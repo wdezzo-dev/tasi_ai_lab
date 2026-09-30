@@ -53,6 +53,9 @@ st.markdown(
     [data-testid="stMarkdownContainer"] li { line-height: 1.8; margin-bottom: 5px; }
     [data-testid="stMarkdownContainer"] ul ul { margin-block: 4px 6px; }
     [data-testid="stMarkdownContainer"] h3 { margin-block: 1.1rem 0.35rem; }
+    [data-testid="stCaptionContainer"],
+    [data-testid="stCaptionContainer"] p { direction: rtl; text-align: right; line-height: 1.7; }
+    [data-testid="stCaptionContainer"] p { unicode-bidi: plaintext; }
     [data-testid="stMetricValue"], [data-testid="stMetricLabel"],
     [data-testid="stMetricDelta"] { direction: rtl; text-align: right; }
     [data-testid="stWidgetLabel"] { direction: rtl; text-align: right; }
@@ -194,14 +197,16 @@ def pct(v) -> str:
 
 # ---------------------------------------------------------------- filtering
 cards = load_cards()
+cards["family"] = cards["family"].map(FAMILY_AR).fillna(cards["family"])
 FAMILIES = sorted(cards["family"].dropna().unique().tolist())
 TIMEFRAMES = [t for t in ["15min", "30min", "1h", "4h", "Daily"] if t in cards["timeframe"].unique()]
 
 with st.sidebar:
     st.markdown("## :material/filter_alt: التصفية")
-    fams = st.multiselect("العائلة", [FAMILY_AR[f] for f in FAMILIES], default=[FAMILY_AR[f] for f in FAMILIES], placeholder="اختر العائلات")
+    fams = st.multiselect("العائلة", FAMILIES, default=FAMILIES, placeholder="اختر العائلات")
     tfs = st.multiselect("الإطار الزمني", [TF_AR[t] for t in TIMEFRAMES], default=[TF_AR[t] for t in TIMEFRAMES], placeholder="اختر الإطار")
-    gain_lo, gain_hi = st.slider("نطاق الربح المجمع خارج العينة", min_value=-0.5, max_value=1.5, value=(-0.5, 1.5), step=0.05)
+    gain_hi_slider = max(1.5, float(cards["stress_oos_gain"].max()))
+    gain_lo, gain_hi = st.slider("نطاق الربح المجمع خارج العينة", min_value=-0.5, max_value=gain_hi_slider, value=(-0.5, gain_hi_slider), step=0.05)
     picks_only = st.checkbox("فقط أفضل اختيار لكل سهم", value=False)
     hide_thin = st.checkbox("إخفاء النتائج ذات الصفقات القليلة", value=False)
     top_n = st.select_slider("عدد أعلى الاختيارات في الرسم", options=[10, 20, 30, 50], value=20)
@@ -209,7 +214,7 @@ with st.sidebar:
     st.caption("تكاليف نافذة التشديد لكل اتجاه: عمولة 40 + انزلاق 10 نقطة أساس (= 1.00% رحلة ذهاب وإياب). "
                "المستوى الواقعي المعتمَد من الكتالوج: عمولة 17.825 + انزلاق 20 (= 0.76% رحلة ذهاب وإياب).")
 
-mask = cards["family"].isin({k for k, v in FAMILY_AR.items() if v in fams})
+mask = cards["family"].isin(fams)
 mask &= cards["timeframe"].isin({k for k, v in TF_AR.items() if v in tfs})
 mask &= (cards["stress_oos_gain"] >= gain_lo) & (cards["stress_oos_gain"] <= gain_hi)
 if hide_thin:
@@ -247,10 +252,14 @@ with tab_overview:
     round_trip = 2 * (commission + slippage) / 10000
 
     eq, trades, meta = run_strategy(int(row.strategy_id), row.ticker, row.timeframe, commission, slippage)
-    st.caption(
-        f"{rl}السهم: {row.ticker} — الاستراتيجية: {meta['name']} (معرف {int(row.strategy_id)}, {row.timeframe}) "
-        f"| المعاملات: `{json.dumps(meta['params'], ensure_ascii=False)}` | "
-        f"الشراء والاحتفاظ على كامل الفترة: {pct(meta['bench'])} | التكلفة: عمولة {commission:g} + انزلاق {slippage:g} نقطة أساس لكل اتجاه (≈ {round_trip * 100:.2f}% رحلة ذهاب وإياب)"
+    st.markdown(
+        f"{rl}**:material/info: تفاصيل العرض**\n\n"
+        f"{rl}- **السهم:** {row.ticker}\n"
+        f"{rl}- **الاستراتيجية:** {meta['name']} (معرف {int(row.strategy_id)}، {row.timeframe})\n"
+        f"{rl}- **المعاملات:** `{json.dumps(meta['params'], ensure_ascii=False)}`\n"
+        f"{rl}- **الشراء والاحتفاظ على كامل الفترة:** {pct(meta['bench'])}\n"
+        f"{rl}- **التكلفة:** عمولة {commission:g} + انزلاق {slippage:g} نقطة أساس لكل اتجاه "
+        f"(≈ {round_trip * 100:.2f}% رحلة ذهاب وإياب)"
     )
     if not trades:
         st.warning("لا توجد صفقات لهذه الاستراتيجية ضمن البيانات المتاحة.")
@@ -318,7 +327,11 @@ with tab_plots:
     with st.container(border=True):
         st.markdown("**:material/scatter_plot: العائد مقابل المخاطرة (أفضل اختيار لكل سهم)**")
         picks_df = df[df["is_pick"] == 1]
-        st.caption("المحور الأفقي: الربح المجمع خارج العينة — المحور الرأسي: أقصى تراجع (قيمة سلبية أقل). اللون: عائلة الاستراتيجية.")
+        st.caption(
+            f"{rl}المحور الأفقي: الربح المجمع خارج العينة\n"
+            f"{rl}المحور الرأسي: أقصى تراجع (القيم السلبية الأقل عمقًا أفضل)\n"
+            f"{rl}اللون: عائلة الاستراتيجية"
+        )
         sc = (
             alt.Chart(picks_df)
             .mark_circle(size=60, opacity=0.75)
@@ -341,9 +354,9 @@ with tab_table:
             view = (df[df["is_pick"] == 1] if picks_only else df).reset_index(drop=True)
             board = view[ROW_COLUMNS[::-1]].rename(columns={k: PERF_COLUMNS[k] for k in ROW_COLUMNS})
             st.caption(
-                f"{rl}الربح الفعلي — التحقق/الاختبار = العائد المحقق الفعلي داخل النافذة بدون سنَوية. "
-                "الربح المجمع خارج العينة = (1+التحقق) × (1+الاختبار) − 1. "
-                "أرقام التاريخ الكامل تشمل فترة التدريب."
+                f"{rl}**الربح الفعلي — التحقق/الاختبار:** العائد المحقق الفعلي داخل كل نافذة، بدون سنَوية.\n"
+                f"{rl}**الربح المجمع خارج العينة:** (1+التحقق) × (1+الاختبار) − 1.\n"
+                f"{rl}**أرقام التاريخ الكامل** تشمل فترة التدريب."
             )
             st.dataframe(styled_df(board, BOARD_SUBSET, BOARD_FORMAT), hide_index=True, height=min(320 + 28 * len(view), 760))
             fname = "picks" if picks_only else "survivors"
@@ -359,11 +372,17 @@ with tab_cards:
     if len(df) == 0:
         st.warning("لا توجد نتائج مطابقة لمعايير التصفية الحالية.")
     else:
-        st.markdown(f"**:material/grid_view: البطاقات التفصيلية (جميع الاستراتيجيات — {len(df)})**")
+        cards_total = len(cards)
+        lbl = (
+            f"**:material/grid_view: البطاقات التفصيلية (جميع الاستراتيجيات — {cards_total})**"
+            if len(df) == cards_total
+            else f"**:material/grid_view: البطاقات التفصيلية ({len(df)} استراتيجية من أصل {cards_total} وفق التصفية)**"
+        )
+        st.markdown(lbl)
         st.caption(
-            f"{rl}كل الأرقام محققة فعلية (نسب مئوية، بدون سنَوية): "
-            "الربح المجمع خارج العينة = (1+التحقق) × (1+الاختبار) − 1. "
-            "الربح الإجمالي يشمل فترة التدريب."
+            f"{rl}**كل الأرقام محققة فعلية** (نسب مئوية، بدون سنَوية).\n"
+            f"{rl}**الربح المجمع خارج العينة:** (1+التحقق) × (1+الاختبار) − 1.\n"
+            f"{rl}**الربح الإجمالي (التاريخ الكامل)** يشمل فترة التدريب."
         )
         for t, g in df.groupby("ticker"):
             with st.expander(f"{rl}{t} — {len(g)} استراتيجية"):
@@ -380,7 +399,7 @@ with tab_method:
     st.markdown(
         """
 ### ١) الفكرة والمنهجية
-- لكل سهم خُصّصت أفضل **5 استراتيجيات مرشحة** (من أصل 2,935 عبر 8 عائلات)، حُدّدت معاملاتها في فترة التدريب وثُبّتت،
+- لكل سهم خُصّصت أفضل **5 استراتيجيات مرشحة** (من أصل **3,779 استراتيجية موثّقة** في الكتالوج المرجعي عبر 8 عائلات)، حُدّدت معاملاتها في فترة التدريب وثُبّتت،
   ثم شُخّص أداؤها خارج العينة في نافذتين:
   * **التدريب (حتى 31-07-2024):** ضبط المعاملات (ولا تُحتسب نتائجُها النهائية).
   * **التحقق (01-08-2024 → 31-12-2025):** نافذة أولى لفحص أداء المعاملات المُثبّتة.

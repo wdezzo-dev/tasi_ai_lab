@@ -89,7 +89,7 @@ def overview_chart(td: pd.DataFrame) -> alt.VConcatChart:
     main = (
         alt.layer(equity, crosshair(nearest_main))
         .add_params(nearest_main)
-        .properties(title="الأداء التراكمي مع نتائج الصفقات (أخضر رابح / أحمر خاسر)", height=300)
+        .properties(title=alt.Title("\u200fالأداء التراكمي مع نتائج الصفقات (أخضر رابح / أحمر خاسر)", anchor="end", fontSize=15), height=300)
     )
 
     dd_chart = (
@@ -104,7 +104,7 @@ def overview_chart(td: pd.DataFrame) -> alt.VConcatChart:
         )
         .add_params(nearest_dd)
     )
-    dd_strip = alt.layer(dd_chart, crosshair(nearest_dd)).properties(title="التراجع", height=70)
+    dd_strip = alt.layer(dd_chart, crosshair(nearest_dd)).properties(title=alt.Title("\u200fالتراجع", anchor="end", fontSize=13), height=70)
 
     bar_axis = alt.Axis(
         format=",.0f", title="نتيجة الصفقة (ر.س)",
@@ -127,7 +127,7 @@ def overview_chart(td: pd.DataFrame) -> alt.VConcatChart:
         .add_params(nearest_bars)
     )
     strip = alt.layer(bars, zero_rule, crosshair(nearest_bars)).properties(
-        title="نتائج الصفقات الفردية (أخضر رابح / أحمر خاسر)", height=90
+        title=alt.Title("\u200fنتائج الصفقات الفردية (أخضر رابح / أحمر خاسر)", anchor="end", fontSize=14), height=90
     )
 
     return alt.vconcat(main, dd_strip, strip, spacing=6).resolve_scale(x="shared")
