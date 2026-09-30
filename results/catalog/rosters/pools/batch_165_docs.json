@@ -1,0 +1,98 @@
+{
+ "batch_165": {
+  "strategy_ids": [
+   333,
+   2378,
+   2042,
+   201,
+   3195,
+   1873,
+   2486,
+   1357,
+   2021,
+   819
+  ],
+  "docs": {
+   "333": {
+    "id": 333,
+    "name": "Keltner Seasonal Filter",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 94%. It performs best in the stocks market.\n\nSignals trigger when Keltner confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like EmaPeriod, AtrPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2m`\n  - `SeasonalThreshold = 0.5m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Seasonal\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2m`\n  - `SeasonalThreshold = 0.5m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Seasonal\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2378": {
+    "id": 2378,
+    "name": "X2MA Digit DM 361",
+    "family": "trend",
+    "overview": "This strategy combines two moving averages with the Average Directional Index (ADX).\nA long position is opened when the fast moving average is above the slow moving average and the positive directional index (+DI) is greater than the negative directional index (-DI).\nA short position is opened when the fast moving average is below the slow moving average and -DI is greater than +DI.\n\nThe strategy uses percentage based stop-loss and take-profit protections. Candles for calculations are taken from the specified timeframe.\n\n## Parameters\n- **Fast MA Length** – length of the fast moving average.\n- **Slow MA Length** – length of the slow moving average.\n- **ADX Length** – period for Average Directional Index calculation.\n- **Stop Loss %** – stop-loss size in percent of entry price.\n- **Take Profit %** – take-profit size in percent of entry price.\n- **Candle Type** – candle timeframe used for processing.\n",
+    "details": "",
+    "parameters": "- **Fast MA Length** – length of the fast moving average.\n- **Slow MA Length** – length of the slow moving average.\n- **ADX Length** – period for Average Directional Index calculation.\n- **Stop Loss %** – stop-loss size in percent of entry price.\n- **Take Profit %** – take-profit size in percent of entry price.\n- **Candle Type** – candle timeframe used for processing."
+   },
+   "2042": {
+    "id": 2042,
+    "name": "FATL MACD Trend",
+    "family": "trend",
+    "overview": "This strategy implements a trend-following system based on the **FATL MACD** indicator. FATL (Fast Adaptive Trend Line) is subtracted from price to produce a MACD-like oscillator which is then smoothed by an adaptive moving average. Positive values indicate bullish momentum, negative values indicate bearish momentum.\n\nThe algorithm analyses the slope of this oscillator on each finished candle:\n\n- When the previous value is lower than the value before it, the oscillator has turned upward. If the current value rises further, the strategy opens a long position and closes any short positions.\n- When the previous value is higher than the value before it, the oscillator has turned downward. If the current value continues to fall, the strategy opens a short position and closes any long positions.\n\nAll main parameters are configurable:\n\n- **Fast EMA** – MACD fast moving average period (default 12).\n- **Slow EMA** – MACD slow moving average period (default 26).\n- **Signal EMA** – MACD signal line period (default 9).\n- **Candle Type** – candle series used for indicator calculation.\n\nPositions are opened with market orders and are closed when an opposite signal appears.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "201": {
+    "id": 201,
+    "name": "VWAP Williams R",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 40%. It performs best in the crypto market.\n\nWhen the oscillator drops below -80 and price trades under VWAP, the setup implies selling pressure is fading and a rebound may follow. Conversely, a reading above -20 while price is positioned above VWAP warns that buyers are exhausted and a pullback is likely. The strategy opens trades in the direction of a potential return to VWAP and watches for that move to complete.\n\nThis approach fits active intraday traders who prefer frequent mean reversion opportunities. A small stop‑loss relative to VWAP keeps risk contained while still allowing enough room for price to fluctuate before reversing.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price < VWAP && Williams %R < -80 (oversold below VWAP)\n  - **Short**: Price > VWAP && Williams %R > -20 (overbought above VWAP)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price breaks above VWAP\n  - **Short**: Exit short position when price breaks below VWAP\n- **Stops**: Yes.\n- **Default Values**:\n  - `WilliamsRPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: VWAP Williams R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price < VWAP && Williams %R < -80 (oversold below VWAP)\n  - **Short**: Price > VWAP && Williams %R > -20 (overbought above VWAP)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price breaks above VWAP\n  - **Short**: Exit short position when price breaks below VWAP\n- **Stops**: Yes.\n- **Default Values**:\n  - `WilliamsRPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: VWAP Williams R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3195": {
+    "id": 3195,
+    "name": "Ingrit",
+    "family": "trend",
+    "overview": "Ingrit is a conversion of the MetaTrader 5 expert advisor `Ingrit.mq5`. The strategy watches five-minute candles and reacts when a strong counter-trend candle is followed by a wide breakout measured against a swing from fourteen bars ago. Orders are placed at market with configurable stop-loss, take-profit, and trailing stop distances expressed in pips. Signals may optionally be reversed or forced to flatten the opposite exposure before entering a new trade.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `CandleType` | Timeframe used to build candles for the breakout logic. Default: 5-minute time frame. |\n| `StopLossPips` | Stop-loss distance in pips. A value of `0` disables the fixed stop. |\n| `TakeProfitPips` | Take-profit distance in pips. A value of `0` disables the fixed target. |\n| `TrailingStopPips` | Base trailing stop distance in pips. Set to `0` to disable trailing. |\n| `TrailingStepPips` | Extra pip distance that must be gained before the trailing stop moves again. Must be positive when trailing is enabled. |\n| `StepPips` | Minimum swing distance in pips between the reference candle and the latest candle before a signal triggers. |\n| `ReverseSignals` | If `true`, swaps long and short conditions (reverse mode). |\n| `CloseOppositePositions` | If `true`, enlarges the market order to flatten any opposite exposure before opening the new position. |\n| `Volume` | Strategy property that defines the base order size. Combine with `CloseOppositePositions` to control reversal behaviour. |"
+   },
+   "1873": {
+    "id": 1873,
+    "name": "CoeffofLine True",
+    "family": "momentum",
+    "overview": "This strategy ports the MQL5 expert `Exp_CoeffofLine_true.mq5` to the StockSharp framework. It tracks the **Linear Regression Slope** of median prices and reacts to zero crossings.\n\nA long position is opened when the slope becomes positive after being negative. A short position is opened when the slope turns negative after being positive. Existing positions are closed on opposite signals. Only completed candles are processed.\n\n## Parameters\n\n- **Candle Type** – timeframe for the candle series.\n- **Slope Period** – length of the linear regression used to compute the slope.\n- **Signal Bar** – historical bar index used for signal evaluation.\n- **Buy Open / Sell Open** – permissions to open long or short positions.\n- **Buy Close / Sell Close** – permissions to exit long or short positions.\n\nThe strategy subscribes to candles, binds the indicator via the high-level API and operates without manual indicator value requests.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe for the candle series.\n- **Slope Period** – length of the linear regression used to compute the slope.\n- **Signal Bar** – historical bar index used for signal evaluation.\n- **Buy Open / Sell Open** – permissions to open long or short positions.\n- **Buy Close / Sell Close** – permissions to exit long or short positions.\n\nThe strategy subscribes to candles, binds the indicator via the high-level API and operates without manual indicator value requests."
+   },
+   "2486": {
+    "id": 2486,
+    "name": "Money Fixed Risk",
+    "family": "volatility",
+    "overview": "Money Fixed Risk Strategy is a direct port of the MetaTrader 5 expert advisor **Money Fixed Risk.mq5**. The original script periodically computes the maximum position size that keeps risk below a fixed percentage of account equity and then opens a market buy protected with symmetric stop-loss and take-profit orders. This StockSharp version preserves the same behaviour using the high-level tick subscription API and risk controls provided by the framework.\n\nThe strategy listens to every trade (tick) for the selected security. After a configurable number of ticks it evaluates the current portfolio value, converts the configured stop distance in pips to price units and calculates the largest volume that keeps risk within the specified percentage of equity. If the calculated volume is valid the strategy opens a long market order and assigns both stop-loss and take-profit levels at exactly the stop distance away from the filled price. The stop and target are monitored on each subsequent tick and the position is closed once either boundary is touched.",
+    "details": "",
+    "parameters": "- **Stop Loss (pips)** – stop-loss distance expressed in pips. The take-profit is placed at the same distance in the opposite direction.\n- **Risk %** – percentage of portfolio equity risked on each trade.\n- **Ticks Interval** – number of ticks to wait before re-evaluating and potentially opening a new position.\n\nAll parameters support optimisation and validation (must be greater than zero)."
+   },
+   "1357": {
+    "id": 1357,
+    "name": "Bollinger Channel Rebound",
+    "family": "mean_reversion",
+    "overview": "Converted from TradingView script \"strategy1\". The strategy trades Bollinger channel rebounds. It enters long after the price falls below the lower band and then closes above it. Exits are triggered by crossing above the middle band, touching the upper band, or stop-loss below the channel.\n\n## Details\n\n- **Entry Criteria**: Price was below the lower band and then closes above it.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Cross above middle band, touch of upper band, or stop-loss below channel.\n- **Stops**: Yes, fixed stop below channel.\n- **Default Values**:\n  - `Length` = 20\n  - `BufferFactor` = 0.2\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Variable\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price was below the lower band and then closes above it.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Cross above middle band, touch of upper band, or stop-loss below channel.\n- **Stops**: Yes, fixed stop below channel.\n- **Default Values**:\n  - `Length` = 20\n  - `BufferFactor` = 0.2\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Variable\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2021": {
+    "id": 2021,
+    "name": "News Hour Trade",
+    "family": "volume",
+    "overview": "The **News Hour Trade** strategy places pending buy and sell stop orders around scheduled high impact news events. Orders are offset from the current price by a fixed number of steps and include stop-loss, take-profit and optional trailing stop management.\n\n## Idea\n\n1. At the configured start hour and minute the strategy prepares for an upcoming news release.\n2. A buy stop and a sell stop order are placed `PriceGap` steps above and below the current price.\n3. When one order triggers, the opposite pending order is cancelled automatically.\n4. The open position is protected with fixed stop-loss and take-profit levels. If `TrailStop` is enabled the stop level follows the price when it moves in favor of the position.\n5. Only one trade per day is allowed.\n\n## Parameters\n\n- **StartHour / StartMinute** – time to start trading.\n- **DelaySeconds** – pause before orders are placed (currently informational).\n- **Volume** – order size in lots.\n- **StopLoss** – distance to stop-loss in price steps.\n- **TakeProfit** – distance to take-profit in steps.\n- **PriceGap** – offset from current price for pending orders.\n- **Expiration** – pending order lifetime in seconds (0 means no expiration).\n- **TrailStop** – enable trailing stop.\n- **TrailingStop** – distance from current price for trailing stop.\n- **TrailingGap** – minimum gap before updating trailing stop.\n- **BuyTrade / SellTrade** – enable buy or sell side orders.\n- **CandleType** – timeframe used for time tracking.\n\n## Notes\n\nThe strategy is intended for the M5 timeframe but can be applied to any instrument with low spreads. Use with caution around major news events.\n",
+    "details": "",
+    "parameters": "- **StartHour / StartMinute** – time to start trading.\n- **DelaySeconds** – pause before orders are placed (currently informational).\n- **Volume** – order size in lots.\n- **StopLoss** – distance to stop-loss in price steps.\n- **TakeProfit** – distance to take-profit in steps.\n- **PriceGap** – offset from current price for pending orders.\n- **Expiration** – pending order lifetime in seconds (0 means no expiration).\n- **TrailStop** – enable trailing stop.\n- **TrailingStop** – distance from current price for trailing stop.\n- **TrailingGap** – minimum gap before updating trailing stop.\n- **BuyTrade / SellTrade** – enable buy or sell side orders.\n- **CandleType** – timeframe used for time tracking."
+   },
+   "819": {
+    "id": 819,
+    "name": "Weighted Standard Deviation",
+    "family": "volume",
+    "overview": "Implements a strategy based on volume weighted mean and standard deviation. It buys when price drops below the lower band and sells when price rises above the upper band. Positions are closed when price returns to the mean.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

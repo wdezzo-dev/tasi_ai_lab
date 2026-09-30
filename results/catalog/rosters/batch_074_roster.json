@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2362,
+      "name": "Delta RSI",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,7),rsi(close,28)) and rsi(close,28) > 50",
+      "exit_long": "crossbelow(rsi(close,7),rsi(close,28)) or rsi(close,28) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish 7/28 RSI cross above a slow RSI over 50 approximates the documented Up transition, with the inverse or loss of trend as exit. Periods and Level are not supplied, so 7/28/50 are explicit fallbacks."
+    },
+    {
+      "id": 585,
+      "name": "Bollinger EMA Stats",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close >= ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 20-period, 2-standard-deviation lower band is entered and EMA(20) is the exit target. The wider 3-standard-deviation band is a stateful entry-relative stop and therefore cannot be represented by stop_loss_pct."
+    },
+    {
+      "id": 2650,
+      "name": "iCCI iMA",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,14),ema(roc(close,14),9))",
+      "exit_long": "crossbelow(roc(close,14),ema(roc(close,14),9)) or roc(close,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC and its EMA are used as momentum and signal proxies because CCI is unavailable; the 20-bar momentum losing zero approximates the secondary CCI reversal. Periods and pips are unspecified, so 14/9/20 and null percent protection are explicit fallbacks."
+    },
+    {
+      "id": 3956,
+      "name": "Polish Layer Expert Advisor System Efficient",
+      "family": "trend",
+      "entry_long": "sma(close,9) > sma(close,45) and crossabove(rsi(close,7),rsi(close,14)) and roc(close,14) > 0",
+      "exit_long": "sma(close,9) < sma(close,45) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 9/45 price trend is retained while a bullish 7/14 RSI cross and positive ROC substitute for Stochastic, DeMarker, and Williams confirmations. Exact triple crossings are unavailable; 7777/17-pip protection is not converted to percentages."
+    },
+    {
+      "id": 742,
+      "name": "EMA Crossover with Volume + Stacked TP & Trailing SL",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,21),ema(close,55)) and volume_ratio(volume,20) > 1.2",
+      "exit_long": "crossbelow(ema(close,21),ema(close,55)) or close < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EMA(21/55) crossover is filtered by volume at 1.2 times its 20-bar average, exactly following the documented entry. ATR(14) stacked targets and trailing management are stateful and cannot be expressed as percentage exits."
+    },
+    {
+      "id": 2457,
+      "name": "Breakdown Level Intraday",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,20)",
+      "exit_long": "low < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar prior channel approximates the previous-day high for the long breakout, with the low channel as exit. The six-point delta, order time, break-even, trailing, and 120/90-point protections are unavailable in the DSL."
+    },
+    {
+      "id": 172,
+      "name": "Bollinger Williams R",
+      "family": "breakout",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The lower Bollinger condition and RSI(14)<30 approximate the documented Williams %R<-80 confirmation, with return to the middle band as exit. The 2*ATR stop is not a percentage field."
+    },
+    {
+      "id": 493,
+      "name": "Adaptive RSI",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(rsi(close,14),1),0)",
+      "exit_long": "crossbelow(roc(rsi(close,14),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A turn in the one-bar change of RSI(14) is a direct proxy for the unsupported adaptive RSI turning up or down. The documented opposite-signal exit is retained; no stops are specified."
+    },
+    {
+      "id": 3508,
+      "name": "Close Profit End Of Week",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an exit-only Friday profit utility with no entry signal; the impossible guards deliberately prevent fabricated trades. Calendar time, floating-profit state, and the 20:00 cutoff cannot be represented."
+    },
+    {
+      "id": 1447,
+      "name": "Trade Entry Detector, Wick to Body Ratio",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2) and close > open and close - low >= 2 * (close - open)",
+      "exit_long": "close >= bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A lower-band close with a lower wick at least twice the bullish body implements the documented long wick-to-body condition. Bollinger 20/2 and the two-wick ratio are fallbacks because no parameter values are supplied; the opposite band exits."
+    }
+  ]
+}

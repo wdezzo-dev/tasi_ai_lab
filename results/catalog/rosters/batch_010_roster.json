@@ -1,0 +1,105 @@
+{
+  "batch": "batch_010",
+  "strategy_roster": [
+    {
+      "id": 62,
+      "name": "Stochastic Overbought/Oversold Reversal",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Stochastic proxy: RSI oversold (<30) to neutral (50). Simple mean reversion. StopLoss=2% documented."
+    },
+    {
+      "id": 96,
+      "name": "Three White Soldiers",
+      "family": "momentum",
+      "entry_long": "close > open and close > donchian_high_prev(high,1) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Three consecutive bullish candles with higher closes, above MA(20). Long momentum continuation. StopLoss=2% documented."
+    },
+    {
+      "id": 97,
+      "name": "Three Black Crows",
+      "family": "momentum",
+      "entry_long": "close < open and close < donchian_low_prev(low,1) and close < sma(close,20)",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Three consecutive bearish candles with lower closes, below MA(20). Short momentum (approximated as long exit). StopLoss=2% documented."
+    },
+    {
+      "id": 104,
+      "name": "Rejection Candle",
+      "family": "momentum",
+      "entry_long": "close > open and (high - close) <= 0.1 * (high - low) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Rejection candle: small upper shadow (<=10% of range), bullish close above MA(20). StopLoss=2% documented."
+    },
+    {
+      "id": 116,
+      "name": "Day of Week Effect",
+      "family": "pattern",
+      "entry_long": "close > sma(close,20) and close > open",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Day of week proxy: long when price above MA(20) with bullish close (seasonality not representable in daily data). StopLoss=2% documented."
+    },
+    {
+      "id": 132,
+      "name": "Bollinger Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "close > bb_mid(close,20) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger + Stochastic: close below lower BB with RSI oversold. Exit mid band or RSI > 50. No fixed stop documented."
+    },
+    {
+      "id": 163,
+      "name": "Rsi Williams R",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and close < sma(close,20) - 2 * atr(high,low,close,14)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI + Williams %R proxy: RSI oversold and close >2 ATR below MA(20). Long mean reversion. StopLoss=2% documented."
+    },
+    {
+      "id": 222,
+      "name": "Cointegration Pairs",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close,20) - 2 * std(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Cointegration proxy: price deviates >2 std below MA(20). Mean reversion to MA. StopLoss=2% documented."
+    },
+    {
+      "id": 238,
+      "name": "CCI Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close,20) - 2 * std(close,20) and rsi(close,14) < 30",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI mean reversion proxy: close >2 std below MA(20) with oversold RSI. No fixed stop documented."
+    },
+    {
+      "id": 276,
+      "name": "Bollinger Width Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) < 0.5 * sma(bb_upper(close,20,2) - bb_lower(close,20,2), 20) and close > sma(close,20)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger width contraction (<50% of 20-bar avg) with price above MA(20). Long on squeeze breakout. No fixed stop documented."
+    }
+  ]
+}

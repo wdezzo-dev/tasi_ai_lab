@@ -1,0 +1,98 @@
+{
+ "batch_210": {
+  "strategy_ids": [
+   1200,
+   3104,
+   3528,
+   2104,
+   1683,
+   1676,
+   1300,
+   1029,
+   620,
+   389
+  ],
+  "docs": {
+   "1200": {
+    "id": 1200,
+    "name": "Bollinger Bands with Trailing Stop",
+    "family": "trend",
+    "overview": "Enters long when price closes above the upper Bollinger Band. \nExits when price falls below the lower band or a trailing stop based on ATR is triggered.\n\n## Details\n\n- **Entry Criteria**: Close above upper band.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below lower band or trailing stop hit.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbDeviation` = 2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Bollinger Bands, ATR\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close above upper band.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below lower band or trailing stop hit.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbDeviation` = 2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Bollinger Bands, ATR\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3104": {
+    "id": 3104,
+    "name": "MA MACD Position Averaging",
+    "family": "trend",
+    "overview": "This strategy is a faithful conversion of the MetaTrader expert advisor **\"MA MACD Position averaging\"**. It combines a weighted moving average filter with a MACD ratio check and adds a martingale-style averaging module that increases the position size whenever price moves adversely by a configurable number of pips. All risk parameters are configured in pip units and internally converted to price offsets using the instrument metadata provided by StockSharp.\n\n## Trading Logic\n\n1. **Indicator preparation**\n   - A configurable moving average (`MaPeriod`, `MaMethod`, `MaAppliedPrice`) is sampled on completed candles. The `SignalBar` and `MaShift` parameters emulate MetaTrader's ability to look back by a given number of bars and to plot the moving average with a horizontal offset.\n   - A MACD indicator (`MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod`, `MacdAppliedPrice`) is processed on the same candles. The strategy stores the MACD main and signal lines in a small rolling buffer so that historical values can be accessed without calling indicator APIs directly.\n2. **Entry conditions**\n   - **Long**: both MACD lines are below zero, the ratio `MACDmain / MACDsignal` is greater than or equal to `MacdRatio`, the candle close is above the sampled moving average and the distance between price and the average is at least `IndentPips` pips.\n   - **Short**: both MACD lines are above zero, the ratio is above `MacdRatio`, the candle close is below the moving average and the distance between them is at least `IndentPips` pips.\n   - New entries are only allowed when the strategy has no exposure. When an averaging cycle is already in progress, the signal logic is skipped and only the averaging rules apply.\n3. **Averaging module**\n   - When a long position exists and price moves down by at least `StepLossingPips` from the best (lowest) long entry, the strategy opens an additional long trade whose volume equals the last leg volume multiplied by `LotCoefficient` (rounded by the in",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | `TimeSpan.FromHours(1).TimeFrame()` | Timeframe used for indicator calculations. |\n| `OrderVolume` | `decimal` | `0.1` | Base lot size for the initial entry. |\n| `StopLossPips` | `int` | `50` | Stop-loss distance in pips (0 disables the stop). |\n| `TakeProfitPips` | `int` | `50` | Take-profit distance in pips (0 disables the target). |\n| `TrailingStopPips` | `int` | `5` | Trailing stop offset in pips. Must be positive to enable trailing. |\n| `TrailingStepPips` | `int` | `5` | Extra pip distance required before the trailing stop moves again. |\n| `StepLossingPips` | `int` | `30` | Price setback in pips that triggers a new averaging leg. |\n| `LotCoefficient` | `decimal` | `2.0` | Multiplier applied to the previous leg volume when averaging. |\n| `SignalBar` | `int` | `0` | Number of completed bars to look back when sampling indicators. |\n| `MaPeriod` | `int` | `15` | Moving average length in bars. |\n| `MaShift` | `int` | `0` | Horizontal shift (in bars) applied to the moving average values. |\n| `MaMethod` | `MovingAverageMethod` | `Weighted` | Moving average smoothing algorithm (simple, exponential, smoothed, weighted). |\n| `MaAppliedPrice` | `AppliedPriceType` | `Weighted` | Candle price used as input for the moving average. |\n| `IndentPips` | `int` | `4` | Minimum pip gap required between price and the moving average before entering. |\n| `MacdFastPeriod` | `int` | `12` | Fast EMA length of the MACD filter. |\n| `MacdSlowPeriod` | `int` | `26` | Slow EMA length of the MACD filter. |\n| `MacdSignalPeriod` | `int` | `9` | Signal line length of the MACD filter. |\n| `MacdAppliedPrice` | `AppliedPriceType` | `Weighted` | Applied price used for the MACD calculation. |\n| `MacdRatio` | `decimal` | `0.9` | Minimum MACD main/signal ratio required to allow trading. |\n\n### Pip conversion\n\nAll pip-based settings (`StopLossPips`, `TakeProfitPips`, `TrailingStopPips`, `TrailingStepPips`, `StepLossingPips`, `IndentPips`) are multiplied by the security `PriceStep`. When the instrument has 3 or 5 decimal places the value is further multiplied by 10 to reproduce MetaTrader's \"pip\" definition for fractional quotes. If no price step is available a fallback of `0.0001` is used."
+   },
+   "3528": {
+    "id": 3528,
+    "name": "MA Grid",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader 5 expert advisor **MAGrid.mq5**. It maintains a hedged grid of buy and sell positions around an exponential moving average (EMA). The idea is to keep the grid balanced around the EMA anchor. When price crosses predefined distance steps above or below the EMA, the strategy closes one position from the opposing side of the grid and opens a new position in the direction of the breakout. This constantly re-centers the basket around the moving average.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `MaPeriod` | 48 | EMA period used for the anchor level. |\n| `GridAmount` | 6 | Number of grid steps; automatically rounded up to an even value. |\n| `Distance` | 0.005 | Relative spacing between grid levels (e.g., 0.005 = 0.5%). |\n| `OrderVolume` | 0.1 | Volume submitted with each market order. |\n| `CandleType` | Daily time frame | Candle series used to calculate the EMA and evaluate signals. |"
+   },
+   "2104": {
+    "id": 2104,
+    "name": "Color Zerolag DeMarker",
+    "family": "trend",
+    "overview": "This strategy converts the original MQL5 expert `Exp_ColorZerolagDeMarker` to the StockSharp framework. It uses a custom combination of several **DeMarker** indicators to build fast and slow trend lines. Trading signals are generated when these lines cross.\n\n## Indicators\n\n- Five DeMarker indicators with different periods: 8, 21, 34, 55 and 89.\n- Each indicator value is multiplied by a weight factor (0.05, 0.10, 0.16, 0.26 and 0.43).\n- The weighted values are summed to form the **fast** line.\n- The **slow** line is an exponentially smoothed version of the fast line controlled by the `Smoothing` parameter.\n\n## Trading Logic\n\n1. Subscribe to candles with a configurable timeframe.\n2. On each finished candle, calculate the fast and slow lines.\n3. When the previous fast line is above the previous slow line and the current fast line falls below the slow line:\n   - Close short positions if allowed.\n   - Open a long position if enabled.\n4. When the previous fast line is below the previous slow line and the current fast line rises above the slow line:\n   - Close long positions if allowed.\n   - Open a short position if enabled.\n5. Optional stop-loss and take-profit percentages are applied for newly opened positions.\n\n## Parameters\n\n- `CandleTimeframe` – timeframe for candle subscription.\n- `Smoothing` – smoothing factor for the slow line.\n- `Factor1`–`Factor5` – weight factors for each DeMarker period.\n- `DeMarkerPeriod1`–`DeMarkerPeriod5` – periods for DeMarker indicators.\n- `Volume` – order volume.\n- `OpenBuy` / `OpenSell` – enable long/short entries.\n- `CloseBuy` / `CloseSell` – enable exits for long/short positions.\n- `StopLossPct` / `TakeProfitPct` – optional percentage-based risk management.\n\n## Notes\n\nThe strategy operates on closed candles only and uses the high-level StockSharp API (`SubscribeCandles` and `Bind`). All comments in the code are provided in English for clarity.\n",
+    "details": "",
+    "parameters": "- `CandleTimeframe` – timeframe for candle subscription.\n- `Smoothing` – smoothing factor for the slow line.\n- `Factor1`–`Factor5` – weight factors for each DeMarker period.\n- `DeMarkerPeriod1`–`DeMarkerPeriod5` – periods for DeMarker indicators.\n- `Volume` – order volume.\n- `OpenBuy` / `OpenSell` – enable long/short entries.\n- `CloseBuy` / `CloseSell` – enable exits for long/short positions.\n- `StopLossPct` / `TakeProfitPct` – optional percentage-based risk management."
+   },
+   "1683": {
+    "id": 1683,
+    "name": "Parabolic SAR Alert",
+    "family": "trend",
+    "overview": "This strategy monitors the Parabolic SAR (Stop and Reverse) indicator to detect potential trend reversals. When the SAR value flips from above the price to below, the algorithm interprets it as a bullish signal and opens a long position. When the SAR moves from below the price to above, a short position is opened.\n\nThe default acceleration factor (0.02) and maximum acceleration (0.2) follow the classic Parabolic SAR configuration. These parameters control how quickly the indicator approaches price: higher values make the SAR react faster but can lead to whipsaws. The strategy processes only finished candles and stores previous SAR and price values to identify crossovers without querying historical data.\n\nRisk management is not defined explicitly; the example relies on opposite signals to exit. Additional protection can be enabled through the framework's built-in mechanisms.\n\n## Details\n\n- **Entry Criteria**: Parabolic SAR crosses the closing price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `InitialAcceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Parabolic SAR crosses the closing price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `InitialAcceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1676": {
+    "id": 1676,
+    "name": "My Line Order",
+    "family": "other",
+    "overview": "This strategy triggers market orders when price crosses predefined horizontal levels. The user specifies separate levels for long and short entries and risk parameters in pips. After opening a position the strategy tracks stop loss, take profit and optional trailing stop.\n\nThe system suits discretionary setups where entry levels are known in advance. It works on any instrument and timeframe because it relies only on price levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close price crosses above `BuyPrice`.\n  - **Short**: Close price crosses below `SellPrice`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop-loss at `StopLossPips`.\n  - Take-profit at `TakeProfitPips`.\n  - Trailing stop if `TrailingStopPips` > 0.\n- **Stops**: Yes, in pips.\n- **Default Values**:\n  - `BuyPrice` = 0 (disabled)\n  - `SellPrice` = 0 (disabled)\n  - `TakeProfitPips` = 30\n  - `StopLossPips` = 20\n  - `TrailingStopPips` = 0\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Manual\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close price crosses above `BuyPrice`.\n  - **Short**: Close price crosses below `SellPrice`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop-loss at `StopLossPips`.\n  - Take-profit at `TakeProfitPips`.\n  - Trailing stop if `TrailingStopPips` > 0.\n- **Stops**: Yes, in pips.\n- **Default Values**:\n  - `BuyPrice` = 0 (disabled)\n  - `SellPrice` = 0 (disabled)\n  - `TakeProfitPips` = 30\n  - `StopLossPips` = 20\n  - `TrailingStopPips` = 0\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Manual\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1300": {
+    "id": 1300,
+    "name": "Silver Midnight Candle Color",
+    "family": "other",
+    "overview": "Trades at 1:00 AM New York time based on the color of the previous day's midnight candle. If the midnight candle closed higher than it opened, the strategy goes long; otherwise it goes short. Long trades aim for 57 ticks with a 200 tick stop, while short trades target 48 ticks with the same 200 tick stop.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1029": {
+    "id": 1029,
+    "name": "MathStatisticsKernelFunctions",
+    "family": "other",
+    "overview": "Demonstrates several statistical kernel functions and trades when the selected kernel output crosses 0.5.\n\n## Parameters\n- **Kernel** – kernel function name (`uniform`, `triangle`, `epanechnikov`, `quartic`, `triweight`, `tricubic`, `gaussian`, `cosine`, `logistic`, `sigmoid`).\n- **Bandwidth** – kernel bandwidth.\n- **Candle Type** – timeframe of candles.\n",
+    "details": "",
+    "parameters": "- **Kernel** – kernel function name (`uniform`, `triangle`, `epanechnikov`, `quartic`, `triweight`, `tricubic`, `gaussian`, `cosine`, `logistic`, `sigmoid`).\n- **Bandwidth** – kernel bandwidth.\n- **Candle Type** – timeframe of candles."
+   },
+   "620": {
+    "id": 620,
+    "name": "Cleaner Screeners Library",
+    "family": "other",
+    "overview": "Simple screener strategy that evaluates RSI across multiple symbols and prints buy or sell ratings. It serves as a foundation for building custom multi-asset screeners.\n\n## Details\n\n- **Entry Criteria**: RSI values are checked against thresholds for each symbol.\n- **Long/Short**: None (signals only)\n- **Exit Criteria**: None\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `StrongThreshold` = 70m\n  - `WeakThreshold` = 60m\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Screener\n  - Direction: N/A\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: N/A\n",
+    "details": "- **Entry Criteria**: RSI values are checked against thresholds for each symbol.\n- **Long/Short**: None (signals only)\n- **Exit Criteria**: None\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `StrongThreshold` = 70m\n  - `WeakThreshold` = 60m\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Screener\n  - Direction: N/A\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: N/A",
+    "parameters": ""
+   },
+   "389": {
+    "id": 389,
+    "name": "Payday Anomaly",
+    "family": "other",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis strategy exploits the \"payday\" effect by holding a broad market ETF around typical salary payment dates. The ETF is owned from two trading days before month-end through the third trading day of the new month, capturing inflows from paycheck contributions.\n\nThe rest of the month the portfolio is in cash. Daily candles determine the window and market orders adjust the position.\n\n## Details\n\n- **Instrument**: broad market ETF.\n- **Window**: from two days before month end to third trading day of next month.\n- **Positioning**: long during window, flat otherwise.\n- **Data**: daily candles.\n- **Risk control**: trade skipped if order value below `MinTradeUsd`.\n",
+    "details": "- **Instrument**: broad market ETF.\n- **Window**: from two days before month end to third trading day of next month.\n- **Positioning**: long during window, flat otherwise.\n- **Data**: daily candles.\n- **Risk control**: trade skipped if order value below `MinTradeUsd`.",
+    "parameters": ""
+   }
+  }
+ }
+}

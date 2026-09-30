@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 904,
+      "name": "IBS Internal Bar Strength",
+      "family": "trend",
+      "entry_long": "(close - low) / (high - low) < 0.09 and close > ema(close,220)",
+      "exit_long": "(close - low) / (high - low) >= 0.985",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The current bar's close location within its range approximates previous-bar IBS, retaining thresholds 0.09/0.985 and EMA(220). Re-entry spacing and the 14-bar maximum holding period require position state."
+    },
+    {
+      "id": 996,
+      "name": "Long-Only MTF EMA Cloud",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,21),ema(close,50))",
+      "exit_long": "crossbelow(ema(close,21),ema(close,50))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "The documented EMA 21/50 bullish crossover and 1%/2% protections are retained. The inverse crossover is a signal-exit proxy because the source otherwise exits only through protection."
+    },
+    {
+      "id": 2016,
+      "name": "Color Schaff RSI Trend Cycle",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,23),6) and rsi(close,23) >= 2",
+      "exit_long": "crossbelow(rsi(close,23),2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(23), the documented fast length, is an explicit proxy for the unavailable STC colors; crossing below 6 but not 2 maps the long transition. The 50-cycle smoothing and 60/-60 settings are not separately representable."
+    },
+    {
+      "id": 1260,
+      "name": "RSI + MACD Long-Only",
+      "family": "trend",
+      "entry_long": "(crossabove(rsi(close,14),50) and macd(close,12,26) > macd_signal(close,12,26,9)) or (crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,14) > 50)",
+      "exit_long": "crossbelow(rsi(close,14),50) or (crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) and macd(close,12,26) - macd_signal(close,12,26,9) <= 0)",
+      "stop_loss_pct": 2.5,
+      "take_profit_pct": 11.5,
+      "notes": "Both documented long entry branches and the RSI/MACD exit logic are retained with 14 and 12/26/9 defaults. The optional EMA(200), oversold-window context, and optional protection are omitted; numeric default percentages are kept."
+    },
+    {
+      "id": 1583,
+      "name": "MartinGale Scalping",
+      "family": "trend",
+      "entry_long": "sma(close,3) > sma(close,8)",
+      "exit_long": "sma(close,3) < sma(close,8)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA 3/8 relationship and inverse exit are direct. Pyramiding, slow-SMA price exits, and the 1.03/0.95 absolute levels are not percentage fields."
+    },
+    {
+      "id": 2618,
+      "name": "Pipso Range Reversal",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,36)",
+      "exit_long": "high > donchian_high_prev(high,36)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long side uses a break below the prior 36-bar low and exits on the opposite channel high. Session hours and the 300% channel-derived stop require clock and entry-state fields."
+    },
+    {
+      "id": 2300,
+      "name": "Darvas Boxes System",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior 20-bar Donchian highs/lows exactly proxy the box boundaries and opposite exits. The 1000/2000 point protections are not percentage fields."
+    },
+    {
+      "id": 2403,
+      "name": "Re Open Positions",
+      "family": "momentum",
+      "entry_long": "roc(close,5) > 0",
+      "exit_long": "roc(close,5) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Five-bar positive ROC is a one-percent fallback for reopening from the last entry because no threshold is supplied. Multi-position counting and per-entry point stops/targets are unsupported."
+    },
+    {
+      "id": 2745,
+      "name": "Arrows and Curves",
+      "family": "volatility",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) is an explicit envelope fallback because the custom channel parameters have no defaults. The custom relay/state, pip stops, targets, and trailing cannot be represented."
+    },
+    {
+      "id": 3343,
+      "name": "Basic RSI EA Template",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing below the documented 30 level enters long, and a recross above 50 is a mean-reversion exit proxy. The 30/20 pip stop and target are not percentage exits."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2989,
+      "name": "Trendline Cross Alert",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The module only monitors manually supplied horizontal and trendline levels and submits no automatic orders. An impossible negative-price guard preserves its alert-only behavior; level inputs and notifications are unavailable."
+    },
+    {
+      "id": 2166,
+      "name": "Digital CCI Woodies",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,14),ema(close,6))",
+      "exit_long": "crossbelow(ema(close,14),ema(close,6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so EMA(14)/EMA(6) preserve the documented fast/slow crossover periods and opposite exits. The short branch, CCI calculation, and six-hour resampling are omitted."
+    },
+    {
+      "id": 1692,
+      "name": "Parabolic SAR Bug",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 1.0,
+      "notes": "Parabolic SAR is unavailable, so an EMA(10)/EMA(20) direction cross is the explicit long-side proxy and the inverse cross exits. The documented 2% stop and 1% target are retained; SAR acceleration, trailing, and short mode are omitted."
+    },
+    {
+      "id": 499,
+      "name": "Advanced EMA Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30)) and adx(high,low,close,14) > 25 and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30)) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10)/EMA(30), ADX(14), and normalized ATR(14) are explicit fallbacks for the unnamed cross and trend-strength filters. SuperTrend, USD-strength sizing, minimum holding time, dynamic stops, and exact thresholds are unavailable."
+    },
+    {
+      "id": 885,
+      "name": "HMA Crossover ATR Curvature",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,15),ema(close,34)) and roc(ema(close,15),1) > 0",
+      "exit_long": "crossbelow(ema(close,15),ema(close,34))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(15)/EMA(34) and positive fast-average ROC proxy the documented HMA crossover and nonnegative curvature. HMA and ATR-based trailing risk are unavailable; the short branch is omitted."
+    },
+    {
+      "id": 4119,
+      "name": "4119 Champion",
+      "family": "breakout",
+      "entry_long": "crossabove(rsi(close,14),30) and close > ema(close,20)",
+      "exit_long": "crossbelow(rsi(close,14),70) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An RSI(14) recross from oversold with price above EMA(20) proxies the champion's pending long breakout; the opposite RSI/trend condition exits. Three stop orders, RSI level, point protection, and trailing are unavailable."
+    },
+    {
+      "id": 580,
+      "name": "Bjorgum Double Tap",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,50) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break above the prior 50-bar high with an SMA(20) filter approximates a double-bottom neckline breakout. Pattern pivots, Fibonacci targets/stops, tolerance, and the short side are not representable."
+    },
+    {
+      "id": 4145,
+      "name": "RobotPowerM5 Meta4 V12",
+      "family": "momentum",
+      "entry_long": "crossabove(ema(close,5),ema(close,20)) and roc(close,1) > 0",
+      "exit_long": "crossbelow(ema(close,5),ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power and Bears Power are unavailable; EMA(5)/EMA(20) with positive one-bar momentum is a current-timeframe proxy. Point stops, targets, trailing, and the martingale/order controls are omitted."
+    },
+    {
+      "id": 2482,
+      "name": "JK BullP AutoTrader",
+      "family": "volatility",
+      "entry_long": "crossabove(rsi(close,13),30)",
+      "exit_long": "crossbelow(rsi(close,13),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power is unavailable, so an RSI(13) recross from oversold represents the documented buy reversal and the neutral cross exits. Point-based stop, target, trailing, and the separate sell branch are unsupported."
+    },
+    {
+      "id": 1677,
+      "name": "Averaged Stoch & WPR",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,26) < 30 and roc(rsi(close,26),1) > 0",
+      "exit_long": "rsi(close,26) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic and Williams %R are unavailable; oversold RSI(26) with a rising one-bar RSI ROC is the long reversal proxy, and RSI overbought exits. The optional percentage stop has no numeric value, and the short side is omitted."
+    }
+  ]
+}

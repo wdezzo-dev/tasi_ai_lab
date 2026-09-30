@@ -1,0 +1,98 @@
+{
+ "batch_336": {
+  "strategy_ids": [
+   3942,
+   3050,
+   889,
+   3173,
+   3359,
+   3753,
+   3690,
+   1104,
+   530,
+   1909
+  ],
+  "docs": {
+   "3942": {
+    "id": 3942,
+    "name": "Full Damp",
+    "family": "trend",
+    "overview": "The Full Damp strategy is a trend-reversal system built around a triple set of Bollinger Bands combined with a Relative Strength Index (RSI) confirmation filter. The strategy waits for price spikes beyond the widest Bollinger band to detect potential exhaustion. A recent oversold or overbought RSI reading validates the signal before the trade is triggered when price returns inside the medium-width band. Once positioned, exits are managed with partial profit taking, dynamic stop adjustments and Bollinger-based trailing rules.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle data source used for analysis and execution. | Hourly candles |\n| `BollingerPeriod1` | Period of the narrow Bollinger Bands (width = 1). | 20 |\n| `BollingerPeriod2` | Period of the medium Bollinger Bands (width = 2). | 20 |\n| `BollingerPeriod3` | Period of the wide Bollinger Bands (width = 3). | 20 |\n| `RsiPeriod` | RSI period used for signal confirmation. | 14 |\n| `LookbackBars` | Number of completed candles within which the RSI must hit the extreme levels. | 6 |\n| `StopOffsetPoints` | Additional buffer (in price points) added to the initial stop-loss level. | 10 |\n| `Volume` | Order volume inherited from the base strategy. | 1 |"
+   },
+   "3050": {
+    "id": 3050,
+    "name": "Engulfing Momentum",
+    "family": "trend",
+    "overview": "This strategy ports the **ENGULFING** MetaTrader expert advisor to the StockSharp high-level API. It combines a bullish/bearish engulfing pattern on the working timeframe with higher-timeframe momentum confirmation and a monthly MACD trend filter. Risk management reproduces the original break-even and trailing behaviour using stop distances measured in instrument steps.\n\n## How it Works\n\n1. **Candlestick Pattern** – the latest finished candle must engulf the previous bar in the direction of the trade. The strategy also checks that the bar two periods ago overlaps the prior bar, mirroring the original fractal-based confirmation.\n2. **Trend Filter** – fast and slow *weighted* moving averages (LWMA analogue) gate entries. Long trades require the fast average to trade above the slow average and vice versa for shorts.\n3. **Momentum Filter** – a 14-period momentum indicator calculated on a higher timeframe must deviate from the neutral level (100) by at least the configured threshold on any of the last three values. This reproduces the `MomLevelB/MomLevelS` checks from the MQL code.\n4. **MACD Filter** – a monthly (30-day) MACD series must show the main line above the signal line for longs and below for shorts, just like the `MacdMAIN0` vs `MacdSIGNAL0` comparison in the EA.\n5. **Order Handling** – the strategy always flips the position when an opposite signal appears. Protective logic closes trades whenever stop, target, break-even or trailing rules fire.\n\n## Risk Management\n\n- **Stop Loss / Take Profit** – distances are configured in instrument steps (ticks). They mirror the `Stop_Loss` and `Take_Profit` inputs of the original EA.\n- **Trailing Stop** – optional trailing measured in steps. The stop follows the best price achieved after entry.\n- **Break-Even Move** – once price advances by `BreakEvenTriggerSteps`, the stop is moved to the entry plus `BreakEvenOffsetSteps`, reproducing the \"no loss\" feature (`USEMOVETOBREAKEVEN`).\n\nMoney-based targets from the MQL script (`",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `FastMaPeriod` / `SlowMaPeriod` | Lengths of the weighted moving averages used for trend confirmation. |\n| `MomentumPeriod` | Momentum length on the higher timeframe. |\n| `MomentumBuyThreshold` / `MomentumSellThreshold` | Minimum absolute deviation from 100 required for the momentum filter. |\n| `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` | MACD configuration applied to `MacdCandleType`. |\n| `StopLossSteps`, `TakeProfitSteps` | Protective stop and target distances in price steps. Set to zero to disable. |\n| `TrailingStopSteps` | Optional trailing stop distance (0 disables trailing). |\n| `BreakEvenTriggerSteps`, `BreakEvenOffsetSteps` | Distance required before moving the stop to break-even and the offset applied. |\n| `CandleType` | Primary timeframe where engulfing patterns are evaluated. |\n| `HigherCandleType` | Higher timeframe used for the momentum filter (defaults to 1 hour). |\n| `MacdCandleType` | Timeframe for the MACD trend filter (defaults to 30 days ≈ monthly). |"
+   },
+   "889": {
+    "id": 889,
+    "name": "Honest Volatility Grid",
+    "family": "trend",
+    "overview": "Strategy based on multiple Keltner Channel levels to build a volatility grid. It scales into long and short positions across predefined bands and exits via opposite levels or a raw stop.\n\n## Details\n\n- **Entry Criteria**: Price reaches configured Keltner channel levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite channel or raw stop.\n- **Stops**: Optional raw stop.\n- **Default Values**:\n  - `EmaPeriod` = 200\n  - `Multiplier` = 1.0\n  - `LEntry1Level` = -2\n  - `SEntry1Level` = 2\n  - `RawStopLevel` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price reaches configured Keltner channel levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite channel or raw stop.\n- **Stops**: Optional raw stop.\n- **Default Values**:\n  - `EmaPeriod` = 200\n  - `Multiplier` = 1.0\n  - `LEntry1Level` = -2\n  - `SEntry1Level` = 2\n  - `RawStopLevel` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3173": {
+    "id": 3173,
+    "name": "Spreader",
+    "family": "trend",
+    "overview": "The **Spreader Strategy** is a pair-trading approach inspired by the original MetaTrader expert advisor \"Spreader\". The strategy\nmonitors two positively correlated instruments and seeks to profit from short-term divergences while maintaining a market-neutral\nprofile. Once the combined position reaches the desired money target the strategy closes both legs and waits for the next setup.\n\nThe algorithm is designed for one-minute candles by default, mirroring the behaviour of the original EA, but the timeframe can be\nadjusted when the strategy is loaded into Designer, Shell, or the API runner.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `SecondSecurity` | Instrument that forms the hedge leg of the spread. This parameter is required. |\n| `PrimaryVolume` | Base order volume for the primary instrument. The secondary volume is scaled using the swing ratio. |\n| `TargetProfit` | Absolute profit, expressed in the account currency, after which both legs are closed. |\n| `ShiftLength` | Number of bars used when comparing recent swings. The strategy uses `2 * ShiftLength + 1` candles from each instrument. |\n| `CandleType` | Candle series used for analysis. Defaults to 1-minute time frame. |"
+   },
+   "3359": {
+    "id": 3359,
+    "name": "VR Smart Grid Lite Averaging",
+    "family": "trend",
+    "overview": "The VR Smart Grid Lite Averaging strategy is a grid averaging system that follows the original MetaTrader 5 expert advisor. The algorithm opens market orders in the direction of the most recent bullish or bearish candle and builds a martingale-style ladder whenever price moves against the position. Distances, volumes and exit logic can be tuned to match the original MQL implementation.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `Take Profit (pips)` | Target distance for single open positions. |\n| `Start Volume` | Volume for the initial order in each direction. |\n| `Max Volume` | Maximum allowed volume per order (0 disables the limit). |\n| `Close Mode` | Choose between averaging exits or partial closes. |\n| `Order Step (pips)` | Minimum adverse movement before adding a new order. |\n| `Minimal Profit (pips)` | Extra profit buffer added to the averaging exit. |\n| `Candle Type` | Candle series used for signal generation. |"
+   },
+   "3753": {
+    "id": 3753,
+    "name": "Dealers Trade MACD MQL4",
+    "family": "trend",
+    "overview": "The Dealers Trade MACD MQL4 strategy is a direct conversion of the \"Dealers Trade v7.74\" expert advisor for MetaTrader 4. It keeps the pyramiding money management and the MACD slope logic of the original system while adapting position handling to StockSharp's netted accounts. The strategy is designed for swing trading on H4/D1 charts and continuously adds to the trend as long as momentum remains aligned with the MACD main line.\n\n## How the strategy works\n\n- **Signal detection** – the strategy subscribes to candles of the configured timeframe and calculates a classic MACD indicator (fast EMA, slow EMA and signal EMA). A rising MACD main value compared to the previous bar signals bullish momentum, while a falling value signals bearish momentum. The `ReverseCondition` parameter can be used to flip the direction when a contrarian approach is preferred.\n- **Order spacing and scaling** – only one directional basket is active at a time. When the MACD indicates a long trend, the strategy opens an initial market buy order. Additional buys are sent only when the price has moved down by at least `SpacingPips * PriceStep` from the last entry price, mirroring the \"averaging\" behaviour from the MQL script. Short baskets behave symmetrically when the MACD slope turns negative.\n- **Lot sizing** – the base lot size is either the fixed `FixedVolume` or, if `UseRiskSizing` is enabled, a value derived from the portfolio equity and `RiskPercent`. Mini accounts are supported through the `IsStandardAccount` flag that emulates the original \"Account is normal\" option. Every extra order within the same basket is multiplied by `LotMultiplier` and capped by `MaxVolume`.\n- **Risk controls** – hard stop loss and take profit levels are attached to each position using the `StopLossPips` and `TakeProfitPips` distances. Once a trade has moved by `TrailingStopPips + SpacingPips` in profit the stop level is tightened to keep at least `TrailingStopPips` of profit, reproducing the trailing rule from the",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | H4 | Timeframe used for MACD calculations and signal evaluation. |\n| `FixedVolume` | 0.1 | Base lot size when `UseRiskSizing` is disabled. |\n| `UseRiskSizing` | true | Enables balance based position sizing. |\n| `RiskPercent` | 2 | Percentage of equity used to size positions when `UseRiskSizing` is true. |\n| `IsStandardAccount` | true | Set to false for mini accounts (lots divided by 10). |\n| `MaxVolume` | 5 | Maximum volume allowed for a single order. |\n| `LotMultiplier` | 1.5 | Multiplier applied to the base lot for each additional entry in the basket. |\n| `MaxTrades` | 5 | Maximum number of simultaneously open trades. |\n| `SpacingPips` | 4 | Minimum pip distance between consecutive entries. |\n| `OrdersToProtect` | 3 | Number of orders kept before the protection block can open new trades. |\n| `AccountProtection` | true | Enables the secure profit protection logic. |\n| `SecureProfit` | 50 | Unrealised profit (in account currency) required to trigger protection. |\n| `TakeProfitPips` | 30 | Take profit distance per trade, expressed in pips. |\n| `StopLossPips` | 90 | Stop loss distance per trade, expressed in pips. |\n| `TrailingStopPips` | 15 | Trailing stop distance applied after activation. |\n| `ReverseCondition` | false | Inverts the MACD slope interpretation. |\n| `MacdFast` | 14 | Fast EMA length for the MACD indicator. |\n| `MacdSlow` | 26 | Slow EMA length for the MACD indicator. |\n| `MacdSignal` | 1 | Signal EMA length for the MACD indicator. |"
+   },
+   "3690": {
+    "id": 3690,
+    "name": "Close Agent",
+    "family": "trend",
+    "overview": "Close Agent Strategy is a risk-management assistant that mirrors the MQL CloseAgent expert advisor. The strategy does not open new trades. Instead, it monitors existing positions and closes them when price stretches beyond the Bollinger Bands while the Relative Strength Index (RSI) reaches extreme zones. The tool can watch for positions created manually or by other automated strategies and optionally liquidate everything once a global profit target is achieved.",
+    "details": "",
+    "parameters": "- **Close Mode (`CloseMode`):** selects which positions are eligible for closing.\n  - `Manual` – only positions without this strategy identifier (manual trades or other bots).\n  - `Auto` – only positions opened by this strategy instance.\n  - `Both` – monitor every position on the strategy symbol.\n- **Candle Type (`CandleType`):** timeframe used to calculate Bollinger Bands and RSI.\n- **Operation Mode (`OperationMode`):**\n  - `LiveBar` – use the latest forming candle; reacts faster but may use unfinished data.\n  - `NewBar` – waits for a candle to close before generating a signal (safer but slower).\n- **Close All Target (`CloseAllTarget`):** if the floating profit (`PnL`) reaches this absolute value, every monitored position is closed immediately.\n- **Enable Alerts (`EnableAlerts`):** when true, logs a message every time an exit is triggered, including the realized profit estimate."
+   },
+   "1104": {
+    "id": 1104,
+    "name": "Multi-Timeframe Trend Following with 200 EMA Filter - Longs Only",
+    "family": "trend",
+    "overview": "The strategy goes long when the fast EMA is above the slow EMA on 5, 15 and 30 minute charts and the price is above the 200 EMA on the 5 minute chart. The position is closed if any timeframe turns bearish or the price drops below the 200 EMA.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA > Slow EMA on 5, 15 and 30 minute timeframes and close > 200 EMA (5m).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Any timeframe trend turns negative or close < 200 EMA (5m).\n- **Stops**:\n  - Stop Loss: percentage.\n  - Take Profit: percentage.\n- **Default Values**:\n  - `Fast EMA Length` = 9\n  - `Slow EMA Length` = 21\n  - `200 EMA Length` = 200\n  - `Stop Loss %` = 1\n  - `Take Profit %` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 5m base with 15m and 30m confirmation\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA > Slow EMA on 5, 15 and 30 minute timeframes and close > 200 EMA (5m).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Any timeframe trend turns negative or close < 200 EMA (5m).\n- **Stops**:\n  - Stop Loss: percentage.\n  - Take Profit: percentage.\n- **Default Values**:\n  - `Fast EMA Length` = 9\n  - `Slow EMA Length` = 21\n  - `200 EMA Length` = 200\n  - `Stop Loss %` = 1\n  - `Take Profit %` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 5m base with 15m and 30m confirmation\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "530": {
+    "id": 530,
+    "name": "ATR Based Trendlines",
+    "family": "trend",
+    "overview": "Strategy that builds ATR based trendlines from pivot points and trades their breakouts.\n\n## Details\n\n- **Entry Criteria**: Breakout of ATR-based trendlines.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `LookbackLength` = 30\n  - `AtrPercent` = 1.0\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Breakout of ATR-based trendlines.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `LookbackLength` = 30\n  - `AtrPercent` = 1.0\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1909": {
+    "id": 1909,
+    "name": "SmartAssTrade V2",
+    "family": "trend",
+    "overview": "SmartAssTrade V2 Strategy uses MACD histogram and 20-period moving averages across multiple timeframes (1m, 5m, 15m, 30m, 60m) combined with Williams %R and RSI filters to capture trend momentum. Optional trailing stop protects profits.\n\n## Details\n\n- **Entry Criteria**: majority of timeframes show rising MACD histogram and MA with supporting WPR/RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: price reaches take profit or stop loss; optional trailing stop\n- **Stops**: Absolute stop loss and take profit with optional trailing\n- **Default Values**:\n  - `Volume` = 1\n  - `TakeProfit` = 35\n  - `StopLoss` = 62\n  - `UseTrailingStop` = false\n  - `TrailingStop` = 30\n  - `TrailingStopStep` = 1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, SMA, Williams %R, RSI\n  - Stops: Optional\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe (1m,5m,15m,30m,60m)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: majority of timeframes show rising MACD histogram and MA with supporting WPR/RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: price reaches take profit or stop loss; optional trailing stop\n- **Stops**: Absolute stop loss and take profit with optional trailing\n- **Default Values**:\n  - `Volume` = 1\n  - `TakeProfit` = 35\n  - `StopLoss` = 62\n  - `UseTrailingStop` = false\n  - `TrailingStop` = 30\n  - `TrailingStopStep` = 1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, SMA, Williams %R, RSI\n  - Stops: Optional\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe (1m,5m,15m,30m,60m)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

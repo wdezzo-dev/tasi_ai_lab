@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 594,
+      "name": "Bollinger Bands SMA 20-2",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_lower(close,20,2))",
+      "exit_long": "crossbelow(close,bb_upper(close,20,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented lower-band upside cross enters; the opposite upper-band cross exits. The 20-period, 2-standard-deviation bands are exact and no stop is specified."
+    },
+    {
+      "id": 848,
+      "name": "Gold Pullback",
+      "family": "trend",
+      "entry_long": "ema(close,14) > ema(close,60) and low <= ema(close,21) and ema(close,21) <= high and macd(close,12,26) > macd_signal(close,12,26,9) and roc(close,21) > 0 and rsi(close,14) > 50",
+      "exit_long": "ema(close,14) < ema(close,60) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA pullback, EMA trend, MACD direction, and RSI confirmation are retained; MACD uses 12/26/9 because its periods are undocumented. Positive 21-bar ROC approximates the unsupported bullish TDI filter. Candle-relative symmetric SL/TP cannot be expressed, so trend and MACD reversals exit."
+    },
+    {
+      "id": 2034,
+      "name": "EMA Prediction",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,1),ema(close,2)) and close > open",
+      "exit_long": "crossbelow(ema(close,1),ema(close,2)) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 1/2 EMA prediction crossover is combined with the documented bullish/bearish candle confirmation, and the bearish reversal exits. Tick-based 1000/2000 SL/TP are not percentage exits."
+    },
+    {
+      "id": 2165,
+      "name": "S7 Up Bot",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,2) + 0.01 * close and low > donchian_low_prev(low,2) - 0.01 * close and close > low",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long side requires near-equal current/prior lows followed by a positive span from the low. Prior-low access uses a 2-bar prior Donchian, a normalized 1% difference proxies the undocumented HL Divergence, and positive close-minus-low retains the Span Price sign; the documented minimum span distance is unavailable. A cross below the prior low proxies Exit At Extremum; absolute TP/SL/trailing values are unspecified."
+    },
+    {
+      "id": 2200,
+      "name": "MFI Histogram",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),60)",
+      "exit_long": "crossbelow(rsi(close,14),40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MFI is unsupported, so RSI(14) is the price-only proxy for crosses above 60 and below 40; the volume component is not reproduced. Opposite crossing exits. Documented 1000/2000 tick SL/TP are not percentage exits."
+    },
+    {
+      "id": 2326,
+      "name": "SpectrAnalysis WPR",
+      "family": "momentum",
+      "entry_long": "roc(rsi(close,13),1) > 0",
+      "exit_long": "roc(rsi(close,13),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R and spectral analysis are unavailable; a rising or falling RSI(13) turn is the closest bounded-oscillator proxy. The documented upward and downward turns enter and exit, respectively."
+    },
+    {
+      "id": 2793,
+      "name": "Trend RDS",
+      "family": "trend",
+      "entry_long": "low > donchian_high_prev(low,2) and high >= donchian_low_prev(high,2)",
+      "exit_long": "high < donchian_low_prev(high,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior-two-bar Donchian extremes approximate three higher lows, while the negated lower-high condition enforces the dual-pattern block. The mirrored lower-high structure exits. The 09:00-12:00 gate, pip stops, trailing logic, and risk sizing are unsupported."
+    },
+    {
+      "id": 3149,
+      "name": "Gap DM",
+      "family": "volatility",
+      "entry_long": "open < donchian_high_prev(close,1)",
+      "exit_long": "close >= donchian_high_prev(close,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On daily bars, the prior bar's close is the previous-session proxy; a gap-down open enters contrarian long and filling back above it exits. The 1-pip minimum, exact session boundary, position cap, and disabled pip SL/TP are not representable."
+    },
+    {
+      "id": 3828,
+      "name": "Doji Trader",
+      "family": "breakout",
+      "entry_long": "close - open <= 0.1 * atr(high,low,close,14) and open - close <= 0.1 * atr(high,low,close,14) and close > donchian_high_prev(high,2) and close > open",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A body within 0.1 ATR(14) approximates a doji, and a close above the prior two-bar high approximates the delayed range breakout. Stateful doji-range arming, the three-bar search, session clock, and step-based SL/TP are unsupported; a cross below the recent low proxies range failure."
+    },
+    {
+      "id": 3893,
+      "name": "DoubleUp2 Martingale",
+      "family": "trend",
+      "entry_long": "zscore(close,8) > 2.3 and macd(close,13,33) > macd_signal(close,13,33,2)",
+      "exit_long": "roc(close,1) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(13,33,2) is exact; a close z-score above 2.3 approximates CCI(8) exceeding +230. Positive one-bar ROC proxies favorable movement toward the fixed 120-point partial-profit exit. CCI itself, exact point distance, and martingale/equity sizing are unsupported."
+    }
+  ]
+}

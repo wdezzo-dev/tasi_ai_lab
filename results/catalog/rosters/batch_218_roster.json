@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2063,
+      "name": "Ichimoku Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(ema((close - (donchian_high(high,52) + donchian_low(low,52)) / 2) - ((donchian_high(high,9) + donchian_low(low,9)) / 2 - (donchian_high(high,26) + donchian_low(low,26)) / 2),10),ema((close - (donchian_high(high,52) + donchian_low(low,52)) / 2) - ((donchian_high(high,9) + donchian_low(low,9)) / 2 - (donchian_high(high,26) + donchian_low(low,26)) / 2),10))",
+      "exit_long": "crossbelow(ema((close - (donchian_high(high,52) + donchian_low(low,52)) / 2) - ((donchian_high(high,9) + donchian_low(low,9)) / 2 - (donchian_high(high,26) + donchian_low(low,26)) / 2),10),ema((close - (donchian_high(high,52) + donchian_low(low,52)) / 2) - ((donchian_high(high,9) + donchian_low(low,9)) / 2 - (donchian_high(high,26) + donchian_low(low,26)) / 2),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tenkan/Kijun/Senkou Span B are built from Donchian midpoints at the standard 9/26/52 periods and the oscillator is smoothed with EMA(10) in place of the Jurik MA; crossing the oscillator's own previous value is expressed as crossabove(x,x). The lagging line, the forward plot shift and the percent stop/target parameters (no values documented) are dropped."
+    },
+    {
+      "id": 736,
+      "name": "EMA Cross MACD Session Start",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and macd(close,12,26) > 0",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or macd(close,12,26) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast/slow EMA cross with a positive MACD histogram translates directly, using EMA(9)/EMA(21) and MACD(12,26) as stated defaults since no periods are documented. The session-start immediate entry and session-end flattening need a clock, which the DSL lacks."
+    },
+    {
+      "id": 313,
+      "name": "VWAP ADX Trend Strength",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and crossabove(close,ema(close,20))",
+      "exit_long": "adx(high,low,close,14) < 20 or crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Session VWAP cannot be computed in the DSL, so the trend-change component uses a close crossing EMA(20) (stated default) while the documented AdxPeriod = 14 and AdxThreshold = 25 gate it, with a 20 exit level added by symmetry. ATR-multiple stops and the 5-minute candle type are unsupported."
+    },
+    {
+      "id": 1252,
+      "name": "Reverse Keltner Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20) - 2 * atr(high,low,close,10)) and adx(high,low,close,14) < 25",
+      "exit_long": "close >= ema(close,20) + 2 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Keltner channel is EMA(20) +/- 2x ATR(10) with the documented multipliers, the long entry is the re-entry cross back through the lower band, and WeakTrendOnly with AdxThreshold 25 becomes ADX(14) < 25. The half-channel-width stop is a dynamic ATR distance, not a percentage, so SL/TP stay null."
+    },
+    {
+      "id": 1237,
+      "name": "Relative Currency Strength",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal compares the traded pair's session return with the average of a basket of major currencies (threshold 0.01), which is inherently cross-sectional across instruments. A single OHLCV series cannot supply the basket, so the never-true guard is used."
+    },
+    {
+      "id": 883,
+      "name": "Highs Lows",
+      "family": "other",
+      "entry_long": "(high + low) / 2 < (donchian_high(high,100) + donchian_low(low,100)) / 2 and ((high + low) / 2 - donchian_low(low,100)) / (donchian_high(high,100) - donchian_low(low,100) + 0.0001) * 100 < 15",
+      "exit_long": "(high + low) / 2 > (donchian_high(high,100) + donchian_low(low,100)) / 2 and ((high + low) / 2 - donchian_low(low,100)) / (donchian_high(high,100) - donchian_low(low,100) + 0.0001) * 100 > 85",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Range = 100 window supplies the highest and lowest values, the midpoint versus their average gives the side, and the normalized distance is compared with LowThreshold 15 and HighThreshold 85; the denominator is nudged to avoid a zero range. No stops are documented and the 240-minute candle type is not encoded."
+    },
+    {
+      "id": 2851,
+      "name": "Expotest",
+      "family": "other",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not in the DSL, so its long/short flip is approximated by a close beyond the prior 5-bar extreme (a stated default, the docs give no period), exiting on the mirrored break. The martingale-inspired sizing and the predefined stop/target have no documented values and are dropped."
+    },
+    {
+      "id": 1564,
+      "name": "XAUUSD Simple 20 Profit 100 Loss",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry depends only on position state and cooldown timers (15 minutes after a win, 12 hours after a loss) with USD PnL exits of 20/100, so no market-derived long condition exists. The never-true guard is used instead of inventing one."
+    },
+    {
+      "id": 569,
+      "name": "Big Runner",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,5)) and crossabove(sma(close,5),sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,5)) and crossbelow(sma(close,5),sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "The documented close-over-fast-SMA and fast-over-slow-SMA double cross uses FastLength 5 and SlowLength 20, and the long protection is applied verbatim as StopLossLongPercent 2 and TakeProfitLongPercent 4. Portfolio-percent sizing, leverage and the short-side 7%/2% values are outside the engine."
+    },
+    {
+      "id": 1137,
+      "name": "Optimized Grid with KNN",
+      "family": "other",
+      "entry_long": "ema(ema(ema(close,5),5),5) > ema(ema(ema(close,20),5),5) and roc(close,10) > 0",
+      "exit_long": "ema(ema(ema(close,5),5),5) < ema(ema(ema(close,20),5),5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "T3 is approximated by a triple-smoothed EMA with 5 and 20 as stated fast/slow defaults and the KNN average price change by a positive 10-bar ROC. The exit condition needs the stored lastEntryPrice, which the DSL cannot reference, and the grid sizing is not expressible."
+    }
+  ]
+}

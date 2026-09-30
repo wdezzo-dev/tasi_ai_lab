@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 241,
+      "name": "ADX Mean Reversion",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) < sma(adx(high,low,close,14),20) - 2 * std(adx(high,low,close,14),20) and close < sma(close,20)",
+      "exit_long": "adx(high,low,close,14) > sma(adx(high,low,close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX(14) is compared with its SMA(20) and two-standard-deviation band exactly as documented, and close versus SMA(20) is the price filter. The source mentions a percent stop but supplies no numeric value; SMA length 20 is a fallback."
+    },
+    {
+      "id": 2537,
+      "name": "Fuzzy Logic",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,14) / 100,0.25)",
+      "exit_long": "crossabove(rsi(close,14) / 100,0.5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Normalized RSI(14) supplies a 0-to-1 decision-score proxy and retains the documented 0.25 long threshold, exiting after recovery to 0.5. Williams, DeMarker, fuzzy memberships, and 60/20-point protection are unavailable."
+    },
+    {
+      "id": 45,
+      "name": "Choppiness Index Breakout",
+      "family": "trend",
+      "entry_long": "atr(high,low,close,14) / close < 0.382 and close > sma(close,20)",
+      "exit_long": "atr(high,low,close,14) / close > 0.618 or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR(14) as a fraction of close approximates low and high choppiness, translating the 38.2/61.8 thresholds to 0.382/0.618; SMA(20) retains the trend direction. The exact Choppiness formula and unspecified stop are unavailable."
+    },
+    {
+      "id": 1471,
+      "name": "Trend Type Indicator",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and adx(high,low,close,14) > 25 and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "close < sma(close,20) or adx(high,low,close,14) < 25",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price direction, ADX(14)>25, and ATR(14) above its 20-bar mean approximate a non-sideways bullish regime. +DI/-DI and the custom smoothed regime type are unavailable; no stops are documented."
+    },
+    {
+      "id": 2222,
+      "name": "Heiken Ashi Smoothed Trend",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(open,10))",
+      "exit_long": "crossbelow(ema(close,10),ema(open,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Crosses between EMA-smoothed close and open preserve the documented bullish/bearish color changes. Heiken-Ashi recursive construction is unavailable and EMA length 10 is a fallback because no value is supplied."
+    },
+    {
+      "id": 3491,
+      "name": "Time Bomb",
+      "family": "breakout",
+      "entry_long": "roc(close,1) > 1",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A one-bar rise above 1% is a price-normalized proxy for the five-pip move inside ten seconds because ticks and clocks are unavailable. The 20-pip stop and target are not percentage fields."
+    },
+    {
+      "id": 3670,
+      "name": "Prop Firm Helper",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-period prior Donchian breakout enters and the opposite band represents the trailing exit. Channel periods, shifts, ATR stop movement, risk sizing, equity pass, and daily-loss rules are unavailable or unspecified."
+    },
+    {
+      "id": 4121,
+      "name": "ComFracti Fractal RSI",
+      "family": "momentum",
+      "entry_long": "close > donchian_low_prev(low,5) and rsi(close,3) < 47",
+      "exit_long": "close < donchian_low_prev(low,5) or rsi(close,3) > 53",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break above the prior five-bar low approximates a bullish fractal, and RSI(3) below 50-3 retains the daily RSI filter. Fractal shifts, multiple timeframes, expiry, and 2500/700-pip protection are not representable."
+    },
+    {
+      "id": 3990,
+      "name": "Risk Monitor",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source intentionally never opens trades, so impossible price guards prevent a fabricated strategy entry. Account sizing, exposure, and realized/floating profit diagnostics are outside the DSL."
+    },
+    {
+      "id": 1736,
+      "name": "RGT EA RSI",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and close < bb_lower(close,20,2)",
+      "exit_long": "close >= bb_mid(close,20) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<30 and a 20/2 lower-band close retain the documented long extreme, with middle-band recovery as exit. All thresholds, price-unit stops, and trailing parameters are absent and use explicit fallbacks."
+    }
+  ]
+}

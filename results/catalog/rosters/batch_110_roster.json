@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 734,
+      "name": "EMA 5 Alert Candle Short",
+      "family": "trend",
+      "entry_long": "low < ema(close,5) and sma(high - ema(close,5),3) <= 0 and close > donchian_high_prev(high,1)",
+      "exit_long": "close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented short is mirrored for a long-only engine: a three-bar EMA(5) touch streak (average of high minus EmaPeriod 5 at or below zero) plus an alert candle below the EMA, then a close above the prior candle high; losing the EMA exits. The stop at the alert-candle high and the equal-distance take-profit are price-relative, and RiskPerTrade 2m is a sizing input, so no percentages are set."
+    },
+    {
+      "id": 2433,
+      "name": "Ichimoku Chinkou Cross",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,9)) and close > sma(close,52) + 2 * std(close,52) and rsi(close,14) > 70",
+      "exit_long": "crossbelow(close,sma(close,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Chinkou is a shifted close and the Kumo cloud is not computable, so the documented TenkanPeriod 9 is approximated by SMA(9) and the cloud by SMA(SenkouSpanPeriod 52) plus two standard deviations; the documented RsiPeriod 14 with RsiBuyLevel 70 is kept as written. The documented 2% StopLoss is applied."
+    },
+    {
+      "id": 3364,
+      "name": "Testinator",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and roc(close,10) > 0 and rsi(close,14) > 50",
+      "exit_long": "close < ema(close,20) or rsi(close,14) < 40",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry and exit filter bit masks are reduced to their documented components (RsiEntryLevel/RsiEntryPeriod, a Bollinger close filter and a trend/momentum bias) with 20/50 EMAs, ROC(10) and RSI(14) as fallbacks since no levels or periods are documented. The basket MaxBuys, StepPips ladder, fixed-versus-ATR protection ratios, trading window and daily ATR subscription are not expressible."
+    },
+    {
+      "id": 1165,
+      "name": "Pin Bar Reversal",
+      "family": "trend",
+      "entry_long": "close > sma(close,50) and close > open and (close - open) <= 0.3 * (high - low) and (close - low) >= 0.66 * (high - low) and atr(high,low,close,14) > 0.0015 * close",
+      "exit_long": "close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented thresholds are used: TrendLength 50 filter, MaxBodyPct 0.30, MinWickPct 0.66 and the MinAtr 0.0015 volatility gate, with ratios written as multiples of the bar range to avoid dividing by a possibly zero range. StopMultiplier 1 and TakeMultiplier 1.5 are ATR distances, not percent stops, so the exit falls back to a loss of the trend average."
+    },
+    {
+      "id": 1132,
+      "name": "Octopus Nest",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2) and ema(close,20) > ema(close,50) and close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The squeeze release is taken as a close above the Bollinger upper band with the documented EMA trend filter and price above the EMA; the Keltner/BB squeeze comparison needs a max() the DSL lacks and Parabolic SAR is unavailable, so both legs are dropped. Stops at recent extremes and the risk-reward target are not expressible."
+    },
+    {
+      "id": 914,
+      "name": "ICT Master Suite Trading IQ",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The session high/low break is rendered as a 20-bar range high break (no session length is documented) and the ATR(14) x 1.5 trailing stop becomes an EMA(10) exit proxy. The session-boundary computation, AllowLong/AllowShort switches and the intraday timeframe are dropped."
+    },
+    {
+      "id": 2611,
+      "name": "RSI Bollinger Fractal Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and rsi(close,8) > 30 and bb_upper(rsi(close,8),14,1.0) < 70",
+      "exit_long": "close < bb_mid(rsi(close,8),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stop-order break beyond a recent fractal level becomes a 10-bar range-high break that survives only while the documented RsiLower 30 and RsiUpper 70 cancel levels are not hit, with the RSI Bollinger bands kept at BandsPeriod 14 and BandsDeviation 1.0. IndentPips 15 offsets, the Parabolic SAR trailing (SarStep, SarMax, SarTrailingPips) and the 50/135-pip brackets are not expressible."
+    },
+    {
+      "id": 2440,
+      "name": "VR Steals 2",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy buys once at start with no indicator-based trigger and then only manages the position with the documented 50-step take-profit, 50-step stop and 20/9-step breakeven move, so no market-derived entry exists and the never-true guard is used. Price-step management is outside the DSL."
+    },
+    {
+      "id": 2675,
+      "name": "Open Time",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are gated purely by the 18:50 clock window (buy disabled, sell enabled by default) and exits by the 20:50 close window, so this is a schedule-driven EA with no market-derived signal and the never-true guard is used. The 300-second duration, 30/3-pip trailing and pip brackets are not DSL rules."
+    },
+    {
+      "id": 299,
+      "name": "Beta Adjusted Pairs Trading",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close,20),-2)",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The second asset, its portfolio and the BetaAsset1/BetaAsset2 hedge legs are not expressible, so the hedged spread collapses into a z-score of the traded price over the documented LookbackPeriod 20 and the documented EntryThreshold 2.0 long recross, exiting on reversion to the average. The documented StopLoss 2.0 is applied and the beta/variance condition is dropped."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_068": {
+  "strategy_ids": [
+   1093,
+   3506,
+   3805,
+   356,
+   1094,
+   601,
+   3236,
+   1245,
+   3442,
+   3724
+  ],
+  "docs": {
+   "1093": {
+    "id": 1093,
+    "name": "Multi-Factor",
+    "family": "trend",
+    "overview": "Multi-Factor Strategy combines MACD, RSI, and two moving averages to trade with trend confirmation. Long trades occur when MACD line is above its signal, RSI is below 70, price above the 50-period SMA, and the 50 SMA is above the 200 SMA. Short trades use opposite conditions.\n\nStops and targets are based on ATR multiples.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `MACD > Signal` && `RSI < 70` && `Close > SMA50` && `SMA50 > SMA200`.\n  - **Short**: `MACD < Signal` && `RSI > 30` && `Close < SMA50` && `SMA50 < SMA200`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop loss and take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `RsiLength` = 14\n  - `AtrLength` = 14\n  - `StopAtrMultiplier` = 2\n  - `ProfitAtrMultiplier` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, RSI, SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `MACD > Signal` && `RSI < 70` && `Close > SMA50` && `SMA50 > SMA200`.\n  - **Short**: `MACD < Signal` && `RSI > 30` && `Close < SMA50` && `SMA50 < SMA200`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop loss and take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `RsiLength` = 14\n  - `AtrLength` = 14\n  - `StopAtrMultiplier` = 2\n  - `ProfitAtrMultiplier` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, RSI, SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3506": {
+    "id": 3506,
+    "name": "Sample Check Pending Order",
+    "family": "trend",
+    "overview": "The Sample Check Pending Order strategy continuously ensures that exactly one buy-stop and one sell-stop order are resting in the book. The original MetaTrader 5 expert by Tungman verifies that the broker accepts the requested lot size, confirms there is sufficient free margin for both directions, and then submits new pending orders right on top of the current bid/ask with a one-day expiration. This conversion reproduces the same workflow using StockSharp's high-level order management API and Level 1 quotes.\n\n## Trading Logic\n\n1. **Market data processing**\n   - The strategy subscribes to Level 1 updates and caches the latest best bid and best ask prices.\n   - Trading logic is suspended until both sides of the book are known and `IsFormedAndOnlineAndAllowTrading()` confirms the environment is ready (strategy is running, the portfolio is connected, etc.).\n2. **Volume validation**\n   - Each incoming tick triggers a validation of the configured `OrderVolume` against `Security.MinVolume`, `Security.MaxVolume`, and `Security.VolumeStep`.\n   - The check mirrors the MT5 helper: volume must lie within the allowed range and be an exact multiple of the step. Violations produce an informational log entry and block any new orders.\n3. **Margin pre-check**\n   - Before submitting anything, the strategy estimates the margin required to place a long or short position of the configured size. It uses the latest bid/ask, the instrument multiplier, and the user-provided `AccountLeverage` to compute the requirement.\n   - If the current or initial portfolio value is insufficient for either direction, the algorithm aborts for that tick, closely mimicking the `CheckMoneyForTrade` safeguards.\n4. **Pending order placement**\n   - When no active buy-stop order exists, a new one is registered at the current ask (rounded to the nearest tick). The same rule applies to the sell-stop at the current bid. Both orders reuse the same volume validation result.\n   - Expiration is enforced manually: each or",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Lot size sent with each stop order. Must respect the broker limits and volume step. |\n| `StopLossPoints` | Distance in points converted to price units for the protective stop once a trade is opened. |\n| `TakeProfitPoints` | Distance in points used for the profit target created after a fill. |\n| `ExpirationMinutes` | Lifetime of each pending order. When the period expires the order is cancelled and recreated on the next tick. |\n| `AccountLeverage` | Estimated account leverage used to approximate margin requirements before each submission. |\n\nAll distances are transformed into actual price offsets using `Security.PriceStep`. If the instrument does not expose a valid price step or multiplier, the strategy falls back to a value of `1` to keep calculations defined. Logging messages document any abnormal configuration so operators can adjust parameters quickly."
+   },
+   "3805": {
+    "id": 3805,
+    "name": "Triple SMA Crossover",
+    "family": "trend",
+    "overview": "The Triple SMA Crossover strategy replicates the original MQL expert advisor `3sma.mq4`. The system analyses three simple moving averages (SMA) calculated on the closing price and trades when the short-term trend aligns with the medium- and long-term averages. The conversion keeps the original trading rules while adapting them to the StockSharp high-level strategy API.",
+    "details": "",
+    "parameters": "- **Candle Type** – Primary timeframe used to compute the moving averages.\n- **Fast SMA Length** – Period for the fast SMA (MQL input `SMA1`).\n- **Medium SMA Length** – Period for the medium SMA (MQL input `SMA2`).\n- **Slow SMA Length** – Period for the slow SMA (MQL input `SMA3`).\n- **SMA Spread Steps** – Additional filter requiring SMAs to diverge by a number of price steps (MQL input `SMAspread`).\n- **Trade Volume** – Order volume used when opening positions (MQL input `lots`)."
+   },
+   "356": {
+    "id": 356,
+    "name": "Bitcoin Intraday Seasonality",
+    "family": "trend",
+    "overview": "Strategy that goes long on Bitcoin during predefined strong intraday hours.\n\nTesting indicates an average annual return of about 45%. It performs best in the crypto market.\n\nThe system watches hourly candles. During selected UTC hours it maintains a long position sized to the portfolio value. Outside of those hours it exits to cash. Orders smaller than a minimum USD value are skipped.\n\n## Details\n\n- **Entry Criteria**: Hold BTC long during specified UTC hours.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Exit outside of the specified hours.\n- **Stops**: No.\n- **Default Values**:\n  - `HoursLong` = [0, 1, 2, 3]\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Hold BTC long during specified UTC hours.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Exit outside of the specified hours.\n- **Stops**: No.\n- **Default Values**:\n  - `HoursLong` = [0, 1, 2, 3]\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1094": {
+    "id": 1094,
+    "name": "Multi Indicator Swing",
+    "family": "trend",
+    "overview": "Swing strategy combining Parabolic SAR, SuperTrend, ADX and volume delta confirmation.\n\n## Details\n\n- **Entry Criteria**: All enabled indicators agree.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or hitting stop-loss/take-profit.\n- **Stops**: Optional percentage based levels.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(2)\n  - `PsarStart` = 0.02m\n  - `PsarIncrement` = 0.02m\n  - `PsarMaximum` = 0.2m\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 3m\n  - `AdxLength` = 14\n  - `AdxThreshold` = 25m\n  - `DeltaLength` = 14\n  - `DeltaSmooth` = 3\n  - `DeltaThreshold` = 0.5m\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: PSAR, SuperTrend, ADX, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (2m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: All enabled indicators agree.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or hitting stop-loss/take-profit.\n- **Stops**: Optional percentage based levels.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(2)\n  - `PsarStart` = 0.02m\n  - `PsarIncrement` = 0.02m\n  - `PsarMaximum` = 0.2m\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 3m\n  - `AdxLength` = 14\n  - `AdxThreshold` = 25m\n  - `DeltaLength` = 14\n  - `DeltaSmooth` = 3\n  - `DeltaThreshold` = 0.5m\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: PSAR, SuperTrend, ADX, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (2m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "601": {
+    "id": 601,
+    "name": "Captain Backtest Model",
+    "family": "breakout",
+    "overview": "Tracks the early session price range to establish a daily bias. Trades breakouts during the trade window after a retracement.\n\n## Details\n\n- **Bias**: Morning range high or low defines long or short bias.\n- **Entry**: Break above/below previous candle once retracement conditions are met.\n- **Long/Short**: Both directions.\n- **Exit**: Fixed risk/reward or end of trade window.\n- **Stops**: Fixed point distance.\n- **Default Values**:\n  - PrevRangeStart = 06:00\n  - PrevRangeEnd = 10:00\n  - TakeStart = 10:00\n  - TakeEnd = 11:15\n  - TradeStart = 10:00\n  - TradeEnd = 16:00\n  - Risk = 25\n  - Reward = 75\n",
+    "details": "- **Bias**: Morning range high or low defines long or short bias.\n- **Entry**: Break above/below previous candle once retracement conditions are met.\n- **Long/Short**: Both directions.\n- **Exit**: Fixed risk/reward or end of trade window.\n- **Stops**: Fixed point distance.\n- **Default Values**:\n  - PrevRangeStart = 06:00\n  - PrevRangeEnd = 10:00\n  - TakeStart = 10:00\n  - TakeEnd = 11:15\n  - TradeStart = 10:00\n  - TradeEnd = 16:00\n  - Risk = 25\n  - Reward = 75",
+    "parameters": ""
+   },
+   "3236": {
+    "id": 3236,
+    "name": "2DLimits",
+    "family": "breakout",
+    "overview": "2DLimits is a direct port of the MetaTrader 4 expert advisor `2DLimits_EA_v2`. The strategy evaluates the last two completed daily candles and only participates when they form a stair-step pattern (higher highs/lows or lower highs/lows). When the pattern is valid, the strategy submits stop orders at the previous day's extreme and protects the position with a midpoint stop-loss and a target equal to the prior daily range.\n\nThe implementation relies on StockSharp's high-level candle subscriptions together with level-1 quotes. Daily candles supply the breakout levels while the best bid/ask snapshots ensure that long setups are only armed when price trades below the midpoint and short setups only when price trades above it.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Volume` | Order volume for the stop entries. Must be greater than zero. |\n| `CandleType` | Candle type that provides the reference range (defaults to daily candles). |"
+   },
+   "1245": {
+    "id": 1245,
+    "name": "Resampling Reverse Engineering Bands",
+    "family": "momentum",
+    "overview": "Resampling Reverse Engineering Bands reverse engineers RSI price levels at a configurable resampling rate. The strategy buys when price falls below the low band and sells when price rises above the high band.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close price crosses below the low RRSI band.\n  - **Short**: Close price crosses above the high RRSI band.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `HighThreshold` = 70\n  - `LowThreshold` = 30\n  - `SampleLength` = 1\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Medium\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close price crosses below the low RRSI band.\n  - **Short**: Close price crosses above the high RRSI band.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `HighThreshold` = 70\n  - `LowThreshold` = 30\n  - `SampleLength` = 1\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3442": {
+    "id": 3442,
+    "name": "Specific Day & Time Orders",
+    "family": "volatility",
+    "overview": "This strategy replicates the MetaTrader expert *\"Expert Advisor specific day and time\"*.  \nIt places buy and/or sell orders at a scheduled timestamp and optionally removes every exposure at another timestamp.  \nThe StockSharp version keeps the original risk-management behaviour, including optional trailing stops and break-even moves.\n\n## Core logic\n\n1. **Scheduling**  \n   - `OpenTime` – moment when orders are created.  \n   - `CloseTime` – moment when positions are flattened and pending orders can be removed.  \n   Both checks accept a one-minute window, matching the `TimeToString(..., TIME_MINUTES)` comparison used in the MT4 code.\n\n2. **Order placement**  \n   - `OrderPlacement` chooses between market, stop, or limit orders.  \n   - `OpenBuyOrders` / `OpenSellOrders` enable the desired directions.  \n   - `OrderDistancePoints` offsets the price of pending orders by a number of points (pips).  \n   - `PendingExpireMinutes` cancels pending orders automatically when their validity window ends.\n\n3. **Volume management**  \n   - `LotSizing = Manual` sends the fixed `ManualVolume`.  \n   - `LotSizing = Automatic` calculates volume from the current portfolio value and the instrument contract size:  \n     `volume = (portfolio / contractSize) * RiskFactor`.  \n   The result is aligned to `Security.VolumeStep` and clamped between `MinVolume`/`MaxVolume` when available.\n\n4. **Protection logic**  \n   - `StopLossPoints` and `TakeProfitPoints` translate the original point-based distances to absolute prices using the instrument pip size.  \n   - `TrailingStopEnabled` + `TrailingStepPoints` and `BreakEvenEnabled` move the protective stop exactly like the MQL script, using bid/ask updates as triggers.  \n   - When stop-loss or take-profit conditions are hit, the position is closed with a market order, mirroring the MT4 behaviour of modifying stops to a new price.\n\n5. **Closing phase**  \n   - When `CloseOwnOrders` or `CloseAllOrders` is enabled the strategy exits any open position in the clos",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `OpenTime`, `CloseTime` | UTC timestamps for entering and exiting the market. |\n| `OrderPlacement` | Market, stop, or limit order placement. |\n| `OpenBuyOrders`, `OpenSellOrders` | Directions to activate. |\n| `TakeProfitPoints`, `StopLossPoints` | Protective distances expressed in points (0 disables). |\n| `TrailingStopEnabled`, `TrailingStepPoints` | Enable trailing stop and define the minimum advance before moving it. |\n| `BreakEvenEnabled`, `BreakEvenAfterPoints` | Shift the stop to break-even once profit exceeds the threshold. |\n| `OrderDistancePoints` | Offset used for pending orders. |\n| `PendingExpireMinutes` | Expiration window for pending orders. |\n| `LotSizing` | Manual or automatic volume sizing. |\n| `RiskFactor`, `ManualVolume` | Inputs for the sizing modes. |\n| `CloseOwnOrders`, `CloseAllOrders`, `DeletePendingOrders` | Control how positions and pending orders are closed at the end. |"
+   },
+   "3724": {
+    "id": 3724,
+    "name": "RM Stochastic Band",
+    "family": "mean_reversion",
+    "overview": "The **RM Stochastic Band Strategy** is a high-level StockSharp port of the MetaTrader expert advisor *EA RM Stochastic Band* by Ronny Maheza. The strategy observes three stochastic oscillators calculated on different timeframes (base, mid, and high) and opens trades only when all three confirm oversold or overbought conditions. Upon entry, exit levels are derived from the Average True Range (ATR) measured on the higher timeframe, replicating the ATR-based stop-loss and take-profit levels in the original expert advisor. Additional execution filters include a configurable minimum portfolio value as a margin proxy and a spread control that adapts its tolerance depending on the observed spread.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `OrderVolume` | Volume of each market order. | 0.1 |\n| `StochasticLength` | %K lookback period. | 5 |\n| `StochasticSmoothing` | Smoothing applied to %K. | 3 |\n| `StochasticSignalLength` | %D length. | 3 |\n| `AtrPeriod` | ATR period on the high timeframe. | 14 |\n| `StopLossMultiplier` | ATR multiplier for the stop-loss. | 1.5 |\n| `TakeProfitMultiplier` | ATR multiplier for the take-profit. | 3.0 |\n| `MinMargin` | Minimum portfolio value required for trading. | 100 |\n| `MaxSpreadStandard` | Spread cap for standard accounts. | 3 |\n| `MaxSpreadCent` | Spread cap used when the current spread already exceeds the standard cap. | 10 |\n| `OversoldLevel` | Oversold threshold for stochastic %K. | 20 |\n| `OverboughtLevel` | Overbought threshold for stochastic %K. | 80 |\n| `BaseCandleType` | Primary timeframe (default 1-minute candles). | 1-minute | \n| `MidCandleType` | Confirmation timeframe (default 5-minute candles). | 5-minute |\n| `HighCandleType` | Confirmation + ATR timeframe (default 15-minute candles). | 15-minute |\n\nAll parameters support optimization ranges identical to the MetaTrader inputs where appropriate."
+   }
+  }
+ }
+}

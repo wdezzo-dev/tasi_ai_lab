@@ -1,0 +1,98 @@
+{
+ "batch_238": {
+  "strategy_ids": [
+   4176,
+   3454,
+   4006,
+   3534,
+   2751,
+   2384,
+   641,
+   1959,
+   2110,
+   108
+  ],
+  "docs": {
+   "4176": {
+    "id": 4176,
+    "name": "MO Bidir Hedge",
+    "family": "trend",
+    "overview": "The **MO Bidir Hedge Strategy** is a StockSharp port of the MetaTrader 4 expert advisor `mo_bidir_v0_1`. The original robot was designed for the five-minute chart and always kept a hedged market exposure: every new bar opened both a long and a short position with pre-defined stop-loss and take-profit distances. The StockSharp version reproduces this behaviour using finished candles, high-level order helpers, and explicit risk parameters measured in instrument points.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Order size applied to both sides of the hedge. Must be positive. |\n| `StopLossPoints` | Distance from the entry price to the protective stop measured in instrument points. Use `0` to disable the stop. |\n| `TakeProfitPoints` | Target distance from the entry price in instrument points. Use `0` to disable the profit target. |\n| `CandleType` | Timeframe used to detect new bars. Defaults to a five-minute time frame. |\n\nAll point-based distances are converted to absolute prices by multiplying the configured value by the instrument `PriceStep`. If the step is undefined the minimal price increment is used; when neither value is available the protective levels remain inactive."
+   },
+   "3454": {
+    "id": 3454,
+    "name": "Fibonacci Potential Entries Retracement",
+    "family": "trend",
+    "overview": "The **Fibonacci Potential Entries Retracement Strategy** recreates the MetaTrader expert `EA_PUB_FibonacciPotentialEntries`. The algorithm waits for live Level 1 quotes, then places two pending orders around manually supplied Fibonacci retracement levels. When the shared profit target is reached the strategy scales out of each position by 50% and moves the protective stop to break-even for the remaining quantity.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `P50Level` | Price assigned to the 50% Fibonacci retracement. |\n| `P61Level` | Price assigned to the 61.8% Fibonacci retracement. |\n| `P100Level` | Price assigned to the 100% Fibonacci retracement (used for the midpoint stop). |\n| `TargetLevel` | Shared profit target for both trades. |\n| `RiskPercent` | Total risk budget in percent of equity (must be ≥ 0.7). |\n| `MarketBias` | Chooses long (`Bull`) or short (`Bear`) campaign. |"
+   },
+   "4006": {
+    "id": 4006,
+    "name": "Ten Pips Opposite Last N Hour Trend",
+    "family": "trend",
+    "overview": "This strategy is a faithful port of the MetaTrader expert **10pipsOnceADayOppositeLastNHourTrend**. It trades exactly once per day at a configurable hour and deliberately takes the opposite side of the price change observed over the last *N* completed hourly candles. The logic is designed for currency pairs with five-digit pricing, but the C# version automatically adapts the pip size using the instrument's `PriceStep` and number of decimals.\n\nAt the selected trading hour the strategy inspects the closing price from `HoursToCheckTrend` hours ago and compares it with the close of the most recent completed hourly candle:\n\n- If the older close is **higher**, the market has been falling (bearish), so the strategy opens a **long** position.\n- Otherwise the market has been rising (bullish), therefore it opens a **short** position.\n\nPositions are closed by protective stops, a daily time-based exit, or manually when the market is outside the trading window.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `FixedVolume` | Fixed lot size. Set to `0` to use risk-based sizing. | `0.1` |\n| `MinimumVolume` | Hard lower bound for the order volume. | `0.1` |\n| `MaximumVolume` | Hard upper bound for the order volume. | `5` |\n| `MaximumRisk` | Fraction of equity used when `FixedVolume = 0`. | `0.05` |\n| `MaxOrders` | Maximum simultaneous orders/positions. | `1` |\n| `TradingHour` | Hour of day (0–23) when new trades are allowed. | `7` |\n| `HoursToCheckTrend` | Look-back window in hours for the trend comparison. | `30` |\n| `OrderMaxAge` | Maximum lifetime of a position. | `21h` |\n| `StopLossPips` | Stop-loss distance in pips. | `50` |\n| `TakeProfitPips` | Take-profit distance in pips. | `10` |\n| `TrailingStopPips` | Trailing-stop distance in pips. | `0` (disabled) |\n| `FirstMultiplier` … `FifthMultiplier` | Lot multipliers applied when the most recent losing trade is found at the respective depth. | `4`, `2`, `5`, `5`, `1` |\n| `CandleType` | Time frame for candle subscription. | `1 hour` |"
+   },
+   "3534": {
+    "id": 3534,
+    "name": "PriceChannel Signal v2",
+    "family": "trend",
+    "overview": "PriceChannel Signal v2 is a trend-following breakout system built around a modified Donchian channel. The original MQL5 expert advisor watches for transitions in the channel trend, optional re-entry conditions when price pushes back through the bands, and protective exit levels derived from the same range. The StockSharp port keeps the original behaviour: it trades a single position at a time, reacts only on completed candles and can be restricted to an intraday window.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `ChannelPeriod` | Donchian lookback length used to calculate the price channel and exit bands. |\n| `RiskFactor` | Shift of the entry bands (0–10). Lower values widen the bands, higher values tighten them. |\n| `ExitLevel` | Shift of the exit bands. Must be larger than `RiskFactor` to stay inside the entry range. |\n| `UseReEntry` | Enables re-entry trades when price pushes back through the active band. |\n| `UseExitSignals` | Enables exit logic based on the inner protective bands. |\n| `CandleType` | Timeframe used to build candles and run the indicators. |\n| `UseTimeControl` | Toggles the intraday trading window. |\n| `StartHour` / `StartMinute` | Inclusive beginning of the trading window when time control is active. |\n| `EndHour` / `EndMinute` | Exclusive end of the trading window when time control is active. |"
+   },
+   "2751": {
+    "id": 2751,
+    "name": "YTG ADX Level Cross",
+    "family": "trend",
+    "overview": "- **Market regime**: Works on trending or strongly directional moves where DI spikes accompany breakouts.\n- **Direction**: Opens either long or short positions, but never both simultaneously.\n- **Timeframe**: Controlled by the `CandleType` parameter (default 1-hour candles).\n- **Data**: Uses finished candles to calculate ADX/DI values from the `AverageDirectionalIndex` indicator.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 1-hour time frame | Time frame of the candle subscription used for ADX calculation. |\n| `AdxPeriod` | 28 | Length of the Average Directional Index and its DI calculations. |\n| `LevelPlus` | 5 | Threshold that the +DI series must exceed to open a long position. |\n| `LevelMinus` | 5 | Threshold that the -DI series must exceed to open a short position. |\n| `Shift` | 1 | Number of closed candles to look back when evaluating the DI crossing (1 = previous candle). |\n| `TakeProfitPoints` | 500 | Distance in price points for the take-profit order. Multiplied by the instrument's tick size internally. |\n| `StopLossPoints` | 500 | Distance in price points for the protective stop-loss order. |\n| `TradeVolume` | 0.1 | Base volume for new market orders, matching the `Lots` setting in the MQL expert. |"
+   },
+   "2384": {
+    "id": 2384,
+    "name": "Artificial Intelligence Accelerator",
+    "family": "trend",
+    "overview": "This strategy implements a simple perceptron model on top of Bill Williams' **Acceleration/Deceleration Oscillator (AC)**. Four oscillator readings are sampled at lags of 0, 7, 14 and 21 bars and multiplied by adjustable weights. The weighted sum acts as a decision signal: positive values imply bullish momentum and negative values imply bearish momentum. The strategy reverses its position whenever the signal changes sign and places a fixed stop-loss from the entry price.\n\nThe AC itself is derived from the Awesome Oscillator (AO) by subtracting a 5-period moving average from the AO. This makes the strategy sensitive to shifts in market acceleration.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Perceptron signal > 0.\n  - **Short**: Perceptron signal < 0.\n- **Long/Short**: Both sides; the strategy reverses if the signal flips.\n- **Exit Criteria**:\n  - Stop-loss triggered from the entry price.\n  - Reverse when signal crosses zero.\n- **Stops**: Yes, fixed stop-loss in price units.\n- **Default Values**:\n  - `X1` = 76\n  - `X2` = 47\n  - `X3` = 153\n  - `X4` = 135\n  - `StopLoss` = 8355\n  - `CandleType` = 1-minute candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: AC (derived from AO)\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Short-term\n  - Neural networks: Perceptron\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Perceptron signal > 0.\n  - **Short**: Perceptron signal < 0.\n- **Long/Short**: Both sides; the strategy reverses if the signal flips.\n- **Exit Criteria**:\n  - Stop-loss triggered from the entry price.\n  - Reverse when signal crosses zero.\n- **Stops**: Yes, fixed stop-loss in price units.\n- **Default Values**:\n  - `X1` = 76\n  - `X2` = 47\n  - `X3` = 153\n  - `X4` = 135\n  - `StopLoss` = 8355\n  - `CandleType` = 1-minute candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: AC (derived from AO)\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Short-term\n  - Neural networks: Perceptron\n  - Risk level: High",
+    "parameters": ""
+   },
+   "641": {
+    "id": 641,
+    "name": "Crunchster's Turtle and Trend System",
+    "family": "trend",
+    "overview": "Combines a fast/slow EMA trend filter with Donchian channel breakout entries and ATR based stop management. A trailing Donchian channel exits positions when momentum reverses.\n\n## Details\n\n- **Entry Criteria**: EMA differential cross or Donchian breakout.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing channel or ATR stop.\n- **Stops**: Yes, ATR based.\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `FastEmaPeriod` = 10\n  - `BreakoutPeriod` = 20\n  - `TrailPeriod` = 1000\n  - `StopAtrMultiple` = 20\n  - `OrderPercent` = 10\n  - `TrendEnabled` = true\n  - `BreakoutEnabled` = false\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: EMA, Donchian, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: EMA differential cross or Donchian breakout.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing channel or ATR stop.\n- **Stops**: Yes, ATR based.\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `FastEmaPeriod` = 10\n  - `BreakoutPeriod` = 20\n  - `TrailPeriod` = 1000\n  - `StopAtrMultiple` = 20\n  - `OrderPercent` = 10\n  - `TrendEnabled` = true\n  - `BreakoutEnabled` = false\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: EMA, Donchian, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1959": {
+    "id": 1959,
+    "name": "NRatio Sign",
+    "family": "trend",
+    "overview": "This strategy employs the NRatio indicator, an NRTR-based oscillator that measures the normalized distance between price and a dynamic trailing level. Trading signals occur when the NRatio crosses predefined thresholds. Depending on the selected mode, the system either reacts to breakouts beyond the upper and lower bounds or to reversals back inside them.\n\nThe approach can operate on both sides of the market and uses percentage-based risk management for exits. Smoothing of the distance metric is performed with an exponential moving average, allowing the strategy to respond quickly while filtering noise.\n\n## Details\n\n- **Entry Criteria**:\n  - **Mode In**:\n    - **Long**: `NRatio` crosses above `UpLevel`.\n    - **Short**: `NRatio` crosses below `DownLevel`.\n  - **Mode Out**:\n    - **Long**: `NRatio` crosses above `DownLevel`.\n    - **Short**: `NRatio` crosses below `UpLevel`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protective stop.\n- **Stops**: Yes, take-profit and stop-loss in percent.\n- **Default Values**:\n  - `CandleType` = 4-hour candles\n  - `Kf` = 1\n  - `Length` = 3\n  - `Fast` = 2\n  - `Sharp` = 2\n  - `UpLevel` = 80\n  - `DownLevel` = 20\n  - `TakeProfitPercent` = 2\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: NRTR, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Mode In**:\n    - **Long**: `NRatio` crosses above `UpLevel`.\n    - **Short**: `NRatio` crosses below `DownLevel`.\n  - **Mode Out**:\n    - **Long**: `NRatio` crosses above `DownLevel`.\n    - **Short**: `NRatio` crosses below `UpLevel`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protective stop.\n- **Stops**: Yes, take-profit and stop-loss in percent.\n- **Default Values**:\n  - `CandleType` = 4-hour candles\n  - `Kf` = 1\n  - `Length` = 3\n  - `Fast` = 2\n  - `Sharp` = 2\n  - `UpLevel` = 80\n  - `DownLevel` = 20\n  - `TakeProfitPercent` = 2\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: NRTR, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2110": {
+    "id": 2110,
+    "name": "MA Rounding Candle",
+    "family": "trend",
+    "overview": "This strategy is an interpretation of the original MQL5 expert advisor \"MA Rounding Candle\". It uses two smoothed moving averages applied to candle open and close prices. The relative position of these averages defines the colour of a synthetic candle: green when the smoothed close is above the open, red when the close is below the open and gray when they are equal. A change in colour from the previous bar generates trade signals.",
+    "details": "",
+    "parameters": "- **MaLength** – period of the smoothing moving averages (default 12).\n- **CandleType** – timeframe of the processed candles."
+   },
+   "108": {
+    "id": 108,
+    "name": "Wyckoff Accumulation",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 61%. It performs best in the crypto market.\n\nThis strategy enters long when price breaks out of the accumulation range, expecting a new uptrend fueled by those earlier purchases.\n\nA protective stop sits just below the base to limit losses should the breakout fail.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Volume, Price\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Volume, Price\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

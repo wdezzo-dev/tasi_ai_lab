@@ -1,0 +1,98 @@
+{
+ "batch_183": {
+  "strategy_ids": [
+   2511,
+   3756,
+   1281,
+   1282,
+   228,
+   381,
+   2236,
+   292,
+   1674,
+   2115
+  ],
+  "docs": {
+   "2511": {
+    "id": 2511,
+    "name": "True Scalper Profit Lock",
+    "family": "trend",
+    "overview": "The **True Scalper Profit Lock Strategy** is a StockSharp port of the MetaTrader 5 expert advisor \"True Scalper Profit Lock\". The strategy focuses on ultra short-term trading using fast exponential moving averages, a two-period RSI filter, and a profit protection routine that moves stops to break even. Additional \"abandon\" logic forces the strategy to close trades that do not reach the target within a predefined number of candles.\n\nThe implementation subscribes to a single candle stream and evaluates the finished candles only. It is designed for intraday scalping, but all parameters are fully adjustable, allowing it to be adapted to other timeframes or instruments.",
+    "details": "",
+    "parameters": "- `InitialVolume` – base lot size when money management is disabled.\n- `TakeProfitPoints` / `StopLossPoints` – distance in `Security.PriceStep` units.\n- `FastPeriod`, `SlowPeriod`, `RsiLength`, `RsiThreshold` – indicator configuration.\n- `UseRsiMethodA`, `UseRsiMethodB` – toggle the RSI decision logic.\n- `UseAbandonMethodA`, `UseAbandonMethodB`, `AbandonBars` – configure the timeout management.\n- `UseMoneyManagement`, `RiskPercent`, `LiveTrading`, `IsMiniAccount` – risk sizing options aligned with the MT5 expert advisor.\n- `UseProfitLock`, `BreakEvenTriggerPoints`, `BreakEvenPoints` – break-even parameters.\n- `MaxPositions` – kept for compatibility with the MQL version (the StockSharp port manages a single net position per instrument).\n- `CandleType` – timeframe or custom candle type for signal generation."
+   },
+   "3756": {
+    "id": 3756,
+    "name": "ProtoType IX",
+    "family": "trend",
+    "overview": "ProtoType IX is a multi-filter trend following strategy converted from the original MetaTrader 4 expert advisor. The algorithm observes Williams %R swings to detect fresh impulsive moves and validates them with Average True Range (ATR) expansion. Trades are opened only when the projected reward-to-risk ratio is attractive enough and the breakout is confirmed.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| Williams %R Period | Length of the Williams %R indicator. |\n| Criteria WPR | Absolute threshold defining overbought/oversold zones. |\n| ATR Period | Length of the Average True Range indicator. |\n| ATR Multiplier | Multiplier applied to ATR for breakout validation. |\n| Zero Bar | Number of bars before enabling ATR trailing. |\n| Min Target Spread | Minimal acceptable target distance expressed in spread multiples. |\n| TP/SL Criteria | Minimal take-profit / stop-loss ratio required to enter a trade. |\n| Max Orders | Maximum simultaneously opened orders. |\n| Max Order Size | Upper bound for order volume after sizing. |\n| Risk % | Risk percentage used for position sizing. |\n| Candle Type | Candle data type for calculations. |"
+   },
+   "1281": {
+    "id": 1281,
+    "name": "RSI Adaptive T3",
+    "family": "trend",
+    "overview": "Trend-following strategy based on an RSI-adaptive Tillson T3 moving average. It goes long when the T3 crosses above its two-bar lag and exits on the opposite cross.\n\nBacktests on daily charts show steady performance in trending markets.\n\n## Details\n\n- **Entry Criteria**: T3 crossing above its 2-bar lag.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `MinT3Length` = 5\n  - `MaxT3Length` = 50\n  - `VolumeFactor` = 0.7\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: RSI, T3\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: T3 crossing above its 2-bar lag.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `MinT3Length` = 5\n  - `MaxT3Length` = 50\n  - `VolumeFactor` = 0.7\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: RSI, T3\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1282": {
+    "id": 1282,
+    "name": "RSI-CCI Fusion",
+    "family": "trend",
+    "overview": "Combines standardized RSI and CCI into a single oscillator with dynamic bands.\nBuys when the fused value crosses above the lower band and sells or shorts when it crosses below the upper band.\n\n## Details\n\n- **Entry Criteria**: rescaled fusion crosses above lower band for long; crosses below upper band for short\n- **Long/Short**: Both (short optional)\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 14\n  - `RsiWeight` = 0.5\n  - `EnableShort` = false\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, CCI, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: rescaled fusion crosses above lower band for long; crosses below upper band for short\n- **Long/Short**: Both (short optional)\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 14\n  - `RsiWeight` = 0.5\n  - `EnableShort` = false\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, CCI, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "228": {
+    "id": 228,
+    "name": "Hurst Exponent Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 121%. It performs best in the crypto market.\n\nA long position is opened when the Hurst exponent is below 0.5 and price closes under a moving average. A short position occurs when the Hurst value is below 0.5 and price closes above the average. Positions exit when price returns to the average line or the Hurst exponent rises above the threshold.\n\nThe strategy fits traders who favour statistical tendencies over strong trends. A protective stop-loss shields against extended moves that fail to revert.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Hurst < 0.5 && Close < MA\n  - **Short**: Hurst < 0.5 && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close >= MA or Hurst > 0.5\n  - **Short**: Exit when Close <= MA or Hurst > 0.5\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `HurstPeriod` = 100\n  - `AveragePeriod` = 20\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Hurst Exponent, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Hurst < 0.5 && Close < MA\n  - **Short**: Hurst < 0.5 && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close >= MA or Hurst > 0.5\n  - **Short**: Exit when Close <= MA or Hurst > 0.5\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `HurstPeriod` = 100\n  - `AveragePeriod` = 20\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Hurst Exponent, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "381": {
+    "id": 381,
+    "name": "Momentum Style Rotation",
+    "family": "momentum",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis Python strategy rotates among a set of factor exchange​-traded funds (ETFs) and a broad market ETF. At the end of each month the ETFs are ranked by their trailing three-month total return. The portfolio then invests entirely in the top ranked fund for the following month to harvest medium-term momentum.\n\nThe approach always holds a single ETF and re-evaluates monthly. Daily candles are used for calculations and all rebalancing trades are executed at the market price.\n\n## Details\n\n- **Universe**: list of factor ETFs and a benchmark ETF.\n- **Signal**: compute 63-day (three-month) total return and select the strongest instrument.\n- **Rebalance**: first trading day of each month.\n- **Positioning**: fully long the selected ETF, all others flat.\n- **Risk control**: orders skipped when the required trade value falls below `MinTradeUsd`.\n",
+    "details": "- **Universe**: list of factor ETFs and a benchmark ETF.\n- **Signal**: compute 63-day (three-month) total return and select the strongest instrument.\n- **Rebalance**: first trading day of each month.\n- **Positioning**: fully long the selected ETF, all others flat.\n- **Risk control**: orders skipped when the required trade value falls below `MinTradeUsd`.",
+    "parameters": ""
+   },
+   "2236": {
+    "id": 2236,
+    "name": "Panel Joke",
+    "family": "volatility",
+    "overview": "This strategy converts the original MetaTrader *panel-joke* system into StockSharp. It compares the current candle with the previous one across seven price metrics (open, high, low, average of high and low, close, average of high/low/close, and weighted average of high/low/close). Each metric that increased counts toward a potential long setup; each decrease counts toward a short setup.\n\nWhen the `Enable Autopilot` parameter is `true`, the strategy automatically opens or reverses positions based on which side has more points. No additional indicators or stop rules are used.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Buy counter > Sell counter.\n  - **Short**: Sell counter > Buy counter.\n- **Exit Criteria**: Reverse when the opposite signal appears.\n- **Stops**: None.\n- **Default Values**:\n  - `Enable Autopilot` = `true`.\n  - `Candle Type` = 5-minute time frame.\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Buy counter > Sell counter.\n  - **Short**: Sell counter > Buy counter.\n- **Exit Criteria**: Reverse when the opposite signal appears.\n- **Stops**: None.\n- **Default Values**:\n  - `Enable Autopilot` = `true`.\n  - `Candle Type` = 5-minute time frame.\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "292": {
+    "id": 292,
+    "name": "ATR Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the ATR returns toward balance. Starting parameter `AtrPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossMultiplier` = 2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossMultiplier` = 2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1674": {
+    "id": 1674,
+    "name": "Shuriken Lite",
+    "family": "other",
+    "overview": "This strategy replicates the functionality of the original *Shuriken Lite* MQL tool. It tracks executed trades on the account and groups them by numerical identifiers known as **magic numbers**. For each group the strategy calculates:\n\n- Number of trades\n- Winning and losing trades\n- Total profit or loss in pips\n- Profit factor\n\nThe statistics are logged after every new trade when score display is enabled.\n\n## Parameters\n\n- **Magic Numbers** — comma-separated list of identifiers used to group trades. Each identifier should match the numeric value placed in the order comment.\n- **Show Scores** — enable or disable logging of statistics.\n\n## Usage\n\n1. Set the desired magic numbers in the parameter.\n2. Run the strategy alongside other strategies that set numeric comments on their orders.\n3. Check the log for the aggregated performance metrics.\n",
+    "details": "",
+    "parameters": "- **Magic Numbers** — comma-separated list of identifiers used to group trades. Each identifier should match the numeric value placed in the order comment.\n- **Show Scores** — enable or disable logging of statistics."
+   },
+   "2115": {
+    "id": 2115,
+    "name": "Digital Filter T01",
+    "family": "other",
+    "overview": "## Summary\nDigitalF-T01 filter compared with a shifted trigger line. The strategy opens a long position when the digital filter crosses below the trigger and a short position when it crosses above. Stop-loss and take-profit protection are applied in points.\n\n## Parameters\n- **Half Channel** - half channel distance added to the trigger line.\n- **Stop Loss** - stop-loss value in points.\n- **Take Profit** - take-profit value in points.\n- **Candle Type** - candle type used for calculations.\n",
+    "details": "",
+    "parameters": "- **Half Channel** - half channel distance added to the trigger line.\n- **Stop Loss** - stop-loss value in points.\n- **Take Profit** - take-profit value in points.\n- **Candle Type** - candle type used for calculations."
+   }
+  }
+ }
+}

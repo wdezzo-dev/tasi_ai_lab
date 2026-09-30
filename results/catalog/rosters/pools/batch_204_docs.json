@@ -1,0 +1,98 @@
+{
+ "batch_204": {
+  "strategy_ids": [
+   793,
+   2487,
+   2291,
+   3840,
+   220,
+   2644,
+   4089,
+   2680,
+   993,
+   816
+  ],
+  "docs": {
+   "793": {
+    "id": 793,
+    "name": "Financial Ratios Fundamental",
+    "family": "trend",
+    "overview": "This strategy analyzes quarterly financial ratios to gauge a company's fundamentals. It looks at the current ratio, interest coverage, payable turnover and gross margin, entering long positions when any of these ratios improve compared to the previous period.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `currentRatio > previousCurrent` OR `interestCoverage < previousInterest` OR `payableTurnover > previousPayable` OR `grossMargin > previousGross`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: `currentRatio < previousCurrent` OR `interestCoverage > previousInterest` OR `payableTurnover < previousPayable` OR `grossMargin < previousGross`.\n- **Stops**: No.\n- **Default Values**:\n  - `Candle Type` = daily candles.\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `currentRatio > previousCurrent` OR `interestCoverage < previousInterest` OR `payableTurnover > previousPayable` OR `grossMargin > previousGross`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: `currentRatio < previousCurrent` OR `interestCoverage > previousInterest` OR `payableTurnover < previousPayable` OR `grossMargin < previousGross`.\n- **Stops**: No.\n- **Default Values**:\n  - `Candle Type` = daily candles.\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2487": {
+    "id": 2487,
+    "name": "Example of MACD Automated",
+    "family": "trend",
+    "overview": "The strategy replicates the \"Example of MACD Automated\" MetaTrader 4 expert advisor using the StockSharp high-level API. It monitors the MACD main line on two timeframes and opens a single position when both trend filters agree. Protective stop-loss and take-profit distances are applied in price steps, and the position size follows the original AdvancedMM logic that accumulates the volume of recent losing trades.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `BaseVolume` | Base order volume used by the AdvancedMM logic. | `0.01` |\n| `StopLossPoints` | Stop-loss distance expressed in price steps. `0` disables the stop. | `50` |\n| `TakeProfitPoints` | Take-profit distance expressed in price steps. `0` disables the target. | `30` |\n| `MacdFastLength` | Fast EMA period of the MACD on both timeframes. | `12` |\n| `MacdSlowLength` | Slow EMA period of the MACD on both timeframes. | `26` |\n| `MacdSignalLength` | Signal line EMA period. | `9` |\n| `EntryCandleType` | Timeframe for trade execution. | `15m` candles |\n| `FilterCandleType` | Higher timeframe used as trend filter. | `1d` candles |"
+   },
+   "2291": {
+    "id": 2291,
+    "name": "Fisher Org v1",
+    "family": "trend",
+    "overview": "This strategy uses the Fisher Transform indicator to capture trend reversals. A long position is opened when the indicator forms a local minimum, while a short position is opened when a local maximum appears. Opposite signals close any existing position.\n\n## Rules\n- **Long**: `Fisher[t-2] > Fisher[t-1]` and `Fisher[t-1] <= Fisher[t]`\n- **Short**: `Fisher[t-2] < Fisher[t-1]` and `Fisher[t-1] >= Fisher[t]`\n\n## Parameters\n- `Fisher Length` – period of the Fisher Transform (default 7)\n- `Candle Type` – timeframe of candles used for calculations\n\n## Indicators\n- Fisher Transform\n",
+    "details": "",
+    "parameters": "- `Fisher Length` – period of the Fisher Transform (default 7)\n- `Candle Type` – timeframe of candles used for calculations"
+   },
+   "3840": {
+    "id": 3840,
+    "name": "Franks 4 Hour Limit Orders",
+    "family": "trend",
+    "overview": "The **Franks 4 Hour Limit Orders Strategy** ports the MetaTrader 4 expert advisor from `MQL/7684/Franks_4hour_limit_orders.mq4` to the StockSharp high-level API. The original EA combines Alexander Elder's Triple Screen ideas: it evaluates momentum on a four-hour chart using the MACD histogram (OsMA) together with the Force Index, and then places contrarian limit orders around the previous candle extremes. The StockSharp implementation keeps this multi-indicator logic while following the repository guidelines (tabs, high-level API, no custom collections) and adds extensive inline comments in English for clarity.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | 1 | Fixed volume used for pending limit orders. |\n| `StopLossPips` | 35 | Distance, in pips, between the entry price and the protective stop. |\n| `TakeProfitPips` | 150 | Distance, in pips, between the entry price and the take-profit level. |\n| `TrailingStopPips` | 30 | Distance, in pips, for the trailing stop that locks in profits once price moves far enough. |\n| `EntryBufferPips` | 16 | Minimum gap, in pips, between the current market price and the pending order. |\n| `PipSize` | 0.0001 | Pip size used for price conversions; defaults to 0.0001 but can be aligned with exotic symbols. |\n| `CandleType` | 4h timeframe | Candle series processed by the strategy. |"
+   },
+   "220": {
+    "id": 220,
+    "name": "Volatility Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 97%. It performs best in the crypto market.\n\nA buy order is triggered when the close rises above the SMA by more than `Multiplier` times the ATR. A sell signal appears when the close falls below the SMA by the same distance. Positions remain open until an opposite breakout occurs or a protective stop is hit.\n\nThis technique caters to intraday traders who thrive on momentum surges. Using ATR-based thresholds helps filter out noise so only significant moves generate trades.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Close > SMA + Multiplier * ATR\n  - **Short**: Close < SMA - Multiplier * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when an opposite breakout triggers or stop-loss hits\n  - **Short**: Exit when an opposite breakout triggers or stop-loss hits\n- **Stops**: Yes, stop-loss at `Multiplier * ATR` from entry.\n- **Default Values**:\n  - `Period` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close > SMA + Multiplier * ATR\n  - **Short**: Close < SMA - Multiplier * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when an opposite breakout triggers or stop-loss hits\n  - **Short**: Exit when an opposite breakout triggers or stop-loss hits\n- **Stops**: Yes, stop-loss at `Multiplier * ATR` from entry.\n- **Default Values**:\n  - `Period` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2644": {
+    "id": 2644,
+    "name": "Multi Arbitration",
+    "family": "volatility",
+    "overview": "The **Multi Arbitration Strategy** is a StockSharp port of the MetaTrader \"Multi_arbitration 1.000\" expert advisor. The original script continuously evaluates existing buy and sell positions, adds new trades in the direction with weaker floating profit, and performs a global liquidation once overall profit targets are met. This C# implementation keeps the core decision logic while adapting it to StockSharp's netting portfolio model and high-level strategy API.\n\nThe strategy:\n- Opens an initial long position as soon as the first finished candle arrives.\n- Compares the unrealized profit of the active direction with the alternative direction to decide whether a reversal is required.\n- Forces a flat position when the configured profit target is exceeded or when position pressure grows beyond a configurable limit.\n- Uses only market orders (`BuyMarket` / `SellMarket`) to maintain simplicity and fast execution.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `TradeVolume` | Volume used for every market order. Represents the minimum lot size in the original EA. | `1` |\n| `ProfitForClose` | Profit threshold that triggers a global exit once exceeded. | `300` |\n| `MaxOpenPositions` | Maximum number of simultaneous positions allowed before the strategy forces a flatten. Acts as `limit - 15` equivalent. | `15` |\n| `CandleType` | Candle data type that synchronizes trade decisions. Default is 1-minute time frame. | `1 minute candles` |"
+   },
+   "4089": {
+    "id": 4089,
+    "name": "TST Pullback Reversal",
+    "family": "mean_reversion",
+    "overview": "The **TST Pullback Reversal Strategy** watches for aggressive intrabar reversals. It was converted from the original MetaTrader 4 expert advisor `TST.mq4` and rebuilt using the high-level StockSharp API. The method looks for candles where price has pulled sharply away from the candle open after setting an intraday extreme, then fades that move expecting mean reversion. The strategy trades both long and short and uses static stop-loss and take-profit levels measured in price steps.",
+    "details": "",
+    "parameters": "- `StopLossPoints` (default `500`): distance from entry to the protective stop, expressed in price steps.\n- `TakeProfitPoints` (default `100`): distance from entry to the profit target, expressed in price steps.\n- `GapPoints` (default `500`): minimum pullback between the candle extreme and the close required to generate a signal.\n- `OrderVolume` (default `0.1`): quantity sent with every new market order.\n- `CandleType` (default `1 hour`): timeframe of the candles supplied through `SubscribeCandles`.\n\nAll distance-based settings are multiplied by the instrument's `PriceStep`. If the security does not report a step the strategy falls back to `1`."
+   },
+   "2680": {
+    "id": 2680,
+    "name": "Multi Time Frame Trader",
+    "family": "other",
+    "overview": "This strategy recreates the original MQL \"Multi Time Frame Trader\" logic with StockSharp high-level APIs. It combines three\npolynomial regression channels (M1, M5 and H1) and only trades when the lower time frames test their channel extremes in the\ndirection suggested by the hourly slope.\n\nThe system continuously recomputes the regression channel upper, middle and lower bands on every finished candle. When the hourly\nupper band decreases, the bias is bearish; when it rises, the bias is bullish. Entries are triggered once the M5 and M1 candles\nreach the corresponding band and the directional filter agrees.\n\n## Core workflow\n\n- **Subscriptions**: the strategy listens to 1-minute, 5-minute and 1-hour candles simultaneously.\n- **Regression channel**: each subscription builds a polynomial regression line (degree 1-3) over `Bars` points and offsets it by\n  `StdMultiplier` standard deviations to obtain resistance and support bands.\n- **Slope estimation**: the channel slope is derived from the difference between the current upper band and the upper band `Bars`\n  candles ago, mirroring the `i-Regr` indicator behaviour.\n- **Directional filter**: the H1 slope defines whether only shorts (negative slope) or longs (positive slope) are allowed.\n\n## Entry logic\n\n### Short trades\n\n1. Hourly slope is negative.\n2. Latest 5-minute candle high touches or breaks the 5-minute regression resistance.\n3. Latest 1-minute candle high touches or breaks the 1-minute resistance.\n4. No existing short position is open (`Position >= 0`).\n5. A market sell order is sent, the stop loss is set half a channel width above the entry and the target equals the M5 midline.\n\n### Long trades\n\n1. Hourly slope is positive.\n2. Latest 5-minute candle low touches or breaks the 5-minute regression support.\n3. Latest 1-minute candle low touches or breaks the 1-minute support.\n4. No existing long position is open (`Position <= 0`).\n5. A market buy order is sent, the stop loss is placed half a channel width below the e",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Degree` | 1 | Polynomial order of the regression channel (1=linear, 2=parabolic, 3=cubic). |\n| `StdMultiplier` | 2.0 | Multiplier for the standard deviation that defines band width. |\n| `Bars` | 250 | Number of candles used for regression fitting and slope lookback. |\n| `Shift` | 0 | Horizontal shift for the regression evaluation point (clamped between 0 and `Bars - 1`). |\n| `UseTrading` | true | Disables all order generation when set to `false`, while the channel continues to update. |"
+   },
+   "993": {
+    "id": 993,
+    "name": "Long Short Exit Risk Management",
+    "family": "other",
+    "overview": "Template strategy showing how to handle long and short positions with percentage-based risk controls. It uses basic price equality triggers and optional time exits.\n\n## Details\n\n- **Entry Criteria**: Close price equals configured long or short value.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss, take profit, or time-based exit after N bars.\n- **Stops**: Percentage stop loss and take profit with optional trailing.\n- **Default Values**:\n  - `StopLossPercent` = 2\n  - `TakeProfitPercent` = 3\n  - `ExitBars` = 10\n  - `BarsToWait` = 10\n  - `MaxTradesPerDay` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close price equals configured long or short value.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss, take profit, or time-based exit after N bars.\n- **Stops**: Percentage stop loss and take profit with optional trailing.\n- **Default Values**:\n  - `StopLossPercent` = 2\n  - `TakeProfitPercent` = 3\n  - `ExitBars` = 10\n  - `BarsToWait` = 10\n  - `MaxTradesPerDay` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "816": {
+    "id": 816,
+    "name": "Function Logistic Equation",
+    "family": "other",
+    "overview": "This strategy applies the logistic equation to price changes over a period. When the positive logistic value crosses above half of the recent range it buys, and when the negative logistic value falls below the lower half it sells.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

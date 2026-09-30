@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3470,
+      "name": "MACross",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,8),sma(close,20))",
+      "exit_long": "crossbelow(sma(close,8),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(8)/SMA(20) crossover and inverse exit are translated exactly. The 20-pip stop and target, minimum-equity guard, money management, and finished-candle scheduling are not percentage/DSL fields."
+    },
+    {
+      "id": 1139,
+      "name": "Lorenzo SuperScalp",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 45 and close < bb_lower(close,20,2) * 1.02 and crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or rsi(close,14) > 55",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14), Bollinger(20,2), and MACD(12,26,9) retain the documented long thresholds and crossover. The 15-bar minimum re-entry delay, short-side filters, and no-stop rule are not all representable in a stateless long-only entry."
+    },
+    {
+      "id": 1838,
+      "name": "Exp Hull Trend",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),sma(ema(close,9),9))",
+      "exit_long": "crossbelow(ema(close,9),sma(ema(close,9),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9) and its SMA(9) are an explicit smooth-HMA proxy because the source supplies no Hull length; their bullish/bearish crosses translate the trend change. The exact Hull calculation, timeframe, and any unspecified protection are omitted."
+    },
+    {
+      "id": 274,
+      "name": "Volume Slope Breakout",
+      "family": "trend",
+      "entry_long": "zscore(sma(volume,20),20) > 2 and roc(sma(volume,20),1) > 0",
+      "exit_long": "zscore(sma(volume,20),20) < 0 or roc(sma(volume,20),1) < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A 20-bar volume z-score above the documented 2.0 multiplier with positive slope retains the breakout rule; the opposite reversion exits. The documented 2% stop is encoded, while the proprietary slope indicator and 5-minute timeframe are approximated."
+    },
+    {
+      "id": 72,
+      "name": "Doji Reversal",
+      "family": "trend",
+      "entry_long": "close > open - 0.001 * close and close < open + 0.001 * close and roc(close,3) < 0",
+      "exit_long": "close > open + 0.001 * close or close < open - 0.001 * close",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "A close within a 0.1% band of open after a three-bar decline is an explicit doji proxy, and a break beyond the band is the doji-extreme exit. The documented 1% stop is retained; exact candle classification and both-direction reversal are approximated."
+    },
+    {
+      "id": 3114,
+      "name": "LBS",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1) and close > open",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish close above the previous candle high is the market proxy for the two-sided stop breakout. Trading-hour gates, freeze buffer, pending-order cancellation, 50-pip stop, trailing, and pip targets are not expressible."
+    },
+    {
+      "id": 2498,
+      "name": "AIS1 EURUSD Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break with EMA(20) trend agreement approximates the previous-daily-range continuation entry. Daily/4-hour timeframe mapping, stop/take factors, trailing range, risk sizing, and cooldown are unavailable."
+    },
+    {
+      "id": 2128,
+      "name": "Momentum Candle Sign",
+      "family": "momentum",
+      "entry_long": "crossbelow(roc(open,12),roc(close,12))",
+      "exit_long": "crossabove(roc(open,12),roc(close,12))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(open,12) versus ROC(close,12) preserves the documented open/close momentum crossover and opposite exit. The default 12-hour timeframe is not modeled, and no stops are documented."
+    },
+    {
+      "id": 2877,
+      "name": "EA Stochastic",
+      "family": "volatility",
+      "entry_long": "rsi(close,5) < 80 and roc(rsi(close,5),3) < 0",
+      "exit_long": "rsi(close,5) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(5)<80 with a falling three-bar RSI proxy represents the stochastic remaining below the upper level; RSI>50 is the recovery exit. Stochastic K/D smoothing, exact compared-bar state, pip stops/targets, and trailing are not expressible."
+    },
+    {
+      "id": 1272,
+      "name": "RSI Long Position DAX 2 Hours Dow Jones 1 Hour",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),35)",
+      "exit_long": "rsi(close,14) > 55 or crossbelow(rsi(close,14),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RSI(14) cross above oversold 35, target 55, and stop 30 are translated directly. The strategy is long-only and the source explicitly has no percentage stop; its multi-timeframe labels do not add DSL conditions."
+    }
+  ]
+}

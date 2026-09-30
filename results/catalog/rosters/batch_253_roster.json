@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 796,
+      "name": "Fine-tune Inputs Gann + Laplace Smooth Volume Zone Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(volume,5) - ema(volume,20),3), 0)",
+      "exit_long": "crossbelow(ema(ema(volume,5) - ema(volume,20),3), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The volume oscillator is the documented fast-minus-slow volume average smoothed by a third EMA, and a documented Threshold is read as the zero line the smoothed oscillator must cross upward. No parameter values are documented, so 5/20/3 and the zero threshold are explicit fallbacks, and the documented Close All behaviour becomes the mirror cross exit."
+    },
+    {
+      "id": 111,
+      "name": "Stochastic Failure Swing",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14), 30) and bars_since(rsi(close,14) < 30) < 10 and close > donchian_low_prev(low,10)",
+      "exit_long": "crossbelow(rsi(close,14), 50)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Stochastic %K/%D are unavailable, so RSI(14) supplies the oversold 20 reading and its recross above 30, with the higher low represented by price holding above the prior 10-bar low and bars_since giving the documented failure-swing look-back. The documented 2% stop is encoded; the 15-minute candle type and the prior-swing-level exit are approximated by the RSI 50 mirror."
+    },
+    {
+      "id": 1949,
+      "name": "Ozymandias Trend",
+      "family": "trend",
+      "entry_long": "crossabove(sma(low,20) + 0.5 * atr(high,low,close,20), sma(high,20) - 0.5 * atr(high,low,close,20))",
+      "exit_long": "crossbelow(sma(low,20) + 0.5 * atr(high,low,close,20), sma(high,20) - 0.5 * atr(high,low,close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Ozymandias buy line (average of lows plus ATR) crossing above its sell line (average of highs minus ATR) is the documented bullish direction switch, and the reverse cross closes. The documented Length 2 is degenerate on daily bars, so 20 and the 0.5 ATR factor are explicit fallbacks; TakeProfitPoints 2000 and StopLossPoints 1000 are point units with no percentage field."
+    },
+    {
+      "id": 1396,
+      "name": "Ta",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and close > donchian_high_prev(high,10) and rsi(close,14) > 50 and adx(high,low,close,14) > 20 and ema(roc(close,5),5) > 0",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD cross, RSI above 50 and ADX above 20 are kept, the resistance pivot becomes the prior 10-bar high, and +DI > -DI is proxied by a smoothed five-bar rate of change because the DSL's adx() returns only the ADX line. The two partial take-profits and the stop have no documented values, so the opposite MACD cross exits and both percentage fields stay null."
+    },
+    {
+      "id": 3777,
+      "name": "SurefireThing",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,1) - 1.1 * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+      "exit_long": "close > donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pending buy-stop level RangeMultiplier 1.1 times the previous candle range below the prior close is approximated by testing whether the low reached the prior range minus that multiple, and the mean-reversion exit is a close back above the prior low. TakeProfitPoints 10 and StopLossPoints 15 are price steps rather than percentages, and the daily exposure reset, paired pending orders and order sizing are not expressible."
+    },
+    {
+      "id": 2280,
+      "name": "ColorX2MA Digit",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,12), sma(sma(close,12),5))",
+      "exit_long": "crossbelow(sma(close,12), sma(sma(close,12),5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented defaults FastLength 12 and SlowLength 5 are used literally, the slow line being the SMA of the fast one, and the documented colour-driven crossover is the entry with the opposite cross as exit. The slope-colour state and short branch are dropped for a long-only schema, and no stops are documented."
+    },
+    {
+      "id": 1753,
+      "name": "VR Setka Grid",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a grid engine: it opens a sequence of orders every Distance points against the position, optionally with a martingale volume multiplier, and closes the basket at the average entry plus Correction. Multiple simultaneous orders, average-price targets and session-range deviation state have no single-symbol long-signal equivalent, so the never-true guard is used rather than inventing one."
+    },
+    {
+      "id": 3445,
+      "name": "Universal Signal Demo",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,21) and rsi(close,14) > 50 and macd(close,12,26) > macd_signal(close,12,26,9) and close > bb_mid(close,20) and close > open and volume_ratio(volume,20) > 1",
+      "exit_long": "ema(close,9) < ema(close,21) and rsi(close,14) < 50 and macd(close,12,26) < macd_signal(close,12,26,9) and close < bb_mid(close,20) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The eight weighted patterns are not documented individually, so the named components (trend alignment, RSI momentum, MACD histogram, Bollinger positioning, candle direction, volume expansion) are applied as an equally weighted agreement and the composite-score exit becomes their bearish mirror. No weights, thresholds or lengths are documented, so 9/21, 14, 12/26/9, 20 and the volume_ratio baseline are fallbacks; PriceLevel pending orders, SignalExpiration and StopLevel/TakeLevel are unsupported."
+    },
+    {
+      "id": 2950,
+      "name": "GBP 9 AM Breakout",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry is purely calendar-driven: at LookHour/LookMinute it brackets price with buy-stop and sell-stop orders at fixed pip distances and force-closes at CloseHour, so there is no market-derived long condition. The DSL has no clock or pending-order field, and the pip distances have no percentage equivalent, so the never-true guard is used."
+    },
+    {
+      "id": 4224,
+      "name": "Daily Trend Reversal",
+      "family": "trend",
+      "entry_long": "close > open and zscore(close,14) > 0 and close > donchian_high_prev(high,1)",
+      "exit_long": "close < open or zscore(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The daily bias becomes a close above the session open with a positive CCI-style deviation, and a close above the prior day's high stands in for the documented step filter; CCI is proxied by a 14-bar close z-score because CCI Period has no documented value. The documented reversal exit is the mirror filter flip, while the GMT session window, pip take-profit/stop, Profit Stop and Holding Hours cannot be expressed on one daily series."
+    }
+  ]
+}

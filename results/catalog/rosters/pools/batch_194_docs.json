@@ -1,0 +1,98 @@
+{
+ "batch_194": {
+  "strategy_ids": [
+   4167,
+   266,
+   2101,
+   3034,
+   1438,
+   3371,
+   287,
+   1102,
+   566,
+   1024
+  ],
+  "docs": {
+   "4167": {
+    "id": 4167,
+    "name": "Six Indicators Momentum",
+    "family": "trend",
+    "overview": "This strategy reproduces the MetaTrader 4 expert advisor **6xIndics_M** using the StockSharp high-level API. It mixes six momentum inputs derived from Bill Williams' Accelerator Oscillator (AC) and Awesome Oscillator (AO) and feeds them through a selectable decision matrix. A slow stochastic oscillator acts as the final filter. Only one position is open at a time; martingale money management, stop-loss/take-profit and optional trailing stops emulate the original behaviour.\n\n## How the strategy works\n\n1. **Data subscription** – the strategy subscribes to the configured candle series (`CandleType`, default 1-hour bars).\n2. **Indicators**\n   - Awesome Oscillator calculates the difference between the 5- and 34-period simple moving averages of the median price.\n   - A 5-period simple moving average of the AO produces the Accelerator Oscillator values (AC).\n   - A Stochastic Oscillator with parameters 5/5/5 supplies the %K line that is delayed by one closed candle (MT4 shift = 1).\n3. **Six indicator slots** – every finished candle fills the following buffers:\n   - Slot 0: AC value shifted by 1 candle (`AC[1]`).\n   - Slot 1: AC value shifted by 10 candles (`AC[10]`).\n   - Slot 2: AC value shifted by 20 candles (`AC[20]`).\n   - Slot 3: AO momentum, i.e. `AO[0] - AO[shift]`, where the shift is configurable (`AoMomentumShift`).\n   - Slot 4: AC momentum `AC[0] - AC[shift #1]` (`AcPrimaryShift`).\n   - Slot 5: AC momentum `AC[0] - AC[shift #2]` (`AcSecondaryShift`).\n4. **Selectable signal matrix** – parameters `FirstSourceIndex` … `SixthSourceIndex` pick which slot feeds the six Boolean checks originally named `k`, `u`, `t`, `e`, `r`, `o`. The same indices are reused both for generating entries and for closing trades when `CloseOnReverseSignal` is enabled.\n5. **Entry logic**\n   - **Buy** when the chosen slots satisfy: `A > 0`, `B > 0.0001 × Sensitivity`, `C > 0.0002 × Sensitivity`, `D < 0`, `E < 0.0001 × Sensitivity`, `F < 0.0002 × Sensitivity`, and the previous stochastic %K is",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `AllowBuy`, `AllowSell` | Enable or disable long/short entries. | `true` |\n| `CloseOnReverseSignal` | Close the current position when an opposite signal appears while the trade is in profit. | `false` |\n| `FirstSourceIndex` … `SixthSourceIndex` | Choose which of the six indicator slots feeds each logical check. Values outside 0–5 are clamped. | `1,2,3,4,3,4` |\n| `AoMomentumShift` | Number of bars between the current AO value and the comparison used in slot 3. | `10` |\n| `AcPrimaryShift`, `AcSecondaryShift` | Number of bars between the current AC value and the comparisons for slots 4 and 5. | `10` / `10` |\n| `SensitivityMultiplier` | Multiplier applied to the 0.0001 and 0.0002 thresholds used in the slot checks. | `1.0` |\n| `TakeProfitPips`, `StopLossPips` | Exit distances expressed in MetaTrader-style pips (they are rescaled by the tick size). | `300` / `300` |\n| `UseTrailingStop` | Enable the trailing stop logic. | `false` |\n| `TrailingStopPips` | Distance between price and trailing stop, in pips. | `300` |\n| `RequireProfitForTrailing` | When enabled, the trailing stop activates only after the trade gains an extra `LockProfitPips`. | `false` |\n| `LockProfitPips` | Additional profit (in pips) that must be locked before the trailing stop starts moving. | `300` |\n| `Volume` | Base order size. | `0.1` |\n| `UseMartingale` | Enable martingale position sizing. | `false` |\n| `CandleType` | Candle series used for all calculations. | `TimeSpan.FromHours(1)` |"
+   },
+   "266": {
+    "id": 266,
+    "name": "VWAP Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 133%. It performs best in the crypto market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `LookbackPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2101": {
+    "id": 2101,
+    "name": "Linear Regression Slope V1",
+    "family": "trend",
+    "overview": "Uses the slope of a linear regression and its shifted copy to detect trend changes.\n\n## Details\n- **Data**: Price candles.\n- **Entry**:\n  - Buy when the slope crosses below its shifted value.\n  - Sell when the slope crosses above its shifted value.\n- **Exit**: Opposite signal closes the position.\n- **Instruments**: Any instruments.\n- **Risk**: No built-in stop or target.\n",
+    "details": "- **Data**: Price candles.\n- **Entry**:\n  - Buy when the slope crosses below its shifted value.\n  - Sell when the slope crosses above its shifted value.\n- **Exit**: Opposite signal closes the position.\n- **Instruments**: Any instruments.\n- **Risk**: No built-in stop or target.",
+    "parameters": ""
+   },
+   "3034": {
+    "id": 3034,
+    "name": "Freeman ATR MA RSI Grid",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader \"freeman\" expert advisor using StockSharp's high level API. It layers multiple market positions while a trend measured by a moving average slope stays aligned with an RSI confirmation. Every entry and exit distance is defined in pips and converted to price units using the instrument tick size so the behaviour matches the original forex implementation.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Timeframe used for indicator calculations. |\n| `MaxPositions` | Maximum number of simultaneously open positions (sum of long and short). |\n| `DistancePips` | Minimum pip distance between consecutive entries in the same direction. |\n| `AtrPeriod` | Averaging period for the ATR indicator. |\n| `AtrStopLossMultiplier` | ATR multiplier for the protective stop. `0` disables the stop. |\n| `AtrTakeProfitMultiplier` | ATR multiplier for the profit target. `0` disables the target. |\n| `UseTrendFilter` | Enables the moving average slope filter. |\n| `DistanceFromMaPips` | Minimum pip distance between price and the moving average when the trend filter is active. |\n| `MaPeriod`, `MaShift`, `MaMethod`, `MaPriceType` | Moving average parameters mirroring the MetaTrader inputs. |\n| `UseRsiFilter` | Enables the RSI confirmation filter. |\n| `RsiLevelUp`, `RsiLevelDown`, `RsiPeriod`, `RsiPriceType` | RSI configuration with applied price selection. |\n| `TrailingStopPips`, `TrailingStepPips` | Trailing stop distance and step measured in pips. |\n| `CurrentBarOffset` | Offset applied when reading indicator values, emulating the `CurrentBar` input from the expert advisor. |"
+   },
+   "1438": {
+    "id": 1438,
+    "name": "Timeframe",
+    "family": "trend",
+    "overview": "EMA crossover strategy with timeframe aware risk management.\n\nTesting indicates an average annual return of about 31%. It performs best in the crypto market.\n\nThe strategy buys when a fast EMA crosses above a slower EMA and the long term trend is bullish. Short entries occur on the opposite cross. Trading hours and a simple ADX filter help to avoid low momentum periods. Risk is managed with percentage based take profit and stop loss.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: EMA9 crosses above EMA20 while EMA50 is above EMA200.\n  - **Short**: EMA9 crosses below EMA20 while EMA50 is below EMA200.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Stop loss or take profit.\n  - **Short**: Stop loss or take profit.\n- **Stops**: Yes, optional trailing stop.\n- **Default Values**:\n  - `TakeProfitPercent` = 1.5\n  - `StopLossPercent` = 1.0\n  - `TrailingPercent` = 0.5\n  - `StartHour` = 15\n  - `EndHour` = 20\n  - `CooldownBars` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA, RSI, ADX\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: EMA9 crosses above EMA20 while EMA50 is above EMA200.\n  - **Short**: EMA9 crosses below EMA20 while EMA50 is below EMA200.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Stop loss or take profit.\n  - **Short**: Stop loss or take profit.\n- **Stops**: Yes, optional trailing stop.\n- **Default Values**:\n  - `TakeProfitPercent` = 1.5\n  - `StopLossPercent` = 1.0\n  - `TrailingPercent` = 0.5\n  - `StartHour` = 15\n  - `EndHour` = 20\n  - `CooldownBars` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA, RSI, ADX\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3371": {
+    "id": 3371,
+    "name": "PricerEA",
+    "family": "volatility",
+    "overview": "The **PricerEA Strategy** recreates the behaviour of the MetaTrader 4 expert \"PricerEA v1.0\" using the StockSharp high-level API.\nIt places up to four pending orders (buy stop, sell stop, buy limit and sell limit) at manually defined price levels. Once any\npending order is filled the strategy attaches protective stop-loss and take-profit orders, optionally enabling a trailing stop and\nbreak-even adjustment to follow the original Expert Advisor.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `BuyStopPrice`, `SellStopPrice`, `BuyLimitPrice`, `SellLimitPrice` | Absolute prices for the corresponding pending orders. A value of `0` disables the order. |\n| `TakeProfitPoints` | Distance from the entry price to the take-profit order, measured in price points (`Security.PriceStep`). |\n| `StopLossPoints` | Distance from the entry price to the stop-loss order, also measured in price points. |\n| `EnableTrailingStop` | Enables the trailing stop logic. |\n| `TrailingStepPoints` | Minimal movement (in points) required before the trailing stop is moved. |\n| `EnableBreakEven` | Enables the break-even rule which lifts the stop above/below the entry after sufficient profit. |\n| `BreakEvenTriggerPoints` | Extra profit (points) required before the stop is moved for break-even. |\n| `PendingExpiryMinutes` | Lifetime of the pending orders in minutes. `0` keeps them alive until filled or manually cancelled. |\n| `VolumeMode` | Chooses between manual volume and automatic sizing. |\n| `RiskFactor` | Risk multiplier used by automatic sizing (mirrors the MQL input). |\n| `ManualVolume` | Fixed lot size used when `VolumeMode` is set to `Manual`. |"
+   },
+   "287": {
+    "id": 287,
+    "name": "Stochastic Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the Stochastic returns toward balance. Starting parameter `StochPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `StochKPeriod` = 3\n  - `StochDPeriod` = 3\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `StochKPeriod` = 3\n  - `StochDPeriod` = 3\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1102": {
+    "id": 1102,
+    "name": "Multi-Timeframe Parabolic SAR",
+    "family": "other",
+    "overview": "Combines Parabolic SAR signals from multiple timeframes. Long trades trigger when price stays above the SAR levels selected by the parameters. Short trades appear when price falls below the chosen SARs. Optional stop loss, trailing stop and take profit are available.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price above SAR according to `LongSource` setting.\n  - **Short**: Price below SAR according to `ShortSource` setting.\n- **Exit Criteria**:\n  - Opposite SAR crossover or protection triggers.\n- **Indicators**:\n  - Parabolic SAR on current timeframe\n  - Optional Parabolic SAR on higher and lower timeframes\n- **Stops**: Optional stop loss, trailing stop, take profit via StartProtection.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `StopLossPercent` = 1\n  - `TrailingPercent` = 0.5\n  - `TakeProfitPercent` = 2\n- **Filters**:\n  - Timeframe: main 5m, higher 1d, lower 1m\n  - Indicators: Parabolic SAR\n  - Stops: optional\n  - Complexity: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price above SAR according to `LongSource` setting.\n  - **Short**: Price below SAR according to `ShortSource` setting.\n- **Exit Criteria**:\n  - Opposite SAR crossover or protection triggers.\n- **Indicators**:\n  - Parabolic SAR on current timeframe\n  - Optional Parabolic SAR on higher and lower timeframes\n- **Stops**: Optional stop loss, trailing stop, take profit via StartProtection.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `StopLossPercent` = 1\n  - `TrailingPercent` = 0.5\n  - `TakeProfitPercent` = 2\n- **Filters**:\n  - Timeframe: main 5m, higher 1d, lower 1m\n  - Indicators: Parabolic SAR\n  - Stops: optional\n  - Complexity: Moderate",
+    "parameters": ""
+   },
+   "566": {
+    "id": 566,
+    "name": "Bias Ratio",
+    "family": "trend",
+    "overview": "The Bias Ratio strategy trades breakouts based on price deviation from long-term moving averages. It compares the close price to both an exponential moving average (EMA) and a simple moving average (SMA). A long position is opened when price exceeds the EMA by a specified ratio, while a short position is opened when price falls below the SMA by the same ratio.\n\n## Details\n\n- **Entry Criteria**:\n  - `close / EMA >= 1 + BiasThreshold` → enter long.\n  - `close / SMA <= 1 - BiasThreshold` → enter short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Opposite signal closes and reverses positions.\n- **Stops**: None.\n- **Default Values**:\n  - `MaPeriod` = 200\n  - `BiasThreshold` = 0.025\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - `close / EMA >= 1 + BiasThreshold` → enter long.\n  - `close / SMA <= 1 - BiasThreshold` → enter short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Opposite signal closes and reverses positions.\n- **Stops**: None.\n- **Default Values**:\n  - `MaPeriod` = 200\n  - `BiasThreshold` = 0.025\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1024": {
+    "id": 1024,
+    "name": "Martin Strategy - No Loss Exit V3",
+    "family": "other",
+    "overview": "This martingale averaging strategy adds to a long position whenever price drops by a configured percentage from the first entry. Each new order increases the cash amount by a multiplier and adjusts the average price. The position is closed when the candle high reaches the average price plus the take-profit percentage, ensuring exits only in profit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Flat` → buy for `Initial Cash`\n  - **Add**: `Price <= EntryPrice * (1 - PriceStep% * orderCount)` && `orderCount < MaxOrders`\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - `High >= AvgPrice * (1 + TakeProfit%)`\n- **Stops**: No\n- **Default Values**:\n  - `Initial Cash` = 100\n  - `Max Orders` = 20\n  - `Price Step %` = 1.5\n  - `Take Profit %` = 1\n  - `Increase Factor` = 1.05\n- **Filters**:\n  - Category: Averaging down\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Flat` → buy for `Initial Cash`\n  - **Add**: `Price <= EntryPrice * (1 - PriceStep% * orderCount)` && `orderCount < MaxOrders`\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - `High >= AvgPrice * (1 + TakeProfit%)`\n- **Stops**: No\n- **Default Values**:\n  - `Initial Cash` = 100\n  - `Max Orders` = 20\n  - `Price Step %` = 1.5\n  - `Take Profit %` = 1\n  - `Increase Factor` = 1.05\n- **Filters**:\n  - Category: Averaging down\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

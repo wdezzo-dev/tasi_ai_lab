@@ -1,0 +1,98 @@
+{
+ "batch_212": {
+  "strategy_ids": [
+   3243,
+   2360,
+   4203,
+   4071,
+   1817,
+   786,
+   1304,
+   845,
+   1329,
+   3472
+  ],
+  "docs": {
+   "3243": {
+    "id": 3243,
+    "name": "JBrainTrend1Stop",
+    "family": "trend",
+    "overview": "The **JBrainTrend1Stop Strategy** is a StockSharp port of the MetaTrader 5 expert advisor `Exp_JBrainTrend1Stop`. It combines two Average True Range measurements, a Stochastic oscillator and Jurik moving averages to detect BrainTrading trend reversals. Whenever the Jurik-smoothed price makes a sufficiently large swing and the Stochastic leaves its neutral zone, the strategy switches bias, updates the BrainTrend stop line and (optionally) reverses the net position after a configurable delay.\n\n## Trading logic\n\n1. Subscribe to candles defined by `CandleType` and feed them into:\n   - A primary `AverageTrueRange` with length `AtrPeriod`.\n   - An extended `AverageTrueRange` with period `AtrPeriod + StopDPeriod`.\n   - A `StochasticOscillator` with `StochasticPeriod` and a single-bar %K smoothing (to match the MT5 settings).\n   - Three `JurikMovingAverage` instances (high, low and close) configured with `JmaLength` and `JmaPhase`.\n2. For each finished candle compute:\n   - `range = ATR / 2.3` (matching the original constant `d = 2.3`).\n   - `range1 = ATR_extended * 1.5` (matching `s = 1.5`).\n   - `val3 = |JMA_close - JMA_close[shift 2]|` which reproduces the MT5 buffer difference.\n3. When `val3 > range` and the Stochastic leaves its neutral band:\n   - If `%K < 47` the strategy enters the bearish BrainTrend state (`_trendState = -1`), seeds the sell stop at `JMA_high + range1 / 4` and raises a **sell** signal.\n   - If `%K > 53` the strategy enters the bullish state (`_trendState = 1`), seeds the buy stop at `JMA_low - range1 / 4` and raises a **buy** signal.\n4. While the state remains unchanged the BrainTrend stop is trailed toward price by `range1` (`JMA_high + range1` for bearish trends, `JMA_low - range1` for bullish trends).\n5. Signals are released after `SignalBar` completed bars. Upon execution:\n   - A buy signal closes short positions (if `SellClose` is enabled) and optionally opens a new long (if `BuyOpen` is enabled).\n   - A sell signal closes long positions (if `Bu",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle series processed by the strategy. | H4 (4-hour time frame) |\n| `AtrPeriod` | Length of the primary ATR used for the BrainTrend trigger. | 7 |\n| `StochasticPeriod` | Period for %K/%D of the Stochastic oscillator (single-bar %K smoothing). | 9 |\n| `StopDPeriod` | Extra bars added to the secondary ATR period (`AtrPeriod + StopDPeriod`). | 3 |\n| `JmaLength` | Jurik moving average length applied to high/low/close. | 7 |\n| `JmaPhase` | Phase argument forwarded to the Jurik moving averages (clamped to [-100; 100]). | 100 |\n| `SignalBar` | Number of completed bars to wait before firing a new signal. | 1 |\n| `BuyOpen` / `SellOpen` | Allow entering long/short positions after a signal. | `true` |\n| `BuyClose` / `SellClose` | Allow closing existing long/short positions on an opposite signal. | `true` |\n\nUse the strategy's `Volume` property or broker configuration to control order size."
+   },
+   "2360": {
+    "id": 2360,
+    "name": "ColorXvaMA Digit StDev",
+    "family": "trend",
+    "overview": "This strategy trades based on how far the price deviates from an exponential moving average (EMA). Two deviation multipliers (K1 and K2) define inner and outer bands calculated from the standard deviation of price.\n\nWhen the price rises above the EMA by K2 standard deviations, the strategy enters a long position. When the price falls below the EMA by K2 standard deviations, it enters a short position. Existing positions are closed once the deviation returns inside the inner band defined by K1.",
+    "details": "",
+    "parameters": "- **EMA Length** – period of the exponential moving average.\n- **StdDev Length** – period for the standard deviation calculation.\n- **Deviation K1** – multiplier for the inner band used to exit positions.\n- **Deviation K2** – multiplier for the outer band used to open positions.\n- **Candle Type** – timeframe of the candles."
+   },
+   "4203": {
+    "id": 4203,
+    "name": "Early Open Trend",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 4 expert advisor `earlyOpenTrend.mq4` located in `MQL/9826`.\n- Trades once per direction per day by comparing the current price with the daily open after a wick-based confirmation.\n- Mimics the original time-window logic, including the daylight-saving offset that shifts the broker session by one or two hours.\n- Uses StockSharp high-level API with candle subscriptions, automated position protection, and built-in session handling.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `OrderVolume` | 0.1 | Size of each market order. |\n| `OrderType` | 0 | Direction filter: `0` = both, `1` = long only, `2` = short only. |\n| `RangeFilterPips` | 1 | Minimum wick distance between the daily open and the opposite extreme before entering. |\n| `TakeProfitPips` | 100 | Take-profit distance in pips (0 disables). |\n| `StopLossPips` | 1000 | Stop-loss distance in pips (0 disables). |\n| `StartHour` | 7 | Session start hour before DST subtraction. |\n| `EndHour` | 18 | Session end hour before DST subtraction. |\n| `ClosingHour` | 20 | Hour used to flatten open trades. |\n| `HoldingHours` | 0 | Maximum holding time in hours (0 disables). |\n| `SummerTimeStartDay` | 87 | First day-of-year that activates the two-hour DST offset. |\n| `WinterTimeStartDay` | 297 | Day-of-year when the offset returns to one hour. |\n| `CandleType` | 15-minute time frame | Candle series used for calculations. |"
+   },
+   "4071": {
+    "id": 4071,
+    "name": "SVOS EURJPY D1",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader 4 expert advisor **SVOS_EURJPY_D1**. It operates on daily candles for EURJPY and\ncombines a regime classifier with pattern recognition and indicator filters. The Vertical Horizontal Filter (VHF) distinguishes\nbetween trending and ranging market states. When the market is trending the strategy relies on the MACD histogram (OSMA) slope,\nwhile in ranging conditions it falls back to the Stochastic oscillator. Candlestick patterns such as engulfing bars and\nmorning/evening stars are used to close positions aggressively against unfavourable price action.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `LotSize` | Base order size expressed in lots. | `0.1` |\n| `RiskBoost` | Multiplier applied to the lot size when the EMA trend filter is aligned. | `3` |\n| `TakeProfitPips` | Take-profit distance in pips. | `350` |\n| `StopLossPips` | Stop-loss distance in pips. | `90` |\n| `TrailingStopPips` | Trailing-stop distance in pips (always active). | `150` |\n| `StochKPeriod` | %K length of the Stochastic oscillator. | `8` |\n| `StochDPeriod` | %D length of the Stochastic oscillator. | `3` |\n| `StochSlowing` | Smoothing factor applied to %K. | `3` |\n| `StdDevPeriod` | Lookback window for the standard deviation filter. | `20` |\n| `StdDevMinimum` | Minimal standard deviation required before new trades can open. | `0.3` |\n| `VhfPeriod` | Length of the Vertical Horizontal Filter. | `20` |\n| `VhfThreshold` | Regime threshold; higher values denote trending markets. | `0.4` |\n| `MaxTrendOrders` | Maximum number of simultaneously open orders during trends. | `4` |\n| `MaxRangeOrders` | Maximum number of simultaneously open orders during ranges. | `2` |\n| `MacdFastLength` | Fast EMA length inside MACD. | `10` |\n| `MacdSlowLength` | Slow EMA length inside MACD. | `25` |\n| `MacdSignalLength` | Signal EMA length for MACD. | `5` |\n| `DojiDivisor` | Ratio used to flag doji candles (body smaller than range / divisor). | `8.5` |\n| `CandleType` | Candle type used for analysis (daily by default). | `1 day` |\n| `PipSizeOverride` | Optional pip-size override; `0` enables automatic detection from `Security.PriceStep`. | `0` |"
+   },
+   "1817": {
+    "id": 1817,
+    "name": "Liquidex V1",
+    "family": "trend",
+    "overview": "Liquidex V1 is a breakout scalping strategy converted from the original MQL expert advisor. It combines a **range filter** and a **weighted moving average (WMA)** to identify short‑term opportunities.\n\n## Trading Logic\n1. For every finished candle the strategy measures its range (`high - low`).\n2. If the candle range is smaller than `RangeFilter`, the candle is ignored.\n3. A WMA with period `MaPeriod` is calculated using closing prices.\n4. When the candle opens below the WMA and closes above it, a **buy** market order is sent.\n5. When the candle opens above the WMA and closes below it, a **sell** market order is sent.\n6. Each position is protected by a stop loss defined in `StopLoss`.\n\n## Parameters\n- `RangeFilter` – minimum candle range in price units required to trade.\n- `MaPeriod` – number of periods for the weighted moving average.\n- `StopLoss` – protective stop loss in points.\n- `CandleType` – candle series used for analysis.\n\nThe strategy uses `Strategy.Volume` as order size and reverses the position when an opposite signal appears.\n",
+    "details": "",
+    "parameters": "- `RangeFilter` – minimum candle range in price units required to trade.\n- `MaPeriod` – number of periods for the weighted moving average.\n- `StopLoss` – protective stop loss in points.\n- `CandleType` – candle series used for analysis.\n\nThe strategy uses `Strategy.Volume` as order size and reverses the position when an opposite signal appears."
+   },
+   "786": {
+    "id": 786,
+    "name": "Fibonacci Retracement Strategy for Crypto",
+    "family": "other",
+    "overview": "This strategy trades using Fibonacci retracement levels calculated from the highest and lowest prices over a lookback period.\n\n- Enters long when the price crosses above the 61.8% level.\n- Enters short when the price crosses below the 38.2% level.\n- Exits long when the price reaches the 23.6% level.\n- Exits short when the price reaches the 78.6% level.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1304": {
+    "id": 1304,
+    "name": "Simple Fibonacci Retracement",
+    "family": "other",
+    "overview": "Uses Fibonacci retracement levels derived from the highest high and lowest low over a lookback window. When price crosses a selected Fibonacci level, the strategy enters a position and places fixed pip-based take profit and stop loss orders.\n\n## Details\n\n- **Entry**: Cross above or below the chosen Fibonacci level.\n- **Exit**: Fixed take profit or stop loss.\n- **Indicators**: Highest, Lowest.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 100\n  - `TakeProfitPips` = 50\n  - `StopLossPips` = 20\n- **Direction**: Both.\n",
+    "details": "- **Entry**: Cross above or below the chosen Fibonacci level.\n- **Exit**: Fixed take profit or stop loss.\n- **Indicators**: Highest, Lowest.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 100\n  - `TakeProfitPips` = 50\n  - `StopLossPips` = 20\n- **Direction**: Both.",
+    "parameters": ""
+   },
+   "845": {
+    "id": 845,
+    "name": "Gold Friday Anomaly",
+    "family": "other",
+    "overview": "This strategy buys at the first Friday candle within a specified date range and exits after holding a fixed number of bars.\n\n## Details\n\n- **Entry Criteria:** Buy on first Friday candle within start/end dates.\n- **Exit Criteria:** Close position after holding N bars (default 4).\n- **Long/Short:** Long only.\n- **Indicators:** None.\n- **Stops:** None.\n- **Timeframe:** Configurable candle type (1 hour by default).\n- **Category:** Time-based.\n- **Complexity:** Low.\n",
+    "details": "- **Entry Criteria:** Buy on first Friday candle within start/end dates.\n- **Exit Criteria:** Close position after holding N bars (default 4).\n- **Long/Short:** Long only.\n- **Indicators:** None.\n- **Stops:** None.\n- **Timeframe:** Configurable candle type (1 hour by default).\n- **Category:** Time-based.\n- **Complexity:** Low.",
+    "parameters": ""
+   },
+   "1329": {
+    "id": 1329,
+    "name": "Spearman Rank Correlation Coefficient",
+    "family": "other",
+    "overview": "This pair trading strategy measures the Spearman rank correlation between two securities. When the correlation exceeds a positive threshold the strategy goes short the first security and long the second. When it drops below the negative threshold it takes the opposite position. Positions are closed when the correlation returns toward zero.\n\n## Details\n\n- **Entry Criteria:**\n  - **Long First / Short Second**: correlation < -Threshold.\n  - **Short First / Long Second**: correlation > Threshold.\n- **Long/Short**: Pair trading.\n- **Exit Criteria:**\n  - Correlation absolute value < Threshold / 2.\n- **Stops**: No.\n- **Default Values:**\n  - `CorrelationPeriod` = 10\n  - `Threshold` = 0.8\n- **Filters:**\n  - Category: Correlation\n  - Direction: Both\n  - Indicators: Spearman Rank Correlation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:**\n  - **Long First / Short Second**: correlation < -Threshold.\n  - **Short First / Long Second**: correlation > Threshold.\n- **Long/Short**: Pair trading.\n- **Exit Criteria:**\n  - Correlation absolute value < Threshold / 2.\n- **Stops**: No.\n- **Default Values:**\n  - `CorrelationPeriod` = 10\n  - `Threshold` = 0.8\n- **Filters:**\n  - Category: Correlation\n  - Direction: Both\n  - Indicators: Spearman Rank Correlation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3472": {
+    "id": 3472,
+    "name": "Close Orders Risk Control",
+    "family": "other",
+    "overview": "The **Close Orders Strategy** is a risk-management utility that mirrors the behaviour of the original MQL expert advisor *CloseOrders.mq4*. It continuously monitors the floating profit and loss of open positions and automatically liquidates matching orders once either the profit target or the cut-loss threshold is reached. This makes it suitable for protecting a portfolio or synchronising exits across multiple strategies.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| **Target Profit Money** | Floating profit (in account currency) that triggers the liquidation of matching orders. Must be greater than zero. |\n| **Cut Loss Money** | Negative floating PnL (in account currency) that forces liquidation. A value of `0` disables the loss-based exit. |\n| **Magic Number** | Optional strategy identifier. Leave empty to manage every open position; otherwise only positions whose `StrategyId` equals the supplied value are affected. |\n| **Candle Type** | Candle series used to trigger periodic profit checks. Adjust the timeframe when higher-frequency monitoring is required. |"
+   }
+  }
+ }
+}

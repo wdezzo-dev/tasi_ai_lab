@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1895,
+      "name": "Renko Live Charts Pimped",
+      "family": "trend",
+      "entry_long": "close > ema(close,24) + atr(high,low,close,24) and close > open",
+      "exit_long": "close < ema(close,24) - atr(high,low,close,24) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Renko bars do not exist in this engine, so a brick step measured as one documented AtrPeriod=24 unit away from the base line stands in for the direction flip. BoxSize=10m and UseAtrMa/AtrMaPeriod=120 have no expressible price equivalent, and the docs state no stops."
+    },
+    {
+      "id": 2979,
+      "name": "Exp Trend Intensity Index",
+      "family": "trend",
+      "entry_long": "crossbelow(zscore(close,10), 2)",
+      "exit_long": "crossabove(zscore(close,10), -2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Leaving the high zone opens the long and leaving the low zone closes it, so the normalized price-minus-average intensity stands in for TII with the PriceMaLength fallback of 10. HighLevel and LowLevel have no documented values so the 2 and -2 zone edges are fallbacks, and the SignalBar lookback plus point protection are not expressible."
+    },
+    {
+      "id": 1186,
+      "name": "Price and Volume Breakout Buy",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,60) and volume > donchian_high_prev(volume,60) and close > sma(close,200)",
+      "exit_long": "close < sma(close,200) and bars_since(close < sma(close,200)) >= 5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All three documented conditions are exact with PriceBreakoutPeriod=60, VolumeBreakoutPeriod=60 and TrendlineLength=200, and the exit is the documented five closes on the other side of the SMA. The short branch and OrderDirection switch are outside this long-only roster, and no stops are documented."
+    },
+    {
+      "id": 2839,
+      "name": "E-News Lucky",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the strategy only tracks the 10:30 PlacementTime and 22:30 CancelTime clock to place symmetric buy-stop and sell-stop orders and explicitly does not use indicator calculations, so no market-derived long signal exists to translate. The never-true guard is used and the pip stop, target and trailing distances are not percentage fields."
+    },
+    {
+      "id": 2887,
+      "name": "Renko Level",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,10))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rounded close advancing to a new block is approximated by price breaking the prior window extreme, with a 10-bar window standing in for the 30-pip block because block size is a price increment rather than a bar count. Reverse mode, Allow Increase pyramiding and the order sizes are not DSL fields."
+    },
+    {
+      "id": 291,
+      "name": "ADX Slope Mean Reversion",
+      "family": "trend",
+      "entry_long": "crossabove(adx(high,low,close,14), sma(adx(high,low,close,14),20)) and bars_since(adx(high,low,close,14) < sma(adx(high,low,close,14),20)) <= 3",
+      "exit_long": "crossbelow(adx(high,low,close,14), sma(adx(high,low,close,14),20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented AdxPeriod=14 and LookbackPeriod=20 are exact, and the entry requires the indicator to sit under its own average within the last three bars before crossing back toward it, which is the documented swing-then-reverse. StopLossPercent=2.0 becomes the percentage stop and no take profit is documented."
+    },
+    {
+      "id": 1630,
+      "name": "EMA WPR Retracement",
+      "family": "trend",
+      "entry_long": "donchian_high(high,46) - donchian_low(low,46) > 0 and crossabove(-100 * (close - donchian_high(high,46)) / (donchian_high(high,46) - donchian_low(low,46)), -30) and roc(ema(close,144),1) > 0",
+      "exit_long": "crossabove(-100 * (close - donchian_high(high,46)) / (donchian_high(high,46) - donchian_low(low,46)), -20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is reproduced exactly from the documented WPR Period=46 and the -30 retracement level, with the range denominator guarded, and EMA Trend=144 provides the rising-trend confirmation. Stop Loss 50 and Take Profit 200 are price points handled by a protection module, so both fields are null and Max Trades pyramiding and the trailing stop are omitted."
+    },
+    {
+      "id": 3076,
+      "name": "Three Indicators",
+      "family": "trend",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) > 50 and 100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)) > 50",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three documented oscillators are all required, with the stochastic %K rebuilt from a 14-bar range so the filter survives as a market-derived condition. No MACD, stochastic or RSI values are documented so 12/26/9 and 14 are fallbacks, the %D line and StochasticSlowing are dropped, and no stops are documented."
+    },
+    {
+      "id": 2949,
+      "name": "Exp Digital MACD",
+      "family": "trend",
+      "entry_long": "crossabove(roc(macd(close,12,26),1), 0)",
+      "exit_long": "crossbelow(roc(macd(close,12,26),1), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default MacdTwist mode is a reversal of the MACD main-line slope, so a one-bar rise turning positive enters and the reverse exits. FastPeriod=12, SlowPeriod=26 and SignalPeriod=5 are documented, while the other three modes, the SignalBar=1 shift and the point-based stops are not expressible."
+    },
+    {
+      "id": 1086,
+      "name": "Multi Conditions Curve Fitting",
+      "family": "trend",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and ema(close,10) > ema(close,25) and rsi(close,14) < 20 and 100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)) < 20",
+      "exit_long": "ema(close,10) < ema(close,25) or rsi(close,14) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule is reproduced with the exact FastEmaLength=10, SlowEmaLength=25, RsiLength=14 and RsiOversold=20 values, and the StochLength=14 %K is rebuilt from the range with a guard. StochD is not available so only the first two exit clauses are kept, and the docs state no stops."
+    }
+  ]
+}

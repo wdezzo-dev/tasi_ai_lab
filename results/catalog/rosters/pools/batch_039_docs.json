@@ -1,0 +1,98 @@
+{
+ "batch_039": {
+  "strategy_ids": [
+   3778,
+   4080,
+   3908,
+   3843,
+   828,
+   92,
+   4129,
+   1882,
+   3492,
+   2183
+  ],
+  "docs": {
+   "3778": {
+    "id": 3778,
+    "name": "Suffic369",
+    "family": "trend",
+    "overview": "The Suffic369 strategy is a trend-following breakout system that combines two short moving averages with wide Bollinger Bands. The expert advisor enters long positions when the fast simple moving average (SMA) of closing prices crosses above the SMA of recent highs while the market trades near the lower Bollinger Band. Short positions are opened when the fast SMA crosses below the SMA of recent lows while the price is pressing against the upper band. The converted StockSharp version keeps the original MQL logic but expresses it with high-level candle subscriptions and indicator bindings.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `FastMaLength` | 3 | Length of the fast SMA built on close prices. |\n| `HighMaLength` | 5 | Length of the SMA calculated on candle highs. |\n| `LowMaLength` | 5 | Length of the SMA calculated on candle lows. |\n| `BollingerLength` | 156 | Window size of the Bollinger Bands. |\n| `BollingerDeviation` | 1 | Standard deviation multiplier for the bands. |\n| `UseStopLoss` | true | Enables the stop-loss block. |\n| `StopLossPoints` | 30 | Stop distance in instrument price steps. |\n| `UseTakeProfit` | true | Enables the take-profit block. |\n| `TakeProfitPoints` | 60 | Profit target distance in price steps. |\n| `UseTrailingStop` | true | Enables trailing stop management. |\n| `TrailingStopPoints` | 30 | Trailing offset in price steps. |\n| `CandleType` | 15-minute time frame | Candle type used for calculations. |\n\nAll numeric parameters are exposed as `StrategyParam<T>` instances so they can be optimised directly inside StockSharp."
+   },
+   "4080": {
+    "id": 4080,
+    "name": "Gandalf PRO Projection",
+    "family": "trend",
+    "overview": "The Gandalf PRO strategy is a StockSharp port of the MetaTrader 4 expert advisor *Gandalf_PRO*. The original robot builds an\nadaptive smoothing filter from a weighted moving average and a recursive trend component. When the projected price moves at\nleast 15 pips beyond the current market price, the EA enters in that direction with a distant stop-loss and a take-profit at the\nprojected level. The StockSharp conversion reproduces the same filter and decision logic while relying on the high-level candle\nAPI so every calculation is performed on finished bars.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `EnableBuy` | `bool` | `true` | Allow the strategy to open long positions. |\n| `CountBuy` | `int` | `24` | Length of the smoothing filter used for long projections. |\n| `BuyPriceFactor` | `decimal` | `0.18` | Weight of the current close in the long recursive filter. |\n| `BuyTrendFactor` | `decimal` | `0.18` | Weight applied to the trend term when building the long projection. |\n| `BuyStopLossPips` | `int` | `62` | Stop-loss distance for long positions, measured in pips. |\n| `BuyRiskMultiplier` | `decimal` | `0` | Multiplier applied to `BaseVolume` before sending a long order (0 keeps the base volume). |\n| `EnableSell` | `bool` | `true` | Allow the strategy to open short positions. |\n| `CountSell` | `int` | `24` | Length of the smoothing filter used for short projections. |\n| `SellPriceFactor` | `decimal` | `0.18` | Weight of the current close in the short recursive filter. |\n| `SellTrendFactor` | `decimal` | `0.18` | Weight applied to the trend term when building the short projection. |\n| `SellStopLossPips` | `int` | `62` | Stop-loss distance for short positions, measured in pips. |\n| `SellRiskMultiplier` | `decimal` | `0` | Multiplier applied to `BaseVolume` before sending a short order (0 keeps the base volume). |\n| `BaseVolume` | `decimal` | `1` | Base order size used when both risk multipliers are zero. |\n| `CandleType` | `DataType` | 1-hour time frame | Candle series processed by the strategy. |"
+   },
+   "3908": {
+    "id": 3908,
+    "name": "Five MA Multi-Timeframe",
+    "family": "trend",
+    "overview": "The **Five MA Multi-Timeframe Strategy** replicates the original MT4 \"5matf\" expert advisor using StockSharp's high-level API. The strategy analyzes five simple moving averages across three timeframes (primary, higher, and slowest) and combines the slope of each average with the Accelerator Oscillator to produce graded entry signals. When enough bullish or bearish evidence is present on all timeframes, the strategy opens or closes positions accordingly.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Primary timeframe used for trading signals. |\n| `HigherTimeframe1` | 60-minute candles | First higher timeframe for confirmation. |\n| `HigherTimeframe2` | 240-minute candles | Second higher timeframe for slow trend filter. |\n| `FirstPeriod` – `FifthPeriod` | 5, 8, 13, 21, 34 | SMA lengths applied to each timeframe. |\n| `OpenLevel` | 0 | Minimum signal grade required to open a new position. |\n| `CloseLevel` | 1 | Opposite signal grade required to close an existing position. |\n\nAll parameters can be optimized or fine-tuned within StockSharp's strategy UI."
+   },
+   "3843": {
+    "id": 3843,
+    "name": "GBP 9 AM Pending Orders",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp conversion of the original MetaTrader 4 expert located in `MQL/7687/Gbp9am.mq4`. It recreates the London 9 AM breakout routine that arms two pending orders around the current price and keeps at most one active trade during the session.\n\n## Trading idea\n\n1. At the configured *look hour* and *minute* the strategy takes the latest candle close as a price snapshot.\n2. A buy stop is placed above the snapshot price and a sell stop is placed below it. Both orders share the same volume and carry individual stop-loss levels together with a shared take-profit distance.\n3. When one of the orders is filled the other is cancelled immediately so that only one position is ever active.\n4. The open position is managed with synthetic stop-loss and take-profit levels that are checked on every completed candle.\n5. A daily close-out hour can be enabled to flatten any remaining exposure and remove pending orders after the London session.\n6. If both pending orders are removed without a trade, or the market time moves away from the observation hour, the strategy re-arms the next day exactly like the MetaTrader version.\n\nThe pip offsets are approximated using the instrument price step. If the broker provides fractional pips (3 or 5 decimal digits) the logic automatically scales to typical 0.1 pip increments.\n\n## Parameter reference\n\n| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order volume (lots) shared by both pending orders. |\n| `LookHour` | Exchange hour that represents 9 AM London time. |\n| `LookMinute` | Minute inside the look hour when the snapshot is taken. |\n| `CloseHour` | Hour when all positions and pending orders are forcefully closed. |\n| `UseCloseHour` | Enables or disables the daily close-out procedure. |\n| `TakeProfitPips` | Target distance in pips, applied symmetrically to both directions. |\n| `BuyDistancePips` | Offset in pips between the snapshot price and the buy stop entry. |\n| `SellDistancePips` | Offset in pips betw",
+    "details": "",
+    "parameters": ""
+   },
+   "828": {
+    "id": 828,
+    "name": "Game Theory Trading",
+    "family": "trend",
+    "overview": "Game Theory Trading Strategy blends herd behavior analysis, liquidity trap detection, institutional flow and Nash equilibrium zones to trade contrarian and momentum moves.\n\nThe strategy watches RSI extremes and volume spikes to spot herd buying or selling. Liquidity traps around recent highs and lows plus accumulation/distribution and smart money bias refine entries. Price bands built from a moving average and standard deviation define Nash equilibrium for reversion trades. Position size adapts when price is near equilibrium or institutional volume appears.\n\n## Details\n- **Data**: Price and volume candles.\n- **Entry Criteria**: Contrarian, momentum or Nash reversion signals.\n- **Exit Criteria**: Stop loss / take profit or opposite signals.\n- **Stops**: Optional stop loss and take profit.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `VolumeMaLength` = 20\n  - `HerdThreshold` = 2.0\n  - `LiquidityLookback` = 50\n  - `InstVolumeMultiplier` = 2.5\n  - `InstMaLength` = 21\n  - `NashPeriod` = 100\n  - `NashDeviation` = 0.02\n  - `UseStopLoss` = True\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = True\n  - `TakeProfitPercent` = 5\n- **Filters**:\n  - Category: Mixed contrarian/momentum\n  - Direction: Long & Short\n  - Indicators: RSI, SMA, Accumulation/Distribution, StandardDeviation, Highest/Lowest\n  - Complexity: Advanced\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price and volume candles.\n- **Entry Criteria**: Contrarian, momentum or Nash reversion signals.\n- **Exit Criteria**: Stop loss / take profit or opposite signals.\n- **Stops**: Optional stop loss and take profit.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `VolumeMaLength` = 20\n  - `HerdThreshold` = 2.0\n  - `LiquidityLookback` = 50\n  - `InstVolumeMultiplier` = 2.5\n  - `InstMaLength` = 21\n  - `NashPeriod` = 100\n  - `NashDeviation` = 0.02\n  - `UseStopLoss` = True\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = True\n  - `TakeProfitPercent` = 5\n- **Filters**:\n  - Category: Mixed contrarian/momentum\n  - Direction: Long & Short\n  - Indicators: RSI, SMA, Accumulation/Distribution, StandardDeviation, Highest/Lowest\n  - Complexity: Advanced\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "92": {
+    "id": 92,
+    "name": "RSI Hook Reversal",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 163%. It performs best in the stocks market.\n\nThe strategy waits for that hook while price keeps pressing in the prior direction.\nA long entry triggers once RSI curls higher from oversold as price marks a fresh low, while a short opens when RSI turns down from overbought during a new high.\n\nTrades use a simple percent stop to control risk and typically close when the RSI hooks the other way.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4129": {
+    "id": 4129,
+    "name": "FT TIME BIGDOG Breakout",
+    "family": "breakout",
+    "overview": "The **FT TIME BIGDOG** strategy is a London-session breakout system converted from the MetaTrader 4 expert advisor `FT_TIME_BIGDOG.mq4` (directory `MQL/9259`).\nIt measures the consolidation range that forms between the configured start and stop hours and then places stop orders above and below that range once the window closes.\nThe StockSharp version keeps the original behaviour while exposing configurable parameters for breakout timing, order distance and risk management.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `StartHour` | 14 | Hour (0–23) marking the beginning of the accumulation window. |\n| `StopHour` | 16 | Hour when pending orders become eligible. Must be greater than or equal to `StartHour`. |\n| `RangeLimitPoints` | 50 | Maximum width of the session range in broker points (points × `PointMultiplier`). No orders are placed if the range is wider. |\n| `TakeProfitPoints` | 50 | Take-profit distance applied to triggered positions, expressed in broker points. |\n| `OrderBufferPoints` | 20 | Minimum distance required between the market price and a pending order. Prevents orders from being placed too close to current price. |\n| `PointMultiplier` | 1 | Multiplier applied to the instrument point size. Set to 10 for five-digit forex symbols. |\n| `Volume` | 0.1 | Order volume for both stop orders. |\n| `CandleType` | 1 hour | Candle series used to measure the range and drive signal evaluation. |"
+   },
+   "1882": {
+    "id": 1882,
+    "name": "20/200 Expert",
+    "family": "momentum",
+    "overview": "This strategy opens trades based on the difference between the opening prices of two past bars. It enters long when the open at shift2 minus the open at shift1 exceeds a threshold and enters short on the opposite condition. Positions are opened only at a specified hour and closed by take profit, stop loss or after a maximum holding time.\n\n## Details\n\n- **Entry Criteria:**\n  - Long: open[Shift2] - open[Shift1] > DeltaLong points.\n  - Short: open[Shift1] - open[Shift2] > DeltaShort points.\n- **Long/Short:** Both.\n- **Exit Criteria:** take profit, stop loss or max holding time.\n- **Stops:** Fixed stop loss and take profit in points.\n- **Default Values:**\n  - Shift1 = 6\n  - Shift2 = 2\n  - DeltaLong = 6 points\n  - DeltaShort = 21 points\n  - TakeProfitLong = 390 points\n  - StopLossLong = 1470 points\n  - TakeProfitShort = 320 points\n  - StopLossShort = 2670 points\n  - TradeHour = 14\n  - MaxOpenTime = 504 hours\n  - Volume = 0.1\n  - Candle timeframe = 1 hour\n- **Filters:**\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Hourly\n  - Seasonality: Time-based\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:**\n  - Long: open[Shift2] - open[Shift1] > DeltaLong points.\n  - Short: open[Shift1] - open[Shift2] > DeltaShort points.\n- **Long/Short:** Both.\n- **Exit Criteria:** take profit, stop loss or max holding time.\n- **Stops:** Fixed stop loss and take profit in points.\n- **Default Values:**\n  - Shift1 = 6\n  - Shift2 = 2\n  - DeltaLong = 6 points\n  - DeltaShort = 21 points\n  - TakeProfitLong = 390 points\n  - StopLossLong = 1470 points\n  - TakeProfitShort = 320 points\n  - StopLossShort = 2670 points\n  - TradeHour = 14\n  - MaxOpenTime = 504 hours\n  - Volume = 0.1\n  - Candle timeframe = 1 hour\n- **Filters:**\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Hourly\n  - Seasonality: Time-based\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3492": {
+    "id": 3492,
+    "name": "Simple Engulfing",
+    "family": "volatility",
+    "overview": "The **Simple Engulfing Strategy** replicates the behaviour of the MetaTrader 4 experts \"simple engulf mt4 buy\" and \"simple engulf mt4 sell\". Both experts detect engulfing candlestick patterns and open trades in a single direction. The StockSharp port merges both advisors into one configurable strategy so that the trader can reproduce the original buy-only, sell-only or combined behaviour inside the StockSharp framework.\n\nThe strategy listens to completed candles only, which matches the bar-close execution style used by the MetaTrader version. All order placement uses the high-level StockSharp API (`SubscribeCandles`, `Bind`, `BuyMarket`, `SellMarket`, and `StartProtection`) to stay close to the StockSharp coding guidelines.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | `TimeFrame(15 minutes)` | Candle type and aggregation interval used to detect patterns. |\n| `TradeVolume` | `0.01` | Order volume per entry, identical to the MetaTrader experts. |\n| `StopLossPips` | `20` | Stop-loss distance expressed in pips. Set to `0` to disable the protective order. |\n| `TakeProfitPips` | `20` | Take-profit distance expressed in pips. Set to `0` to disable the protective order. |\n| `MinBodyPips` | `0` | Minimum candle body (in pips) required for a valid engulfing pattern. |\n| `MaxBodyPips` | `50` | Maximum candle body (in pips) allowed for a valid engulfing pattern. Use `0` to remove the upper filter. |\n| `Direction` | `BuyOnly` | Defines which side(s) of the original advisors should be executed (`BuyOnly`, `SellOnly`, or `Both`). |"
+   },
+   "2183": {
+    "id": 2183,
+    "name": "Night Stochastic",
+    "family": "mean_reversion",
+    "overview": "The Night Stochastic strategy trades only during the quiet night session from **21:00** to **06:00**. It uses the %K line of the Stochastic Oscillator to detect oversold and overbought conditions.\n\nWhen the oscillator drops below the oversold level a long position is opened. When it rises above the overbought level a short position is opened. Each trade is protected by fixed stop loss and take profit levels measured in price points.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `%K < StochOversold` and time is between 21:00 and 06:00.\n  - **Short**: `%K > StochOverbought` and time is between 21:00 and 06:00.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position closed by predefined stop loss or take profit.\n- **Stops**: Yes, uses fixed stop loss and take profit.\n- **Default Values**:\n  - `StopLossPoints` = 40\n  - `TakeProfitPoints` = 20\n  - `StochOversold` = 30\n  - `StochOverbought` = 70\n  - `CandleType` = 15 minute timeframe\n- **Filters**:\n  - Category: Indicator based\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Timeframe: Short term\n  - Trading window: 21:00-06:00 server time\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `%K < StochOversold` and time is between 21:00 and 06:00.\n  - **Short**: `%K > StochOverbought` and time is between 21:00 and 06:00.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position closed by predefined stop loss or take profit.\n- **Stops**: Yes, uses fixed stop loss and take profit.\n- **Default Values**:\n  - `StopLossPoints` = 40\n  - `TakeProfitPoints` = 20\n  - `StochOversold` = 30\n  - `StochOverbought` = 70\n  - `CandleType` = 15 minute timeframe\n- **Filters**:\n  - Category: Indicator based\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Timeframe: Short term\n  - Trading window: 21:00-06:00 server time",
+    "parameters": ""
+   }
+  }
+ }
+}

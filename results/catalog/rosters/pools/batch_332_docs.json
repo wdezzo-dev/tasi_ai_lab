@@ -1,0 +1,98 @@
+{
+ "batch_332": {
+  "strategy_ids": [
+   4040,
+   643,
+   275,
+   1733,
+   1306,
+   701,
+   1257,
+   2014,
+   1548,
+   1327
+  ],
+  "docs": {
+   "4040": {
+    "id": 4040,
+    "name": "A System Championship",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 4 expert advisor \"A System: Championship Strategy Final Edit\" (file `ACB6.MQ4`).\n- Detects bullish or bearish breakouts on a configurable primary timeframe and confirms momentum with live bid/ask prices.\n- Uses a secondary timeframe to size the trailing stop distance, reproducing the multi-threaded logic of the original EA through two candle streams.\n- Implements the global equity stop, trade pause and adaptive risk sizing blocks that were hard-coded in the source robot.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `PrimaryTimeFrame` | 1 day | Higher timeframe used for breakout detection. |\n| `SecondaryTimeFrame` | 4 hours | Timeframe that provides the trailing stop range. |\n| `TakeFactor` | 0.8 | Multiplier applied to the primary candle range when creating the take-profit. |\n| `TrailFactor` | 10 | Multiplier applied to the secondary candle range when updating the trailing stop. |\n| `FallLimit` | 0.5 | Ratio of the maximum profit that allows the retracement exit. |\n| `FallFactor` | 0.4 | Minimum share of the full target that must be reached before a retracement exit is permitted. |\n| `RiskPerTrade` | 0.02 | Fraction of equity allocated to each trade before adjustments. |\n| `BaseVolume` | 1 | Fallback order size used when risk sizing yields a smaller volume. |\n| `MinStopDistance` | 0 | Exchange stop distance constraint expressed in price units. |\n| `TradePause` | 5 minutes | Waiting period after any executed order. |\n| `SystemStop` | 0.8 | Drawdown factor for the portfolio equity stop (e.g. 0.8 = 20% allowable drawdown). |\n| `LossesExpected` | 20 | Expected number of losing trades for risk adjustment. |\n| `TradesExpected` | 85 | Expected number of total trades for risk adjustment. |"
+   },
+   "643": {
+    "id": 643,
+    "name": "Crypto Strategy SUSDT 10 min",
+    "family": "trend",
+    "overview": "A simple EMA crossover strategy that enters long when price closes above the EMA and opens below it, and enters short on the opposite condition. Stop loss and take profit are defined as percentages from the entry price.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `close > EMA` and `open < EMA`\n  - **Short**: `close < EMA` and `open > EMA`\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit or stop loss.\n- **Stops**: Yes, both take profit and stop loss.\n- **Default Values**:\n  - `CandleType` = 10 minute\n  - `EmaLength` = 24\n  - `TakeProfitPercent` = 4\n  - `StopLossPercent` = 2\n  - `OrderPercent` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `close > EMA` and `open < EMA`\n  - **Short**: `close < EMA` and `open > EMA`\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit or stop loss.\n- **Stops**: Yes, both take profit and stop loss.\n- **Default Values**:\n  - `CandleType` = 10 minute\n  - `EmaLength` = 24\n  - `TakeProfitPercent` = 4\n  - `StopLossPercent` = 2\n  - `OrderPercent` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "275": {
+    "id": 275,
+    "name": "OBV Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 154%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `LookbackPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `SlopeLength` = 5\n  - `Multiplier` = 2m\n  - `StopLoss` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: OBV\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `SlopeLength` = 5\n  - `Multiplier` = 2m\n  - `StopLoss` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: OBV\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1733": {
+    "id": 1733,
+    "name": "Break the Range Bound",
+    "family": "trend",
+    "overview": "This strategy detects quiet market phases where three moving averages converge within a narrow band. When price finally breaks out above or below this range, the strategy enters in the direction of the breakout and aims to capture the emerging trend.\n\nThe system observes the spread between the Fast, Mid and Slow SMAs. If the maximum difference between these averages stays below the configured threshold for a specified number of bars, the market is considered \"range bound\". The highest high and lowest low of that period define the breakout levels.\n\nTrades are opened when price closes beyond these extremes. Positions are protected by reversing conditions: if price falls back into the range or reaches a multiple of the range width in profit, the position is closed.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: After a range of `RangeLength` bars where SMA spread is below `ShakeThreshold`, enter when price closes above the highest high of the range.\n  - **Short**: Under the same range conditions, enter when price closes below the lowest low of the range.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - **Long**: Close if price returns below the range low or profit exceeds `4 * (range high - range low)`.\n  - **Short**: Close if price returns above the range high or profit exceeds `4 * (range high - range low)`.\n- **Stops**: Implicit exits based on range boundaries and profit multiple.\n- **Default Values**:\n  - `FastSma` = 38\n  - `MidSma` = 140\n  - `SlowSma` = 210\n  - `ShakeThreshold` = 250\n  - `RangeLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: After a range of `RangeLength` bars where SMA spread is below `ShakeThreshold`, enter when price closes above the highest high of the range.\n  - **Short**: Under the same range conditions, enter when price closes below the lowest low of the range.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - **Long**: Close if price returns below the range low or profit exceeds `4 * (range high - range low)`.\n  - **Short**: Close if price returns above the range high or profit exceeds `4 * (range high - range low)`.\n- **Stops**: Implicit exits based on range boundaries and profit multiple.\n- **Default Values**:\n  - `FastSma` = 38\n  - `MidSma` = 140\n  - `SlowSma` = 210\n  - `ShakeThreshold` = 250\n  - `RangeLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1306": {
+    "id": 1306,
+    "name": "Simple RSI Stock Strategy 1D",
+    "family": "trend",
+    "overview": "This system goes long when RSI drops below an oversold level while price stays above the 200-day SMA. The position uses an ATR-based stop and three profit targets.\n\n## Details\n\n- **Entry Criteria**: RSI below `OversoldLevel` and close above SMA filter.\n- **Long/Short**: Long only.\n- **Exit Criteria**: ATR stop or hit of any take-profit level.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 5\n  - `OversoldLevel` = 30\n  - `SmaLength` = 200\n  - `AtrLength` = 20\n  - `AtrMultiplier` = 1.5\n  - `TakeProfit1` = 5\n  - `TakeProfit2` = 10\n  - `TakeProfit3` = 15\n  - `StopLossPercent` = 25\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI, SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: RSI below `OversoldLevel` and close above SMA filter.\n- **Long/Short**: Long only.\n- **Exit Criteria**: ATR stop or hit of any take-profit level.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 5\n  - `OversoldLevel` = 30\n  - `SmaLength` = 200\n  - `AtrLength` = 20\n  - `AtrMultiplier` = 1.5\n  - `TakeProfit1` = 5\n  - `TakeProfit2` = 10\n  - `TakeProfit3` = 15\n  - `StopLossPercent` = 25\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI, SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "701": {
+    "id": 701,
+    "name": "Dskyz (DAFE) GENESIS",
+    "family": "trend",
+    "overview": "Simplified version of the Dskyz (DAFE) GENESIS strategy. The system trades when short-term momentum aligns with a trend filter and RSI.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `SMA(9) > SMA(30)` and `RSI > 55` and `EMA(8) > EMA(21)`.\n  - **Short**: `SMA(9) < SMA(30)` and `RSI < 45` and `EMA(8) < EMA(21)`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `EMA(8) < EMA(21)`.\n  - **Short**: `EMA(8) > EMA(21)`.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 9.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RSI, EMA, SMA\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `SMA(9) > SMA(30)` and `RSI > 55` and `EMA(8) > EMA(21)`.\n  - **Short**: `SMA(9) < SMA(30)` and `RSI < 45` and `EMA(8) < EMA(21)`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `EMA(8) < EMA(21)`.\n  - **Short**: `EMA(8) > EMA(21)`.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 9.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RSI, EMA, SMA\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1257": {
+    "id": 1257,
+    "name": "RMI Trend Sync",
+    "family": "trend",
+    "overview": "RMI Trend Sync blends RSI and MFI momentum signals with a SuperTrend trailing stop. A long trade opens when average momentum crosses above a threshold with rising EMA slope, while a short trade triggers on a downward break. SuperTrend provides the exit trail.\n\n## Details\n\n- **Entry Criteria**: Momentum average crosses thresholds with EMA slope confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite momentum or SuperTrend stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RmiLength` = 21\n  - `PositiveThreshold` = 70\n  - `NegativeThreshold` = 30\n  - `SuperTrendLength` = 10\n  - `SuperTrendMultiplier` = 3.5\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, MFI, EMA, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Momentum average crosses thresholds with EMA slope confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite momentum or SuperTrend stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RmiLength` = 21\n  - `PositiveThreshold` = 70\n  - `NegativeThreshold` = 30\n  - `SuperTrendLength` = 10\n  - `SuperTrendMultiplier` = 3.5\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, MFI, EMA, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2014": {
+    "id": 2014,
+    "name": "Color Schaff MFI Trend Cycle",
+    "family": "trend",
+    "overview": "This strategy is a translation of the MQL5 expert `Exp_ColorSchaffMFITrendCycle`.\nIt employs the **Color Schaff MFI Trend Cycle** indicator, which combines\nMoney Flow Index values with a double stochastic calculation. The indicator\nproduces eight color states representing momentum and overbought/oversold zones.\n\nTrading logic:\n\n- When the previous indicator color is **green** (indexes 6-7) and the current\n  color drops below the strong uptrend zone, the strategy closes short positions\n  and opens a new long position.\n- When the previous indicator color is **orange** (indexes 0-1) and the current\n  color rises above the strong downtrend zone, the strategy closes long positions\n  and opens a new short position.\n\nParameters:\n\n- `FastMfiPeriod` – period of the fast MFI.\n- `SlowMfiPeriod` – period of the slow MFI.\n- `CycleLength` – length of the cyclical buffer used in the indicator.\n- `HighLevel` / `LowLevel` – overbought and oversold thresholds for the STC\n  value.\n- `CandleType` – timeframe of the input candles (default 1 hour).\n\nThe strategy uses StockSharp high level API and processes only finished candles.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1548": {
+    "id": 1548,
+    "name": "VWAP EMA ATR Pullback",
+    "family": "trend",
+    "overview": "Trend-following strategy using EMAs, VWAP, and ATR.\n\nTesting indicates an average annual return of about 55%. It performs best in the futures market.\n\nThe approach identifies strong trends via fast and slow EMAs separated by an ATR-based distance. Entries occur when price pulls back to VWAP, aiming to join the trend. A take-profit is placed at the VWAP plus or minus the ATR multiple.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: uptrend and close < VWAP.\n  - **Short**: downtrend and close > VWAP.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Target at VWAP ± ATR * multiplier.\n- **Stops**: No.\n- **Default Values**:\n  - `FastEmaLength` = 30\n  - `SlowEmaLength` = 200\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ATR, VWAP\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: uptrend and close < VWAP.\n  - **Short**: downtrend and close > VWAP.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Target at VWAP ± ATR * multiplier.\n- **Stops**: No.\n- **Default Values**:\n  - `FastEmaLength` = 30\n  - `SlowEmaLength` = 200\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ATR, VWAP\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1327": {
+    "id": 1327,
+    "name": "Source",
+    "family": "trend",
+    "overview": "Source Strategy enters long when the candle closes above its open and short when it closes below. Optional stop loss, take profit, and trailing stop percentages manage the open position.\n\n## Details\n\n- **Entry Criteria**: long when close > open, short when close < open\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal or triggered stop management\n- **Stops**: Optional stop loss, take profit, trailing stop\n- **Default Values**:\n  - `SL %` = 1\n  - `TP %` = 3\n  - `Trail Points %` = 3\n  - `Trail Offset %` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: long when close > open, short when close < open\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal or triggered stop management\n- **Stops**: Optional stop loss, take profit, trailing stop\n- **Default Values**:\n  - `SL %` = 1\n  - `TP %` = 3\n  - `Trail Points %` = 3\n  - `Trail Offset %` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

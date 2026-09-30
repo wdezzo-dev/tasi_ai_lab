@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3402,
+      "name": "Dark Cloud Piercing CCI",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,49) > 0",
+      "exit_long": "zscore((high + low + close) / 3,49) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 1491,
+      "name": "TSI SuperTrend Decision",
+      "family": "trend",
+      "entry_long": "close > (ema(close,10) + 3 * atr(high,low,close,10))",
+      "exit_long": "close < (ema(close,10) - 3 * atr(high,low,close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is approximated by an EMA plus/minus ATR envelope using documented/default period and multiplier; exact recursive SuperTrend state is unavailable."
+    },
+    {
+      "id": 2031,
+      "name": "Dig Variation",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30",
+      "exit_long": "rsi(close,14) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 2800,
+      "name": "CoensioTrader1 V06",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,30,1.5)",
+      "exit_long": "close < bb_mid(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 30 and deviation 1.5; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 76,
+      "name": "Fibonacci Retracement Reversal",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 2973,
+      "name": "Renko Fractals Grid",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 711,
+      "name": "Dual SuperTrend w VIX Filter",
+      "family": "trend",
+      "entry_long": "close > (ema(close,10) + 3.5 * atr(high,low,close,10))",
+      "exit_long": "close < (ema(close,10) - 3.5 * atr(high,low,close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is approximated by an EMA plus/minus ATR envelope using documented/default period and multiplier; exact recursive SuperTrend state is unavailable."
+    },
+    {
+      "id": 3074,
+      "name": "Adaptive Renko Duplex",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2551,
+      "name": "T3 MA Direction Change",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 973,
+      "name": "Linear Continuation",
+      "family": "trend",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    }
+  ]
+}

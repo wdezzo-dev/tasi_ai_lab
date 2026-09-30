@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2045,
+      "name": "Force DiverSign",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,3) and roc(ema(volume * roc(close,1),5),1) > 0 and roc(ema(volume * roc(close,1),13),1) > 0",
+      "exit_long": "high >= donchian_high_prev(high,3) and roc(ema(volume * roc(close,1),5),1) < 0 and roc(ema(volume * roc(close,1),13),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Force Index is built as volume times the 1-bar return and smoothed with EMA(5) fast and EMA(13) slow (Period1/Period2 have no documented values), then the buy is a 3-bar low with both Force series turning up and the sell the mirrored case. The down-up-down candle pattern and the fast/slow opposite-direction test between first and third candle need shifted reads not available in the DSL."
+    },
+    {
+      "id": 2346,
+      "name": "JSatl Digit System",
+      "family": "trend",
+      "entry_long": "close > ema(close,14) and roc(ema(close,14),1) > 0",
+      "exit_long": "close < ema(close,14) and roc(ema(close,14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Jurik MA is approximated by EMA(14) using the documented JmaLength, with the rising slope and close-above-average confirmation for the long and both reversed for the exit. The 4-hour candle type and Jurik phase parameter have no DSL equivalent and no stops are documented."
+    },
+    {
+      "id": 1656,
+      "name": "EMA Sticker",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,5))",
+      "exit_long": "crossbelow(close,ema(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MA period of 5 with a close crossing the EMA is a direct translation, and the opposite cross is the documented exit. The optional 0.001 stop and 0.001 target are absolute price units, so SL/TP stay null."
+    },
+    {
+      "id": 3372,
+      "name": "Basic MA Template",
+      "family": "trend",
+      "entry_long": "open < sma(close,49) and close > sma(close,49)",
+      "exit_long": "open > sma(close,49) and close < sma(close,49)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Simple MA of period 49 gives the open-below/close-above long rule with the mirrored exit standing in for the protection module. The previous-candle evaluation, the iMA-style forward shift and the 38.5/48.5-pip stop and target are not expressible, so SL/TP stay null."
+    },
+    {
+      "id": 1344,
+      "name": "VWAP Pro V21",
+      "family": "trend",
+      "entry_long": "close > ema(close,9) and ema(close,9) > ema(close,21) and close > ema(close,50)",
+      "exit_long": "close < ema(close,9) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWAP cannot be computed in the DSL, so the long side uses the documented EMA(9)/EMA(21) alignment plus the higher-timeframe EMA(50) trend filter on the traded series, exiting when either fails. The 0.7x/1.4x ATR(14) take-profit and stop are volatility distances, not fixed percentages, so the SL/TP fields stay null."
+    },
+    {
+      "id": 895,
+      "name": "HTF Candles Lib",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A utility library that rebuilds higher-timeframe candles from 1-minute data and logs their structure, documented with no entry, no exit and no stops. The never-true guard records that no market signal exists to translate."
+    },
+    {
+      "id": 1218,
+      "name": "Random Entry and Exit",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries and exits are driven by random numbers below the configured thresholds, so no deterministic market-derived condition exists and the same DSL would give unreproducible results. The never-true guard is used instead of a fabricated signal."
+    },
+    {
+      "id": 1199,
+      "name": "PS January Barometer Backtester",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The rule is calendar-anchored seasonality: a February-June close above the January high, a December exit and optional Santa Claus Rally / First Five Days filters on monthly candles. The DSL has no month or date field, so the never-true guard is used rather than substituting an arbitrary rolling window."
+    },
+    {
+      "id": 1044,
+      "name": "Mechanical Trading",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": 0.2,
+      "take_profit_pct": 0.4,
+      "notes": "Entry is purely a clock condition (one market order at Trade Hour 16 with the direction set by Short Mode), so there is no market-derived long signal; the never-true guard is used. The documented percent protection is preserved as 0.2% stop and 0.4% target."
+    },
+    {
+      "id": 966,
+      "name": "Larry Conners SMTP",
+      "family": "other",
+      "entry_long": "low <= donchian_low(low,10) and (high - low) > sma(high - low,10) and close > low + 0.75 * (high - low)",
+      "exit_long": "close < donchian_low(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 10-bar lowest low, largest-range bar and top-25% range close combine directly, with the largest-range test approximated by range versus its 10-bar average and the highest-low trailing exit by a 5-bar low. The buy stop one tick above the high cannot be placed in this engine, so the signal is taken at the next open."
+    }
+  ]
+}

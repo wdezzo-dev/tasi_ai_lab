@@ -1,0 +1,98 @@
+{
+ "batch_339": {
+  "strategy_ids": [
+   2102,
+   2190,
+   3709,
+   3370,
+   1999,
+   3785,
+   1119,
+   4047,
+   346,
+   2243
+  ],
+  "docs": {
+   "2102": {
+    "id": 2102,
+    "name": "LSMA Angle",
+    "family": "trend",
+    "overview": "This strategy uses the angle of the Least Squares Moving Average (LSMA) to detect trend direction. The angle is approximated by the difference between two LSMA values separated by a configurable number of bars.\n\n- **Long entry**: LSMA angle rises above the positive threshold.\n- **Long exit**: Angle returns below the positive threshold.\n- **Short entry**: LSMA angle falls below the negative threshold.\n- **Short exit**: Angle returns above the negative threshold.\n\n## Parameters\n- `LSMA Period`: Length for LSMA calculation.\n- `Angle Threshold`: Absolute value defining the neutral zone around zero.\n- `Start Shift`: Older bar used to calculate the angle.\n- `End Shift`: Recent bar used to calculate the angle.\n- `Candle Type`: Candle data type for calculation.\n\n## Notes\n- Angle values are scaled to points depending on the security (1000 for JPY pairs, otherwise 100000).\n- Works on completed candles only.\n",
+    "details": "",
+    "parameters": "- `LSMA Period`: Length for LSMA calculation.\n- `Angle Threshold`: Absolute value defining the neutral zone around zero.\n- `Start Shift`: Older bar used to calculate the angle.\n- `End Shift`: Recent bar used to calculate the angle.\n- `Candle Type`: Candle data type for calculation."
+   },
+   "2190": {
+    "id": 2190,
+    "name": "Color Coppock",
+    "family": "trend",
+    "overview": "The **Color Coppock Strategy** implements a trading system based on a modified Coppock oscillator. The oscillator sums two Rate of Change (ROC) values and smooths the result with a moving average. Rising momentum generates long signals, while falling momentum generates short signals.\n\n## How It Works\n\n1. Calculate two ROC values with different periods.\n2. Sum both ROC values and apply a Simple Moving Average for smoothing.\n3. Compare the current oscillator value with the previous two values:\n   - If the oscillator turns upward after declining, the strategy enters a long position or closes an existing short.\n   - If the oscillator turns downward after rising, the strategy enters a short position or closes an existing long.\n4. Position volume is taken from the strategy's `Volume` property.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `Roc1Period` | Period for the first ROC calculation. |\n| `Roc2Period` | Period for the second ROC calculation. |\n| `SmoothingPeriod` | SMA period applied to the sum of both ROC values. |\n| `CandleType` | Candle type used for indicator calculations. |\n\n## Usage\n\n1. Attach the strategy to a security and set the desired parameters.\n2. The strategy subscribes to the specified candles and processes only finished candles.\n3. Trades are executed with market orders using the default volume.\n\n## Notes\n\n- The strategy uses only high-level API calls such as `SubscribeCandles` and market order helpers.\n- All comments inside the code are written in English.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Roc1Period` | Period for the first ROC calculation. |\n| `Roc2Period` | Period for the second ROC calculation. |\n| `SmoothingPeriod` | SMA period applied to the sum of both ROC values. |\n| `CandleType` | Candle type used for indicator calculations. |"
+   },
+   "3709": {
+    "id": 3709,
+    "name": "ATR Step Trader",
+    "family": "trend",
+    "overview": "The ATR Step Trader strategy is a direct port of the MetaTrader5 expert advisor `atrTrader.mq5`. It combines a fast/slow moving-average filter with Average True Range (ATR) based breakout and pyramiding rules. The port keeps the bar-driven workflow of the original EA: only completed candles are processed, the fast SMA must sit above or below the slow SMA for a fixed number of bars, and every decision is anchored to ATR multiples to normalise distances across markets.",
+    "details": "",
+    "parameters": "| Group | Name | Description | Default |\n| --- | --- | --- | --- |\n| Trend Filter | `FastPeriod` | Fast SMA length that measures short-term direction. | `70` |\n| Trend Filter | `SlowPeriod` | Slow SMA length that measures long-term direction. | `180` |\n| Trend Filter | `MomentumPeriod` | Number of consecutive finished candles that must confirm the trend. | `50` |\n| Volatility | `AtrPeriod` | ATR window used for all distance calculations. | `100` |\n| Entry Logic | `StepMultiplier` | ATR multiple that gates initial breakouts. | `4` |\n| Entry Logic | `StepsMultiplier` | ATR multiple that separates pyramid layers. | `2` |\n| Risk Management | `StopMultiplier` | Extra multiplier applied to the initial stop beyond the base step distance. | `3` |\n| Position Sizing | `PyramidLimit` | Maximum number of entries per direction. | `3` |\n| Trading | `TradeVolume` | Strategy volume submitted with each market order. | `1` |\n| General | `CandleType` | Candle type (time frame) used for the subscription. | `TimeFrame(1h)` |"
+   },
+   "3370": {
+    "id": 3370,
+    "name": "Rapid Doji",
+    "family": "trend",
+    "overview": "The Rapid Doji strategy replicates the logic of the original \"Rapid Doji EA\" expert advisor. It scans finished candles of a configurable timeframe (daily by default) and places stop entry orders above and below every doji candle. Protective stops are positioned using an Average True Range (ATR) multiplier, while an auxiliary trailing stop keeps the risk distance fixed in raw points after a position becomes profitable.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle data type used for pattern detection (daily timeframe by default). |\n| `AtrPeriod` | Lookback length of the ATR indicator. |\n| `AtrMultiplier` | Multiplier applied to the ATR value for stop-loss calculation. |\n| `TrailingDistancePoints` | Fixed distance in raw points used when trailing the stop. |\n\nAll parameters support optimisation inside the StockSharp environment."
+   },
+   "1999": {
+    "id": 1999,
+    "name": "Color Zerolag TriX OSMA",
+    "family": "trend",
+    "overview": "This strategy uses a zero-lag TRIX OSMA oscillator built from five different TRIX periods. Each TRIX component is weighted and smoothed to form a single oscillator that reacts to trend changes with minimal lag. A long position is opened when the oscillator turns upward while a short position is opened when it turns downward.",
+    "details": "",
+    "parameters": "- `Smoothing1` – smoothing factor for the slow trend.\n- `Smoothing2` – smoothing factor for the OSMA line.\n- `Factor1..Factor5` – weights applied to each TRIX component.\n- `Period1..Period5` – periods for the five TRIX calculations.\n- `CandleType` – candle series used for calculations."
+   },
+   "3785": {
+    "id": 3785,
+    "name": "Session Breakout",
+    "family": "trend",
+    "overview": "The Session Breakout strategy replicates the MetaTrader expert advisor \"Session breakout\". It watches the European morning sessi\non and measures its price range. When that range is sufficiently tight, the strategy prepares to trade breakouts during the U.S.\nafternoon session using StockSharp's high-level API. The implementation enforces at most one long and one short entry per day a\nnd automatically attaches protective orders (stop loss and take profit) to every position.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order volume used for both long and short breakouts. |\n| `EuropeSessionStartHour` | Hour when the European range tracking begins. |\n| `EuropeSessionEndHour` | Hour when the European range tracking stops. |\n| `UsSessionStartHour` | Hour that marks the beginning of the U.S. session window. |\n| `UsSessionEndHour` | Hour that marks the end of the U.S. session window. |\n| `SmallSessionThresholdPips` | Maximum width (in pips) for the European range to qualify as a squeeze. |\n| `BreakoutBufferPips` | Extra buffer added above/below the range before triggering breakouts. |\n| `TradeOnMonday` | Enables trading on Mondays. Weekends are always skipped. |\n| `TakeProfitPips` | Distance between the entry price and the take-profit level. |\n| `StopLossPips` | Distance between the entry price and the stop-loss level. |\n| `CandleType` | Candle series used for all calculations (15-minute candles by default). |"
+   },
+   "1119": {
+    "id": 1119,
+    "name": "Nifty Options Trendy Markets with TSL",
+    "family": "trend",
+    "overview": "Breakout strategy using Bollinger Bands with ADX and Supertrend filters. Entries require a volume spike. Positions close on MACD crossovers, ADX weakening or an ATR based trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price crosses above upper Bollinger Band && ADX > threshold && volume spike && price above Supertrend\n  - Short: price crosses below lower Bollinger Band && ADX > threshold && volume spike && price below Supertrend\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross, ADX drop or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerMultiplier` = 2m\n  - `AdxLength` = 14\n  - `AdxEntryThreshold` = 25m\n  - `AdxExitThreshold` = 20m\n  - `SuperTrendLength` = 10\n  - `SuperTrendMultiplier` = 3m\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5m\n  - `VolumeSpikeMultiplier` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, ADX, Supertrend, MACD, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price crosses above upper Bollinger Band && ADX > threshold && volume spike && price above Supertrend\n  - Short: price crosses below lower Bollinger Band && ADX > threshold && volume spike && price below Supertrend\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross, ADX drop or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerMultiplier` = 2m\n  - `AdxLength` = 14\n  - `AdxEntryThreshold` = 25m\n  - `AdxExitThreshold` = 20m\n  - `SuperTrendLength` = 10\n  - `SuperTrendMultiplier` = 3m\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5m\n  - `VolumeSpikeMultiplier` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, ADX, Supertrend, MACD, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4047": {
+    "id": 4047,
+    "name": "21hour",
+    "family": "trend",
+    "overview": "The **21hour** strategy reproduces the behaviour of the MQL4 expert advisor `21hour.mq4`. It operates around a daily time window: pending breakout orders are created at a configurable start hour and all exposure is removed at a configurable stop hour. The StockSharp version keeps the same \"two stop orders around the price\" idea while leveraging the high-level API for order management, market data subscriptions and protective take-profit handling.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Volume` | Order volume in lots for both pending orders. | `0.1` |\n| `StartHour` | Hour (0–23) when the pair of pending orders is created. | `10` |\n| `StopHour` | Hour (0–23) when the strategy closes positions and removes all pending orders. | `22` |\n| `StepPoints` | Distance in instrument points between the current bid/ask price and each stop entry. Converted to price by multiplying with `PriceStep`. | `15` |\n| `TakeProfitPoints` | Distance in points from the entry price to the take-profit target managed by `StartProtection`. Set to `0` to disable the target. | `200` |\n| `CandleType` | Candle data type used for time tracking. Default is one-minute time frame (`TimeSpan.FromMinutes(1).TimeFrame()`). | `1 minute` |"
+   },
+   "346": {
+    "id": 346,
+    "name": "Parabolic SAR Sentiment Divergence",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 127%. It performs best in the stocks market.\n\nSignals trigger when Parabolic confirms divergence setups on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like StartAf, MaxAf. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `StartAf = 0.02m`\n  - `MaxAf = 0.2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `StartAf = 0.02m`\n  - `MaxAf = 0.2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2243": {
+    "id": 2243,
+    "name": "Binary Wave StdDev",
+    "family": "trend",
+    "overview": "Strategy that sums signals from MA, MACD, CCI, Momentum, RSI and ADX using configurable weights.\nTrades in direction of cumulative score when volatility measured by standard deviation exceeds a threshold.\nOptional stop loss and take profit in points.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: score > 0 and StdDev >= EntryVolatility\n  - Short: score < 0 and StdDev >= EntryVolatility\n- **Exit Criteria**:\n  - Volatility falls below ExitVolatility\n- **Stops**: Optional via `UseStopLoss` and `UseTakeProfit`\n- **Default Values**:\n  - `WeightMa` = 1\n  - `WeightMacd` = 1\n  - `WeightCci` = 1\n  - `WeightMomentum` = 1\n  - `WeightRsi` = 1\n  - `WeightAdx` = 1\n  - `MaPeriod` = 13\n  - `FastMacd` = 12\n  - `SlowMacd` = 26\n  - `SignalMacd` = 9\n  - `CciPeriod` = 14\n  - `MomentumPeriod` = 14\n  - `RsiPeriod` = 14\n  - `AdxPeriod` = 14\n  - `StdDevPeriod` = 9\n  - `EntryVolatility` = 1.5\n  - `ExitVolatility` = 1\n  - `StopLossPoints` = 1000\n  - `TakeProfitPoints` = 2000\n  - `UseStopLoss` = false\n  - `UseTakeProfit` = false\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, MACD, CCI, Momentum, RSI, ADX, StandardDeviation\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: score > 0 and StdDev >= EntryVolatility\n  - Short: score < 0 and StdDev >= EntryVolatility\n- **Exit Criteria**:\n  - Volatility falls below ExitVolatility\n- **Stops**: Optional via `UseStopLoss` and `UseTakeProfit`\n- **Default Values**:\n  - `WeightMa` = 1\n  - `WeightMacd` = 1\n  - `WeightCci` = 1\n  - `WeightMomentum` = 1\n  - `WeightRsi` = 1\n  - `WeightAdx` = 1\n  - `MaPeriod` = 13\n  - `FastMacd` = 12\n  - `SlowMacd` = 26\n  - `SignalMacd` = 9\n  - `CciPeriod` = 14\n  - `MomentumPeriod` = 14\n  - `RsiPeriod` = 14\n  - `AdxPeriod` = 14\n  - `StdDevPeriod` = 9\n  - `EntryVolatility` = 1.5\n  - `ExitVolatility` = 1\n  - `StopLossPoints` = 1000\n  - `TakeProfitPoints` = 2000\n  - `UseStopLoss` = false\n  - `UseTakeProfit` = false\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, MACD, CCI, Momentum, RSI, ADX, StandardDeviation\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,136 @@
+{
+  "strategy_roster": [
+    {
+      "id": 7,
+      "name": "Keltner Channel Breakout",
+      "family": "trend",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "close > ema(close,20) + 2 * atr(high,low,close,14)",
+      "exit_long": "crossbelow(close, ema(close,20))",
+      "notes": "Keltner upper band = EMA(20) center + 2*ATR(14); breakout entry, exit when price crosses back through center EMA. Corpus stop is ATR-multiple based, not representable as fixed pct; left null."
+    },
+    {
+      "id": 18,
+      "name": "ROC Impulse",
+      "family": "trend",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "roc(close,12) > 5",
+      "exit_long": "crossbelow(roc(close,12), 2)",
+      "notes": "ROC(12) sharp positive spike (RocPeriod=12); corpus trigger level undocumented, used 5% proxy. Exit when momentum fades toward zero (cross below 2%). ATR stop (2m) not representable as fixed pct; left null."
+    },
+    {
+      "id": 36,
+      "name": "ATR Expansion Breakout",
+      "family": "volatility",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "atr(high,low,close,14) > sma(atr(high,low,close,14),20) and close > sma(close,20)",
+      "exit_long": "atr(high,low,close,14) < sma(atr(high,low,close,14),20) or crossbelow(close, sma(close,20))",
+      "notes": "ATR(14) expanding above its own 20-bar average while price above MA(20); exit on volatility contraction or close through MA. ATR-multiple stop not representable; left null."
+    },
+    {
+      "id": 44,
+      "name": "ATR Range Breakout",
+      "family": "trend",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "close - donchian_low_prev(low,5) > atr(high,low,close,14)",
+      "exit_long": "crossbelow(close, sma(close,20))",
+      "notes": "Price climbed more than one ATR(14) above the lowest low of the prior 5 bars (lookback=5, no ref() in DSL so donchian_low_prev(low,5) approximates 'price moves more than ATR over the lookback'). Exit on close through MA(20) as documented. ATR stop left null."
+    },
+    {
+      "id": 46,
+      "name": "Volume Spike Trend",
+      "family": "volume",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "volume_ratio(volume,20) > 2 and close > sma(close,20)",
+      "exit_long": "volume_ratio(volume,20) < 1",
+      "notes": "Volume spike > 2x 20-bar average with price above MA(20) (MAPeriod=20, VolAvgPeriod=20, VolumeSpikeMultiplier=2); exit when volume reverts below average. Corpus stop undocumented as pct; left null."
+    },
+    {
+      "id": 53,
+      "name": "Volume MA Cross",
+      "family": "volume",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "crossabove(sma(volume,10), sma(volume,50)) and close > sma(close,20)",
+      "exit_long": "crossbelow(sma(volume,10), sma(volume,50))",
+      "notes": "Fast volume MA(10) crosses above slow volume MA(50); price MA(20) filter per corpus. Exit on reverse crossover. Corpus stop undocumented as pct; left null."
+    },
+    {
+      "id": 115,
+      "name": "Volume Climax Reversal",
+      "family": "volume",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "rsi(close,14) < 30 and volume_ratio(volume,20) > 2 and close > donchian_low_prev(low,1)",
+      "exit_long": "crossbelow(rsi(close,14), 40)",
+      "notes": "Climax-volume bar with oversold conditions then close ticking back above prior-bar low approximates 'large volume bar closes and price begins to retrace' (corpus has no ref()/LR; RSI/donchian used as conservative stand-ins). Exit when retrace momentum fades below RSI 40. StopLoss=2% documented."
+    },
+    {
+      "id": 59,
+      "name": "Hammer Candle Reversal",
+      "family": "pattern",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "close > open and (open - low) >= 2 * (close - open) and (high - close) <= (close - open)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "notes": "Bullish hammer: lower shadow >= 2x body, upper shadow <= body (close>open assumed; abs/min/max not in DSL). Exit on close below prior-bar low as pattern-failure proxy (corpus exit is stop/discretionary). Stop 2% proxy."
+    },
+    {
+      "id": 63,
+      "name": "Bullish Engulfing Pattern",
+      "family": "pattern",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "entry_long": "close > open and close >= donchian_high_prev(high,1) and open <= donchian_low_prev(low,1) and close < sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "notes": "Bullish bar fully engulfs prior bar's range with price below MA(20) as downtrend filter (RequireDowntrend=true, DowntrendBars=3 approximated since ref() unavailable; full-range engulf is a conservative stronger-than-body condition). Exit on pattern failure. StopLossPercent=1 documented."
+    },
+    {
+      "id": 66,
+      "name": "Three-Bar Reversal Up",
+      "family": "pattern",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "entry_long": "close > open and close > donchian_high_prev(high,2) and close < sma(close,50)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "notes": "Bullish close above the highs of the prior two bars approximates 'closes above the middle bar's high' after two lower bars; DowntrendLength=5 approximated by close < SMA(50). Exit on pattern failure. StopLossPercent=1 documented."
+    },
+    {
+      "id": 17,
+      "name": "Williams R",
+      "family": "trend",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "(donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)) > 0.8",
+      "exit_long": "(donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)) < 0.5",
+      "notes": "Williams %R(14) scaled 0..1 (close near 14-bar low => ratio>0.8, i.e. recorded WR<-80 oversold); exit on move toward neutral (ratio<0.5, i.e. WR>-50). StopLossPercent=2 documented."
+    },
+    {
+      "id": 34,
+      "name": "Low Volatility Reversion",
+      "family": "mean_reversion",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "atr(high,low,close,14) < 0.8 * sma(atr(high,low,close,14),20) and close < sma(close,20) - 0.5 * std(close,20)",
+      "exit_long": "close >= sma(close,20)",
+      "notes": "Low-vol regime (ATR(14) below 80% of its 20-bar lookback) with price 0.5 std below MA(20) approximates 'price away from moving average while ATR below threshold'. Corpus AtrThresholdPercent=50 produced zero signals across the whole universe on Daily, so threshold relaxed to 80% for viability. Exit on return to MA. ATR stop left null."
+    }
+  ]
+}

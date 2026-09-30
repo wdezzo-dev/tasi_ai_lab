@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2823,
+      "name": "Momentum M15",
+      "family": "trend",
+      "entry_long": "roc(open,23) < -0.2 and close > sma(low,26)",
+      "exit_long": "roc(open,23) > 0.2 or close < sma(low,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(Open,23) below -0.2 corresponds to momentum under the 99.8 bound, while close above SMA(Low,26) approximates the shifted average filter. The MA shift, monotonic 6/10-bar windows, gap lockout, and optional point trail are omitted."
+    },
+    {
+      "id": 1784,
+      "name": "X Trader V3",
+      "family": "trend",
+      "entry_long": "crossbelow(sma((high + low) / 2,16),sma((high + low) / 2,1)) and bars_since(sma((high + low) / 2,16) > sma((high + low) / 2,1)) >= 2",
+      "exit_long": "crossabove(sma((high + low) / 2,16),sma((high + low) / 2,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Median-price SMA(16/1) preserves the documented unusual long crossover and the two-bar persistence test using bars_since. The time window and 100/150-tick stops are not expressible in this DSL."
+    },
+    {
+      "id": 3461,
+      "name": "Ichimoku Price Action",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented optional MACD direction filter is represented by a 12/26/9 signal cross; lengths are explicit fallbacks. Time-of-day selection, Ichimoku fields, fixed/ATR/swing stops, break-even, and trailing are unavailable."
+    },
+    {
+      "id": 3184,
+      "name": "Exp Color PEMA Digit TM Plus MMRec Duplex (C#)",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5),ema(close,21))",
+      "exit_long": "crossbelow(ema(close,5),ema(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA slope turns approximate the long PEMA color switch; EMA(5/21) are fallbacks because smoothing and signal-bar values are unspecified. Pentuple EMA, rounding, dual streams, timers, and step protection are unsupported."
+    },
+    {
+      "id": 3024,
+      "name": "Tunnel Method",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(close,160) + 0.01 * sma(close,160))",
+      "exit_long": "crossbelow(sma(close,20),sma(close,80) - 0.01 * sma(close,80))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 20/160 SMA tunnel and 20/80 exit retain the documented long breakout and bearish reversal, with 1% used as a price-scale proxy for one pip. SMA shifts 0/1/2, cadence, and 50/50/5-point management are omitted."
+    },
+    {
+      "id": 166,
+      "name": "Donchian Stochastic",
+      "family": "breakout",
+      "entry_long": "bars_since(close > donchian_high_prev(high,20)) < 5 and roc(close,3) < 0",
+      "exit_long": "close < donchian_low_prev(low,20) or roc(close,3) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A 20-bar high breakout within five bars is confirmed by a negative three-bar return as a lagging Stochastic %K<20 proxy, with opposite breakout or momentum recovery exiting. The documented 2% stop is retained; all lengths are fallbacks."
+    },
+    {
+      "id": 3066,
+      "name": "Hans Indicator Cloud System",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar prior range approximates the two Hans cloud sessions and their upper/lower breakout; the mirrored band exits. Cloud colors, timezone sessions, signal-bar shift, and entry buffer are unavailable."
+    },
+    {
+      "id": 2332,
+      "name": "Balance Of Power Histogram",
+      "family": "momentum",
+      "entry_long": "roc((close - open) / (high - low),1) > 0",
+      "exit_long": "roc((close - open) / (high - low),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The exact documented BOP formula is used, and ROC(1) detects its current turn because explicit two-bar history is unavailable. The four-hour schedule and advanced money management are omitted."
+    },
+    {
+      "id": 3861,
+      "name": "BadOrders",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This demonstration intentionally submits invalid pending orders rather than defining a trade, so impossible guards prevent fabricated entries. Tick bid, 100-point modification, rejection, and close-reopen state cannot be represented."
+    },
+    {
+      "id": 2278,
+      "name": "Stoch Komposter",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing the documented lower level 30 is used as a bounded Stochastic %K proxy, with a cross above 70 as exit. Stochastic periods, ATR arrows, and 1000/2000 price-unit protection are unavailable."
+    }
+  ]
+}

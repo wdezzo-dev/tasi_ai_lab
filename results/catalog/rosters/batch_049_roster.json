@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3287,
+      "name": "Macd Secrets",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and ema(close,6) > ema(close,85) and roc(close,14) > 0",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or ema(close,6) < ema(close,85) or roc(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9), EMA(6/85), and positive 14-bar ROC retain the documented current-timeframe momentum, baseline, and deviation checks. Higher-timeframe MACD/LWMA/momentum context, point targets, and single-position risk handling are not expressible."
+    },
+    {
+      "id": 677,
+      "name": "Distance to Demand Vector",
+      "family": "trend",
+      "entry_long": "close > (donchian_high_prev(high,100) + donchian_low_prev(low,100)) / 2",
+      "exit_long": "close < (donchian_high_prev(high,100) + donchian_low_prev(low,100)) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 100-bar prior high/low midpoint is an explicit distance-and-direction proxy for the unavailable long and short demand vectors. Vector calculations, 1-minute timeframe, and opposite-side handling are omitted; no stops are documented."
+    },
+    {
+      "id": 2303,
+      "name": "ADX DMI",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,14)) and adx(high,low,close,14) > 20",
+      "exit_long": "crossbelow(close,ema(close,14)) or adx(high,low,close,14) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close/EMA(14) cross with ADX confirmation proxies the documented -DI/+DI directional crossover, with the inverse as exit. DMI lines, optional close toggles, and external stop management are not available."
+    },
+    {
+      "id": 730,
+      "name": "EMA RSI Trail Stop",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20)) and ema(close,20) > ema(close,100) and close > open",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20)) or rsi(close,14) > 70",
+      "stop_loss_pct": 5.0,
+      "take_profit_pct": null,
+      "notes": "EMA(10/20/100), the bullish candle filter, and RSI(14)>70 exit retain the documented trend/RSI rules. The fixed 5% stop is retained; point trailing, 24-bar timer, and short-side settings are omitted."
+    },
+    {
+      "id": 3161,
+      "name": "ColorMaRsi Trigger MMRec Duplex",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5),ema(close,10)) and rsi(close,3) > rsi(close,13)",
+      "exit_long": "crossbelow(ema(close,5),ema(close,10)) or rsi(close,3) < rsi(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(5/10) and RSI(3/13) alignment are the documented long-block composite values and produce a bullish trigger. Separate short block, applied-price variants, MMRec volume history, 1000/2000-point protections, and signal-bar shifts are not representable."
+    },
+    {
+      "id": 3917,
+      "name": "TCP Pivot Reversal Limit",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,20) and close > open",
+      "exit_long": "high > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A lower-range rejection with a bullish close is a stateless proxy for a failed downside pivot and reversal. Daily pivot formulas, target mode, hourly timing, trailing, and point stops are not expressible."
+    },
+    {
+      "id": 4030,
+      "name": "Regularities of Exchange Rates",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 10-bar high break is a price-action proxy for the scheduled two-sided stop-order bracket. Opening/closing hours, broker-point offsets, 500-point stop, 20-point target, and pending-order cancellation are not DSL fields."
+    },
+    {
+      "id": 1942,
+      "name": "Close By Equity Percent",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is an equity-only position manager and has no entry signal, so an impossible negative-price guard avoids fabricating exposure. Balance/equity comparison, 1.2x threshold, reference updates, and minute scheduling are unavailable."
+    },
+    {
+      "id": 3318,
+      "name": "TraderToolEA Manual Panel (StockSharp Port)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a manual command panel rather than an autonomous signal, so no deterministic entry is fabricated. Button toggles, Level1 order management, grids, pip stops, virtual trailing, and break-even state are unsupported."
+    },
+    {
+      "id": 282,
+      "name": "Hull MA Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(ema(close,9),sma(close,9)) and rsi(close,14) < 40",
+      "exit_long": "crossbelow(ema(close,9),sma(close,9)) or rsi(close,14) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9) turning through SMA(9) with RSI(14)<40 is an explicit Hull-slope/RSI oversold proxy. Hull(9), deviation 2x, ATR(14) stop, and 5-minute execution are unavailable; no percentage protection is set."
+    }
+  ]
+}

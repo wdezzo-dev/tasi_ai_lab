@@ -1,0 +1,98 @@
+{
+ "batch_246": {
+  "strategy_ids": [
+   759,
+   1456,
+   2884,
+   2694,
+   2244,
+   3967,
+   1436,
+   976,
+   2079,
+   4050
+  ],
+  "docs": {
+   "759": {
+    "id": 759,
+    "name": "Enhanced Range Filter Strategy with ATR TP/SL",
+    "family": "trend",
+    "overview": "This strategy combines a custom range filter with ATR based take profit and stop loss levels.\nEntries occur when price breaks the filter and all additional filters are satisfied:\n\n- Volume above average\n- RSI within configured boundaries\n- Trend confirmation via EMA crossover\n- Market not ranging based on ATR ratio\n\nPositions are closed when the ATR based stop loss or take profit level is reached.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1456": {
+    "id": 1456,
+    "name": "TrailingTakeProfit Example",
+    "family": "trend",
+    "overview": "Strategy description in English with trading logic explanation.\n\n## Details\n- **Entry Criteria**: Fast SMA crossing above/below slow SMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing take profit from previous bar high or low.\n- **Stops**: None.\n- **Default Values**: Fast 14, Slow 28, ATR Length 7, ATR Multiplier 1.5.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**: Fast SMA crossing above/below slow SMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing take profit from previous bar high or low.\n- **Stops**: None.\n- **Default Values**: Fast 14, Slow 28, ATR Length 7, ATR Multiplier 1.5.\n- **Filters**: None.",
+    "parameters": ""
+   },
+   "2884": {
+    "id": 2884,
+    "name": "SilverTrend Duplex",
+    "family": "trend",
+    "overview": "The **SilverTrend Duplex Strategy** is a StockSharp port of the MetaTrader 5 expert advisor `Exp_SilverTrend_Duplex`. The original robot combines two independent SilverTrend filters (for long and short decisions) and executes trades when the indicator colours flip between bullish and bearish states. This C# implementation keeps the dual-filter architecture, allowing you to tune the long and short logic separately while taking advantage of StockSharp's high level API.\n\nThe strategy operates on finished candles only. Two separate subscriptions can be configured, so long and short signals may observe different timeframes or instruments if required. Internally, a custom `SilverTrendIndicator` rebuilds the colour logic from the MQL version by combining Donchian channel extremes with the risk multiplier to emulate the original SilverTrend bands.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `LongCandleType` | 4 hour candles | Data type used for the long-side indicator. |\n| `LongSsp` | 9 | SilverTrend lookback length for the long filter. |\n| `LongRisk` | 3 | Risk multiplier (`33 - risk`) applied to the channel width. |\n| `LongSignalBar` | 1 | Offset (in finished candles) for evaluating long signals. Must be ≥ 1. |\n| `EnableLongEntries` | true | Toggles opening of long positions. |\n| `EnableLongExits` | true | Toggles closing of long positions when bearish colours appear. |\n| `ShortCandleType` | 4 hour candles | Data type used for the short-side indicator. |\n| `ShortSsp` | 9 | SilverTrend lookback length for the short filter. |\n| `ShortRisk` | 3 | Risk multiplier for the short filter. |\n| `ShortSignalBar` | 1 | Offset for evaluating short signals. Must be ≥ 1. |\n| `EnableShortEntries` | true | Toggles opening of short positions. |\n| `EnableShortExits` | true | Toggles closing of short positions when bullish colours appear. |\n| `Volume` | 1 | Base order volume used for entries. |"
+   },
+   "2694": {
+    "id": 2694,
+    "name": "Perceptron Adaptive",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 5 expert advisor *Perceptron.mq5*.  \nFive discrete indicator signals are combined through a two-layer perceptron. Each trade records the indicator state and, once the position is closed, synaptic weights are reinforced or penalized depending on the achieved profit. The behaviour mimics the self-learning loop of the original EA while leveraging the StockSharp high-level candle API.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 1-minute time frame | Candle subscription used by the strategy. |\n| `FastMaLength` | 5 | Period of the fast SMA in the crossover signal. |\n| `SlowMaLength` | 9 | Period of the slow SMA. |\n| `RsiLength` | 14 | RSI calculation period. |\n| `CciLength` | 14 | CCI calculation period. |\n| `SlopeMaLength` | 5 | Period of the MA used for slope detection. |\n| `AoShortLength` | 5 | Short period of the Awesome Oscillator. |\n| `AoLongLength` | 34 | Long period of the Awesome Oscillator. |\n| `StopLossOffset` | 0.001 | Stop-loss distance in absolute price units (0 disables the stop). |\n| `TakeProfitOffset` | 0.0004 | Take-profit distance in absolute price units (0 disables the target). |\n| `SinMax` | 5 | Upper bound for neuron bias weights. |\n| `SinMin` | 0 | Lower bound for neuron bias weights. |\n| `SinPlusStep` | 0.03 | Positive reinforcement increment. |\n| `SinMinusStep` | 0.03 | Negative reinforcement decrement. |\n\nAll numeric parameters are exposed as `StrategyParam<T>` and can be optimised inside StockSharp Designer."
+   },
+   "2244": {
+    "id": 2244,
+    "name": "Color HMA StDev",
+    "family": "trend",
+    "overview": "Strategy based on Hull Moving Average with a dynamic standard deviation filter.\n\nThe system watches how far price deviates from the HMA. When the close breaks above the\naverage by a chosen multiple of the standard deviation the strategy enters long, and vice versa for short positions.\nA wider multiplier defines an exit zone so that positions are closed only after a significant return inside the band.\n\nThis approach attempts to capture fast momentum bursts while avoiding noise. The Hull Moving Average reacts quickly\nto trend changes, and the standard deviation adapts to volatility allowing the thresholds to expand during turbulent\nmarkets. The strategy trades in both directions and does not use fixed stops, relying instead on the\nmean reversion of price back toward the HMA.\n\n## Details\n\n- **Entry Criteria**: Close crossing HMA ± K1 * StdDev.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Close crossing HMA ± K2 * StdDev in opposite direction.\n- **Stops**: No fixed stop-loss or take-profit.\n- **Default Values**:\n  - `HmaPeriod` = 13\n  - `StdPeriod` = 9\n  - `K1` = 1.5m\n  - `K2` = 2.5m\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend, Volatility\n  - Direction: Both\n  - Indicators: HMA, Standard Deviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close crossing HMA ± K1 * StdDev.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Close crossing HMA ± K2 * StdDev in opposite direction.\n- **Stops**: No fixed stop-loss or take-profit.\n- **Default Values**:\n  - `HmaPeriod` = 13\n  - `StdPeriod` = 9\n  - `K1` = 1.5m\n  - `K2` = 2.5m\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend, Volatility\n  - Direction: Both\n  - Indicators: HMA, Standard Deviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3967": {
+    "id": 3967,
+    "name": "Fuzzy Logic Legacy",
+    "family": "trend",
+    "overview": "The strategy reproduces the 2007 \"Fuzzy logic\" MetaTrader expert advisor in StockSharp. It combines several Bill Williams tools\nwith momentum oscillators and evaluates them through a fuzzy scoring table. Only when the aggregated score shows strong bullish o\nr bearish consensus does the system open a new position. A fixed stop-loss and optional trailing stop mirror the original trade m\nanagement rules.\n\n## Trading Logic\n\n1. Build the Bill Williams Alligator (jaw, teeth, lips) using smoothed moving averages and calculate the *Gator* spread as the su\nm of absolute distances between the lines.\n2. Calculate Williams %R (period 14), DeMarker (period 14) and RSI (period 14) on the same candles.\n3. Derive the Accelerator Oscillator (AC) from the Awesome Oscillator sequence and track up to five consecutive bars to detect ac\nceleration streaks.\n4. Each indicator feeds a five-level fuzzy membership table with predefined breakpoints copied from the original code.\n5. Weighted sums of the memberships produce a decision value between 0 and 1:\n   - Values **> 0.75** indicate bullish consensus and trigger long entries.\n   - Values **< 0.25** indicate bearish consensus and trigger short entries.\n6. Only one position can be open at a time. Protective stops are attached immediately after entry.\n\n## Position Management\n\n- **Stop-loss**: Fixed distance in price steps (`Stop Loss (points)` parameter).\n- **Trailing stop**: Optional; when enabled it trails the protective stop by the specified number of price steps.\n- **Money management**: Optional balance-based sizing that mimics the MetaTrader formula `Volume = (Balance * (PercentMM + DeltaM\nM) - InitialBalance * DeltaMM) / 10000`.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `Candle Type` | Candle data series used for analysis. |\n| `Long Threshold` | Decision level that must be exceeded to open a long position. |\n| `Short Threshold` | Decision level that must be crossed to open a short position. |\n| `Stop Loss",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Candle Type` | Candle data series used for analysis. |\n| `Long Threshold` | Decision level that must be exceeded to open a long position. |\n| `Short Threshold` | Decision level that must be crossed to open a short position. |\n| `Stop Loss (points)` | Distance of the initial stop-loss in price steps. |\n| `Trailing Stop (points)` | Distance of the trailing stop in price steps; set to `0` to disable. |\n| `Fixed Volume` | Trade volume when money management is disabled. |\n| `Use Money Management` | Enables the MetaTrader-style money management formula. |\n| `Percent MM` | Percentage of the account balance used in the money management formula. |\n| `Delta MM` | Additional percentage offset for the money management formula. |\n| `Initial Balance` | Reference balance used by the money management formula. |"
+   },
+   "1436": {
+    "id": 1436,
+    "name": "Time Session Filter - MACD example",
+    "family": "trend",
+    "overview": "Strategy demonstrates using a time session filter with MACD and trend EMA. Trades only during the configured hours.\n\n## Details\n\n- **Entry Criteria**: MACD crosses signal within active session and price relative to trend EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover or session end when enabled.\n- **Stops**: No.\n- **Default Values**:\n  - `SessionStart` = 11:00\n  - `SessionEnd` = 15:00\n  - `CloseAtSessionEnd` = false\n  - `FastEmaPeriod` = 11\n  - `SlowEmaPeriod` = 26\n  - `SignalPeriod` = 9\n  - `TrendMaLength` = 55\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD crosses signal within active session and price relative to trend EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover or session end when enabled.\n- **Stops**: No.\n- **Default Values**:\n  - `SessionStart` = 11:00\n  - `SessionEnd` = 15:00\n  - `CloseAtSessionEnd` = false\n  - `FastEmaPeriod` = 11\n  - `SlowEmaPeriod` = 26\n  - `SignalPeriod` = 9\n  - `TrendMaLength` = 55\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "976": {
+    "id": 976,
+    "name": "Linear Mean Reversion",
+    "family": "trend",
+    "overview": "Linear Mean Reversion Strategy uses the z-score of price relative to a moving average to trade mean reversion with a fixed stop loss in points.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: z-score < -EntryThreshold.\n  - **Short**: z-score > EntryThreshold.\n- **Exit Criteria**: z-score returns toward zero (z-score > -ExitThreshold for longs, z-score < ExitThreshold for shorts).\n- **Stops**: Fixed stop loss in points.\n- **Default Values**:\n  - `HalfLife` = 14\n  - `Scale` = 1\n  - `EntryThreshold` = 2\n  - `ExitThreshold` = 0.2\n  - `StopLossPoints` = 50\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: SMA, StandardDeviation\n  - Stops: Yes\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: z-score < -EntryThreshold.\n  - **Short**: z-score > EntryThreshold.\n- **Exit Criteria**: z-score returns toward zero (z-score > -ExitThreshold for longs, z-score < ExitThreshold for shorts).\n- **Stops**: Fixed stop loss in points.\n- **Default Values**:\n  - `HalfLife` = 14\n  - `Scale` = 1\n  - `EntryThreshold` = 2\n  - `ExitThreshold` = 0.2\n  - `StopLossPoints` = 50\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: SMA, StandardDeviation\n  - Stops: Yes\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2079": {
+    "id": 2079,
+    "name": "Color Zerolag JCCX",
+    "family": "trend",
+    "overview": "Strategy inspired by the ColorZerolagJCCX indicator from MetaTrader. It approximates the original oscillator using two simple moving averages.\nThe strategy goes long when the fast average crosses below the slow average and goes short when the fast average crosses above the slow average.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Fast MA crosses below Slow MA`\n  - Short: `Fast MA crosses above Slow MA`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: `StartProtection()`\n- **Default Values**:\n  - `FastPeriod` = 8\n  - `SlowPeriod` = 21\n  - `CandleType` = 4-hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Average\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Fast MA crosses below Slow MA`\n  - Short: `Fast MA crosses above Slow MA`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: `StartProtection()`\n- **Default Values**:\n  - `FastPeriod` = 8\n  - `SlowPeriod` = 21\n  - `CandleType` = 4-hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Average\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4050": {
+    "id": 4050,
+    "name": "Smoothed MA Directional",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp high-level API port of the MetaTrader 4 expert `oc08_vy_m0moqesu15` from the `MQL/8615` folder. The original expert aligns its position with a single smoothed moving average (SMMA) and attaches fixed stop-loss and take-profit levels to every order. The C# version keeps the same directional behaviour while adopting idiomatic StockSharp components.\n\n## Trading idea\n\n- **Directional bias:** Price closing above the smoothed moving average indicates an uptrend; closing below signals a downtrend.\n- **Position alignment:** The strategy always tries to maintain a single position in the direction of the detected trend. If the market flips sides, it immediately reverses the position.\n- **Risk control:** Every entry is protected by stop-loss and take-profit offsets expressed in price steps. StockSharp's `StartProtection` helper replaces the manual SL/TP assignment in the original MQ4 code.\n- **Execution style:** Orders are submitted as market orders on candle close, replicating the `OrdersTotal()==0` logic of the MetaTrader expert.\n\n## How it works\n\n1. On startup the strategy subscribes to candles of the configured timeframe and binds a `SmoothedMovingAverage` indicator with the selected period.\n2. When a candle finishes, the indicator value is compared with the candle close.\n3. If the close is higher than the SMMA and the strategy is flat or short, it sends a market buy sized to cover the short exposure (if any) and open a long position.\n4. If the close is lower than the SMMA and the strategy is flat or long, it sends a market sell sized to cover the long exposure (if any) and open a short position.\n5. Protective stop-loss and take-profit distances are configured once at start using the current security `PriceStep`. If both offsets are set to zero the protection is disabled.\n6. Chart output (candles, indicator, trades) is drawn automatically when the strategy runs inside environments that expose a chart area.\n\n## Parameters\n\n| Name | Default | De",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `StopLossPoints` | 100 | Stop-loss distance in price steps. Set to `0` to disable the stop.\n| `TakeProfitPoints` | 100 | Take-profit distance in price steps. Set to `0` to disable the target.\n| `MaPeriod` | 12 | Period of the smoothed moving average used to gauge the trend.\n| `TradeVolume` | 1 | Market order volume. The strategy also writes this value into `Strategy.Volume` on start.\n| `CandleType` | 15-minute time frame | Candle type (time frame) driving the indicator and signals.\n\nAll parameters are configurable through StockSharp Designer/Runner and include optimization ranges for automated testing."
+   }
+  }
+ }
+}

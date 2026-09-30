@@ -1,0 +1,98 @@
+{
+ "batch_086": {
+  "strategy_ids": [
+   1309,
+   884,
+   3638,
+   39,
+   1225,
+   1142,
+   1751,
+   624,
+   2852,
+   1269
+  ],
+  "docs": {
+   "1309": {
+    "id": 1309,
+    "name": "SJ NIFTY",
+    "family": "trend",
+    "overview": "Trend-following strategy using SuperTrend, VWAP, RSI and EMA200. Keltner Channel basis acts as optional trend filter. Position size is calculated from risk percent of capital with stop-loss and risk-reward take-profit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close > SuperTrend && Close > VWAP && RSI > Overbought && Close > EMA200 && Keltner basis filter && Close > previous high.\n  - **Short**: Close < SuperTrend && Close < VWAP && RSI < Oversold && Close < EMA200 && Keltner basis filter && Close < previous low.\n- **Exit Criteria**: Stop-loss or take-profit based on risk ratio.\n- **Position Sizing**: Risk percentage of portfolio divided by stop distance, rounded to lot size.\n- **Indicators**: SuperTrend, VWAP, RSI, EMA, Keltner Channels.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close > SuperTrend && Close > VWAP && RSI > Overbought && Close > EMA200 && Keltner basis filter && Close > previous high.\n  - **Short**: Close < SuperTrend && Close < VWAP && RSI < Oversold && Close < EMA200 && Keltner basis filter && Close < previous low.\n- **Exit Criteria**: Stop-loss or take-profit based on risk ratio.\n- **Position Sizing**: Risk percentage of portfolio divided by stop distance, rounded to lot size.\n- **Indicators**: SuperTrend, VWAP, RSI, EMA, Keltner Channels.",
+    "parameters": ""
+   },
+   "884": {
+    "id": 884,
+    "name": "HMA 200 + EMA 20 Crossover",
+    "family": "trend",
+    "overview": "The strategy enters long when price is above the 200-period Hull Moving Average\nand crosses above the 20-period Exponential Moving Average. Short positions are\nopened when price is below the HMA and crosses below the EMA. Positions reverse\non opposite signals.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close > HMA` and `Close` crosses above `EMA`.\n  - **Short**: `Close < HMA` and `Close` crosses below `EMA`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse on opposite crossover signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HMA Length` = 200\n  - `EMA Length` = 20\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: HMA, EMA\n  - Stops: None\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close > HMA` and `Close` crosses above `EMA`.\n  - **Short**: `Close < HMA` and `Close` crosses below `EMA`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse on opposite crossover signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HMA Length` = 200\n  - `EMA Length` = 20\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: HMA, EMA\n  - Stops: None\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3638": {
+    "id": 3638,
+    "name": "Donchian Scalper",
+    "family": "trend",
+    "overview": "Donchian Scalper is a StockSharp port of the MetaTrader 4 expert advisor `DonchianScalperEA`. The strategy monitors Donchian channel boundaries and the exponential moving average (EMA) of the same length. A pending stop order is armed only after price pulls back through the EMA, signalling that momentum has reset before a potential breakout. Entries are executed with stop orders placed at the current Donchian extremes and protected by the opposite band. Profits are managed either by a fixed take-profit distance or by adaptive trailing stops that track the chosen market structure.",
+    "details": "",
+    "parameters": "* **Volume** – order volume used for stop entries and market exits.\n* **Channel Period** – Donchian channel length, also used for the EMA filter.\n* **Cross Anchor** – additional distance (in points) that the pullback must exceed before the breakout order is armed.\n* **Stop Loss (points)** – distance added to the opposite Donchian band for the initial protective stop; set to `0` to place the stop directly on the band.\n* **Take Profit (points)** – profit target used by the *Close At Profit* mode. Ignored when the trailing mode is active.\n* **Candle Type** – timeframe driving indicator calculations.\n* **Profit Mode** – selects between the fixed take-profit exit and adaptive trailing stops.\n* **Trailing Mode** – trailing engine used in the *Trailing* profit mode. Choices are Donchian boundary, EMA, or ATR-based trailing.\n* **Cooldown Bars** – minimum number of finished candles that must pass after the position becomes flat before new orders may be placed.\n* **ATR Period / ATR Multiplier** – parameters for the ATR trailing engine. The multiplier defines how many ATRs are subtracted (long) or added (short) to compute the trailing stop."
+   },
+   "39": {
+    "id": 39,
+    "name": "Historical Volatility Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 154%. It performs best in the stocks market.\n\nThe strategy compares price to levels derived from standard deviation and a simple moving average. Breakouts above or below those levels trigger trades.\n\nExits occur when price crosses back through the moving average or the stop hits.\n\n## Details\n\n- **Entry Criteria**: Price breaks above or below HV-based level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `HvPeriod` = 20\n  - `MAPeriod` = 20\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: HV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price breaks above or below HV-based level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `HvPeriod` = 20\n  - `MAPeriod` = 20\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: HV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1225": {
+    "id": 1225,
+    "name": "Range Filter DW",
+    "family": "trend",
+    "overview": "This strategy implements an ATR-based range filter similar to Donovan Wall's Range Filter. The filter ignores minor price movements by moving only when price exceeds a volatility-based range. A long position is opened when the close is above the upper band, while a short position is opened when the close is below the lower band.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close above the upper band.\n  - **Short**: Close below the lower band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite band breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `RangePeriod` = 14\n  - `RangeMultiplier` = 2.618\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close above the upper band.\n  - **Short**: Close below the lower band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite band breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `RangePeriod` = 14\n  - `RangeMultiplier` = 2.618\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1142": {
+    "id": 1142,
+    "name": "ORB 15m – First 15min Breakout (Long/Short)",
+    "family": "breakout",
+    "overview": "This strategy enters at the close of the first 15‑minute bar after the session open in Stockholm time. A bullish first bar triggers a long trade, a bearish bar triggers a short. Position size is calculated from risk percentage and the distance to the stop.\n\n## Details\n\n- **Entry Criteria**: trade on the first 15-minute bar after session open; long if the bar closes above its open, short if below.\n- **Exit Criteria**: stop-loss at the opposite extreme of the reference bar; optional take profit at `RMultiple` times risk or otherwise at session end.\n- **Long/Short**: both.\n- **Stops**: yes.\n- **Default Values**:\n  - `RiskPct = 1`\n  - `TpTenR = true`\n  - `RMultiple = 10`\n  - `SessionOpenHour = 15`\n  - `SessionOpenMinute = 30`\n  - `SessionEndHour = 22`\n  - `SessionEndMinute = 0`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n",
+    "details": "- **Entry Criteria**: trade on the first 15-minute bar after session open; long if the bar closes above its open, short if below.\n- **Exit Criteria**: stop-loss at the opposite extreme of the reference bar; optional take profit at `RMultiple` times risk or otherwise at session end.\n- **Long/Short**: both.\n- **Stops**: yes.\n- **Default Values**:\n  - `RiskPct = 1`\n  - `TpTenR = true`\n  - `RMultiple = 10`\n  - `SessionOpenHour = 15`\n  - `SessionOpenMinute = 30`\n  - `SessionEndHour = 22`\n  - `SessionEndMinute = 0`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday",
+    "parameters": ""
+   },
+   "1751": {
+    "id": 1751,
+    "name": "Maximus vX Lite",
+    "family": "breakout",
+    "overview": "This strategy attempts to trade breakouts from short-term consolidation zones. It searches for compact price ranges on the 15‑minute chart and opens trades when the price breaks away from these ranges by a specified distance.\n\n## Strategy Logic\n\n1. For every finished 15‑minute candle the highest high and lowest low of the last 40 candles are calculated.\n2. If the distance between these extremes is below the **Range** parameter a consolidation zone is assumed.\n3. After the **Delay Open** period passes without new trades, a breakout above the upper boundary plus **Distance** points triggers a long position, while a breakout below the lower boundary minus **Distance** points triggers a short position.\n4. A fixed **Stop Loss** and a trailing stop of **Trail** points are applied once a position is opened.\n5. Consolidation boundaries are reset after the **Period** hours elapse.\n\n## Parameters\n\n- `DelayOpen` – Hours to wait before opening a new trade.\n- `Distance` – Breakout distance from the consolidation boundary in points.\n- `Period` – Hours after which consolidation levels are recalculated.\n- `Range` – Maximum size of the consolidation zone in points.\n- `StopLoss` – Initial stop loss in points.\n- `Trail` – Trailing stop distance in points.\n\n## Notes\n\nThe strategy uses only the high-level API: candles are received through `SubscribeCandles`, and indicator values are bound using `Bind`. Orders are sent with `BuyMarket` and `SellMarket` methods. Comments in the source code are written in English.\n",
+    "details": "",
+    "parameters": "- `DelayOpen` – Hours to wait before opening a new trade.\n- `Distance` – Breakout distance from the consolidation boundary in points.\n- `Period` – Hours after which consolidation levels are recalculated.\n- `Range` – Maximum size of the consolidation zone in points.\n- `StopLoss` – Initial stop loss in points.\n- `Trail` – Trailing stop distance in points."
+   },
+   "624": {
+    "id": 624,
+    "name": "Color Gradient Framework",
+    "family": "momentum",
+    "overview": "Demonstrates computing a color gradient from red to green based on RSI and trades when RSI crosses the center line.\n\n## Logic\n- Calculates a Relative Strength Index with configurable period.\n- Derives a gradient color for visualization.\n- Buys when RSI moves above 50.\n- Sells when RSI moves below 50.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2852": {
+    "id": 2852,
+    "name": "Surefirething",
+    "family": "volatility",
+    "overview": "The Surefirething strategy recreates the classic MetaTrader 5 expert advisor that places symmetric buy and sell limit orders around the most recent candle close. The system constantly rebuilds the grid after every completed candle, manages protective stops in pip units, and forces a complete flat position ten minutes before midnight server time.",
+    "details": "",
+    "parameters": "- `OrderVolume` – base volume for both limit orders (default: `0.1`).\n- `StopLossPips` – stop-loss distance in pips (default: `50`).\n- `TakeProfitPips` – take-profit distance in pips (default: `50`).\n- `TrailingStopPips` – trailing stop distance in pips (default: `25`).\n- `TrailingStepPips` – additional movement in pips required before the trailing stop moves (default: `1`). Must be greater than zero when a trailing stop is enabled.\n- `CandleType` – candle data type used for calculations (default: 1-hour time frame)."
+   },
+   "1269": {
+    "id": 1269,
+    "name": "RSI Long Only with Confirmed Crossbacks",
+    "family": "mean_reversion",
+    "overview": "This strategy waits for the RSI to drop below a threshold and then cross back above it. The crossback confirms oversold conditions before entering a long position. Positions close when the RSI crosses above an exit level. Parameters allow short trades, but defaults effectively disable shorts.\n\n## Details\n\n- **Entry Criteria**: RSI crosses above the oversold level after being below it.\n- **Long/Short**: Long only by default.\n- **Exit Criteria**: RSI crosses above the long exit level or optional short rules.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `RsiLength` = 14\n  - `Oversold` = 44\n  - `LongExitLevel` = 70\n  - `ShortEntryLevel` = 100\n  - `ShortExitLevel` = 0\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI crosses above the oversold level after being below it.\n- **Long/Short**: Long only by default.\n- **Exit Criteria**: RSI crosses above the long exit level or optional short rules.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `RsiLength` = 14\n  - `Oversold` = 44\n  - `LongExitLevel` = 70\n  - `ShortEntryLevel` = 100\n  - `ShortExitLevel` = 0\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_051": {
+  "strategy_ids": [
+   1578,
+   2109,
+   737,
+   1077,
+   2442,
+   3185,
+   3946,
+   684,
+   3793,
+   3218
+  ],
+  "docs": {
+   "1578": {
+    "id": 1578,
+    "name": "Zero-lag Volatility-Breakout EMA Trend",
+    "family": "trend",
+    "overview": "Breakout system using zero-lag EMA difference with Bollinger bands and an EMA trend filter. Optionally holds positions until an opposite signal.\n\n## Details\n\n- **Entry Criteria**: Dif crosses above upper band with EMA slope filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Optional exit on mid-band cross.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `EmaLength` = 200\n  - `StdMultiplier` = 2m\n  - `UseBinary` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, Bollinger Bands\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Dif crosses above upper band with EMA slope filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Optional exit on mid-band cross.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `EmaLength` = 200\n  - `StdMultiplier` = 2m\n  - `UseBinary` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, Bollinger Bands\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2109": {
+    "id": 2109,
+    "name": "RD Trend Trigger",
+    "family": "trend",
+    "overview": "The RD Trend Trigger strategy uses the RD-TrendTrigger oscillator to capture trend reversals or level breakouts depending on the selected mode. In twist mode, trades follow changes in oscillator direction; in disposition mode, trades occur when the oscillator crosses predefined levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Twist mode**: Enter long when the oscillator turns upward; enter short when it turns downward.\n  - **Disposition mode**: Enter long when the oscillator rises above `HighLevel`; enter short when it falls below `LowLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signals or explicit exit conditions in disposition mode when the oscillator rises above `LowLevel`.\n- **Stops**: None by default; protection can be enabled externally.\n- **Default Values**:\n  - `Regress` = 15\n  - `T3Length` = 5\n  - `T3VolumeFactor` = 0.7\n  - `HighLevel` = 50\n  - `LowLevel` = -50\n  - `Mode` = Twist\n  - `CandleType` = 4-hour candles\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Long & Short\n  - Indicators: Custom RD-TrendTrigger (based on highs/lows and Tillson T3)\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Twist mode**: Enter long when the oscillator turns upward; enter short when it turns downward.\n  - **Disposition mode**: Enter long when the oscillator rises above `HighLevel`; enter short when it falls below `LowLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signals or explicit exit conditions in disposition mode when the oscillator rises above `LowLevel`.\n- **Stops**: None by default; protection can be enabled externally.\n- **Default Values**:\n  - `Regress` = 15\n  - `T3Length` = 5\n  - `T3VolumeFactor` = 0.7\n  - `HighLevel` = 50\n  - `LowLevel` = -50\n  - `Mode` = Twist\n  - `CandleType` = 4-hour candles\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Long & Short\n  - Indicators: Custom RD-TrendTrigger (based on highs/lows and Tillson T3)\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "737": {
+    "id": 737,
+    "name": "EMA Crossover Short Focus Trailing Stop",
+    "family": "trend",
+    "overview": "The strategy goes long when the 13 EMA is above the 33 EMA and no short position exists. It goes short when the 13 EMA is below the 33 EMA and no long position is open. Positions exit when the 13 EMA crosses the opposite EMA and a trailing stop follows recent extremes.\n\n## Details\n- **Entry Criteria:**\n  - **Long:** 13 EMA ≥ 33 EMA and position ≤ 0.\n  - **Short:** 13 EMA ≤ 33 EMA and position ≥ 0.\n- **Long/Short:** both.\n- **Exit Criteria:** long exits when 13 EMA < 33 EMA; short exits when 13 EMA > 25 EMA.\n- **Stops:** trailing stop with distance `TrailDistance` and offset `TrailOffset`.\n- **Default Values:** short EMA = 13, mid EMA = 25, long EMA = 33, trail distance = 10, trail offset = 2.\n",
+    "details": "- **Entry Criteria:**\n  - **Long:** 13 EMA ≥ 33 EMA and position ≤ 0.\n  - **Short:** 13 EMA ≤ 33 EMA and position ≥ 0.\n- **Long/Short:** both.\n- **Exit Criteria:** long exits when 13 EMA < 33 EMA; short exits when 13 EMA > 25 EMA.\n- **Stops:** trailing stop with distance `TrailDistance` and offset `TrailOffset`.\n- **Default Values:** short EMA = 13, mid EMA = 25, long EMA = 33, trail distance = 10, trail offset = 2.",
+    "parameters": ""
+   },
+   "1077": {
+    "id": 1077,
+    "name": "Moving Average Crossover",
+    "family": "trend",
+    "overview": "Buys when the short SMA crosses above the long SMA and sells when it crosses below. Positions reverse on opposite signals.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when short SMA crosses above long SMA.\n  - Short when short SMA crosses below long SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse on opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortLength` = 9\n  - `LongLength` = 21\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Crossover\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long when short SMA crosses above long SMA.\n  - Short when short SMA crosses below long SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse on opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortLength` = 9\n  - `LongLength` = 21\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Crossover\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2442": {
+    "id": 2442,
+    "name": "Fractal WPR",
+    "family": "trend",
+    "overview": "This strategy uses the Williams %R oscillator to generate trading signals based on crossings of overbought and oversold levels. It is adapted from an MQL5 expert advisor and demonstrates a simple momentum reversal system.\n\n## How It Works\n\n1. A Williams %R indicator with configurable period is calculated on the selected timeframe.\n2. Two horizontal levels define extreme zones:\n   - `HighLevel` marks the overbought area (default −30).\n   - `LowLevel` marks the oversold area (default −70).\n3. When `Trend` is set to `Direct`:\n   - Crossing downward through `LowLevel` opens a long position and closes any short position.\n   - Crossing upward through `HighLevel` opens a short position and closes any long position.\n4. When `Trend` is set to `Against`, the reactions to crossings are reversed.\n5. Optional parameters allow enabling or disabling opening and closing of long or short positions separately.\n6. Stop‑loss and take‑profit distances in ticks are applied using the high‑level protection API.\n\nOnly completed candles are processed to avoid reacting to intrabar noise.\n\n## Parameters\n\n- `WprPeriod` – Williams %R calculation period.\n- `HighLevel` – threshold for the overbought zone.\n- `LowLevel` – threshold for the oversold zone.\n- `Trend` – trading mode (`Direct` or `Against`).\n- `BuyPositionOpen` – allow opening long positions.\n- `SellPositionOpen` – allow opening short positions.\n- `BuyPositionClose` – allow closing long positions.\n- `SellPositionClose` – allow closing short positions.\n- `StopLossTicks` – stop‑loss distance in ticks.\n- `TakeProfitTicks` – take‑profit distance in ticks.\n- `CandleType` – candle timeframe used for analysis.\n\n## Indicators\n\n- Williams %R\n\n",
+    "details": "",
+    "parameters": "- `WprPeriod` – Williams %R calculation period.\n- `HighLevel` – threshold for the overbought zone.\n- `LowLevel` – threshold for the oversold zone.\n- `Trend` – trading mode (`Direct` or `Against`).\n- `BuyPositionOpen` – allow opening long positions.\n- `SellPositionOpen` – allow opening short positions.\n- `BuyPositionClose` – allow closing long positions.\n- `SellPositionClose` – allow closing short positions.\n- `StopLossTicks` – stop‑loss distance in ticks.\n- `TakeProfitTicks` – take‑profit distance in ticks.\n- `CandleType` – candle timeframe used for analysis."
+   },
+   "3185": {
+    "id": 3185,
+    "name": "Breakdown Catcher",
+    "family": "breakout",
+    "overview": "The Breakdown Catcher strategy is a bar-by-bar breakout system ported from the MetaTrader expert advisor \"Breakdown catcher\". After each completed candle the strategy places virtual breakout levels above the previous high and below the previous low (optionally shifted by an indent). When the next candle pierces one of these levels the strategy enters a position in the breakout direction and immediately assigns stop-loss, take-profit and optional trailing protection expressed in pips.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `StopLossPips` | Stop-loss distance in pips. | `30` |\n| `TakeProfitPips` | Take-profit distance in pips. | `90` |\n| `TrailingStopPips` | Trailing stop distance in pips. Set to `0` to disable trailing. | `30` |\n| `TrailingStepPips` | Additional progress required before the trailing stop moves. Must be positive when trailing is enabled. | `5` |\n| `IndentPips` | Extra offset applied to breakout levels. | `0` |\n| `AllowedSpreadPoints` | Maximum spread measured in raw points (`PriceStep` units). | `5` |\n| `CandleType` | Candle series used for breakout detection. | `1h time frame` |"
+   },
+   "3946": {
+    "id": 3946,
+    "name": "Monday Typical Breakout",
+    "family": "breakout",
+    "overview": "The **Monday Typical Breakout Strategy** is a C# port of the MetaTrader expert advisor `yi1ywioff50qr6` (repository ID 8187). The original robot monitors hourly candles and opens a long position every Monday when the new session opens above the previous bar's typical price `(high + low + close) / 3`. This implementation reproduces the entry logic within the StockSharp high-level strategy framework and adds detailed configuration parameters for position sizing and risk control.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `FixedVolume` | Lot size for entries. Set to `0` to enable the equity scaling table. | `0.1` |\n| `OpenHour` | Trading session hour (0-23) when Monday signals are evaluated. | `9` |\n| `StopLossPoints` | Distance in price points for the protective stop. `0` disables the stop. | `50` |\n| `TakeProfitPoints` | Distance in price points for the profit target. `0` disables the target. | `20` |\n| `InitialEquity` | Equity threshold that activates equity-based lot scaling. | `600` |\n| `EquityStep` | Equity increment required to increase the trade size. | `300` |\n| `InitialStepVolume` | Lot size used when equity is at least `InitialEquity`. | `0.4` |\n| `VolumeStep` | Additional lot size added for each `EquityStep` reached. | `0.2` |\n| `CandleType` | Candle data type driving the strategy (hourly by default). | `1 hour time-frame` |"
+   },
+   "684": {
+    "id": 684,
+    "name": "Dominance Tagcloud",
+    "family": "momentum",
+    "overview": "This visualization strategy renders a tag cloud of cryptocurrency dominance values. Each symbol receives a box sized according to its dominance and positioned randomly while avoiding overlaps. The sample demonstrates custom drawing logic and processing of multiple symbols without producing trading signals.\n\n## Details\n\n- **Entry Criteria**: none (visualization only)\n- **Long/Short**: none\n- **Exit Criteria**: none\n- **Indicators**: dominance values of major crypto assets\n- **Stops**: no\n- **Category**: Visualization\n",
+    "details": "- **Entry Criteria**: none (visualization only)\n- **Long/Short**: none\n- **Exit Criteria**: none\n- **Indicators**: dominance values of major crypto assets\n- **Stops**: no\n- **Category**: Visualization",
+    "parameters": ""
+   },
+   "3793": {
+    "id": 3793,
+    "name": "Pedro Mod",
+    "family": "volatility",
+    "overview": "This strategy is a StockSharp port of the **Pedroxxmod** MetaTrader 4 expert advisor. The original EA waits for the market to move a\nfew pips away from a reference price and then opens a contrarian position. Subsequent orders are averaged in the same direction\nwhenever the price retraces by a configurable distance. The StockSharp implementation keeps the behaviour intact while exposing\nstrongly typed parameters through the high-level `Strategy` API.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Lots` | Fixed order volume when money management is disabled. |\n| `StopLoss` | Protective stop distance in MetaTrader pips. Set to `0` to disable the stop. |\n| `TakeProfit` | Profit target distance in MetaTrader pips. Set to `0` to disable the target. |\n| `Gap` | Distance in MetaTrader pips the ask must move away from the reference before opening the first trade. |\n| `MaxTrades` | Maximum number of simultaneously open trades (basket size). |\n| `ReEntryGap` | Distance in MetaTrader pips that triggers averaging orders in the basket direction. |\n| `MoneyManagement` | Enables the dynamic volume rule `floor(Equity / 20000)` when set to `true`. |\n| `MaxLots` | Upper bound for the dynamically calculated volume. |\n| `StartHour` / `EndHour` | Trading window in exchange server time (inclusive). |\n| `StartYear` | Calendar year from which trading is permitted. Earlier data is ignored. |"
+   },
+   "3218": {
+    "id": 3218,
+    "name": "BuySellStopButtons",
+    "family": "mean_reversion",
+    "overview": "- Recreates the MetaTrader 4 \"Buy Sell Stop Buttons\" expert advisor inside StockSharp.\n- Provides three manual parameters (`BuyRequest`, `SellRequest`, `CloseRequest`) that emulate the chart buttons.\n- Implements the same money management helpers: fixed money take-profit, percent take-profit, equity trailing lock, break-even and pip trailing stops.\n- Uses a one minute candle subscription purely as a heartbeat to evaluate the management rules on finished bars.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `OrderLots` | Base lot size used when a manual entry is requested. Mirrors the `Lots` extern input (`0.01` by default). |\n| `NumberOfTrades` | Number of tickets dispatched per request. The C# port nets the volume into a single market order. |\n| `UseTakeProfitInMoney` / `TakeProfitInMoney` | Enable and configure the direct money target that closes all trades when reached. |\n| `UseTakeProfitPercent` / `TakeProfitPercent` | Enable and configure the equity percentage target. The strategy uses `Portfolio.CurrentValue` to approximate account balance. |\n| `EnableTrailing`, `TrailingProfitMoney`, `TrailingLossMoney` | Configure the equity trailing block: once profit exceeds `TrailingProfitMoney`, the peak is tracked and all trades close if profit retraces by `TrailingLossMoney`. |\n| `UseBreakEven`, `BreakEvenTriggerPips`, `BreakEvenOffsetPips` | Move the stop to break-even plus offset after the position earns the configured pip distance. |\n| `StopLossPips`, `TakeProfitPips`, `TrailingStopPips` | Ticket management settings converted to pip distances in StockSharp. |\n| `CandleType` | Candle series that drives the heartbeat (default one-minute candles). |\n| `BuyRequest`, `SellRequest`, `CloseRequest` | Manual commands that replace the original chart buttons. The flags reset automatically after the action succeeds. |"
+   }
+  }
+ }
+}

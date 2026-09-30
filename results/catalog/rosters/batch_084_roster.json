@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1398,
+      "name": "Table to Filter Trades Per Day",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,50),sma(close,200))",
+      "exit_long": "crossbelow(sma(close,50),sma(close,200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(50)/SMA(200) bullish and bearish crosses are translated directly. The table-based daily trade limiter and fixed currency targets have no supplied numeric percentage or DSL state, so they are omitted."
+    },
+    {
+      "id": 2625,
+      "name": "VLT Trader Filter",
+      "family": "trend",
+      "entry_long": "high - low <= sma(high - low,20) and close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A range no larger than its 20-bar average followed by a prior-high break approximates the smallest-candle volatility filter and stop-order breakout. CandleCount, pip offsets, and pending-order mechanics are not represented."
+    },
+    {
+      "id": 2882,
+      "name": "Exp CandlesticksBW Tm",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,5,34),ema(macd(close,5,34),5)) and roc(close,1) > 0",
+      "exit_long": "crossbelow(macd(close,5,34),ema(macd(close,5,34),5)) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(5,34) with a five-period EMA is used as a compact Awesome/Accelerator momentum proxy for the documented six-state candle colors. Color buffers, signal-bar offsets, session filtering, and 1000/2000-point protection are unavailable."
+    },
+    {
+      "id": 1517,
+      "name": "Varanormal Mac N Cheez",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,9),sma(close,21))",
+      "exit_long": "crossbelow(sma(close,9),sma(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(9)/SMA(21) crossover and inverse exit retain the documented trend rules. The daily currency target, fixed loss amount, trailing offset, and 5-minute scheduling cannot be represented by the percentage fields or indicator DSL."
+    },
+    {
+      "id": 221,
+      "name": "Bollinger Band Squeeze",
+      "family": "trend",
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) < sma(bb_upper(close,20,2) - bb_lower(close,20,2),20) and close > bb_upper(close,20,2)",
+      "exit_long": "crossbelow(close,bb_upper(close,20,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) width below its 20-bar average plus an upper-band break preserves the documented squeeze-release long setup. The exact lower-band release, session fields, and typical 2x ATR stop are not fixed percentage exits."
+    },
+    {
+      "id": 456,
+      "name": "Squeeze Pro Overlays",
+      "family": "breakout",
+      "entry_long": "bb_upper(close,20,2) > ema(close,20) + 2 * atr(high,low,close,20) and roc(close,5) > 0",
+      "exit_long": "bb_lower(close,20,2) < ema(close,20) - 2 * atr(high,low,close,20) and roc(close,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) plus/minus 2 ATR(20) approximates the Keltner envelope, while Bollinger(20,2) outside the envelope represents squeeze release. Linear-regression slope is approximated by ROC(5); no stops are documented."
+    },
+    {
+      "id": 1515,
+      "name": "US Index First 30m Candle",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1) and close > open",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break above the prior candle high approximates the locked first-30-minute range; the opposite low break supplies the long exit. Session locking, one-trade-per-day state, range-derived stops, and RiskReward=1 cannot be encoded."
+    },
+    {
+      "id": 2086,
+      "name": "Derivative Zero Cross",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,14),0)",
+      "exit_long": "crossbelow(roc(close,14),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(14) percent momentum is a direct proxy for the source derivative and its zero-line sign change. The derivative smoothing, side permissions, and point-based stop/target values are unavailable; 14 is a documented fallback."
+    },
+    {
+      "id": 3644,
+      "name": "Symbol Sync",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a symbol-propagation utility rather than a market strategy, so the impossible guard prevents fabricated trades. Linked-strategy state, security identifiers, and chart-limit controls are outside the OHLCV DSL."
+    },
+    {
+      "id": 771,
+      "name": "Graph Style 4th Dimension RSI",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),70) and roc(close,1) > 0",
+      "exit_long": "crossbelow(rsi(close,14),50) or crossbelow(rsi(close,14),30)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing the documented 70 extreme with positive price change represents a bullish confirmation; returns toward 50/30 are exits. The explicit 1% stop is retained, while the exact fourth-dimension price-change rule and short branch are approximated."
+    }
+  ]
+}

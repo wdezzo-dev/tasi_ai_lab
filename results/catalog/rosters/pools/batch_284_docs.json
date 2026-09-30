@@ -1,0 +1,98 @@
+{
+ "batch_284": {
+  "strategy_ids": [
+   528,
+   1839,
+   2569,
+   2742,
+   1732,
+   2356,
+   2534,
+   2058,
+   2277,
+   3013
+  ],
+  "docs": {
+   "528": {
+    "id": 528,
+    "name": "Arpit Bollinger Band",
+    "family": "trend",
+    "overview": "Bollinger Band breakout strategy that waits for a close outside the bands two candles ago and enters when price breaks the extreme of that bar.\n\n- **Indicators**: Bollinger Bands (EMA 20, deviation 1.5)\n- **Entry**: Long when price closed below the lower band two bars ago and current high exceeds that bar's high. Short when price closed above the upper band two bars ago and current low falls below that bar's low.\n- **Stops**: Stop placed beyond the current candle range with a 5% buffer and take profit based on a risk‑reward ratio.\n\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1839": {
+    "id": 1839,
+    "name": "TSI MACD Crossover",
+    "family": "trend",
+    "overview": "Implements a crossover system based on the True Strength Index (TSI) and its exponential moving average signal line.\n\nThe strategy subscribes to 4-hour candles by default and calculates the TSI using configurable short and long smoothing lengths. An additional EMA produces the signal line. A long position is opened when the TSI crosses above the signal line; a short position is opened when the TSI crosses below the signal line. Opposite positions are closed automatically on the reverse cross.\n\n- Indicators: True Strength Index, Exponential Moving Average\n- Parameters:\n  - `CandleType` – candle series to process.\n  - `LongLength` – long smoothing period for TSI.\n  - `ShortLength` – short smoothing period for TSI.\n  - `SignalLength` – period of the EMA signal line.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2569": {
+    "id": 2569,
+    "name": "Elli Ichimoku ADX",
+    "family": "trend",
+    "overview": "The strategy is a C# port of the MetaTrader 5 expert \"Elli\" (barabashkakvn's edition). It combines Ichimoku Kinko Hyo structure with an Average Directional Index (+DI) breakout filter. Trades are opened only when a strong directional impulse is confirmed simultaneously by Ichimoku line alignment and a sudden surge in the positive directional index.\n\nThe StockSharp implementation keeps the original behaviour of working with two candle streams: Ichimoku analysis is performed on a higher timeframe (default 1 hour) while ADX is evaluated on a faster series (default 1 minute). Orders are entered with a fixed protective stop and target measured in price steps, identical to the original expert advisor.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TakeProfitPoints` | 60 | Take profit distance in price steps. Set to 0 to disable. |\n| `StopLossPoints` | 30 | Stop loss distance in price steps. Set to 0 to disable. |\n| `TenkanPeriod` | 19 | Length of the Ichimoku Tenkan-sen (conversion line). |\n| `KijunPeriod` | 60 | Length of the Ichimoku Kijun-sen (base line). |\n| `SenkouSpanBPeriod` | 120 | Length of the Ichimoku Senkou Span B line. |\n| `AdxPeriod` | 10 | Period for the ADX indicator. |\n| `PlusDiHighThreshold` | 13 | Threshold that the current +DI value must exceed. |\n| `PlusDiLowThreshold` | 6 | Threshold that the previous +DI value must stay below. |\n| `BaselineDistanceThreshold` | 20 | Minimum Tenkan/Kijun spread (in price steps) required to confirm momentum. |\n| `IchimokuCandleType` | 1 hour candles | Candle series used for Ichimoku evaluation. |\n| `AdxCandleType` | 1 minute candles | Candle series used for ADX calculation. |"
+   },
+   "2742": {
+    "id": 2742,
+    "name": "XFatlXSatlCloud Duplex",
+    "family": "trend",
+    "overview": "XFatlXSatlCloud Duplex is a dual-direction strategy converted from the original MQL5 expert advisor. It trades crossings of the XFatlXSatlCloud indicator, which blends a fast FATL digital filter with a slower SATL filter and then smooths both with configurable moving averages. Separate configurations can be applied to the long and short sides, including different timeframes, smoothing methods and applied price sources.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n| --- | --- | --- |\n| Trading | `LongVolume` | Order size for long entries (greater than zero). |\n| Trading | `ShortVolume` | Order size for short entries (greater than zero). |\n| Trading | `LongAllowOpen` | Enable or disable opening new long positions. |\n| Trading | `LongAllowClose` | Enable or disable long exits (needed for stops and cross exits). |\n| Trading | `ShortAllowOpen` | Enable or disable opening new short positions. |\n| Trading | `ShortAllowClose` | Enable or disable short exits. |\n| Signals | `LongSignalBar` | Number of completed bars to look back when checking the crossover for longs. |\n| Signals | `ShortSignalBar` | Number of completed bars to look back when checking the crossover for shorts. |\n| Data | `LongCandleType` | Candle type (timeframe) used for the long indicator subscription. |\n| Data | `ShortCandleType` | Candle type used for the short indicator subscription. |\n| Indicators | `LongMethod1` | Smoothing method applied to the FATL output on the long side. Supported values: SMA, EMA, SMMA, LWMA, Jurik, ZeroLag, Kaufman. |\n| Indicators | `LongLength1` | Length for the fast long smoother. |\n| Indicators | `LongPhase1` | Phase parameter forwarded to the fast smoother (kept for compatibility, only Jurik uses it conceptually). |\n| Indicators | `LongMethod2` | Smoothing method applied to the SATL output on the long side (same supported set as above). |\n| Indicators | `LongLength2` | Length for the slow long smoother. |\n| Indicators | `LongPhase2` | Phase parameter for the slow long smoother. |\n| Indicators | `LongAppliedPrice` | Applied price used to build the long indicator (close, open, median, typical, weighted, simple, quarter, trend-follow or Demark). |\n| Indicators | `ShortMethod1` | Smoothing method for the fast short line. |\n| Indicators | `ShortLength1` | Length for the fast short smoother. |\n| Indicators | `ShortPhase1` | Phase parameter for the fast short smoother. |\n| Indicators | `ShortMethod2` | Smoothing method for the slow short line. |\n| Indicators | `ShortLength2` | Length for the slow short smoother. |\n| Indicators | `ShortPhase2` | Phase parameter for the slow short smoother. |\n| Indicators | `ShortAppliedPrice` | Applied price used to build the short indicator. |\n| Risk | `LongStopLoss` | Absolute price distance for the long stop loss (0 disables the check). |\n| Risk | `LongTakeProfit` | Absolute price distance for the long take profit (0 disables the check). |\n| Risk | `ShortStopLoss` | Absolute price distance for the short stop loss (0 disables the check). |\n| Risk | `ShortTakeProfit` | Absolute price distance for the short take profit (0 disables the check). |"
+   },
+   "1732": {
+    "id": 1732,
+    "name": "BB Squeeze",
+    "family": "trend",
+    "overview": "The strategy monitors the contraction and expansion of Bollinger Bands to exploit volatility breakouts. It defines a squeeze as a period when the distance between the upper and lower Bollinger Bands becomes narrow relative to the middle band. Once volatility expands and price closes outside of the band after a squeeze, the system enters in the direction of the breakout.\n\nPositions are opened with market orders. A long position is created when price closes above the upper band following a squeeze, while a short position is opened when price closes below the lower band. Only completed candles are processed, preventing premature signals during formation.\n\nThe algorithm tracks band width changes without storing entire candle histories. By comparing the current width to the previous one, it ensures that an expansion truly occurs before placing orders. This avoids entering during extended low-volatility phases where no breakout develops.\n\nDefault parameters use a 20-period Bollinger Band with a width multiplier of 2. The squeeze threshold is set to 0.05, meaning the bands must be within five percent of the middle line to register low volatility. The candle timeframe and all numerical values are fully configurable and support optimization in the StockSharp environment.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2356": {
+    "id": 2356,
+    "name": "Bear Bulls Power",
+    "family": "trend",
+    "overview": "This strategy is a conversion of the MetaTrader 5 expert \"Exp_Bear_Bulls_Power\". It uses a smoothed Bear/Bulls Power indicator to detect trend reversals.\n\n## How it works\n\n1. Calculate the median price of each candle: `(High + Low) / 2`.\n2. Smooth the median price with a moving average of length `FirstLength`.\n3. Compute the difference between the median price and its moving average.\n4. Apply a second smoothing with a moving average of length `SecondLength`.\n5. Determine trend direction by comparing the current smoothed value with the previous one.\n6. Generate signals when the direction changes:\n   - Upward turn above zero opens a long position.\n   - Downward turn below zero opens a short position.\n\n## Parameters\n\n- **Candle Type** – timeframe of processed candles.\n- **First Length** – period for price smoothing.\n- **Second Length** – period for signal smoothing.\n\nThe strategy uses market orders and works on completed candles only.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe of processed candles.\n- **First Length** – period for price smoothing.\n- **Second Length** – period for signal smoothing.\n\nThe strategy uses market orders and works on completed candles only."
+   },
+   "2534": {
+    "id": 2534,
+    "name": "MA + RSI Wizard",
+    "family": "trend",
+    "overview": "This strategy is the StockSharp port of the MetaTrader 5 \"MQL5 Wizard MA RSI\" expert from folder `MQL/17489`. The original robot combines a moving average filter with an RSI filter and opens trades when the weighted sum of the filters crosses configurable thresholds. The C# version keeps the same structure while expressing the logic with StockSharp's high level API and modern risk management helpers.\n\nThe bot works on any instrument that provides OHLCV candles. It evaluates one moving average that can be lagged by a user defined number of bars and an RSI that can be fed with different price sources. Both indicators contribute to a composite score. A position is opened once the score exceeds the open threshold and closed when the opposite score reaches the close threshold. Optional distance, stop loss and take profit settings replicate the money management parameters of the original Expert Advisor.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Data series used for analysis. | 15-minute time frame |\n| `ThresholdOpen` | Minimum weighted score to open a position. | 55 |\n| `ThresholdClose` | Minimum opposite score to close a position. | 100 |\n| `PriceLevelPoints` | Required distance between price and shifted MA (in points). | 0 |\n| `StopLevelPoints` | Stop loss distance (points). | 50 |\n| `TakeLevelPoints` | Take profit distance (points). | 50 |\n| `ExpirationBars` | Cooldown in bars before re-entering in the same direction. | 4 |\n| `MaPeriod` | Moving average period. | 20 |\n| `MaShift` | Forward shift applied to the MA output (bars). | 3 |\n| `MaMethods` | Moving average method (Simple, Exponential, Smoothed, LinearWeighted). | Simple |\n| `MaAppliedPrice` | Price source for the MA. | Close |\n| `MaWeight` | Weight assigned to the MA score. | 0.8 |\n| `RsiPeriod` | RSI period. | 3 |\n| `RsiAppliedPrice` | Price source for the RSI. | Close |\n| `RsiWeight` | Weight assigned to the RSI score. | 0.5 |"
+   },
+   "2058": {
+    "id": 2058,
+    "name": "KlPrice Reversal",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the original MQL5 expert **exp_i-KlPrice.mq5**. It implements a reversal system based on a normalized price oscillator. The oscillator compares the current price to a smoothed price band derived from a moving average and the average true range (ATR). Crossing predefined boundaries generates trading signals.\n\n## How It Works\n\n1. A simple moving average (SMA) smooths the closing price.\n2. An Average True Range (ATR) estimates market volatility.\n3. The oscillator is calculated as:\n   \n   `jres = 100 * (Close - (SMA - ATR)) / (2 * ATR) - 50`\n4. The oscillator value is mapped to five color zones:\n   - **4** – above the upper level\n   - **3** – between zero and the upper level\n   - **2** – between the upper and lower levels\n   - **1** – between the lower level and zero\n   - **0** – below the lower level\n5. A long position opens when the oscillator leaves zone 4. A short position opens when it leaves zone 0. Existing positions close when the oscillator crosses zero.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `CandleType` | Time frame for price data. |\n| `PriceMaLength` | SMA period for price smoothing. |\n| `AtrLength` | ATR period used to compute the price band. |\n| `UpLevel` | Upper threshold of the oscillator. |\n| `DownLevel` | Lower threshold of the oscillator. |\n| `EnableBuy` | Allow opening long positions. |\n| `EnableSell` | Allow opening short positions. |\n\n## Usage\n\n1. Create an instance of `KlPriceReversalStrategy`.\n2. Set desired parameters.\n3. Attach the strategy to a portfolio and security.\n4. Start the strategy to receive signals and place orders.\n\nThe strategy uses market orders via `BuyMarket` and `SellMarket`. Position protection is activated through `StartProtection()`.\n\n## Notes\n\n- The implementation approximates the original MQL indicator by using built-in StockSharp indicators (`SimpleMovingAverage` and `AverageTrueRange`).\n- All calculations are performed on finished candles only.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Time frame for price data. |\n| `PriceMaLength` | SMA period for price smoothing. |\n| `AtrLength` | ATR period used to compute the price band. |\n| `UpLevel` | Upper threshold of the oscillator. |\n| `DownLevel` | Lower threshold of the oscillator. |\n| `EnableBuy` | Allow opening long positions. |\n| `EnableSell` | Allow opening short positions. |"
+   },
+   "2277": {
+    "id": 2277,
+    "name": "Chaikin Volatility Stochastic",
+    "family": "trend",
+    "overview": "This strategy applies a stochastic oscillator to Chaikin volatility values to capture trend reversals. The high-low range of each candle is smoothed with an EMA, then normalized with a stochastic calculation and finally smoothed by a weighted moving average.\n\nWhen the smoothed oscillator turns downward after rising, a long position is opened and any short position is closed. When the oscillator turns upward after falling, a short position is opened and any long position is closed.\n\n## Parameters\n- **Candle Type**: timeframe for candle subscription.\n- **EMA Length**: smoothing period for the high-low range.\n- **Stochastic Length**: lookback period for the stochastic calculation.\n- **WMA Length**: weighted moving average period for smoothing the oscillator.\n- **Enable Longs / Enable Shorts**: toggle allowed trade directions.\n\n## Indicators\n- ExponentialMovingAverage\n- Highest and Lowest\n- WeightedMovingAverage\n\n## Trading Rules\n- **Long Entry**: oscillator was rising and turns downward.\n- **Short Entry**: oscillator was falling and turns upward.\n- Opposite positions are closed on signal change.\n",
+    "details": "",
+    "parameters": "- **Candle Type**: timeframe for candle subscription.\n- **EMA Length**: smoothing period for the high-low range.\n- **Stochastic Length**: lookback period for the stochastic calculation.\n- **WMA Length**: weighted moving average period for smoothing the oscillator.\n- **Enable Longs / Enable Shorts**: toggle allowed trade directions."
+   },
+   "3013": {
+    "id": 3013,
+    "name": "Para Retrace",
+    "family": "trend",
+    "overview": "The **Para Retrace Strategy** is a C# conversion of the original MetaTrader 4 expert advisor `Para_Retrace.mq4`. It reproduces the idea of using the Parabolic SAR indicator as a dynamic anchor and waiting for price retracements back toward that level before entering the market. The conversion leverages the high-level StockSharp API to manage market data subscriptions, indicator updates, and order execution.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `SarStep` | Initial acceleration factor for Parabolic SAR. | `0.01` |\n| `SarMax` | Maximum acceleration factor for Parabolic SAR. | `0.2` |\n| `RetraceOffsetPips` | Distance (in pips) between the SAR value and the entry trigger. | `30` |\n| `StopLossPips` | Stop-loss distance in pips (converted to absolute price). Set to `0` to disable. | `30` |\n| `TakeProfitPips` | Take-profit distance in pips (converted to absolute price). Set to `0` to disable. | `30` |\n| `CandleType` | Timeframe used for candles and indicator calculations. | `5 Minute` |\n\n> **Note:** The strategy estimates the pip size from the security metadata. If the instrument uses five decimal places (typical for Forex), one pip equals ten minimum price steps."
+   }
+  }
+ }
+}

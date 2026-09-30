@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4032,
+      "name": "Divergence Trader Basket",
+      "family": "trend",
+      "entry_long": "sma(close,10) - sma(close,30) > 0 and sma(close,10) - sma(close,30) < 2.0 * atr(high,low,close,14)",
+      "exit_long": "sma(close,10) - sma(close,30) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast-minus-slow SMA divergence is positive (Buy Threshold) but still inside the neutral corridor, which is expressed in ATR(14) units because the docs give no numbers for the fast/slow periods or the thresholds. Exits when the divergence flips negative; the pip take-profit, stop, trailing, break-even, basket thresholds, and the trading window are not DSL fields."
+    },
+    {
+      "id": 1670,
+      "name": "EMA plus WPR v2",
+      "family": "trend",
+      "entry_long": "donchian_high(high,5) - donchian_low(low,5) > 0 and close <= donchian_low_prev(low,5) and close > ema(close,20) and roc(ema(close,20),1) > 0",
+      "exit_long": "donchian_high(high,5) - donchian_low(low,5) > 0 and close >= donchian_high_prev(high,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R hitting -100 is a close at the prior window low, which only prior-bar Donchian lows can express, taken while price is above a rising EMA(20). The 5-bar %R window and EMA(20) are fallbacks: no values are documented and on daily bars a 14-bar low can never coexist with an uptrend filter, so the shorter window is used. The fixed stop, take profit, trailing, and bar-count exit have no supplied numbers."
+    },
+    {
+      "id": 1637,
+      "name": "X Trail",
+      "family": "trend",
+      "entry_long": "crossabove(sma((high + low) / 2,10), sma((high + low) / 2,30))",
+      "exit_long": "crossbelow(sma((high + low) / 2,10), sma((high + low) / 2,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long state (fast above slow after having been below) reduces to the crossover of the two median-price SMAs, with the opposite cross reversing. The DSL cannot lag a series, so the two-candle persistence confirmation is dropped, and the 10/30 lengths are fallbacks with no stops documented."
+    },
+    {
+      "id": 2049,
+      "name": "VininI Trend",
+      "family": "trend",
+      "entry_long": "std(close,14) > 0 and crossabove((close - sma(close,14)) / (0.015 * std(close,14)), 100)",
+      "exit_long": "std(close,14) > 0 and crossbelow((close - sma(close,14)) / (0.015 * std(close,14)), -100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Breakdown mode is translated as the CCI proxy crossing the upper level, with the lower level as the long exit. CCI is rebuilt as (close-SMA(14))/(0.015*std(14)) behind a non-zero guard, and the period plus the +/-100 levels are explicit fallbacks because the docs list no values; Twist mode and mode switching are dropped."
+    },
+    {
+      "id": 465,
+      "name": "200 SMA Buffer",
+      "family": "trend",
+      "entry_long": "close > sma(close,200) * 1.05",
+      "exit_long": "close < sma(close,200) * 0.97",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented buffer is exact: SmaLength=200 with EntryPercent=5 above and ExitPercent=3 below. The docs specify no stops, so both percent fields are null."
+    },
+    {
+      "id": 2388,
+      "name": "RobotPower M5",
+      "family": "momentum",
+      "entry_long": "high + low - 2 * ema(close,13) > 0",
+      "exit_long": "high + low - 2 * ema(close,13) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power (high-EMA) plus Bears Power (low-EMA) collapses to high+low-2*EMA, so the documented zero crossing of the combined momentum is exact; BullBearPeriod=13 is a fallback. The fixed TakeProfit, StopLoss, and TrailingStep are price distances with no supplied values, so no percent fields are set."
+    },
+    {
+      "id": 3980,
+      "name": "EES Hedger (advanced)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The module states outright that entries are produced elsewhere and it only reacts to foreign account trades by opening an opposite hedge, so it is a position-management overlay with no market-derived signal; the never-true guard records that. Pip stop, take profit, break-even, and trailing management are not DSL fields."
+    },
+    {
+      "id": 1343,
+      "name": "Stochastic-Dynamic Volatility Band Model",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, bb_lower(close,5,1.67))",
+      "exit_long": "bars_since(crossabove(close, bb_lower(close,5,1.67))) > 7",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Length=5 and Multiplier=1.67 bands are exact, and bars_since>7 implements the documented ExitBars=7 holding timer for the long side. Despite the name, the rules use Bollinger bands rather than a stochastic; no stops are documented."
+    },
+    {
+      "id": 1765,
+      "name": "SHE Kanskigor",
+      "family": "volume",
+      "entry_long": "roc(close,1) < 0",
+      "exit_long": "roc(close,1) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The daily reversal buys after a down session, but the DSL cannot read the previous bar's open, so the prior session's down close (ROC(close,1)<0) stands in for open>close. The 00:05 entry time, the one-trade-per-day rule, and the 350/550 price-step take profit and stop are not expressible."
+    },
+    {
+      "id": 2822,
+      "name": "FX-CHAOS Scalp",
+      "family": "volume",
+      "entry_long": "crossabove(sma((high + low) / 2,5) - sma((high + low) / 2,34), 0) and close > sma(close,20)",
+      "exit_long": "crossbelow(sma((high + low) / 2,5) - sma((high + low) / 2,34), 0) or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Awesome Oscillator zero cross is translated exactly, while the fractal ZigZag swing tracker cannot be rebuilt because the DSL has no lag or pivot state and the separate daily series is unavailable, so SMA(20) stands in for the higher-timeframe filter. Point stop and target have no documented values."
+    }
+  ]
+}

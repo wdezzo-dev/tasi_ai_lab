@@ -1,0 +1,98 @@
+{
+ "batch_116": {
+  "strategy_ids": [
+   2927,
+   1475,
+   3531,
+   2412,
+   328,
+   791,
+   77,
+   4101,
+   2844,
+   3122
+  ],
+  "docs": {
+   "2927": {
+    "id": 2927,
+    "name": "ColorX2MA Digit NN3 MMRec",
+    "family": "trend",
+    "overview": "- Recreates the triple time frame Expert Advisor based on the ColorX2MA Digit indicator.\n- Uses a custom double-smoothed moving average indicator that mimics the original X2MA logic with selectable smoothing methods (Simple, Exponential, Smoothed, Linear Weighted, Jurik, Kaufman Adaptive).\n- Applies three independent indicator instances (12h, 6h, 3h by default); each instance can independently open or close long/short exposure according to its own settings.\n- Aggregates the desired volume of every time frame and trades the difference with market orders so the net position always matches the sum of individual signals.\n- Signals are confirmed after `SignalBars` consecutive bars with the same slope direction, which emulates the `SignalBar` shift in the MQL version.\n- Includes optional switches to allow or forbid opening/closing of long and short exposure separately for every time frame, reproducing the “Must Trade” flags of the original.",
+    "details": "",
+    "parameters": "- **A/B/C Candle Type** – data type (time frame) for every indicator instance.\n- **Fast/Slow Method** – smoothing method for the first and the second moving average inside the X2MA clone.\n- **Fast/Slow Length** – period of the respective moving averages (defaults: 12 and 5).\n- **Signal Bars** – number of consecutive bars required before accepting a new direction (default: 1).\n- **Digits** – rounding precision applied to the indicator output before slope calculation (simulates the `Digit` input).\n- **Price Type** – price source used by the indicator (close, open, median, typical, weighted, simplified, quarter, TrendFollow and DeMark formulas).\n- **Allow Long/Short Entry/Exit** – boolean flags that control whether a specific time frame may open or close long/short exposure.\n- **Volume** – traded volume contributed by the time frame when it is long (positive) or short (negative)."
+   },
+   "1475": {
+    "id": 1475,
+    "name": "Trendline Breaks with Multi Fibonacci Supertrend",
+    "family": "trend",
+    "overview": "The strategy averages three SuperTrend calculations that use Fibonacci multipliers (0.618, 1.618, 2.618) and smooths the result with an EMA. Dynamic trendlines are built from swing highs and lows with slopes derived from ATR. A long trade is opened when price breaks above the upper trendline, the smoothed SuperTrend is rising and the +DI value exceeds −DI. Short trades mirror these rules.\n\n## Details\n- **Entry**: trendline breakout with DMI confirmation and SuperTrend agreement.\n- **Exit**: price crossing back over the smoothed trend or hitting ATR‑based stop/target.\n- **Indicators**: SuperTrend, ATR, Average Directional Index.\n- **Type**: breakout, long and short.\n",
+    "details": "- **Entry**: trendline breakout with DMI confirmation and SuperTrend agreement.\n- **Exit**: price crossing back over the smoothed trend or hitting ATR‑based stop/target.\n- **Indicators**: SuperTrend, ATR, Average Directional Index.\n- **Type**: breakout, long and short.",
+    "parameters": ""
+   },
+   "3531": {
+    "id": 3531,
+    "name": "RSI MA on RSI Dual",
+    "family": "trend",
+    "overview": "The RSI MA on RSI Dual strategy recreates the MetaTrader expert advisor \"RSI_MAonRSI_Dual\" inside StockSharp. It watches two relative strength indexes with different lookback periods and applies a common moving average on top of each RSI stream. Trading decisions are taken when the smoothed RSI lines cross one another while remaining on the same side of a configurable neutral level.\n\nThe conversion keeps the behaviour of the original robot, including time filtering and the ability to restrict trading direction or to reverse the signal logic.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle series analysed by the strategy. |\n| `FastRsiPeriod` | Period of the fast RSI. |\n| `SlowRsiPeriod` | Period of the slow RSI. |\n| `MaPeriod` | Moving-average length used to smooth both RSI streams. |\n| `AppliedPrice` | Price type forwarded into the RSI calculations. |\n| `NeutralLevel` | RSI threshold that separates bullish and bearish zones. |\n| `AllowLong` / `AllowShort` | Enable or disable trading direction. |\n| `ReverseSignals` | Swap long and short signals. |\n| `CloseOpposite` | Close the opposite position before entering a new one. |\n| `OnlyOnePosition` | Permit at most one open position. |\n| `UseTimeFilter` | Activate the trading session filter. |\n| `SessionStart` / `SessionEnd` | Trading window boundaries. |"
+   },
+   "2412": {
+    "id": 2412,
+    "name": "ColorJFatl Digit ReOpen",
+    "family": "trend",
+    "overview": "This strategy uses a Jurik Moving Average (JMA) to identify trend direction. A long position opens when the JMA turns upward and all short positions are closed. A short position opens when the JMA turns downward and all long positions are closed. Additional positions are added every time price moves a fixed number of points in the trade direction, up to a maximum count.\n\n## Details\n\n- **Entry**:\n  - JMA changes direction upward → open long and close shorts.\n  - JMA changes direction downward → open short and close longs.\n- **Re-entry**:\n  - After the initial position, new positions open every `PriceStep` points in the trade direction until `MaxPositions` is reached.\n- **Exit**:\n  - Opposite JMA turn closes current positions.\n- **Parameters**:\n  - `JmaLength` – JMA period.\n  - `PriceStep` – price movement in points required for re-entry.\n  - `MaxPositions` – maximum number of concurrent positions.\n  - `BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose` – enable or disable actions.\n  - `CandleType` – timeframe for calculations.\n- **Indicator**: Jurik Moving Average.\n- **Type**: Trend following.\n- **Timeframe**: 4 hours by default.\n",
+    "details": "- **Entry**:\n  - JMA changes direction upward → open long and close shorts.\n  - JMA changes direction downward → open short and close longs.\n- **Re-entry**:\n  - After the initial position, new positions open every `PriceStep` points in the trade direction until `MaxPositions` is reached.\n- **Exit**:\n  - Opposite JMA turn closes current positions.\n- **Parameters**:\n  - `JmaLength` – JMA period.\n  - `PriceStep` – price movement in points required for re-entry.\n  - `MaxPositions` – maximum number of concurrent positions.\n  - `BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose` – enable or disable actions.\n  - `CandleType` – timeframe for calculations.\n- **Indicator**: Jurik Moving Average.\n- **Type**: Trend following.\n- **Timeframe**: 4 hours by default.",
+    "parameters": ""
+   },
+   "328": {
+    "id": 328,
+    "name": "Bollinger Kalman Filter",
+    "family": "trend",
+    "overview": "Signals trigger when Bollinger confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like BollingerLength, BollingerDeviation. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `BollingerLength = 20`\n  - `BollingerDeviation = 2.0m`\n  - `KalmanQ = 0.01m`\n  - `KalmanR = 0.1m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `BollingerLength = 20`\n  - `BollingerDeviation = 2.0m`\n  - `KalmanQ = 0.01m`\n  - `KalmanR = 0.1m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "791": {
+    "id": 791,
+    "name": "Fibonacci-Only",
+    "family": "breakout",
+    "overview": "Fibonacci-Only Strategy uses custom 19% and 82.56% retracement levels derived from the last 100 candles. The strategy enters when price touches or breaks these levels with confirmation from candle direction. It supports optional breakout entries, ATR-based stop loss, trailing stop and seven stacked take profits.\n\n## Details\n\n- **Entry Criteria**: touch or break of Fibonacci levels with confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss, trailing stop, or take profit targets\n- **Stops**: ATR or percent\n- **Default Values**:\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Fibonacci\n  - Direction: Both\n  - Indicators: Highest, Lowest, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: touch or break of Fibonacci levels with confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss, trailing stop, or take profit targets\n- **Stops**: ATR or percent\n- **Default Values**:\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Fibonacci\n  - Direction: Both\n  - Indicators: Highest, Lowest, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "77": {
+    "id": 77,
+    "name": "Inside Bar Breakout",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 118%. It performs best in the stocks market.\n\nEach new candle is compared with the one before it. If an inside bar appears, the system marks its high and low and watches for a close outside those levels. A bullish breakout opens a long position with a stop below the pattern low, while a bearish breakout triggers a short with a stop above the pattern high.\n\nShould price fail to break out immediately, the strategy manages existing positions by exiting if the next candle moves against the trade beyond the prior bar's extremes.\n\n## Details\n\n- **Entry Criteria**: Breakout of an inside bar's high or low.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing previous candle extreme or stop-loss.\n- **Stops**: Yes, placed beyond the pattern.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Breakout of an inside bar's high or low.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing previous candle extreme or stop-loss.\n- **Stops**: Yes, placed beyond the pattern.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4101": {
+    "id": 4101,
+    "name": "Amstell SL Averaging",
+    "family": "momentum",
+    "overview": "Conversion of the MetaTrader expert advisor `exp_Amstell-SL`. The system opens both a long and a short immediately, adds new orders every time price moves against the most recent entry by a fixed number of points, and relies on virtual (software-managed) take-profit and stop-loss levels to exit each ticket individually.\n\n## Strategy Logic\n\n- **Initial Entries**: When the strategy starts and there are no open trades, it submits one market buy (at the ask) and one market sell (at the bid).\n- **Pyramiding on Drawdown**:\n  - Long side: whenever the current ask is `ReentryPoints` (default 10 points) below the last long entry price, a new buy order of the same volume is sent.\n  - Short side: whenever the current bid is `ReentryPoints` above the last short entry price, a new sell order of the same volume is opened.\n- **Exit Rules (virtual management)**:\n  - For every long ticket the strategy monitors the best bid and best ask. If the bid rises by `TakeProfitPoints` from the order price or the ask drops by `StopLossPoints`, the position is closed at market.\n  - For every short ticket it checks whether the ask is lower by `TakeProfitPoints` or the bid is higher by `StopLossPoints`; in either case the sell order is covered at market.\n- **Processing Order**: Exits are evaluated before any new entries, replicating the MetaTrader script that stops further actions after closing a position on the current tick.\n\n## Parameters\n\n- `TakeProfitPoints` – distance (in price steps) used to close profitable positions. Default: `30`.\n- `StopLossPoints` – distance (in price steps) for protective exits. Default: `30`.\n- `Volume` – lot size for each newly opened order. Default: `0.01`.\n- `ReentryPoints` – adverse movement (in price steps) required to stack an additional order on the corresponding side. Default: `10`.\n\n## Additional Notes\n\n- The point value is derived from `Security.PriceStep`; if it is not provided by the exchange, a value of `1` is used.\n- The strategy can be simultaneously l",
+    "details": "",
+    "parameters": "- `TakeProfitPoints` – distance (in price steps) used to close profitable positions. Default: `30`.\n- `StopLossPoints` – distance (in price steps) for protective exits. Default: `30`.\n- `Volume` – lot size for each newly opened order. Default: `0.01`.\n- `ReentryPoints` – adverse movement (in price steps) required to stack an additional order on the corresponding side. Default: `10`."
+   },
+   "2844": {
+    "id": 2844,
+    "name": "Timed Buy Order",
+    "family": "volatility",
+    "overview": "The **Timed Buy Order Strategy** replicates the MetaTrader expert advisor `buy_order.mq4`, which submits a stream of market buy orders driven by a one-second timer. The StockSharp port keeps the same trading rhythm: it waits until the timer aligns with the expected second within the current minute and then pushes the next order. After a pre-defined number of fills the strategy stops itself automatically.\n\nThis implementation relies on the high-level StockSharp `Timer` service instead of manual loops. No market indicators or candle subscriptions are required, making the logic deterministic and timing-focused.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `OrderVolume` | `decimal` | `0.01` | Quantity for each market buy order. A validation guard stops the strategy if the value is non-positive. |\n| `OrdersToPlace` | `int` | `60` | Total number of sequential buy orders to submit before stopping. |\n| `Interval` | `TimeSpan` | `1s` | Delay between timer callbacks. Keeping it at one second best reproduces the MQL timing, but other values are possible for experimentation. |\n\nAll parameters are exposed through StockSharp `StrategyParam<T>` objects, so they can be optimised or configured from UI tooling."
+   },
+   "3122": {
+    "id": 3122,
+    "name": "Vlado",
+    "family": "mean_reversion",
+    "overview": "- **Category**: Mean-reversion oscillator strategy.\n- **Market**: Any liquid instrument that delivers stable candle data (forex pairs, index futures, crypto spot pairs).\n- **Timeframe**: Configurable via `CandleType`. Defaults to 1-hour candles, matching the original usage example.\n- **Direction**: Long and short. The engine always holds at most one position and flips when the opposite signal appears.\n- **Indicator**: Williams %R with configurable lookback length and threshold levels.",
+    "details": "",
+    "parameters": "- `WilliamsPeriod`: Number of candles used to compute the oscillator. Higher values smooth the signal, lower values react faster.\n- `OverboughtLevel`: Threshold that defines when the market is considered overbought (default -25). Can be optimised.\n- `OversoldLevel`: Threshold that defines when the market is considered oversold (default -75). Can be optimised.\n- `CandleType`: Candle type and timeframe applied to all calculations. Works with time frames, volume candles, or range bars.\n- `Volume` (inherited from `Strategy`): Defines the base order size. Adjust to match account size and risk appetite."
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_228": {
+  "strategy_ids": [
+   3221,
+   2313,
+   977,
+   3766,
+   2407,
+   1026,
+   721,
+   1749,
+   666,
+   1015
+  ],
+  "docs": {
+   "3221": {
+    "id": 3221,
+    "name": "Fractals & Alligator",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader \"Fractals & Alligator\" expert by combining Bill Williams Alligator alignment with fractal breakouts, a momentum confirmation layer, and range filters. It processes finished candles on a higher timeframe to emulate the original multi-timeframe logic.\n\n## Details\n- **Entry Criteria**: Wait for the Alligator lips, teeth, and jaw to widen in the same direction while a fresh fractal forms beyond the mouth. A long setup requires the close to break the latest bullish fractal above the teeth and any of the last three momentum readings to exceed the buy threshold. Shorts mirror the rules on the downside.\n- **Long/Short**: Opens both long and short trades. Only one net position is maintained; new signals reverse the existing exposure.\n- **Exit Criteria**: Positions are closed when the opposite fractal is penetrated or when the Alligator alignment collapses. Protective orders handle remaining exits.\n- **Stops**: Uses StockSharp protective orders for stop-loss, take-profit, and an optional trailing stop in price steps, matching the original money-management idea.\n- **Default Values**: Alligator lengths 13/8/5 with shifts 8/5/3, 14-period momentum, 10-bar range lookback, 20-step fixed box (if ATR filter disabled), take-profit 50 steps, stop-loss 20 steps, trailing stop 40 steps.\n- **Filters**: Optional ATR multiplier confirms that price has moved at least one ATR away from the recent range; otherwise a fixed box expressed in price steps is used. Momentum thresholds (0.3%) suppress low-energy breakouts.\n",
+    "details": "- **Entry Criteria**: Wait for the Alligator lips, teeth, and jaw to widen in the same direction while a fresh fractal forms beyond the mouth. A long setup requires the close to break the latest bullish fractal above the teeth and any of the last three momentum readings to exceed the buy threshold. Shorts mirror the rules on the downside.\n- **Long/Short**: Opens both long and short trades. Only one net position is maintained; new signals reverse the existing exposure.\n- **Exit Criteria**: Positions are closed when the opposite fractal is penetrated or when the Alligator alignment collapses. Protective orders handle remaining exits.\n- **Stops**: Uses StockSharp protective orders for stop-loss, take-profit, and an optional trailing stop in price steps, matching the original money-management idea.\n- **Default Values**: Alligator lengths 13/8/5 with shifts 8/5/3, 14-period momentum, 10-bar range lookback, 20-step fixed box (if ATR filter disabled), take-profit 50 steps, stop-loss 20 steps, trailing stop 40 steps.\n- **Filters**: Optional ATR multiplier confirms that price has moved at least one ATR away from the recent range; otherwise a fixed box expressed in price steps is used. Momentum thresholds (0.3%) suppress low-energy breakouts.",
+    "parameters": ""
+   },
+   "2313": {
+    "id": 2313,
+    "name": "ZZFibo Trader",
+    "family": "trend",
+    "overview": "Uses ZigZag swings to derive Fibonacci retracement levels. The strategy recalculates levels whenever a new pivot high or low is detected and enters when price breaks the 50% retracement by the specified breakout distance in the trend direction. Optional stop-loss protection is available via an absolute price distance.\n\n## Parameters\n- Candle Type\n- Breakout\n- Stop Loss\n- ZigZag Depth\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Breakout\n- Stop Loss\n- ZigZag Depth"
+   },
+   "977": {
+    "id": 977,
+    "name": "Linear On MACD",
+    "family": "trend",
+    "overview": "Strategy combining MACD signals on price and volume with linear regression.\n\n## Details\n\n- **Entry Criteria**: long when both MACDs are above signals and regression price sits between open and close; short on reverse.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Lookback` = 21\n  - `RiskHigh` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, Linear Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Variable\n",
+    "details": "- **Entry Criteria**: long when both MACDs are above signals and regression price sits between open and close; short on reverse.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Lookback` = 21\n  - `RiskHigh` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, Linear Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Variable",
+    "parameters": ""
+   },
+   "3766": {
+    "id": 3766,
+    "name": "Lucky Shift Limit",
+    "family": "trend",
+    "overview": "The **Lucky Shift Limit** strategy is a direct conversion of the MetaTrader 4 expert advisor `Lucky_acnl6p6j89zn91fa.mq4`. It watches the best bid/ask quotes in real time and reacts to sudden jumps measured in MetaTrader \"points\" (pips). When the ask price accelerates upward by the configured shift distance the strategy fades the move by selling, while a sharp drop in the bid prompts a contrarian buy. All open trades are constantly monitored and closed either once they become profitable or when the floating loss exceeds a safety threshold identical to the original MQ4 logic.\n\n## Data and execution requirements\n\n- **Market data** – subscribes to Level 1 quotes only; no candles or depth of market are required.\n- **Execution style** – entries and exits rely on market orders to mimic the immediate `OrderSend` calls from MetaTrader.\n- **Account mode** – works with both hedging and netting accounts. On netting accounts the strategy accumulates exposure in a single position and the exit module flattens it.\n- **Volume sizing** – default order size comes from `Strategy.Volume`, but the helper emulates `AccountFreeMargin/10000` from MetaTrader when the portfolio value is available.\n\n## Parameters\n\n| Name | Default | Description |\n| --- | --- | --- |\n| `Shift points` | 3 | Minimum number of MetaTrader points between consecutive asks/bids that triggers a new order. Larger values filter out noise, smaller values react faster. |\n| `Limit points` | 18 | Maximum adverse excursion allowed for an open trade. If price moves against the position by this many points the trade is force-closed. |\n\nBoth parameters are expressed in MetaTrader points and converted internally into absolute price offsets using the instrument tick size. Optimisation boundaries in the UI match the practical ranges from the MQ4 version.\n\n## Trading logic\n\n1. **Initialisation**\n   - Converts the point-based settings into actual price distances using `Security.PriceStep`.\n   - Resets cached bid/ask quotes and start",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Shift points` | 3 | Minimum number of MetaTrader points between consecutive asks/bids that triggers a new order. Larger values filter out noise, smaller values react faster. |\n| `Limit points` | 18 | Maximum adverse excursion allowed for an open trade. If price moves against the position by this many points the trade is force-closed. |\n\nBoth parameters are expressed in MetaTrader points and converted internally into absolute price offsets using the instrument tick size. Optimisation boundaries in the UI match the practical ranges from the MQ4 version."
+   },
+   "2407": {
+    "id": 2407,
+    "name": "MFI Level Cross",
+    "family": "trend",
+    "overview": "This strategy uses the Money Flow Index (MFI) oscillator to identify overbought and oversold conditions. When the MFI crosses predefined threshold levels, the strategy enters or reverses positions. It can operate either in the direction of the crossing or in the opposite direction, depending on the selected trend mode.\n\nThe default configuration monitors four-hour candles and evaluates the 14-period MFI. The strategy opens a long position when the MFI falls below the lower threshold and a short position when it rises above the upper threshold. When set to \"Against\" mode, the entry logic is reversed to trade against the indicator direction.\n\nRisk management is handled through built-in stop-loss and take-profit parameters expressed as percentages from the entry price.\n\n## Details\n\n- **Entry Criteria**:\n  - **Trend Mode: Direct**:\n    - **Long**: Previous MFI > Low level and current MFI ≤ Low level.\n    - **Short**: Previous MFI < High level and current MFI ≥ High level.\n  - **Trend Mode: Against**:\n    - **Long**: Previous MFI < High level and current MFI ≥ High level.\n    - **Short**: Previous MFI > Low level and current MFI ≤ Low level.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Position is reversed when the opposite signal appears or closed by protection module.\n- **Stops**: Stop-loss and take-profit expressed in percent from entry price.\n- **Default Values**:\n  - `Candle Type` = 4-hour candles.\n  - `MFI Period` = 14.\n  - `Low Level` = 40.\n  - `High Level` = 60.\n  - `Stop Loss %` = 1.\n  - `Take Profit %` = 2.\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Configurable\n  - Indicators: Money Flow Index\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n## Notes\n\nThis implementation relies on StockSharp's high-level API. It subscribes to candle data, binds the MFI indicator directly, and executes market orders when crossing conditions are met. Position p",
+    "details": "- **Entry Criteria**:\n  - **Trend Mode: Direct**:\n    - **Long**: Previous MFI > Low level and current MFI ≤ Low level.\n    - **Short**: Previous MFI < High level and current MFI ≥ High level.\n  - **Trend Mode: Against**:\n    - **Long**: Previous MFI < High level and current MFI ≥ High level.\n    - **Short**: Previous MFI > Low level and current MFI ≤ Low level.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Position is reversed when the opposite signal appears or closed by protection module.\n- **Stops**: Stop-loss and take-profit expressed in percent from entry price.\n- **Default Values**:\n  - `Candle Type` = 4-hour candles.\n  - `MFI Period` = 14.\n  - `Low Level` = 40.\n  - `High Level` = 60.\n  - `Stop Loss %` = 1.\n  - `Take Profit %` = 2.\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Configurable\n  - Indicators: Money Flow Index\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1026": {
+    "id": 1026,
+    "name": "Mateo's Time of Day Analysis LE",
+    "family": "other",
+    "overview": "Opens a long position during a specified intraday window and closes it later in the day.\n\nThis strategy is useful for exploring time-of-day effects.\n\n## Details\n\n- **Entry Criteria**: Time reaches `StartTime` within the `From`-`Thru` date range.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Time reaches `EndTime` (before 20:00).\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `StartTime` = 09:30\n  - `EndTime` = 16:00\n  - `From` = 2017-04-21\n  - `Thru` = 2099-12-01\n- **Filters**:\n  - Category: Time-based\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: Time reaches `StartTime` within the `From`-`Thru` date range.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Time reaches `EndTime` (before 20:00).\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `StartTime` = 09:30\n  - `EndTime` = 16:00\n  - `From` = 2017-04-21\n  - `Thru` = 2099-12-01\n- **Filters**:\n  - Category: Time-based\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "721": {
+    "id": 721,
+    "name": "Earnings Trading",
+    "family": "other",
+    "overview": "Executes trades around specified earnings dates. Opens a long or short position on entry dates and closes on exit dates.\n\n## Details\n\n- **Data**: Daily price candles.\n- **Entry**: Open per direction on Entry Date 1 or 2.\n- **Exit**: Close position on Exit Date 1 or 2.\n- **Instruments**: Any instruments.\n- **Risk**: Fixed quantity only.\n",
+    "details": "- **Data**: Daily price candles.\n- **Entry**: Open per direction on Entry Date 1 or 2.\n- **Exit**: Close position on Exit Date 1 or 2.\n- **Instruments**: Any instruments.\n- **Risk**: Fixed quantity only.",
+    "parameters": ""
+   },
+   "1749": {
+    "id": 1749,
+    "name": "Drag SL/TP Manager",
+    "family": "other",
+    "overview": "This strategy automatically places stop-loss and take-profit orders at a fixed distance from the executed trade price. It is useful when manual positions should be protected immediately after entry.\n\n## Parameters\n\n- **Auto Set SL** (`bool`): enable automatic stop-loss placement.\n- **SL Points** (`decimal`): stop-loss distance in price steps.\n- **Auto Set TP** (`bool`): enable automatic take-profit placement.\n- **TP Points** (`decimal`): take-profit distance in price steps.\n\n## Behavior\n\nWhen the strategy starts it calls `StartProtection` with the selected distances. Any position opened while the strategy is running will immediately receive the corresponding protective orders. The distances are measured in price steps (`Security.PriceStep`).\n\nThe strategy itself does not generate trade signals; it simply manages protective orders for positions opened manually or by other strategies.\n\n## Notes\n\n- Designed for high-level API usage.\n- Only the finished candle state should trigger trading actions in extended versions.\n- No graphical dragging feature from the original MQL script is implemented.\n",
+    "details": "",
+    "parameters": "- **Auto Set SL** (`bool`): enable automatic stop-loss placement.\n- **SL Points** (`decimal`): stop-loss distance in price steps.\n- **Auto Set TP** (`bool`): enable automatic take-profit placement.\n- **TP Points** (`decimal`): take-profit distance in price steps."
+   },
+   "666": {
+    "id": 666,
+    "name": "DCA",
+    "family": "other",
+    "overview": "This strategy buys a fixed quote amount at regular intervals, either on a chosen weekday or after a set number of candles. It optionally closes all positions after a specified end date.\n\n## Parameters\n- Candle Type\n- Capital to invest per trade\n- Start date\n- End date\n- Close all on last candle\n- Use day of week mode\n- Day of week\n- Every X candles\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Capital to invest per trade\n- Start date\n- End date\n- Close all on last candle\n- Use day of week mode\n- Day of week\n- Every X candles"
+   },
+   "1015": {
+    "id": 1015,
+    "name": "Machine Learning Logistic Regression",
+    "family": "other",
+    "overview": "This strategy retrains a simple logistic regression model on every bar.\nThe model uses recent closing prices and a synthetic series derived from them.\nIf the predicted probability of growth is above 0.5 the strategy enters a long position; otherwise it goes short.\nPositions are held for a fixed number of bars.\n\n## Details\n- **Entry**: prediction > 0.5 → long, otherwise short.\n- **Exit**: opposite signal or holding period reached.\n- **Long/Short**: both.\n- **Timeframe**: configurable, default 1 minute.\n",
+    "details": "- **Entry**: prediction > 0.5 → long, otherwise short.\n- **Exit**: opposite signal or holding period reached.\n- **Long/Short**: both.\n- **Timeframe**: configurable, default 1 minute.",
+    "parameters": ""
+   }
+  }
+ }
+}

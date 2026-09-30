@@ -1,0 +1,98 @@
+{
+ "batch_268": {
+  "strategy_ids": [
+   2254,
+   4017,
+   447,
+   3800,
+   2423,
+   2240,
+   2296,
+   2259,
+   2480,
+   3306
+  ],
+  "docs": {
+   "2254": {
+    "id": 2254,
+    "name": "Martingale MACD",
+    "family": "trend",
+    "overview": "This strategy replicates the original MQL \"MartGreg_1\" expert in the StockSharp framework. It uses two Moving Average Convergence Divergence (MACD) indicators to search for reversals and applies a martingale rule for position sizing.\n\n## How it works\n\n- The first MACD searches for local extremes on the last three finished candles.\n- The second MACD compares the last two values to determine momentum direction.\n- A long position is opened when the first MACD forms a valley and the second MACD decreases.\n- A short position is opened when the first MACD forms a peak and the second MACD increases.\n- After every losing trade the next order size is doubled up to the configured limit.\n- Stop loss and take profit are set in absolute price points.\n\n## Parameters\n\n- `Shape` – divider for calculating initial volume from account balance.\n- `Doubling Count` – maximum number of consecutive doublings after losses.\n- `Stop Loss` – protective stop in points.\n- `Take Profit` – profit target in points.\n- `MACD1 Fast/Slow` – periods for the first MACD.\n- `MACD2 Fast/Slow` – periods for the second MACD.\n- `Candle Type` – timeframe for analysis.\n\n",
+    "details": "",
+    "parameters": "- `Shape` – divider for calculating initial volume from account balance.\n- `Doubling Count` – maximum number of consecutive doublings after losses.\n- `Stop Loss` – protective stop in points.\n- `Take Profit` – profit target in points.\n- `MACD1 Fast/Slow` – periods for the first MACD.\n- `MACD2 Fast/Slow` – periods for the second MACD.\n- `Candle Type` – timeframe for analysis."
+   },
+   "4017": {
+    "id": 4017,
+    "name": "Starter 2005",
+    "family": "trend",
+    "overview": "The **Starter 2005 Strategy** is a StockSharp high-level API conversion of the classic MetaTrader 4 expert advisor `Starter.mq4` released in 2005. The original system mixed a Laguerre oscillator, an exponential moving average slope filter, and a Commodity Channel Index confirmation. This port keeps the decision tree intact while adapting money-management and execution to StockSharp conventions:\n\n- A Laguerre RSI proxy replicates the `iCustom(\"Laguerre\")` buffer that oscillates between 0 and 1.\n- A 5-period EMA calculated on the median price supplies the same rising/falling slope confirmation used by the MT4 expert.\n- A 14-period CCI measured on closing prices filters out weak setups just like the original `Alpha` variable.\n- The adaptive lot sizing routine mirrors the historical `LotsOptimized()` function, including streak-based reductions after consecutive losses.\n- Position exits are triggered either by Laguerre reversing out of the extreme zone or by the trade reaching a configurable profit distance equivalent to `Point * Stop`.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `BaseVolume` | `decimal` | `1.2` | Minimum lot size used when risk sizing suggests a smaller amount. |\n| `MaximumRisk` | `decimal` | `0.036` | Fraction of equity exposed on a new position before applying the divider. |\n| `RiskDivider` | `decimal` | `500` | Divisor applied to risk capital, reproducing the original `AccountFreeMargin() * MaximumRisk / 500` rule. |\n| `DecreaseFactor` | `decimal` | `2` | Streak divisor used to shrink volume after consecutive losses. |\n| `MaPeriod` | `int` | `5` | EMA length on the candle median price. |\n| `CciPeriod` | `int` | `14` | Commodity Channel Index lookback. |\n| `CciThreshold` | `decimal` | `5` | Absolute CCI level required to trigger a signal. |\n| `LaguerreGamma` | `decimal` | `0.66` | Smoothing factor of the Laguerre filter. |\n| `LaguerreEntryTolerance` | `decimal` | `0.02` | Tolerance around 0/1 used to mimic the original equality checks. |\n| `LaguerreExitHigh` | `decimal` | `0.9` | Upper exit level for long positions. |\n| `LaguerreExitLow` | `decimal` | `0.1` | Lower exit level for short positions. |\n| `TakeProfitPoints` | `decimal` | `10` | Profit target expressed in price points (`Point * Stop` in MQL). |\n| `CandleType` | `DataType` | `TimeFrame(5m)` | Candle subscription processed by the strategy. |"
+   },
+   "447": {
+    "id": 447,
+    "name": "SuperTrend + EMA Rebound",
+    "family": "trend",
+    "overview": "The system trades in the direction of SuperTrend and looks for pullbacks to an\nexponential moving average. A position is opened either when the SuperTrend line\nflips direction or when price rebounds from the EMA while remaining in the\nprevailing SuperTrend bias. This combination attempts to capture the first leg\nof a new move and subsequent retracements within an established trend.\n\nA percentage based take profit can be enabled via the built‑in protection module\nby setting the take profit type to \"%\". The defaults favor long trades but short\nentries can also be activated. Because the strategy relies on direction changes,\nit is most effective in trending markets where SuperTrend reacts quickly to\nmomentum shifts.\n\n## Details\n\n- **Entry Criteria**:\n  - SuperTrend flips to uptrend, or price rebounds above EMA during uptrend.\n  - SuperTrend flips to downtrend, or price rebounds below EMA during downtrend.\n- **Long/Short**: Long enabled by default, short optional.\n- **Exit Criteria**:\n  - Opposite SuperTrend flip.\n  - Optional take profit handled by protection module.\n- **Stops**: Percentage take profit via protection; no stop loss included.\n- **Default Values**:\n  - ATR period = 10, ATR factor = 3.0.\n  - EMA length = 20, TP = 1.5%.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both (long default)\n  - Indicators: SuperTrend, EMA\n  - Stops: Optional TP\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - SuperTrend flips to uptrend, or price rebounds above EMA during uptrend.\n  - SuperTrend flips to downtrend, or price rebounds below EMA during downtrend.\n- **Long/Short**: Long enabled by default, short optional.\n- **Exit Criteria**:\n  - Opposite SuperTrend flip.\n  - Optional take profit handled by protection module.\n- **Stops**: Percentage take profit via protection; no stop loss included.\n- **Default Values**:\n  - ATR period = 10, ATR factor = 3.0.\n  - EMA length = 20, TP = 1.5%.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both (long default)\n  - Indicators: SuperTrend, EMA\n  - Stops: Optional TP\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3800": {
+    "id": 3800,
+    "name": "ExpICustomV1",
+    "family": "trend",
+    "overview": "## Summary\n\nThe **ExpICustomV1 Strategy** is a StockSharp port of the MetaTrader expert `exp_iCustom_v1`. The strategy reads trade signals from a configurable indicator instance and reacts to non-zero values in the selected buffers. When the buy buffer is non-zero the strategy opens a long position, while the sell buffer triggers a short entry. Protective stop-loss, take-profit, trailing and break-even logic reproduce the money-management options of the original expert.\n\n> Implementations are available in both C# and Python.\n\n## Trading Logic\n\n1. Subscribe to the primary timeframe specified by **Candle Type** and process closed candles only.\n2. Instantiate the indicator defined by **Indicator Name** and apply the slash-separated **Indicator Parameters** (supports both `Name=Value` pairs and ordered numeric values).\n3. Store final indicator outputs in a history buffer so that any shift can be accessed on later candles.\n4. When the buy buffer value at **Indicator Shift** is not zero the strategy opens/maintains a long position. When the sell buffer is non-zero the strategy opens/maintains a short position.\n5. If both buffers return non-zero values simultaneously the signals cancel each other to avoid ambiguous entries.\n6. Optional **Close On Reverse** exits the current position before reacting to the opposite signal.\n7. Sleep logic enforces a minimum number of bars between consecutive entries in the same direction. The timer can be cancelled when the opposite signal fires if **Cancel Sleeping** is enabled.\n8. Positions are protected by stop-loss, take-profit, optional trailing stop and break-even locking. All distances are expressed in price points.\n\n## Indicator configuration\n\n* **Indicator Name** – Full type name or short StockSharp indicator name (for example `SMA`, `MACD`, `BollingerBands`).\n* **Indicator Parameters** – Slash-separated list applied to the indicator. Both `Length=14/Width=2` and ordered values like `14/2/0.7` are supported.\n* **Override blocks** – ",
+    "details": "",
+    "parameters": ""
+   },
+   "2423": {
+    "id": 2423,
+    "name": "Frank Ud Hedging Grid",
+    "family": "trend",
+    "overview": "The **Frank Ud Hedging Grid Strategy** is a direct port of the MetaTrader expert advisor \"Frank Ud\" into the StockSharp high-level API. The bot keeps simultaneous long and short baskets on the same instrument and then performs martingale-style averaging whenever price drifts against the active basket. All signal handling is performed on top of best bid/ask (Level 1) updates, making the strategy suitable for low-latency execution or tick-by-tick backtesting.",
+    "details": "",
+    "parameters": "- `TakeProfitPips` – distance between the basket average price and the collective take-profit target (default 12 pips).\n- `StopLossPips` – protective stop distance used only for the very first hedge orders (default 12 pips).\n- `StepPips` – adverse movement required before adding the next martingale order (default 16 pips).\n- `AutoLot` – when `true` the strategy uses `LotSize`; otherwise it trades with the instrument minimum volume.\n- `LotSize` – custom base lot size used together with the martingale multiplier when `AutoLot` is enabled."
+   },
+   "2240": {
+    "id": 2240,
+    "name": "XDPO Histogram",
+    "family": "trend",
+    "overview": "The XDPO Histogram strategy adapts the original MQL5 expert *Exp_XDPO_Histogram*. It builds a double smoothed detrended price oscillator (XDPO) from closing prices. The oscillator is obtained by subtracting a moving average from price and smoothing this difference with a second moving average. Histogram dynamics provide signals for opening and closing trades.",
+    "details": "",
+    "parameters": "- `FirstMaLength` – length of the first moving average applied to the price.\n- `SecondMaLength` – length of the moving average applied to the difference between price and the first MA.\n- `CandleType` – candle type used for all computations."
+   },
+   "2296": {
+    "id": 2296,
+    "name": "Volume Weighted MA Candle",
+    "family": "trend",
+    "overview": "This strategy builds volume weighted moving averages (VWMA) for candle open and close prices. The relative position of these VWMAs defines a candle \"color\".\n\n## Trading Logic\n1. A candle is **bullish** when VWMA(open) is below VWMA(close).\n2. A candle is **bearish** when VWMA(open) is above VWMA(close).\n3. When the previous candle is bullish and the current one turns neutral or bearish, the strategy opens a long position and closes any short.\n4. When the previous candle is bearish and the current one turns neutral or bullish, the strategy opens a short position and closes any long.\n\n## Parameters\n- `VWMA Period` – length used to calculate both volume weighted moving averages.\n- `Candle Type` – timeframe of candles used for calculations.\n\nA protective block is enabled by default: 2% take‑profit and 1% stop‑loss.\n",
+    "details": "",
+    "parameters": "- `VWMA Period` – length used to calculate both volume weighted moving averages.\n- `Candle Type` – timeframe of candles used for calculations.\n\nA protective block is enabled by default: 2% take‑profit and 1% stop‑loss."
+   },
+   "2259": {
+    "id": 2259,
+    "name": "MaDelta",
+    "family": "trend",
+    "overview": "The MaDelta strategy measures the difference between a fast and a slow moving average. The difference is scaled by a multiplier and raised to the third power, producing an oscillating value `px`. Two dynamic thresholds separated by `Delta` (in pips) track the recent high and low of this value. When `px` breaks above the upper threshold, the strategy switches to a long bias; when `px` falls below the lower threshold, it switches to a short bias. Existing positions opposite to the new bias are closed and a new trade is opened in the direction of the signal.\n\nThe approach effectively captures momentum bursts when the distance between the two moving averages expands rapidly. Cubing the difference exaggerates strong moves while filtering small fluctuations. The `Delta` parameter defines how far `px` must travel before a reversal is recognized, preventing whipsaw in flat markets.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `px > hi` sets `trade = 1` and opens a long when no position exists.\n  - **Short**: `px < lo` sets `trade = -1` and opens a short when flat.\n- **Reverse Logic**:\n  - Long signal while short closes the short with a market buy before entering long.\n  - Short signal while long closes the long with a market sell before entering short.\n- **Indicators**:\n  - Fast moving average (SMA) with period `FastMaPeriod`.\n  - Slow moving average (EMA) with period `SlowMaPeriod`.\n  - Oscillator: `px = ((Multiplier * 0.1) * (FastMA - SlowMA))^3`.\n- **Parameters**:\n  - `Delta` – size of the high/low channel in pips.\n  - `Multiplier` – scales the MA difference before cubing.\n  - `FastMaPeriod` – length of the fast SMA.\n  - `SlowMaPeriod` – length of the slow EMA.\n  - `Volume` – order volume for entries.\n  - `CandleType` – timeframe of processed candles.\n- **Other Notes**:\n  - Works only with finished candles.\n  - No explicit stop-loss or take-profit; positions reverse on opposite signals.\n  - Uses high-level API with indicator binding and automatic charting.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `px > hi` sets `trade = 1` and opens a long when no position exists.\n  - **Short**: `px < lo` sets `trade = -1` and opens a short when flat.\n- **Reverse Logic**:\n  - Long signal while short closes the short with a market buy before entering long.\n  - Short signal while long closes the long with a market sell before entering short.\n- **Indicators**:\n  - Fast moving average (SMA) with period `FastMaPeriod`.\n  - Slow moving average (EMA) with period `SlowMaPeriod`.\n  - Oscillator: `px = ((Multiplier * 0.1) * (FastMA - SlowMA))^3`.\n- **Parameters**:\n  - `Delta` – size of the high/low channel in pips.\n  - `Multiplier` – scales the MA difference before cubing.\n  - `FastMaPeriod` – length of the fast SMA.\n  - `SlowMaPeriod` – length of the slow EMA.\n  - `Volume` – order volume for entries.\n  - `CandleType` – timeframe of processed candles.\n- **Other Notes**:\n  - Works only with finished candles.\n  - No explicit stop-loss or take-profit; positions reverse on opposite signals.\n  - Uses high-level API with indicator binding and automatic charting.",
+    "parameters": ""
+   },
+   "2480": {
+    "id": 2480,
+    "name": "Ten Pips EURUSD",
+    "family": "trend",
+    "overview": "The **Ten Pips EURUSD Strategy** is a breakout system that reproduces the logic of the original MetaTrader expert advisor. It watches the most recent completed candle and places stop orders above and below that range. Orders are sized in pips, adjusted for the current instrument tick size, and optionally managed by a trailing stop. The implementation uses StockSharp's high-level candle subscriptions together with order book updates to keep the behaviour close to the MQL version while remaining broker-neutral.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `0.01` | Order volume in lots (or contract units for non-FX symbols). |\n| `StopLossPips` | `50` | Distance between entry and protective stop, expressed in pips. |\n| `TakeProfitPips` | `150` | Take-profit distance in pips, used only when trailing is disabled. |\n| `UseTrailing` | `false` | Enables the trailing stop logic. |\n| `TrailingStopPips` | `50` | Initial distance for the trailing stop, measured in pips. |\n| `TrailingStepPips` | `25` | Minimum gain (in pips) required to move an active trailing stop. |\n| `CandleType` | `15 minute timeframe` | Candle series used to detect the breakout levels. |"
+   },
+   "3306": {
+    "id": 3306,
+    "name": "Cryptocurrency Divergence",
+    "family": "trend",
+    "overview": "The **Cryptocurrency Divergence Strategy** searches for classical momentum divergences between price action and the Relative Strength Index (RSI) while confirming trend direction with moving averages and MACD. The original MetaTrader expert advisor relied on multi-timeframe momentum checks, money management, and extensive trailing logic. This StockSharp port keeps the spirit of the system by:\n\n- Detecting bullish divergences when price prints a lower low but RSI forms a higher low.\n- Detecting bearish divergences when price creates a higher high but RSI prints a lower high.\n- Validating setups with fast/slow moving averages and MACD line versus signal line.\n- Managing positions through configurable stop loss, take profit, break-even, and trailing stop behaviour expressed in price steps.\n\nThe strategy is designed for spot cryptocurrencies but can be applied to any instrument that delivers enough volatility and clear swing points.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle series used for analysis (default 15-minute time frame). |\n| `TradeVolume` | Order volume applied to all entries. |\n| `FastMaLength` / `SlowMaLength` | Periods of the fast and slow SMAs. |\n| `RsiLength` | RSI calculation length. |\n| `RsiBullishLevel` / `RsiBearishLevel` | RSI thresholds that define oversold and overbought zones for divergence confirmation. |\n| `MacdShortLength` / `MacdLongLength` / `MacdSignalLength` | MACD configuration. |\n| `StopLossPoints` / `TakeProfitPoints` | Distances in price steps for risk and reward targets. |\n| `EnableBreakEven`, `BreakEvenTrigger`, `BreakEvenOffset` | Controls for the break-even move. |\n| `EnableTrailing`, `TrailDistance` | Trailing stop activation and spacing. |\n\nEvery parameter is exposed through `StrategyParam<T>` so it can be optimised inside the StockSharp designer."
+   }
+  }
+ }
+}

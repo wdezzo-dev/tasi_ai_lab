@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3098,
+      "name": "Doubler Hedged Trailing",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2470,
+      "name": "Ride Alligator Williams",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 482,
+      "name": "Vietnamese 3x Supertrend",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3103,
+      "name": "3103 — ADX EA (C#)",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,85),macd_signal(close,6,85,9))",
+      "exit_long": "crossbelow(macd(close,6,85),macd_signal(close,6,85,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2917,
+      "name": "BykovTrend + ColorX2MA MMRec",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 123,
+      "name": "Monday Weakness",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 374,
+      "name": "FX Carry Trade",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 1067,
+      "name": "Monday Open",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 815,
+      "name": "Funamental and Financials",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 821,
+      "name": "Function Adf",
+      "family": "other",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fallback OHLCV translation used because the source strategy relies on unsupported proprietary/stateful features; no unsupported indicator or external data was fabricated."
+    }
+  ]
+}

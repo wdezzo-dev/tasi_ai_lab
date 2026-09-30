@@ -1,0 +1,98 @@
+{
+ "batch_119": {
+  "strategy_ids": [
+   1580,
+   3931,
+   1247,
+   2494,
+   3689,
+   2846,
+   1453,
+   1626,
+   2794,
+   2633
+  ],
+  "docs": {
+   "1580": {
+    "id": 1580,
+    "name": "Zigzag Candles",
+    "family": "trend",
+    "overview": "Simple strategy that reacts to ZigZag pivot points. A long position is opened when a new low pivot forms, while a short position is taken at new high pivots.\n\n## Details\n- **Entry Criteria**: Pivot highs and lows from ZigZag.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite pivot.\n- **Stops**: No.\n- **Default Values**:\n  - `ZigzagLength` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Pivot highs and lows from ZigZag.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite pivot.\n- **Stops**: No.\n- **Default Values**:\n  - `ZigzagLength` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3931": {
+    "id": 3931,
+    "name": "HBS System Strategy (StockSharp Version)",
+    "family": "trend",
+    "overview": "The **HBS System Strategy** is a high-level StockSharp conversion of the MetaTrader 4 expert advisor \"HBS system.mq4\" (ForTrader.ru). The original EA combines exponential moving average filtering with pending stop orders that are rounded to fixed price levels. Two stop orders are deployed in the trend direction: the first targets a nearby rounded level and the second seeks an extended breakout. Both trades share the same protective stop and trailing logic, producing a layered breakout structure.\n\nThis StockSharp port keeps the multi-order behaviour while embracing the high-level API. Orders are submitted through the pending order helpers (`BuyStop`, `SellStop`, `SellLimit`, `BuyLimit`) and risk is controlled via dynamically maintained protective stops. The code is fully commented in English for easier maintenance.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `EMA Period` | Length of the exponential moving average filter. | 200 |\n| `Buy Stop-Loss (points)` | Distance (in points) between the long entry and its protective stop. | 50 |\n| `Buy Trailing (points)` | Trailing distance for long positions. | 10 |\n| `Sell Stop-Loss (points)` | Distance (in points) between the short entry and its protective stop. | 50 |\n| `Sell Trailing (points)` | Trailing distance for short positions. | 10 |\n| `Order Volume` | Volume applied to **each** pending order. With the default two orders, the maximum exposure equals twice this value. | 0.1 |\n| `Entry Offset (points)` | Offset (in points) subtracted/added from the rounded level to obtain the pending entry price. | 15 |\n| `Second Take-Profit (points)` | Additional distance used by the secondary take-profit target. | 15 |\n| `Rounding Factor` | Multiplier used for the rounding logic (e.g., 100 → two decimal places). | 100 |\n| `Candle Type` | Data type for candle aggregation. Defaults to a 1-hour timeframe. | `TimeFrame(1h)` |"
+   },
+   "1247": {
+    "id": 1247,
+    "name": "Revelations",
+    "family": "trend",
+    "overview": "A volatility breakout strategy that enters on strong ATR spikes confirmed by local extrema and a regime index. Position size adapts to spike strength.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: ATR spike upward at local low with regime confirmation.\n  - **Short**: ATR spike downward at local high with regime confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Take profit or stop loss hit.\n- **Stops**: Fixed percent stops.\n- **Default Values**:\n  - `ATR Fast` = 14\n  - `ATR Slow` = 21\n  - `ATR StdDev` = 12\n  - `Spike Threshold` = 0.5\n  - `Super Spike Mult` = 1.5\n  - `Regime Window` = 8\n  - `Regime Events` = 3\n  - `Local Window` = 3\n  - `Max Quantity` = 2\n  - `Min Quantity` = 1\n  - `Stop %` = 0.9\n  - `Take Profit %` = 1.8\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Long/Short\n  - Indicators: ATR, SMA, Highest/Lowest\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: ATR spike upward at local low with regime confirmation.\n  - **Short**: ATR spike downward at local high with regime confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Take profit or stop loss hit.\n- **Stops**: Fixed percent stops.\n- **Default Values**:\n  - `ATR Fast` = 14\n  - `ATR Slow` = 21\n  - `ATR StdDev` = 12\n  - `Spike Threshold` = 0.5\n  - `Super Spike Mult` = 1.5\n  - `Regime Window` = 8\n  - `Regime Events` = 3\n  - `Local Window` = 3\n  - `Max Quantity` = 2\n  - `Min Quantity` = 1\n  - `Stop %` = 0.9\n  - `Take Profit %` = 1.8\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Long/Short\n  - Indicators: ATR, SMA, Highest/Lowest\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2494": {
+    "id": 2494,
+    "name": "Two MA Four Level",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader expert \"2MA_4Level\" using the StockSharp high-level API. It trades a single instrument with two smoothed moving averages (SMMA) calculated on the median price and watches five relative crossover zones between the fast and slow curves. Entries are only allowed when no position is open, and every trade is protected by pip-based stop-loss and take-profit offsets.\n\n## Logic\n\n- Compute a fast and a slow SMMA on the selected candle series (default 50 and 130 periods).\n- Evaluate the previous and current SMMA values on the completed candle to detect a crossover.\n- Check the crossover against five thresholds built from the slow MA:\n  - the raw slow MA (no offset),\n  - slow MA + `MostTopLevel` pips,\n  - slow MA + `TopLevel` pips,\n  - slow MA - `LowermostLevel` pips,\n  - slow MA - `LowerLevel` pips.\n- When the fast MA crosses above any threshold, open a long position (if flat). A cross below any threshold opens a short position.\n- Stop-loss and take-profit levels are attached through `StartProtection` using the instrument pip value (`Security.PriceStep`).\n\nThe strategy never pyramids positions: a new trade can only be opened after the previous one is closed by stop or target.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `FastPeriod` | 50 | Length of the fast smoothed moving average. Must be lower than `SlowPeriod`. |\n| `SlowPeriod` | 130 | Length of the slow smoothed moving average. |\n| `MostTopLevel` | 500 | Upper offset (in pips) used for the widest bullish/bearish confirmation. Must be greater than `TopLevel`. |\n| `TopLevel` | 250 | Upper offset (in pips) for the secondary bullish/bearish confirmation. |\n| `LowerLevel` | 250 | Lower offset (in pips) for the secondary bearish/bullish confirmation. Must be lower than `LowermostLevel`. |\n| `LowermostLevel` | 500 | Lower offset (in pips) used for the widest bearish/bullish confirmation. |\n| `TakeProfitPips` | 55 | Distance from entry to th",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `FastPeriod` | 50 | Length of the fast smoothed moving average. Must be lower than `SlowPeriod`. |\n| `SlowPeriod` | 130 | Length of the slow smoothed moving average. |\n| `MostTopLevel` | 500 | Upper offset (in pips) used for the widest bullish/bearish confirmation. Must be greater than `TopLevel`. |\n| `TopLevel` | 250 | Upper offset (in pips) for the secondary bullish/bearish confirmation. |\n| `LowerLevel` | 250 | Lower offset (in pips) for the secondary bearish/bullish confirmation. Must be lower than `LowermostLevel`. |\n| `LowermostLevel` | 500 | Lower offset (in pips) used for the widest bearish/bullish confirmation. |\n| `TakeProfitPips` | 55 | Distance from entry to the take-profit, expressed in pips. |\n| `StopLossPips` | 260 | Distance from entry to the stop-loss, expressed in pips. |\n| `CandleType` | 15-minute time frame | Candle series used for the SMMA calculations and signal processing. |"
+   },
+   "3689": {
+    "id": 3689,
+    "name": "SUPERMACBOT by The Guardian Forex TV",
+    "family": "trend",
+    "overview": "The **SUPERMACBOT by The Guardian Forex TV Strategy** replicates the concept of the original MetaTrader expert advisor by combining the MACD oscillator with a dual simple moving average trend filter and a trailing average exit filter. The converted StockSharp implementation works on completed candles and sends market orders whenever a bullish or bearish confluence forms. The strategy avoids tick-by-tick trading and follows the high-level API guidelines by relying on candle subscriptions and indicator bindings.\n\nThe trading engine evaluates momentum through the MACD histogram and trend alignment between two simple moving averages. A trailing moving average acts both as a trade management reference and a delayed confirmation filter, mirroring the trailing module configured in the MQL expert. The StockSharp version focuses on clarity and portability across instruments and timeframes by exposing every key value as a configurable parameter.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle series processed by the strategy. | 1-minute timeframe |\n| `FastMaPeriod` | Period of the fast simple moving average filter. | 12 |\n| `SlowMaPeriod` | Period of the slow simple moving average filter. | 26 |\n| `MacdFastPeriod` | Fast EMA period for the MACD indicator. | 12 |\n| `MacdSlowPeriod` | Slow EMA period for the MACD indicator. | 24 |\n| `MacdSignalPeriod` | Signal EMA period for the MACD indicator. | 9 |\n| `HistogramThreshold` | Minimum absolute value required from the MACD histogram before opening a position. | 0.0 |\n| `TrailingPeriod` | Period of the trailing simple moving average used for confirmations and exits. | 12 |\n\nAll parameters are exposed through `StrategyParam<T>` and can be optimized inside StockSharp Designer."
+   },
+   "2846": {
+    "id": 2846,
+    "name": "PLC",
+    "family": "breakout",
+    "overview": "The PLC strategy replicates the behavior of the MetaTrader expert advisor `PLC (barabashkakvn's edition)` using the StockSharp high-level API. The algorithm operates on the high timeframe specified by the `Entry Timeframe` parameter and places breakout stop orders above and below the most recent finished candle. Lower timeframe fractals (M5 and H1 by default) are used to dynamically scale the order volume. Once the floating profit of all open positions exceeds the configured threshold, the strategy liquidates the entire position and waits for the next setup.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Shift OHLC` | Number of pips added above the last candle high and below the last candle low to determine the stop activation levels. |\n| `Minimum Profit` | Profit (in the instrument currency) that triggers closing all open positions. |\n| `Shift Position` | Minimum distance in pips between the new stop level and the extreme open-price of existing positions. Prevents stacking orders too close to previous entries. |\n| `Buy Volume` / `Sell Volume` | Base order size (lots). Used before any fractal multipliers are applied. |\n| `M5 Multiplier` / `H1 Multiplier` | Volume multipliers activated when the stop price is above (for longs) or below (for shorts) the latest fractal on the respective timeframe. Use `0` to disable scaling. |\n| `Entry Timeframe` | Main timeframe used to generate entries. Each finished candle on this timeframe triggers a new evaluation. |\n| `M5 Fractal Timeframe` | Timeframe that feeds the lower fractal detector (default 5 minutes). |\n| `H1 Fractal Timeframe` | Timeframe that feeds the higher fractal detector (default 1 hour). |"
+   },
+   "1453": {
+    "id": 1453,
+    "name": "Trailing Stop with RSI - Momentum-Based",
+    "family": "breakout",
+    "overview": "This strategy enters on momentum breakouts and uses an RSI filter to reverse positions at overbought or oversold levels. A trailing stop activates after a configurable profit and follows price to protect gains.\n\n## Details\n\n- **Entry**: Momentum and its change align in the same direction.\n- **Exit**: RSI levels or trailing stop.\n- **Indicators**: Momentum, RSI.\n- **Timeframe**: Any.\n- **Risk**: Uses trailing stop.\n",
+    "details": "- **Entry**: Momentum and its change align in the same direction.\n- **Exit**: RSI levels or trailing stop.\n- **Indicators**: Momentum, RSI.\n- **Timeframe**: Any.\n- **Risk**: Uses trailing stop.",
+    "parameters": ""
+   },
+   "1626": {
+    "id": 1626,
+    "name": "Parabolic SAR Bug5",
+    "family": "momentum",
+    "overview": "Parabolic SAR Bug5 Strategy trades price reversals detected by the Parabolic SAR indicator. It opens a long position when price crosses above the SAR and a short position when price crosses below. The strategy optionally reverses trade direction, closes open positions on SAR flips, and supports trailing stop, take profit and stop loss rules.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Step` | Initial acceleration factor for Parabolic SAR. |\n| `Maximum` | Maximum acceleration factor for Parabolic SAR. |\n| `StopLossPoints` | Stop loss distance in points. |\n| `TakeProfitPoints` | Take profit distance in points. |\n| `Trailing` | Enable trailing stop management. |\n| `TrailPoints` | Trailing stop distance in points. |\n| `Reverse` | Reverse trading direction. |\n| `SarClose` | Close position on SAR switch. |\n| `CandleType` | Timeframe of candles to process. |"
+   },
+   "2794": {
+    "id": 2794,
+    "name": "Aeron JJN Scalper EA",
+    "family": "volatility",
+    "overview": "This strategy is a high-level StockSharp port of the **Aeron JJN Scalper** expert advisor. It watches finished candles, identifies specific two-bar reversal situations, and places simulated stop orders at the open of the most recent opposite candle. When the market reaches the stored stop level the strategy enters with a market order, applies ATR-based risk targets, and manages the trade with a pip-based trailing stop.\n\nKey ideas:\n\n* Trade direction is decided by a bullish/bearish two-candle reversal pattern.\n* Entry levels come from the open price of the last strong candle in the opposite direction.\n* An ATR(8) value measured on the signal bar sets both stop-loss and take-profit distances.\n* Trailing stop logic moves the protective level once price advances by the configured pip offsets.\n* Pending levels automatically expire after the configured number of minutes.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Volume` | 0.1 | Net position size used for entries; the strategy adds the absolute current position to flip direction when required. |\n| `TrailingStopPips` | 5 | Base trailing stop distance (converted to price units). |\n| `TrailingStepPips` | 5 | Extra advance required before moving the trailing stop again. |\n| `ResetMinutes` | 10 | Expiration time for a stored pending level (minutes). |\n| `DojiDiff1Pips` | 10 | Minimum body size (in pips) for the reversal candle that precedes the signal. |\n| `DojiDiff2Pips` | 4 | Minimum body size (in pips) for the candle used as the entry reference level. |\n| `CandleType` | 1 minute time frame | Candle data type used for calculations. |"
+   },
+   "2633": {
+    "id": 2633,
+    "name": "IStochastic Trading",
+    "family": "mean_reversion",
+    "overview": "IStochastic Trading Strategy is a direct StockSharp port of the \"IStochastic_Trading\" MetaTrader 5 expert advisor. The bot uses the Stochastic Oscillator to detect oversold and overbought conditions and then builds a martingale-style position ladder while managing every entry with stop loss, take profit and a trailing stop. The implementation operates on finished candles obtained through StockSharp's high-level API and relies on market orders only.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `OrderVolume` | `0.1` | Initial position size in lots. Additional entries double the previous volume. |\n| `TakeProfitPips` | `50` | Take profit distance measured in pips. The value is converted to price points internally. |\n| `StopLossPips` | `50` | Stop loss distance in pips for each position. |\n| `TrailingStopPips` | `10` | Trailing stop distance in pips. Set to zero to disable trailing. |\n| `TrailingStepPips` | `5` | Minimum favourable move (in pips) before the trailing stop is adjusted. |\n| `MaxPositions` | `3` | Maximum number of simultaneously open martingale steps. A value of `0` removes the limit. |\n| `GapPips` | `7` | Price gap, in pips, required before doubling into the current direction. |\n| `KPeriod` | `5` | Number of candles used to build the %K line. |\n| `DPeriod` | `3` | Period of the %D smoothing average. |\n| `Slowing` | `3` | Additional smoothing applied to %K. |\n| `ZoneBuy` | `30` | %D threshold used to validate long entries (oversold zone). |\n| `ZoneSell` | `70` | %D threshold used to validate short entries (overbought zone). |\n| `CandleType` | `15-minute time frame` | Candle series employed for calculations. |"
+   }
+  }
+ }
+}

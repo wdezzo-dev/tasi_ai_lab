@@ -1,0 +1,98 @@
+{
+ "batch_133": {
+  "strategy_ids": [
+   1365,
+   2290,
+   2865,
+   1680,
+   4179,
+   1558,
+   588,
+   3463,
+   3382,
+   3179
+  ],
+  "docs": {
+   "1365": {
+    "id": 1365,
+    "name": "SuperTrade ST1",
+    "family": "trend",
+    "overview": "Long-only strategy combining Supertrend with EMA filter and ATR-based risk management.\n\nTesting indicates an average annual return of about 45%. It performs best in the crypto market.\n\nThe system waits for a drop in Supertrend direction while price stays above both the Supertrend line and EMA. Risk is controlled with ATR-based stop-loss and take-profit levels at a 1:4 ratio.\n\n## Details\n\n- **Entry Criteria**:\n  - Previous Supertrend direction > current direction\n  - Close > Supertrend\n  - Close > EMA\n- **Long/Short**: Long only\n- **Exit Criteria**: `Close <= entry - StopAtrMultiplier * ATR` or `Close >= entry + TakeAtrMultiplier * ATR`\n- **Stops**: ATR-based stop-loss and take-profit\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Factor` = 3.0\n  - `EmaPeriod` = 200\n  - `StopAtrMultiplier` = 1.0\n  - `TakeAtrMultiplier` = 4.0\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Supertrend, EMA, ATR\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Previous Supertrend direction > current direction\n  - Close > Supertrend\n  - Close > EMA\n- **Long/Short**: Long only\n- **Exit Criteria**: `Close <= entry - StopAtrMultiplier * ATR` or `Close >= entry + TakeAtrMultiplier * ATR`\n- **Stops**: ATR-based stop-loss and take-profit\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Factor` = 3.0\n  - `EmaPeriod` = 200\n  - `StopAtrMultiplier` = 1.0\n  - `TakeAtrMultiplier` = 4.0\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Supertrend, EMA, ATR\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2290": {
+    "id": 2290,
+    "name": "AcceleratorBot USDJPY H4",
+    "family": "trend",
+    "overview": "The AcceleratorBot strategy is a conversion of the original MQL4 expert designed for USDJPY on the H4 timeframe. It blends trend strength from the Average Directional Index (ADX), momentum from the Stochastic Oscillator and multi-timeframe Acceleration/Deceleration (AC) values. Candlestick patterns are used as directional filters.\n\n## Details\n\n- **Entry Criteria**: Trend or momentum signals confirmed by candlestick filters.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal, stop loss, take profit or trailing stop.\n- **Stops**: Fixed and trailing.\n- **Default Values**:\n  - `StopLossPoints` = 750\n  - `TakeProfitPoints` = 9999\n  - `TrailPoints` = 0\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 20m\n  - `X1` = 0\n  - `X2` = 150\n  - `X3` = 500\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend and momentum\n  - Direction: Both\n  - Indicators: ADX, Stochastic, AC\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Trend or momentum signals confirmed by candlestick filters.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal, stop loss, take profit or trailing stop.\n- **Stops**: Fixed and trailing.\n- **Default Values**:\n  - `StopLossPoints` = 750\n  - `TakeProfitPoints` = 9999\n  - `TrailPoints` = 0\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 20m\n  - `X1` = 0\n  - `X2` = 150\n  - `X3` = 500\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend and momentum\n  - Direction: Both\n  - Indicators: ADX, Stochastic, AC\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2865": {
+    "id": 2865,
+    "name": "Night Flat Trade",
+    "family": "trend",
+    "overview": "- **Market & Timeframe**: Designed for EURUSD on the H1 timeframe, but any instrument with a clearly defined price step can be used.\n- **Session Window**: Entries are allowed only during a two-hour window that starts at the configured `OpenHour` and ends at `OpenHour + 1` (exchange time).\n- **Range Filter**: The high-low span of the last three completed candles must remain between `DiffMinPips` and `DiffMaxPips` (converted into price units).\n- **Bias**: Long-only or short-only depending on where the latest close sits inside the qualifying range.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle series to subscribe to (defaults to H1). | 1-hour candles |\n| `TakeProfitPips` | Optional take-profit distance in pips. | 50 |\n| `TrailingStopPips` | Distance between price and trailing stop in pips (0 disables trailing). | 15 |\n| `TrailingStepPips` | Extra pips required before each trailing stop update. | 5 |\n| `DiffMinPips` | Minimum allowed three-candle range (pips). | 18 |\n| `DiffMaxPips` | Maximum allowed three-candle range (pips). | 28 |\n| `OpenHour` | Session start hour in exchange time (entries allowed until `OpenHour + 1`). | 0 |"
+   },
+   "1680": {
+    "id": 1680,
+    "name": "Xbug Free",
+    "family": "trend",
+    "overview": "Contrarian moving average strategy that buys when price crosses below its moving average and sells when price crosses above. Uses symmetric take-profit and stop-loss distances.\n\n## Details\n\n- **Entry Criteria**: price crossing below/above simple moving average\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal or protective stop\n- **Stops**: Yes\n- **Default Values**:\n  - `MaPeriod` = 19\n  - `MaShift` = 15\n  - `StopPoints` = 270\n  - `Volume` = 0.1\n  - `CandleType` = 4-hour\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price crossing below/above simple moving average\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal or protective stop\n- **Stops**: Yes\n- **Default Values**:\n  - `MaPeriod` = 19\n  - `MaShift` = 15\n  - `StopPoints` = 270\n  - `Volume` = 0.1\n  - `CandleType` = 4-hour\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4179": {
+    "id": 4179,
+    "name": "Moving Average Money",
+    "family": "trend",
+    "overview": "The strategy is a StockSharp conversion of the MetaTrader expert advisor \"Moving Average Money\". It evaluates completed candles and reacts when the previous bar crosses a shifted simple moving average. The system supports both long and short trades and keeps every decision synchronized with the high-level candle subscription API.",
+    "details": "",
+    "parameters": "- `CandleType` – time frame used for signal detection.\n- `MovingPeriod` – length of the simple moving average.\n- `MovingShift` – number of fully formed candles used to shift the moving average to the right.\n- `MaximumRiskPercent` – percentage of the current portfolio value that defines the maximum loss per trade.\n- `ProfitLossFactor` – multiplier applied to the stop distance to compute the take-profit distance.\n- `TradeVolume` – base order volume for new entries (volume step constraints are respected automatically)."
+   },
+   "1558": {
+    "id": 1558,
+    "name": "Williams %R",
+    "family": "breakout",
+    "overview": "Strategy buys when Williams %R drops into deep oversold territory and exits on breakout or overbought levels.\n\n## Details\n\n- **Entry Criteria**: %R < -90\n- **Long/Short**: Long only\n- **Exit Criteria**: close > previous high or %R > -30\n- **Stops**: No\n- **Default Values**:\n  - `LookbackPeriod` = 2\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: WilliamsR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: %R < -90\n- **Long/Short**: Long only\n- **Exit Criteria**: close > previous high or %R > -30\n- **Stops**: No\n- **Default Values**:\n  - `LookbackPeriod` = 2\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: WilliamsR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "588": {
+    "id": 588,
+    "name": "Bollinger Bands & Fibonacci",
+    "family": "breakout",
+    "overview": "This strategy trades Bollinger Band breakouts filtered by Fibonacci levels. A long position opens when price crosses above the upper band and the candle's low is above a Fibonacci-based support. A short position opens when price crosses below the lower band and the candle's high is below a Fibonacci-based resistance.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses above upper band and low > Fibonacci low.\n  - **Short**: Close crosses below lower band and high < Fibonacci high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Close crosses below middle band.\n  - **Short**: Close crosses above middle band.\n- **Stops**: None.\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerMultiplier` = 2\n  - `FibonacciLength` = 50\n  - `FibonacciLevel0` = 0\n  - `FibonacciLevel100` = 1\n- **Filters**:\n  - Category: Band breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Highest, Lowest\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 1H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses above upper band and low > Fibonacci low.\n  - **Short**: Close crosses below lower band and high < Fibonacci high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Close crosses below middle band.\n  - **Short**: Close crosses above middle band.\n- **Stops**: None.\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerMultiplier` = 2\n  - `FibonacciLength` = 50\n  - `FibonacciLevel0` = 0\n  - `FibonacciLevel100` = 1\n- **Filters**:\n  - Category: Band breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Highest, Lowest\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 1H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3463": {
+    "id": 3463,
+    "name": "TugbaGold",
+    "family": "momentum",
+    "overview": "TugbaGold is a grid-based averaging expert advisor that originates from MetaTrader 5. The converted strategy recreates its martingale position sizing and basket management logic using StockSharp's high-level API. The system places new orders whenever the previous candle closes with directional momentum and progressively builds a grid of positions spaced by a configurable distance. Averaging exits are executed either by locking in profits on the extreme positions or by partially closing the basket depending on the selected mode.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitPips` | Take-profit distance applied when only one position is open. Set to `0` to disable. |\n| `StartVolume` | Initial volume for the first order in a grid sequence. |\n| `MaxVolume` | Maximum order volume. `0` keeps the doubling sequence unbounded. |\n| `CloseMode` | Exit mode: `Average` (close both extremes) or `Partial` (partial + full close). |\n| `PointOrderStepPips` | Minimum distance in pips before a new averaging order can be added. |\n| `MinimalProfitPips` | Additional profit buffer added to averaging targets. |\n| `CandleType` | Candle series used for signal evaluation. |"
+   },
+   "3382": {
+    "id": 3382,
+    "name": "Basic ATR Stop Take",
+    "family": "volatility",
+    "overview": "Basic ATR Stop Take ports the MetaTrader 4 expert advisor **“Basic ATR stop_take expert adviser”** to the StockSharp high-level strategy API. The system is intentionally minimal: it opens exactly one market position in the chosen direction, calculates an Average True Range (ATR) on the working candles, and attaches protective stop-loss and take-profit levels derived from ATR multipliers. Once the trade is closed by either level, the strategy immediately prepares for the next setup in the same direction.",
+    "details": "",
+    "parameters": "* **Trade Direction** – side of the market to trade (`None`, `Buy`, or `Sell`).\n* **Trade Volume** – order volume for the single market entry.\n* **ATR Period** – number of candles used in the ATR calculation.\n* **Stop Factor** – ATR multiplier applied to the stop-loss distance. Zero disables the protective stop.\n* **Take Factor** – ATR multiplier applied to the take-profit distance. Zero disables the profit target.\n* **Candle Type** – timeframe of the candles used for ATR calculation and trade management."
+   },
+   "3179": {
+    "id": 3179,
+    "name": "iCCI iRSI",
+    "family": "mean_reversion",
+    "overview": "The **iCCI iRSI Strategy** is a direct conversion of the MetaTrader 5 expert advisor `iCCI iRSI.mq5`. The original system blends the Commodity Channel Index (CCI) and the Relative Strength Index (RSI) to detect exhaustion zones. When both oscillators agree on an oversold or overbought state the advisor opens a position, attaches protective orders and optionally trails the stop as the trade moves into profit. This StockSharp port mirrors that behaviour with high-level APIs, including pip-based inputs, auto-closing of opposite positions and a reversible signal mode.",
+    "details": "",
+    "parameters": "- **Candle Type** – candle data series processed by the indicators (default: 1-hour candles).\n- **CciPeriod** – CCI averaging length (default: 14).\n- **CciUpperLevel / CciLowerLevel** – overbought and oversold CCI thresholds (defaults: +80 / −80).\n- **RsiPeriod** – RSI averaging length (default: 42).\n- **RsiUpperLevel / RsiLowerLevel** – RSI trigger levels (defaults: 60 / 30).\n- **ReverseSignals** – flips the interpretation of the oscillator signals (default: `false`).\n- **TradeVolume** – market order size. Set to match the MT5 lot input (default: 0.1).\n- **StopLossPips / TakeProfitPips** – protective distances in pips (defaults: 0 and 140). Set to zero to disable.\n- **TrailingStopPips / TrailingStepPips** – trailing-stop distance and minimum step (defaults: 5 / 5). A zero trailing distance disables trailing even if a step is provided."
+   }
+  }
+ }
+}

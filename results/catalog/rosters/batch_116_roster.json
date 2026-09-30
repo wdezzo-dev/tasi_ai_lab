@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2927,
+      "name": "ColorX2MA Digit NN3 MMRec",
+      "family": "trend",
+      "entry_long": "roc(sma(ema(close, 12), 5), 1) > 0 and close > sma(ema(close, 12), 5)",
+      "exit_long": "roc(sma(ema(close, 12), 5), 1) < 0 or close < sma(ema(close, 12), 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The X2MA double smoothing is rebuilt as SMA(EMA) with the documented fast/slow lengths 12 and 5, and a rising slope with price above the line is the documented long signal, the SignalBars confirmation being approximated by a one-bar return. The 12h/6h/3h aggregation, per-timeframe volume netting and rounding Digits are not single-series features."
+    },
+    {
+      "id": 1475,
+      "name": "Trendline Breaks with Multi Fibonacci Supertrend",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and roc(ema(close, 10), 1) > 0 and adx(high, low, close, 14) > 20",
+      "exit_long": "close < ema(close, 20) or close < donchian_low_prev(low, 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ATR-sloped upper trendline is approximated by the prior 20-bar high, the averaged Fibonacci SuperTrend by a rising EMA(10), and the DMI confirmation by ADX(14) above 20 because the DSL exposes no separate +DI/-DI. The documented ATR-based stop and target are not percentage fields and the swing-line construction is not reproducible."
+    },
+    {
+      "id": 3531,
+      "name": "RSI MA on RSI Dual",
+      "family": "trend",
+      "entry_long": "crossabove(ema(rsi(close, 5), 9), ema(rsi(close, 21), 9)) and ema(rsi(close, 5), 9) > 50",
+      "exit_long": "crossbelow(ema(rsi(close, 5), 9), ema(rsi(close, 21), 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two RSI streams (5 and 21) smoothed by the same MA(9) reproduce the documented dual-RSI cross while a neutral level of 50 is used because NeutralLevel has no documented value. The session filter, direction flags, signal reversal and CloseOpposite/OnlyOnePosition switches are configuration, not signals."
+    },
+    {
+      "id": 2412,
+      "name": "ColorJFatl Digit ReOpen",
+      "family": "trend",
+      "entry_long": "roc(ema(close, 7), 1) > 0 and bars_since(roc(ema(close, 7), 1) < 0) <= 2",
+      "exit_long": "roc(ema(close, 7), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Jurik moving average is approximated by EMA(7) since JmaLength has no documented default, and its upward turn within two bars is the documented long entry while the opposite turn closes. Re-entry every PriceStep points up to MaxPositions is a pyramiding module, and the source timeframe is 4 hours."
+    },
+    {
+      "id": 328,
+      "name": "Bollinger Kalman Filter",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close, 20, 2) and ema(close, 11) > bb_mid(close, 20)",
+      "exit_long": "crossbelow(ema(close, 11), bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs give no entry formula, so Bollinger(20, 2) confirmation of a filtered price is used, with the Kalman constants KalmanQ=0.01 and KalmanR=0.1 mapped to their steady-state smoothing factor q/(q+r) of about 0.09, i.e. an EMA of roughly 11 periods. ATR-multiple stops are not percentage fields."
+    },
+    {
+      "id": 791,
+      "name": "Fibonacci-Only",
+      "family": "breakout",
+      "entry_long": "close > donchian_high(high, 100) - 0.19 * (donchian_high(high, 100) - donchian_low(low, 100)) and close > open",
+      "exit_long": "close < donchian_high(high, 100) - 0.382 * (donchian_high(high, 100) - donchian_low(low, 100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented custom 19% and 82.56% retracements are rebuilt from a 100-bar high/low range (the lookback is a fallback) and the upside break with a bullish candle is the long entry, with a 38% retracement as the exit. The seven stacked take-profits, trailing stop and ATR/percent stop are execution modules."
+    },
+    {
+      "id": 77,
+      "name": "Inside Bar Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2) and low >= donchian_low_prev(low,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The marked inside-bar high is approximated by the prior two-bar high because shifted bars are unavailable, and holding the prior bar's low confirms the bullish break; the documented exit is the next candle trading against the prior extreme. The documented StopLossPercent of 1 is used instead of pattern-relative placement."
+    },
+    {
+      "id": 4101,
+      "name": "Amstell SL Averaging",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA opens a long and a short simultaneously and pyramids both legs every ReentryPoints of adverse movement, with purely virtual 30-point exits, so there is no market-derived directional signal; the impossible negative-price guard avoids fabricating one. Point distances and lot size are not DSL fields."
+    },
+    {
+      "id": 2844,
+      "name": "Timed Buy Order",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states the strategy uses no market indicators or candle subscriptions and simply submits 60 market buys on a one-second timer, so it is schedule-driven with no signal to translate. Interval, OrdersToPlace and OrderVolume are timer and sizing parameters."
+    },
+    {
+      "id": 3122,
+      "name": "Vlado",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14) + 0.0001), 25)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14) + 0.0001), 75)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is mirrored onto the 0-100 fast stochastic so the documented OversoldLevel -75 and OverboughtLevel -25 become 25 and 75, with a 14-bar window as a fallback because WilliamsPeriod has no default. The epsilon guards a zero-width range; volume sizing and the 1-hour default are not signals."
+    }
+  ]
+}

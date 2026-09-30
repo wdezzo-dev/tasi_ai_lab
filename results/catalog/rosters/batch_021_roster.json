@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 11,
+      "name": "Ichimoku Kumo Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(sma((high + low) / 2,9),sma((high + low) / 2,26)) and close > sma((high + low) / 2,52)",
+      "exit_long": "crossbelow(sma((high + low) / 2,9),sma((high + low) / 2,26)) or close < sma((high + low) / 2,52)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ichimoku is unavailable; current-value SMA midpoint proxies retain the documented 9/26/52 Tenkan, Kijun, and cloud levels. The shifted cloud and short side are omitted, and no stop is documented."
+    },
+    {
+      "id": 450,
+      "name": "Tendency EMA + RSI",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and ema(close,9) > ema(close,50) and ema(close,21) > ema(close,50) and close > open",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA 9/21/50 alignment, bullish candle, and RSI(14) overbought exit are retained. The optional five-bar profit exit is off by default, the short side is omitted, and no stop is built in."
+    },
+    {
+      "id": 481,
+      "name": "4H Bollinger Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_lower(close,20,1.8)) and volume_ratio(volume,20) > 1 and close > sma(close,80)",
+      "exit_long": "crossabove(close,bb_upper(close,20,1.8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,1.8), volume_ratio(20)>1, and SMA(80) retain the long breakout rule; the opposite upper-band cross is the exit. The short side and 4H-only execution context are omitted, with no stop documented."
+    },
+    {
+      "id": 755,
+      "name": "Enhanced Bollinger Bands SL TP",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close,bb_lower(close,20,2))",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior-close lower-band condition and current re-entry are represented by a cross above Bollinger(20,2); middle-band reversion is an exit proxy. The documented 10/20 pip protection is not a percentage field, and the short side is omitted."
+    },
+    {
+      "id": 997,
+      "name": "Long-Only Opening Range Breakout (ORB) with Pivot Points",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,15)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": 3.0,
+      "take_profit_pct": null,
+      "notes": "The 15-minute opening-range high is approximated by the prior 15-bar high. R1 confirmation, session timing, one-trade-per-day state, and pivot-based trailing exits are unavailable; the documented 3% stop is retained."
+    },
+    {
+      "id": 1271,
+      "name": "RSI Pro+ Bear Market",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,11),8)",
+      "exit_long": "crossbelow(rsi(close,11),8)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RSI(11) upward cross above level 8 is exact. A recross below 8 is a conservative failure exit; the source's 0.11% fixed target is outside the requested 1.0-5.0 percentage-field range, so no percentage is encoded."
+    },
+    {
+      "id": 1657,
+      "name": "ZMFX Stolid 5a EA",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and close < open and rsi(close,14) < 30 and (rsi(close,15) >= 30 or volume_ratio(volume,20) > 2)",
+      "exit_long": "ema(close,20) < ema(close,50) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20/50) proxies the smoothed multi-timeframe trend, the completed down candle proxies PreviousBarDown, and the implication is retained with volume_ratio(20)>2. Stochastic/timeframe shifts and the short side are unsupported; no stop is documented."
+    },
+    {
+      "id": 1747,
+      "name": "Charles 1.3.7",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The symmetric buy-stop is approximated by a break above the prior one-bar high and range failure by a close below the prior one-bar low. Anchor, trailing-profit, trailing-stop, volume, and price-step stop logic are not representable in this DSL."
+    },
+    {
+      "id": 2662,
+      "name": "Up3x1 Investor",
+      "family": "volatility",
+      "entry_long": "close > open and (high - low) > atr(high,low,close,14) and (close - open) > atr(high,low,close,14)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The completed bullish expansion candle is represented with a body and range exceeding one ATR(14) as a normalized proxy because pip thresholds are not supplied. A bearish expansion is the failure exit; pip stop, target, and trailing levels are unsupported."
+    },
+    {
+      "id": 3970,
+      "name": "Trend Follower Rainbow",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,4),ema(close,8)) and macd(close,5,35) > macd_signal(close,5,35,5) and ema(close,5) > ema(close,13) and ema(close,13) > ema(close,21) and ema(close,21) > ema(close,34) and ema(close,34) > ema(close,55)",
+      "exit_long": "crossbelow(ema(close,4),ema(close,8)) or crossbelow(macd(close,5,35),macd_signal(close,5,35,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(4/8) crossover, MACD(5/35/5) momentum, and 5/13/21/34/55 rainbow-base alignment are retained. Laguerre, MFI, bundle offsets, and point-based trailing stops are unavailable; the long side is represented only."
+    }
+  ]
+}

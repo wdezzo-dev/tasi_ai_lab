@@ -1,0 +1,98 @@
+{
+ "batch_214": {
+  "strategy_ids": [
+   1100,
+   3361,
+   2219,
+   1399,
+   3784,
+   1113,
+   922,
+   1032,
+   1350,
+   625
+  ],
+  "docs": {
+   "1100": {
+    "id": 1100,
+    "name": "Multi-TF AI SuperTrend with ADX",
+    "family": "trend",
+    "overview": "This strategy combines two SuperTrend indicators filtered by an ADX strength check. Trend direction is confirmed by comparing price WMAs with SuperTrend WMAs. Long trades open when both SuperTrends are bullish and ADX shows positive strength. Short trades open under opposite conditions. The first SuperTrend's ATR provides a trailing stop.\n\n- **Long**: Both SuperTrends bullish, price WMAs above SuperTrend WMAs, +DI > -DI and ADX above threshold.\n- **Short**: Both SuperTrends bearish, price WMAs below SuperTrend WMAs, -DI > +DI and ADX above threshold.\n- **Indicators**: SuperTrend, WMA, ATR, ADX.\n- **Stops**: ATR-based trailing stop from the first SuperTrend.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3361": {
+    "id": 3361,
+    "name": "X MAN",
+    "family": "trend",
+    "overview": "The X MAN strategy recreates the core logic of the MetaTrader expert advisor `X_MAN.mq4` within the StockSharp high-level API. The system trades breakouts driven by a fast and slow linear weighted moving average (LWMA) while filtering entries with multi-timeframe momentum and a monthly MACD confirmation. It is designed for trend continuation trades that are triggered only when momentum and trend structure align.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Primary timeframe used for the LWMA calculations. |\n| `HigherCandleType` | Higher timeframe feeding the momentum filter. |\n| `MacdCandleType` | Timeframe for the MACD confirmation (monthly by default). |\n| `FastMaPeriod` | Length of the fast LWMA. |\n| `SlowMaPeriod` | Length of the slow LWMA. |\n| `MomentumPeriod` | Lookback window of the momentum oscillator. |\n| `MomentumBuyThreshold` | Minimum distance from 100 required for bullish momentum. |\n| `MomentumSellThreshold` | Minimum distance from 100 required for bearish momentum. |\n| `DistancePoints` | Minimal separation between the fast and slow LWMA expressed in price points. |\n| `TakeProfitPoints` | Optional protective take profit distance in points. |\n| `StopLossPoints` | Optional protective stop loss distance in points. |\n\nAll parameters are exposed through `StrategyParam<T>` so they can be optimized inside StockSharp Designer or configured at run time."
+   },
+   "2219": {
+    "id": 2219,
+    "name": "Fibo Candles Trend",
+    "family": "trend",
+    "overview": "This strategy uses the custom **Fibo Candles** technique to determine trend direction.\nThe indicator paints each candle in one of two colors based on a Fibonacci ratio comparison\nbetween the current close and the recent high/low range. A switch in color signals a potential\nreversal. When the color turns bullish the strategy closes any short position and opens a long\nposition. When the color turns bearish it closes any long position and opens a short.\n\nThe method adapts to market volatility through a lookback period and selectable Fibonacci level.\nA stop loss and take profit in absolute points protect every trade.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Current candle color changes from bearish to bullish.\n  - **Short**: Current candle color changes from bullish to bearish.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Existing positions are closed when the opposite color appears.\n- **Stops**: Fixed stop loss and take profit in points via `StartProtection`.\n- **Default Values**:\n  - `Period` = 10 (candles used to measure high/low range).\n  - `Fibo Level` = 0.236 (ratio used for trend decision).\n  - `Stop Loss` = 1000 points.\n  - `Take Profit` = 2000 points.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Hourly by default\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Current candle color changes from bearish to bullish.\n  - **Short**: Current candle color changes from bullish to bearish.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Existing positions are closed when the opposite color appears.\n- **Stops**: Fixed stop loss and take profit in points via `StartProtection`.\n- **Default Values**:\n  - `Period` = 10 (candles used to measure high/low range).\n  - `Fibo Level` = 0.236 (ratio used for trend decision).\n  - `Stop Loss` = 1000 points.\n  - `Take Profit` = 2000 points.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Hourly by default\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "1399": {
+    "id": 1399,
+    "name": "MADH Moving Average Difference, Hann",
+    "family": "trend",
+    "overview": "Implements the MADH indicator described by John Ehlers. Strategy goes long when the indicator is above zero and short when below.\n\n## Details\n- **Entry Criteria**: MADH > 0 for longs, MADH < 0 for shorts.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `ShortLength` = 8\n  - `DominantCycle` = 27\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MADH\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: MADH > 0 for longs, MADH < 0 for shorts.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `ShortLength` = 8\n  - `DominantCycle` = 27\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MADH\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3784": {
+    "id": 3784,
+    "name": "Simple MACD EA",
+    "family": "trend",
+    "overview": "The Simple MACD EA strategy is a direct port of the classic MetaTrader expert advisor \"Simple MACD EA\". The approach uses two exponential moving averages (EMAs) to emulate the MACD histogram and determine the dominant trend on one-minute candles. Long positions are opened when the fast EMA (period 100) crosses above the slow EMA (user-defined MACD level). Short positions are opened when the fast EMA drops below the slow EMA. Only one position is maintained at any time.",
+    "details": "",
+    "parameters": "- **Candle Type** – Time frame used for the EMA calculations (default: 1-minute candles).\n- **Volume** – Order volume for new entries.\n- **MACD Level** – EMA length that defines the slow MACD component. A secondary EMA with length `MACD Level + 1` is derived automatically.\n- **Trailing Stop** – Distance in points for the trailing exit. Set to zero to disable.\n- **Trailing Updates** – Maximum number of trailing stop adjustments per trade.\n- **Wait Cycles** – Number of candle evaluations to wait before the adaptive soft stop becomes active."
+   },
+   "1113": {
+    "id": 1113,
+    "name": "Nasdaq Day and Night Breakdown",
+    "family": "other",
+    "overview": "Compares pre-market and regular session movements of Nasdaq futures and the Nasdaq index.\nCalculates differences before and after market open and shows intraday swings.\n\n## Details\n\n- **Entry Criteria**: none\n- **Long/Short**: None\n- **Exit Criteria**: none\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Analysis\n  - Direction: None\n  - Indicators: Price difference\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: none\n- **Long/Short**: None\n- **Exit Criteria**: none\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Analysis\n  - Direction: None\n  - Indicators: Price difference\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "922": {
+    "id": 922,
+    "name": "Indicator Test with Conditions Table",
+    "family": "other",
+    "overview": "This strategy compares the latest closing price with user-defined levels and executes market orders when the conditions are met. Each side (long and short) has separate entry and exit rules controlled by parameters.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Enabled long condition is true.\n  - **Short**: Enabled short condition is true.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Enabled close long condition is true.\n  - **Short**: Enabled close short condition is true.\n- **Stops**: No.\n- **Default Values**:\n  - `LongOperator` = `>`\n  - `CloseLongOperator` = `<`\n  - `ShortOperator` = `<`\n  - `CloseShortOperator` = `>`\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Enabled long condition is true.\n  - **Short**: Enabled short condition is true.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Enabled close long condition is true.\n  - **Short**: Enabled close short condition is true.\n- **Stops**: No.\n- **Default Values**:\n  - `LongOperator` = `>`\n  - `CloseLongOperator` = `<`\n  - `ShortOperator` = `<`\n  - `CloseShortOperator` = `>`\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1032": {
+    "id": 1032,
+    "name": "Mawreez' RSI Divergence Detector",
+    "family": "other",
+    "overview": "This strategy checks for price and RSI divergence over a range of lookback lengths. It buys when price makes a lower low while RSI forms a higher low, and sells on the opposite signal.\n\n## Parameters\n- Candle Type\n- RSI Length\n- Minimum Divergence Length\n- Maximum Divergence Length\n",
+    "details": "",
+    "parameters": "- Candle Type\n- RSI Length\n- Minimum Divergence Length\n- Maximum Divergence Length"
+   },
+   "1350": {
+    "id": 1350,
+    "name": "Fibonacci Levels with High/Low Criteria AYNET",
+    "family": "other",
+    "overview": "Uses a Fibonacci level from a higher timeframe candle along with highest and lowest price criteria.\nBuys when the close is above the previous lowest low and the Fibonacci level. Sells when the close is below the previous highest high and the same level.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "625": {
+    "id": 625,
+    "name": "Color",
+    "family": "other",
+    "overview": "Strategy that trades based on the perceived lightness of a configured color.\nIf the color is light (luminance > 0.5) the strategy buys, otherwise it sells.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Color luminance > 0.5`\n  - Short: `Color luminance <= 0.5`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `ColorHex` = \"#f23645\"\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Color luminance > 0.5`\n  - Short: `Color luminance <= 0.5`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `ColorHex` = \"#f23645\"\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

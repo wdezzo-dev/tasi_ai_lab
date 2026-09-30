@@ -1,0 +1,98 @@
+{
+ "batch_331": {
+  "strategy_ids": [
+   3693,
+   3344,
+   4206,
+   2352,
+   4098,
+   646,
+   664,
+   3154,
+   609,
+   462
+  ],
+  "docs": {
+   "3693": {
+    "id": 3693,
+    "name": "Surfing 3.0",
+    "family": "trend",
+    "overview": "This C# strategy is a faithful port of the MetaTrader 4 expert **Surfing 3.0**. It recreates the breakout logic that watches an exponential moving average (EMA) envelope built from candle highs and lows. Whenever the previous bar closes inside the band and the latest closed bar pierces it, the system reacts with a directional trade. The translation relies on StockSharp's high level API, candle subscriptions and built-in indicators instead of hand-written buffers.\n\nThe algorithm works exclusively with finished candles from a configurable aggregation. It keeps only the minimal amount of state required to emulate the `iMA` and `iClose` lookbacks used by the original code. Every decision is made once per closed bar, matching the \"closed bar\" evaluation style of the MQL implementation.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `OrderVolume` | Trade volume used for every market order. | `1` |\n| `TakeProfitPoints` | Take profit distance expressed in instrument points. | `80` |\n| `StopLossPoints` | Stop loss distance expressed in instrument points. | `50` |\n| `MaPeriod` | Length of the EMA applied to highs and lows. | `50` |\n| `RsiPeriod` | Period of the RSI filter. | `10` |\n| `LongRsiThreshold` | Minimum RSI value required to allow long entries. | `40` |\n| `ShortRsiThreshold` | Maximum RSI value allowed to enter short positions. | `65` |\n| `TradeStartHour` | Hour (exchange time) from which new trades are permitted. | `8` |\n| `TradeEndHour` | Hour (exclusive) after which positions are closed and no new trades start. | `18` |\n| `CandleType` | Candle aggregation used for all calculations (default: 15-minute candles). | `15m` |"
+   },
+   "3344": {
+    "id": 3344,
+    "name": "Expert Candles",
+    "family": "trend",
+    "overview": "The **Expert Candles Strategy** is a StockSharp port of the MetaTrader 5 *Expert_Candles* expert advisor. It monitors the most\nrecent price action for candlestick reversal formations that feature elongated shadows. Whenever a bullish or bearish composite\ncandle is detected the strategy opens a position in the respective direction and optionally applies money management identical to\nthe original EA.\n\nThe implementation follows the high-level StockSharp API: candle subscriptions are used to build composite bars, while market\norders and protective levels are managed directly from the strategy.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | H1 | Timeframe used to request candles. |\n| `Range` | 3 | Maximum number of neighbouring candles combined into a composite pattern. |\n| `MinimumPoints` | 50 | Minimal composite height in points (`PriceStep`-based) required to evaluate the pattern. |\n| `ShadowBig` | 0.5 | Ratio that the dominant shadow must exceed to confirm the reversal. |\n| `ShadowSmall` | 0.2 | Maximum ratio allowed for the opposite shadow. |\n| `LimitFactor` | 0.0 | Entry offset as a fraction of the composite height (positive values shift the price inside the candle). |\n| `StopLossFactor` | 2.0 | Stop-loss distance as a multiple of the composite height. Set to zero to disable the protective stop. |\n| `TakeProfitFactor` | 1.0 | Take-profit distance as a multiple of the composite height. Set to zero to disable the target. |\n| `ExpirationBars` | 4 | Number of completed candles during which a signal stays active. |\n| `FixedVolume` | 0.1 | Fallback order size used when risk-based sizing cannot be computed. |\n| `RiskPercent` | 10 | Percentage of equity risked per trade when a stop-loss is available. |"
+   },
+   "4206": {
+    "id": 4206,
+    "name": "MACD Not So Sample",
+    "family": "trend",
+    "overview": "The MACD Not So Sample strategy is a conversion of the MetaTrader expert advisor *MACD_Not_So_Sample*. The original robot trades\na 4-hour EURUSD chart using MACD crossovers confirmed by an EMA trend filter, combined with large take-profit levels and a\ntrailing stop. The StockSharp version keeps the same structure: the MACD histogram must be negative and cross above its signal\nline for a long entry, while a positive histogram crossing below the signal produces a short entry. A trend EMA must confirm the\ndirection before any position is opened.\n\nAll money-management features are implemented in StockSharp: the strategy sets a configurable take-profit target, manages a\ntrailing stop once price travels far enough, and closes trades when the MACD crosses in the opposite direction with sufficient\nstrength. The port uses StockSharp indicators and high-level candle subscriptions so all calculations happen on finalized H4\ncandles, mirroring the MetaTrader behaviour.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `FastPeriod` | `int` | `47` | Fast EMA length used inside the MACD calculation. |\n| `SlowPeriod` | `int` | `166` | Slow EMA length used inside the MACD calculation. |\n| `SignalPeriod` | `int` | `11` | EMA length of the MACD signal line. |\n| `TrendPeriod` | `int` | `8` | Length of the EMA trend filter. |\n| `MacdOpenLevelPips` | `decimal` | `1` | Minimum MACD magnitude (in pips) required to open a position. |\n| `MacdCloseLevelPips` | `decimal` | `3` | Minimum MACD magnitude (in pips) required to close a position. |\n| `TakeProfitPips` | `decimal` | `550` | Take-profit distance measured in pips. |\n| `TrailingStopPips` | `decimal` | `19` | Trailing-stop distance measured in pips. A value of `0` disables trailing. |\n| `TradeVolume` | `decimal` | `1` | Net volume used for market entries. |\n| `CandleType` | `DataType` | 4-hour time frame | Candle series processed by the strategy. |\n| `RequiredSecurityCode` | `string` | `EURUSD` | Security code that must match the selected instrument, mimicking the MetaTrader check. |"
+   },
+   "2352": {
+    "id": 2352,
+    "name": "Figurelli Series",
+    "family": "trend",
+    "overview": "This strategy converts the MetaTrader5 expert \"Exp_FigurelliSeries\" to StockSharp. It uses a custom Figurelli Series indicator which measures the difference between the number of moving averages above and below the current price. Trading occurs once per day at a user-defined start time and all positions are closed at a stop time.",
+    "details": "",
+    "parameters": "- `StartPeriod` – initial moving average period.\n- `Step` – period increment between averages.\n- `Total` – number of moving averages.\n- `StartHour` / `StartMinute` – time when entries may occur.\n- `StopHour` / `StopMinute` – time to exit all positions.\n- `CandleType` – candle type for calculations."
+   },
+   "4098": {
+    "id": 4098,
+    "name": "Exp Amstell",
+    "family": "trend",
+    "overview": "The **Exp Amstell Strategy** is a grid trading system converted from the original MetaTrader 4 expert advisor `exp_Amstell.mq4`. It continuously places buy and sell market orders whenever price travels a configurable number of points away from the most recent fill. Every individual trade is managed independently: once the market moves by the specified take-profit distance, the strategy sends an offsetting order to capture the profit for that single layer.\n\nUnlike momentum-driven systems, Exp Amstell remains active at all times. It does not wait for indicator confirmations and instead accumulates positions on both sides of the book as the market oscillates. This behaviour makes it highly sensitive to the chosen point distances and to the size of each order.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `TradeVolume` | `decimal` | `0.1` | Volume of every market order that opens a new grid layer. |\n| `TakeProfitPoints` | `int` | `30` | Distance in MetaTrader points that must be covered by price before an individual layer is closed. |\n| `ReentryDistancePoints` | `int` | `10` | Minimal point distance from the latest entry before adding another order on the same side. |\n\nThe strategy automatically converts points into actual price steps using the instrument’s `PriceStep`. Five-digit and three-digit quotes receive the MetaTrader-specific multiplier so that `1 point` equals `0.0001` (or `0.01` for JPY-style symbols)."
+   },
+   "646": {
+    "id": 646,
+    "name": "Custom Buy BID",
+    "family": "trend",
+    "overview": "The Custom Buy BID strategy uses the Supertrend indicator to identify bullish reversals. It opens a long position when price crosses above the Supertrend line and applies configurable profit and loss targets for risk management.\n\n## Details\n\n- **Entry Criteria**: Price crosses above Supertrend.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Take Profit or Stop Loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `TakeProfitPercent` = 5m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StartDate` = 2018-09-01\n  - `EndDate` = 9999-01-01\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses above Supertrend.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Take Profit or Stop Loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `TakeProfitPercent` = 5m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StartDate` = 2018-09-01\n  - `EndDate` = 9999-01-01\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "664": {
+    "id": 664,
+    "name": "DCA Strategy with Hedging",
+    "family": "trend",
+    "overview": "This strategy enters long after three consecutive candles close above the EMA and enters short after three consecutive candles close below it. Additional positions are added when price moves against the latest entry by a given percentage. The whole position is closed once price moves by the take profit percentage from the average entry price.\n\n## Parameters\n- Candle Type\n- EMA length\n- DCA interval %\n- Take profit %\n- Initial position size\n\n",
+    "details": "",
+    "parameters": "- Candle Type\n- EMA length\n- DCA interval %\n- Take profit %\n- Initial position size"
+   },
+   "3154": {
+    "id": 3154,
+    "name": "TDSGlobal Pending Strategy (C#)",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader 5 expert advisor **TDSGlobal** from `MQL/23255/TDSGlobal.mq5` to the StockSharp high-level API. It evaluates momentum on four-hour candles through the MACD line, the MACD histogram (OsMA) and the Force Index. When the indicator combination signals a potential reversal, the strategy submits pending limit orders around the previous candle extremums and manages the resulting position with optional stop-loss, take-profit and trailing-stop logic.\n\nThe implementation reproduces the original workflow while adapting it to idiomatic StockSharp constructs such as `StrategyParam<T>`, candle subscriptions via `SubscribeCandles`, and asynchronous order handling through the strategy life cycle events.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Fixed order size when risk sizing is disabled. | 1 |\n| `UseRiskSizing` | Enable money management based on `RiskPercent`. | true |\n| `RiskPercent` | Percentage of portfolio equity risked per trade. | 3 |\n| `MacdFastPeriod` | Fast EMA length for the MACD line. | 12 |\n| `MacdSlowPeriod` | Slow EMA length for the MACD line. | 26 |\n| `MacdSignalPeriod` | Signal EMA length for the MACD histogram. | 9 |\n| `ForceLength` | EMA smoothing length for the Force Index. | 24 |\n| `StopLossPips` | Stop-loss distance in pips (0 disables). | 50 |\n| `TakeProfitPips` | Take-profit distance in pips (0 disables). | 50 |\n| `TrailingStopPips` | Trailing stop distance in pips (0 disables). | 5 |\n| `TrailingStepPips` | Minimum step for trailing updates. | 5 |\n| `EntryOffsetPips` | Buffer added around previous highs/lows for pending orders. | 16 |\n| `MinDistancePips` | Minimum allowed distance between price and protective levels. | 3 |\n| `PipSize` | Pip size used for pip-to-price conversions. | 0.0001 |\n| `CandleType` | Candle type processed by the strategy. | 4-hour candles |"
+   },
+   "609": {
+    "id": 609,
+    "name": "CE ZLSMA 5MIN Candlechart",
+    "family": "trend",
+    "overview": "Trend-following system using Zero Lag LSMA on Heikin Ashi candles with a Chandelier Exit filter. Buys when trend flips bullish and the candle closes above the ZLSMA.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: direction turns up, Heikin Ashi close above ZLSMA and open\n- **Long/Short**: Long\n- **Exit Criteria**:\n  - Long: close below ZLSMA\n- **Stops**: None\n- **Default Values**:\n  - `ZlsmaLength` = 50\n  - `AtrPeriod` = 1\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: ZLSMA, ATR, Heikin Ashi\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: direction turns up, Heikin Ashi close above ZLSMA and open\n- **Long/Short**: Long\n- **Exit Criteria**:\n  - Long: close below ZLSMA\n- **Stops**: None\n- **Default Values**:\n  - `ZlsmaLength` = 50\n  - `AtrPeriod` = 1\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: ZLSMA, ATR, Heikin Ashi\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "462": {
+    "id": 462,
+    "name": "Liquidity Swings",
+    "family": "trend",
+    "overview": "The Liquidity Swings strategy tracks recent pivot highs and lows to define resistance and support. A long trade occurs when the low crosses above support while the close remains below resistance. A short trade triggers when the high crosses below resistance while the close stays above support. Risk management uses a stop loss below/above the level with a buffer and a take profit at twice that distance, yielding a 1:2 risk-reward.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Low crosses above support and close < resistance.\n  - **Short**: High crosses below resistance and close > support.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at level or buffered value.\n  - Take profit at 2× risk distance.\n- **Stops**: Stop loss and take profit.\n- **Default Values**:\n  - `Lookback` = 5\n  - `StopLossBuffer` = 0.5\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Pivot highs/lows\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: 1h (default)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Low crosses above support and close < resistance.\n  - **Short**: High crosses below resistance and close > support.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at level or buffered value.\n  - Take profit at 2× risk distance.\n- **Stops**: Stop loss and take profit.\n- **Default Values**:\n  - `Lookback` = 5\n  - `StopLossBuffer` = 0.5\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Pivot highs/lows\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: 1h (default)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

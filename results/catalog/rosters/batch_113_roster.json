@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 188,
+      "name": "Parabolic Sar Volume",
+      "family": "trend",
+      "entry_long": "close > ema(close,5) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so a short EMA(5) stands in for the trailing SAR level and volume_ratio against the documented VolumePeriod=20 replaces AvgVolume; losing the line is the SAR flip. The Acceleration/MaxAcceleration parameters and the SAR/ATR trailing stop are not percentage fields."
+    },
+    {
+      "id": 1105,
+      "name": "MultiLayer Acceleration Deceleration",
+      "family": "trend",
+      "entry_long": "close > ema(close,100) and close > donchian_high_prev(high,10) and roc(sma(close,5) - sma(close,34),1) > 0",
+      "exit_long": "crossbelow(ema(close,10), ema(close,20)) or close < ema(close,100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA Length 100 filter is kept, the up-fractal break above the Alligator teeth becomes a close above the prior 10-bar high with EMA(10)/EMA(20) as the teeth proxy, and a rising SMA(5)-SMA(34) stands in for the green AC bar. The five-layer stop ladder, fractal stop and oscillator sign check are order-sizing modules."
+    },
+    {
+      "id": 2372,
+      "name": "Bollinger Bands with DEMA",
+      "family": "trend",
+      "entry_long": "close > bb_lower(close,20,2) and roc(2 * ema(close,20) - ema(ema(close,20),20),3) > 0",
+      "exit_long": "open > bb_upper(close,20,2) and close < bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DEMA is approximated by 2*EMA(20)-EMA(EMA(20),20) with the documented DemaPeriod and BollingerPeriod/Deviation are 20/2; the rising DEMA over three bars is the documented daily trend filter and the opposite-colour outer-band candle is the exit. The open-below-band half of the entry and the 30-minute/daily multi-timeframe split are not expressible on one series."
+    },
+    {
+      "id": 2334,
+      "name": "RVI Diff Reversal",
+      "family": "trend",
+      "entry_long": "crossabove(ema(macd(close,12,26) - macd_signal(close,12,26,9),13),0)",
+      "exit_long": "crossbelow(ema(macd(close,12,26) - macd_signal(close,12,26,9),13),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RVI is unavailable, so the RVI-minus-signal difference is proxied by the MACD line/signal difference with the documented RviLength=12 and SmoothingLength=13; a smoothed zero crossing stands in for the documented slope reversal and the opposite cross is the exit. The 6-hour timeframe and the short mirror are not represented."
+    },
+    {
+      "id": 3873,
+      "name": "Trade Channel",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,20) and (donchian_high(high,20) - donchian_low(low,20)) <= sma(donchian_high(high,20) - donchian_low(low,20),20)",
+      "exit_long": "close >= donchian_high(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ChannelLength=20 Donchian channel must stop expanding (width at or below its own 20-bar mean) before a support touch is faded long, and the reversion back to the top border exits. The ATR(4) initial stop and TrailingPoints are ATR/point fields, not percentages."
+    },
+    {
+      "id": 562,
+      "name": "Berlin Candles",
+      "family": "breakout",
+      "entry_long": "sma((open + high + low + close) / 4, 2) > sma(close,26) and roc(sma((open + high + low + close) / 4, 2),1) > 0",
+      "exit_long": "sma((open + high + low + close) / 4, 2) < sma(close,26) or roc(sma((open + high + low + close) / 4, 2),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The recursive Heikin-Ashi/Berlin smoothing cannot be expressed, so a 2-bar smoothed typical price stands in for the Berlin close with the documented Smoothing=1 and the documented BaselinePeriod=26 baseline. A rising Berlin close above the baseline enters and the mirror exits; stops are documented as absent."
+    },
+    {
+      "id": 2382,
+      "name": "Regression Channel Breakout",
+      "family": "breakout",
+      "entry_long": "low <= sma(close,20) - 2 * std(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The linear regression line is approximated by SMA(20) and the bands by +-2 standard deviations, since the docs name Length and Deviation but supply no values. The documented long rule (low touching or breaking the lower band) enters and a close back through the regression line exits; trailing start/step are point fields."
+    },
+    {
+      "id": 1401,
+      "name": "Gap Momentum System",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,40), sma(roc(close,40),20))",
+      "exit_long": "crossbelow(roc(close,40), sma(roc(close,40),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Accumulated up/down gaps are approximated by the documented Period=40 return measured against its SignalPeriod=20 mean, and a rising signal buys while a falling one reverses. LongOnly=true is honoured by producing only the long side, and the docs specify no stops."
+    },
+    {
+      "id": 3072,
+      "name": "ColorMetroDuplexStrategy",
+      "family": "volatility",
+      "entry_long": "crossabove(rsi(close,5) + 10, rsi(close,14) - 10)",
+      "exit_long": "crossbelow(rsi(close,5) + 10, rsi(close,14) - 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stepped RSI envelopes are rebuilt as a fast envelope (RSI(5) plus a 10-point step) crossing a slow envelope (RSI(14) minus a 10-point step), with the step sizes and RSI length as fallbacks because the docs list the inputs without values. SignalBar buffering, the per-module candle types and the reserved stop/slippage fields are not DSL features."
+    },
+    {
+      "id": 2484,
+      "name": "Puncher",
+      "family": "mean_reversion",
+      "entry_long": "100 * (close - donchian_low(low,100)) / (donchian_high(high,100) - donchian_low(low,100) + 0.0001) < 30 and rsi(close,14) < 30",
+      "exit_long": "100 * (close - donchian_low(low,100)) / (donchian_high(high,100) - donchian_low(low,100) + 0.0001) > 70 or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long-period stochastic is rebuilt as a fast stochastic over the documented StochasticPeriod=100 and must sit in the shared OversoldLevel=30 zone together with RSI(14); the OverboughtLevel=70 zone exits. StopLossPips/TakeProfitPips, the trailing, break-even and %D/%K smoothings are pip or smoothing fields."
+    }
+  ]
+}

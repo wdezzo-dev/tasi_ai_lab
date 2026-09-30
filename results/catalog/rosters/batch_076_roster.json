@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2030,
+      "name": "Color Trend CF",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,24))",
+      "exit_long": "crossbelow(ema(close,12),ema(close,24))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12) versus twice-length EMA(24) implements the source's fast/slow crossover structure; 12 is a fallback because Period has no supplied value. Price-unit stop and target values are not provided."
+    },
+    {
+      "id": 2152,
+      "name": "Kalman Filter Candles",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(open,10))",
+      "exit_long": "crossbelow(ema(close,10),ema(open,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Separately smoothed close and open series approximate the two Kalman streams and retain bullish and bearish color changes. EMA length 10 is an explicit fallback for the unspecified process noise; exact adaptive filtering is unavailable."
+    },
+    {
+      "id": 3100,
+      "name": "3100 Close All Positions",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This supervisory utility never opens positions, so impossible price guards deliberately prevent fabricated trades. Portfolio floating-profit thresholds, child strategies, and flattening state cannot be represented."
+    },
+    {
+      "id": 2337,
+      "name": "Stochastic Diff",
+      "family": "trend",
+      "entry_long": "roc(ema(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3) - sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),3),3),1) > 0",
+      "exit_long": "roc(ema(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3) - sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),3),3),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 14-bar range-position oscillator, nested 3-bar %K/%D smoothing, and 3-bar EMA retain the stochastic difference; a positive one-bar change approximates its trough turn upward. All periods and percent protections are fallbacks because values are omitted."
+    },
+    {
+      "id": 2929,
+      "name": "AbsolutelyNoLagLWMA Digit MMRec",
+      "family": "trend",
+      "entry_long": "roc(ema(ema(close,14),14),1) > 0",
+      "exit_long": "roc(ema(ema(close,14),14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Double EMA(14) is a no-lag WMA proxy, and its one-bar slope chooses the bullish module. WMA weighting, digit rounding, three timeframe modules, and point/queue money management are unavailable."
+    },
+    {
+      "id": 3079,
+      "name": "Constituents EA",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pending-order system is represented by its stop-order breakout branch using a 20-bar prior range. Start hour, limit/stop mode selection, pip buffers, freeze levels, and protection have no supplied numeric values."
+    },
+    {
+      "id": 3881,
+      "name": "Synchronized Hour Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and roc(close,10) > 0",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar high break with positive ten-bar momentum approximates the recent bullish/bearish balance breakout. The 19:00/22:00 hour gate, offsets, order cap, and point exits are omitted and 20/10 are fallbacks."
+    },
+    {
+      "id": 2189,
+      "name": "Bounce Strength Index",
+      "family": "momentum",
+      "entry_long": "crossabove(sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),10),50)",
+      "exit_long": "crossbelow(sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),10),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Close position in the 14-bar range with SMA(3) then SMA(10) reproduces the double-smoothed Bounce Strength Index. Parameters are absent, so 14/3/10 are explicit fallbacks."
+    },
+    {
+      "id": 3628,
+      "name": "RangeEA Weekly Grid",
+      "family": "volatility",
+      "entry_long": "close < bb_mid(close,20)",
+      "exit_long": "close >= bb_upper(close,20,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A long pullback below the midpoint and exit at the upper edge approximate one level of the weekly limit grid. Weekly bars, order count, time window, dynamic offsets, and 60-point protections are not represented."
+    },
+    {
+      "id": 3272,
+      "name": "Fibonacci Time Zones",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(macd(close,12,26),0) and close > bb_mid(close,20)",
+      "exit_long": "crossbelow(macd(close,12,26),0) or close >= bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish MACD(12/26) cross above the Bollinger midpoint selects the long branch and an opposite filter or upper band exits. Time zones, higher-timeframe confirmation, discretionary entries, and pip/money management are unavailable; lengths are fallbacks."
+    }
+  ]
+}

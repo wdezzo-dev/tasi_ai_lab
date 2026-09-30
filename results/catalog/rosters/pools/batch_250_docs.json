@@ -1,0 +1,98 @@
+{
+ "batch_250": {
+  "strategy_ids": [
+   1729,
+   453,
+   2850,
+   1481,
+   676,
+   642,
+   1310,
+   2233,
+   3795,
+   1323
+  ],
+  "docs": {
+   "1729": {
+    "id": 1729,
+    "name": "3rd Generation XMA Reversal",
+    "family": "trend",
+    "overview": "Employs a double-smoothed exponential moving average known as the 3rd Generation XMA to spot local highs and lows. A long position is opened when the XMA turns upward from a local bottom. Shorts are initiated when the XMA reverses from a local top. Positions are reversed on opposite signals and no explicit stop or take profit is used.\n\n## Details\n- **Entry Criteria**: XMA forms a local minimum or maximum and reverses.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `MaLength` = 50\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (4H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: XMA forms a local minimum or maximum and reverses.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `MaLength` = 50\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (4H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "453": {
+    "id": 453,
+    "name": "Vela Superada",
+    "family": "trend",
+    "overview": "The Vela Superada strategy trades a two-candle reversal pattern. A bullish setup occurs when a bearish candle is immediately followed by a bullish candle that closes above the prior open. Trades are filtered with a short-term EMA, RSI and MACD trend to avoid counter-trend signals. Both long and short sides can be enabled.\n\nThe strategy employs percentage-based take profit and stop loss levels and dynamically tightens a trailing stop once price moves favorably. This allows capturing extended moves while protecting against reversals.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous candle bearish, current bullish, close and previous close above EMA, RSI < 65, MACD rising.\n  - **Short**: Previous candle bullish, current bearish, close and previous close below EMA, RSI > 35, MACD falling.\n- **Long/Short**: Configurable (long by default).\n- **Exit Criteria**:\n  - Trailing stop or opposite signal.\n- **Stops**: Percent-based stop loss and take profit.\n- **Default Values**:\n  - `EmaLength` = 10\n  - `RsiLength` = 14\n  - `ShowLong` = True\n  - `ShowShort` = False\n  - `TpPercent` = 1.2\n  - `SlPercent` = 1.8\n- **Filters**:\n  - Category: Pattern + indicators\n  - Direction: Both\n  - Indicators: EMA, RSI, MACD\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous candle bearish, current bullish, close and previous close above EMA, RSI < 65, MACD rising.\n  - **Short**: Previous candle bullish, current bearish, close and previous close below EMA, RSI > 35, MACD falling.\n- **Long/Short**: Configurable (long by default).\n- **Exit Criteria**:\n  - Trailing stop or opposite signal.\n- **Stops**: Percent-based stop loss and take profit.\n- **Default Values**:\n  - `EmaLength` = 10\n  - `RsiLength` = 14\n  - `ShowLong` = True\n  - `ShowShort` = False\n  - `TpPercent` = 1.2\n  - `SlPercent` = 1.8\n- **Filters**:\n  - Category: Pattern + indicators\n  - Direction: Both\n  - Indicators: EMA, RSI, MACD\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2850": {
+    "id": 2850,
+    "name": "AO Lightning",
+    "family": "trend",
+    "overview": "AO Lightning reproduces the MT5 expert advisor \"AO_Lightning\" using the high-level StockSharp API. The system monitors the slope of the Awesome Oscillator (AO) built from median prices. When the oscillator decreases the strategy accumulates long exposure, and when the oscillator increases it builds a short position. Positions are pyramided up to a configurable cap while opposite positions are closed before flipping direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Order size for every new layer. | 1 |\n| `MaxPositions` | Maximum number of long or short layers that may be active simultaneously. | 10 |\n| `AoShortPeriod` | Fast SMA length used by the Awesome Oscillator (median price SMA). | 5 |\n| `AoLongPeriod` | Slow SMA length for the Awesome Oscillator. | 34 |\n| `CandleType` | Candle data source processed by the strategy. | 5-minute time frame |"
+   },
+   "1481": {
+    "id": 1481,
+    "name": "Triangle Breakout Strategy for BTC",
+    "family": "trend",
+    "overview": "Trades breakouts of simple moving average triangle when volume spikes and manages positions with ATR-based stops.\n\n## Details\n\n- **Entry Criteria**: price crossing above upper SMA line or below lower SMA line with volume above its SMA\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop-loss or take-profit\n- **Stops**: Yes\n- **Default Values**:\n  - `TriangleLength` = 50\n  - `VolumeSmaLength` = 20\n  - `AtrLength` = 14\n  - `VolumeMultiplier` = 1.5\n  - `AtrMultiplierSl` = 1.0\n  - `AtrMultiplierTp` = 1.5\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, ATR, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price crossing above upper SMA line or below lower SMA line with volume above its SMA\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop-loss or take-profit\n- **Stops**: Yes\n- **Default Values**:\n  - `TriangleLength` = 50\n  - `VolumeSmaLength` = 20\n  - `AtrLength` = 14\n  - `VolumeMultiplier` = 1.5\n  - `AtrMultiplierSl` = 1.0\n  - `AtrMultiplierTp` = 1.5\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: SMA, ATR, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "676": {
+    "id": 676,
+    "name": "Directional Index K xDMI",
+    "family": "trend",
+    "overview": "This strategy uses the difference between +DI and -DI from the Average Directional Index to gauge trend direction. When the directional index rises above the key level the strategy buys, and when it falls below the negative key level it sells. Positions are closed when the absolute value of the index drops back under the threshold.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "642": {
+    "id": 642,
+    "name": "Crypto MVRV ZScore",
+    "family": "trend",
+    "overview": "The strategy applies the MVRV Z-Score concept to detect extremes between market value and realized value.\nPositions are opened when the spread z-score crosses predefined thresholds and closed on opposite crossovers.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when spread z-score crosses above `LongEntryThreshold`.\n  - Short when spread z-score crosses below `ShortEntryThreshold`.\n- **Long/Short**: Configurable (`TradeDirection`).\n- **Exit Criteria**:\n  - Opposite threshold crossover.\n- **Stops**: None.\n- **Default Values**:\n  - `ZScoreCalculationPeriod` = 252\n  - `LongEntryThreshold` = 0.382\n  - `ShortEntryThreshold` = -0.382\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, Z-Score\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long when spread z-score crosses above `LongEntryThreshold`.\n  - Short when spread z-score crosses below `ShortEntryThreshold`.\n- **Long/Short**: Configurable (`TradeDirection`).\n- **Exit Criteria**:\n  - Opposite threshold crossover.\n- **Stops**: None.\n- **Default Values**:\n  - `ZScoreCalculationPeriod` = 252\n  - `LongEntryThreshold` = 0.382\n  - `ShortEntryThreshold` = -0.382\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, Z-Score\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1310": {
+    "id": 1310,
+    "name": "SMA RSI Volume ATR",
+    "family": "trend",
+    "overview": "This strategy combines a Simple Moving Average (SMA), Relative Strength Index (RSI), volume confirmation and an ATR-based volatility filter.\nIt buys when price is above the SMA, RSI is oversold, volume exceeds its moving average by a multiplier and volatility is rising. It sells under the opposite conditions.\n\nStops are managed with fixed percent take profit and stop loss levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close > SMA` && `RSI < RsiOversold` && `Volume > AvgVolume * VolumeThreshold` && `ATR > ATR_{prev}`\n  - **Short**: `Close < SMA` && `RSI > RsiOverbought` && `Volume > AvgVolume * VolumeThreshold` && `ATR > ATR_{prev}`\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or take-profit\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `SmaLength` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `VolumeThreshold` = 1.5\n  - `AtrLength` = 14\n  - `TakeProfitPerc` = 1.5\n  - `StopLossPerc` = 0.5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, RSI, Volume, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close > SMA` && `RSI < RsiOversold` && `Volume > AvgVolume * VolumeThreshold` && `ATR > ATR_{prev}`\n  - **Short**: `Close < SMA` && `RSI > RsiOverbought` && `Volume > AvgVolume * VolumeThreshold` && `ATR > ATR_{prev}`\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or take-profit\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `SmaLength` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `VolumeThreshold` = 1.5\n  - `AtrLength` = 14\n  - `TakeProfitPerc` = 1.5\n  - `StopLossPerc` = 0.5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, RSI, Volume, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2233": {
+    "id": 2233,
+    "name": "Supertrend Signal",
+    "family": "trend",
+    "overview": "This strategy opens positions when the closing price crosses the SuperTrend line. A long trade is placed when price moves above the line, and a short trade is opened when price drops below it. Opposite signals close and reverse existing positions.\n\nThe SuperTrend indicator uses the Average True Range (ATR) to follow price and define the prevailing trend. Parameters allow configuring ATR period, multiplier and candle timeframe.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Close price crosses above SuperTrend\n  - Short: Close price crosses below SuperTrend\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Opposite SuperTrend crossover\n- **Stops**: None\n- **Default Values**:\n  - `AtrPeriod` = 5\n  - `Multiplier` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend (ATR-based)\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Close price crosses above SuperTrend\n  - Short: Close price crosses below SuperTrend\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Opposite SuperTrend crossover\n- **Stops**: None\n- **Default Values**:\n  - `AtrPeriod` = 5\n  - `Multiplier` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend (ATR-based)\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3795": {
+    "id": 3795,
+    "name": "NRTR Reversal",
+    "family": "trend",
+    "overview": "The NRTR Reversal strategy is a StockSharp port of the MetaTrader 4 expert \"NRTR_Revers\". The original system plots a Noise Reduction Trailing Range (NRTR) line derived from the Average True Range (ATR) and reverses positions whenever price convincingly breaks this adaptive barrier. The StockSharp version keeps the single-position behaviour of the expert advisor, mirrors the ATR-based offset calculation, and manages exits through the built-in protection module.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 15-minute timeframe | Candle series used for calculations. |\n| `TakeProfitPoints` | `decimal` | `4000` | Take-profit distance expressed in instrument price steps. Set to zero to disable. |\n| `StopLossPoints` | `decimal` | `4000` | Stop-loss distance in price steps. Set to zero to disable. |\n| `TrailingStopPoints` | `decimal` | `0` | Reserved parameter for external trailing modules. Not used inside the strategy. |\n| `TradeVolume` | `decimal` | `0.1` | Base volume (lots) mirrored from the MetaTrader setting. |\n| `Period` | `int` | `3` | Number of candles used to compute the NRTR pivot. |\n| `ReverseDistancePoints` | `int` | `100` | Additional breakout distance in points required for confirmation. |\n| `AtrMultiplier` | `decimal` | `3.0` | Multiplier applied to ATR before building the offset. |"
+   },
+   "1323": {
+    "id": 1323,
+    "name": "Smoothed Heiken Ashi Strategy Long Only",
+    "family": "trend",
+    "overview": "Long-only strategy using smoothed Heikin-Ashi candles. Buys when the smoothed candle changes from red to green and exits when it turns red.\n\n## Details\n\n- **Entry Criteria**: Smoothed HA changes from red to green\n- **Long/Short**: Long only\n- **Exit Criteria**: Smoothed HA turns red\n- **Stops**: None\n- **Default Values**:\n  - `EmaLength` = 10\n  - `SmoothingLength` = 10\n",
+    "details": "- **Entry Criteria**: Smoothed HA changes from red to green\n- **Long/Short**: Long only\n- **Exit Criteria**: Smoothed HA turns red\n- **Stops**: None\n- **Default Values**:\n  - `EmaLength` = 10\n  - `SmoothingLength` = 10",
+    "parameters": ""
+   }
+  }
+ }
+}

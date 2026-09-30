@@ -1,0 +1,98 @@
+{
+ "batch_177": {
+  "strategy_ids": [
+   4032,
+   1670,
+   1637,
+   2049,
+   465,
+   2388,
+   3980,
+   1343,
+   1765,
+   2822
+  ],
+  "docs": {
+   "4032": {
+    "id": 4032,
+    "name": "Divergence Trader Basket",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the \"Divergence Trader\" MetaTrader expert advisor. It compares two simple moving averages\ncalculated on configurable price sources and measures their difference (divergence). When the distance between the fast and slow\naverages falls inside a neutral corridor, the algorithm assumes that momentum is about to resume and opens a position in the\ndirection of the prevailing bias. The implementation uses only completed candles from a selected timeframe and relies on the\nhigh-level API with indicator bindings.",
+    "details": "",
+    "parameters": "- **Lot Size** – trading volume submitted with each new position. The value is aligned with the instrument volume step.\n- **Fast SMA Period / Price** – length and price source for the fast moving average.\n- **Slow SMA Period / Price** – length and price source for the slow moving average.\n- **Buy Threshold** – minimal positive divergence required before opening a long position.\n- **Stay-Out Threshold** – maximal divergence allowed for new entries; values outside this range disable trading.\n- **Take Profit (pips)** – profit target expressed in pips. Disabled when set to zero.\n- **Stop Loss (pips)** – loss tolerance in pips. Disabled when set to zero.\n- **Trailing Stop (pips)** – trailing distance activated after the trade becomes profitable. Disabled when zero.\n- **Break-Even Trigger / Buffer (pips)** – pip gain required before protecting the position at break-even and optional buffer to\n  offset the break-even stop from the entry price.\n- **Basket Profit / Basket Loss** – account-equity based thresholds that flatten all positions when reached. Loss control is\ndisabled by default.\n- **Start Hour / Stop Hour** – trading window in local time. When both values are equal the strategy operates all day.\n- **Candle Type** – timeframe used for both signal generation and risk management."
+   },
+   "1670": {
+    "id": 1670,
+    "name": "EMA plus WPR v2",
+    "family": "trend",
+    "overview": "Strategy combining Williams %R oscillator with EMA trend filter. Trades when WPR reaches extreme levels after a retracement. Includes optional WPR-based exits, trailing stops and bar-based exit.\n\n## Details\n\n- **Long**: WPR hits -100 after retracement and EMA trend is up.\n- **Short**: WPR hits 0 after retracement and EMA trend is down.\n- **Indicators**: Williams %R, EMA.\n- **Stops**: fixed stop loss and take profit, optional trailing stop.\n",
+    "details": "- **Long**: WPR hits -100 after retracement and EMA trend is up.\n- **Short**: WPR hits 0 after retracement and EMA trend is down.\n- **Indicators**: Williams %R, EMA.\n- **Stops**: fixed stop loss and take profit, optional trailing stop.",
+    "parameters": ""
+   },
+   "1637": {
+    "id": 1637,
+    "name": "X Trail",
+    "family": "trend",
+    "overview": "This strategy generates trades when a fast and a slow simple moving average\nbuilt on median price cross each other. The logic mirrors the original MQL\nscript **X_trail.mq4** which used alerts on such crossovers.\n\nA long position is opened when the fast MA remains above the slow MA for the\ncurrent and previous bar while being below it two bars ago. The opposite\npattern triggers a short position. Positions are reversed on every new signal.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast MA > slow MA on the last two finished candles and fast MA was below slow MA two candles earlier.\n  - **Short**: Fast MA < slow MA on the last two finished candles and fast MA was above slow MA two candles earlier.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover (position reversal).\n- **Stops**: None.\n- **Indicators**:\n  - Two simple moving averages calculated from median price.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast MA > slow MA on the last two finished candles and fast MA was below slow MA two candles earlier.\n  - **Short**: Fast MA < slow MA on the last two finished candles and fast MA was above slow MA two candles earlier.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover (position reversal).\n- **Stops**: None.\n- **Indicators**:\n  - Two simple moving averages calculated from median price.",
+    "parameters": ""
+   },
+   "2049": {
+    "id": 2049,
+    "name": "VininI Trend",
+    "family": "trend",
+    "overview": "## Description\nThis strategy converts the original MQL expert advisor **Exp_VininI_Trend** into StockSharp. It uses the Commodity Channel Index (CCI) to emulate the VininI Trend oscillator. A long position is opened when the oscillator breaks above the upper level or twists upward. A short position is opened when the oscillator drops below the lower level or twists downward. The strategy works on completed candles only.\n\n## Parameters\n- **CCI Period** – length for the CCI indicator.\n- **Upper Level** – threshold that triggers buy signals.\n- **Lower Level** – threshold that triggers sell signals.\n- **Entry Modes** – `Breakdown` reacts to level crossings, `Twist` reacts to direction changes.\n- **Candle Type** – timeframe of candles used for calculations.\n\n## Original\nConverted from the MQL5 strategy located at `MQL/1365/exp_vinini_trend.mq5`.\n",
+    "details": "",
+    "parameters": "- **CCI Period** – length for the CCI indicator.\n- **Upper Level** – threshold that triggers buy signals.\n- **Lower Level** – threshold that triggers sell signals.\n- **Entry Modes** – `Breakdown` reacts to level crossings, `Twist` reacts to direction changes.\n- **Candle Type** – timeframe of candles used for calculations."
+   },
+   "465": {
+    "id": 465,
+    "name": "200 SMA Buffer",
+    "family": "trend",
+    "overview": "The 200 SMA Buffer strategy trades based on the price's distance from a long-term Simple Moving Average. It buys when the close rises a certain percentage above the SMA and exits when the price falls a defined percentage below it. The approach aims to capture long-term momentum while allowing a buffer around the moving average.\n\n## Details\n\n- **Entry Criteria**:\n  - Close price > SMA * (1 + Entry %).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close price < SMA * (1 - Exit %).\n- **Stops**: None.\n- **Default Values**:\n  - `SmaLength` = 200\n  - `EntryPercent` = 5\n  - `ExitPercent` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Close price > SMA * (1 + Entry %).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close price < SMA * (1 - Exit %).\n- **Stops**: None.\n- **Default Values**:\n  - `SmaLength` = 200\n  - `EntryPercent` = 5\n  - `ExitPercent` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2388": {
+    "id": 2388,
+    "name": "RobotPower M5",
+    "family": "momentum",
+    "overview": "This strategy combines the Bulls Power and Bears Power indicators on a 5-minute chart.\nIt opens positions when the combined momentum of bulls and bears crosses zero and manages exits with fixed targets and a trailing stop.\n\n## How It Works\n- **Indicators**: Bulls Power and Bears Power with a shared period `BullBearPeriod`.\n- **Timeframe**: 5-minute candles by default (`CandleType`).\n\n### Entry Rules\n- **Long Entry**: When `BullsPower + BearsPower > 0` and no position is open, buy at market.\n- **Short Entry**: When `BullsPower + BearsPower < 0` and no position is open, sell at market.\n\n### Exit Rules\n- **Take Profit**: Close the position when price moves `TakeProfit` units in the trade direction.\n- **Stop Loss**: Close the position if price moves against the position by `StopLoss` units.\n- **Trailing Stop**: After entry, the stop loss trails by `TrailingStep` once price advances more than twice that distance.\n\n### Parameters\n- `BullBearPeriod` – period for both Bulls Power and Bears Power calculations.\n- `TrailingStep` – step size used when adjusting the trailing stop.\n- `TakeProfit` – distance from entry to the take-profit level.\n- `StopLoss` – distance from entry to the stop-loss level.\n- `CandleType` – candle timeframe for signal calculation.\n\n### Position Size\nUses the strategy's `Volume` property for order size.\n\n## Notes\nDesigned for educational purposes and serves as an example of converting an MQL strategy to the StockSharp API.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3980": {
+    "id": 3980,
+    "name": "EES Hedger (advanced)",
+    "family": "volatility",
+    "overview": "The strategy mirrors the behaviour of the classic MetaTrader \"EES Hedger\" expert advisor. Whenever an external trader, discretionary operator, or another automated system opens a position on the same account, the strategy immediately creates an opposite hedge using a configurable volume. It then manages the hedge with stop-loss, take-profit, break-even, and trailing-stop rules so that exposure is neutralised while profits on the hedge are protected.\n\nUnlike traditional signal-driven strategies, this module assumes that entries are produced elsewhere. Its sole responsibility is to observe account trades, react to matching tickets, and protect the hedge position until it is closed either by the protective orders or manually.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `HedgeVolume` | Volume used to open the opposite hedge position. |\n| `StopLossPips` | Distance from the entry price to the protective stop-loss order. |\n| `TakeProfitPips` | Distance from the entry price to the take-profit order. |\n| `TrailingStopPips` | Distance maintained by the trailing stop once the activation threshold is exceeded. Set to zero to disable trailing. |\n| `TrailingActivationPips` | Minimum profit (in pips) required before the trailing stop begins to move. |\n| `BreakEvenPips` | Profit threshold (in pips) after which the stop-loss is moved to the entry price plus one pip. |\n| `OriginalOrderComment` | Optional comment filter that selects which external trades should be hedged. Leave empty to hedge all trades on the instrument. |\n| `HedgerOrderComment` | Comment attached to hedge orders and protective stops generated by the strategy. |"
+   },
+   "1343": {
+    "id": 1343,
+    "name": "Stochastic-Dynamic Volatility Band Model",
+    "family": "mean_reversion",
+    "overview": "Uses Bollinger-style volatility bands to trade crossovers and exits after a fixed number of candles.\n\n## Details\n\n- **Entry Criteria**: long when price crosses above the lower band; short when price crosses below the upper band\n- **Long/Short**: Both\n- **Exit Criteria**: position closed after `ExitBars` candles\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 5\n  - `Multiplier` = 1.67\n  - `ExitBars` = 7\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: BollingerBands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: long when price crosses above the lower band; short when price crosses below the upper band\n- **Long/Short**: Both\n- **Exit Criteria**: position closed after `ExitBars` candles\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 5\n  - `Multiplier` = 1.67\n  - `ExitBars` = 7\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: BollingerBands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1765": {
+    "id": 1765,
+    "name": "SHE Kanskigor",
+    "family": "volume",
+    "overview": "This daily strategy opens a single position each day based on the direction of the previous day's candle. At the configured time it buys if the prior day closed below its open and sells if it closed above. A fixed take-profit and stop-loss measured in price steps manage risk. Only one trade is allowed per day.\n\n## Details\n\n- **Entry Criteria**: At `StartTime` compare the previous day's open and close; buy when `open > close`, sell when `open < close`\n- **Long/Short**: Both\n- **Exit Criteria**: take profit or stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `Volume` = 0.1\n  - `StartTime` = 00:05\n  - `TakeProfit` = 350\n  - `StopLoss` = 550\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: At `StartTime` compare the previous day's open and close; buy when `open > close`, sell when `open < close`\n- **Long/Short**: Both\n- **Exit Criteria**: take profit or stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `Volume` = 0.1\n  - `StartTime` = 00:05\n  - `TakeProfit` = 350\n  - `StopLoss` = 550\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2822": {
+    "id": 2822,
+    "name": "FX-CHAOS Scalp",
+    "family": "volume",
+    "overview": "The FX-CHAOS scalp strategy replicates the MT5 expert advisor that combines the Awesome Oscillator with fractal-based ZigZag levels on multiple timeframes. The StockSharp port subscribes to hourly candles for trade execution and daily candles for a higher timeframe filter. Internal trackers rebuild the \"ZigZag on Fractals\" logic by detecting five-candle fractal patterns and stitching them into alternating swing points.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Volume` | Trade volume in lots. Applied to every market order. |\n| `Stop Loss (pts)` | Distance in points for the protective stop. The value is multiplied by the security price step. Set to `0` to disable. |\n| `Take Profit (pts)` | Distance in points for the profit target. Converted with the price step in the same way. Set to `0` to disable. |\n| `Trading Candle` | Primary timeframe used for entries (defaults to 1 hour). |\n| `Daily Candle` | Higher timeframe used for the ZigZag filter (defaults to 1 day). |"
+   }
+  }
+ }
+}

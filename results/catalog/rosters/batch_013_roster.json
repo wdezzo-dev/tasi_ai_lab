@@ -1,0 +1,105 @@
+{
+  "batch": "batch_013",
+  "strategy_roster": [
+    {
+      "id": 81,
+      "name": "VWAP Bounce",
+      "family": "trend",
+      "entry_long": "close < sma(close,20) and close > open",
+      "exit_long": "close > sma(close,20) and close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP is unavailable in the DSL, so SMA(20) proxies VWAP. Long on a bullish close below the proxy and exit on the opposite bearish signal. StopLoss=2% documented."
+    },
+    {
+      "id": 210,
+      "name": "ADX Donchian",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 10 and close >= donchian_high_prev(high,5)",
+      "exit_long": "adx(high,low,close,14) < 5",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Long side uses ADX(14)>10 and a five-bar Donchian upper breakout; prior-bar channel avoids the current-bar boundary issue. Exit below threshold-5. StopLoss=2% documented."
+    },
+    {
+      "id": 1147,
+      "name": "Out of the Noise Intraday Strategy with VWAP",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "crossbelow(close,sma(close,20)) or close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Session bounds and VWAP are unavailable; 20-bar Donchian bounds and an SMA(20) cross proxy the documented breakout and exits. No stop is documented."
+    },
+    {
+      "id": 1993,
+      "name": "Lacust Stop and BE",
+      "family": "momentum",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long follows the bullish last candle; a bearish candle is a signal-exit proxy. The documented fixed-price, breakeven, and trailing distances have no percentage values, so both percentage fields are null."
+    },
+    {
+      "id": 2438,
+      "name": "Bollinger Bands Distance",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,4,2) - 3",
+      "exit_long": "close > bb_mid(close,4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses Bollinger(4,2) and the documented distance of 3 for the long threshold. Absolute price-step profit and loss exits are not expressible as percentages; mid-band reversion is the exit proxy."
+    },
+    {
+      "id": 2779,
+      "name": "MACD EA",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Canonical 12/26/9 MACD is used because the document lists configurable periods but gives no defaults. Opposite crossover exits; pip offsets, partial profit, breakeven, and money management are not representable here."
+    },
+    {
+      "id": 3159,
+      "name": "Exp Spearman Rank Correlation Histogram",
+      "family": "volatility",
+      "entry_long": "crossabove(roc(close,14),0) and roc(close,14) > 0",
+      "exit_long": "crossbelow(roc(close,14),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Spearman correlation and its color levels are unavailable, so a 14-bar ROC sign change proxies bullish/bearish state transitions. Trade mode and thresholds are unspecified; absolute price-unit protection is not expressible as a percentage."
+    },
+    {
+      "id": 3300,
+      "name": "Crypto SR",
+      "family": "trend",
+      "entry_long": "sma((high + low + close) / 3,6) > sma((high + low + close) / 3,85) and roc(close,14) > 0.3 and macd(close,12,26) > macd_signal(close,12,26,9) and low <= sma((high + low + close) / 3,85) and close > open",
+      "exit_long": "sma((high + low + close) / 3,6) < sma((high + low + close) / 3,85) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "LWMA, higher-timeframe Momentum, and fractal levels are unavailable; SMA(6/85) typical price, positive ROC momentum, MACD(12,26,9), slow-average support, and bullish close proxy the long confirmation. Absolute pip protection remains null."
+    },
+    {
+      "id": 3831,
+      "name": "DT RSI EXP1",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,47),50) and rsi(close,47) > 40 and rsi(close,47) < 55 and ema(close,20) < open",
+      "exit_long": "rsi(close,47) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(47) recross above the 50/neckline proxy, remaining above 40 and below 55 with a weak EMA filter approximates the documented long swing. Fixed price-step stops and the 4-hour EMA are unavailable, so percentage stops are null."
+    },
+    {
+      "id": 3939,
+      "name": "TCPivot Session Stop",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma((high + low + close) / 3,20))",
+      "exit_long": "crossbelow(close,sma((high + low + close) / 3,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Daily pivot arithmetic and session timing are unavailable; a rolling typical-price average over 20 bars proxies the prior pivot for the long cross. Selected pivot-tier stops and optional session exit are not expressible as percentages."
+    }
+  ]
+}

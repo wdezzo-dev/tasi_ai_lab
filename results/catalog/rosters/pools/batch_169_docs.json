@@ -1,0 +1,98 @@
+{
+ "batch_169": {
+  "strategy_ids": [
+   777,
+   3856,
+   2864,
+   2463,
+   446,
+   2157,
+   2838,
+   572,
+   3944,
+   2323
+  ],
+  "docs": {
+   "777": {
+    "id": 777,
+    "name": "Faith Indicator",
+    "family": "trend",
+    "overview": "This strategy evaluates market \"faith\" by measuring volume expansion when price makes higher highs or lower lows. A positive grade suggests buyers dominate, while a negative grade indicates sellers prevail. The strategy trades on transitions between positive and negative grades.\n\n## Details\n\n- **Entry Criteria:** faith grade crosses above zero → buy; crosses below zero → sell.\n- **Long/Short:** both.\n- **Exit Criteria:** opposite signal.\n- **Indicators:** Highest, SMA.\n",
+    "details": "- **Entry Criteria:** faith grade crosses above zero → buy; crosses below zero → sell.\n- **Long/Short:** both.\n- **Exit Criteria:** opposite signal.\n- **Indicators:** Highest, SMA.",
+    "parameters": ""
+   },
+   "3856": {
+    "id": 3856,
+    "name": "Disaster Strategy (MQL #7704)",
+    "family": "trend",
+    "overview": "The original MetaTrader expert advisor named `disaster.mq4` arms stop orders around a very long simple moving average (SMA). It waits until the current price moves far enough away from the average, then parks two pending stop orders that try to capture a mean-reversion snap-back. Each new minute recalculates the SMA and nudges the pending orders to the latest baseline. Filled orders are protected with a fixed stop-loss and an adaptive take-profit that shrinks after the previous trade on the same side closed with a loss.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `Volume` | `0.1` | Order volume aligned to the instrument volume step. |\n| `MaPeriod` | `590` | Simple moving average length used as the baseline. |\n| `StopLossPips` | `30` | Distance between the entry price and the protective stop. |\n| `TakeProfitPips` | `70` | Base take-profit distance. Automatically halves after a losing trade on the same side. |\n| `TriggerDistancePips` | `20` | Required gap between price and the SMA before arming stop entries. |\n| `CandleType` | `1-minute time frame` | Candle series used to feed the SMA. |\n\nAll pip-based parameters are translated through the instrument `PriceStep` or `MinPriceStep`. For FX pairs with 3 or 5 decimal digits, the conversion multiplies the step by 10, matching the MetaTrader `Point` behaviour."
+   },
+   "2864": {
+    "id": 2864,
+    "name": "Absolutely No Lag LWMA",
+    "family": "trend",
+    "overview": "The strategy replicates the MetaTrader expert advisor **Exp_AbsolutelyNoLagLwma** by applying a double weighted moving average (LWMA) to candle data. The indicator output is color-coded: green (2) for an upward slope, gray (1) for flat, and magenta (0) for a downward slope. Trade decisions are based on transitions between these color states. The StockSharp implementation uses the high-level API, subscribes to timeframe candles, and sends market orders according to the detected trend direction.",
+    "details": "",
+    "parameters": "- **LWMA Length** – length of the two LWMAs used for smoothing.\n- **Price Type** – price source that feeds the LWMA (close, open, high, low, median, typical, weighted, simplified, quarter, trend-follow variations, or Demark price).\n- **Signal Bar** – number of finished candles back used for signal evaluation.\n- **Enable Long Entries** – permits opening long positions on bullish transitions.\n- **Enable Short Entries** – permits opening short positions on bearish transitions.\n- **Enable Long Exits** – closes long positions when the indicator turns bearish.\n- **Enable Short Exits** – closes short positions when the indicator turns bullish.\n- **Candle Type** – timeframe of the candle subscription used by the indicator.\n- **Volume** (built-in Strategy property) – trade size for new entries."
+   },
+   "2463": {
+    "id": 2463,
+    "name": "Universum 3.0",
+    "family": "trend",
+    "overview": "DeMarker oscillator based strategy that opens positions on each completed bar and adjusts volume using a martingale scheme.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `DeMarker > 0.5`\n  - Short: `DeMarker < 0.5`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Positions are closed by take profit or stop loss\n- **Stops**: Absolute points via `TakeProfitPoints` and `StopLossPoints`\n- **Default Values**:\n  - `DemarkerPeriod` = 10\n  - `TakeProfitPoints` = 50m\n  - `StopLossPoints` = 50m\n  - `InitialVolume` = 1m\n  - `LossesLimit` = 100\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: DeMarker\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n",
+    "details": "- **Entry Criteria**:\n  - Long: `DeMarker > 0.5`\n  - Short: `DeMarker < 0.5`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Positions are closed by take profit or stop loss\n- **Stops**: Absolute points via `TakeProfitPoints` and `StopLossPoints`\n- **Default Values**:\n  - `DemarkerPeriod` = 10\n  - `TakeProfitPoints` = 50m\n  - `StopLossPoints` = 50m\n  - `InitialVolume` = 1m\n  - `LossesLimit` = 100\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: DeMarker\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   },
+   "446": {
+    "id": 446,
+    "name": "Strategy Base Template",
+    "family": "trend",
+    "overview": "This folder provides a minimal scaffold for building custom trading ideas. The\nstrategy only calculates a single exponential moving average and exposes a wide\nrange of common parameters: enabling long or short trades, optional take profit\nand stop loss, and optimization ranges. Developers can insert their own entry\nand exit logic inside the placeholders to rapidly prototype new systems.\n\nThe template also demonstrates how to start the built‑in protection module with\npercentage‑based targets, making it easy to experiment with different risk\nsettings. Because no real signals are included, this script is not meant to be\ntraded as‑is but rather to serve as a starting point for further research.\n\n## Details\n\n- **Entry Criteria**: Not implemented – replace with custom rules.\n- **Long/Short**: Configurable via parameters.\n- **Exit Criteria**: Not implemented – replace with custom rules.\n- **Stops**: Optional percent take profit and stop loss handled by protection module.\n- **Default Values**:\n  - EMA length = 10.\n  - Take profit = 1.2%, Stop loss = 1.8% (disabled by default).\n- **Filters**:\n  - Category: Template\n  - Direction: Configurable\n  - Indicators: EMA\n  - Stops: Optional\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: User defined\n",
+    "details": "- **Entry Criteria**: Not implemented – replace with custom rules.\n- **Long/Short**: Configurable via parameters.\n- **Exit Criteria**: Not implemented – replace with custom rules.\n- **Stops**: Optional percent take profit and stop loss handled by protection module.\n- **Default Values**:\n  - EMA length = 10.\n  - Take profit = 1.2%, Stop loss = 1.8% (disabled by default).\n- **Filters**:\n  - Category: Template\n  - Direction: Configurable\n  - Indicators: EMA\n  - Stops: Optional\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: User defined",
+    "parameters": ""
+   },
+   "2157": {
+    "id": 2157,
+    "name": "Color Bears Gap",
+    "family": "momentum",
+    "overview": "Implements a strategy based on the Color Bears Gap indicator. The indicator compares two smoothed gaps between the high price and smoothed open/close values. When the difference crosses zero, positions are opened in the new direction and opposite positions are closed.\n\n## Details\n- **Entry Criteria**: Indicator crosses below zero -> buy, crosses above zero -> sell.\n- **Long/Short**: Configurable via parameters.\n- **Exit Criteria**: Opposite zero crossing.\n- **Stops**: None.\n- **Default Values**:\n  - `Length1` = 12\n  - `Length2` = 5\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n  - `CandleType` = 8-hour timeframe\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Color Bears Gap\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 8-hour\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses below zero -> buy, crosses above zero -> sell.\n- **Long/Short**: Configurable via parameters.\n- **Exit Criteria**: Opposite zero crossing.\n- **Stops**: None.\n- **Default Values**:\n  - `Length1` = 12\n  - `Length2` = 5\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n  - `CandleType` = 8-hour timeframe\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Color Bears Gap\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 8-hour\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2838": {
+    "id": 2838,
+    "name": "Breakeven Trailing Stop Tick",
+    "family": "volatility",
+    "overview": "- Tick-based trailing stop manager converted from the MetaTrader expert advisor `e_Breakeven_v4`.\n- Monitors every trade tick to move a virtual stop-loss once price travels far enough from the entry.\n- Closes long or short positions at market when the trailing level is hit, replicating the breakeven-plus-step behaviour of the original EA.\n- Includes an optional demo mode that randomly opens positions during testing to demonstrate the trailing logic without an external signal source.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `TrailingStopPips` | Distance in pips between the current price and the trailing stop. | 10 | Set to `0` to disable trailing completely. |\n| `TrailingStepPips` | Additional pip distance required before the stop is advanced again. | 1 | Must be greater than zero when the trailing stop is active, reproducing the EA validation rule. |\n| `EnableDemoEntries` | Enables random entries for backtests without an external signal. | `false` | When `true`, the strategy flips a coin on each tick while flat to decide the direction. |"
+   },
+   "572": {
+    "id": 572,
+    "name": "BTCUSD Adjustable SLTP",
+    "family": "trend",
+    "overview": "The strategy trades BTCUSD using a crossover between SMA(10) and SMA(25) with an EMA(150) filter. Long entries wait for a pullback: after the crossover a retracement percentage is tracked and a long position opens when price crosses back above that level. Short entries trigger immediately on a bearish crossover while price is below the EMA.\n\nExits use adjustable take-profit, stop-loss and break-even distances. A long position is also closed if SMA(10) crosses below SMA(25) while price is under the EMA(150).\n\n## Details\n\n- **Entry Criteria**:\n  - Long: SMA(10) crosses above SMA(25), then price retraces by a set percentage and crosses above the retracement level.\n  - Short: SMA(10) crosses below SMA(25) while price is below EMA(150).\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Configurable take profit, stop loss and break-even distances.\n  - Long exit when SMA(10) crosses below SMA(25) under EMA(150).\n- **Stops**: Yes, adjustable in points.\n- **Default Values**:\n  - `FastSmaLength` = 10\n  - `SlowSmaLength` = 25\n  - `EmaFilterLength` = 150\n  - `TakeProfitDistance` = 1000\n  - `StopLossDistance` = 250\n  - `BreakEvenTrigger` = 500\n  - `RetracementPercentage` = 0.01\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: SMA, EMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: SMA(10) crosses above SMA(25), then price retraces by a set percentage and crosses above the retracement level.\n  - Short: SMA(10) crosses below SMA(25) while price is below EMA(150).\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Configurable take profit, stop loss and break-even distances.\n  - Long exit when SMA(10) crosses below SMA(25) under EMA(150).\n- **Stops**: Yes, adjustable in points.\n- **Default Values**:\n  - `FastSmaLength` = 10\n  - `SlowSmaLength` = 25\n  - `EmaFilterLength` = 150\n  - `TakeProfitDistance` = 1000\n  - `StopLossDistance` = 250\n  - `BreakEvenTrigger` = 500\n  - `RetracementPercentage` = 0.01\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: SMA, EMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3944": {
+    "id": 3944,
+    "name": "RndTrade",
+    "family": "volume",
+    "overview": "Conversion of the original MQL4 \"RndTrade\" expert advisor into a StockSharp high-level strategy that performs fully random market entries and exits them after a fixed holding period.\n\n## Core Logic\n\n1. Subscribe to the configured candle type (1-minute candles by default) and wait for completed bars.\n2. Whenever the strategy is flat, generate a random number. A value above 0.5 triggers a market buy, otherwise a market sell, both using the configured trade volume.\n3. Record the candle time of the entry and keep the position open for the selected holding duration (four hours by default).\n4. After the holding timer elapses, close the entire position with the corresponding market order.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Data type of candles that fire the random decision logic. | 1 minute candles |\n| `TradeVolume` | Volume used for every random market order. | 1 |\n| `HoldDuration` | Time span to keep any opened random position active before closing it. | 4 hours |\n\n## Additional Notes\n\n- The random generator is reseeded automatically when the strategy starts to mimic the MQL4 behavior of using the local time as a seed.\n- Only market orders are used, reflecting the original expert advisor which immediately executed trades without pending orders.\n- No additional indicators or historical buffers are required; the strategy only relies on the incoming candle timestamps and the internal timer.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Data type of candles that fire the random decision logic. | 1 minute candles |\n| `TradeVolume` | Volume used for every random market order. | 1 |\n| `HoldDuration` | Time span to keep any opened random position active before closing it. | 4 hours |"
+   },
+   "2323": {
+    "id": 2323,
+    "name": "Cm Manual Grid",
+    "family": "volume",
+    "overview": "Cm Manual Grid places a configurable grid of stop and limit orders around the current price. Each new order increases volume by a fixed increment. The strategy can close long or short positions separately when profit targets are reached and includes a trailing profit mechanism.\n\n## Details\n\n- **Type**: grid trading with pending orders\n- **Orders**: Buy Stop, Sell Stop, Buy Limit, Sell Limit\n- **Volume**: start volume `Lot` with increment `LotPlus`\n- **Profit Management**:\n  - `CloseProfitB` closes long positions\n  - `CloseProfitS` closes short positions\n  - `ProfitClose` closes all positions\n  - `TralStart` and `TralClose` manage trailing profit\n- **Defaults**:\n  - `OrdersBuyStop` = 5\n  - `OrdersSellStop` = 5\n  - `OrdersBuyLimit` = 5\n  - `OrdersSellLimit` = 5\n  - `FirstLevel` = 5 steps\n  - `StepBuyStop` = 10\n  - `StepSellStop` = 10\n  - `StepBuyLimit` = 10\n  - `StepSellLimit` = 10\n  - `Lot` = 0.1\n  - `LotPlus` = 0.1\n  - `CloseProfitB` = 10\n  - `CloseProfitS` = 10\n  - `ProfitClose` = 10\n  - `TralStart` = 10\n  - `TralClose` = 5\n",
+    "details": "- **Type**: grid trading with pending orders\n- **Orders**: Buy Stop, Sell Stop, Buy Limit, Sell Limit\n- **Volume**: start volume `Lot` with increment `LotPlus`\n- **Profit Management**:\n  - `CloseProfitB` closes long positions\n  - `CloseProfitS` closes short positions\n  - `ProfitClose` closes all positions\n  - `TralStart` and `TralClose` manage trailing profit\n- **Defaults**:\n  - `OrdersBuyStop` = 5\n  - `OrdersSellStop` = 5\n  - `OrdersBuyLimit` = 5\n  - `OrdersSellLimit` = 5\n  - `FirstLevel` = 5 steps\n  - `StepBuyStop` = 10\n  - `StepSellStop` = 10\n  - `StepBuyLimit` = 10\n  - `StepSellLimit` = 10\n  - `Lot` = 0.1\n  - `LotPlus` = 0.1\n  - `CloseProfitB` = 10\n  - `CloseProfitS` = 10\n  - `ProfitClose` = 10\n  - `TralStart` = 10\n  - `TralClose` = 5",
+    "parameters": ""
+   }
+  }
+ }
+}

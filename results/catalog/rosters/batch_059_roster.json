@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2247,
+      "name": "Aroon Horn Sign",
+      "family": "trend",
+      "entry_long": "(close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)) > 0.5 and roc(close,9) > 0",
+      "exit_long": "(close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)) < 0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Aroon is not in the DSL, so the documented AroonPeriod 9 dominance is approximated by the close's position in the 9-bar range (Aroon Up > Down and >= 50 becomes the upper half) plus a positive 9-bar ROC for the rising horn; the lower half is the short condition that closes the long. TakeProfit 2000 and StopLoss 1000 are price units, not percentages."
+    },
+    {
+      "id": 2308,
+      "name": "ICAi",
+      "family": "trend",
+      "entry_long": "roc(ema(close,12),1) >= 0 and roc(ema(close,12),2) < 0",
+      "exit_long": "roc(ema(close,12),1) <= 0 and roc(ema(close,12),2) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented turn rule (Prev < PrevPrev and Current >= Prev) is reproduced exactly on the smoothed line using 1-bar and 2-bar rate of change, with the documented Length 12 mapped to EMA(12); the standard-deviation adaptation inside ICAi is not separable. TakeProfit 2000 / StopLoss 1000 are price units and the 4-hour timeframe is not configurable."
+    },
+    {
+      "id": 3341,
+      "name": "Histo Scalper",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) > 50 and close > ema(close,20) and adx(high,low,close,14) > 20",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) and rsi(close,14) < 50 and close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Unanimous agreement among the documented filter set is represented by MACD above its signal, RSI above 50, price above EMA(20) and ADX above 20, all with conventional periods since no values are documented. The \"at least one filter was opposite on the previous bar\" confirmation needs shifted bars, and the per-filter mode switches, session window and point-based exits are configuration and order features."
+    },
+    {
+      "id": 1052,
+      "name": "MicuRobert EMA Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,26)) or crossabove(close,ema(close,12)) and ema(close,12) > ema(close,26)",
+      "exit_long": "crossbelow(ema(close,12),ema(close,26)) or crossbelow(close,ema(close,12)) and ema(close,12) < ema(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented long triggers are kept (fast/smoothed cross, or price crossing the fast average while it leads), with ZLEMA approximated by EMA at 12/26 because no lengths are documented. Session restriction, the trailing stop and fixed stop/target require clock and position state."
+    },
+    {
+      "id": 2762,
+      "name": "Percentage Crossover Channel",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) * 1.01 and close > sma(close,20)",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom channel is rebuilt as a percentage band around a 20-period simple average, with 1% standing in for the undocumented Percent parameter and 20 for the undocumented fast-average length. The band-touch branch is used for entry and the middle-line cross for the exit; ReverseSignals, TradeOnMiddleCross, price modes and point-based protection are switches and order features."
+    },
+    {
+      "id": 1047,
+      "name": "Merovinh - Mean Reversion Lowest Low",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,20) and bars_since(low < donchian_low_prev(low,20)) < 3",
+      "exit_long": "high > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Successive breaks of the lookback low are expressed as a new 20-bar low occurring within the last three bars (Bars 20 and Number Of Lows 2 are explicit defaults since neither is documented), and a new 20-bar high closes the position as documented. Start/End date limits are not configurable here."
+    },
+    {
+      "id": 2986,
+      "name": "The 20s Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1) + 0.2 * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+      "exit_long": "close < donchian_low_prev(low,1) - 0.2 * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Ratio 0.2 is applied to the previous bar's range, so a close beyond the prior high plus 20% of that range is the upside breakout and the mirrored band is the exit, which subsumes the LevelPoints confirmation. SignalBar 1 is inherent in next-bar execution, and 1000/2000-point protection, Mode selection and the long/short permission switches are order features."
+    },
+    {
+      "id": 3261,
+      "name": "Explosion",
+      "family": "momentum",
+      "entry_long": "(high - low) > 2 * (donchian_high_prev(high,1) - donchian_low_prev(low,1)) and close > open",
+      "exit_long": "(high - low) > 2 * (donchian_high_prev(high,1) - donchian_low_prev(low,1)) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented doubling of the previous candle's range with a bullish body is literal, using multiplication to avoid a division-by-zero on flat bars. StopLossPips 20, TakeProfitPips 10, the 25/5 pip trailing and the one-entry-per-bar flag are pip and order features."
+    },
+    {
+      "id": 3910,
+      "name": "Elite eFibo Trader v2.1",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system is a multi-order Fibonacci ladder launched by an unconditional market order, with a shared protective stop and a cash basket take-profit, so no single market signal describes it and the impossible negative-price guard is used. LevelDistancePips, the 14 level volumes and MoneyTakeProfit are order-book and portfolio state."
+    },
+    {
+      "id": 396,
+      "name": "Short-Term Reversal Futures",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,5) < -10",
+      "exit_long": "roc(close,5) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented weekly cross-sectional ranking of the worst contracts has no cross-section here, so a large negative 5-day return stands in for buying the laggard, exiting when the week turns positive; -10% is an explicit default reflecting the larger moves of futures. The short holding period, the optional volatility stop and multi-contract sizing are not expressible."
+    }
+  ]
+}

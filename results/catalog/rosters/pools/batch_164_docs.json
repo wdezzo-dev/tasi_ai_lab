@@ -1,0 +1,98 @@
+{
+ "batch_164": {
+  "strategy_ids": [
+   490,
+   489,
+   3961,
+   3446,
+   1842,
+   2327,
+   2597,
+   3227,
+   2012,
+   2000
+  ],
+  "docs": {
+   "490": {
+    "id": 490,
+    "name": "Adaptive Fibonacci Pullback",
+    "family": "trend",
+    "overview": "The strategy averages three SuperTrend lines built with Fibonacci multipliers (0.618, 1.618, 2.618) and smooths the result with an EMA. Trades follow pullbacks to this adaptive trend while an AMA-based midline and optional RSI filter confirm direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Low below averaged SuperTrend and close above its smoothed value.\n  - Previous close relative to AMA midline defines pullback.\n  - **Long**: close above midline and RSI > threshold.\n  - **Short**: close below midline and RSI < threshold.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Close crossing the smoothed SuperTrend in opposite direction.\n- **Stops**: Percent stop loss and take profit via `StartProtection`.\n- **Default Values**:\n  - `AtrPeriod` = 8\n  - `SmoothLength` = 21\n  - `AmaLength` = 55\n  - `RsiLength` = 7\n  - `RsiBuy` = 70\n  - `RsiSell` = 30\n  - `TakeProfitPercent` = 5\n  - `StopLossPercent` = 0.75\n- **Filters**:\n  - Category: Trend pullback\n  - Direction: Both\n  - Indicators: SuperTrend, EMA, AMA, RSI\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Low below averaged SuperTrend and close above its smoothed value.\n  - Previous close relative to AMA midline defines pullback.\n  - **Long**: close above midline and RSI > threshold.\n  - **Short**: close below midline and RSI < threshold.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Close crossing the smoothed SuperTrend in opposite direction.\n- **Stops**: Percent stop loss and take profit via `StartProtection`.\n- **Default Values**:\n  - `AtrPeriod` = 8\n  - `SmoothLength` = 21\n  - `AmaLength` = 55\n  - `RsiLength` = 7\n  - `RsiBuy` = 70\n  - `RsiSell` = 30\n  - `TakeProfitPercent` = 5\n  - `StopLossPercent` = 0.75\n- **Filters**:\n  - Category: Trend pullback\n  - Direction: Both\n  - Indicators: SuperTrend, EMA, AMA, RSI\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "489": {
+    "id": 489,
+    "name": "Beta Weighted MA",
+    "family": "trend",
+    "overview": "The Beta Weighted MA (BWMA) strategy uses a Beta distribution to weight recent prices, producing a moving average whose lag and smoothness can be tuned with alpha and beta parameters. The strategy enters a long position when price crosses above the BWMA and a short position when price crosses below it.\n\n## Details\n\n- **Entry Criteria**:\n  - Price crosses above the Beta Weighted Moving Average → enter long.\n  - Price crosses below the Beta Weighted Moving Average → enter short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite cross closes the current position and opens the reverse.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 50\n  - `Alpha` = 3\n  - `Beta` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long/Short\n  - Indicators: Beta Weighted Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price crosses above the Beta Weighted Moving Average → enter long.\n  - Price crosses below the Beta Weighted Moving Average → enter short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite cross closes the current position and opens the reverse.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 50\n  - `Alpha` = 3\n  - `Beta` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long/Short\n  - Indicators: Beta Weighted Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3961": {
+    "id": 3961,
+    "name": "Macd Pattern Trader DoubleTop",
+    "family": "trend",
+    "overview": "Port of the MetaTrader 4 expert advisor **MacdPatternTraderv04cb**. The strategy scans a configurable MACD main line for\nbearish double-top and bullish double-bottom patterns. When the second swing fails to exceed the first one while the MACD\nremains beyond a positive or negative trigger level, the strategy opens a market position in the direction of the\nanticipated reversal. Protective orders reproduce the original fixed 100 pip stop-loss and 300 pip take-profit distances.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `FastPeriod` | Fast EMA length used by MACD. |\n| `SlowPeriod` | Slow EMA length used by MACD. |\n| `SignalPeriod` | Signal line smoothing length for MACD. |\n| `TriggerLevel` | Absolute MACD level required to arm the double-top/double-bottom detection. |\n| `StopLossPips` | Distance of the protective stop in pips (default 100). |\n| `TakeProfitPips` | Distance of the take-profit in pips (default 300). |\n| `TradeVolume` | Base order volume for new positions. |\n| `CandleType` | Candle series used for indicator calculations. |"
+   },
+   "3446": {
+    "id": 3446,
+    "name": "Morning/Evening Star CCI",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader 5 Expert Advisor **Expert_AMS_ES_CCI** using the StockSharp high-level API. It scans for Morning Star and Evening Star three-candle reversal patterns and requires confirmation from the Commodity Channel Index (CCI) before opening new positions. The logic works with finished candles only and operates on the primary security specified in the strategy settings.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `CciPeriod` | Number of bars used in the CCI calculation. | 25 | Optimizable. |\n| `BodyAveragePeriod` | Number of candles used to measure the average body size. | 5 | Optimizable. |\n| `EntryThreshold` | Absolute CCI value required for new trades. | 50 | Positive value; the strategy checks ±EntryThreshold. |\n| `NeutralThreshold` | Absolute CCI level that defines the exit zone. | 80 | Positive value; the strategy checks ±NeutralThreshold. |\n| `CandleType` | Candle type (timeframe) used for analysis. | 1 hour time frame | Change to match the desired resolution. |"
+   },
+   "1842": {
+    "id": 1842,
+    "name": "TSI WPR Cross",
+    "family": "trend",
+    "overview": "This strategy trades based on the crossover of the True Strength Index (TSI) calculated from the Williams %R oscillator.\nWhen the TSI crosses above its smoothed signal line the strategy enters a long position. When the TSI crosses below the signal line it enters a short position.\n\n## Parameters\n- **Candle Type**: Timeframe of candles used for calculation.\n- **Williams %R Period**: Number of bars for the Williams %R indicator.\n- **Short Length**: Short EMA length used in the TSI calculation.\n- **Long Length**: Long EMA length used in the TSI calculation.\n- **Signal Length**: EMA length applied to TSI to form the signal line.\n\n## Trading Rules\n1. Calculate Williams %R value of each finished candle.\n2. Feed this value into the True Strength Index indicator.\n3. Smooth the TSI with an EMA to obtain the signal line.\n4. **Buy** when TSI crosses above the signal line.\n5. **Sell** when TSI crosses below the signal line.\n6. Existing positions in the opposite direction are closed on a new signal.\n\n## Notes\n- The strategy uses high-level API with automatic candle subscriptions.\n- StartProtection is launched at startup for basic risk management.\n- Chart areas are created to visualize TSI, its signal line and executed trades.\n",
+    "details": "",
+    "parameters": "- **Candle Type**: Timeframe of candles used for calculation.\n- **Williams %R Period**: Number of bars for the Williams %R indicator.\n- **Short Length**: Short EMA length used in the TSI calculation.\n- **Long Length**: Long EMA length used in the TSI calculation.\n- **Signal Length**: EMA length applied to TSI to form the signal line."
+   },
+   "2327": {
+    "id": 2327,
+    "name": "Wlx BW5 Zone",
+    "family": "momentum",
+    "overview": "This strategy uses Bill Williams' Awesome Oscillator (AO) and Accelerator Oscillator (AC) to identify strong momentum sequences. A buy (sell) signal appears when both oscillators move higher (lower) for five consecutive bars. The system reverses or opens positions accordingly.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `AO` and `AC` rising for five consecutive bars.\n  - **Short**: `AO` and `AC` falling for five consecutive bars.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Timeframe` = 4 hours.\n  - `Direct` = true.\n  - `SignalBar` = 1.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `AO` and `AC` rising for five consecutive bars.\n  - **Short**: `AO` and `AC` falling for five consecutive bars.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Timeframe` = 4 hours.\n  - `Direct` = true.\n  - `SignalBar` = 1.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2597": {
+    "id": 2597,
+    "name": "Morse Code",
+    "family": "volatility",
+    "overview": "The Morse Code Strategy replicates the original MetaTrader 5 expert that treats every finished candle as either a \"dash\" or a \"dot\". A bullish candle (close price greater than or equal to the open) is encoded as `1`, while a bearish candle (close price less than or equal to the open) is encoded as `0`. The strategy scans the latest sequence of completed candles and compares it to a user-selected binary mask. When the last candles match the configured sequence exactly, the strategy opens a position in the chosen direction and immediately attaches both a take-profit and a stop-loss order expressed in pips.\n\nThe implementation relies exclusively on high-level StockSharp APIs: candle subscriptions provide data, binding handles event delivery, and the built-in protection module manages exits. No custom collections or direct indicator value access are required, keeping the logic concise and robust.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 5-minute candles (`TimeSpan.FromMinutes(5).TimeFrame()`) | Data type used to build the Morse sequence. |\n| `Pattern` | `_0` (`\"0\"`) | Binary mask to match against the most recent candles. Values come directly from `MorsePatternMasks`. |\n| `Direction` | `Sides.Buy` | Whether to open a long (`Buy`) or short (`Sell`) position when the pattern appears. |\n| `TakeProfitPips` | `50` | Distance from entry to take profit in pips. The strategy automatically adapts to 3- and 5-decimal forex quotes by multiplying the price step by ten. |\n| `StopLossPips` | `50` | Distance from entry to stop loss in pips, using the same pip calculation as above. |\n| `Volume` (strategy property) | user-defined | Order size in lots/contracts, equivalent to `InpLot` in the MT5 expert. |\n\nAll parameters support the StockSharp parameter window, can be optimised, and can be changed before the strategy is started."
+   },
+   "3227": {
+    "id": 3227,
+    "name": "Random Hedg",
+    "family": "mean_reversion",
+    "overview": "The **Random Hedg Strategy** is a StockSharp high-level port of the MetaTrader expert advisor \"Random Hedg\". The original EA opens a market buy and market sell simultaneously, then manages both legs with a mixture of fixed stop loss, take profit, break-even and trailing logic. The conversion keeps that core behaviour while exposing every setting as a strategy parameter so the bot can be tuned or optimized directly inside StockSharp Designer.",
+    "details": "",
+    "parameters": "- `HedgeVolume` – volume used to open both hedge legs (default 0.1 contracts).\n- `StopLossPips` – distance of the protective stop loss (default 200 pips).\n- `TakeProfitPips` – distance of the take profit (default 200 pips).\n- `TrailingStopPips` – trailing step applied after a position becomes profitable (default 40 pips).\n- `BreakEvenTriggerPips` – profit required before moving the stop to break even (default 10 pips).\n- `BreakEvenOffsetPips` – additional profit locked in when the break-even move happens (default 5 pips).\n- `EnableTrailing` – enables or disables trailing stop management.\n- `EnableBreakEven` – enables or disables the break-even feature.\n- `EnableExitStrategy` – enables the Bollinger Band-based liquidation filter.\n- `BollingerPeriod` – period of the Bollinger Bands used for the optional exit (default 20 candles).\n- `BollingerWidth` – width multiplier of the Bollinger Bands (default 2).\n- `CandleType` – candle data series used to drive the logic (default 30-minute time frame)."
+   },
+   "2012": {
+    "id": 2012,
+    "name": "Random Trader",
+    "family": "volume",
+    "overview": "Opens a long or short position randomly when no position is open. Each trade uses fixed take profit and stop loss values measured in price units.\n\n## Details\n\n- **Entry Criteria**: no position and random choice\n- **Long/Short**: Both\n- **Exit Criteria**: price hits take profit or stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `Volume` = 1\n  - `TakeProfit` = 10\n  - `StopLoss` = 10\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**: no position and random choice\n- **Long/Short**: Both\n- **Exit Criteria**: price hits take profit or stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `Volume` = 1\n  - `TakeProfit` = 10\n  - `StopLoss` = 10\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "2000": {
+    "id": 2000,
+    "name": "HFT Spreader for FORTS",
+    "family": "volume",
+    "overview": "This strategy replicates the behavior of an HFT spreader on the FORTS market. It continuously monitors the order book and places limit orders on both sides of the market to capture the bid-ask spread.",
+    "details": "",
+    "parameters": "- `SpreadMultiplier` – required spread in ticks to place both buy and sell orders. Default is 4 ticks.\n- `Volume` – order volume. Default is 1 lot."
+   }
+  }
+ }
+}

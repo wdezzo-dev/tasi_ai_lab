@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 667,
+      "name": "DCA Support and Resistance with RSI and Trend Filter",
+      "family": "trend",
+      "entry_long": "rsi(close,50) < 40 and close > ema(close,10)",
+      "exit_long": "rsi(close,50) > 70 or close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 50 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 2957,
+      "name": "Sidus Alligator",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 2420,
+      "name": "MACD Stochastic 2",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 30,
+      "name": "VWAP Reversion",
+      "family": "trend",
+      "entry_long": "close > sma(close,30) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWAP/VWMA is approximated with a volume-confirmed moving-average trend filter because anchored/session VWAP is unavailable in the DSL."
+    },
+    {
+      "id": 933,
+      "name": "Iron Bot Statistical Trend Filter",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 3823,
+      "name": "Bruno Trend",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3879,
+      "name": "MoStAsHaR15 Pivot Line",
+      "family": "trend",
+      "entry_long": "crossabove((macd(close,12,26) - macd_signal(close,12,26,9)), atr(high,low,close,14))",
+      "exit_long": "crossbelow((macd(close,12,26) - macd_signal(close,12,26,9)), -atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3119,
+      "name": "Exp XFisher org v1",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2173,
+      "name": "TMA Breakout",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1195,
+      "name": "ProfitView Strategy Template",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    }
+  ]
+}

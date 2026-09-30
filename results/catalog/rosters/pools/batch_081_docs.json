@@ -1,0 +1,98 @@
+{
+ "batch_081": {
+  "strategy_ids": [
+   2475,
+   2417,
+   1355,
+   1552,
+   1423,
+   3142,
+   628,
+   3490,
+   4195,
+   2712
+  ],
+  "docs": {
+   "2475": {
+    "id": 2475,
+    "name": "ExpBuySellSide",
+    "family": "trend",
+    "overview": "This strategy converts the MetaTrader Expert Advisor **ExpBuySellSide** to the StockSharp API. It merges an ATR-based stop system with a simplified Step Up/Down trend filter.\n\nThe ATR module calculates dynamic stop levels around each candle. When price breaks above the upper band the market is considered to be in a bullish phase; breaking below the lower band indicates a bearish phase.\n\nThe Step Up/Down module compares a very fast SMA with a slower SMA and checks whether the spread between them is expanding. Growing spread in the direction of the crossover confirms the trend.\n\nA trade is opened only when **both** modules point in the same direction. Existing positions may optionally be closed when an opposite signal appears.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price closes above the ATR upper band **and** the fast SMA rises away from the slow SMA.\n  - **Short**: price closes below the ATR lower band **and** the fast SMA falls away from the slow SMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal appears and the option *Close Opposite* is enabled.\n  - Manual stop using position protection.\n- **Stops**: Based on `ATR * Multiplier` bands.\n- **Default Values**:\n  - `ATR Period` = 5.\n  - `ATR Multiplier` = 2.5.\n  - `Fast SMA` = 2.\n  - `Slow SMA` = 30.\n  - `Candle Type` = 1 hour time frame.\n  - `Close Opposite` = true.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price closes above the ATR upper band **and** the fast SMA rises away from the slow SMA.\n  - **Short**: price closes below the ATR lower band **and** the fast SMA falls away from the slow SMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal appears and the option *Close Opposite* is enabled.\n  - Manual stop using position protection.\n- **Stops**: Based on `ATR * Multiplier` bands.\n- **Default Values**:\n  - `ATR Period` = 5.\n  - `ATR Multiplier` = 2.5.\n  - `Fast SMA` = 2.\n  - `Slow SMA` = 30.\n  - `Candle Type` = 1 hour time frame.\n  - `Close Opposite` = true.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2417": {
+    "id": 2417,
+    "name": "JBrainTrend ReOpen",
+    "family": "trend",
+    "overview": "This strategy is a C# implementation inspired by the MQL5 example \"JBrainTrend1Stop_ReOpen\".  \nIt uses the Stochastic oscillator to determine overbought and oversold conditions and supports pyramiding by reopening positions when price advances by a specified step.\n\n## Logic\n- Subscribe to candles of the selected timeframe.\n- Calculate Stochastic oscillator (%K and %D).\n- Enter long when %K falls below 20 and short when %K rises above 80.\n- Positions are closed when the opposite extreme is reached.\n- After an entry, additional positions are added if price moves `PriceStep` in the direction of the trade, up to `MaxPositions`.\n- Protective stop loss and take profit are applied in absolute price units.\n\n## Parameters\n- `StochPeriod` – main period of the Stochastic oscillator.\n- `KPeriod` / `DPeriod` – smoothing periods for %K and %D lines.\n- `CandleType` – timeframe used for analysis.\n- `StopLoss` – stop loss distance in price units.\n- `TakeProfit` – take profit distance in price units.\n- `PriceStep` – price movement required to reopen a position.\n- `MaxPositions` – maximum number of entries in one direction.\n- `BuyEnabled` / `SellEnabled` – enable or disable long/short trades.\n\n## Notes\nThe original MQL5 script used a custom indicator named *JBrainTrend1Stop*.  \nThis C# port approximates the trading concept with built‑in indicators from StockSharp for easier integration.\n",
+    "details": "",
+    "parameters": "- `StochPeriod` – main period of the Stochastic oscillator.\n- `KPeriod` / `DPeriod` – smoothing periods for %K and %D lines.\n- `CandleType` – timeframe used for analysis.\n- `StopLoss` – stop loss distance in price units.\n- `TakeProfit` – take profit distance in price units.\n- `PriceStep` – price movement required to reopen a position.\n- `MaxPositions` – maximum number of entries in one direction.\n- `BuyEnabled` / `SellEnabled` – enable or disable long/short trades."
+   },
+   "1355": {
+    "id": 1355,
+    "name": "SuperTrend SDI Webhook",
+    "family": "trend",
+    "overview": "Strategy based on SuperTrend and Smoothed Directional Indicator (SDI). It enters long when +DI is above -DI and SuperTrend indicates an uptrend. Short positions open when -DI is above +DI and SuperTrend points down. The strategy applies percent take profit, stop loss and trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `+DI > -DI && SuperTrend up`\n  - Short: `-DI > +DI && SuperTrend down`\n- **Long/Short**: Both\n- **Exit Criteria**: Take profit, stop loss or trailing stop\n- **Indicators**: SuperTrend, AverageDirectionalIndex\n- **Stops**: Percent take profit, stop loss, trailing stop\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 1.8m\n  - `DiLength` = 3\n  - `DiSmooth` = 7\n  - `TakeProfitPercent` = 25m\n  - `StopLossPercent` = 4.8m\n  - `TrailingPercent` = 1.9m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SuperTrend, SDI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `+DI > -DI && SuperTrend up`\n  - Short: `-DI > +DI && SuperTrend down`\n- **Long/Short**: Both\n- **Exit Criteria**: Take profit, stop loss or trailing stop\n- **Indicators**: SuperTrend, AverageDirectionalIndex\n- **Stops**: Percent take profit, stop loss, trailing stop\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 1.8m\n  - `DiLength` = 3\n  - `DiSmooth` = 7\n  - `TakeProfitPercent` = 25m\n  - `StopLossPercent` = 4.8m\n  - `TrailingPercent` = 1.9m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SuperTrend, SDI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1552": {
+    "id": 1552,
+    "name": "VWAP RSI Scalper FINAL v1",
+    "family": "trend",
+    "overview": "Scalping strategy combining VWAP and RSI with ATR-based exits and daily trade limits.\n\n## Details\n\n- **Entry Criteria**: Price relative to VWAP and EMA with RSI thresholds within session.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop and target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiLength` = 3\n  - `RsiOversold` = 35m\n  - `RsiOverbought` = 70m\n  - `EmaLength` = 50\n  - `SessionStart` = 09:00\n  - `SessionEnd` = 16:00\n  - `MaxTradesPerDay` = 3\n  - `AtrLength` = 14\n  - `StopAtrMult` = 1m\n  - `TargetAtrMult` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: VWAP, RSI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price relative to VWAP and EMA with RSI thresholds within session.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop and target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiLength` = 3\n  - `RsiOversold` = 35m\n  - `RsiOverbought` = 70m\n  - `EmaLength` = 50\n  - `SessionStart` = 09:00\n  - `SessionEnd` = 16:00\n  - `MaxTradesPerDay` = 3\n  - `AtrLength` = 14\n  - `StopAtrMult` = 1m\n  - `TargetAtrMult` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: VWAP, RSI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1423": {
+    "id": 1423,
+    "name": "ThinkTech AI Signals",
+    "family": "trend",
+    "overview": "This strategy trades breakouts of the first 15-minute candle of the session. It uses ATR-based stop-loss and take-profit levels and can apply optional trend and RSI filters.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price breaks above the first candle high with trend and RSI filters satisfied.\n  - **Short**: Price breaks below the first candle low with trend and RSI filters satisfied.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Reach take-profit or stop-loss level.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `RiskRewardRatio` = 2\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30\n  - `RsiOverbought` = 70\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price breaks above the first candle high with trend and RSI filters satisfied.\n  - **Short**: Price breaks below the first candle low with trend and RSI filters satisfied.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Reach take-profit or stop-loss level.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `RiskRewardRatio` = 2\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30\n  - `RsiOverbought` = 70",
+    "parameters": ""
+   },
+   "3142": {
+    "id": 3142,
+    "name": "Yesterday Today",
+    "family": "breakout",
+    "overview": "- Tracks the previous daily range and waits for the close of an intraday candle to break it.\n- Opens long positions when the close exceeds yesterday's high; opens short positions when the close drops below yesterday's low.\n- Applies fixed-distance stop-loss and take-profit levels expressed in pips. Pip size adapts to 3- or 5-digit forex quotes just like in the original MQL implementation.\n- Risk levels are evaluated on every finished intraday candle using its high/low to detect stop-loss or take-profit hits.\n- Uses the built-in protection framework to guard against unexpected margin issues.",
+    "details": "- **Entry Criteria**: Intraday candle closes above yesterday's high (long) or below yesterday's low (short).\n- **Long/Short**: Both directions supported.\n- **Exit Criteria**: Stop-loss or take-profit levels touched by intraday candle extremes.\n- **Stops**: Yes, fixed pip distances.\n- **Default Values**:\n  - `TradeVolume` = 1\n  - `StopLossPips` = 50\n  - `TakeProfitPips` = 50\n  - `SignalCandleType` = `TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday entries with daily context\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": "- `TradeVolume` — lot size for new positions. When reversing, the strategy automatically adds the opposite exposure to flatten first.\n- `StopLossPips` — distance from the entry price to the protective stop, expressed in pips. A value of `0` disables the stop.\n- `TakeProfitPips` — distance from the entry price to the profit target, expressed in pips. A value of `0` disables the target.\n- `SignalCandleType` — intraday candle type used for breakout detection (default is 15-minute candles)."
+   },
+   "628": {
+    "id": 628,
+    "name": "Combo Strategy 123 Reversal & Fractal Chaos Bands",
+    "family": "breakout",
+    "overview": "Strategy combining a 123 reversal pattern with Fractal Chaos Bands breakout.\nLong trades occur when a bullish 123 reversal forms and price closes above the upper fractal band.\nShort trades occur when a bearish 123 reversal aligns with a close below the lower fractal band.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Reversal123 long signal and close above upper fractal band.\n  - Short: Reversal123 short signal and close below lower fractal band.\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 15\n  - `KSmoothing` = 1\n  - `DLength` = 3\n  - `Level` = 50m\n  - `Pattern` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Pattern & breakout\n  - Direction: Both\n  - Indicators: Stochastic Oscillator, Fractal Chaos Bands\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Reversal123 long signal and close above upper fractal band.\n  - Short: Reversal123 short signal and close below lower fractal band.\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 15\n  - `KSmoothing` = 1\n  - `DLength` = 3\n  - `Level` = 50m\n  - `Pattern` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Pattern & breakout\n  - Direction: Both\n  - Indicators: Stochastic Oscillator, Fractal Chaos Bands\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3490": {
+    "id": 3490,
+    "name": "Commission Calculator",
+    "family": "momentum",
+    "overview": "The **Commission Calculator Strategy** is a utility strategy that mirrors the original MetaTrader script. It sends a single discretionary order using the selected execution mode (market, limit, or stop) and measures the broker commission applied to every resulting fill. The strategy stores the cumulative commission and prints a final report with the starting balance, total fees, and fee-adjusted balance when it finishes.\n\nUnlike conventional signal-driven strategies, no market data or indicators are required. The strategy focuses on automated fee accounting for manual or semi-manual executions.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Quantity` | `0.001` | Trade volume sent by helper methods (`BuyMarket`, `SellLimit`, etc.). |\n| `EntryPrice` | `31365` | Price used for limit or stop orders and for calculating protective distances. |\n| `StopLossPrice` | `31200` | Price that defines the stop-loss distance. A non-positive distance disables the stop-loss protection. |\n| `TakeProfitPrice` | `32100` | Price that defines the take-profit distance. A non-positive distance disables the take-profit protection. |\n| `CommissionRate` | `0.04` | Commission rate expressed as a percentage of traded notional. |\n| `Mode` | `None` | Order type to execute when the strategy starts. Options: `None`, `MarketBuy`, `MarketSell`, `BuyLimit`, `SellLimit`, `BuyStop`, `SellStop`. |"
+   },
+   "4195": {
+    "id": 4195,
+    "name": "Parabolic SAR Bug 3",
+    "family": "volatility",
+    "overview": "The **Parabolic SAR Bug 3 Strategy** is a StockSharp high-level port of the MetaTrader 4 expert advisor `pSAR_bug_3.mq4` located in `MQL/9786`. The robot reacts to the very first Parabolic SAR dot that appears on the opposite side of the price. When the SAR flips below the candle close, the strategy opens a long position after closing any short exposure. When the SAR jumps above the close, it reverses to a short position. Each trade is guarded by fixed stop-loss and take-profit levels measured in Parabolic SAR points and scaled by the same multiplier as in the original MQL program.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TradeVolume` | `0.1` | Order volume in lots. Updating the value also changes the base `Strategy.Volume` property. |\n| `StopLossPoints` | `90` | Stop-loss distance expressed in Parabolic SAR points, later scaled by `StopMultiplier` and the instrument price step. |\n| `TakeProfitPoints` | `20` | Take-profit distance expressed in Parabolic SAR points, later scaled by `StopMultiplier` and the price step. |\n| `StopMultiplier` | `10` | Multiplier that reproduces the MetaTrader `StopMult` input, enabling fractional-pip brokers compatibility. |\n| `SarStep` | `0.02` | Initial acceleration factor for the Parabolic SAR indicator. |\n| `SarMaximum` | `0.2` | Maximum acceleration factor for the Parabolic SAR indicator. |\n| `CandleType` | `15m time-frame` | Candle type used for indicator calculations and signal detection. |"
+   },
+   "2712": {
+    "id": 2712,
+    "name": "Vortex Oscillator System",
+    "family": "mean_reversion",
+    "overview": "The Vortex Oscillator System is a direct port of the MetaTrader 5 expert advisor that relies on the Vortex Oscillator to capture sharp shifts between positive and negative directional movement. The oscillator is constructed as the spread between the Vortex positive line (VI+) and the Vortex negative line (VI-) calculated on the selected candle series. Deep negative readings indicate that VI- dominates VI+, while strong positive values show VI+ leadership. The strategy interprets those extremes as potential inflection zones and reacts with mean-reversion style entries backed by oscillator-driven exits.",
+    "details": "",
+    "parameters": "- **Vortex Length** – lookback period for the Vortex indicator (default 14).\n- **Candle Type** – timeframe used for building candles supplied to the indicator.\n- **Use Buy Stop Loss** – enables the oscillator-based stop-loss filter and exit for long trades.\n- **Use Buy Take Profit** – enables the oscillator-based take-profit exit for long trades.\n- **Use Sell Stop Loss** – enables the oscillator-based stop-loss filter and exit for short trades.\n- **Use Sell Take Profit** – enables the oscillator-based take-profit exit for short trades.\n- **Buy Threshold** – oscillator value that qualifies a long entry (default -0.75).\n- **Buy Stop Loss Level** – oscillator value that closes long positions when the long stop-loss option is active (default -1.00).\n- **Buy Take Profit Level** – oscillator value that closes long positions when the long take-profit option is active (default 0.00).\n- **Sell Threshold** – oscillator value that qualifies a short entry (default 0.75).\n- **Sell Stop Loss Level** – oscillator value that closes short positions when the short stop-loss option is active (default 1.00).\n- **Sell Take Profit Level** – oscillator value that closes short positions when the short take-profit option is active (default 0.00).\n- **Volume** – trade size used for new positions (default 0.1, matching the original expert advisor)."
+   }
+  }
+ }
+}

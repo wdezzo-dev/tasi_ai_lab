@@ -1,0 +1,98 @@
+{
+ "batch_149": {
+  "strategy_ids": [
+   2784,
+   126,
+   607,
+   3487,
+   3413,
+   3646,
+   2820,
+   205,
+   1649,
+   3468
+  ],
+  "docs": {
+   "2784": {
+    "id": 2784,
+    "name": "MA Crossover Multi Timeframe",
+    "family": "trend",
+    "overview": "This strategy reproduces the idea of the original **MA Crossover** expert advisor for MetaTrader 4. It compares two moving averages that may come from different timeframes. A bullish crossover (fast MA above slow MA) opens a long position, while a bearish crossover opens a short position. Optional filters control the permitted trade direction, the active trading schedule and an equity guard. Internal stop-loss, take-profit and trailing logic emulate the \"hidden\" exits from the MQL version.\n\n## Trading logic\n\n1. Subscribe to two candle streams (current and previous timeframes) and calculate the selected type of moving averages.\n2. Apply the configured bar shifts to the moving average values before comparing them.\n3. Ignore unfinished candles and wait for both moving averages to be formed.\n4. Skip trading outside of the configured day/time window or when the equity guard is triggered.\n5. On a bullish crossover:\n   - Optionally close a short position if `ClosePositionsOnCross = true`.\n   - Open a long position if long trading is allowed.\n6. On a bearish crossover:\n   - Optionally close a long position if `ClosePositionsOnCross = true`.\n   - Open a short position if short trading is allowed.\n7. Manage the open position with stop-loss, take-profit and trailing rules expressed as percentages of the entry price.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `AllowedDirection` | Trade direction filter (`LongOnly`, `ShortOnly`, `LongAndShort`). |\n| `ClosePositionsOnCross` | Close the opposite position when a crossover appears before opening a new trade. |\n| `MaType` | Moving average calculation type (`Simple`, `Exponential`, `Smoothed`, `Weighted`). |\n| `CurrentMaPeriod` | Period for the fast moving average. |\n| `PreviousPeriodAddition` | Extra length added to the slow moving average (`PreviousMaPeriod = CurrentMaPeriod + addition`). |\n| `CurrentShift` / `PreviousShift` | Number of completed bars used to shift the moving average values backward. |",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `AllowedDirection` | Trade direction filter (`LongOnly`, `ShortOnly`, `LongAndShort`). |\n| `ClosePositionsOnCross` | Close the opposite position when a crossover appears before opening a new trade. |\n| `MaType` | Moving average calculation type (`Simple`, `Exponential`, `Smoothed`, `Weighted`). |\n| `CurrentMaPeriod` | Period for the fast moving average. |\n| `PreviousPeriodAddition` | Extra length added to the slow moving average (`PreviousMaPeriod = CurrentMaPeriod + addition`). |\n| `CurrentShift` / `PreviousShift` | Number of completed bars used to shift the moving average values backward. |\n| `CurrentCandleType` / `PreviousCandleType` | Candle data for the fast and slow moving averages. |\n| `StopLossPercent` | Stop-loss distance in percent of the entry price (hidden exit). |\n| `TrailingStopPercent` | Trailing stop distance in percent based on the best achieved price. |\n| `TakeProfitPercent` | Take-profit distance in percent of the entry price (hidden exit). |\n| `StartDay` / `EndDay` | Day-of-week filter for trading activity. |\n| `StartTime` / `EndTime` | Intraday time window for opening new trades. |\n| `ClosePositionsOnMinEquity` | Close all positions when the equity guard is triggered. |\n| `MinimumEquityPercent` | Minimum percentage of the initial portfolio value allowed by the equity guard. |"
+   },
+   "126": {
+    "id": 126,
+    "name": "Quarterly Expiry",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 115%. It performs best in the stocks market.\n\nThe strategy trades in the direction of the prevailing trend at the start of the week, exiting before settlement day to avoid chaos.\n\nA fixed stop keeps risk in line if volatility proves too extreme.\n\n## Details\n\n- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "607": {
+    "id": 607,
+    "name": "CCI MACD",
+    "family": "trend",
+    "overview": "Combines Commodity Channel Index crossovers with a MACD filter and EMA/ATR bands to trade in the trend direction.\n\n## Details\n\n- **Data**: Price candles.\n- **Entry**: Long when CCI crosses above zero, MACD above zero, price above EMA125 and EMA750 but below upper ATR band; short when opposite.\n- **Exit**: Position closes on opposite signal.\n- **Instruments**: Any instruments.\n- **Risk**: No stop loss or take profit.\n",
+    "details": "- **Data**: Price candles.\n- **Entry**: Long when CCI crosses above zero, MACD above zero, price above EMA125 and EMA750 but below upper ATR band; short when opposite.\n- **Exit**: Position closes on opposite signal.\n- **Instruments**: Any instruments.\n- **Risk**: No stop loss or take profit.",
+    "parameters": ""
+   },
+   "3487": {
+    "id": 3487,
+    "name": "MACD Diver and RSI",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the **\"Macd diver and rsi\"** MetaTrader 5 expert advisor. It keeps the original two-stage signal idea: the Relative Strength Index (RSI) detects oversold or overbought extremes, while the MACD histogram confirms that momentum is turning back in the direction of the trade. Long and short sides are configured independently so the behaviour can be tuned for bullish and bearish setups separately.\n\nThe strategy operates on a single candle subscription (configurable timeframe) and trades the charted security directly through market orders. All indicator processing uses the high-level StockSharp API via `BindEx`, matching the project rules.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Timeframe of the candle subscription used for signals. |\n| `LongRsiPeriod`, `ShortRsiPeriod` | RSI lengths for long and short detection. |\n| `LongRsiThreshold`, `ShortRsiThreshold` | RSI thresholds that enable entries (oversold for longs, overbought for shorts). |\n| `LongMacdFastLength`, `LongMacdSlowLength`, `LongMacdSignalLength` | MACD EMA lengths for the bullish leg. |\n| `ShortMacdFastLength`, `ShortMacdSlowLength`, `ShortMacdSignalLength` | MACD EMA lengths for the bearish leg. |\n| `LongVolume`, `ShortVolume` | Trade volume per signal. When reversing, the strategy adds the absolute open volume so the single order performs the close and new open. |\n| `LongStopLossPips`, `LongTakeProfitPips`, `ShortStopLossPips`, `ShortTakeProfitPips` | Distance of stop-loss and take-profit orders in pips. Zero disables the respective level. |"
+   },
+   "3413": {
+    "id": 3413,
+    "name": "5Mins Envelopes",
+    "family": "trend",
+    "overview": "The **5Mins Envelopes** strategy reproduces the MetaTrader expert that trades five-minute candles around a linear weighted moving average envelope.\nIt looks for price spikes that stretch well beyond the bands and then enters in the mean-reversion direction.\nA spread filter, static stop-loss, optional take-profit, and trailing stop mirror the original money management.\n\n## Trading Logic\n- **Indicator**: Linear Weighted Moving Average (LWMA) calculated on the median price (high+low)/2 with a period of 3.\n- **Envelope width**: 0.05% deviation from the LWMA value (upper and lower bands).\n- **Signal detection** (evaluated on the previous completed candle and current bid):\n  - **Long**: Previous candle low stays more than `DistancePoints` below the lower band **and** the current bid is also beyond that distance.\n  - **Short**: Previous candle high stays more than `DistancePoints` above the upper band **and** the current bid is also beyond that distance.\n- **Filters**:\n  - Only one position at a time (new entries require the current position to be flat).\n  - If `MaxSpreadPoints` is greater than zero, the bid/ask spread must stay below this threshold before submitting a new order.\n\n## Risk Management\n- **Order volume**: `TradeVolume` parameter controls the market order size.\n- **Stop-loss**: `StopLossPoints` converts to absolute price distance using the instrument tick size.\n- **Take-profit**: Optional `TakeProfitPoints`; set to zero to disable.\n- **Trailing stop**: Optional `TrailingStopPoints`; set to zero to disable.\n- **Protection**: The `StartProtection` helper applies all exits with market orders, matching the MetaTrader behaviour.\n\n## Parameters\n- `TradeVolume = 1m`\n- `DistancePoints = 140`\n- `EnvelopePeriod = 3`\n- `EnvelopeDeviationPercent = 0.05m`\n- `StopLossPoints = 250`\n- `TakeProfitPoints = 0`\n- `TrailingStopPoints = 120`\n- `MaxSpreadPoints = 25`\n- `CandleType = TimeFrame(5 minutes)`\n\n## Tags\n- Category: Mean Reversion\n- Direction: Both\n- Indicators: WeightedMov",
+    "details": "",
+    "parameters": "- `TradeVolume = 1m`\n- `DistancePoints = 140`\n- `EnvelopePeriod = 3`\n- `EnvelopeDeviationPercent = 0.05m`\n- `StopLossPoints = 250`\n- `TakeProfitPoints = 0`\n- `TrailingStopPoints = 120`\n- `MaxSpreadPoints = 25`\n- `CandleType = TimeFrame(5 minutes)`"
+   },
+   "3646": {
+    "id": 3646,
+    "name": "Neural Network Template",
+    "family": "momentum",
+    "overview": "This strategy replicates the behaviour of the MQL5 expert advisor template that feeds RSI and MACD features into a neural network. Because StockSharp does not ship with the custom network loader from the original project, the strategy replaces the black-box network with a deterministic scoring model while keeping the same market structure and risk controls. The goal is to capture momentum when both RSI and MACD agree on direction and the projected move is large enough to justify a trade.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `BarsToPattern` | Number of candles stored in the rolling window used to calculate RSI and MACD statistics. |\n| `TradeLevel` | Minimum confidence (0-1) required to open a position. |\n| `ProfitMultiply` | Multiplier applied to the projected move before capping it with `MaxTakeProfitPoints`. |\n| `MinTargetPoints` | Minimum number of price points required from the projection to enter a trade. |\n| `MaxTakeProfitPoints` | Maximum distance, in points, allowed for the take-profit. |\n| `StopLossPoints` | Distance, in points, of the protective stop relative to the entry price. |\n| `TradeVolume` | Volume sent with every market order. |\n| `CandleType` | Candle data type or timeframe to subscribe to. |"
+   },
+   "2820": {
+    "id": 2820,
+    "name": "N-Candles Sequence",
+    "family": "volatility",
+    "overview": "The N-Candles Sequence strategy replicates the behaviour of the original MetaTrader expert \"N-_Candles_v7\" using the StockSharp high-level API. It monitors finished candles and looks for a configurable number of consecutive bullish or bearish bodies. When a qualifying streak is present, the strategy opens a position in the same direction and manages it with configurable take profit, stop loss, trailing stop, trading hours filter, and floating profit lock.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `ConsecutiveCandles` | Number of candles with identical direction required to trigger a signal. |\n| `OrderVolume` | Market order volume used for entries and exits. |\n| `TakeProfitPips` | Take profit distance expressed in pips. Set to zero to disable. |\n| `StopLossPips` | Stop loss distance expressed in pips. Set to zero to disable. |\n| `TrailingStopPips` | Trailing stop distance. Set to zero to disable trailing. |\n| `TrailingStepPips` | Additional distance required before the trailing stop is moved. |\n| `MaxPositions` | Maximum number of simultaneous entries per pattern (the strategy keeps a single net position). |\n| `MaxPositionVolume` | Upper bound for the allowed net volume. |\n| `UseTradeHours` / `StartHour` / `EndHour` | Enable and configure the trading time window (inclusive). |\n| `MinProfit` | Floating profit threshold that triggers a full exit. |\n| `ClosingBehavior` | Defines how to react when a \"black sheep\" candle appears. |\n| `CandleType` | The candle series used for calculations. |"
+   },
+   "205": {
+    "id": 205,
+    "name": "Hull MA CCI",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 52%. It performs best in the crypto market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: HMA(t) > HMA(t-1) && CCI < -100 (HMA rising with oversold conditions)\n  - **Short**: HMA(t) < HMA(t-1) && CCI > 100 (HMA falling with overbought conditions)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when HMA starts falling\n  - **Short**: Exit short position when HMA starts rising\n- **Stops**: Yes.\n- **Default Values**:\n  - `HullPeriod` = 9\n  - `CciPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Hull MA CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: HMA(t) > HMA(t-1) && CCI < -100 (HMA rising with oversold conditions)\n  - **Short**: HMA(t) < HMA(t-1) && CCI > 100 (HMA falling with overbought conditions)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when HMA starts falling\n  - **Short**: Exit short position when HMA starts rising\n- **Stops**: Yes.\n- **Default Values**:\n  - `HullPeriod` = 9\n  - `CciPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Hull MA CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1649": {
+    "id": 1649,
+    "name": "Line Order",
+    "family": "volume",
+    "overview": "The **Line Order Strategy** triggers a market order when price crosses a user-defined horizontal line. It is intended as a simplified conversion of the original MQL script *LineOrder.mq4*, providing manual line trading functionality through the high-level StockSharp API.\n\nThe strategy exposes parameters to control direction, entry level and risk management. After entering a position, optional stop-loss, take-profit and trailing stop levels are monitored on every completed candle. The logic is fully event-driven and does not maintain custom collections.\n\n## Parameters\n- **LinePrice** – price level for placing the order.\n- **IsBuy** – `true` for long entries, `false` for short entries.\n- **StopLoss** – stop-loss distance in price units (0 disables).\n- **TakeProfit** – take-profit distance in price units (0 disables).\n- **TrailingStop** – trailing stop distance in price units (0 disables).\n- **Volume** – order volume.\n- **CandleType** – candle type used to monitor price.\n\n## Trading Rules\n- **Entry**: when the closing price crosses the `LinePrice` in the chosen direction.\n- **Stop-loss**: closes position when loss exceeds `StopLoss` distance from entry.\n- **Take-profit**: closes position when profit reaches `TakeProfit` distance.\n- **Trailing stop**: after entry, adjusts to the most favorable price and exits when price moves against position by `TrailingStop`.\n\n## Notes\n- Works with any security supported by StockSharp.\n- Designed for educational purposes to illustrate translation of manual line trading from MQL.\n- Implementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "- **LinePrice** – price level for placing the order.\n- **IsBuy** – `true` for long entries, `false` for short entries.\n- **StopLoss** – stop-loss distance in price units (0 disables).\n- **TakeProfit** – take-profit distance in price units (0 disables).\n- **TrailingStop** – trailing stop distance in price units (0 disables).\n- **Volume** – order volume.\n- **CandleType** – candle type used to monitor price."
+   },
+   "3468": {
+    "id": 3468,
+    "name": "Trading Panel",
+    "family": "volume",
+    "overview": "The **TradingPanelStrategy** is a manual order-entry helper converted from the MQL5 expert advisor *EA_TradingPanel*. It exposes programmatic methods that replicate the original on-chart panel: a single action can submit multiple market orders, automatically attach stop-loss and take-profit distances measured in pips, and optionally select a custom security to trade. The defaults mirror the source EA (one trade, 2-pip stop, 10-pip take, 0.01 volume).\n\nUnlike the graphical panel, this StockSharp port focuses on automation-friendly entry points. Callers (for example, a custom UI or script) can trigger `PlaceBuyOrders()` or `PlaceSellOrders()` whenever required, while the strategy takes care of volume normalisation, price rounding and protective order placement.",
+    "details": "",
+    "parameters": "| Name | Description | Notes |\n| ---- | ----------- | ----- |\n| `TradeCount` | Number of market orders sent per action. | Ensures at least zero. Default `1`. |\n| `StopLossPips` | Stop-loss distance in pips. | Zero disables stop creation. Default `2`. |\n| `TakeProfitPips` | Take-profit distance in pips. | Zero disables target creation. Default `10`. |\n| `VolumePerTrade` | Volume for each individual market order. | Rounded via `Security.VolumeStep`. Default `0.01`. |\n| `TargetSecurity` | Optional override for the traded instrument. | Falls back to `Strategy.Security` when null. |\n\nAll parameters are exposed through `StrategyParam<T>` so they support optimisation and runtime reconfiguration from StockSharp UI."
+   }
+  }
+ }
+}

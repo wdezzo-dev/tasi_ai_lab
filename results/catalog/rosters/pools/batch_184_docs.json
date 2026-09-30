@@ -1,0 +1,98 @@
+{
+ "batch_184": {
+  "strategy_ids": [
+   4081,
+   2479,
+   932,
+   413,
+   2172,
+   2634,
+   4155,
+   388,
+   634,
+   119
+  ],
+  "docs": {
+   "4081": {
+    "id": 4081,
+    "name": "Two MA Four Level Bands",
+    "family": "trend",
+    "overview": "This strategy recreates the MetaTrader expert advisor `ytg_2MA_4Level`. It compares a fast moving average with a slower one and triggers entries when the fast curve crosses the slow curve either directly or within four configurable offset bands. Positions are protected by symmetric stop-loss and take-profit distances expressed in pips, just like in the original implementation.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `TakeProfitPips` | `int` | `130` | Take-profit distance in pips. Set to `0` to disable the target. |\n| `StopLossPips` | `int` | `1000` | Stop-loss distance in pips. Set to `0` to disable the protective stop. |\n| `TradeVolume` | `decimal` | `1` | Base lot size sent with each order (auto-adjusted to `VolumeStep`). |\n| `CalculationBar` | `int` | `1` | Number of bars used as the anchor for the MA comparison (MetaTrader `shift`). |\n| `FastPeriod` / `SlowPeriod` | `int` | `14` / `180` | Period lengths of the moving averages. |\n| `FastMethod` / `SlowMethod` | `MovingAverageMethod` | `Smoothed` | Averaging technique: `Simple`, `Exponential`, `Smoothed`, or `LinearWeighted`. |\n| `FastPrice` / `SlowPrice` | `CandlePrice` | `Median` | Applied price used by each moving average. |\n| `UpperLevel1` / `UpperLevel2` | `int` | `500` / `250` | Positive offsets (in pips) added to the slow MA for tolerance checks. |\n| `LowerLevel1` / `LowerLevel2` | `int` | `500` / `250` | Negative offsets (in pips) subtracted from the slow MA for tolerance checks. |\n| `CandleType` | `DataType` | `15m` time frame | Candle series on which the indicators operate. |"
+   },
+   "2479": {
+    "id": 2479,
+    "name": "Pipsover",
+    "family": "trend",
+    "overview": "Pipsover is a momentum-reversal strategy that reacts to strong extremes of the Chaikin oscillator. The original MetaTrader 5 Expert Advisor opens a new trade when the oscillator prints a pronounced spike while the previous candle retraces to the 20-period simple moving average. The C# port keeps the same idea by rebuilding the Chaikin oscillator with the accumulation/distribution line and two exponential moving averages. Each trade is protected with the same stop-loss and take-profit distances defined in the script so that risk control matches the reference implementation.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TradeVolume` | 0.1 | Order size used for every market order. |\n| `MaLength` | 20 | Period of the pullback SMA. |\n| `StopLossPoints` | 65 | Stop-loss offset in price steps from the entry. |\n| `TakeProfitPoints` | 100 | Take-profit offset in price steps from the entry. |\n| `OpenLevel` | 100 | Absolute Chaikin threshold that enables new entries. |\n| `CloseLevel` | 125 | Absolute Chaikin threshold that forces position exit. |\n| `ChaikinFastLength` | 3 | Fast EMA length of the Chaikin oscillator. |\n| `ChaikinSlowLength` | 10 | Slow EMA length of the Chaikin oscillator. |\n| `CandleType` | 1 hour | Timeframe used for candle subscription; adjust it to match the trading session of interest. |"
+   },
+   "932": {
+    "id": 932,
+    "name": "inwCoin Martingale",
+    "family": "trend",
+    "overview": "This strategy implements a simple martingale approach for long positions on Bitcoin.\nIt supports three optional entry signals: MACD histogram crossing above zero,\nStochastic RSI %D crossing above the 20 level, or price breaking an ATR-based channel.\nAfter each buy, the position size can double when price drops by a configured percentage.\nThe entire position is closed when profit reaches a specified percent above the average entry price.\n\n## Details\n\n- **Entry Signals**\n  - **MACD Line > 0**: histogram crosses above zero.\n  - **STO RSI cross up**: %D line crosses above 20 while %K is in oversold zone.\n  - **ATR Channel**: close price crosses above EMA plus ATR multiplier.\n- **Take profit**: position exits when price exceeds average price by the configured percent.\n- **Martingale**: additional buys occur when price drops by the configured percent from average price.\n- **Direction**: Long only.\n\n",
+    "details": "- **Entry Signals**\n  - **MACD Line > 0**: histogram crosses above zero.\n  - **STO RSI cross up**: %D line crosses above 20 while %K is in oversold zone.\n  - **ATR Channel**: close price crosses above EMA plus ATR multiplier.\n- **Take profit**: position exits when price exceeds average price by the configured percent.\n- **Martingale**: additional buys occur when price drops by the configured percent from average price.\n- **Direction**: Long only.",
+    "parameters": ""
+   },
+   "413": {
+    "id": 413,
+    "name": "Bollinger Divergence",
+    "family": "trend",
+    "overview": "Bollinger Divergence hunts for extremes where price pierces a band yet the\nopposite band begins to contract.  This divergence between price momentum and\nvolatility often precedes a snap back toward the middle of the range.\n\nA long signal appears when a candle closes beneath the lower band while the\nupper band narrows by at least a set percentage.  For shorts the pattern is\nmirrored around the upper band.  Positions target a quick move back to the\nmiddle Bollinger line with an optional fixed take‑profit.\n\nThe setup performs best in range‑bound markets or after a volatility spike\nbegins to fade.  The `CandlePercent` parameter controls how much the opposite\nband must contract before a trade is allowed, helping avoid whipsaws during\nstrong trends.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close below lower band AND upper band contracts by `CandlePercent`.\n  - **Short**: Close above upper band AND lower band contracts by `CandlePercent`.\n- **Exit Criteria**:\n  - Return to middle band OR take profit percentage.\n- **Stops**: No hard stop; relies on take profit or manual exit.\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `CandlePercent` = 30\n  - `TakeProfit` = 5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: Bollinger Bands\n  - Complexity: Simple\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close below lower band AND upper band contracts by `CandlePercent`.\n  - **Short**: Close above upper band AND lower band contracts by `CandlePercent`.\n- **Exit Criteria**:\n  - Return to middle band OR take profit percentage.\n- **Stops**: No hard stop; relies on take profit or manual exit.\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `CandlePercent` = 30\n  - `TakeProfit` = 5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: Bollinger Bands\n  - Complexity: Simple\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2172": {
+    "id": 2172,
+    "name": "ColorMETRO XRSX",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp implementation inspired by the original MQL5 Expert Advisor \"Exp_ColorMETRO_XRSX\". It uses two smoothed moving averages to detect trend changes. A long position is opened when the fast average crosses above the slow average, while a short position is opened when the fast average crosses below the slow average.\n\n## Parameters\n\n- **Fast Period** – period of the fast moving average.\n- **Slow Period** – period of the slow moving average.\n- **Candle Type** – time frame of candles used for calculations.\n\n## How It Works\n\n1. The strategy subscribes to the selected candle series.\n2. Two `Sma` indicators with different periods are calculated on the close price.\n3. When the fast SMA crosses above the slow SMA, any short position is closed and a long position is opened.\n4. When the fast SMA crosses below the slow SMA, any long position is closed and a short position is opened.\n5. The previous values of the averages are stored to detect crossings only once.\n\n## Notes\n\n- The strategy uses the high level API with `Bind` for indicator processing.\n- `StartProtection` is enabled to manage protective mechanisms.\n- This implementation is a simplified translation and does not use the original custom indicator.\n",
+    "details": "",
+    "parameters": "- **Fast Period** – period of the fast moving average.\n- **Slow Period** – period of the slow moving average.\n- **Candle Type** – time frame of candles used for calculations."
+   },
+   "2634": {
+    "id": 2634,
+    "name": "ProMart MACD Martingale",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp port of the historical MQL expert **MartGreg_1 / ProMart**. It combines two MACD configurations with a controlled martingale position sizing model. The primary MACD searches for local lows and highs in momentum, while the secondary MACD confirms the direction of the recent slope. After every closed trade the strategy either follows the indicator pattern again (when the last trade was profitable) or immediately flips direction (after a loss) while potentially doubling the next order size.\n\n## Trading Logic\n\n- **Signals**\n  - Build two MACD indicators on the selected candle series:\n    - `MACD1` (fast=5, slow=20, signal=3) acts as the pattern detector.\n    - `MACD2` (fast=10, slow=15, signal=3) confirms the short-term slope.\n  - Evaluate signals only on completed candles using the previous three MACD1 values and the previous two MACD2 values (mirroring the MQL logic that looked one bar back).\n  - **Long setup**: MACD1 forms a local valley (`MACD1[t-1] > MACD1[t-2] < MACD1[t-3]`) and MACD2 is rising (`MACD2[t-2] > MACD2[t-1]`).\n  - **Short setup**: MACD1 forms a local peak while MACD2 is falling.\n  - If the most recent closed trade was profitable, the strategy waits for the next valid setup. After a losing trade it opens the opposite direction immediately, regardless of the current MACD shape, replicating the original martingale reversal.\n- **Position management**\n  - Trades are opened with market orders and monitored on every finished candle.\n  - Stop-loss and take-profit levels are calculated in price points from the entry price. If the candle’s high/low reaches either level, the position is closed at market and the trade result is recorded.\n  - No new trade is opened on the same candle that closed a position; the strategy waits for the next bar, just like the MQL expert that acted on the first tick of a new bar.\n- **Martingale sizing**\n  - A base volume is derived from the portfolio equity divided by `BalanceDivider` and aligned to the ",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `BalanceDivider` | Divider applied to portfolio equity to compute the base order volume. | `1000` |\n| `MaxDoublingCount` | Maximum number of consecutive volume doublings after losses. | `1` |\n| `StopLossPoints` | Stop-loss distance measured in price points (`PriceStep * StopLossPoints`). | `500` |\n| `TakeProfitPoints` | Take-profit distance measured in price points. | `1500` |\n| `Macd1Fast` / `Macd1Slow` / `Macd1Signal` | Periods for the primary MACD that detects valleys/peaks. | `5 / 20 / 3` |\n| `Macd2Fast` / `Macd2Slow` / `Macd2Signal` | Periods for the secondary MACD slope filter. | `10 / 15 / 3` |\n| `CandleType` | Data type of the candle series (default: 1-minute time frame). | `TimeSpan.FromMinutes(1).TimeFrame()` |"
+   },
+   "4155": {
+    "id": 4155,
+    "name": "Psar Bug",
+    "family": "volatility",
+    "overview": "The **Psar Bug Strategy** is a direct port of the MetaTrader 4 expert advisor `pSAR_bug.mq4`. It reacts to the very first Parabolic SAR dot that appears on the opposite side of price and immediately reverses the position. The StockSharp implementation subscribes to candles, evaluates completed bars only, and uses the high-level API to place market orders and manage protective stops.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `TradeVolume` | Order volume in lots used for entries. The default value is `0.1` lots. |\n| `StopLossPoints` | Distance from the entry price to the stop-loss expressed in price steps. Mirrors the MetaTrader `StopLoss` input. |\n| `TakeProfitPoints` | Distance from the entry price to the take-profit expressed in price steps. Mirrors the MetaTrader `TakeProfit` input. |\n| `SarAccelerationStep` | Initial acceleration factor of the Parabolic SAR indicator. |\n| `SarAccelerationMax` | Maximum acceleration factor for the Parabolic SAR calculation. |\n| `CandleType` | Candle data type (timeframe) used for the indicator calculations. By default the strategy works on 15-minute candles. |"
+   },
+   "388": {
+    "id": 388,
+    "name": "Pairs Trading Stocks",
+    "family": "mean_reversion",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis simplified pairs trading strategy operates on multiple stock pairs. For each pair the price ratio is tracked over a rolling window and its z-score is computed. When the z-score exceeds an entry threshold a long/short trade is opened; positions are closed when the z-score reverts.\n\nThe algorithm supports trading multiple independent pairs simultaneously.\n\n## Details\n\n- **Universe**: list of stock pairs.\n- **Signal**: z-score of price ratio crossing `EntryZ`.\n- **Exit**: close when z-score reaches `ExitZ`.\n- **Data**: daily candles with 60-day lookback by default.\n- **Risk control**: trades skipped when order value below `MinTradeUsd`.\n",
+    "details": "- **Universe**: list of stock pairs.\n- **Signal**: z-score of price ratio crossing `EntryZ`.\n- **Exit**: close when z-score reaches `ExitZ`.\n- **Data**: daily candles with 60-day lookback by default.\n- **Risk control**: trades skipped when order value below `MinTradeUsd`.",
+    "parameters": ""
+   },
+   "634": {
+    "id": 634,
+    "name": "Correlation Cycle",
+    "family": "other",
+    "overview": "This strategy implements John Ehlers' Correlation Cycle, Correlation Angle and Market State concepts. It computes the correlation between price and sine/cosine components to obtain a correlation angle. When the angle is stable and above zero the strategy enters a long position. When the angle is stable and below zero it enters a short position.\n\n## Parameters\n- Candle Type\n- Period\n- Market State Threshold\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Period\n- Market State Threshold"
+   },
+   "119": {
+    "id": 119,
+    "name": "End of Month Strength",
+    "family": "other",
+    "overview": "Testing indicates an average annual return of about 94%. It performs best in the stocks market.\n\nThe strategy buys near the final days of the month and exits on the first trading day of the new month to capture that tendency.\n\nStops are placed below recent support to guard against unexpected weakness.\n\n## Details\n\n- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_047": {
+  "strategy_ids": [
+   1976,
+   1296,
+   517,
+   1938,
+   1472,
+   4070,
+   1388,
+   992,
+   1744,
+   161
+  ],
+  "docs": {
+   "1976": {
+    "id": 1976,
+    "name": "Exp 3XMA Ichimoku",
+    "family": "trend",
+    "overview": "This strategy is a conversion of the MQL expert `exp_3xma_ishimoku`. It uses the Ichimoku indicator with shortened periods and acts contrarian to cloud breakouts.\n\nThe Kijun line is compared to the Ichimoku cloud boundaries. When Kijun falls from above the cloud into it, the strategy closes short positions and opens a long one if buying is allowed. When Kijun rises from below the cloud into it, long positions are closed and a short position may be opened.\n\nThe default timeframe for analysis is 4-hour candles.\n\n## Parameters\n- **Tenkan Period** – length of the Tenkan-sen line.\n- **Kijun Period** – length of the Kijun-sen line.\n- **Senkou Span B Period** – period for the second Senkou span.\n- **Allow Buy** – enable opening long positions.\n- **Allow Sell** – enable opening short positions.\n- **Candle Type** – candle series used for indicator calculation.\n\n## How It Works\n1. Subscribes to the selected candle series and binds the Ichimoku indicator.\n2. Processes only finished candles.\n3. Detects when the Kijun line crosses the cloud borders.\n4. Closes opposite positions and opens a new one in the signal direction if allowed.\n\n## Disclaimer\nThis example is for educational purposes and does not constitute financial advice. Use at your own risk.\n",
+    "details": "",
+    "parameters": "- **Tenkan Period** – length of the Tenkan-sen line.\n- **Kijun Period** – length of the Kijun-sen line.\n- **Senkou Span B Period** – period for the second Senkou span.\n- **Allow Buy** – enable opening long positions.\n- **Allow Sell** – enable opening short positions.\n- **Candle Type** – candle series used for indicator calculation."
+   },
+   "1296": {
+    "id": 1296,
+    "name": "Setup: Smooth Gaussian + Adaptive Supertrend (Manual Vol)",
+    "family": "trend",
+    "overview": "Enters long when the close is above a double-smoothed moving average (\"Gaussian\" trend).\nExits when price closes below the trend line. A simple manual volatility filter can restrict entries.\n\n## Details\n\n- **Entry Criteria**: Close above trend line and (volatility filter disabled or volatility is 2 or 3).\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below trend line.\n- **Stops**: None.\n- **Default Values**:\n  - `TrendLength` = 75\n  - `Volatility` = 2\n  - `EnableVolatilityFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close above trend line and (volatility filter disabled or volatility is 2 or 3).\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below trend line.\n- **Stops**: None.\n- **Default Values**:\n  - `TrendLength` = 75\n  - `Volatility` = 2\n  - `EnableVolatilityFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "517": {
+    "id": 517,
+    "name": "Alligator + MA Trend Catcher",
+    "family": "trend",
+    "overview": "This strategy combines the Bill Williams Alligator with a 200-period EMA trend filter. A long position is opened when price is above the trendline and the Alligator lines (lips, teeth, jaw) are aligned upward. A short position is opened when price is below the trendline and the Alligator lines are aligned downward. Positions are closed when the opposite alignment occurs.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1938": {
+    "id": 1938,
+    "name": "Range EA",
+    "family": "trend",
+    "overview": "Strategy trading price deviations from a moving average within a fixed range. Opens long or short positions when the price moves a specified distance away from the average. Supports optional trailing stop, step-down averaging, reversal module, and trading session filter.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close price above moving average + `Range`\n  - Short: close price below moving average - `Range`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Reach `TakeProfit` or `StopLoss`\n  - Trailing stop hits when enabled\n  - Optional reversal after move of `Turn`\n- **Stops**: Fixed value\n- **Default Values**:\n  - `MaLength` = 21\n  - `Range` = 250m\n  - `TakeProfit` = 500m\n  - `StopLoss` = 250m\n  - `UseTrailingStop` = true\n  - `TrailingStop` = 250m\n  - `UseTurn` = true\n  - `Turn` = 250m\n  - `LotMultiplicator` = 1.65m\n  - `TurnTakeProfit` = 500m\n  - `UseStepDown` = false\n  - `StepDown` = 150m\n  - `UseTradeTime` = false\n  - `OpenTradeTime` = 08:00:00\n  - `CloseTradeTime` = 21:30:00\n  - `OrderVolume` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Range\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: close price above moving average + `Range`\n  - Short: close price below moving average - `Range`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Reach `TakeProfit` or `StopLoss`\n  - Trailing stop hits when enabled\n  - Optional reversal after move of `Turn`\n- **Stops**: Fixed value\n- **Default Values**:\n  - `MaLength` = 21\n  - `Range` = 250m\n  - `TakeProfit` = 500m\n  - `StopLoss` = 250m\n  - `UseTrailingStop` = true\n  - `TrailingStop` = 250m\n  - `UseTurn` = true\n  - `Turn` = 250m\n  - `LotMultiplicator` = 1.65m\n  - `TurnTakeProfit` = 500m\n  - `UseStepDown` = false\n  - `StepDown` = 150m\n  - `UseTradeTime` = false\n  - `OpenTradeTime` = 08:00:00\n  - `CloseTradeTime` = 21:30:00\n  - `OrderVolume` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Range\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1472": {
+    "id": 1472,
+    "name": "Trend Vanguard",
+    "family": "trend",
+    "overview": "Trend Vanguard uses a simple ZigZag on highs and lows to follow trend reversals.\nIt flips direction when the ZigZag changes orientation.\n\n## Details\n\n- **Entry Criteria**: ZigZag reversal\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite ZigZag signal\n- **Stops**: No\n- **Default Values**:\n  - `Depth` = 21\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: ZigZag reversal\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite ZigZag signal\n- **Stops**: No\n- **Default Values**:\n  - `Depth` = 21\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4070": {
+    "id": 4070,
+    "name": "Very Blondie System",
+    "family": "breakout",
+    "overview": "The Very Blondie System is a short-term mean-reversion grid strategy originally distributed as the MetaTrader 4 expert advisor \"VBS - Very Blondie System\". The port keeps the original idea of fading a breakout from the recent trading range: when price moves far enough away from the highest high or lowest low seen over the last `PeriodX` candles, the strategy enters immediately with a market order and adds four martingale-style limit orders to scale into the move if price keeps extending.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `PeriodLength` | Lookback window for the highest high and lowest low | `60` |\n| `LimitPoints` | Minimum distance (in MT4 points) between current price and the range extreme to trigger a basket | `1000` |\n| `GridPoints` | Spacing (in MT4 points) between consecutive grid orders | `1500` |\n| `ProfitTarget` | Floating profit target expressed in account currency | `40` |\n| `LockDownPoints` | Profit distance (in MT4 points) that arms the break-even exit | `0` |\n| `PointValue` | Price change produced by one MT4 point (`0` = auto-detect) | `0` |\n| `CandleType` | Candle series used to drive the strategy | `TimeFrameCandle, 1 minute` |"
+   },
+   "1388": {
+    "id": 1388,
+    "name": "Swing Breakout Strategy PRO",
+    "family": "breakout",
+    "overview": "Breakout strategy that trades when price closes beyond the last confirmed swing high or low. The distance between the latest swing points defines stop-loss and target levels.\n\n## Details\n\n- **Long**: previous close above last swing high and current high above previous high.\n- **Short**: previous close below last swing low and current low below previous low.\n- **Stops**: opposite swing level.\n- **Targets**: range between last swing high and low.\n- **Indicators**: internal pivot calculation.\n\n",
+    "details": "- **Long**: previous close above last swing high and current high above previous high.\n- **Short**: previous close below last swing low and current low below previous low.\n- **Stops**: opposite swing level.\n- **Targets**: range between last swing high and low.\n- **Indicators**: internal pivot calculation.",
+    "parameters": ""
+   },
+   "992": {
+    "id": 992,
+    "name": "Long Explosive V1",
+    "family": "momentum",
+    "overview": "Long Explosive V1 enters a long position when the close price jumps by a defined percentage relative to the previous bar. The position is closed when price drops by the configured percentage or before opening a new long trade.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close - PrevClose > Close * Price increase (%) / 100`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: `Close - PrevClose < -Close * Price decrease (%) / 100` or before a new long entry.\n- **Stops**: None.\n- **Default Values**:\n  - `Price increase (%)` = 1\n  - `Price decrease (%)` = 1\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Price\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close - PrevClose > Close * Price increase (%) / 100`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: `Close - PrevClose < -Close * Price decrease (%) / 100` or before a new long entry.\n- **Stops**: None.\n- **Default Values**:\n  - `Price increase (%)` = 1\n  - `Price decrease (%)` = 1\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Price\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1744": {
+    "id": 1744,
+    "name": "Renko Live Chart",
+    "family": "volatility",
+    "overview": "This strategy emulates a classic Renko brick chart and trades on brick direction changes. It was converted from the MetaTrader script **RenkoLiveChart_v600**.\n\n## Logic\n\nThe strategy builds Renko bricks using finished time‑based candles. When the price moves by at least the selected box size from the last brick price, a new brick is formed. A long position is opened on an upward brick and a short position on a downward brick.\n\n## Parameters\n\n- **Candle Type** – timeframe of the input candles used for brick construction.\n- **Brick Size** – price step that defines the height of a Renko brick.\n- **Brick Offset** – initial offset in bricks applied to the first brick.\n- **Show Wicks** – display wicks on the chart when drawing candles.\n\n## Notes\n\n- Trades are executed only on completed candles.\n- Position protection is started automatically on strategy start.\n- This implementation focuses on core Renko behaviour and ignores advanced features of the original script, such as external file handling.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe of the input candles used for brick construction.\n- **Brick Size** – price step that defines the height of a Renko brick.\n- **Brick Offset** – initial offset in bricks applied to the first brick.\n- **Show Wicks** – display wicks on the chart when drawing candles."
+   },
+   "161": {
+    "id": 161,
+    "name": "Macd Cci",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 70%. It performs best in the stocks market.\n\nMACD swings highlight momentum shifts; CCI helps time pullback entries in that direction. Both long and short trades are possible.\n\nTraders who blend momentum with oscillators may like this technique. Risk control uses an ATR stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `MACD > Signal && CCI < CciOversold`\n  - Short: `MACD < Signal && CCI > CciOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross in opposite direction\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `FastPeriod` = 12\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `CciPeriod` = 20\n  - `CciOversold` = -100m\n  - `CciOverbought` = 100m\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `MACD > Signal && CCI < CciOversold`\n  - Short: `MACD < Signal && CCI > CciOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross in opposite direction\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `FastPeriod` = 12\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `CciPeriod` = 20\n  - `CciOversold` = -100m\n  - `CciOverbought` = 100m\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_344": {
+  "strategy_ids": [
+   2401,
+   1803,
+   683,
+   865,
+   799,
+   3888,
+   2260,
+   1947,
+   3951,
+   1111
+  ],
+  "docs": {
+   "2401": {
+    "id": 2401,
+    "name": "Scalpel EA",
+    "family": "trend",
+    "overview": "This strategy is a simplified conversion of the original *Scalpel EA* written for MetaTrader.\nIt combines a Commodity Channel Index (CCI) filter with multi-timeframe breakout\nanalysis. The goal is to trade in the direction of short-term momentum when\nseveral higher timeframes confirm the movement.\n\n## Logic\n\n1. **Indicator** – CCI calculated on the primary timeframe. Trades are allowed\n   only when the CCI value stays inside a configurable band around zero.\n2. **Trend confirmation** – For 30‑minute, 1‑hour and 4‑hour candles the most\n   recent highs and lows are compared with previous ones.\n   - Long trades require rising lows on all three timeframes.\n   - Short trades require falling highs on all three timeframes.\n3. **Breakout** – Entry is triggered when the close price of the primary candle\n   breaks the high (for longs) or low (for shorts) of the previous candle.\n4. **Risk control** – `StartProtection` places a fixed take‑profit and stop‑loss\n   measured in price units.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `CciPeriod` | Period of the Commodity Channel Index. |\n| `CciLimit` | Absolute CCI threshold. Entries are allowed only inside ±limit. |\n| `TakeProfit` | Take profit value in price units. |\n| `StopLoss` | Stop loss value in price units. |\n| `CandleType` | Primary timeframe for trading (default 1 minute). |\n\n## Notes\n\n- The strategy subscribes to additional 30‑minute, 1‑hour and 4‑hour candles\n  to evaluate higher‑timeframe trends.\n- Volume is taken from the base class `Strategy.Volume` property.\n- Only one position is open at a time. Opposite signals close the existing position\n  and open a new one.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `CciPeriod` | Period of the Commodity Channel Index. |\n| `CciLimit` | Absolute CCI threshold. Entries are allowed only inside ±limit. |\n| `TakeProfit` | Take profit value in price units. |\n| `StopLoss` | Stop loss value in price units. |\n| `CandleType` | Primary timeframe for trading (default 1 minute). |"
+   },
+   "1803": {
+    "id": 1803,
+    "name": "Unseasonalised ATR and Forecast",
+    "family": "trend",
+    "overview": "This strategy analyzes the average trading range of recent candles and forecasts the next range using linear trend regression. It does not place any trades but displays statistics that can be used for manual decisions.",
+    "details": "",
+    "parameters": "- **SampleSize** – number of recent candles used for calculations.\n- **DesiredRange** – target range used for confidence interval estimation.\n- **CandleType** – candle series to analyze."
+   },
+   "683": {
+    "id": 683,
+    "name": "Doji Trading",
+    "family": "trend",
+    "overview": "The strategy looks for Doji candles appearing above an exponential moving average. When such a pattern occurs, it enters a long position. The stop loss is set to the lowest low of recent bars and a trailing stop protects profit after the price moves enough in favor.\n\n## Details\n\n- **Entry Criteria**: Doji candle with close above EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Lowest low stop and trailing stop.\n- **Stops**: Yes, fixed and trailing.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `EmaLength` = 60\n  - `Tolerance` = 0.05\n  - `StopBars` = 450\n  - `TrailTriggerPercent` = 1\n  - `TrailOffsetPercent` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Candlestick\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Doji candle with close above EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Lowest low stop and trailing stop.\n- **Stops**: Yes, fixed and trailing.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `EmaLength` = 60\n  - `Tolerance` = 0.05\n  - `StopBars` = 450\n  - `TrailTriggerPercent` = 1\n  - `TrailOffsetPercent` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Candlestick\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "865": {
+    "id": 865,
+    "name": "Grover Llorens Activator",
+    "family": "trend",
+    "overview": "Adaptive trailing strategy based on ATR that switches direction when price crosses the internal activator line.\n\nIt buys when the difference between price and the trailing line crosses above zero. It sells when it crosses below zero.\n\n## Details\n\n- **Entry Criteria**: Price crossing trailing stop calculated from ATR.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 480\n  - `Multiplier` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing trailing stop calculated from ATR.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 480\n  - `Multiplier` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "799": {
+    "id": 799,
+    "name": "Flex ATR",
+    "family": "trend",
+    "overview": "Flex ATR dynamically selects EMA, RSI, and ATR periods based on the current timeframe. A long trade opens when the fast EMA crosses above the slow EMA and RSI exceeds 50. A short trade triggers on the opposite crossover with RSI below 50. Exits use ATR-based stops or an optional trailing stop.\n\n## Details\n\n- **Entry Criteria**: Fast EMA vs slow EMA cross with RSI filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop or target, optional trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrStopMult` = 3\n  - `AtrProfitMult` = 1.5\n  - `EnableTrailingStop` = true\n  - `AtrTrailMult` = 1\n  - `CandleType` = TimeSpan.FromMinutes(30)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Fast EMA vs slow EMA cross with RSI filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop or target, optional trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrStopMult` = 3\n  - `AtrProfitMult` = 1.5\n  - `EnableTrailingStop` = true\n  - `AtrTrailMult` = 1\n  - `CandleType` = TimeSpan.FromMinutes(30)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3888": {
+    "id": 3888,
+    "name": "Nextbar",
+    "family": "trend",
+    "overview": "The **Nextbar Strategy** is a direct translation of the MetaTrader 4 expert advisor `nextbar.mq4`. The original EA evaluates the distance between the last completed candle and a candle that is several bars older. When price travels far enough in one direction it either follows the momentum or trades against it, depending on the configured direction flag. Positions are then protected with symmetric take-profit/stop-loss levels and are force-closed after a fixed number of bars.\n\nThis StockSharp version keeps the same behaviour while using the high-level strategy API. It processes completed candles only, ensuring that all calculations match the bar-on-close logic of the MT4 script.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `CandleType` | Timeframe used for signal evaluation. | 1-hour time frame | Attach the strategy to a security that can provide this candle type. |\n| `BarsToCheck` | Number of completed candles between the reference close and the latest close. | 8 | Matches `bars2check` from the EA. |\n| `BarsToHold` | Maximum number of completed candles to keep a position open. | 10 | Matches `bars2hold`. The position is closed on the bar where the counter reaches this number. |\n| `MinMovePoints` | Minimum distance (in MetaTrader points) between the two compared closes. | 77 | Corresponds to `minbar`. Converted using `Security.PriceStep`. |\n| `TakeProfitPoints` | Profit target distance in MetaTrader points. | 115 | Equivalent to the `profit` input. Set to zero to disable if desired. |\n| `StopLossPoints` | Stop-loss distance in MetaTrader points. | 115 | Equivalent to the `loss` input. Set to zero to disable if desired. |\n| `Direction` | Trading mode: `Follow` (trend) or `Reverse` (contrarian). | `Follow` | Mirrors the `direction` input (`1` = follow, `2` = reverse). |\n| `Volume` | Trade volume used for market orders. | Strategy volume | Configure through the standard `Strategy.Volume` property. |"
+   },
+   "2260": {
+    "id": 2260,
+    "name": "Trend Arrows",
+    "family": "trend",
+    "overview": "This strategy trades breakouts when the closing price moves beyond recent extremes.\nIt calculates the highest and lowest closing prices over a configurable period.\nA new uptrend is detected when the close exceeds the recent high,\nwhile a downtrend starts when the close drops below the recent low.\n\nWhen a new uptrend is detected, existing short positions can be closed and optional long positions opened.\nConversely, a new downtrend allows closing long positions and optionally opening shorts.\nThe strategy processes finished candles only and uses StockSharp's high level API.\n\n## Parameters\n- **Period** – number of bars to determine recent extremes.\n- **Candle Type** – timeframe of candles.\n- **Open Long** – allow opening long positions.\n- **Open Short** – allow opening short positions.\n- **Close Long** – allow closing long positions.\n- **Close Short** – allow closing short positions.\n\n## Logic\n1. Subscribe to candle data of the selected timeframe.\n2. Track highest and lowest closes over the period using `Highest` and `Lowest` indicators.\n3. When price breaks above the highest close, signal an uptrend; when below the lowest close, signal a downtrend.\n4. Enter or exit positions according to the new trend and enabled options.\n",
+    "details": "",
+    "parameters": "- **Period** – number of bars to determine recent extremes.\n- **Candle Type** – timeframe of candles.\n- **Open Long** – allow opening long positions.\n- **Open Short** – allow opening short positions.\n- **Close Long** – allow closing long positions.\n- **Close Short** – allow closing short positions."
+   },
+   "1947": {
+    "id": 1947,
+    "name": "Range Expansion Index",
+    "family": "trend",
+    "overview": "This strategy uses Tom DeMark's **Range Expansion Index (REI)** to evaluate price strength and weakness.\nThe indicator compares current highs and lows with previous prices and oscillates between positive and negative values.\n\n## How It Works\n\n- When the REI rises above the **Down Level** (default `-60`) after being below it, the strategy opens a **long** position.\n- When the REI falls below the **Up Level** (default `60`) after being above it, the strategy opens a **short** position.\n- Opposite positions are closed automatically when an opposite signal occurs.\n\n## Parameters\n\n- `REI Period` – number of bars used in the REI calculation (default `8`).\n- `Up Level` – upper threshold that indicates price weakness when crossed downward (default `60`).\n- `Down Level` – lower threshold that indicates price strength when crossed upward (default `-60`).\n- `Candle Type` – timeframe of candles for indicator calculation (default `8 hours`).\n\n## Usage\n\nAttach the strategy to a security and start it. The strategy subscribes to the specified candle series and uses market\norders to enter or exit positions based on REI signals.\n",
+    "details": "",
+    "parameters": "- `REI Period` – number of bars used in the REI calculation (default `8`).\n- `Up Level` – upper threshold that indicates price weakness when crossed downward (default `60`).\n- `Down Level` – lower threshold that indicates price strength when crossed upward (default `-60`).\n- `Candle Type` – timeframe of candles for indicator calculation (default `8 hours`)."
+   },
+   "3951": {
+    "id": 3951,
+    "name": "The MasterMind Reversal Strategy (StockSharp Port)",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 4 expert advisor \"TheMasterMind\" that combines a Stochastic oscillator with Williams %R to capture extreme reversals.\n- Implemented with StockSharp's high-level API using candle subscriptions and indicator bindings.\n- Trades a single security and reacts on finished candles only, mirroring the original \"trade at close\" execution style.",
+    "details": "",
+    "parameters": ""
+   },
+   "1111": {
+    "id": 1111,
+    "name": "NAS100 and Gold Smart Scalping Strategy PRO Enhanced v2",
+    "family": "trend",
+    "overview": "Strategy scalps short-term moves using EMA9 and VWAP as dynamic guides, RSI for momentum, and ATR for risk management. A 15 minute EMA200 trend filter keeps trades with the prevailing trend while a volume spike filter seeks strong candles. Positions size by risk and support optional trailing stops and cooldown periods between trades.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss, take-profit or opposite signal\n- **Stops**: Yes, ATR based\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `RiskPercent` = 1%\n  - `AtrMultiplierSl` = 1\n  - `AtrMultiplierTp` = 2\n  - `CooldownMins` = 30\n  - `StartHour` = 13\n  - `EndHour` = 20\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: EMA, VWAP, RSI, ATR, EMA200\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss, take-profit or opposite signal\n- **Stops**: Yes, ATR based\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `RiskPercent` = 1%\n  - `AtrMultiplierSl` = 1\n  - `AtrMultiplierTp` = 2\n  - `CooldownMins` = 30\n  - `StartHour` = 13\n  - `EndHour` = 20\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: EMA, VWAP, RSI, ATR, EMA200\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

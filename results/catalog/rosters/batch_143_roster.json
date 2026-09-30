@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1951,
+      "name": "Modified Optimum Elliptic Filter",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high+low)/2,9), ema((high+low)/2,21))",
+      "exit_long": "crossbelow(ema((high+low)/2,9), ema((high+low)/2,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two-pole recursive Ehlers filter cannot be reproduced in an expression DSL, so the filter value is approximated by dual EMAs (9/21) of the HL2 midpoint, making the documented pattern F(t-1)<F(t-2) and F(t)>F(t-1) a fast-over-slow up-cross that reverses on the down-cross. The explicit filter coefficients are dropped and the 4-hour CandleType is fixed by the roster frequency; no stops are documented."
+    },
+    {
+      "id": 497,
+      "name": "Adjustable MA & Alternating Extremities",
+      "family": "trend",
+      "entry_long": "crossabove(high, bb_upper(close,50,2))",
+      "exit_long": "crossbelow(low, bb_lower(close,50,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used verbatim: a candle high crossing above the upper Bollinger band (Length 50, Multiplier 2) opens long and the mirrored low break under the lower band closes it. The alternating overshoot state that blocks consecutive same-direction trades is position state handled by the engine, not a DSL condition."
+    },
+    {
+      "id": 1424,
+      "name": "Three Candle Bullish Engulfing",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,2) and close > open and roc(close,2) > 0 and (open * roc(open,1) - close * roc(close,1)) < 30 * atr(high,low,close,14) and (open * roc(open,1) - close * roc(close,1)) > -30 * atr(high,low,close,14)",
+      "exit_long": "low < donchian_low_prev(low,2)",
+      "stop_loss_pct": 5.0,
+      "take_profit_pct": null,
+      "notes": "With no bar shifting available, the three-candle pattern is rebuilt as a close above the prior two-bar high with a bullish body, an earlier up-leg (roc(close,2)>0) and a small prior body expressed through roc(open,1)/roc(close,1) versus 0.3 x ATR(14). The documented StopLossPerc 5 is used; TrailPerc 1.5, the 15:15 session exit and the optional RsiLevel 80 entry mode are not expressible."
+    },
+    {
+      "id": 3163,
+      "name": "Four Hour Swing",
+      "family": "trend",
+      "entry_long": "ema((high+low)/2,4) > ema((high+low)/2,14) and ema((high+low)/2,14) > ema((high+low)/2,50) and roc(close,14) > 0",
+      "exit_long": "ema((high+low)/2,4) < ema((high+low)/2,14) or roc(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Single-series substitution for the 4H/7D/30D stack: the documented EMA 4/14/50 lengths on typical price (high+low)/2 must align while MomentumPeriod 14 is positive. MomentumThreshold 0.3 is a distance from 100 in the source's units, which is below the resolution of a percent-return series, so the momentum leg is kept as a positive 14-bar rate of change; the weekly stochastic confirmation, 20/50/40 pip stop, target and trailing, and break-even handling are not expressible."
+    },
+    {
+      "id": 4201,
+      "name": "Hard Profit",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close >= high - 0.25 * (high - low) and close > sma((high+low)/2,50)",
+      "exit_long": "close < donchian_low_prev(low,20) or close < sma((high+low)/2,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Breakout Period 20 and Trend Period 50 on median price are explicit fallbacks because only parameter names are documented, and the close-finishes-at-the-extreme test is relaxed to within 25% of the bar high. The pip-based initial stop, break-even, trailing activation, staged partial targets, spread filter and the five money-management modes are not expressible."
+    },
+    {
+      "id": 1916,
+      "name": "Order Expert Strategy (1916)",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries fire only when price crosses absolute BuyLevel/SellLevel chart lines, which default to 0 (disabled) and have no documented values, so no market-derived signal exists and the never-true negative-price guard is used. The pip-based StopLossPip/TakeProfitPip, trailing switch and CandleType are configuration, not DSL conditions."
+    },
+    {
+      "id": 4083,
+      "name": "AIS4 Trade Machine",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy does not generate automatic signals: the operator types Buy/Sell/Modify/Close and supplies absolute StopPrice/TakePrice, so position sizing and protective orders are manual. The never-true guard prevents fabricating an entry, and AccountReserve/OrderReserve are sizing fractions."
+    },
+    {
+      "id": 2367,
+      "name": "RSI Slowdown",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,2) >= 90 and roc(rsi(close,2),1) < 1.12 and roc(rsi(close,2),1) > -1.12",
+      "exit_long": "rsi(close,2) <= 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used: RSI(2) at or above LevelMax 90 with a slowdown, and the mirror LevelMin 10 exit. Because bars cannot be shifted, the |RSI - prevRSI| < 1 test becomes a roc(rsi,1) band of +/-1.12, which is the percent change equivalent of a one-point move at the 90 level; the 6-hour CandleType and SeekSlowdown toggle have no daily-bar analogue."
+    },
+    {
+      "id": 2385,
+      "name": "Opening and Closing on Time",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is explicitly scheduled: it buys at 13:00 and closes at 13:01 with no indicators or filters, so there is no market-derived entry and the never-true guard is used. Open/Close Time, IsBuy and Volume are clock and sizing settings that the DSL has no representation for."
+    },
+    {
+      "id": 3293,
+      "name": "Check Execution",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a broker execution diagnostic that repeatedly modifies a pending buy stop or protective sell stop to log spread and accept latency; it never derives a directional signal, so the never-true guard is used. Iterations, Pending/Stop offsets and order mode are venue-test settings."
+    }
+  ]
+}

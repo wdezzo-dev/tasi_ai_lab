@@ -1,0 +1,98 @@
+{
+ "batch_254": {
+  "strategy_ids": [
+   1048,
+   204,
+   2966,
+   1368,
+   2434,
+   2196,
+   3839,
+   1541,
+   1563,
+   3048
+  ],
+  "docs": {
+   "1048": {
+    "id": 1048,
+    "name": "MESA Stochastic Multi Length",
+    "family": "trend",
+    "overview": "This strategy uses four MESA Stochastic oscillators with different lookback lengths. A long position is opened when all four oscillators are above their moving average trigger. A short position is opened when all four oscillators fall below their triggers.\n\n## Parameters\n- `Length1` – lookback for the first oscillator.\n- `Length2` – lookback for the second oscillator.\n- `Length3` – lookback for the third oscillator.\n- `Length4` – lookback for the fourth oscillator.\n- `TriggerLength` – smoothing period for the trigger moving averages.\n- `CandleType` – candle time frame.\n",
+    "details": "",
+    "parameters": "- `Length1` – lookback for the first oscillator.\n- `Length2` – lookback for the second oscillator.\n- `Length3` – lookback for the third oscillator.\n- `Length4` – lookback for the fourth oscillator.\n- `TriggerLength` – smoothing period for the trigger moving averages.\n- `CandleType` – candle time frame."
+   },
+   "204": {
+    "id": 204,
+    "name": "Parabolic SAR CCI",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 49%. It performs best in the crypto market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price > SAR && CCI < -100 (trend up with oversold conditions)\n  - **Short**: Price < SAR && CCI > 100 (trend down with overbought conditions)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price drops below SAR\n  - **Short**: Exit short position when price rises above SAR\n- **Stops**: No.\n- **Default Values**:\n  - `SarAccelerationFactor` = 0.02m\n  - `SarMaxAccelerationFactor` = 0.2m\n  - `CciPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Parabolic SAR CCI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price > SAR && CCI < -100 (trend up with oversold conditions)\n  - **Short**: Price < SAR && CCI > 100 (trend down with overbought conditions)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price drops below SAR\n  - **Short**: Exit short position when price rises above SAR\n- **Stops**: No.\n- **Default Values**:\n  - `SarAccelerationFactor` = 0.02m\n  - `SarMaxAccelerationFactor` = 0.2m\n  - `CciPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Parabolic SAR CCI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2966": {
+    "id": 2966,
+    "name": "XIT Three MA Cross",
+    "family": "trend",
+    "overview": "- **Market Regime**: Works best in instruments that trend for multiple candles on the selected timeframe.\n- **Indicators**:\n  - Slow, intermediate, and fast moving averages (user-selectable type) evaluated on the trading timeframe.\n  - MACD (EMA-based) for momentum direction and distance between MACD and signal line.\n  - Two ATR calculations (same length, independent timeframes) used to project stop-loss and take-profit distances.\n- **Order Direction**: Bi-directional. The engine can open both long and short trades.\n- **Position Sizing**: Calculated from the configured risk percentage and the ATR-based stop distance. When instrument metadata is incomplete, the strategy falls back to the default `Volume` property.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Primary timeframe for moving averages and MACD calculations. | 1-hour candles |\n| `SlowMaLength` / `IntermediateMaLength` / `FastMaLength` | Periods of the moving averages. | 60 / 14 / 4 |\n| `SlowMaType`, `IntermediateMaType`, `FastMaType` | Moving average families (Simple, Exponential, Smoothed, Weighted). | Simple |\n| `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` | MACD fast, slow, and signal EMA lengths. | 12 / 26 / 9 |\n| `MacdTriggerPoints` | Minimum distance between MACD and its signal, measured in instrument points. Converted using `PriceStep`. | 7 |\n| `AtrLength` | Period for both ATR indicators. | 14 |\n| `AtrTakeCandleType` / `AtrStopCandleType` | Timeframes for take-profit and stop-loss ATR series. | 4-hour candles |\n| `RiskPercent` | Percent of current portfolio value risked on each trade. | 10% |"
+   },
+   "1368": {
+    "id": 1368,
+    "name": "Supertrend + MACD Crossover",
+    "family": "trend",
+    "overview": "This strategy combines the Supertrend indicator with a MACD crossover to identify bullish entries.\nA long position is opened when price is above the Supertrend line and the MACD line crosses above its signal line.\nThe position is closed when price falls below the Supertrend line and the MACD line crosses below its signal.\n\n## Details\n\n- **Indicators**: Supertrend (ATR 10, factor 3), MACD (12, 26, 9)\n- **Entry**: Price above Supertrend and MACD bullish crossover\n- **Exit**: Price below Supertrend and MACD bearish crossover\n- **Direction**: Long only\n- **Timeframe**: Any\n",
+    "details": "- **Indicators**: Supertrend (ATR 10, factor 3), MACD (12, 26, 9)\n- **Entry**: Price above Supertrend and MACD bullish crossover\n- **Exit**: Price below Supertrend and MACD bearish crossover\n- **Direction**: Long only\n- **Timeframe**: Any",
+    "parameters": ""
+   },
+   "2434": {
+    "id": 2434,
+    "name": "Color Zerolag Momentum X2",
+    "family": "trend",
+    "overview": "Dual timeframe momentum strategy using a zero lag moving average cross. The higher timeframe defines trend direction, while the lower timeframe triggers entries when momentum crosses its zero lag average in the direction of the trend.\n\n## Details\n\n- **Entry Criteria**: momentum crosses its zero lag average in trend direction\n- **Long/Short**: Both\n- **Exit Criteria**: opposite cross or trend reversal\n- **Stops**: No\n- **Default Values**:\n  - `TrendCandleType` = 6h\n  - `TrendMomentumPeriod` = 34\n  - `TrendMaLength` = 15\n  - `SignalCandleType` = 30m\n  - `SignalMomentumPeriod` = 34\n  - `SignalMaLength` = 15\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Momentum, ZeroLagEMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: momentum crosses its zero lag average in trend direction\n- **Long/Short**: Both\n- **Exit Criteria**: opposite cross or trend reversal\n- **Stops**: No\n- **Default Values**:\n  - `TrendCandleType` = 6h\n  - `TrendMomentumPeriod` = 34\n  - `TrendMaLength` = 15\n  - `SignalCandleType` = 30m\n  - `SignalMomentumPeriod` = 34\n  - `SignalMaLength` = 15\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Momentum, ZeroLagEMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2196": {
+    "id": 2196,
+    "name": "Forex Line",
+    "family": "trend",
+    "overview": "The Forex Line strategy is a trend-following system derived from the MetaTrader indicator \"ForexLine\". It applies two stages of weighted moving averages to the price to build fast and slow lines. Crossovers between these double-smoothed lines are used to determine entry signals.\n\nThe strategy buys when the fast line crosses above the slow line and sells when the fast line crosses below the slow line. Each moving average uses a two-step smoothing process that helps filter market noise.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast double-smoothed WMA crosses above the slow double-smoothed WMA.\n  - **Short**: Fast double-smoothed WMA crosses below the slow double-smoothed WMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite crossover closes existing position.\n- **Stops**: Not included; can be added externally.\n- **Default Values**:\n  - `FastLength1` = 5\n  - `FastLength2` = 10\n  - `SlowLength1` = 20\n  - `SlowLength2` = 20\n  - `CandleType` = 8 hour timeframe\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Weighted moving averages\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast double-smoothed WMA crosses above the slow double-smoothed WMA.\n  - **Short**: Fast double-smoothed WMA crosses below the slow double-smoothed WMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite crossover closes existing position.\n- **Stops**: Not included; can be added externally.\n- **Default Values**:\n  - `FastLength1` = 5\n  - `FastLength2` = 10\n  - `SlowLength1` = 20\n  - `SlowLength2` = 20\n  - `CandleType` = 8 hour timeframe\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Weighted moving averages\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3839": {
+    "id": 3839,
+    "name": "Flat Trend",
+    "family": "trend",
+    "overview": "The **Flat Trend Strategy** reproduces the core ideas of the original Flat Trend expert advisor by combining multi-speed trend filters, ADX confirmation and a standard deviation \"juice\" breakout filter. The strategy focuses on detecting the moment when price leaves a ranging phase and momentum expands, allowing it to join directional moves with dynamic position protection.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `TriggerLength` | EMA length for the trigger filter. |\n| `FilterLength1` | EMA length for the first confirmation filter. |\n| `FilterLength2` | EMA length for the second confirmation filter. |\n| `UseOnlyPrimaryIndicators` | Use only trigger and first filter for entries. |\n| `IgnoreModerateForEntry` | Require strong trend states for new trades. |\n| `IgnoreModerateForExit` | Require strong counter-signals to close trades. |\n| `UseTradingHours` | Enable intraday trading window. |\n| `TradingHourBegin` / `TradingHourEnd` | Start and end hour of the trading window. |\n| `UseJuiceFilter`, `JuicePeriod`, `JuiceThreshold` | Standard deviation breakout filter parameters. |\n| `UseAdxFilter`, `AdxPeriod`, `AdxThreshold`, `UseDirectionalFilter` | ADX strength and DI confirmation. |\n| `UseAdrForStop`, `StopLossPips` | Initial stop-loss configuration. |\n| `TrailingDivisor` | ATR multiplier for trailing stop calculation. |\n| `BreakEvenPips`, `BreakEvenLockPips` | Break-even activation and lock distance. |\n| `AtrPeriod` | ATR lookback used for volatility estimation. |\n| `CandleType` | Primary candle timeframe. |"
+   },
+   "1541": {
+    "id": 1541,
+    "name": "Volume-Weighted Supertrend",
+    "family": "trend",
+    "overview": "This strategy calculates a supertrend based on a volume-weighted moving average and an ATR band. A second supertrend is applied to volume to confirm trend strength. A long position opens when volume and price trends align upward, and closes when conditions reverse.\n\n## Parameters\n- **ATR Period** – ATR period for price trend.\n- **Volume Period** – period for VWAP and volume trend.\n- **Factor** – ATR multiplier.\n- **Candle Type** – timeframe of processed candles.\n",
+    "details": "",
+    "parameters": "- **ATR Period** – ATR period for price trend.\n- **Volume Period** – period for VWAP and volume trend.\n- **Factor** – ATR multiplier.\n- **Candle Type** – timeframe of processed candles."
+   },
+   "1563": {
+    "id": 1563,
+    "name": "XAUUSD 10-Minute",
+    "family": "trend",
+    "overview": "This strategy trades XAUUSD on 10-minute candles using MACD, RSI and Bollinger Bands signals. It opens long positions when bullish conditions appear and short positions when bearish signals trigger. The system applies ATR-based stop-loss and take-profit levels adjusted for a fixed spread.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal, RSI below oversold or price below lower Bollinger Band.\n  - **Short**: MACD line crosses below signal, RSI above overbought or price above upper Bollinger Band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position closed on opposite signal, stop-loss or take-profit.\n- **Stops**: ATR stop-loss at `3 * ATR`, take-profit at `5 * ATR`.\n- **Default Values**:\n  - MACD fast/slow/signal: `12/26/9`.\n  - RSI period: `14`, overbought `65`, oversold `35`.\n  - Bollinger length `20`, width `2`.\n  - ATR period `14`.\n  - Spread `38` ticks.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal, RSI below oversold or price below lower Bollinger Band.\n  - **Short**: MACD line crosses below signal, RSI above overbought or price above upper Bollinger Band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position closed on opposite signal, stop-loss or take-profit.\n- **Stops**: ATR stop-loss at `3 * ATR`, take-profit at `5 * ATR`.\n- **Default Values**:\n  - MACD fast/slow/signal: `12/26/9`.\n  - RSI period: `14`, overbought `65`, oversold `35`.\n  - Bollinger length `20`, width `2`.\n  - ATR period `14`.\n  - Spread `38` ticks.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday",
+    "parameters": ""
+   },
+   "3048": {
+    "id": 3048,
+    "name": "Ichimoku Retracement",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp conversion of the MetaTrader expert advisor **\"ICHMOKU RETRACEMENT\"**. It keeps the original idea o\nf trading Ichimoku pullbacks that happen inside a higher timeframe trend while being filtered by long-term momentum and MACD read\nings. The StockSharp implementation focuses on clarity, indicator reuse and risk control through the high-level API.\n\n## Trading Idea\n\n1. **Trend filter** – the strategy looks for a bullish or bearish bias using a pair of Linear Weighted Moving Averages (LWMA). A\n bullish context requires the fast LWMA to be above the slow LWMA, while a bearish context requires the opposite relation.\n2. **Ichimoku retracement** – after a trend is detected, the previous candle must touch any of the Ichimoku lines (Tenkan-sen, Ki\njun-sen or the two leading spans). The current candle must open back on the trend side of the touched line, signaling a momentum p\nullback.\n3. **Momentum confirmation** – the close-to-close momentum ratio must deviate from its neutral value (100) by at least a configurable\n threshold. The ratio is computed on the same timeframe used for the Ichimoku indicator.\n4. **Macro filter** – a monthly MACD (12/26/9) confirms the dominant long-term direction. Long trades require MACD main line above\n the signal line, short trades require the opposite.\n5. **Order management** – the strategy keeps at most one net position. Protective stop-loss and take-profit levels are placed in pi\nps and evaluated on every finished candle.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `Signal Candle Type` | Timeframe used for the LWMA, Ichimoku and momentum calculations. | 1 hour candles |\n| `Macro Candle Type` | Higher timeframe used for the MACD trend filter. | 30-day candles |\n| `Fast LWMA` | Period for the fast linear weighted moving average. | 6 |\n| `Slow LWMA` | Period for the slow linear weighted moving average. | 85 |\n| `Tenkan Period` | Ichimoku Tenkan-sen period. | 9 |\n| `Kijun Period",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `Signal Candle Type` | Timeframe used for the LWMA, Ichimoku and momentum calculations. | 1 hour candles |\n| `Macro Candle Type` | Higher timeframe used for the MACD trend filter. | 30-day candles |\n| `Fast LWMA` | Period for the fast linear weighted moving average. | 6 |\n| `Slow LWMA` | Period for the slow linear weighted moving average. | 85 |\n| `Tenkan Period` | Ichimoku Tenkan-sen period. | 9 |\n| `Kijun Period` | Ichimoku Kijun-sen period. | 26 |\n| `Span B Period` | Ichimoku Senkou Span B period. | 52 |\n| `Momentum Period` | Lookback for the close-to-close momentum ratio. | 14 |\n| `Momentum Threshold` | Minimum absolute deviation from 100 required by the momentum ratio. | 0.3 |\n| `Take Profit (pips)` | Take-profit distance expressed in pips. | 50 |\n| `Stop Loss (pips)` | Stop-loss distance expressed in pips. | 20 |\n\nThe base `Volume` parameter controls the size of new orders. When a reversal signal appears, the strategy closes the current posit\nion (if any) and opens a new position in the opposite direction using `Volume + |Position|` contracts."
+   }
+  }
+ }
+}

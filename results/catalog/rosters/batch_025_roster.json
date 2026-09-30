@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 480,
+      "name": "Four Bar Momentum Reversal",
+      "family": "momentum",
+      "entry_long": "roc(close,4) < 0 and bars_since(roc(close,4) >= 0) > 4",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(4) is percent change, and the four-bar run of negative relative changes is approximated with bars_since; the time window is unavailable. The prior-candle-high break is the documented exit, and no stop is specified."
+    },
+    {
+      "id": 554,
+      "name": "Bollinger Heikin Ashi Entry",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close,bb_lower(close,20,2)) and low <= bb_lower(close,20,2) and bars_since(close < open) >= 3",
+      "exit_long": "close >= bb_mid(close,20) or close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Regular candles proxy Heikin-Ashi; the lower-band recross and bars_since condition approximate two preceding bearish candles. Middle-band reversion and a prior-low break proxy the 1R target and trailing stop, which are not stateful percentage exits."
+    },
+    {
+      "id": 717,
+      "name": "Dynamic Support and Resistance Pivot",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_low_prev(low,2)) and close <= 1.004 * donchian_low_prev(low,2)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior two-bar low proxies a dynamic pivot support and the 0.4% proximity is retained; the mirrored resistance short side is omitted. The documented 10% stop and 26% target are outside the requested 1.0-5.0 percentage-field range, so they remain null."
+    },
+    {
+      "id": 842,
+      "name": "GM-8 and ADX Strategy with Second EMA",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,15)) and close > sma(close,15) and close > ema(close,59) and adx(high,low,close,8) > 34",
+      "exit_long": "crossbelow(close,sma(close,15))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(15), EMA(59), and ADX(8) above 34 long-side rules are retained. The bearish SMA cross is the long exit; StartProtection has no documented percentage value and the short side is omitted."
+    },
+    {
+      "id": 1061,
+      "name": "Modular Range-Trading",
+      "family": "trend",
+      "entry_long": "(crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and adx(high,low,close,14) < 25 and rsi(close,14) > sma(rsi(close,14),14) and close < bb_mid(close,20)) or (crossabove(close,bb_lower(close,20,2)) and adx(high,low,close,14) < 25 and rsi(close,14) < 30)",
+      "exit_long": "close >= bb_mid(close,20) or rsi(close,14) >= 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both long modules are represented with Bollinger(20,2), RSI(14), MACD(12,26,9), and ADX(14) below an explicit 25 fallback; the RSI SMA length is an explicit proxy. Middle-band or RSI reversal exits, while the documented ATR-multiple stop and short module are not long-only percentage exits."
+    },
+    {
+      "id": 2503,
+      "name": "Money Fixed Margin",
+      "family": "volatility",
+      "entry_long": "close < 0 and close > 0",
+      "exit_long": "close < 0 and close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source demonstrates periodic long buying and fixed-margin sizing rather than a predictive signal; the DSL cannot express its 980-bar counter, so an impossible guard avoids fabricating entries. The 25-pip stop, risk-percent sizing, and manual-exit behavior are not represented."
+    },
+    {
+      "id": 2740,
+      "name": "Doji Trader",
+      "family": "trend",
+      "entry_long": "close - open <= 0.1 * atr(high,low,close,14) and open - close <= 0.1 * atr(high,low,close,14) and close > donchian_high_prev(high,2)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A body within 0.1 ATR(14) and a close above the prior two-bar high approximate a compact doji followed by its breakout. Stateful doji arming, the session window, and 50-pip protection are unavailable; a prior-low break proxies the opposite signal."
+    },
+    {
+      "id": 3113,
+      "name": "Exp RJTX Matches Smoothed Duplex",
+      "family": "trend",
+      "entry_long": "sma(close,12) > sma(sma(open,12),10)",
+      "exit_long": "sma(close,12) < sma(sma(open,12),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(12) of close versus a lagged SMA(12) of open approximates the documented LongLength 12 and LongPeriod 10 RJTX match. The short block, alternate smoothing methods, and 1000/2000-point protection are omitted from this long-only translation."
+    },
+    {
+      "id": 3401,
+      "name": "My TS15 Moving Average Trailing Stop",
+      "family": "trend",
+      "entry_long": "close < 0 and close > 0",
+      "exit_long": "close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source explicitly produces no entries and manages an externally opened net position, so the entry guard is intentionally unreachable. EMA(50) is a simple long-side trail proxy; weighted-price sampling, point offsets, maximum-loss liquidation, and step updates are not representable."
+    },
+    {
+      "id": 3636,
+      "name": "MartinGale Breakout",
+      "family": "breakout",
+      "entry_long": "high - low >= 3 * sma(high - low,10) and close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A range at least three times its ten-bar SMA and a strong bullish close retain the documented abnormal-candle breakout. A bearish close is the state-free exit proxy; point target, balance drawdown recovery, martingale sizing, and the 15-minute context are unsupported."
+    }
+  ]
+}

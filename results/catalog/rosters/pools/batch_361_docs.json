@@ -1,0 +1,98 @@
+{
+ "batch_361": {
+  "strategy_ids": [
+   120,
+   1691,
+   1057,
+   1981,
+   635,
+   3827,
+   138,
+   1505,
+   3972,
+   307
+  ],
+  "docs": {
+   "120": {
+    "id": 120,
+    "name": "First Day of Month",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 97%. It performs best in the crypto market.\n\nThe strategy enters long at the start of the month and exits before the second day begins, capturing the typical influx of buying.\n\nA small stop protects against downside surprises if the expected strength fails to appear.\n\n## Details\n\n- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1691": {
+    "id": 1691,
+    "name": "Lego 4 Beta",
+    "family": "trend",
+    "overview": "This strategy is a modular system translated from the MetaTrader script \"exp_Lego_4_Beta\". It combines several common technical indicators and allows enabling or disabling each component through parameters.\n\n## Algorithm\n\n1. **Moving Average Cross** – A fast and a slow moving average are calculated. A long position opens when the fast average crosses above the slow average. A short position opens on the opposite cross.\n2. **Stochastic Oscillator Filter** – When enabled, long entries require the Stochastic %K value to be below the oversold level, and short entries require %K to be above the overbought level.\n3. **RSI Exit** – When enabled, existing long positions are closed if RSI rises above the high threshold. Short positions are closed when RSI drops below the low threshold.\n\n## Parameters\n\n- `UseMaOpen` – activate moving average cross signals.\n- `FastMaLength` / `SlowMaLength` – lengths of the fast and slow moving averages.\n- `MaType` – type of moving average (SMA, EMA, WMA).\n- `UseStochasticOpen` – enable Stochastic filter for entries.\n- `StochLength` – main period for Stochastic calculation.\n- `StochKPeriod` / `StochDPeriod` – smoothing periods for %K and %D lines.\n- `StochBuyLevel` / `StochSellLevel` – oversold and overbought thresholds.\n- `UseRsiClose` – enable RSI-based exits.\n- `RsiPeriod` – RSI calculation length.\n- `RsiHigh` / `RsiLow` – RSI thresholds for closing positions.\n- `CandleType` – candle type to subscribe.\n\n## Notes\n\nThe strategy uses high level `SubscribeCandles` with `BindEx` to process indicator values and follows the StockSharp recommended style. Only market orders are used for entry and exit.\n",
+    "details": "",
+    "parameters": "- `UseMaOpen` – activate moving average cross signals.\n- `FastMaLength` / `SlowMaLength` – lengths of the fast and slow moving averages.\n- `MaType` – type of moving average (SMA, EMA, WMA).\n- `UseStochasticOpen` – enable Stochastic filter for entries.\n- `StochLength` – main period for Stochastic calculation.\n- `StochKPeriod` / `StochDPeriod` – smoothing periods for %K and %D lines.\n- `StochBuyLevel` / `StochSellLevel` – oversold and overbought thresholds.\n- `UseRsiClose` – enable RSI-based exits.\n- `RsiPeriod` – RSI calculation length.\n- `RsiHigh` / `RsiLow` – RSI thresholds for closing positions.\n- `CandleType` – candle type to subscribe."
+   },
+   "1057": {
+    "id": 1057,
+    "name": "MOC Delta MOO Entry v2 Reverse",
+    "family": "trend",
+    "overview": "This strategy reverses the classic MOC Delta MOO Entry logic. It measures the buy-sell volume delta in the afternoon session (14:50–14:55) and stores the delta as a percentage of the day's volume. The next morning at 08:30 a position is opened in the opposite direction of the delta if it exceeds a threshold, filtered by two moving averages. Positions are closed with tick-based take profit and stop loss or at 14:50.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: At 08:30 when the saved delta percent is below `-DeltaThreshold` and the open price is above SMA15 and SMA30 with SMA15 above SMA30.\n  - **Short**: At 08:30 when the saved delta percent is above `DeltaThreshold` and the open price is below SMA15 and SMA30 with SMA15 below SMA30.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Take profit and stop loss in ticks.\n  - Close all open positions at 14:50.\n- **Stops**:\n  - `TpTicks` = 20 ticks take profit.\n  - `SlTicks` = 10 ticks stop loss.\n- **Default Values**:\n  - `DeltaThreshold` = 2\n  - `TpTicks` = 20\n  - `SlTicks` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: At 08:30 when the saved delta percent is below `-DeltaThreshold` and the open price is above SMA15 and SMA30 with SMA15 above SMA30.\n  - **Short**: At 08:30 when the saved delta percent is above `DeltaThreshold` and the open price is below SMA15 and SMA30 with SMA15 below SMA30.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Take profit and stop loss in ticks.\n  - Close all open positions at 14:50.\n- **Stops**:\n  - `TpTicks` = 20 ticks take profit.\n  - `SlTicks` = 10 ticks stop loss.\n- **Default Values**:\n  - `DeltaThreshold` = 2\n  - `TpTicks` = 20\n  - `SlTicks` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1981": {
+    "id": 1981,
+    "name": "Color NonLag Dot MACD",
+    "family": "trend",
+    "overview": "Strategy using MACD indicator with several signal detection modes. The approach is ported from the MQL \"Exp_ColorNonLagDotMACD\" expert advisor.\n\n## Details\n\n- **Entry Criteria**: Depends on selected mode (zero line breakout, MACD twist, signal line twist, or MACD crossing signal line).\n- **Long/Short**: Both directions, can be enabled separately.\n- **Exit Criteria**: Opposite signals or configured stop/target.\n- **Stops**: Optional percent based stop loss and take profit.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Mode` = `MacdDisposition`\n  - `TakeProfitPercent` = 4\n  - `StopLossPercent` = 2\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Depends on selected mode (zero line breakout, MACD twist, signal line twist, or MACD crossing signal line).\n- **Long/Short**: Both directions, can be enabled separately.\n- **Exit Criteria**: Opposite signals or configured stop/target.\n- **Stops**: Optional percent based stop loss and take profit.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Mode` = `MacdDisposition`\n  - `TakeProfitPercent` = 4\n  - `StopLossPercent` = 2\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "635": {
+    "id": 635,
+    "name": "Correlation Matrix Heatmap",
+    "family": "trend",
+    "overview": "Displays a correlation matrix between up to seven selected securities. The strategy subscribes to each instrument, smooths closing prices with a moving average, and logs correlations with time and between instruments. No trading actions are taken.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3827": {
+    "id": 3827,
+    "name": "Doji Arrows",
+    "family": "trend",
+    "overview": "The **Doji Arrows Strategy** is a StockSharp port of the MetaTrader expert advisor `Doji_arrows_expert1.mq4`. The trading idea is to detect a neutral doji candle and immediately trade the breakout that follows on the next bar. When the market prints a very small body candle (open ≈ close) and the subsequent candle closes beyond the doji high or low, the strategy interprets the move as a directional breakout and enters in that direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle type/timeframe to analyse. | 5-minute time frame |\n| `DojiBodyThresholdSteps` | Maximum doji body expressed in price steps. | 1 |\n| `BreakoutBufferSteps` | Extra filter above/below the doji extreme before accepting a breakout. | 0 |\n| `InitialStopSteps` | Initial stop-loss distance from entry in steps. | 20 |\n| `TakeProfitSteps` | Take-profit distance from entry in steps. | 25 |\n| `TrailingStopSteps` | Trailing stop distance maintained once the trade is in profit. | 10 |\n\nAll parameters are exposed through `StrategyParam<T>` making them visible in the UI and ready for optimisation."
+   },
+   "138": {
+    "id": 138,
+    "name": "MA Stochastic",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 151%. It performs best in the stocks market.\n\nShort trades mirror this logic for downtrends, selling rallies when stochastic reaches overbought.\n\nFixed percent stops help avoid large losses if the trend suddenly reverses.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Average, Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Average, Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1505": {
+    "id": 1505,
+    "name": "Ultimate Scalping Strategy v2",
+    "family": "trend",
+    "overview": "Scalping system combining fast and slow EMAs with VWAP. Optional engulfing candle and volume spike filters refine entries. Positions use ATR-based stops and can close on opposite signals.\n\n## Details\n\n- **Long**: fast EMA crosses above slow EMA and price above VWAP.\n- **Short**: fast EMA crosses below slow EMA and price below VWAP.\n- **Indicators**: EMA, VWAP, ATR, SMA.\n- **Stops**: ATR multiples.\n",
+    "details": "- **Long**: fast EMA crosses above slow EMA and price above VWAP.\n- **Short**: fast EMA crosses below slow EMA and price below VWAP.\n- **Indicators**: EMA, VWAP, ATR, SMA.\n- **Stops**: ATR multiples.",
+    "parameters": ""
+   },
+   "3972": {
+    "id": 3972,
+    "name": "Macd Pattern Trader All v0.01",
+    "family": "trend",
+    "overview": "The strategy replicates the \"MacdPatternTraderAll v0.01\" MetaTrader expert advisor. It runs six independent MACD-based entry patterns on the same candle stream, manages risk with adaptive stop-loss and take-profit levels, performs staged profit taking, and optionally applies a slow martingale sizing rule after losing cycles.\n\n## Core Features\n\n- **Six MACD setups** – every pattern uses its own fast/slow EMA periods and threshold levels (`Pattern1` … `Pattern6`). Patterns can be toggled on or off independently.\n- **Dynamic risk levels** – stop-loss levels are derived from recent highs/lows with configurable offsets, while take-profit levels iterate over successive bar blocks to mirror the original MQL implementation.\n- **Session filter** – the strategy trades only inside the configurable `StartTime` / `StopTime` window when `UseTimeFilter` is enabled.\n- **Partial exits** – profitable positions are scaled out in two steps once EMA/SMA filters confirm momentum, following the original `ActivePosManager` logic.\n- **Slow martingale** – when `UseMartingale` is true the next trade size doubles after a losing cycle and resets after any profitable cycle.\n\n## Entry Logic by Pattern\n\n1. **Pattern 1 (tag `Pattern1`)**\n   - Arms a short after the MACD main line pushes above `Pattern1MaxThreshold` and then rolls over with a lower high sequence.\n   - Arms a long after stretching below `Pattern1MinThreshold` and producing a higher low sequence.\n2. **Pattern 2 (tag `Pattern2`)**\n   - Counts oscillations around the zero line. Shorts are triggered when a positive swing fails near `Pattern2MinThreshold`. Longs appear when a negative swing fades near `Pattern2MaxThreshold`. The algorithm reproduces the original distance checks by comparing absolute MACD values (`valueMin2` / `valueCurr2`).\n3. **Pattern 3 (tag `Pattern3`)**\n   - Tracks up to three descending (or ascending) MACD tops to detect a \"triple hook\". Only when all intermediate thresholds (`Pattern3MaxThreshold`, `Pattern3MaxLowTh",
+    "details": "",
+    "parameters": "All configuration knobs are exposed through `StrategyParam<T>` properties for optimization in StockSharp Designer.\n\n- **General**: `CandleType`, `InitialVolume`, `UseTimeFilter`, `StartTime`, `StopTime`, `UseMartingale`.\n- **Patterns 1–6**: stop-loss/take-profit bar counts, offsets, MACD fast/slow periods, and threshold levels matching the external inputs from the MQL script.\n- **Position manager**: EMA/SMA lengths (`EmaPeriod1`, `EmaPeriod2`, `SmaPeriod3`, `EmaPeriod4`) used in the partial exit filter.\n\nAll default values mirror the `extern` variables of `MacdPatternTraderAll v0.01`."
+   },
+   "307": {
+    "id": 307,
+    "name": "MACD Adaptive Histogram",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 184%. It performs best in the crypto market.\n\nSignals trigger when Histogram confirms trend changes on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like FastPeriod, SlowPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `FastPeriod = 12`\n  - `SlowPeriod = 26`\n  - `SignalPeriod = 9`\n  - `HistogramAvgPeriod = 20`\n  - `StdDevMultiplier = 2.0m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Histogram\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `FastPeriod = 12`\n  - `SlowPeriod = 26`\n  - `SignalPeriod = 9`\n  - `HistogramAvgPeriod = 20`\n  - `StdDevMultiplier = 2.0m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Histogram\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

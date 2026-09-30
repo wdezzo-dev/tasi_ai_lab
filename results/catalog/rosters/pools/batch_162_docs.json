@@ -1,0 +1,98 @@
+{
+ "batch_162": {
+  "strategy_ids": [
+   455,
+   3687,
+   3031,
+   1378,
+   1914,
+   1034,
+   3247,
+   1570,
+   1836,
+   2451
+  ],
+  "docs": {
+   "455": {
+    "id": 455,
+    "name": "Golden Ratio Cubes",
+    "family": "trend",
+    "overview": "The Golden Ratio Cubes strategy uses Fibonacci mathematics to detect breakouts. It tracks the highest high and lowest low over a lookback window and computes extensions based on the golden ratio (φ ≈ 1.618). When price closes beyond these extensions, the strategy enters in the breakout direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Close above golden ratio extension of recent range → Buy.\n  - Close below golden ratio extension of recent range → Sell.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite breakout signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Lookback` = 34\n  - `Phi` = 1.618\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Close above golden ratio extension of recent range → Buy.\n  - Close below golden ratio extension of recent range → Sell.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite breakout signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Lookback` = 34\n  - `Phi` = 1.618\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3687": {
+    "id": 3687,
+    "name": "Smart Trend Follower",
+    "family": "trend",
+    "overview": "The **Smart Trend Follower Strategy** is a StockSharp port of the MetaTrader 5 expert advisor *Smart Trend Follower*. The\noriginal system alternates between a contrarian moving-average crossover and a trend-following setup that uses stochastic\nconfirmation. It scales into positions with a martingale-like volume multiplier and maintains a shared take-profit/stop-loss\nfor each directional basket. The StockSharp version keeps the same behaviour while using the high-level API (candle\nsubscriptions, indicator bindings and market orders).",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `SignalMode` | enum (`CrossMa`, `Trend`) | `CrossMa` | Selects the signal engine (contrarian crossover or trend with stochastic filter). |\n| `CandleType` | `DataType` | 30-minute time frame | Primary candle series used for calculations and signal generation. |\n| `InitialVolume` | decimal | `0.01` | Base order size in lots for the first entry of any basket. |\n| `Multiplier` | decimal | `2` | Volume multiplier applied to each additional averaging order. |\n| `LayerDistancePips` | decimal | `200` | Minimum pip distance from the best entry before adding another order in the same direction. |\n| `FastPeriod` | int | `14` | Period of the fast simple moving average. |\n| `SlowPeriod` | int | `28` | Period of the slow simple moving average (must be greater than `FastPeriod`). |\n| `StochasticKPeriod` | int | `10` | Lookback length for the stochastic oscillator %K line. |\n| `StochasticDPeriod` | int | `3` | Smoothing length for the stochastic %D line. |\n| `StochasticSlowing` | int | `3` | Additional smoothing applied to %K before %D calculation. |\n| `TakeProfitPips` | decimal | `500` | Distance in pips from the average entry where the basket take-profit is placed. Set 0 to disable. |\n| `StopLossPips` | decimal | `0` | Protective stop distance in pips. Set 0 to disable the hard stop. |"
+   },
+   "3031": {
+    "id": 3031,
+    "name": "Color Schaff JCCX Trend Cycle MMRec Duplex",
+    "family": "trend",
+    "overview": "- Recreates the dual-direction Expert Advisor \"ColorSchaffJCCXTrendCycle_MMRec_Duplex\" from MetaTrader within StockSharp.\n- Uses two independent Schaff trend cycle stacks built on Jurik moving averages to detect bullish and bearish reversals.\n- Implements a simplified MMRec (money management recommender) module that reduces size after repeated losses.\n- Applies separate parameter sets for long and short trades, enabling asymmetric configurations across timeframes and price sources.",
+    "details": "",
+    "parameters": "| Group | Parameter | Description | Default |\n| --- | --- | --- | --- |\n| Long | `LongCandleType` | Candle type (timeframe) used for long calculations. | 8 hour timeframe |\n| Long | `LongFastLength` | Fast Jurik length inside the long JCCX approximation. | 23 |\n| Long | `LongSlowLength` | Slow Jurik length for the long JCCX approximation. | 50 |\n| Long | `LongSmoothLength` | Jurik smoothing length applied to the numerator/denominator. | 8 |\n| Long | `LongPhase` | Phase parameter translated into a smoothing factor (0.05–0.95). | 100 |\n| Long | `LongCycle` | Rolling window length for the stochastic transforms. | 10 |\n| Long | `LongSignalBar` | Delay (in bars) before a signal is evaluated. | 1 |\n| Long | `LongAppliedPrice` | Price source used for long calculations. | Close |\n| Long | `LongAllowOpen` / `LongAllowClose` | Enable/disable long entries or exits. | true |\n| Long | `LongTotalTrigger` | Number of recent long trades stored for the MMRec queue. | 5 |\n| Long | `LongLossTrigger` | Losses required inside the queue to switch to small volume. | 3 |\n| Long | `LongSmallVolume` / `LongNormalVolume` | Reduced and default long trade sizes. | 0.01 / 0.1 |\n| Long | `LongStopLoss` / `LongTakeProfit` | Optional stop/take distances in price steps. | 1000 / 2000 |\n| Short | Same as long (prefixed with `Short`). | | |"
+   },
+   "1378": {
+    "id": 1378,
+    "name": "Supertrend Long-Only for QQQ",
+    "family": "trend",
+    "overview": "Long-only strategy based on Supertrend indicator and a date range filter.\n\n## Details\n\n- **Entry Criteria**: Price crossing above Supertrend.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price crossing below Supertrend.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrPeriod` = 32\n  - `Multiplier` = 4.35m\n  - `StartDate` = 1995-01-01\n  - `EndDate` = 2050-01-01\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing above Supertrend.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price crossing below Supertrend.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrPeriod` = 32\n  - `Multiplier` = 4.35m\n  - `StartDate` = 1995-01-01\n  - `EndDate` = 2050-01-01\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1914": {
+    "id": 1914,
+    "name": "RMACD Reversal",
+    "family": "trend",
+    "overview": "This strategy uses the Moving Average Convergence Divergence (MACD) indicator to generate reversal signals. Four different modes define how entries are detected:\n\n1. **Breakdown** – enters long when the MACD histogram crosses below zero and enters short when it crosses above zero.\n2. **MacdTwist** – looks for a change in MACD direction by comparing the last two histogram values.\n3. **SignalTwist** – monitors the signal line for direction changes.\n4. **MacdDisposition** – enters when the MACD histogram crosses the signal line.\n\nThe strategy always uses market orders and reverses positions when a new opposite signal appears.",
+    "details": "",
+    "parameters": "- **Fast Length** – period for the fast EMA inside MACD.\n- **Slow Length** – period for the slow EMA inside MACD.\n- **Signal Length** – smoothing period for the signal line.\n- **Candle Type** – timeframe of candles used for calculations.\n- **Mode** – selects the entry algorithm described above."
+   },
+   "1034": {
+    "id": 1034,
+    "name": "Max Gain",
+    "family": "momentum",
+    "overview": "Max Gain compares the percentage distance from the lowest low to the current high and from the highest high to the current low over a lookback period. It goes long when potential gain exceeds the adjusted loss, otherwise it goes short.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Max gain > adjusted max loss.\n  - **Short**: Adjusted max loss > max gain.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `PeriodLength` = 30\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Max gain > adjusted max loss.\n  - **Short**: Adjusted max loss > max gain.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `PeriodLength` = 30\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3247": {
+    "id": 3247,
+    "name": "Personal Assistant MNS",
+    "family": "volatility",
+    "overview": "This strategy ports the MetaTrader `personal_assistant_codeBase_MNS` expert advisor to StockSharp. It acts as a manual trading helper: instead of generating autonomous signals, it exposes C# methods that replicate the hotkey-driven actions from the original EA (open/close trades, adjust volume, or liquidate profitable positions). The helper also logs informative metrics about the symbol, active orders, and currently configured risk levels on every finished candle.\n\n## How it works\n\n1. The strategy subscribes to a configurable candle series (`CandleType`, 1 minute by default).\n2. Each finished candle triggers an update that prints: current position, PnL, number of active stop/take orders, spread, tick value, and the configured magic number.\n3. Manual commands (e.g., `PressBuy()` or `PressSell()`) submit market orders with the current helper volume. Optional stop-loss and take-profit levels are translated from pip distances and cached inside the strategy.\n4. Protective levels are emulated on candle data: if price touches the cached stop or target, the strategy issues market exits.\n5. An optional move-to-break-even rule (`UseTrailingStop`) arms after the price advances by `BreakEvenTriggerPips`; once armed, it liquidates the position if price retreats to the entry price plus `BreakEvenOffsetPips`.\n\n## Features\n\n- Replicates buttons 1–8 from the MQL assistant via public methods:\n  - `PressBuy()` / `PressSell()` – open market trades with optional protective levels.\n  - `PressCloseAll()` – flatten all exposure.\n  - `IncreaseVolume()` / `DecreaseVolume()` – adjust the helper volume in 0.01 lots.\n  - `CloseLongPositions()` / `CloseShortPositions()` – close one side only.\n  - `CloseProfitablePositions()` – close the position when floating PnL is positive.\n- Logs a detailed action legend on start when `DisplayLegend` is enabled.\n- Converts pip-based risk distances into absolute prices using the instrument's price step and decimal precision.\n- Supports break-even trailing for ",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `MagicNumber` | Informational identifier copied from the MQL `MagicNo` input. |\n| `DisplayLegend` | Enable to print the control legend and candle-by-candle status messages. |\n| `OrderVolume` | Base market order volume (lots) reused by all manual actions. |\n| `Slippage` | Maximum tolerated slippage (in ticks), stored for reference. |\n| `TakeProfitPips` | Pip distance for the cached take-profit level (0 disables it). |\n| `StopLossPips` | Pip distance for the cached stop-loss level (0 disables it). |\n| `UseTrailingStop` | Enable or disable the break-even trailing logic. |\n| `BreakEvenTriggerPips` | Profit distance (in pips) required before the break-even stop arms. |\n| `BreakEvenOffsetPips` | Offset (in pips) added to the entry price once the stop is armed. |\n| `CandleType` | Candle series used for monitoring and level emulation. |"
+   },
+   "1570": {
+    "id": 1570,
+    "name": "Z-Score Normalized VIX",
+    "family": "mean_reversion",
+    "overview": "Strategy that averages z-scores of several VIX indices and enters long when combined value drops below a negative threshold.\n\nThe algorithm computes z-score for VIX, VIX3M, VIX9D and VVIX. Selected z-scores are averaged to form a single indicator representing overall volatility sentiment.\n\n## Details\n\n- **Entry Criteria**: Combined z-score below `-Threshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Combined z-score rising above `-Threshold`.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreLength` = 6\n  - `Threshold` = 1\n  - `UseVix` = true\n  - `UseVix3m` = true\n  - `UseVix9d` = true\n  - `UseVvix` = true\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: Z-Score\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Combined z-score below `-Threshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Combined z-score rising above `-Threshold`.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreLength` = 6\n  - `Threshold` = 1\n  - `UseVix` = true\n  - `UseVix3m` = true\n  - `UseVix9d` = true\n  - `UseVvix` = true\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: Z-Score\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1836": {
+    "id": 1836,
+    "name": "Gap Fill",
+    "family": "volume",
+    "overview": "Gap Fill strategy exploits price gaps between consecutive 15-minute candles.\nWhen a new candle opens above the previous candle's high by more than a configurable threshold, the strategy sells and places a buy limit at the prior high, aiming for the gap to close.\nWhen a candle opens below the previous low by more than the threshold, it buys and places a sell limit at the prior low.\nThe threshold is calculated as `MinGapSize` price steps plus the current spread between best bid and ask.\n\n## Details\n\n- **Entry Criteria**: Gap between current open and previous high/low exceeds `MinGapSize` plus spread.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Limit order at the previous candle extreme.\n- **Stops**: No.\n- **Default Values**:\n  - `MinGapSize` = 1\n  - `Volume` = 0.1\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Gap\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Gap between current open and previous high/low exceeds `MinGapSize` plus spread.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Limit order at the previous candle extreme.\n- **Stops**: No.\n- **Default Values**:\n  - `MinGapSize` = 1\n  - `Volume` = 0.1\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Gap\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2451": {
+    "id": 2451,
+    "name": "Ten Pips",
+    "family": "volume",
+    "overview": "This hedging strategy opens long and short positions at the same time. Each position uses fixed take profit and stop loss levels measured in price units and can be protected by a trailing stop. When one side closes, the strategy immediately opens a new position in the same direction to keep both sides active.\n\n## Parameters\n- `TakeProfitBuy` – take profit distance for long positions.\n- `StopLossBuy` – stop loss distance for long positions.\n- `TrailingStopBuy` – trailing stop distance for long positions.\n- `TakeProfitSell` – take profit distance for short positions.\n- `StopLossSell` – stop loss distance for short positions.\n- `TrailingStopSell` – trailing stop distance for short positions.\n- `Volume` – order size used for all trades.\n\n## Notes\n- Positions are opened with market orders.\n- Protective orders are registered for each side separately.\n- Trailing stops are updated when the market moves in a favourable direction.\n",
+    "details": "",
+    "parameters": "- `TakeProfitBuy` – take profit distance for long positions.\n- `StopLossBuy` – stop loss distance for long positions.\n- `TrailingStopBuy` – trailing stop distance for long positions.\n- `TakeProfitSell` – take profit distance for short positions.\n- `StopLossSell` – stop loss distance for short positions.\n- `TrailingStopSell` – trailing stop distance for short positions.\n- `Volume` – order size used for all trades."
+   }
+  }
+ }
+}

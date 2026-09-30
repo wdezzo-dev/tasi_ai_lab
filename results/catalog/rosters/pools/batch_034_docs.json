@@ -1,0 +1,98 @@
+{
+ "batch_034": {
+  "strategy_ids": [
+   3256,
+   3478,
+   1465,
+   3973,
+   1324,
+   938,
+   925,
+   2316,
+   3960,
+   198
+  ],
+  "docs": {
+   "3256": {
+    "id": 3256,
+    "name": "FiboChannel Line",
+    "family": "trend",
+    "overview": "The **FiboChannel Line Strategy** is a conversion of the MetaTrader expert advisor “FIBOCHANNEL”.\nThe original robot relied on the direction of a manually drawn Fibonacci channel, momentum swings on a\nhigher timeframe, and a combination of linear weighted moving averages and MACD signals. The StockSharp\nport keeps the same spirit while leveraging high-level indicator bindings and built-in risk management.\n\nKey ideas:\n\n- Follow the dominant trend using a pair of linear weighted moving averages (LWMA).\n- Confirm momentum spikes around the neutral level of the Momentum oscillator.\n- Filter trades with the MACD line versus signal line relationship.\n- Check the slope of a linear regression channel instead of reading chart objects.\n- Manage positions via automatic percentage based protection.\n\nThe strategy works on any instrument that supports candle aggregation. The default timeframe is 30-minute\ncandles, which provides a balance between responsiveness and indicator stability.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Candle Type` | Candle aggregation used for all indicators. | 30-minute time frame |\n| `Fast LWMA` | Length of the fast linear weighted moving average. | 6 |\n| `Slow LWMA` | Length of the slow linear weighted moving average. | 85 |\n| `Momentum Period` | Number of bars for the Momentum indicator. | 14 |\n| `Momentum Threshold` | Minimal absolute deviation from 100 required inside the momentum buffer. | 0.3 |\n| `Channel Length` | Bars used when computing the linear regression slope. | 50 |\n| `Slope Threshold` | Minimal absolute slope value to confirm trend direction. | 0.0 |\n| `MACD Fast` | Fast EMA period within the MACD calculation. | 12 |\n| `MACD Slow` | Slow EMA period within the MACD calculation. | 26 |\n| `MACD Signal` | Signal line period of MACD. | 9 |\n| `Take Profit %` | Distance of the protective take-profit in percent. | 2 |\n| `Stop Loss %` | Distance of the protective stop-loss in percent. | 1 |\n| `Equity Risk %` | Maximum account equity drawdown allowed before flattening all positions. | 3 |\n\nAll numeric parameters expose optimization hints that mirror the typical ranges of the MQL inputs."
+   },
+   "3478": {
+    "id": 3478,
+    "name": "Dual Stoploss",
+    "family": "trend",
+    "overview": "This strategy replicates the behaviour of the MetaTrader expert **Dual StopLoss.mq4**. It acts as a risk-management layer: it monitors the protective stop-loss orders attached to open positions and closes those positions a few points before the stop would trigger. The early exit is designed to avoid negative slippage on highly volatile moves while still respecting the trader's initial stop placement.\n\n## How it works\n\n1. The strategy subscribes to Level1 data to track the current best bid/ask and the `StopLevel` (or equivalent) distance published by the broker.\n2. Every time new prices arrive or orders/trades change, it searches for the nearest active stop order that belongs to the managed security.\n3. The distance between the market price and that protective stop is compared with a configurable threshold:\n   - Threshold = `WhenToClosePoints × pointValue + stopLevelDistance`.\n   - `pointValue` matches MetaTrader's `Point` (0.0001 for most FX pairs, auto-detected from the security settings).\n   - `stopLevelDistance` comes from Level1 fields (`StopLevel`, `MinStopPrice`, `StopPrice`, or `StopDistance`) when available, otherwise zero.\n4. When the remaining distance is smaller than or equal to the threshold, the position is closed immediately using a market order.\n\nThe logic covers both long and short positions. For long positions the best bid is compared with the sell stop price; for short positions the best ask is compared with the buy stop price. Only stop and stop-limit orders in the active state are considered.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| **WhenToClosePoints** | Distance (in MetaTrader points) from the stop level that should trigger the early exit. Default: 10. Set to zero to only rely on the broker's minimal stop level distance. |\n\n## Notes and limitations\n\n- The strategy does **not** open positions on its own; it only manages positions that already exist and have protective stop orders.\n- Ensure that the underlying co",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **WhenToClosePoints** | Distance (in MetaTrader points) from the stop level that should trigger the early exit. Default: 10. Set to zero to only rely on the broker's minimal stop level distance. |"
+   },
+   "1465": {
+    "id": 1465,
+    "name": "Trend Following KNN",
+    "family": "trend",
+    "overview": "Trend Following KNN is a simplified strategy that measures the average price change over a window and compares price with a moving average.\nIt buys when average change is positive and price is above the moving average, sells when average change is negative and price is below the moving average.\n\n## Details\n\n- **Entry Criteria**: positive/negative average change with price above/below moving average\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `WindowSize` = 20\n  - `MaLength` = 50\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: positive/negative average change with price above/below moving average\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `WindowSize` = 20\n  - `MaLength` = 50\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3973": {
+    "id": 3973,
+    "name": "DeMark Lines",
+    "family": "trend",
+    "overview": "The DeMark Lines Strategy is a conversion of the MetaTrader \"DeMark_lines\" indicator (MQL/8296). The original script drew DeMark trendlines based on recent swing highs and lows and highlighted breakouts with optional alerts. This StockSharp implementation transforms the visualization logic into an automated breakout strategy. It continuously scans for downtrend and uptrend lines formed by validated pivot points and opens positions when price action decisively breaks those lines.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `PivotDepth` | Number of candles on each side required to confirm a pivot high/low. Controls the strictness of swing detection. | 2 |\n| `MinBarsBetweenPivots` | Minimum distance, in bars, between two pivots of the same type. Prevents overlapping anchors and keeps trendlines stable. | 5 |\n| `BreakoutBuffer` | Extra distance (in pips) added beyond the trendline before a breakout is considered valid. Filters noisy touches. | 2 |\n| `CandleType` | Candle data type (timeframe) used for analysis and signal generation. | 30-minute candles |"
+   },
+   "1324": {
+    "id": 1324,
+    "name": "Smoothed Heiken-Ashi",
+    "family": "trend",
+    "overview": "Heiken-Ashi candles smoothed with EMA highlight acceleration in price moves. A long position is opened when a bullish smoothed candle has a larger body than the previous one. The position is closed when a bearish body expands.\n\n## Details\n\n- **Entry Criteria**: bullish smoothed Heiken-Ashi candle with larger body than previous\n- **Long/Short**: Long\n- **Exit Criteria**: bearish body expands\n- **Stops**: No\n- **Default Values**:\n  - `EmaLength` = 40\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Heikin-Ashi\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: bullish smoothed Heiken-Ashi candle with larger body than previous\n- **Long/Short**: Long\n- **Exit Criteria**: bearish body expands\n- **Stops**: No\n- **Default Values**:\n  - `EmaLength` = 40\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Heikin-Ashi\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "938": {
+    "id": 938,
+    "name": "IU Break of Any Session",
+    "family": "breakout",
+    "overview": "The strategy records the high and low of a custom session and trades breakouts of that range during the trading window. A stop-loss is placed at the entry bar extreme and take profit uses a configurable risk to reward ratio. All positions are closed at the specified exit time.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "925": {
+    "id": 925,
+    "name": "Inside Candle",
+    "family": "breakout",
+    "overview": "This strategy detects inside candles and enters on breakouts of the mother candle's range. Exits are based on a user-defined risk/reward ratio.\n\n## Parameters\n- **Candle Type** — timeframe for the candles.\n- **RR Ratio** — risk/reward ratio for target calculation.\n\n",
+    "details": "",
+    "parameters": "- **Candle Type** — timeframe for the candles.\n- **RR Ratio** — risk/reward ratio for target calculation."
+   },
+   "2316": {
+    "id": 2316,
+    "name": "Polarized Fractal Efficiency",
+    "family": "momentum",
+    "overview": "This strategy trades based on the **Polarized Fractal Efficiency (PFE)** indicator. PFE measures the efficiency of price movement and changes sign when momentum shifts.\n\n## Trading Logic\n\n1. Subscribe to candles of the selected timeframe and calculate PFE.\n2. If PFE on the previous bar is lower than two bars ago and the current value is higher than the previous one, a long position is opened.\n3. If PFE on the previous bar is higher than two bars ago and the current value is lower than the previous one, a short position is opened.\n4. Opposite positions are closed before opening new ones.\n5. Optional stop loss and take profit protection is enabled.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `CandleType` | Candle series used for analysis. |\n| `PfePeriod` | Period for calculating the PFE indicator. |\n| `SignalBar` | Offset of the bar used to generate signals. |\n| `TakeProfit` | Take profit in price steps. |\n| `StopLoss` | Stop loss in price steps. |\n\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Candle series used for analysis. |\n| `PfePeriod` | Period for calculating the PFE indicator. |\n| `SignalBar` | Offset of the bar used to generate signals. |\n| `TakeProfit` | Take profit in price steps. |\n| `StopLoss` | Stop loss in price steps. |"
+   },
+   "3960": {
+    "id": 3960,
+    "name": "Pendulum Swing",
+    "family": "volatility",
+    "overview": "The **Pendulum Swing Strategy** is a StockSharp port of the MetaTrader expert advisor *Pendulum 1_01*. The original system keeps two pending stop orders around the current price and progressively increases their volume after each fill. This C# version reproduces the same \"swing\" behaviour using high-level StockSharp helpers.\n\nKey ideas:\n\n- Maintain symmetric buy-stop and sell-stop orders at a configurable distance from the last closed candle.\n- After each fill, the next stop on the same side multiplies its volume, implementing the martingale-style progression from the MQL source.\n- Close the position when a short-term pip target is reached or when the account equity crosses global profit/loss thresholds.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `BaseVolume` | `decimal` | `0.1` | Volume of the first pending stop. |\n| `VolumeMultiplier` | `decimal` | `2` | Factor applied after each filled level on the same side. |\n| `MaxLevels` | `int` | `8` | Maximum number of fills allowed in one direction. |\n| `ManualStepPips` | `int` | `50` | Stop distance in pips when the daily range is unavailable. |\n| `UseDynamicRange` | `bool` | `true` | If enabled, derives the step from the latest finished daily candle. |\n| `RangeFraction` | `decimal` | `0.2` | Fraction of the daily range used as the base stop distance. |\n| `TakeProfitPips` | `int` | `10` | Local pip target that closes the current position. Set `0` to disable. |\n| `SlippagePips` | `int` | `3` | Extra buffer added to the pending distance to mimic MetaTrader slippage. |\n| `UseGlobalTargets` | `bool` | `true` | Enables equity-based liquidation checks. |\n| `GlobalTakePercent` | `decimal` | `1` | Equity growth (in percent) that triggers global take-profit. |\n| `GlobalStopPercent` | `decimal` | `2` | Equity drawdown (in percent) that triggers global stop-loss. |\n| `CandleType` | `DataType` | `15m` candles | Timeframe used for the primary trading logic. |"
+   },
+   "198": {
+    "id": 198,
+    "name": "Vwap Macd",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 181%. It performs best in the crypto market.\n\nVWAP guides intraday value, and MACD crossovers reveal momentum shifts. Trades are launched as MACD turns near the VWAP level.\n\nSuitable for short-term momentum traders. ATR stop rules prevent excessive risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > VWAP && MACD > Signal`\n  - Short: `Close < VWAP && MACD < Signal`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > VWAP && MACD > Signal`\n  - Short: `Close < VWAP && MACD < Signal`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

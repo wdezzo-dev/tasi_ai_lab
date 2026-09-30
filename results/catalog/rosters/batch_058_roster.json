@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1181,
+      "name": "Premarket Gap MomoTrader",
+      "family": "trend",
+      "entry_long": "roc(close,1) >= 5 and close > open and (close - open) / (high - low) > 0.75 and volume_ratio(volume,20) > 1",
+      "exit_long": "close < open or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MinGainPct 5 gap, green candle, large body (the lowest 75% sizing tier is used as the entry filter) and MinVolume 15000 are kept, with the absolute volume threshold expressed as volume above its 20-bar average. The exit is the documented first red candle or non-increasing volume, and the 04:00-09:30 session filter, one-trade-per-day rule and volume-based sizing need clock and order state."
+    },
+    {
+      "id": 3965,
+      "name": "Macd Pattern Trader Trigger",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) - macd_signal(close,12,26,9) > 0 and roc(macd(close,12,26) - macd_signal(close,12,26,9),3) > 0",
+      "exit_long": "macd(close,12,26) - macd_signal(close,12,26,9) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The histogram double-bottom above zero is approximated by a positive MACD histogram that is rising over three bars, and the mirror (negative histogram) is the exit; 12/26/9 is an explicit default since the docs only say the lengths replicate the original advisor. Bullish/Bearish Trigger and Reset levels, point-based stop and target and automatic reversal are stateful features."
+    },
+    {
+      "id": 505,
+      "name": "ADX CCI MA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20)) and adx(high,low,close,10) > 20 and zscore(close,15) > 1.5 and close > sma(close,200)",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20)) and adx(high,low,close,10) > 20 and zscore(close,15) < -1.5",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Documented AdxLength 10 with AdxThreshold 20, CciPeriod 15 (CCI > 100 mapped to 1.5 z-score units) and the Simple MaLength 200 trend filter are used; +DI crossing -DI is approximated by a fast/slow EMA cross since directional indices are not exposed. StopLossPercent 1 and TakeProfitPercent 2 are the documented percentage protections, and the optional MA risk exit is disabled by default."
+    },
+    {
+      "id": 1801,
+      "name": "Artificial Intelligence Perceptron",
+      "family": "trend",
+      "entry_long": "(sma((high+low)/2,5) - sma((high+low)/2,34)) - sma(sma((high+low)/2,5) - sma((high+low)/2,34),5) > 0",
+      "exit_long": "(sma((high+low)/2,5) - sma((high+low)/2,34)) - sma(sma((high+low)/2,5) - sma((high+low)/2,34),5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Accelerator Oscillator is rebuilt exactly (AO of median price minus its SMA) and, because the perceptron weights X1-X4 and the 7-bar input spacing are undocumented and cannot be shifted in the DSL, the single positive AC reading stands in for a positive perceptron output. The 850-point stop, break-even move and volume-increasing reversal are position state."
+    },
+    {
+      "id": 801,
+      "name": "FlexiMA Variance Tracker",
+      "family": "trend",
+      "entry_long": "close - sma(close,20) > sma(close - sma(close,20),20) + std(close - sma(close,20),20) and close > ema(close,20)",
+      "exit_long": "close - sma(close,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The deviation series around the documented MA length 20 is compared with its own 20-bar average plus one standard deviation (the documented 1.0 multiplier), and SuperTrend direction is proxied by close above EMA(20). Exit is the opposite deviation, and the documented ATR period 10 / factor 3.0 sizing filter and the absence of stops are noted."
+    },
+    {
+      "id": 846,
+      "name": "Gold ORB",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,6)",
+      "exit_long": "close < donchian_low_prev(low,6)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 00:00-06:00 Asia range is approximated by a prior 6-bar high/low (6 hours of the documented session) and closing beyond it is the breakout entry, with the opposite side as the exit. The range-derived stop and the 2.0 RewardMultiplier target cannot be expressed as fixed percentages, and the session clock windows are unavailable on daily bars."
+    },
+    {
+      "id": 3509,
+      "name": "OpenPendingorderAfterPositionGetStopLoss",
+      "family": "breakout",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic %K slope turning up is rebuilt as the 14-bar range-position line crossing its 3-period average (KPeriod 14 / DPeriod 3 are explicit defaults) and the downward turn exits. Pending stop placement above market, per-direction position caps, point-based protection and reinstalling orders after a stop-out are order-book features."
+    },
+    {
+      "id": 2631,
+      "name": "N Candles v3",
+      "family": "momentum",
+      "entry_long": "close > open and bars_since(close < open) > 3",
+      "exit_long": "close < open and bars_since(close > open) > 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A run of identical-direction candles is measured with bars_since, giving three consecutive bullish bars for the long and three bearish bars for the exit; Identical Candles has no documented value so 3 is an explicit default. The position cap, point-based take-profit/stop-loss and trailing step are order and position state."
+    },
+    {
+      "id": 2869,
+      "name": "Coin Flip Martingale",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are decided by a pseudo-random coin toss on each finished candle with no market signal, so the impossible negative-price guard is used instead of a fabricated rule. Martingale sizing, the price-step stop/target and the trailing activation are position-management features the DSL cannot express."
+    },
+    {
+      "id": 2205,
+      "name": "Stochastic Histogram",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+      "exit_long": "crossabove(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The %K line is approximated by the close's position in the 14-bar range with a 3-period %D average, and the documented Cross-mode contrarian rule (long on a downward %K/%D cross) is used since Mode is not fixed. KPeriod, DPeriod, Slowing and the Levels thresholds HighLevel/LowLevel have no documented values, so the Cross mode defaults 14/3 are used and the Levels branch is dropped."
+    }
+  ]
+}

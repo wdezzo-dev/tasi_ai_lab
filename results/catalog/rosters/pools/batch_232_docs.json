@@ -1,0 +1,98 @@
+{
+ "batch_232": {
+  "strategy_ids": [
+   1808,
+   1665,
+   873,
+   2520,
+   2528,
+   960,
+   682,
+   372,
+   849,
+   680
+  ],
+  "docs": {
+   "1808": {
+    "id": 1808,
+    "name": "Close Cross Kijun Sen",
+    "family": "trend",
+    "overview": "This strategy acts as a trade management tool. It closes existing positions when the closing price crosses the Kijun-sen line of the Ichimoku indicator.\n\nDuring execution the strategy subscribes to candles and calculates the Kijun-sen value. When a long position is present and price drops below the Kijun line by a configurable offset, the position is closed. When a short position is open and price rises above the line, the position is also closed. The strategy does not open new trades.\n\n## Details\n\n- **Entry Criteria**: The strategy does not open new trades; it only manages existing positions.\n- **Long/Short**: Both (closing).\n- **Exit Criteria**: Closing price crossing the Kijun-sen line by the specified offset.\n- **Stops**: None.\n- **Default Values**:\n  - `KijunPeriod` = 50\n  - `PointsToCross` = 0\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trade management\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: The strategy does not open new trades; it only manages existing positions.\n- **Long/Short**: Both (closing).\n- **Exit Criteria**: Closing price crossing the Kijun-sen line by the specified offset.\n- **Stops**: None.\n- **Default Values**:\n  - `KijunPeriod` = 50\n  - `PointsToCross` = 0\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trade management\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1665": {
+    "id": 1665,
+    "name": "Fibo Average MA Crossover",
+    "family": "trend",
+    "overview": "This strategy converts the MetaTrader expert advisor **EA_Fibo_Avg_001a** into the StockSharp framework.\nIt uses two smoothed moving averages. The slow average length is the sum of the base period and a Fibonacci-based offset.\nA long position is opened when the fast average crosses above the slow average, while a short position is opened on the opposite crossover.\nPositions are managed with stop loss, take profit and a trailing stop. Optional money management can calculate the order volume from the portfolio size.",
+    "details": "",
+    "parameters": "- `CandleType` – candle data type.\n- `FiboNumPeriod` – additional length added to the slow moving average.\n- `MaPeriod` – base period of the moving averages.\n- `TrailingStop` – trailing distance in price steps.\n- `TakeProfit` – take profit distance in price steps.\n- `StopLoss` – stop loss distance in price steps.\n- `UseMoneyManagement` – enable simple money management.\n- `PercentMm` – portfolio percentage used when money management is enabled.\n- `LotSize` – default order volume when money management is disabled."
+   },
+   "873": {
+    "id": 873,
+    "name": "Heatmap MACD",
+    "family": "trend",
+    "overview": "Heatmap MACD trades when MACD histograms from five timeframes align. A long position is opened when all histograms turn positive, and a short position when all turn negative. Optionally, the position can be closed when any histogram flips against the trade.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: MACD histogram > 0 on all five timeframes and previously not all positive.\n  - **Short**: MACD histogram < 0 on all five timeframes and previously not all negative.\n- **Exit Criteria**: Opposite signal or optional close on opposite.\n- **Stops**: None by default.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `TimeFrame1` = tf(60)\n  - `TimeFrame2` = tf(120)\n  - `TimeFrame3` = tf(240)\n  - `TimeFrame4` = tf(240)\n  - `TimeFrame5` = tf(480)\n  - `CloseOnOpposite` = false\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: MACD histogram > 0 on all five timeframes and previously not all positive.\n  - **Short**: MACD histogram < 0 on all five timeframes and previously not all negative.\n- **Exit Criteria**: Opposite signal or optional close on opposite.\n- **Stops**: None by default.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `TimeFrame1` = tf(60)\n  - `TimeFrame2` = tf(120)\n  - `TimeFrame3` = tf(240)\n  - `TimeFrame4` = tf(240)\n  - `TimeFrame5` = tf(480)\n  - `CloseOnOpposite` = false\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2520": {
+    "id": 2520,
+    "name": "TDS Global",
+    "family": "trend",
+    "overview": "The strategy replicates the original MetaTrader \"TDSGlobal\" expert based on Alexander Elder's Triple Screen concept. It evaluates\ndaily candles and combines the slope of MACD (12, 23, 9) with a 24-period Williams %R filter. The system seeks to buy when the\ntrend is turning up while %R shows oversold conditions, and to sell when the trend turns down and %R signals overbought.\n\nWhenever a valid setup is detected, the strategy places stop orders beyond the previous session's high or low. Entries are\npushed away from the current market by a configurable buffer to avoid entering too close to the price, mirroring the original\n\"16 point\" offset logic. Once in a position the strategy manages a protective stop, optional take profit and a trailing stop in\nprice steps.\n\n## Trading Logic\n\n- **Data**: Works on daily candles by default (configurable).\n- **Trend filter**: Compares two most recent MACD main-line values. Rising MACD implies long bias, falling MACD implies short bias.\n- **Oscillator filter**: Uses the previous Williams %R value. Below `WilliamsBuyLevel` (default -75) allows long setups, above\n  `WilliamsSellLevel` (default -25) allows short setups.\n- **Entry**:\n  - Long: place a buy-stop above the prior high plus one price step. The entry is lifted to at least `EntryBufferSteps` price\n    steps above the last close to keep a minimum distance from the market.\n  - Short: place a sell-stop below the prior low minus one price step. The order is lowered to at most the last close minus\n    `EntryBufferSteps` steps.\n- **Risk management**:\n  - Initial stop is anchored to the opposite extreme of the previous candle (high for shorts, low for longs).\n  - Take profit distance equals `TakeProfitSteps` price steps. The default value (999) keeps the behaviour close to the MQL\n    version that used a very wide target.\n  - Trailing stop is enabled when `TrailingStopSteps` > 0. It follows the close by that many steps and only tightens in the\n    direction of the trade.\n- **Order handl",
+    "details": "",
+    "parameters": "- `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` – MACD periods used for the trend slope check.\n- `WilliamsLength` – lookback for Williams %R.\n- `WilliamsBuyLevel`, `WilliamsSellLevel` – oversold/overbought thresholds (negative values, closer to -100/-0 respectively).\n- `EntryBufferSteps` – minimum offset from the current market when placing stop entries (number of price steps).\n- `TakeProfitSteps` – target distance in price steps (set a small number to activate a hard target).\n- `TrailingStopSteps` – trailing stop distance in steps; set to zero to disable trailing.\n- `UseSymbolStagger` – enables the symbol-specific minute windows.\n- `CandleType` – timeframe for candles (daily by default)."
+   },
+   "2528": {
+    "id": 2528,
+    "name": "5/8 MA Cross",
+    "family": "trend",
+    "overview": "The 5/8 MA Cross strategy is a StockSharp port of the MetaTrader expert advisor \"5_8 MACross\". It compares a fast exponential moving average (EMA) calculated on closing prices with a slower EMA calculated on opening prices. The system acts on the crossover between the two averages and can be applied to any symbol and timeframe that provides standard time-based candles.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `FastLength` | Period of the fast EMA (close-based). | 5 |\n| `SlowLength` | Period of the slow EMA (open-based). | 8 |\n| `TakeProfitPoints` | Take profit distance in price points. | 40 |\n| `StopLossPoints` | Stop loss distance in price points (0 disables the stop). | 0 |\n| `TrailingStopPoints` | Trailing stop distance in price points (0 disables trailing). | 0 |\n| `CandleType` | Candle type / timeframe used for calculations. | 1-minute time frame |\n| `Volume` | Order volume inherited from the base `Strategy` class. | 0.1 |"
+   },
+   "960": {
+    "id": 960,
+    "name": "LANZ Strategy 1.0 [Backtest]",
+    "family": "other",
+    "overview": "LANZ Strategy 1.0 opens a single limit order each day based on the price direction between 08:00 and 18:00 New York time. The order is placed between 18:00 and 08:00 with fixed stop-loss and take-profit distances in pips. Any open position is closed at the configured New York hour.\n\n## Parameters\n- Candle Type\n- Account Size USD\n- Risk percent\n- EP offset fraction\n- Stop Loss (pips)\n- Take Profit (pips)\n- Manual close hour (NY)\n- Enable buy\n- Enable sell\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Account Size USD\n- Risk percent\n- EP offset fraction\n- Stop Loss (pips)\n- Take Profit (pips)\n- Manual close hour (NY)\n- Enable buy\n- Enable sell"
+   },
+   "682": {
+    "id": 682,
+    "name": "Dkoderweb Repainting Issue Fix",
+    "family": "pattern",
+    "overview": "This strategy detects harmonic patterns using a simple zigzag approach and trades when price returns to a Fibonacci retracement level. When a bullish pattern forms and price pulls back to the entry window, the strategy opens a long position with predefined take‑profit and stop‑loss levels. A bearish pattern triggers the same logic in the opposite direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: ABCD harmonic pattern and close price at or below the entry Fibonacci level.\n  - **Short**: ABCD harmonic pattern and close price at or above the entry Fibonacci level.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price reaches take‑profit or stop‑loss Fibonacci levels.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TradeSize` = 1\n  - `EntryRate` = 0.382\n  - `TakeProfitRate` = 0.618\n  - `StopLossRate` = -0.618\n- **Filters**:\n  - Category: Pattern recognition\n  - Direction: Both\n  - Indicators: ZigZag\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: ABCD harmonic pattern and close price at or below the entry Fibonacci level.\n  - **Short**: ABCD harmonic pattern and close price at or above the entry Fibonacci level.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price reaches take‑profit or stop‑loss Fibonacci levels.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TradeSize` = 1\n  - `EntryRate` = 0.382\n  - `TakeProfitRate` = 0.618\n  - `StopLossRate` = -0.618\n- **Filters**:\n  - Category: Pattern recognition\n  - Direction: Both\n  - Indicators: ZigZag\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "372": {
+    "id": 372,
+    "name": "Fed Model",
+    "family": "pattern",
+    "overview": "This macro timing system compares the earnings yield of the equity market to the yield on 10‑year Treasury notes. When stocks offer a higher yield, the strategy holds an equity ETF; when bonds yield more, it moves to cash. A monthly regression on the yield gap forecasts the next month’s value to reduce noisy switches.\n\nAt the end of each month the algorithm forecasts the coming month’s yield spread using the last year of data. If the forecast is positive it buys equities, otherwise it holds the cash proxy. Positions change only when the forecast crosses zero, minimizing turnover.\n\n## Details\n\n- **Entry Criteria**:\n  - At month end, regress the last `RegressionMonths` observations of `(EarningsYield - BondYield)` and forecast the next value.\n  - Buy the equity ETF when the forecast is above zero and the order meets `MinTradeUsd`.\n- **Long/Short**: Long equities or cash only.\n- **Exit Criteria**: Exit the equity position when the forecast yield spread turns negative.\n- **Stops**: None.\n- **Default Values**:\n  - `Universe` – [equity ETF, optional cash ETF].\n  - `BondYieldSym` – 10‑year Treasury yield series.\n  - `EarningsYieldSym` – equity market earnings yield.\n  - `RegressionMonths` = 12.\n  - `CandleType` = 1 day.\n  - `MinTradeUsd` – minimum trade value.\n- **Filters**:\n  - Category: Macro.\n  - Direction: Long only.\n  - Timeframe: Monthly.\n  - Rebalance: Monthly.\n\n",
+    "details": "- **Entry Criteria**:\n  - At month end, regress the last `RegressionMonths` observations of `(EarningsYield - BondYield)` and forecast the next value.\n  - Buy the equity ETF when the forecast is above zero and the order meets `MinTradeUsd`.\n- **Long/Short**: Long equities or cash only.\n- **Exit Criteria**: Exit the equity position when the forecast yield spread turns negative.\n- **Stops**: None.\n- **Default Values**:\n  - `Universe` – [equity ETF, optional cash ETF].\n  - `BondYieldSym` – 10‑year Treasury yield series.\n  - `EarningsYieldSym` – equity market earnings yield.\n  - `RegressionMonths` = 12.\n  - `CandleType` = 1 day.\n  - `MinTradeUsd` – minimum trade value.\n- **Filters**:\n  - Category: Macro.\n  - Direction: Long only.\n  - Timeframe: Monthly.\n  - Rebalance: Monthly.",
+    "parameters": ""
+   },
+   "849": {
+    "id": 849,
+    "name": "Gold Scalping BOS & CHoCH",
+    "family": "pattern",
+    "overview": "This strategy trades break of structure (BOS) and change of character (CHoCH) patterns on gold. It derives short-term support and resistance levels and enters when a BOS is followed by an immediate CHoCH, using dynamic stop loss and take profit targets.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `High > LastSwingHigh` and `Close` crosses above `LastSwingLow`\n  - **Short**: `Low < LastSwingLow` and `Close` crosses below `LastSwingHigh`\n- **Long/Short**: Both sides\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Dynamic\n- **Default Values**:\n  - `RecentLength` = 10\n  - `SwingLength` = 5\n  - `TakeProfitFactor` = 2\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `High > LastSwingHigh` and `Close` crosses above `LastSwingLow`\n  - **Short**: `Low < LastSwingLow` and `Close` crosses below `LastSwingHigh`\n- **Long/Short**: Both sides\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Dynamic\n- **Default Values**:\n  - `RecentLength` = 10\n  - `SwingLength` = 5\n  - `TakeProfitFactor` = 2\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "680": {
+    "id": 680,
+    "name": "Divergence Indicator (Any Oscillator)",
+    "family": "pattern",
+    "overview": "Detects regular and hidden divergences between price and RSI. The strategy buys on bullish divergences and sells on bearish divergences.\n\n## Parameters\n- **Pivot Left** – bars to the left of pivot\n- **Pivot Right** – bars to the right of pivot\n- **Min Range** – minimum bars between pivots\n- **Max Range** – maximum bars between pivots\n- **RSI Length** – RSI period\n- **Candle Type** – candle series type\n\n## Indicator\n- RSI\n\n## Rules\n- **Entry**:\n  - Buy when price makes a lower low while RSI makes a higher low (bullish divergence)\n  - Sell when price makes a higher high while RSI makes a lower high (bearish divergence)\n  - Hidden divergences trade in the opposite direction\n",
+    "details": "",
+    "parameters": "- **Pivot Left** – bars to the left of pivot\n- **Pivot Right** – bars to the right of pivot\n- **Min Range** – minimum bars between pivots\n- **Max Range** – maximum bars between pivots\n- **RSI Length** – RSI period\n- **Candle Type** – candle series type"
+   }
+  }
+ }
+}

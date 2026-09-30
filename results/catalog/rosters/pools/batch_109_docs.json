@@ -1,0 +1,98 @@
+{
+ "batch_109": {
+  "strategy_ids": [
+   1640,
+   4147,
+   1242,
+   478,
+   70,
+   1159,
+   4189,
+   988,
+   3368,
+   2891
+  ],
+  "docs": {
+   "1640": {
+    "id": 1640,
+    "name": "OCO Order Execution",
+    "family": "trend",
+    "overview": "This strategy replicates an \"One Cancels the Other\" order ticket originally written for MetaTrader. It allows the trader to define up to four independent price triggers:\n\n- **Buy Limit Price**\n- **Sell Limit Price**\n- **Buy Stop Price**\n- **Sell Stop Price**\n\nThe strategy subscribes to Level1 data to continuously monitor the best bid and ask. When a trigger price is reached, it submits a market order in the corresponding direction. After an order is executed, stop-loss and take-profit protections are applied using distances measured in pips. These distances are automatically converted to absolute prices based on the security's `PriceStep`.\n\nWhen the **OCO mode** is enabled, hitting any trigger will automatically disable all other triggers, effectively implementing the classic one-cancels-the-other behavior. If OCO mode is disabled, other triggers remain active and can open additional positions as prices continue to move.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when `Ask <= BuyLimitPrice` (Buy Limit trigger).\n  - Long when `Ask >= BuyStopPrice` (Buy Stop trigger).\n  - Short when `Bid >= SellLimitPrice` (Sell Limit trigger).\n  - Short when `Bid <= SellStopPrice` (Sell Stop trigger).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Positions are closed automatically by predefined stop-loss or take-profit levels.\n- **Stops**: Yes, stop-loss and take-profit in pips.\n- **Default Values**:\n  - `StopLossPips` = 300.\n  - `TakeProfitPips` = 300.\n  - `OCO Mode` = enabled.\n- **Filters**:\n  - Category: Order execution.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Tick-based.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - Long when `Ask <= BuyLimitPrice` (Buy Limit trigger).\n  - Long when `Ask >= BuyStopPrice` (Buy Stop trigger).\n  - Short when `Bid >= SellLimitPrice` (Sell Limit trigger).\n  - Short when `Bid <= SellStopPrice` (Sell Stop trigger).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Positions are closed automatically by predefined stop-loss or take-profit levels.\n- **Stops**: Yes, stop-loss and take-profit in pips.\n- **Default Values**:\n  - `StopLossPips` = 300.\n  - `TakeProfitPips` = 300.\n  - `OCO Mode` = enabled.\n- **Filters**:\n  - Category: Order execution.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Tick-based.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   },
+   "4147": {
+    "id": 4147,
+    "name": "EMA WMA Risk",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 4 \"EMA WMA\" expert advisor by Vladimir Hlystov.\n- Trades trend reversals detected from the relationship between an exponential moving average (EMA) and a weighted moving average (WMA) calculated on candle **open** prices.\n- Automatically attaches stop-loss and take-profit orders identical to the MT4 robot by using StockSharp's protection helper.\n- Supports risk-based position sizing that mirrors the original \"risk\" input while keeping an option for fixed volume trading.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `EmaPeriod` | Period of the exponential moving average (default 28). |\n| `WmaPeriod` | Period of the weighted moving average (default 8). |\n| `StopLossPoints` | Stop-loss distance in instrument steps (default 50). |\n| `TakeProfitPoints` | Take-profit distance in instrument steps (default 50). |\n| `RiskPercent` | Percentage of equity to risk per trade (default 10%). |\n| `OrderVolume` | Fixed order volume; use 0 to enable risk-based sizing. |\n| `CandleType` | Candle data type/timeframe used for calculations. |"
+   },
+   "1242": {
+    "id": 1242,
+    "name": "Renko RSI",
+    "family": "trend",
+    "overview": "Strategy trades renko bricks using RSI overbought/oversold signals.\n\nTesting shows moderate performance and works best on markets with clear renko trends.\n\nRenko RSI uses renko bricks built from ATR and applies a short RSI. A cross above the oversold level triggers a buy, while a drop below the overbought level triggers a sell.\n\n## Details\n\n- **Entry Criteria**: RSI crosses oversold or overbought levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `RenkoAtrLength` = 14\n  - `RsiLength` = 2\n  - `RsiOverbought` = 80\n  - `RsiOversold` = 20\n  - `CandleType` = Renko ATR(14)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Renko\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Renko\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: RSI crosses oversold or overbought levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `RenkoAtrLength` = 14\n  - `RsiLength` = 2\n  - `RsiOverbought` = 80\n  - `RsiOversold` = 20\n  - `CandleType` = Renko ATR(14)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Renko\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Renko\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "478": {
+    "id": 478,
+    "name": "Three Kilos BTC 15m",
+    "family": "trend",
+    "overview": "The Three Kilos BTC 15m strategy combines three Triple Exponential Moving Averages (TEMA) with a Supertrend filter. A long position is opened when the middle TEMA crosses above the short TEMA, stays above the slow TEMA, and the Supertrend indicates an uptrend. A short position is opened when the short TEMA crosses above the middle TEMA, remains below the slow TEMA, and the Supertrend shows a downtrend. Fixed percentage take profit and stop loss manage risk.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: TEMA2 crosses above TEMA1, TEMA2 > TEMA3, Supertrend uptrend.\n  - **Short**: TEMA1 crosses above TEMA2, TEMA2 < TEMA3, Supertrend downtrend.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Take profit or stop loss.\n- **Stops**: 1% take profit and 1% stop loss.\n- **Default Values**:\n  - `ShortPeriod` = 30\n  - `LongPeriod` = 50\n  - `Long2Period` = 140\n  - `AtrLength` = 10\n  - `Multiplier` = 2\n  - `TakeProfit` = 1%\n  - `StopLoss` = 1%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: TEMA, Supertrend, ATR\n  - Stops: Take profit and stop loss\n  - Complexity: Medium\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: TEMA2 crosses above TEMA1, TEMA2 > TEMA3, Supertrend uptrend.\n  - **Short**: TEMA1 crosses above TEMA2, TEMA2 < TEMA3, Supertrend downtrend.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Take profit or stop loss.\n- **Stops**: 1% take profit and 1% stop loss.\n- **Default Values**:\n  - `ShortPeriod` = 30\n  - `LongPeriod` = 50\n  - `Long2Period` = 140\n  - `AtrLength` = 10\n  - `Multiplier` = 2\n  - `TakeProfit` = 1%\n  - `StopLoss` = 1%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: TEMA, Supertrend, ATR\n  - Stops: Take profit and stop loss\n  - Complexity: Medium\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "70": {
+    "id": 70,
+    "name": "Morning Star Pattern",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 97%. It performs best in the crypto market.\n\nThis strategy tracks sequences of three candles. When the pattern appears a long position is opened with a stop placed below the small middle candle. Exits occur once price rises above the high of the confirmation bar or if the stop is reached.\n\nBecause the pattern often sparks quick recoveries from oversold conditions, trades are usually short lived, capturing the initial thrust higher.\n\n## Details\n\n- **Entry Criteria**: Three-candle Morning Star pattern.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price above confirmation bar high or stop-loss.\n- **Stops**: Yes, below middle candle low.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Three-candle Morning Star pattern.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price above confirmation bar high or stop-loss.\n- **Stops**: Yes, below middle candle low.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1159": {
+    "id": 1159,
+    "name": "Pavan CPR",
+    "family": "breakout",
+    "overview": "Trades long when price crosses above the day's Top Central Pivot Range after previously closing below it. Stop is placed at the pivot level and take profit at a fixed distance.\n\n## Details\n\n- **Entry Criteria**: Previous close below top CPR and current close above it.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Take profit or stop at pivot.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TakeProfitTarget` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Pivot\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Previous close below top CPR and current close above it.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Take profit or stop at pivot.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TakeProfitTarget` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Pivot\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4189": {
+    "id": 4189,
+    "name": "Early Bird Range Break",
+    "family": "breakout",
+    "overview": "The **Early Bird Range Break Strategy** is a C# port of the MetaTrader \"earlyBird3\" expert advisor. It targets range breakouts that happen shortly after the European trading session opens. The algorithm observes an early-morning consolidation range, filters potential breakouts with a 14-period RSI, and enters up to three market orders in the direction of the breakout. Each order uses pre-defined take-profit levels, a shared stop-loss, and an optional trailing mechanism that is enabled only when volatility expands beyond its recent average.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `AutoTrading` | Enables/disables order execution. | `true` |\n| `HedgeTrading` | Allows position reversal on opposite signals (implemented as flat-and-reverse). | `true` |\n| `OrderType` | `0` – both directions, `1` – long only, `2` – short only. | `0` |\n| `TradeVolume` | Volume per submitted market order. | `0.1` |\n| `StopLossPoints` | Stop-loss distance in price points. | `60` |\n| `TakeProfit1Points` | Take-profit distance for the first portion. | `10` |\n| `TakeProfit2Points` | Take-profit distance for the second portion. | `20` |\n| `TakeProfit3Points` | Take-profit distance for the third portion. | `30` |\n| `TrailingStopPoints` | Minimum favorable move before the trailing stop activates. | `15` |\n| `TrailingRiskMultiplier` | Multiplier applied to ATR when validating volatility expansion. | `1.0` |\n| `EntryBufferPoints` | Extra distance added to the breakout levels. | `2` |\n| `RangeStartHour` | Hour when the reference range begins. | `3` |\n| `RangeEndHour` | Hour when the reference range ends. | `7` |\n| `TradingStartHour` | Hour when breakout entries are allowed. | `7` |\n| `TradingStartMinute` | Minute when breakout entries are allowed. | `15` |\n| `TradingEndHour` | Hour after which no new entries are taken. | `15` |\n| `ClosingHour` | Hour when all trades are closed. | `17` |\n| `RsiPeriod` | RSI lookback used for filtering. | `14` |\n| `VolatilityPeriod` | ATR lookback for the volatility gate. | `16` |\n| `CandleType` | Candle series used for analysis (default 5-minute). | `TimeSpan.FromMinutes(5)` |"
+   },
+   "988": {
+    "id": 988,
+    "name": "Logistic RSI STOCH ROC AO",
+    "family": "momentum",
+    "overview": "Strategy applies a logistic map to a selected indicator (AO, ROC, RSI, Stochastic) and trades when the signed standard deviation crosses zero.\n\n## Details\n\n- **Entry Criteria**: Signed standard deviation crosses above zero.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Signed standard deviation crosses below zero.\n- **Stops**: None.\n- **Default Values**:\n  - `Indicator` = LogisticDominance\n  - `Length` = 13\n  - `LenLd` = 5\n  - `LenRoc` = 9\n  - `LenRsi` = 14\n  - `LenSto` = 14\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: AwesomeOscillator, RateOfChange, RelativeStrengthIndex, StochasticOscillator, Highest\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Signed standard deviation crosses above zero.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Signed standard deviation crosses below zero.\n- **Stops**: None.\n- **Default Values**:\n  - `Indicator` = LogisticDominance\n  - `Length` = 13\n  - `LenLd` = 5\n  - `LenRoc` = 9\n  - `LenRsi` = 14\n  - `LenSto` = 14\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: AwesomeOscillator, RateOfChange, RelativeStrengthIndex, StochasticOscillator, Highest\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3368": {
+    "id": 3368,
+    "name": "Dynamic Stop Loss",
+    "family": "volatility",
+    "overview": "The original MetaTrader expert advisor \"Dynamic Stop Loss\" does not open new trades on its own. Instead it watches existing market positions and, once a new candle appears, repositions the protective stop-loss so that it stays at a fixed distance behind the latest price. The StockSharp port keeps the same behaviour: every completed bar triggers a recalculation of the protective stop for whichever side is currently open. If no position exists, the strategy simply idles until a new position is detected.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `StopLossPoints` | `800` | Distance between the market price and the protective stop measured in instrument points. The value is multiplied by `Security.PriceStep` (fallback to `Security.Step`, then `1`) before being applied to the close price. Set to `0` to disable stop management. |\n| `CandleType` | `TimeFrameCandle(00:01:00)` | Candle type that defines when the stop is recalculated. Choose a timeframe matching the chart used in MetaTrader. |"
+   },
+   "2891": {
+    "id": 2891,
+    "name": "FullDump BB RSI",
+    "family": "mean_reversion",
+    "overview": "- **Markets**: Any liquid instrument that supports Bollinger Bands and RSI.\n- **Timeframe**: Configurable candle type (default 15 minutes).\n- **Direction**: Long and short.\n- **Order Type**: Market orders with predefined protective levels.\n- **Concept**: Fade short-term extremes inside the Bollinger envelope while price reverts toward the middle band.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `BandsPeriod` | Length of the Bollinger Bands calculation. | 20 | Optimizable (10 → 40 step 1). |\n| `RsiPeriod` | Averaging length for the RSI. | 14 | Optimizable (7 → 21 step 1). |\n| `Depth` | Number of recent candles inspected for conditions. | 6 | Optimizable (3 → 12 step 1). |\n| `IndentInPoints` | Offset in price steps added to stop-loss and take-profit. | 10 | Optimizable (5 → 30 step 5). |\n| `OrderVolume` | Order size in lots. | 1 | Used for both entries and exits. |\n| `CandleType` | Timeframe of the input candles. | 15-minute candles | Change to adapt the strategy horizon. |"
+   }
+  }
+ }
+}

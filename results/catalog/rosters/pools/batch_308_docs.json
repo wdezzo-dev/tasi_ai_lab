@@ -1,0 +1,98 @@
+{
+ "batch_308": {
+  "strategy_ids": [
+   1092,
+   504,
+   1090,
+   3648,
+   2084,
+   928,
+   1573,
+   3533,
+   1891,
+   2143
+  ],
+  "docs": {
+   "1092": {
+    "id": 1092,
+    "name": "Multi EMA Crossover",
+    "family": "trend",
+    "overview": "The strategy opens separate long positions for four EMA pairs when the faster EMA crosses above the slower one. Each position closes when its faster EMA falls below the slower EMA.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA for any of the pairs (1/5, 3/10, 5/20, 10/40).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fast EMA drops below slow EMA for the respective pair.\n- **Stops**: None.\n- **Default Values**:\n  - `EMA1` = 1\n  - `EMA3` = 3\n  - `EMA5` = 5\n  - `EMA10` = 10\n  - `EMA20` = 20\n  - `EMA40` = 40\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA for any of the pairs (1/5, 3/10, 5/20, 10/40).\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fast EMA drops below slow EMA for the respective pair.\n- **Stops**: None.\n- **Default Values**:\n  - `EMA1` = 1\n  - `EMA3` = 3\n  - `EMA5` = 5\n  - `EMA10` = 10\n  - `EMA20` = 20\n  - `EMA40` = 40\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "504": {
+    "id": 504,
+    "name": "Advanced Supertrend",
+    "family": "trend",
+    "overview": "The Advanced Supertrend strategy enhances the classic Supertrend indicator with optional RSI, moving average, and trend-strength filters. It enters long when Supertrend flips to bullish and enters short when it turns bearish. Optional stop loss and take profit are derived from ATR multiples.\n\n## Details\n\n- **Entry Criteria**:\n  - Supertrend changes direction (bearish→bullish for long, bullish→bearish for short).\n  - Optional filters: RSI within set bounds, price relative to a moving average, trend strength, and breakout confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite Supertrend signal or optional stop-loss/take-profit levels.\n- **Stops**: ATR-based optional stop loss and take profit.\n- **Default Values**:\n  - `AtrLength` = 6\n  - `Multiplier` = 3.0\n  - `UseRsiFilter` = false\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `UseMaFilter` = true\n  - `MaLength` = 50\n  - `MaType` = Weighted\n  - `UseStopLoss` = true\n  - `SlMultiplier` = 3.0\n  - `UseTakeProfit` = true\n  - `TpMultiplier` = 9.0\n  - `UseTrendStrength` = false\n  - `MinTrendBars` = 2\n  - `UseBreakoutConfirmation` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Supertrend, RSI, Moving Average\n  - Stops: ATR based\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Supertrend changes direction (bearish→bullish for long, bullish→bearish for short).\n  - Optional filters: RSI within set bounds, price relative to a moving average, trend strength, and breakout confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite Supertrend signal or optional stop-loss/take-profit levels.\n- **Stops**: ATR-based optional stop loss and take profit.\n- **Default Values**:\n  - `AtrLength` = 6\n  - `Multiplier` = 3.0\n  - `UseRsiFilter` = false\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `UseMaFilter` = true\n  - `MaLength` = 50\n  - `MaType` = Weighted\n  - `UseStopLoss` = true\n  - `SlMultiplier` = 3.0\n  - `UseTakeProfit` = true\n  - `TpMultiplier` = 9.0\n  - `UseTrendStrength` = false\n  - `MinTrendBars` = 2\n  - `UseBreakoutConfirmation` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Supertrend, RSI, Moving Average\n  - Stops: ATR based\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1090": {
+    "id": 1090,
+    "name": "Multi-Band Comparison",
+    "family": "trend",
+    "overview": "Multi-Band Comparison uses SMA, standard deviation and price quantile bands. The strategy goes long when price closes above the upper quantile minus standard deviation for a defined number of bars and exits when price falls below that level for a set number of bars.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close above (upper quantile - std dev) for `EntryConfirmBars` bars.\n- **Exit Criteria**: Close below that line for `ExitConfirmBars` bars.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 20\n  - `BollingerMultiplier` = 1\n  - `UpperQuantile` = 0.95\n  - `EntryConfirmBars` = 1\n  - `ExitConfirmBars` = 1\n- **Filters**:\n  - Category: Statistical\n  - Direction: Long\n  - Indicators: SMA, Standard Deviation\n  - Complexity: Medium\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close above (upper quantile - std dev) for `EntryConfirmBars` bars.\n- **Exit Criteria**: Close below that line for `ExitConfirmBars` bars.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 20\n  - `BollingerMultiplier` = 1\n  - `UpperQuantile` = 0.95\n  - `EntryConfirmBars` = 1\n  - `ExitConfirmBars` = 1\n- **Filters**:\n  - Category: Statistical\n  - Direction: Long\n  - Indicators: SMA, Standard Deviation\n  - Complexity: Medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3648": {
+    "id": 3648,
+    "name": "Balance Drawdown In MT4",
+    "family": "trend",
+    "overview": "This strategy ports the original MetaTrader 4 expert advisor **BalanceDrawdownInMT4** to the StockSharp high-level API. The EA immediately opens a single long position and continuously measures the account drawdown relative to the peak balance reached since the session started.\n\n## Trading Logic\n\n1. When the strategy starts it calls `StartProtection` to arm managed stop-loss and take-profit levels that mimic the MQL inputs expressed in price points.\n2. On the first finished candle (default timeframe: 1 minute) the strategy verifies whether a position is open. If no exposure exists it submits a market buy order using the configured `Volume`.\n3. After every finished candle it updates the drawdown metric:\n   - The strategy tracks the maximum achieved balance as **StartBalance + realized PnL**.\n   - The current equity equals **StartBalance + realized PnL + unrealized PnL**, where unrealized PnL is derived from the latest candle close price, the average entry price, and the instrument's `PriceStep`/`StepPrice`.\n   - Drawdown is the percentage decline from the stored peak balance to the current equity. The value is logged with an informational message on every update.\n\nThe algorithm never opens additional positions or reverses. Once the initial position is established it remains active until stopped out, the take-profit fires, or the user manually intervenes.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `StartBalance` | `1000` | Baseline balance used when calculating peak equity and drawdown percentage. |\n| `Volume` | `0.01` | Net volume (in instrument units) of the initial market buy order. |\n| `StopLossPoints` | `300` | Distance from the entry price to the protective stop, measured in price points. A value of `0` disables the stop. |\n| `TakeProfitPoints` | `400` | Distance from the entry price to the protective target, measured in price points. A value of `0` disables the target. |\n| `CandleType` | `1m` time frame | Time ",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `StartBalance` | `1000` | Baseline balance used when calculating peak equity and drawdown percentage. |\n| `Volume` | `0.01` | Net volume (in instrument units) of the initial market buy order. |\n| `StopLossPoints` | `300` | Distance from the entry price to the protective stop, measured in price points. A value of `0` disables the stop. |\n| `TakeProfitPoints` | `400` | Distance from the entry price to the protective target, measured in price points. A value of `0` disables the target. |\n| `CandleType` | `1m` time frame | Time frame that drives periodic drawdown updates and the initial entry check. |"
+   },
+   "2084": {
+    "id": 2084,
+    "name": "Basic Trailing Stop",
+    "family": "trend",
+    "overview": "The Basic Trailing Stop strategy combines Commodity Channel Index (CCI) and Relative Strength Index (RSI) filters with a simple trailing stop. When both indicators signal oversold or overbought conditions, the strategy opens a market position and immediately places a trailing stop measured in pips. As price moves favorably, the stop level follows the trend to lock in profits.\n\nTesting indicates an average annual return of about 32%. It performs best in the forex market.\n\nBecause the stop level continuously trails price, risk automatically tightens when the trend extends. Exits occur only if the trailing stop is hit. The system maintains one position at a time and can trade in both directions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `CCI` between -150 and -100 and `RSI` between 0 and 30.\n  - **Short**: `CCI` between 100 and 250 and `RSI` between 70 and 100.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing stop hit.\n- **Stops**: Trailing stop only.\n- **Default Values**:\n  - `StopLossPips` = 20\n  - `CciPeriod` = 14\n  - `RsiPeriod` = 14\n  - `CandleType` = `TimeSpan.FromMinutes(1)`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: CCI, RSI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `CCI` between -150 and -100 and `RSI` between 0 and 30.\n  - **Short**: `CCI` between 100 and 250 and `RSI` between 70 and 100.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing stop hit.\n- **Stops**: Trailing stop only.\n- **Default Values**:\n  - `StopLossPips` = 20\n  - `CciPeriod` = 14\n  - `RsiPeriod` = 14\n  - `CandleType` = `TimeSpan.FromMinutes(1)`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: CCI, RSI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "928": {
+    "id": 928,
+    "name": "Intra Bullish Strategy - Profit Ping v4.0",
+    "family": "trend",
+    "overview": "Long-only system using an EMA crossover confirmed by MACD histogram and RSI strength.\n\n## Details\n\n- **Entry Criteria**:\n  - Short EMA crosses above Long EMA\n  - MACD histogram > 0\n  - RSI > 50\n  - Close > Open\n- **Exit Criteria**:\n  - Short EMA crosses below Long EMA\n  - MACD histogram < 0\n  - RSI < 50\n  - Close < Open\n- **Indicators**:\n  - Exponential Moving Averages\n  - MACD\n  - RSI\n- **Stops**: None.\n- **Default Values**:\n  - `ShortEmaLength` = 7\n  - `LongEmaLength` = 14\n  - `RsiLength` = 14\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: EMA, MACD, RSI\n  - Stops: none\n  - Complexity: Low\n",
+    "details": "- **Entry Criteria**:\n  - Short EMA crosses above Long EMA\n  - MACD histogram > 0\n  - RSI > 50\n  - Close > Open\n- **Exit Criteria**:\n  - Short EMA crosses below Long EMA\n  - MACD histogram < 0\n  - RSI < 50\n  - Close < Open\n- **Indicators**:\n  - Exponential Moving Averages\n  - MACD\n  - RSI\n- **Stops**: None.\n- **Default Values**:\n  - `ShortEmaLength` = 7\n  - `LongEmaLength` = 14\n  - `RsiLength` = 14\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: EMA, MACD, RSI\n  - Stops: none\n  - Complexity: Low",
+    "parameters": ""
+   },
+   "1573": {
+    "id": 1573,
+    "name": "Zahorchak Measure",
+    "family": "trend",
+    "overview": "Calculates a weighted score using multiple moving averages. Buys when the score turns positive and sells when it turns negative.\n\n## Details\n\n- **Entry Criteria**: Score crosses above zero\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Points` = 1\n  - `EmaLength` = 10\n- **Filters**:\n  - Category: Breadth\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Score crosses above zero\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Points` = 1\n  - `EmaLength` = 10\n- **Filters**:\n  - Category: Breadth\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3533": {
+    "id": 3533,
+    "name": "CHO Smoothed EA",
+    "family": "trend",
+    "overview": "This strategy replicates the logic of the original \"CHO Smoothed EA\" Expert Advisor. It watches Chaikin Oscillator crossovers on completed candles and smooths the oscillator with a configurable moving average. Optional filters limit trading to a specific session, restrict trade direction, and validate signals with zero-line confirmation. When a signal is accepted the strategy sends a market order and manages the position using fixed distances in points for stop-loss, take-profit, and trailing protection.",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe used to build the candles for indicator calculations.\n- **Fast Period / Slow Period** – Chaikin Oscillator fast and slow periods.\n- **Signal MA Period / Signal MA Type** – smoothing moving average settings applied to the oscillator.\n- **Use Zero Level** – require both oscillator values to be on the correct side of zero before trading.\n- **Trade Mode** – allow long only, short only, or both directions.\n- **Reverse Signals** – swap long and short entries.\n- **Close Opposite** – close existing opposite positions before opening a new trade.\n- **Only One Position** – prevent entries when a position is already open.\n- **Use Time Control / Start Time / End Time** – enable and configure the daily trading window.\n- **Stop Loss (pts)** – distance in points for the protective stop.\n- **Take Profit (pts)** – distance in points for profit targets.\n- **Trailing Stop (pts)** – trailing stop distance in points.\n- **Trailing Step (pts)** – minimum favorable move (in points) before moving the trailing stop."
+   },
+   "1891": {
+    "id": 1891,
+    "name": "2pbIdeal XOSMA",
+    "family": "trend",
+    "overview": "This strategy is a C# translation of the MQL5 expert adviser **Exp_2pbIdealXOSMA**. It analyzes the slope of the MACD histogram to determine market momentum. When the histogram rises for two consecutive bars, the system enters a long position and closes any open short. When the histogram falls for two consecutive bars, the strategy enters a short position and closes any open long.\n\nBy default the algorithm operates on 4-hour candles but the timeframe is configurable. All trades are placed at market price and the position is reversed when the opposite signal appears. No stop-loss or take-profit is applied inside the sample; risk control can be added externally if desired.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Histogram at bar `t-1` is below `t-2` and the current histogram exceeds `t-1`.\n  - **Short**: Histogram at bar `t-1` is above `t-2` and the current histogram is below `t-1`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal closes the current position.\n- **Stops**: None.\n- **Default Values**:\n  - `FastPeriod` = 10\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `SignalBar` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single (MACD)\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: 4-hour (configurable)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Histogram at bar `t-1` is below `t-2` and the current histogram exceeds `t-1`.\n  - **Short**: Histogram at bar `t-1` is above `t-2` and the current histogram is below `t-1`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal closes the current position.\n- **Stops**: None.\n- **Default Values**:\n  - `FastPeriod` = 10\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `SignalBar` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single (MACD)\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: 4-hour (configurable)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2143": {
+    "id": 2143,
+    "name": "Kositbablo 10",
+    "family": "trend",
+    "overview": "Multi-timeframe EURUSD strategy using RSI and EMA signals.\nIt checks daily and hourly indicators and opens market orders when both trend filters align.\n\n## Parameters\n- **Take Profit** – take profit in points.\n- **Stop Loss** – stop loss in points.\n- **Turbo Mode** – allow new trades even if a position exists.\n\n## Rules\n- Go long when Daily RSI(11) < 60, Hourly RSI(5) < 48, and EMA20 > EMA2.\n- Go short when Daily RSI(22) > 38, Hourly RSI(20) > 60, and EMA23 > EMA12.\n- Trades only after the hourly candle is finished.\n",
+    "details": "",
+    "parameters": "- **Take Profit** – take profit in points.\n- **Stop Loss** – stop loss in points.\n- **Turbo Mode** – allow new trades even if a position exists."
+   }
+  }
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 4223,
+  "ticker": "2020",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 4223,
+    "name": "X Bug",
+    "family": "trend",
+    "entry_long": "crossabove((high + low) / 28, sma((high + low) / 28, 28))",
+    "exit_long": "crossbelow((high + low) / 2, sma((high + low) / 2, 28))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented Median applied price (high+low)/2 and SlowPeriod 14 are used, with FastPeriod 1 collapsing to the raw median price. FastShift 0 and SlowShift 10 cannot be reproduced without a series shift, and StopLossPips 70, TakeProfitPips 5000 and the 90-pip trailing stop are pip distances, so protection stays null."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8232,
+      "engine_win_ret": 137.7105070715525,
+      "alpha": 126.98685040721197,
+      "benchmark_ret": 10.723656664340544,
+      "trades": 252,
+      "win_rate": 0.373015873015873,
+      "sharpe": 0.8541336721350278,
+      "max_drawdown": -0.4115097078177693,
+      "profit_factor": 1.7685710081407275
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.08264350602201453,
+      "alpha": -0.032043162968841354,
+      "benchmark_ret": -0.05060034305317318,
+      "trades": 15,
+      "win_rate": 0.26666666666666666,
+      "sharpe": -0.3488378446226274,
+      "max_drawdown": -0.19895529766633913,
+      "profit_factor": 0.6671616615674139
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.13826680585614093,
+      "alpha": 0.030158697748032814,
+      "benchmark_ret": 0.10810810810810811,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": 1.039493239174908,
+      "max_drawdown": -0.10359788964054961,
+      "profit_factor": 9.223217008710282
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8232,
+      "engine_win_ret": 38.381390470307664,
+      "alpha": 27.65773380596712,
+      "benchmark_ret": 10.723656664340544,
+      "trades": 252,
+      "win_rate": 0.3492063492063492,
+      "sharpe": 0.6589553683692759,
+      "max_drawdown": -0.4469681436191557,
+      "profit_factor": 1.4507417606303552
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.14722620880409598,
+      "alpha": -0.0966258657509228,
+      "benchmark_ret": -0.05060034305317318,
+      "trades": 15,
+      "win_rate": 0.26666666666666666,
+      "sharpe": -0.688840357765458,
+      "max_drawdown": -0.24613086694199138,
+      "profit_factor": 0.46378398819999117
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.11590913566469996,
+      "alpha": 0.007801027556591844,
+      "benchmark_ret": 0.10810810810810811,
+      "trades": 4,
+      "win_rate": 0.5,
+      "sharpe": 0.8878766502076414,
+      "max_drawdown": -0.10603553248949138,
+      "profit_factor": 5.713565409912975
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

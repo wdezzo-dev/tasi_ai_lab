@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 321,
+      "name": "Ichimoku Hurst Exponent",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,26) and adx(high,low,close,14) > 20",
+      "exit_long": "ema(close,9) < ema(close,26) or adx(high,low,close,14) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9/26) approximates the Tenkan/Kijun relationship and ADX(14) approximates the Hurst trend-strength filter. Ichimoku cloud, Hurst exponent, opposite signal, and ATR-based stops are not representable as fixed percentage exits."
+    },
+    {
+      "id": 1022,
+      "name": "Market Trend Levels Non-Repainting",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20),ema(close,50)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,20),ema(close,50)) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20/50) and RSI(14) are explicit fallbacks because the source supplies no periods or thresholds; the crossover and optional RSI filter are retained. The 5-minute timeframe and exit-filter toggle are not modeled."
+    },
+    {
+      "id": 593,
+      "name": "Bollinger Bands Modified",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_upper(close,20,0.38)) and close > ema(close,80)",
+      "exit_long": "crossbelow(close,bb_mid(close,20)) or close < ema(close,80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Bollinger length/deviation (20/0.38) and enabled EMA(80) filter are retained. Recent-high/low stops, the 1.6 risk target, and the 5-minute timeframe are represented only by the mean-band/EMA exit."
+    },
+    {
+      "id": 1790,
+      "name": "BrakeExp Channel",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20),sma(close,20))",
+      "exit_long": "crossbelow(ema(close,20),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The unavailable BrakeExp exponential curve is approximated by an EMA(20)/SMA(20) regime cross, with the inverse cross closing a long. A, B, order permissions, timeframe, and the documented absence of stops are retained or omitted as noted."
+    },
+    {
+      "id": 308,
+      "name": "Ichimoku Volume Cluster",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,26) and volume_ratio(volume,20) > 1 and std(volume,20) > 0",
+      "exit_long": "ema(close,9) < ema(close,26) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9/26) and volume_ratio(20) with a positive 20-bar volume deviation proxy the Ichimoku trend/volume cluster. Ichimoku spans, the 2.0 volume multiplier, and ATR protection are not expressible."
+    },
+    {
+      "id": 790,
+      "name": "Fibonacci-Only Strategy V2",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close,93) - 0.19 * (donchian_high(high,93) - donchian_low(low,93)))",
+      "exit_long": "crossbelow(close,sma(close,93))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 19% retracement is approximated with a 93-bar SMA/range expression and a bullish cross; the 82.56% level and candle confirmation are not encoded. ATR/trailing stops, 15-minute execution, and other Fibonacci levels are unsupported."
+    },
+    {
+      "id": 2659,
+      "name": "Last ZZ50",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 10-bar high break is a deterministic proxy for a ZigZag swing and pending buy-stop midpoint. ZigZag depth/deviation/backstep, pending-order updates, session filters, and pip trailing are unavailable."
+    },
+    {
+      "id": 3133,
+      "name": "Executer AC",
+      "family": "momentum",
+      "entry_long": "macd(close,12,26) > 0 and roc(macd(close,12,26),1) > 0",
+      "exit_long": "macd(close,12,26) < 0 or roc(macd(close,12,26),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD sign and one-bar slope provide an executable proxy for the four-bar Accelerator Oscillator acceleration patterns. The AC buffer, fixed pip targets, trailing routine, and zero-line reversal detail are not expressible."
+    },
+    {
+      "id": 1217,
+      "name": "Random Coin Toss",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source explicitly randomizes direction at EntryFrequency bars, so an impossible negative-price guard avoids inventing a deterministic coin result. ATR(14) with 1x/2x multipliers is not a fixed percentage field."
+    },
+    {
+      "id": 2707,
+      "name": "RSI Eraser",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) > 50 and close > ema(close,20)",
+      "exit_long": "rsi(close,14) < 50 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)>50 with an EMA(20) gate retains the documented long-side direction. Daily high/low protection, one-entry-per-day state, pip stops/targets, and risk-based sizing are not available in the DSL."
+    }
+  ]
+}

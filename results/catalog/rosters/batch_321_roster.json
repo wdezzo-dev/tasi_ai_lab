@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2787,
+      "name": "Blau SM Stochastic",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 435,
+      "name": "MA Cross + DMI",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 14",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 94,
+      "name": "CCI Hook Reversal",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 3825,
+      "name": "Contrarian Trade MA Weekly",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,30) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Volume confirmation translated with volume/SMA(volume,20) plus an OHLCV trend filter."
+    },
+    {
+      "id": 3147,
+      "name": "MACD No Sample",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3234,
+      "name": "Aroon WPR Crossover",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 1667,
+      "name": "Three Level Grid",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30 and close > ema(close,10)",
+      "exit_long": "rsi(close,14) < 70 or close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1848,
+      "name": "MA by MA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,7),ema(close,7))",
+      "exit_long": "crossbelow(ema(close,7),ema(close,7))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 7/7; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2676,
+      "name": "Anubis",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,20,50),macd_signal(close,20,50,2))",
+      "exit_long": "crossbelow(macd(close,20,50),macd_signal(close,20,50,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 1962,
+      "name": "AFL Winner Sign",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    }
+  ]
+}

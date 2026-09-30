@@ -1,0 +1,98 @@
+{
+ "batch_110": {
+  "strategy_ids": [
+   734,
+   2433,
+   3364,
+   1165,
+   1132,
+   914,
+   2611,
+   2440,
+   2675,
+   299
+  ],
+  "docs": {
+   "734": {
+    "id": 734,
+    "name": "EMA 5 Alert Candle Short",
+    "family": "trend",
+    "overview": "The **EMA 5 Alert Candle Short** strategy waits for three candles that touch the 5-period EMA and then identifies a candle that stays above it. A short is opened when the next candle breaks the alert candle low, with the take-profit placed at a distance equal to the stop loss.\n\n## Details\n- **Entry Criteria**: after three EMA-touching candles, short on break of a non-touching candle low.\n- **Long/Short**: Short only.\n- **Exit Criteria**: stop loss at alert candle high, take-profit at equal distance.\n- **Stops**: Yes, based on alert candle range.\n- **Default Values**:\n  - `EmaPeriod = 5`\n  - `RiskPerTrade = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Short\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: after three EMA-touching candles, short on break of a non-touching candle low.\n- **Long/Short**: Short only.\n- **Exit Criteria**: stop loss at alert candle high, take-profit at equal distance.\n- **Stops**: Yes, based on alert candle range.\n- **Default Values**:\n  - `EmaPeriod = 5`\n  - `RiskPerTrade = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Short\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2433": {
+    "id": 2433,
+    "name": "Ichimoku Chinkou Cross",
+    "family": "trend",
+    "overview": "This strategy trades based on the crossover of the Ichimoku Chinkou Span (lagging line) with price.\n\n## Strategy Logic\n\n- **Long:** Chinkou crosses above price, both the current price and Chinkou are above the Kumo cloud, and RSI is above the `RsiBuyLevel`.\n- **Short:** Chinkou crosses below price, both the current price and Chinkou are below the Kumo cloud, and RSI is below the `RsiSellLevel`.\n\nThe strategy uses stop-loss protection via `StartProtection` and parameters for Tenkan, Kijun, Senkou Span B, and RSI.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `TenkanPeriod` | Tenkan-sen period | 9 |\n| `KijunPeriod` | Kijun-sen period | 26 |\n| `SenkouSpanPeriod` | Senkou Span B period | 52 |\n| `RsiPeriod` | RSI calculation period | 14 |\n| `RsiBuyLevel` | RSI minimum for long | 70 |\n| `RsiSellLevel` | RSI maximum for short | 30 |\n| `StopLoss` | Stop-loss percent or value | 2% |\n| `CandleType` | Candle type for subscription | 5-minute candles |\n\n## Indicators\n\n- Ichimoku\n- RSI\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `TenkanPeriod` | Tenkan-sen period | 9 |\n| `KijunPeriod` | Kijun-sen period | 26 |\n| `SenkouSpanPeriod` | Senkou Span B period | 52 |\n| `RsiPeriod` | RSI calculation period | 14 |\n| `RsiBuyLevel` | RSI minimum for long | 70 |\n| `RsiSellLevel` | RSI maximum for short | 30 |\n| `StopLoss` | Stop-loss percent or value | 2% |\n| `CandleType` | Candle type for subscription | 5-minute candles |"
+   },
+   "3364": {
+    "id": 3364,
+    "name": "Testinator",
+    "family": "trend",
+    "overview": "The strategy is a C# port of the MetaTrader expert advisor **Testinator v1.30a**. It opens only long positions and manages them as a basket. Each new buy is permitted only when a configurable set of technical filters returns \"true\" and the price has advanced by a minimum number of pips. The exit logic mirrors the entry logic by using another filter mask. The original EA also relied on daily ATR measurements for risk management, therefore the port subscribes to daily candles in addition to the primary timeframe.",
+    "details": "",
+    "parameters": "* `TradeVolume` – lot size (volume) for every market buy.\n* `BuySequence` / `CloseBuySequence` – bit masks that enable individual indicator filters.\n* `MaxBuys` – maximum number of open buys handled as a basket.\n* `StepPips` – minimum price progress (pips) before adding to the basket.\n* `TradeStartHour`, `TradeDurationHours` – defines the daily trading window.\n* `TakeProfitPips`, `StopLossPips` – fixed protective levels (negative disables, zero switches to ATR ratios).\n* `StartTrailPips`, `TrailStepPips` – trailing start distance and step (negative disables, zero uses ATR ratios).\n* `TakeRatio`, `StopRatio`, `StartTrailRatio`, `TrailStepRatio` – ATR multipliers used when the fixed value equals zero.\n* `RsiEntryLevel`, `RsiEntryPeriod` – RSI threshold and period for the entry mask.\n* `RsiCloseLevel`, `RsiClosePeriod` – RSI threshold and period for the exit mask.\n* `BollingerCloseLength`, `BollingerCloseDeviation` – parameters of the exit Bollinger bands.\n* `CandleType` – timeframe of the working candles (daily candles are subscribed automatically for ATR)."
+   },
+   "1165": {
+    "id": 1165,
+    "name": "Pin Bar Reversal",
+    "family": "trend",
+    "overview": "Uses pin bar candles with a trend filter and ATR-based stops and targets. A bullish pin bar above the SMA opens a long position, while a bearish one below it opens a short. Entries are skipped when volatility is too low.\n\n## Details\n\n- **Entry Criteria**: Pin bar in trend direction with long wick, small body and ATR above `MinAtr`.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based stop-loss or take-profit.\n- **Stops**: Yes, ATR multiples.\n- **Default Values**:\n  - `TrendLength` = 50\n  - `MaxBodyPct` = 0.30\n  - `MinWickPct` = 0.66\n  - `AtrLength` = 14\n  - `StopMultiplier` = 1\n  - `TakeMultiplier` = 1.5\n  - `MinAtr` = 0.0015\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Pin bar in trend direction with long wick, small body and ATR above `MinAtr`.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based stop-loss or take-profit.\n- **Stops**: Yes, ATR multiples.\n- **Default Values**:\n  - `TrendLength` = 50\n  - `MaxBodyPct` = 0.30\n  - `MinWickPct` = 0.66\n  - `AtrLength` = 14\n  - `StopMultiplier` = 1\n  - `TakeMultiplier` = 1.5\n  - `MinAtr` = 0.0015\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1132": {
+    "id": 1132,
+    "name": "Octopus Nest",
+    "family": "trend",
+    "overview": "Strategy seeks squeeze breakouts using Bollinger Bands and Keltner Channels. Direction is confirmed with EMA and Parabolic SAR. Stops are placed at recent highs/lows with configurable risk reward.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price above EMA and PSAR, outside squeeze.\n  - **Short**: Price below EMA and PSAR, outside squeeze.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss at recent extremes and take-profit based on risk reward ratio.\n- **Stops**: Yes, fixed by recent high/low.\n- **Filters**: Bollinger/Keltner squeeze, EMA trend, PSAR direction.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price above EMA and PSAR, outside squeeze.\n  - **Short**: Price below EMA and PSAR, outside squeeze.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss at recent extremes and take-profit based on risk reward ratio.\n- **Stops**: Yes, fixed by recent high/low.\n- **Filters**: Bollinger/Keltner squeeze, EMA trend, PSAR direction.",
+    "parameters": ""
+   },
+   "914": {
+    "id": 914,
+    "name": "ICT Master Suite Trading IQ",
+    "family": "breakout",
+    "overview": "The ICT Master Suite strategy trades breakouts of the daily session high and low. When price closes above the session high the strategy enters a long position; when price closes below the session low it enters a short position. Positions are managed with an ATR-based trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Price closes above current session high (long).\n  - Price closes below current session low (short).\n- **Long/Short**: Long & Short.\n- **Exit Criteria**:\n  - ATR-based trailing stop.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.5\n  - `AllowLong` = true\n  - `AllowShort` = true\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price closes above current session high (long).\n  - Price closes below current session low (short).\n- **Long/Short**: Long & Short.\n- **Exit Criteria**:\n  - ATR-based trailing stop.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.5\n  - `AllowLong` = true\n  - `AllowShort` = true\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2611": {
+    "id": 2611,
+    "name": "RSI Bollinger Fractal Breakout",
+    "family": "breakout",
+    "overview": "This strategy reproduces the MetaTrader \"RSI and Bollinger Bands\" expert advisor in StockSharp. It applies Bollinger Bands to the RSI oscillator, waits for a recent fractal breakout level and places stop orders beyond that level with configurable offsets. A Parabolic SAR trailing filter dynamically tightens stops once a position is open.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `RsiPeriod` | RSI smoothing length. | 8 |\n| `BandsPeriod` | RSI Bollinger period. | 14 |\n| `BandsDeviation` | Standard deviation multiplier for Bollinger on RSI. | 1.0 |\n| `SarStep` | Parabolic SAR acceleration step. | 0.003 |\n| `SarMax` | Parabolic SAR maximum acceleration. | 0.2 |\n| `TakeProfitPips` | Take profit distance in pips. | 50 |\n| `StopLossPips` | Stop loss distance in pips. | 135 |\n| `IndentPips` | Offset beyond a fractal before placing the stop order. | 15 |\n| `RsiUpper` | RSI threshold that cancels sell stops. | 70 |\n| `RsiLower` | RSI threshold that cancels buy stops. | 30 |\n| `SarTrailingPips` | Minimum gap (in pips) between price and SAR before trailing. | 10 |\n| `CandleType` | Data type / timeframe for processing. | 4-hour candles |"
+   },
+   "2440": {
+    "id": 2440,
+    "name": "VR Steals 2",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp conversion of the MetaTrader 5 expert \"VR---STEALS-2\". It opens a single long position and demonstrates simple position management without indicators.\n\n## How it works\n1. On start the strategy buys using `BuyMarket` and records the fill price.\n2. Candle data (1 minute by default) is subscribed via `SubscribeCandles`.\n3. For each finished candle:\n   - When the price has moved `Breakeven` steps in favour of the trade the stop level is moved above the entry by `BreakevenOffset` steps.\n   - If the price reaches the entry plus `TakeProfit` steps the position is closed.\n   - If the price falls to the stop level (initial `StopLoss` below entry or the moved breakeven stop) the position is closed.\n4. After exit the strategy does not open new positions.\n\n## Parameters\n| Name | Description | Default |\n| --- | --- | --- |\n| TakeProfit | Distance in price steps to the take-profit level. | 50 |\n| StopLoss | Initial stop distance in price steps. | 50 |\n| Breakeven | Profit in steps required to activate the breakeven stop. | 20 |\n| BreakevenOffset | Offset above entry when the breakeven stop is set. | 9 |\n| CandleType | Candle type used for price processing. | 1 minute time frame |\n\n`StartProtection()` is used to enable built-in position protection.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| TakeProfit | Distance in price steps to the take-profit level. | 50 |\n| StopLoss | Initial stop distance in price steps. | 50 |\n| Breakeven | Profit in steps required to activate the breakeven stop. | 20 |\n| BreakevenOffset | Offset above entry when the breakeven stop is set. | 9 |\n| CandleType | Candle type used for price processing. | 1 minute time frame |\n\n`StartProtection()` is used to enable built-in position protection."
+   },
+   "2675": {
+    "id": 2675,
+    "name": "Open Time",
+    "family": "volatility",
+    "overview": "Open Time Strategy is a time-scheduled trading system that replicates the behaviour of the MetaTrader 5 expert advisor *OpenTime*. The strategy watches the market clock on finished candles and opens trades only inside a configurable time window. It can close any active position during a dedicated exit window, apply an optional trailing stop, and enforce basic stop-loss and take-profit rules expressed in pips.\n\nUnlike the original hedging version, this StockSharp port works on a netted portfolio: when a signal appears that conflicts with the current position, the strategy first closes the opposite exposure and then opens the requested direction with the configured volume.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| Candle Type | 1 minute candles | Data type used for time tracking; the strategy reacts only on finished candles. |\n| Use Close Window | true | Enables the automatic closing window. |\n| Close Hour / Close Minute | 20:50 | Start of the closing window. Hour supports values 0–24; 24 rolls over to the next day. |\n| Enable Trailing | false | Activates the trailing-stop logic. |\n| Trailing Stop | 30 pips | Distance between price and the trailing stop. Converted to price units depending on the instrument’s tick size. |\n| Trailing Step | 3 pips | Additional move required before the trailing stop is advanced again. |\n| Trade Hour / Trade Minute | 18:50 | Start time of the trading window that allows new entries. |\n| Duration | 300 seconds | Duration shared by both the opening and closing windows. |\n| Enable Sell / Enable Buy | Sell = true, Buy = false | Selects which directions are allowed. |\n| Volume | 0.1 | Order volume submitted with new entries. When reversing, extra volume is added to flatten the opposite exposure. |\n| Stop Loss | 0 pips | Initial stop-loss distance. A value of zero disables the static stop and leaves exit control to trailing or the closing window. |\n| Take Profit | 0 pips | Initial take-profit distance. A value of zero disables the profit target. |"
+   },
+   "299": {
+    "id": 299,
+    "name": "Beta Adjusted Pairs Trading",
+    "family": "mean_reversion",
+    "overview": "Signals require the indicator to surpass a threshold while volatility meets predefined criteria. Positions can be long or short with built-in stops.\n\nDesigned for traders who value risk control, the strategy exits as soon as the indicator mean reverts or volatility shifts. Initial setting `Asset2` = (Security.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Asset2` = (Security\n  - `Asset2Portfolio` = (Portfolio\n  - `BetaAsset1` = 1.0m\n  - `BetaAsset2` = 1.0m\n  - `LookbackPeriod` = 20\n  - `EntryThreshold` = 2.0m\n  - `StopLoss` = 2.0m\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Beta\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Asset2` = (Security\n  - `Asset2Portfolio` = (Portfolio\n  - `BetaAsset1` = 1.0m\n  - `BetaAsset2` = 1.0m\n  - `LookbackPeriod` = 20\n  - `EntryThreshold` = 2.0m\n  - `StopLoss` = 2.0m\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Beta\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

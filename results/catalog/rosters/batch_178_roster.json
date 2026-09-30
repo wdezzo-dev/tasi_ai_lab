@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3168,
+      "name": "Three Neural Networks",
+      "family": "trend",
+      "entry_long": "roc(sma(close,2),1) + roc(sma(close,8),1) + roc(sma(close,21),1) > 0",
+      "exit_long": "roc(sma(close,2),1) + roc(sma(close,8),1) + roc(sma(close,21),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The collective neural decision is the sign of the summed slopes of the three smoothed averages, and the equal P1..K3 weights of 0.1 cancel in a sign test. Period=2 is documented for all three layers; the H1/H4/D1 streams cannot be loaded separately, so longer smoothed averages stand in for the higher frames. The shift of 5, pip stop/target/trailing, and risk-percent sizing are not expressible."
+    },
+    {
+      "id": 4183,
+      "name": "Heiken Ashi Smoothed MTF",
+      "family": "trend",
+      "entry_long": "close < open and roc(sma(sma(close,6),2),1) > 0 and close > sma(sma(close,6),2)",
+      "exit_long": "close >= sma(sma(close,6),2) or roc(sma(sma(close,6),2),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Recursive Heiken Ashi candles cannot be rebuilt without a lag, so the documented bullish state is taken from the candle body inside the 6/2 double-smoothed trend and the M5 pullback is a down bar in that rising trend. Five of the six confirmation timeframes, the stop widening after a loss, and the 20/500 price-step take profit and stop are not expressible."
+    },
+    {
+      "id": 1377,
+      "name": "Supertrend Hombrok Bot",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10) and volume_ratio(volume,20) > 1.2 and (close - open) > 0.3 * atr(high,low,close,10) and rsi(close,14) < 70",
+      "exit_long": "close < ema(close,10) - 3.0 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Supertrend state is proxied by a 10-bar upside break (AtrPeriod=10 as the lookback) while the documented filters are exact: VolumeMultiplier=1.2, BodyPctOfAtr=0.3, and RsiOverbought=70. The ATR(10) x 3.0 band below price is the documented ATR-based stop exit; the take profit, RiskRewardRatio=2, and CapitalPerTrade sizing are not percent fields."
+    },
+    {
+      "id": 2446,
+      "name": "Ma Cross",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,3), sma((high + low) / 2,13))",
+      "exit_long": "crossbelow(sma(close,3), sma((high + low) / 2,13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "FastPeriod=3 on Close and SlowPeriod=13 on median price are exact and the market orders fire on the cross. LinearWeighted has no DSL function so the slow curve is a plain SMA, and the FastShift/SlowShift offsets, the order volume, and the 1-minute series are not represented."
+    },
+    {
+      "id": 3947,
+      "name": "MacdPatternTraderV01",
+      "family": "trend",
+      "entry_long": "macd(close,5,13) / close * 100 < -0.0045 and roc(macd(close,5,13),1) > 0",
+      "exit_long": "macd(close,5,13) > 0 or roc(macd(close,5,13),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MacdFastPeriod=5, MacdSlowPeriod=13, MacdSignalPeriod=1 and the BullishThreshold=-0.0045 arming level are kept, the level being read as a fraction of price so it scales to equities, and a rising MACD off that extreme is the bullish hook. The recursive stop and take-profit searches, staged position scaling, and the 7/21/98/365 partial-exit averages are not expressible."
+    },
+    {
+      "id": 3137,
+      "name": "Stochastic CG Oscillator",
+      "family": "momentum",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossabove(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3), sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),10))",
+      "exit_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossbelow(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3), sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The center-of-gravity loop, its normalisation, the weighted window, and the 0.96/0.02 trigger smoothing cannot be rebuilt, so the oscillator-versus-trigger structure is kept with a stochastic oscillator and its own smoothed trigger, with Length=14 and a 10-bar trigger as fallbacks. SignalBar offsets, the instrument-step stop/target, and the sizing modes are not expressible."
+    },
+    {
+      "id": 2627,
+      "name": "EES Hedger",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The module only reacts to positions opened by another system or a manual trader by opening an opposite hedge, so it has no market-derived entry signal and the never-true guard records that. Pip stop, take profit, and trailing management of the hedge are not DSL fields."
+    },
+    {
+      "id": 3631,
+      "name": "RSI Martingale",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < sma(rsi(close,14),20) and roc(rsi(close,14),1) > 0",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No values are documented, so RSI period 14 and a 20-bar extreme scan are fallbacks: RSI below its 20-bar average and turning up is an extreme being reached and starting to revert, and the documented 50 midline closes the long. The martingale recovery module, the pip stop/target without values, daily profit/loss limits, and hour filters are not expressible."
+    },
+    {
+      "id": 364,
+      "name": "Currency PPP Value",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The sample is a cross-sectional currency-ranking framework whose PPP deviation lookup is an unimplemented placeholder, so no market-derived signal exists for a single security and the never-true guard is used. Monthly rebalancing, the K most undervalued ranking, and MinTradeUsd sizing are not DSL features."
+    },
+    {
+      "id": 355,
+      "name": "Betting Against Beta",
+      "family": "other",
+      "entry_long": "zscore(std(roc(close,1),252),252) < -1",
+      "exit_long": "zscore(std(roc(close,1),252),252) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Beta needs a benchmark series and a cross-sectional decile ranking that a single-security DSL cannot compute, so the long-lowest-beta leg is proxied by the security's own realized-volatility z-score over the documented WindowDays=252, with -1 standing in for the bottom decile. The short leg, monthly rebalance, and MinTradeUsd cap are dropped and the docs specify no stops."
+    }
+  ]
+}

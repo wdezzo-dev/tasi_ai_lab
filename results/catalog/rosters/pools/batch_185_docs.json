@@ -1,0 +1,98 @@
+{
+ "batch_185": {
+  "strategy_ids": [
+   2752,
+   4023,
+   897,
+   151,
+   712,
+   1802,
+   3480,
+   3812,
+   1411,
+   662
+  ],
+  "docs": {
+   "2752": {
+    "id": 2752,
+    "name": "Reduce Risks",
+    "family": "trend",
+    "overview": "The Reduce Risks Strategy is a multi-timeframe trend-following system converted from the MetaTrader expert advisor \"Reduce_risks.mq5\". It analyses one-minute candles to trigger entries while filtering the market regime with 15-minute and 1-hour averages. The original algorithm was designed for highly liquid forex majors (EURUSD, USDCHF, USDJPY) and focuses on entering trends only when volatility is muted and structure confirms continuation.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `StopLossPips` | Protective stop distance in pips (mirrored by trailing logic). | `30` |\n| `TakeProfitPips` | Take-profit distance in pips. | `60` |\n| `InitialDeposit` | Reference equity used to compute the drawdown stop. | `10000` |\n| `RiskPercent` | Maximum percentage of the initial deposit that can be lost before blocking new trades and force-closing active positions. | `5` |\n| `M1CandleType` | Data type for the 1-minute candle subscription. | `1 minute` time-frame |\n| `M15CandleType` | Data type for the 15-minute confirmation subscription. | `15 minutes` time-frame |\n| `H1CandleType` | Data type for the 1-hour trend filter subscription. | `1 hour` time-frame |"
+   },
+   "4023": {
+    "id": 4023,
+    "name": "Rabbit M3",
+    "family": "trend",
+    "overview": "Rabbit M3 is a port of the MetaTrader 4 expert advisor `RabbitM3` (also released under the name \"Petes Party Trick\"). The system flips between long-only and short-only regimes using a pair of hourly exponential moving averages. Momentum confirmation comes from a Williams %R cross combined with a CCI level filter, while an extremely long Donchian channel watches for price breakouts that invalidate the current trend bias. Position size can optionally grow after large winners, replicating the lot-scaling rule contained in the original code.",
+    "details": "",
+    "parameters": "* **Fast EMA Period** – length of the fast trend filter (default: 33).\n* **Slow EMA Period** – length of the slow trend filter (default: 70).\n* **Williams %R Period** – lookback for the Williams %R oscillator (default: 62).\n* **Williams Sell Level** – upper bound that must be crossed downward for short signals (default: −20).\n* **Williams Buy Level** – lower bound that must be crossed upward for long signals (default: −80).\n* **CCI Period** – lookback for the Commodity Channel Index (default: 26).\n* **CCI Sell Level** – minimum CCI value required to permit shorts (default: 101).\n* **CCI Buy Level** – maximum CCI value required to permit longs (default: 99).\n* **Donchian Length** – number of completed candles sampled for the breakout exit (default: 410).\n* **Max Open Positions** – maximum simultaneous trades; the classic setup uses one contract (default: 1).\n* **Take Profit (pips)** – profit target measured in price steps (default: 360).\n* **Stop Loss (pips)** – protective stop measured in price steps (default: 20).\n* **Entry Volume** – starting order size (default: 0.01).\n* **Big Win Threshold** – realized profit required before increasing size (default: 4.0).\n* **Volume Increment** – additional volume added after beating the threshold (default: 0.01).\n* **Candle Type** – timeframe used for all indicator calculations (default: hourly candles)."
+   },
+   "897": {
+    "id": 897,
+    "name": "Hull Candles",
+    "family": "trend",
+    "overview": "Hull Candles is a simple trend-following strategy using a Hull Moving Average of the average price (OHLC4). When the HMA rises and the close is above its SMA, it enters long positions; when the HMA falls and the close is below its SMA, it enters short positions.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: HMA rises and close > SMA.\n  - **Short**: HMA falls and close < SMA.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `BodyLength` = 10\n  - `SmaLength` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: HMA, SMA\n  - Complexity: Low\n  - Risk level: High\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: HMA rises and close > SMA.\n  - **Short**: HMA falls and close < SMA.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `BodyLength` = 10\n  - `SmaLength` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: HMA, SMA\n  - Complexity: Low\n  - Risk level: High",
+    "parameters": ""
+   },
+   "151": {
+    "id": 151,
+    "name": "Ichimoku Volume",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 40%. It performs best in the crypto market.\n\nIchimoku components define the directional bias while surging volume confirms interest. Trades open when price aligns with the cloud and volume picks up.\n\nIt fits traders who like to follow cloud breakouts with participation. Risk is restricted by an ATR-based stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Price > Cloud && Tenkan > Kijun && Volume > AvgVolume`\n  - Short: `Price < Cloud && Tenkan < Kijun && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Cloud breakout in opposite direction\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanPeriod` = 52\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Price > Cloud && Tenkan > Kijun && Volume > AvgVolume`\n  - Short: `Price < Cloud && Tenkan < Kijun && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Cloud breakout in opposite direction\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanPeriod` = 52\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "712": {
+    "id": 712,
+    "name": "Dual Phase Trend Regime",
+    "family": "trend",
+    "overview": "The Dual Phase Trend Regime strategy switches between slow and fast trend oscillators based on current volatility. Volatility is derived from return standard deviation and split into low or high regimes. Linear regression slopes determine trend direction. Entries can be taken on regime shifts or oscillator crossovers.\n\n## Parameters\n- Candle Type\n- Trade Direction\n- Signal Source\n- Slow oscillator length\n- Fast oscillator length\n- Volatility refit interval\n- Current volatility period\n- Volatility smoothing length\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Trade Direction\n- Signal Source\n- Slow oscillator length\n- Fast oscillator length\n- Volatility refit interval\n- Current volatility period\n- Volatility smoothing length"
+   },
+   "1802": {
+    "id": 1802,
+    "name": "E TurboFx",
+    "family": "momentum",
+    "overview": "Momentum reversal strategy adapted from the MQL5 expert \"e-TurboFx\". The system watches for a series of candles whose bodies grow in size in the same direction. After several bearish candles with expanding bodies the strategy buys, expecting a rebound. After several bullish candles with growing bodies it sells. Optional stop-loss and take-profit are set in raw price points.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `N` consecutive bearish candles and each body larger than the previous one\n  - Short: `N` consecutive bullish candles and each body larger than the previous one\n- **Long/Short**: Both\n- **Exit Criteria**: Stop-loss or take-profit\n- **Stops**: Points via `StartProtection`\n- **Default Values**:\n  - `BarsCount` = 3\n  - `StopLossPoints` = 700\n  - `TakeProfitPoints` = 1200\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `N` consecutive bearish candles and each body larger than the previous one\n  - Short: `N` consecutive bullish candles and each body larger than the previous one\n- **Long/Short**: Both\n- **Exit Criteria**: Stop-loss or take-profit\n- **Stops**: Points via `StartProtection`\n- **Default Values**:\n  - `BarsCount` = 3\n  - `StopLossPoints` = 700\n  - `TakeProfitPoints` = 1200\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3480": {
+    "id": 3480,
+    "name": "Trading Panel Control",
+    "family": "volatility",
+    "overview": "The **Trading Panel Control Strategy** replicates the functionality of the \"Trading Panel\" MetaTrader 4 utility inside StockSharp. The original MQL panel allowed a trader to switch the active chart timeframe and to jump between instruments by clicking UI buttons. The StockSharp version exposes the same controls through strategy parameters so that the host application (Designer, Terminal, or custom dashboard) can adjust them on the fly.\n\nUnlike the source Expert Advisor, this port does not send trading orders. Its goal is to keep the chart subscription synchronized with the currently selected timeframe and instrument and to log the latest candle closes, providing feedback similar to the text labels in the original panel.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TimeFrameName` | Preferred timeframe code (`M1`, `M5`, `M15`, `M30`, `H1`, `H4`, `D1`, `W1`). Defaults to `M15`. |\n| `SecurityId` | Optional identifier of the instrument to control. Leave blank to use the strategy's `Security` property. |\n| `AutoLookupSecurity` | When `true`, the strategy resolves `SecurityId` through `SecurityProvider`. Disable it to accept the already assigned security as-is. |\n| `DefaultCandleType` | Fallback `DataType` used when an unknown timeframe is entered. Defaults to one-minute candles. |"
+   },
+   "3812": {
+    "id": 3812,
+    "name": "AOCCI",
+    "family": "mean_reversion",
+    "overview": "The AOCCI strategy is a direct conversion of the MetaTrader 4 \"AOCCI\" expert advisor. It combines momentum and mean reversion filters by using the Awesome Oscillator (AO) and the Commodity Channel Index (CCI) together with a daily floor pivot. The converted version works on StockSharp's high level API and keeps the same protective logic as the original script.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CciPeriod` | Period for the Commodity Channel Index (default 55). |\n| `SignalCandleOffset` | Additional offset applied when referencing historical daily candles (default 0). |\n| `StopLossPoints` | Stop-loss distance in price steps. |\n| `TakeProfitPoints` | Take-profit distance in price steps. |\n| `TrailingStopPoints` | Trailing stop distance in price steps (0 disables trailing). |\n| `BigJumpPoints` | Maximum allowed single-bar opening gap expressed in price steps. |\n| `DoubleJumpPoints` | Maximum allowed two-bar combined gap expressed in price steps. |\n| `OrderVolume` | Volume used when submitting market orders. |\n| `CandleType` | Intraday candle type (default one-hour bars). |\n| `DailyCandleType` | Daily candle type used for pivot calculation. |"
+   },
+   "1411": {
+    "id": 1411,
+    "name": "Test Bot: Bearish Buy / Bullish Sell",
+    "family": "other",
+    "overview": "Enters long on the first bearish candle and exits on the first bullish candle.\n\n## Details\n\n- **Entry Criteria**: First bearish candle when flat.\n- **Long/Short**: Long only.\n- **Exit Criteria**: First bullish candle.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: First bearish candle when flat.\n- **Long/Short**: Long only.\n- **Exit Criteria**: First bullish candle.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "662": {
+    "id": 662,
+    "name": "DCA Simulation for CryptoCommunity",
+    "family": "other",
+    "overview": "This strategy simulates dollar cost averaging with optional safety orders and a trailing take-profit. It starts with a base order and can periodically invest additional capital or average down after price drops.\n\n## Details\n\n- **Entry Criteria**:\n  - When no position is open and the date is within the configured range, buy a base amount.\n  - Optional periodic DCA orders every N candles.\n  - Optional safety orders when price falls by a specified percentage from the recent high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Take profit at a target percentage, optionally with trailing stop.\n- **Stops**: Take profit / trailing stop.\n- **Default Values**:\n  - Base order = 100 USD.\n  - DCA amount = 10 USD every 30 candles.\n  - Safety order amount = 100 USD with 15% price deviation.\n  - Take profit = 1000%, trailing = 25%.\n  - Start date = 2021-11-01, end date = 9999-01-01.\n- **Filters**:\n  - Category: Accumulation.\n  - Direction: Long.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Any.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - When no position is open and the date is within the configured range, buy a base amount.\n  - Optional periodic DCA orders every N candles.\n  - Optional safety orders when price falls by a specified percentage from the recent high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Take profit at a target percentage, optionally with trailing stop.\n- **Stops**: Take profit / trailing stop.\n- **Default Values**:\n  - Base order = 100 USD.\n  - DCA amount = 10 USD every 30 candles.\n  - Safety order amount = 100 USD with 15% price deviation.\n  - Take profit = 1000%, trailing = 25%.\n  - Start date = 2021-11-01, end date = 9999-01-01.\n- **Filters**:\n  - Category: Accumulation.\n  - Direction: Long.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Any.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   }
+  }
+ }
+}

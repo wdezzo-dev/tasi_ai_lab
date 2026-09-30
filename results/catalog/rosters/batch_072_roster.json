@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3278,
+      "name": "Eliot Waves",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,6),sma(close,85)) and roc(close,14) > 0.3",
+      "exit_long": "crossbelow(sma(close,6),sma(close,85)) or roc(close,14) < -0.3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(6/85) stands in for the documented linear-weighted averages, while 14-bar ROC above 0.3 is equivalent to momentum above the 100.3 threshold. Pip stops, break-even, trailing, and pyramiding are omitted."
+    },
+    {
+      "id": 2083,
+      "name": "Volatile Action",
+      "family": "trend",
+      "entry_long": "atr(high,low,close,1) > 1.5 * atr(high,low,close,14) and close > open and close > donchian_high_prev(high,24) and ema(close,5) > ema(close,8) and ema(close,8) > ema(close,13) and open > ema(close,8) and close > ema(close,8)",
+      "exit_long": "close < ema(close,8) or atr(high,low,close,1) < atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 24-bar high breakout and ATR(1)/ATR(14) expansion are retained; EMA(5/8/13) alignment approximates the unsupported Alligator. The volatility coefficient has no supplied value and defaults to 1.5, while ATR-based stops and targets are not percentage exits."
+    },
+    {
+      "id": 707,
+      "name": "Dual MACD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,100,200),0) and macd(close,34,144) > macd_signal(close,34,144,9) and macd(close,34,144) > 0",
+      "exit_long": "crossbelow(macd(close,34,144),macd_signal(close,34,144,9))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 1.5,
+      "notes": "The 100/200 MACD zero cross is confirmed by the aligned 34/144/9 fast MACD, whose bearish signal cross exits. The documented 1.0% stop and 1.5% target are retained."
+    },
+    {
+      "id": 2144,
+      "name": "PA Oscillator",
+      "family": "trend",
+      "entry_long": "crossbelow(macd(close,12,26),0)",
+      "exit_long": "crossabove(macd(close,12,26),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A cross below the fast-minus-slow EMA approximates the documented positive-price-action state ending and its long action; the opposite transition exits. EMA lengths 12/26 are explicit fallbacks because the source supplies names only, and the two-color-bar history is unavailable."
+    },
+    {
+      "id": 3231,
+      "name": "Exp Cronex Chaikin",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),3),ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),10))",
+      "exit_long": "crossbelow(ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),3),ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-times-money-flow and two-stage EMA smoothing approximate accumulation/distribution, Chaikin, and Cronex lines because exact tick-volume AD and Cronex filters are unavailable. The 3/10/3/10 lengths are fallbacks; point stops and the signal-bar shift are omitted."
+    },
+    {
+      "id": 2944,
+      "name": "Exp Rj SlidingRangeRj Digit System Tm Plus",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom upper and lower channel with range 5 and shift 0 is approximated by prior five-bar Donchian bands. Delayed entries, timed exits, digit rounding, and 1000/2000-point protection are not represented."
+    },
+    {
+      "id": 4037,
+      "name": "ACB1",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and close > open and roc(close,1) > 3",
+      "exit_long": "close < bb_mid(close,20) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-day breakout with positive 3% one-bar momentum approximates the strong daily breakout; 3% is a fallback because no threshold is documented. Session boundaries, H4 ATR trailing, sizing, and virtual protection are omitted."
+    },
+    {
+      "id": 2041,
+      "name": "RSI EA",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crosses above the fallback oversold level 30 to enter and the opposite overbought cross at 70 exits. Price-unit stop, target, trailing, and short settings are not percentage fields."
+    },
+    {
+      "id": 2790,
+      "name": "Alexav SpeedUp M1",
+      "family": "volatility",
+      "entry_long": "close - open > atr(high,low,close,14)",
+      "exit_long": "crossbelow(close,open)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish body exceeding ATR(14) is a price-normalized proxy for the documented unusually large 100-pip candle, with a bearish body as exit. The 30/90/10/5-pip stop, target, and stepped trail cannot be translated to percentages."
+    },
+    {
+      "id": 529,
+      "name": "Arsi Vwap Atr",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30 + 0.1 * roc(close,14) * roc(close,14))",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": 2.5,
+      "take_profit_pct": 5.0,
+      "notes": "A volatility-widened 30-70 RSI band approximates the unsupported ATR/VWAP adaptive lines, and returning through 50 exits. The documented 2.5% stop is retained and RiskReward 2 implies a 5.0% target; exact adaptive formulas are omitted."
+    }
+  ]
+}

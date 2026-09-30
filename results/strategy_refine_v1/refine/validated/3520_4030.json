@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3520,
+  "ticker": "4030",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3520,
+    "name": "Fast Slow RVI Crossover",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close - open,20), ema(close - open,1))",
+    "exit_long": "crossbelow(ema(close - open,1), ema(close - open,20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Relative Vigor Index is approximated by EMAs of the close-open momentum line, using 10/20 as explicit defaults because the RVI Period has no documented value. The session window, one-trade-per-candle rule and the pip-based stop, take-profit and trailing distances are unsupported, so both stop fields are null."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8428,
+      "engine_win_ret": 2186890.4138646363,
+      "alpha": 2186887.8768795487,
+      "benchmark_ret": 2.5369850878488114,
+      "trades": 1965,
+      "win_rate": 0.5643765903307888,
+      "sharpe": 1.593092583290717,
+      "max_drawdown": -0.40101182644819466,
+      "profit_factor": 1.8230411950458647
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.7776172929296095,
+      "alpha": 0.5304146763002413,
+      "benchmark_ret": 0.24720261662936815,
+      "trades": 88,
+      "win_rate": 0.5568181818181818,
+      "sharpe": 1.8286824506906176,
+      "max_drawdown": -0.15999583928235306,
+      "profit_factor": 2.118531780264259
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.6012033820648899,
+      "alpha": 0.38234584593274934,
+      "benchmark_ret": 0.21885753613214054,
+      "trades": 42,
+      "win_rate": 0.5238095238095238,
+      "sharpe": 2.2989224311416305,
+      "max_drawdown": -0.14645795127091754,
+      "profit_factor": 2.5117291097794174
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8428,
+      "engine_win_ret": 115.39164845700846,
+      "alpha": 112.85466336915965,
+      "benchmark_ret": 2.5369850878488114,
+      "trades": 1965,
+      "win_rate": 0.4732824427480916,
+      "sharpe": 0.6220071097039166,
+      "max_drawdown": -0.8067272241104613,
+      "profit_factor": 1.1282059654898438
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.14696987020451813,
+      "alpha": -0.10023274642485003,
+      "benchmark_ret": 0.24720261662936815,
+      "trades": 88,
+      "win_rate": 0.5,
+      "sharpe": 0.518788503438734,
+      "max_drawdown": -0.19739018900356753,
+      "profit_factor": 1.2288208339183249
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.3012100524481218,
+      "alpha": 0.08235251631598128,
+      "benchmark_ret": 0.21885753613214054,
+      "trades": 42,
+      "win_rate": 0.42857142857142855,
+      "sharpe": 1.3266832106348492,
+      "max_drawdown": -0.18308301992657683,
+      "profit_factor": 1.6102201792624664
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

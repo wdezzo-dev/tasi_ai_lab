@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2700,
+      "name": "Blau C-Momentum",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(ema(roc(close,10),5),5),5),0)",
+      "exit_long": "crossbelow(ema(ema(ema(roc(close,10),5),5),5),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Blau's triple-smoothed momentum is built from ROC(10) smoothed three times with EMA(5) and the documented Breakdown mode becomes a zero-line cross; the docs give no lengths so 10/5/5/5 are stated defaults. The delayed-ROC subtraction term, Twist mode, SignalBar shifting, money management and price-step stops are not expressible."
+    },
+    {
+      "id": 3089,
+      "name": "ScalpWiz 9001",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2) and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the market-derived trigger is kept: a close beyond the Bollinger envelope (period/deviation unspecified, so 20 and 2) during volatility expansion measured against ATR(14) versus its own average, exiting back at the middle band. The four-layer pending-order grid, risk-percent sizing and pip-based stop/target/trailing are not representable."
+    },
+    {
+      "id": 486,
+      "name": "Adaptive HMA Plus",
+      "family": "trend",
+      "entry_long": "roc(sma(close,100),5) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "roc(sma(close,100),5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The adaptive Hull MA cannot be computed here, so a 100-bar SMA (midpoint of the documented MinPeriod 172 / MaxPeriod 233) stands in, and its 5-bar slope direction gives the entry/exit signal. The 0.031 adaptation factor, FlatThreshold activity test, optional volume basis and 5-minute timeframe are approximated by the ATR-activity gate."
+    },
+    {
+      "id": 317,
+      "name": "CCI Volatility Filter",
+      "family": "trend",
+      "entry_long": "zscore(close,20) < -1.5 and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so the documented CciPeriod = 20 and CciOversold = -100 map onto a 20-bar z-score below about -1.5 mean deviations, with the volatility filter from AtrPeriod = 14 versus its own average. The ATR-multiple stops, +100 overbought short branch and 5-minute candle type are dropped."
+    },
+    {
+      "id": 1804,
+      "name": "Coensio Swing Trader",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The user-defined slope/intercept trendlines (defaulting to a flat zero line) are not computable, so a 20-bar Donchian projection supplies the Close > BuyLine breakout and a lost 20-bar average the documented false-breakout close. EntryThreshold = 15 ticks and the 50/100-tick stop, target and trailing step are price units, so SL/TP stay null."
+    },
+    {
+      "id": 1661,
+      "name": "Symr New Bar",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented explicitly as placing no trades: it only detects and logs new-bar boundaries across several timeframes from one subscription. The never-true guard records that there is no market-derived signal to translate."
+    },
+    {
+      "id": 2336,
+      "name": "STLMCandle",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is purely candle direction: a bullish last candle opens long and a bearish one closes it, which translates directly. StopLoss and TakeProfit are absolute price units rather than percentages, so both fields stay null."
+    },
+    {
+      "id": 912,
+      "name": "ICT Bread and Butter Sell-Setup",
+      "family": "other",
+      "entry_long": "close < donchian_low_prev(low,20)",
+      "exit_long": "close > donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the long 'London Close Buy' leg translates: a close below the session low becomes a close below the 20-bar prior low, exiting back inside it. The 10:30-13:00 window, London/NY/Asia session boundaries and 10/20/15-tick stops are time and price-unit features the DSL cannot express."
+    },
+    {
+      "id": 526,
+      "name": "Spot Futures Arbitrage",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is the price difference between two separate securities (spot versus its futures contract) traded as a spread, which a single-symbol series cannot express. The never-true guard is used instead of inventing a long leg."
+    },
+    {
+      "id": 1688,
+      "name": "Manager Trailing",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A position-management demo that buys once on the first finished candle and then applies trailing and partial closes; it has no market-derived entry condition, and its percentages have no documented values. The never-true guard prevents fabricating a signal."
+    }
+  ]
+}

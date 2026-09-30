@@ -1,0 +1,98 @@
+{
+ "batch_366": {
+  "strategy_ids": [
+   1897,
+   1157,
+   190,
+   1083,
+   2995,
+   3457,
+   1480,
+   4204,
+   162,
+   1369
+  ],
+  "docs": {
+   "1897": {
+    "id": 1897,
+    "name": "Exp Oracle",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader **Exp_Oracle** expert advisor. It relies on a custom *Oracle* indicator that blends the Relative Strength Index (RSI) and the Commodity Channel Index (CCI) to forecast market direction several bars ahead. The indicator generates two lines:\n\n- **Oracle line** – raw combination of CCI and RSI extremes.\n- **Signal line** – smoothed moving average of the Oracle line.\n\nThe strategy provides three trading modes to interpret these lines:\n\n1. **Breakdown** – opens positions when the signal line crosses the zero level.\n2. **Twist** – reacts to local turning points of the signal line.\n3. **Disposition** – trades on crossings between the signal and the Oracle line.\n\n## Parameters\n\n- `OraclePeriod` – period for RSI and CCI calculations.\n- `Smooth` – number of bars used to smooth the signal line.\n- `Mode` – algorithm used to generate trading signals (`Breakdown`, `Twist`, or `Disposition`).\n- `CandleType` – timeframe of incoming candles.\n- `AllowBuy` – enables long entries.\n- `AllowSell` – enables short entries.\n- `Volume` – strategy volume inherited from the base `Strategy` class.\n\n## Entry and Exit Rules\n\n### Breakdown\n- **Buy** when the signal line crosses above zero.\n- **Sell** when the signal line crosses below zero.\n\n### Twist\n- **Buy** when the signal line turns upward after a decline.\n- **Sell** when the signal line turns downward after a rise.\n\n### Disposition\n- **Buy** when the signal line crosses above the Oracle line.\n- **Sell** when the signal line crosses below the Oracle line.\n\nExisting positions are closed and reversed when an opposite signal appears. The strategy uses market orders for simplicity.\n\n## Indicator Logic\n\nFor each bar:\n1. Calculate RSI and CCI with the specified `OraclePeriod`.\n2. Build four divergence values using differences between recent CCI and RSI values.\n3. The Oracle line is the sum of the maximum and minimum divergence.\n4. The Signal line is the simple moving average of the Oracle line over `Smoo",
+    "details": "",
+    "parameters": "- `OraclePeriod` – period for RSI and CCI calculations.\n- `Smooth` – number of bars used to smooth the signal line.\n- `Mode` – algorithm used to generate trading signals (`Breakdown`, `Twist`, or `Disposition`).\n- `CandleType` – timeframe of incoming candles.\n- `AllowBuy` – enables long entries.\n- `AllowSell` – enables short entries.\n- `Volume` – strategy volume inherited from the base `Strategy` class."
+   },
+   "1157": {
+    "id": 1157,
+    "name": "Parabolic SAR Early Buy MA Exit",
+    "family": "trend",
+    "overview": "This strategy uses the Parabolic SAR indicator to enter trades when the indicator switches sides relative to price. A simple moving average provides an additional exit rule: long positions are closed when price drops below the moving average while SAR is above price.\n\n## Details\n\n- **Entry Criteria**: SAR switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: For long positions, exit when SAR > price and price < MA.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `AccelerationStep` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `MaPeriod` = 11\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR, SMA\n  - Stops: None\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: SAR switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: For long positions, exit when SAR > price and price < MA.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `AccelerationStep` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `MaPeriod` = 11\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR, SMA\n  - Stops: None\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "190": {
+    "id": 190,
+    "name": "Vwap Adx",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 157%. It performs best in the crypto market.\n\nVWAP acts as the session benchmark, and ADX measures conviction. Entries appear when price departs from VWAP with ADX showing strength.\n\nFits intraday trend traders. Protective stops use ATR multiples.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > VWAP && ADX > 25`\n  - Short: `Close < VWAP && ADX > 25`\n- **Long/Short**: Both\n- **Exit Criteria**: ADX drops below threshold\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `StopLossPercent` = 2m\n  - `AdxPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > VWAP && ADX > 25`\n  - Short: `Close < VWAP && ADX > 25`\n- **Long/Short**: Both\n- **Exit Criteria**: ADX drops below threshold\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `StopLossPercent` = 2m\n  - `AdxPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1083": {
+    "id": 1083,
+    "name": "Moving Regression",
+    "family": "trend",
+    "overview": "Strategy that applies polynomial moving regression to predict the next price. A long position opens when the forecast is above the current value and a short position when below.\n\n## Details\n\n- **Entry Criteria**: Forecast direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Degree` = 2\n  - `Window` = 18\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Polynomial Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Forecast direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Degree` = 2\n  - `Window` = 18\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Polynomial Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2995": {
+    "id": 2995,
+    "name": "VR BUCH Moving Average",
+    "family": "trend",
+    "overview": "The **VR BUCH Moving Average Strategy** is a direct port of the MetaTrader expert advisor *VR---BUCH*. It trades trend reversals using two configurable moving averages and a candle price filter. The StockSharp version keeps the original signal flow: the strategy closes open positions when an opposite setup appears and only opens a new position after the previous exposure is fully closed.\n\nThe implementation relies on StockSharp's high-level candle subscriptions, native moving average indicators and real-time order helpers. All indicator values are processed on finished candles and the strategy avoids manual historical buffers except for a small ring buffer that reproduces the MetaTrader shift parameters.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| **Fast Period** | Length of the fast moving average. |\n| **Fast Shift** | Number of candles used to shift the fast MA value into the past. |\n| **Fast Price** | Candle price component used for the fast MA (close, open, high, low, median, typical, weighted). |\n| **Fast Method** | Smoothing method for the fast MA (simple, exponential, smoothed, weighted). |\n| **Slow Period** | Length of the slow moving average. |\n| **Slow Shift** | Number of candles used to shift the slow MA value. |\n| **Slow Price** | Candle price component for the slow MA. |\n| **Slow Method** | Smoothing method for the slow MA. |\n| **Signal Price** | Candle price used to confirm the entry (defaults to close). |\n| **Candle Type** | Timeframe or custom candle type used for calculations. |\n| **Volume** | Order volume for new trades. |"
+   },
+   "3457": {
+    "id": 3457,
+    "name": "IFS Fractals",
+    "family": "trend",
+    "overview": "IFS Fractals is a port of the MetaTrader 5 script `IFS_Fractals`. The original expert renders an iterated function system (IFS) bitmap of the \"fractal word\" by repeatedly applying 28 affine transforms to a point cloud. The StockSharp version turns the same chaotic process into a directional oscillator: the X coordinate of the generated points is scaled, smoothed with an exponential moving average (EMA), and interpreted as a momentum gauge that drives long and short entries.",
+    "details": "",
+    "parameters": "* **Volume** – market volume for new entries.\n* **Candle Type** – timeframe that drives the fractal iterations (default: 5-minute candles).\n* **Iterations** – number of IFS iterations processed after every finished candle.\n* **Scale** – divisor applied to the X coordinate before feeding it into the EMA.\n* **Entry Threshold** – absolute EMA value required to open a position (positive for longs, negative mirrored for shorts).\n* **Exit Threshold** – EMA value that triggers exits when the signal reverts toward zero.\n* **EMA Period** – smoothing period of the exponential moving average applied to the normalized fractal signal.\n* **Take Profit** – absolute take-profit distance; set to `0` to disable.\n* **Stop Loss** – absolute stop-loss distance; set to `0` to disable."
+   },
+   "1480": {
+    "id": 1480,
+    "name": "Tri-Monthly BTC Swing",
+    "family": "trend",
+    "overview": "Tri-Monthly BTC Swing trades with EMA200, MACD crossover, and RSI filter.\nThe strategy allows only one trade every 90 days.\n\n## Details\n\n- **Entry Criteria**: close above EMA200, MACD line above signal, RSI above threshold, and at least 90 days since last trade\n- **Long/Short**: Long\n- **Exit Criteria**: MACD line below signal or RSI below threshold\n- **Stops**: No\n- **Default Values**:\n  - `EmaLength` = 200\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiLength` = 14\n  - `RsiThreshold` = 50\n  - `TradeInterval` = 90 days\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: close above EMA200, MACD line above signal, RSI above threshold, and at least 90 days since last trade\n- **Long/Short**: Long\n- **Exit Criteria**: MACD line below signal or RSI below threshold\n- **Stops**: No\n- **Default Values**:\n  - `EmaLength` = 200\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiLength` = 14\n  - `RsiThreshold` = 50\n  - `TradeInterval` = 90 days\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4204": {
+    "id": 4204,
+    "name": "Easiest RSI",
+    "family": "trend",
+    "overview": "The original EA opens trades when the Relative Strength Index (RSI) crosses out of oversold/overbought zones and optionally adds up to two extra positions in the same direction as price keeps moving favourably. Each order uses the same volume, a fixed stop-loss, and a trailing-stop that advances in small steps once the trade is deep in profit.\n\nThis StockSharp port keeps the behaviour at the strategy level:\n\n- RSI(14) calculated on the configured candle series drives the signals.\n- Long trades are triggered when RSI crosses upward through the oversold threshold; shorts appear on downward crossings through the overbought threshold.\n- Position scaling mimics the MT4 averaging logic by adding a new order every time price advances by `StepPips`, limited by `MaxEntries`.\n- Initial stops and trailing stops are managed internally with price distances measured in pips (adjusted automatically for 4/5 digit FX quotes).\n- All state (RSI history, last entry prices, trailing stops) is stored in primitive fields to follow the framework guidelines.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `LotSize` | `1` | Volume of each market order. |\n| `StopLossPips` | `50` | Initial protective stop in pips (set to zero to disable). |\n| `TrailingStopPips` | `50` | Trailing-stop distance in pips; zero disables trailing. |\n| `StepPips` | `20` | Minimum favourable move before an additional position is added. |\n| `RsiPeriod` | `14` | RSI length. |\n| `OversoldLevel` | `30` | RSI level that must be crossed upward to trigger long entries. |\n| `OverboughtLevel` | `70` | RSI level that must be crossed downward to trigger short entries. |\n| `MaxEntries` | `3` | Maximum number of sequential entries per direction (matching the MT4 limit). |\n| `CandleType` | `TimeFrame(5m)` | Candle type/time frame used to compute RSI. |\n\nAll distances expressed in pips are converted to absolute prices using the instrument `Step` value. For 5-digit FX symbols the helper doubles the step so that inputs such as `50` equate to 5.0 pips, mirroring the original EA guidance."
+   },
+   "162": {
+    "id": 162,
+    "name": "Bollinger Cci",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 73%. It performs best in the crypto market.\n\nBollinger bands map volatility limits, and CCI measures the distance from the mean. Breaks beyond a band with CCI confirmation trigger trades.\n\nSuitable for volatile markets where trends extend quickly. ATR stops are applied for safety.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < LowerBand && CCI < CciOversold`\n  - Short: `Close > UpperBand && CCI > CciOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**: Price returns to middle band\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `CciPeriod` = 20\n  - `CciOversold` = -100m\n  - `CciOverbought` = 100m\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < LowerBand && CCI < CciOversold`\n  - Short: `Close > UpperBand && CCI > CciOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**: Price returns to middle band\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `CciPeriod` = 20\n  - `CciOversold` = -100m\n  - `CciOverbought` = 100m\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1369": {
+    "id": 1369,
+    "name": "Supertrend - SSL Strategy with Toggle",
+    "family": "trend",
+    "overview": "This strategy combines the Supertrend indicator with the SSL channel.\nA toggle allows requiring confirmation from both indicators before entering a trade.\nIf confirmation is enabled, the first indicator signal waits for the second before executing.\nPositions are closed when an opposite signal appears from either indicator.\n\n## Details\n\n- **Indicators**: Supertrend (ATR 10, factor 2.4), SSL channel (period 13)\n- **Entry**: SSL crossover or Supertrend direction change with optional confirmation\n- **Exit**: Opposite signal from SSL or Supertrend\n- **Direction**: Long and Short\n- **Timeframe**: Any\n",
+    "details": "- **Indicators**: Supertrend (ATR 10, factor 2.4), SSL channel (period 13)\n- **Entry**: SSL crossover or Supertrend direction change with optional confirmation\n- **Exit**: Opposite signal from SSL or Supertrend\n- **Direction**: Long and Short\n- **Timeframe**: Any",
+    "parameters": ""
+   }
+  }
+ }
+}

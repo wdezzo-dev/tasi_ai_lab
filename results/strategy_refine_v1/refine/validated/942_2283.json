@@ -1,0 +1,112 @@
+{
+  "strategy_id": 942,
+  "ticker": "2283",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 942,
+    "name": "IU Open Equal to High Low",
+    "family": "pattern",
+    "entry_long": "open <= low * 1 and close > open",
+    "exit_long": "close < donchian_low_prev(low,1)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The open-equals-low geometry is applied to any bar with a 0.1% equality tolerance because the DSL has no session/time fields to isolate the first candle of the day, and the long side (open at the low, close up) is traded. The prior-candle low becomes the structural exit; the RiskReward 2 target and stop are price distances, not percents."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2023-06-22",
+        "2024-07-31"
+      ],
+      "bars_in_window": 273,
+      "engine_win_ret": 0.4629037885610803,
+      "alpha": 0.45723002969583204,
+      "benchmark_ret": 0.005673758865248235,
+      "trades": 11,
+      "win_rate": 0.7272727272727273,
+      "sharpe": 2.065926013057597,
+      "max_drawdown": -0.06406328934095096,
+      "profit_factor": 7.05101053362536
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.10639282192891186,
+      "alpha": 0.41527857651283295,
+      "benchmark_ret": -0.3088857545839211,
+      "trades": 23,
+      "win_rate": 0.5217391304347826,
+      "sharpe": 0.7006122624811945,
+      "max_drawdown": -0.07954854914987597,
+      "profit_factor": 1.599974516749957
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.10459995878824535,
+      "alpha": 0.06378363225763306,
+      "benchmark_ret": 0.04081632653061229,
+      "trades": 12,
+      "win_rate": 0.4166666666666667,
+      "sharpe": 0.980509339875757,
+      "max_drawdown": -0.0936392364070342,
+      "profit_factor": 1.7782711700452107
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2023-06-22",
+        "2024-07-31"
+      ],
+      "bars_in_window": 273,
+      "engine_win_ret": 0.3853043968666916,
+      "alpha": 0.37963063800144337,
+      "benchmark_ret": 0.005673758865248235,
+      "trades": 11,
+      "win_rate": 0.7272727272727273,
+      "sharpe": 1.7851701330803866,
+      "max_drawdown": -0.07352964563900533,
+      "profit_factor": 5.110461671700765
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.014068125429811174,
+      "alpha": 0.2948176291541099,
+      "benchmark_ret": -0.3088857545839211,
+      "trades": 23,
+      "win_rate": 0.4782608695652174,
+      "sharpe": -0.029749817504120882,
+      "max_drawdown": -0.12476220836391694,
+      "profit_factor": 0.9380674295492797
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.04020688367044167,
+      "alpha": -0.000609442860170617,
+      "benchmark_ret": 0.04081632653061229,
+      "trades": 12,
+      "win_rate": 0.4166666666666667,
+      "sharpe": 0.42665444680712494,
+      "max_drawdown": -0.12510143756516023,
+      "profit_factor": 1.2406763095657736
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

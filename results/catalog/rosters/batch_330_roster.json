@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3796,
+      "name": "Noah 10 Pips 2006",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 3679,
+      "name": "Revised Self Adaptive EA",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 109,
+      "name": "Wyckoff Distribution",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 811,
+      "name": "Fractal Breakout Trend Following",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,5))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 5-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3521,
+      "name": "Fast Slow MA Crossover",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 4160,
+      "name": "New FSCEA",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 806,
+      "name": "Footprint",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 3108,
+      "name": "Bago EA",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 193,
+      "name": "Supertrend Adx",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 2149,
+      "name": "LeMan Trend Hist",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30 and close > ema(close,10)",
+      "exit_long": "rsi(close,14) < 70 or close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1365,
+      "name": "SuperTrade ST1",
+      "family": "trend",
+      "entry_long": "close > ema(close,200) and close > sma(close,10) + 3 * atr(high,low,close,10)",
+      "exit_long": "close < ema(close,200) or close < sma(close,10) - 3 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish SuperTrend state is approximated by close above the SMA(10) band plus the documented Factor 3.0 times ATR(10), filtered by the documented EmaPeriod 200. The documented StopAtrMultiplier 1.0 / TakeAtrMultiplier 4.0 exits are measured from the entry price, so the opposite SuperTrend band and the EMA filter are used as the exit; ATR period 10 is documented and long-only is preserved."
+    },
+    {
+      "id": 2290,
+      "name": "AcceleratorBot USDJPY H4",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 20 and ema(close,20) > ema(close,50) and roc(close,3) > 0 and close > open",
+      "exit_long": "adx(high,low,close,14) < 20 or ema(close,20) < ema(close,50) or roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented AdxPeriod 14 / AdxThreshold 20 trend filter is kept, with Stochastic and Accelerator/Deceleration momentum approximated by ROC(3) and a bullish candle as the candlestick directional filter; EMA 20/50 are fallbacks since no lengths are documented. Point-based StopLoss 750, TakeProfit 9999 and TrailPoints 0 are quote-point values, so percent protection stays null."
+    },
+    {
+      "id": 2865,
+      "name": "Night Flat Trade",
+      "family": "trend",
+      "entry_long": "high - low >= 0.5 * atr(high,low,close,14) and high - low <= 1.5 * atr(high,low,close,14) and close <= (donchian_high_prev(high,3) + donchian_low_prev(low,3)) / 2 and roc(close,1) > 0",
+      "exit_long": "roc(close,1) < 0 or close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented three-candle range filter (DiffMinPips 18 / DiffMaxPips 28) is restated as 0.5x-1.5x ATR(14) because pips are instrument-specific, and the long bias is the latest close in the lower half of the qualifying range with a rising close. The OpenHour session window, TakeProfitPips 50 and the 15-pip trailing stop need clock and pip fields, so they are dropped."
+    },
+    {
+      "id": 1680,
+      "name": "Xbug Free",
+      "family": "trend",
+      "entry_long": "crossbelow(close, sma(close,19))",
+      "exit_long": "crossabove(close, sma(close,19))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented contrarian rule is reproduced literally: a cross under the MaPeriod 19 SMA enters long and a cross back above exits. MaShift 15 (right-shifted average) cannot be reproduced without a series shift, and the symmetric StopPoints 270 / take-profit are quote-point distances rather than percentages, so protection is null."
+    },
+    {
+      "id": 4179,
+      "name": "Moving Average Money",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,20))",
+      "exit_long": "crossbelow(close, sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state only that the previous bar crossing a shifted simple moving average triggers a trade and document no parameter values, so MovingPeriod 20 is a fallback and the long side is taken as the upward cross. MovingShift, MaximumRiskPercent and ProfitLossFactor are not expressible, hence the plain cross both ways and null protection."
+    },
+    {
+      "id": 1558,
+      "name": "Williams %R",
+      "family": "breakout",
+      "entry_long": "close < 0.1 * donchian_high(high,2) + 0.9 * donchian_low(low,2)",
+      "exit_long": "close > donchian_high_prev(high,2) or close > 0.3 * donchian_high(high,2) + 0.7 * donchian_low(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R < -90 is written division-free with the documented LookbackPeriod 2 as close below the 10/90 channel position. The exit matches the documented pair: close above the previous high (donchian_high_prev with the same 2-bar lookback) or %R above -30 written as the 30/70 channel position; no stops are documented."
+    },
+    {
+      "id": 588,
+      "name": "Bollinger Bands & Fibonacci",
+      "family": "breakout",
+      "entry_long": "crossabove(close, bb_upper(close,20,2)) and low > donchian_low_prev(low,50)",
+      "exit_long": "crossbelow(close, bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented BollingerLength 20 / BollingerMultiplier 2 are used for the band cross, and FibonacciLength 50 with levels 0 and 1 is taken literally as the 50-bar low acting as Fibonacci support. Exit is the documented close below the middle band; the short side and 1H timeframe are not translated and stops are documented as none."
+    },
+    {
+      "id": 3463,
+      "name": "TugbaGold",
+      "family": "momentum",
+      "entry_long": "roc(close,1) > 0",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only market-derived rule is the documented directional momentum of the previous close, approximated with a one-bar ROC for the long grid order. Martingale StartVolume/MaxVolume doubling, PointOrderStepPips spacing, MinimalProfitPips and the Average/Partial basket exits need multiple simultaneous positions, so they are unsupported by the single-position engine and noted here."
+    },
+    {
+      "id": 3382,
+      "name": "Basic ATR Stop Take",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe a one-shot market order in a manually chosen direction whose only logic is ATR-derived stop and take factors, and no numeric factor or entry trigger is given, so there is no market-derived long signal and the never-true close<0 guard is used. Stop Factor / Take Factor are ATR multiples rather than percent fields."
+    },
+    {
+      "id": 3179,
+      "name": "iCCI iRSI",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,42) < 30 and zscore(close,14) < -0.8",
+      "exit_long": "rsi(close,42) > 60 or zscore(close,14) > 0.8",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RsiPeriod 42 with RsiLowerLevel 30 / RsiUpperLevel 60 is used directly, while CCI(14) at the documented -80 / +80 levels is approximated by a 14-period z-score scaled by 100 so the exhaustion zones line up. ReverseSignals, StopLossPips 0, TakeProfitPips 140 and the 5-pip trailing stop are not expressible as long signals or percent fields."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_061": {
+  "strategy_ids": [
+   2139,
+   1051,
+   4051,
+   1130,
+   3443,
+   570,
+   2677,
+   1668,
+   3697,
+   3290
+  ],
+  "docs": {
+   "2139": {
+    "id": 2139,
+    "name": "MACD Waterline Cross Expectator",
+    "family": "trend",
+    "overview": "This strategy goes long when the MACD signal line crosses above the zero level and goes short when it crosses below. Risk management uses a stop loss and a configurable risk‑reward multiplier to set the take profit distance.\n\n## Logic\n- Calculate the MACD indicator with configurable fast EMA, slow EMA and signal periods.\n- Track the signal line value on each finished candle.\n- When the signal line crosses from negative to positive and the strategy is ready to buy, a long market order is placed.\n- When the signal line crosses from positive to negative and the strategy is ready to sell, a short market order is placed.\n- Protective stop loss and take profit levels are set automatically for each new position.\n\n## Parameters\n- **FastEmaPeriod** – length of the fast EMA used in MACD.\n- **SlowEmaPeriod** – length of the slow EMA used in MACD.\n- **SignalPeriod** – length of the signal line EMA.\n- **StopLoss** – distance to the stop loss in absolute price units.\n- **Volume** – order size used for new positions.\n- **RiskBenefitRatios** – preset ratios from 1:5 to 1:1 which define take profit distance.\n- **CandleType** – time frame of candles used by the strategy.\n\n## Notes\n- The strategy alternates between long and short trades using an internal flag.\n- Trades are executed at market prices and always close and reverse the current position.\n",
+    "details": "",
+    "parameters": "- **FastEmaPeriod** – length of the fast EMA used in MACD.\n- **SlowEmaPeriod** – length of the slow EMA used in MACD.\n- **SignalPeriod** – length of the signal line EMA.\n- **StopLoss** – distance to the stop loss in absolute price units.\n- **Volume** – order size used for new positions.\n- **RiskBenefitRatios** – preset ratios from 1:5 to 1:1 which define take profit distance.\n- **CandleType** – time frame of candles used by the strategy."
+   },
+   "1051": {
+    "id": 1051,
+    "name": "MH Hull Moving Average Based Trading",
+    "family": "trend",
+    "overview": "Hull Moving Average based breakout strategy.\n\nThe strategy compares the open price with dynamic levels derived from the Hull Moving Average. It enters long when price breaks above the upper level and short when it falls below the lower level. Existing positions are closed on opposite breakouts.\n\n## Details\n\n- **Entry Criteria**: Price relation to Hull Moving Average levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `HullPeriod` = 210\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price relation to Hull Moving Average levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite breakout.\n- **Stops**: No.\n- **Default Values**:\n  - `HullPeriod` = 210\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4051": {
+    "id": 4051,
+    "name": "Profit Hunter HSI with Fibonacci",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader 4 expert advisor `Profit_Hunter_HSI_with_fibonacci.mq4`. The original script combines\nan intraday exponential moving average (EMA) filter with Fibonacci retracement zones derived from the daily chart. The StockSharp\nimplementation follows the same idea using the high-level API: it subscribes to two candle streams (intraday and daily), calculates\nthe Fibonacci grid dynamically, generates trade signals when price interacts with those bands, and manages the resulting position\nwith adaptive stop placement and a stepped trailing stop logic.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `NumBars` | Shift of the candle whose high/low becomes the temporary resistance/support. | `3` | Matches the `numBars` extern input; must be greater than zero. |\n| `MaPeriod` | Period of the EMA used for trend classification. | `5` | Equivalent to `maPeriod` in the EA. |\n| `TimeFrame` | Intraday candle timeframe. | `1 minute` | Mirrors the `timeFrame` extern; accepts any `TimeSpan`. |\n| `DaysBackForHigh` | Index of the daily candle providing the swing high. | `1` | Corresponds to `daysBackForHigh`. |\n| `DaysBackForLow` | Index of the daily candle providing the swing low. | `1` | Corresponds to `daysBackForLow`. |\n| `Volume` | Market order size. | `1` | Represents lots/shares; validated to stay positive. |"
+   },
+   "1130": {
+    "id": 1130,
+    "name": "OBV Traffic Lights",
+    "family": "trend",
+    "overview": "Uses a Heikin Ashi based On-Balance Volume and three EMAs colored like traffic lights. Long when OBV and the fast EMA are above the slow EMA; short when both are below. Positions close when conditions disappear.\n\n- **Entry Criteria**: OBV > Slow EMA and Fast EMA > Slow EMA for long; OBV < Slow EMA and Fast EMA < Slow EMA for short.\n- **Exit Criteria**: Opposite signal or loss of agreement.\n- **Indicators**: OBV, EMA, Highest/Lowest\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3443": {
+    "id": 3443,
+    "name": "Expert AML MFI",
+    "family": "trend",
+    "overview": "The **Expert AML MFI Strategy** replicates the MetaTrader 5 expert advisor \"Expert_AML_MFI\" using the StockSharp high-level API. It focuses on the *Meeting Lines* candlestick pattern and validates every signal with the **Money Flow Index (MFI)** oscillator. The strategy automatically maintains the necessary candle statistics, identifies bullish or bearish reversals, and manages open positions whenever the MFI crosses oversold or overbought thresholds.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Timeframe used for candle subscription. | 1 hour time frame |\n| `MfiPeriod` | Number of bars for the MFI oscillator. | 12 |\n| `BodyAveragePeriod` | Window length for the average body size calculation. | 4 |\n| `BullishEntryLevel` | Maximum MFI value allowed for bullish entries. | 40 |\n| `BearishEntryLevel` | Minimum MFI value required for bearish entries. | 60 |\n| `OversoldLevel` | Oversold level used for exit signals. | 30 |\n| `OverboughtLevel` | Overbought level used for exit signals. | 70 |\n| `TradeVolume` | Base order volume applied to new trades. | 1 |\n\nAll parameters can be optimised directly inside StockSharp Designer thanks to the `StrategyParam` wrappers."
+   },
+   "570": {
+    "id": 570,
+    "name": "Binomial Option Pricing Model",
+    "family": "volatility",
+    "overview": "This module calculates the theoretical price of an option using a two-step binomial tree. It supports American or European styles and call or put types across different asset classes. Volatility is estimated through the standard deviation of closing prices.\n\nNo trading signals are produced; the strategy logs the calculated option price for each finished candle.\n\n## Details\n- **Function**: Option pricing (no trades)\n- **Parameters**: Strike Price, Risk Free Rate, Dividend Yield, Asset Class, Option Style, Option Type, Minutes/Hours/Days to expiry, Timeframe\n- **Indicators**: Standard Deviation\n- **Long/Short**: N/A\n- **Stops**: None\n",
+    "details": "- **Function**: Option pricing (no trades)\n- **Parameters**: Strike Price, Risk Free Rate, Dividend Yield, Asset Class, Option Style, Option Type, Minutes/Hours/Days to expiry, Timeframe\n- **Indicators**: Standard Deviation\n- **Long/Short**: N/A\n- **Stops**: None",
+    "parameters": ""
+   },
+   "2677": {
+    "id": 2677,
+    "name": "II Outbreak",
+    "family": "breakout",
+    "overview": "The II Outbreak strategy is a high-frequency breakout system originally written for MetaTrader 4. It combines a proprietary timing oscillator with a volatility pressure gauge to enter strong directional moves, then manages trades using adaptive trailing stops and pyramiding. This conversion reproduces the original logic on top of the StockSharp high-level API and keeps the same guardrails for spread, volatility and calendar filters.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Commission` | 4 | Round-lot commission in points used when calculating the trailing activation offset. |\n| `SpreadThreshold` | 6 | Maximum spread (in points) allowed for new entries or pyramiding. |\n| `TrailStopPoints` | 20 | Trailing stop distance in points; the initial stop is twice this value. |\n| `TotalEquityRisk` | 0.5 | Percentage of account equity loss that triggers a forced exit after pyramiding. |\n| `MaximumRisk` | 0.1 | Fraction of account balance committed to each order when sizing volume. |\n| `StdDevLimit` | 0.002 | Maximum 10-period standard deviation to accept new trades. |\n| `VolatilityThreshold` | 800 | Minimum volatility score (amplitude × tick density) required for trading. |\n| `AccountLeverage` | 100 | Account leverage used in margin approximation and position sizing. |\n| `WarningAlerts` | true | Enables logging when the standard deviation filter blocks entries. |\n| `CandleType` | 1 minute | Candle type used for all calculations. |"
+   },
+   "1668": {
+    "id": 1668,
+    "name": "Close Orders",
+    "family": "momentum",
+    "overview": "This utility strategy immediately closes existing positions and cancels pending orders according to user-defined filters. It can operate on the attached security only or on all portfolio securities. Optional time window and price range restrictions allow precise control over which orders are affected.\n\n## Details\n\n- **Purpose**: risk management and manual liquidation.\n- **Operation**:\n  - On start the strategy checks the optional time window.\n  - If allowed it closes positions and cancels orders matching the filters.\n  - After processing the strategy stops automatically.\n- **Filters**:\n  - `CloseAllSecurities` – include all portfolio instruments instead of only the attached security.\n  - `CloseOpenLongOrders` / `CloseOpenShortOrders` – close existing long or short positions.\n  - `ClosePendingLongOrders` / `ClosePendingShortOrders` – cancel pending buy or sell orders.\n  - `SpecificOrderId` – only touch orders with the given transaction id when non-zero.\n  - `CloseOrdersWithinRange`, `CloseRangeHigh`, `CloseRangeLow` – limit by entry price range.\n  - `EnableTimeControl`, `StartCloseTime`, `StopCloseTime` – apply only during a specific time window.\n- **Default Values**:\n  - All closing options enabled.\n  - `SpecificOrderId` = 0.\n  - `CloseOrdersWithinRange` = false.\n  - `CloseRangeHigh` = 0.\n  - `CloseRangeLow` = 0.\n  - `EnableTimeControl` = false.\n  - `StartCloseTime` = 02:00.\n  - `StopCloseTime` = 02:30.\n- **Notes**:\n  - The strategy does not open new positions.\n  - Price range filters are ignored when bounds are zero or negative.\n  - When `CloseAllSecurities` is enabled, positions across the entire portfolio are processed.\n",
+    "details": "- **Purpose**: risk management and manual liquidation.\n- **Operation**:\n  - On start the strategy checks the optional time window.\n  - If allowed it closes positions and cancels orders matching the filters.\n  - After processing the strategy stops automatically.\n- **Filters**:\n  - `CloseAllSecurities` – include all portfolio instruments instead of only the attached security.\n  - `CloseOpenLongOrders` / `CloseOpenShortOrders` – close existing long or short positions.\n  - `ClosePendingLongOrders` / `ClosePendingShortOrders` – cancel pending buy or sell orders.\n  - `SpecificOrderId` – only touch orders with the given transaction id when non-zero.\n  - `CloseOrdersWithinRange`, `CloseRangeHigh`, `CloseRangeLow` – limit by entry price range.\n  - `EnableTimeControl`, `StartCloseTime`, `StopCloseTime` – apply only during a specific time window.\n- **Default Values**:\n  - All closing options enabled.\n  - `SpecificOrderId` = 0.\n  - `CloseOrdersWithinRange` = false.\n  - `CloseRangeHigh` = 0.\n  - `CloseRangeLow` = 0.\n  - `EnableTimeControl` = false.\n  - `StartCloseTime` = 02:00.\n  - `StopCloseTime` = 02:30.\n- **Notes**:\n  - The strategy does not open new positions.\n  - Price range filters are ignored when bounds are zero or negative.\n  - When `CloseAllSecurities` is enabled, positions across the entire portfolio are processed.",
+    "parameters": ""
+   },
+   "3697": {
+    "id": 3697,
+    "name": "Symbol Swap",
+    "family": "volatility",
+    "overview": "The **Symbol Swap Strategy** is the StockSharp port of the MetaTrader 5 utility \"Symbol Swap\". The original MQL5 program opens a panel where a trader can enter any ticker, immediately switch the current chart to that symbol, and monitor a compact data window with the latest time, OHLC prices, tick volume, and spread. This C# conversion keeps the same responsibilities while relying exclusively on StockSharp's high-level subscription API.\n\n## Behaviour\n\n1. On start the strategy resolves the instrument to watch. It first tries `WatchedSecurityId`; if the field is empty it falls back to `Strategy.Security` that is configured in the launcher.\n2. Candle data of the chosen `CandleType` is streamed through `SubscribeCandles(...)`. Finished bars deliver the open, high, low, close, and tick volume that populate the panel.\n3. Real-time best bid/ask values arrive via `SubscribeLevel1(...)`. The spread is recalculated on every quote update to mirror the MQL data window.\n4. The formatted block is either written to the strategy log (`OutputMode = Log`) or rendered on a chart (`OutputMode = Chart`) with `DrawText(...)`, recreating the floating panel from MetaTrader.\n5. Calling `SwapSecurity(\"TICKER\")` during execution resolves the new security through `SecurityProvider.LookupById` and seamlessly resubscribes both the candle and Level 1 feeds to the requested instrument.\n\nThe strategy is informational only; it does not place orders. It can run standalone as a market dashboard or alongside other trading bots.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `CandleType` | Time frame that defines the candle subscription used to build OHLC and tick volume data. | `TimeFrame(1 minute)` |\n| `WatchedSecurityId` | Optional instrument identifier. Leave empty to use `Strategy.Security`. | _empty_ |\n| `OutputMode` | Rendering destination of the information block. Choose between `Chart` (overlay near the price) or `Log` (strategy log). | `Chart` |\n\n## Public ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `CandleType` | Time frame that defines the candle subscription used to build OHLC and tick volume data. | `TimeFrame(1 minute)` |\n| `WatchedSecurityId` | Optional instrument identifier. Leave empty to use `Strategy.Security`. | _empty_ |\n| `OutputMode` | Rendering destination of the information block. Choose between `Chart` (overlay near the price) or `Log` (strategy log). | `Chart` |"
+   },
+   "3290": {
+    "id": 3290,
+    "name": "Awesome Osc Trader",
+    "family": "mean_reversion",
+    "overview": "The strategy replicates the \"Awesome Osc Trader\" MetaTrader expert by combining Bollinger Band width, a stochastic filter and a normalized Awesome Oscillator momentum check. Long trades are opened when the oscillator is climbing from a negative extreme while the stochastic leaves the oversold area and market volatility stays inside a configurable band width. Shorts require the mirror conditions. A configurable trading window limits new orders to specific hours, and open positions can be force-closed on opposite signals only if the floating profit matches the chosen filter.\n\n## Details\n\n- **Entry Criteria**:\n  - The Bollinger Band spread, converted to pips, must stay between `BollingerSpreadLowerLimit` and `BollingerSpreadUpperLimit`.\n  - The stochastic main line is above `StochLower` for longs or below `StochUpper` for shorts.\n  - The normalized Awesome Oscillator has shown at least four consecutive bars on the opposite side of zero and is turning back toward zero with strength above `AoStrengthLimit`.\n  - Current time is inside the trading window defined by `EntryHour` and `OpenHours`.\n- **Long/Short**: Trades both directions.\n- **Exit Criteria**:\n  - Optional early exit when an opposite signal appears or when the oscillator crosses zero, controlled by `CloseTrade` and `ProfitTypeClTrd`.\n  - Protective stop-loss, take-profit and trailing stop distances supplied in pips.\n- **Stops**: Fixed stop, take-profit and optional trailing stop managed through `StartProtection`.\n- **Default Values**:\n  - `BollingerPeriod` = 20, `BollingerSigma` = 2\n  - `BollingerSpreadLowerLimit` = 55, `BollingerSpreadUpperLimit` = 380\n  - `PeriodFast` = 3, `PeriodSlow` = 32\n  - `AoStrengthLimit` = 0.13\n  - `StochK` = 8, `StochD` = 3, `StochSlow` = 3\n  - `StochLower` = 18, `StochUpper` = 76\n  - `EntryHour` = 0, `OpenHours` = 16\n  - `Lots` = 0.01, `TakeProfit` = 200, `StopLoss` = 80, `TrailingStop` = 40\n  - `CloseTrade` = true, `ProfitTypeClTrd` = 1 (close only profitable positions)\n- **Filters",
+    "details": "- **Entry Criteria**:\n  - The Bollinger Band spread, converted to pips, must stay between `BollingerSpreadLowerLimit` and `BollingerSpreadUpperLimit`.\n  - The stochastic main line is above `StochLower` for longs or below `StochUpper` for shorts.\n  - The normalized Awesome Oscillator has shown at least four consecutive bars on the opposite side of zero and is turning back toward zero with strength above `AoStrengthLimit`.\n  - Current time is inside the trading window defined by `EntryHour` and `OpenHours`.\n- **Long/Short**: Trades both directions.\n- **Exit Criteria**:\n  - Optional early exit when an opposite signal appears or when the oscillator crosses zero, controlled by `CloseTrade` and `ProfitTypeClTrd`.\n  - Protective stop-loss, take-profit and trailing stop distances supplied in pips.\n- **Stops**: Fixed stop, take-profit and optional trailing stop managed through `StartProtection`.\n- **Default Values**:\n  - `BollingerPeriod` = 20, `BollingerSigma` = 2\n  - `BollingerSpreadLowerLimit` = 55, `BollingerSpreadUpperLimit` = 380\n  - `PeriodFast` = 3, `PeriodSlow` = 32\n  - `AoStrengthLimit` = 0.13\n  - `StochK` = 8, `StochD` = 3, `StochSlow` = 3\n  - `StochLower` = 18, `StochUpper` = 76\n  - `EntryHour` = 0, `OpenHours` = 16\n  - `Lots` = 0.01, `TakeProfit` = 200, `StopLoss` = 80, `TrailingStop` = 40\n  - `CloseTrade` = true, `ProfitTypeClTrd` = 1 (close only profitable positions)\n- **Filters**:\n  - Category: Momentum with volatility filter\n  - Direction: Long and short\n  - Indicators: Bollinger Bands, Stochastic Oscillator, Awesome Oscillator\n  - Stops: Yes (fixed and trailing)\n  - Complexity: Medium\n  - Timeframe: Designed for H1 but works with any candle series\n  - Seasonality: Trading-hour window\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   }
+  }
+ }
+}

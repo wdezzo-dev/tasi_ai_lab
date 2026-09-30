@@ -1,0 +1,84 @@
+{
+  "strategy_id": 2896,
+  "ticker": "2084",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2896,
+    "name": "WAMI Cloud X2",
+    "family": "trend",
+    "entry_long": "crossabove(ema(roc(close,0.0),4),ema(ema(roc(close,1),5),10)) and roc(close,10) > 0.0",
+    "exit_long": "crossbelow(ema(roc(close,1),5),ema(ema(roc(close,1),5),10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "WAMI is built from the first difference of closes, so ROC(1) smoothed by SMA 5 stands in for the main line with a 10-period signal line, and the documented higher-timeframe bullish bias is approximated by a positive 10-bar ROC. Smoothing 5/10 are fallbacks, the 6H/30M split and selectable MA methods are not expressible, and no stops are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.20022919077927015,
+      "alpha": 0.32916713468004744,
+      "benchmark_ret": -0.5293963254593176,
+      "trades": 4,
+      "win_rate": 0.0,
+      "sharpe": -1.8414348544447454,
+      "max_drawdown": -0.20022919077927015,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.022390130959734522,
+      "alpha": 0.4858821944517979,
+      "benchmark_ret": -0.4634920634920634,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": 0.8878253361915762,
+      "max_drawdown": -0.011239742717085388,
+      "profit_factor": 16.28826921177579
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.2164959190614092,
+      "alpha": 0.3129004063979084,
+      "benchmark_ret": -0.5293963254593176,
+      "trades": 4,
+      "win_rate": 0.0,
+      "sharpe": -1.9700863408209583,
+      "max_drawdown": -0.2164959190614092,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.012221133962828867,
+      "alpha": 0.47571319745489227,
+      "benchmark_ret": -0.4634920634920634,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": 0.5021572532063779,
+      "max_drawdown": -0.016212999809879003,
+      "profit_factor": 2.8645641927239156
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

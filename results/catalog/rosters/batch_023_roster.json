@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 460,
+      "name": "SMC Order Block Zones",
+      "family": "trend",
+      "entry_long": "close < (donchian_high_prev(high,8) + donchian_low_prev(low,8)) / 2 and close > donchian_low_prev(low,8) and close > sma(close,50) and low <= donchian_low_prev(low,20)",
+      "exit_long": "close >= (donchian_high_prev(high,8) + donchian_low_prev(low,8)) / 2 or close < sma(close,50)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented 8-bar swing range, 50-bar trend filter, and 20-bar block are approximated with prior Donchian levels: equilibrium is the 8-bar midpoint, the discount zone is its prior low, and a 20-bar prior-low touch confirms the long setup. Range/SMA loss is the exit proxy; the documented stop is 2%."
+    },
+    {
+      "id": 571,
+      "name": "BTCUSD Momentum After Abnormal Days",
+      "family": "trend",
+      "entry_long": "roc(close,1) > sma(roc(close,1),5) + 1.6 * std(roc(close,1),5) and roc(close,1) > 0",
+      "exit_long": "roc(close,1) < sma(roc(close,1),5) - 1.6 * std(roc(close,1),5) or bars_since(roc(close,1) > sma(roc(close,1),5) + 1.6 * std(roc(close,1),5) and roc(close,1) > 0) >= 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The DSL has no intraday (close-open)/open return, so percent ROC(1) replaces the daily return; SMA(5), standard deviation(5), and k=1.6 preserve the documented abnormal-return rule. bars_since approximates the next-day close exit; no stops are documented."
+    },
+    {
+      "id": 797,
+      "name": "Finish Renaming",
+      "family": "momentum",
+      "entry_long": "close < 0 and close > 0",
+      "exit_long": "close < 0 and close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a file-renaming utility with no entries, exits, orders, or stops. An intentionally unreachable condition preserves that fact instead of fabricating a trading rule."
+    },
+    {
+      "id": 1149,
+      "name": "Outside Bar",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1) and low < donchian_low_prev(low,1) and close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": 1.0,
+      "notes": "Prior one-bar high/low comparisons identify a bullish outside bar and the bullish candle classifies it. A bearish body is the state-free exit proxy; the documented bar-range target is 1%, while the offset stop, partial exits, and breakeven logic are not expressible."
+    },
+    {
+      "id": 1536,
+      "name": "Volume by Session",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 1",
+      "exit_long": "volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented above-average session volume is translated with volume_ratio(volume,20)>1 and its opposite as the exit. Session-specific baselines are unavailable, so a 20-bar current-timeframe average is the explicit fallback."
+    },
+    {
+      "id": 1568,
+      "name": "Yesterday's High",
+      "family": "trend",
+      "entry_long": "close < donchian_high_prev(high,1) and high > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_high_prev(high,1)",
+      "stop_loss_pct": 3.0,
+      "take_profit_pct": 9.0,
+      "notes": "A one-bar prior high is the state-free proxy for yesterday's high, with an intrabar high break as the buy-stop trigger. Falling back below that level is an exit proxy; the documented fixed levels are 3% stop and 9% target, while gap units, trailing state, and disabled optional ROC/EMA exits are omitted."
+    },
+    {
+      "id": 1899,
+      "name": "Adaptive Renko",
+      "family": "volatility",
+      "entry_long": "roc(close,1) > (atr(high,low,close,14) / close) * 100 and close > open",
+      "exit_long": "roc(close,1) < -(atr(high,low,close,14) / close) * 100 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A one-bar move exceeding one ATR(14), converted to ROC percent, is the explicit proxy for traveling one adaptive Renko brick. The reverse move exits. The source supplies no numeric defaults and the DSL cannot retain running bricks or a minimum brick size."
+    },
+    {
+      "id": 2179,
+      "name": "Quantum Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "rsi(close,14) >= 70 or crossbelow(rsi(close,14),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic %K and its unsupplied levels are represented by RSI(14): crossing above 30 enters long and 70 is the high-close proxy. The %D line, separate low-close short exit, slowing, and candle-type settings are unavailable."
+    },
+    {
+      "id": 3315,
+      "name": "Wedge Pattern",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9) and close > donchian_high_prev(high,20)",
+      "exit_long": "ema(close,20) < ema(close,50) or roc(close,14) < 0 or crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20,50), positive ROC(14), MACD(12,26,9), and a prior 20-bar high breakout explicitly proxy the unavailable LWMA trend, momentum deviation, MACD confirmation, and fractal wedge buffer. Pip-based stop, target, breakeven, and trailing distances are not percentages."
+    },
+    {
+      "id": 3853,
+      "name": "EMA Cross Contest Hedged",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,26))",
+      "exit_long": "crossbelow(ema(close,12),ema(close,26))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast/slow bullish and bearish EMA crosses are translated with EMA(12,26) because no periods are supplied; the bearish cross is the long exit. Optional MACD confirmation, four-order hedge ladders, expiry, trailing, and pip-based protection are not stateful or percentage DSL features."
+    }
+  ]
+}

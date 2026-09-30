@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1996,
+      "name": "Color Zerolag RVI",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,14) - ema(close,9),sma(ema(close,14) - ema(close,9),9))",
+      "exit_long": "crossabove(ema(close,14) - ema(close,9),sma(ema(close,14) - ema(close,9),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RVI is not in the DSL, so a zero-lag EMA-difference stand-in uses the documented RviLength 14 and SignalLength 9 SMA as its signal line; the documented contrarian long (main line crossing below the signal) and the opposite cross as exit are preserved. The 4-hour candle type and Buy/Sell toggles are not encoded."
+    },
+    {
+      "id": 613,
+      "name": "Chande Momentum Oscillator",
+      "family": "trend",
+      "entry_long": "rsi(close,9) < 25",
+      "exit_long": "rsi(close,9) > 75",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Since CMO equals 2*RSI-100, the documented LowerThreshold -50 and UpperThreshold 50 at CmoPeriod 9 map exactly onto RSI(9) below 25 and above 75. The MaxBarsInPosition = 5 time exit has no DSL equivalent and the 1-minute candle type is not encoded."
+    },
+    {
+      "id": 3429,
+      "name": "Template M5 Envelopes",
+      "family": "trend",
+      "entry_long": "close < sma(close,20) * 0.99",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The LWMA envelope is approximated by SMA(20) with a stated 1% EnvelopeDeviation (no period or deviation is documented), and the long setup reduces to price sitting below the lower envelope, exiting back at the envelope basis. Point-based DistancePoints, EntryOffset, slippage, spread filter, stop/target and the pending-order repricing logic are not expressible."
+    },
+    {
+      "id": 3216,
+      "name": "Trend Is Your Friend",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) < 0 and ema(close,8) > sma(close,20) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close > bb_upper(close,20,2) or ema(close,8) < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bearish-then-stronger-bullish pair becomes a bullish bar after a down close (shifted opens are unavailable), confirmed by the documented Fast MA 8 / Slow MA 20 alignment (LWMA approximated by SMA) and a MACD filter evaluated on the traded series instead of monthly. The 20/50-pip stop and target, break-even lock and trailing are not expressible."
+    },
+    {
+      "id": 3327,
+      "name": "Sail System EA",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A hedging scalper that keeps symmetrical long and short PositionState objects, re-arms both sides and manages virtual stops, spread and broker level constraints; it needs simultaneous opposing positions. The long-only engine cannot represent it, so the never-true guard is used."
+    },
+    {
+      "id": 393,
+      "name": "ROA Effect Stocks",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a cross-sectional ranking by externally supplied return-on-assets with monthly rebalancing into the top decile, which depends on fundamental data and many symbols at once. No single-symbol price series can express it, so the never-true guard is used."
+    },
+    {
+      "id": 1611,
+      "name": "Calculation Position Size Based on Risk",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": 10.0,
+      "take_profit_pct": null,
+      "notes": "This is a position-sizing demonstration whose entries are explicitly not market-derived (random, every 333rd/444th bar) and whose only exit is the documented 10% stop. The 2% account risk value is a sizing input, not a price condition, so the never-true guard is used."
+    },
+    {
+      "id": 2344,
+      "name": "AFL Winner V2",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,9),70)",
+      "exit_long": "crossbelow(rsi(close,9),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The AFL Winner indicator is only described as stochastic-based with no parameter values, so RSI(9) (KPeriod as the length) stands in with HighLevel 70 for bullish and LowLevel 30 for bearish signals as stated defaults. The custom indicator, %D smoothing and relative-position nuance are dropped."
+    },
+    {
+      "id": 353,
+      "name": "Asset Growth Effect",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long the lowest and short the highest asset-growth quantile using reported filing fundamentals, rebalanced annually across the universe. That cross-sectional fundamental signal is unavailable in a single-symbol OHLCV backtest, so the never-true guard is used."
+    },
+    {
+      "id": 560,
+      "name": "Bot for Spot Market - Custom Grid",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A grid engine: it buys at start, adds orders every 0.5% drop below the last entry and closes everything only when price exceeds the average entry by 2%. Average-entry arithmetic and staggered orders cannot be expressed, so the never-true guard is used."
+    }
+  ]
+}

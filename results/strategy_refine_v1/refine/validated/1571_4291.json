@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1571,
+  "ticker": "4291",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1571,
+    "name": "Z-Score RSI",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(zscore(close,20),7),ema(rsi(zscore(close,30),9),15))",
+    "exit_long": "crossbelow(rsi(zscore(close,20),9),ema(rsi(zscore(close,20),9),15))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "All three documented lengths are used literally: the price z-score over ZScoreLength=20, its RSI(9) and the EMA(15) smoothing, with the long on the RSI-over-EMA cross and the opposite cross as exit. The docs list no stops, so both percentage fields are null."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2018-11-18",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1422,
+      "engine_win_ret": 7.4543348615434795,
+      "alpha": -0.7856651384565208,
+      "benchmark_ret": 8.24,
+      "trades": 108,
+      "win_rate": 0.6111111111111112,
+      "sharpe": 1.6567874892018528,
+      "max_drawdown": -0.24686640589877362,
+      "profit_factor": 5.643637809930879
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.478071839601212,
+      "alpha": 0.6987876747422099,
+      "benchmark_ret": -0.2207158351409979,
+      "trades": 27,
+      "win_rate": 0.5185185185185185,
+      "sharpe": 1.305112109751565,
+      "max_drawdown": -0.20547776302860155,
+      "profit_factor": 2.0556738592319626
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.23342026687170225,
+      "alpha": 0.29064287678098355,
+      "benchmark_ret": -0.0572226099092813,
+      "trades": 11,
+      "win_rate": 0.45454545454545453,
+      "sharpe": 1.6546040138708389,
+      "max_drawdown": -0.0652660160589007,
+      "profit_factor": 3.664717303635644
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2018-11-18",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1422,
+      "engine_win_ret": 3.935759157837281,
+      "alpha": -4.304240842162719,
+      "benchmark_ret": 8.24,
+      "trades": 108,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 1.254001840978259,
+      "max_drawdown": -0.27434523262569765,
+      "profit_factor": 3.5665202600631676
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.2916224285253688,
+      "alpha": 0.5123382636663667,
+      "benchmark_ret": -0.2207158351409979,
+      "trades": 27,
+      "win_rate": 0.4074074074074074,
+      "sharpe": 0.8787651115492375,
+      "max_drawdown": -0.25788646539327464,
+      "profit_factor": 1.5680123472934346
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.16761997052196498,
+      "alpha": 0.22484258043124628,
+      "benchmark_ret": -0.0572226099092813,
+      "trades": 11,
+      "win_rate": 0.45454545454545453,
+      "sharpe": 1.234430023128195,
+      "max_drawdown": -0.07705401620168983,
+      "profit_factor": 2.4326969994167293
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

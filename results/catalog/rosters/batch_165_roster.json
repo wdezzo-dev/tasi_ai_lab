@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 333,
+      "name": "Keltner Seasonal Filter",
+      "family": "trend",
+      "entry_long": "close > ema(close, 20) - 2 * atr(high, low, close, 14) and close > open and roc(close, 5) > 0",
+      "exit_long": "close < ema(close, 20) - 2 * atr(high, low, close, 14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry conditions are only described as 'see implementation', so the documented EmaPeriod 20 / AtrPeriod 14 / AtrMultiplier 2 Keltner band is used and a bullish close back inside the lower band with positive ROC(5) acts as the seasonal filter proxy. The 0.5 seasonal threshold, the 5-minute timeframe, and the ATR-multiple stop logic are not expressible."
+    },
+    {
+      "id": 2378,
+      "name": "X2MA Digit DM 361",
+      "family": "trend",
+      "entry_long": "ema(close, 10) > ema(close, 30) and roc(adx(high, low, close, 14), 1) > 0 and close > open",
+      "exit_long": "ema(close, 10) < ema(close, 30) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast EMA(10) above slow EMA(30) is joined by rising ADX(14) and a bullish candle as a stand-in for +DI above -DI; all three lengths are explicit fallbacks because the parameters carry no values. The percentage stop-loss and take-profit have no documented sizes and the short side is omitted."
+    },
+    {
+      "id": 2042,
+      "name": "FATL MACD Trend",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 12, 26), ema(macd(close, 12, 26), 9)) and roc(macd(close, 12, 26), 1) > 0",
+      "exit_long": "crossbelow(macd(close, 12, 26), ema(macd(close, 12, 26), 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The FATL-minus-price oscillator is approximated by MACD(12,26) under the documented Signal EMA 9, and the documented slope rule becomes an upward cross of the smoother with the oscillator still rising that bar. FATL/adaptive smoothing internals, the short leg, and stops are unsupported."
+    },
+    {
+      "id": 201,
+      "name": "VWAP Williams R",
+      "family": "trend",
+      "entry_long": "close < sma(close * volume, 14) / sma(volume, 14) and 100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) < -80",
+      "exit_long": "close > sma(close * volume, 14) / sma(volume, 14)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The intraday VWAP is rebuilt as the documented 14-bar volume-weighted mean sma(close*volume)/sma(volume) and Williams %R as the 14-bar Donchian stochastic, keeping the -80 oversold and VWAP-break exits. The documented StopLossPercent 2 is retained, the short side is omitted, and the stochastic denominator can be zero in a flat range."
+    },
+    {
+      "id": 3195,
+      "name": "Ingrit",
+      "family": "trend",
+      "entry_long": "close > open and close > donchian_high_prev(high, 14) and roc(close, 5) > 0",
+      "exit_long": "close < ema(close, 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A strong bullish counter-trend candle closing above the 14-bar-ago swing high with positive ROC(5) is the documented wide breakout; EMA(10) loss is the reversal exit. The five-minute timeframe, pip stop/target/trailing and the signal-reversal and flatten toggles are not representable, and no numeric protection values are documented."
+    },
+    {
+      "id": 1873,
+      "name": "CoeffofLine True",
+      "family": "momentum",
+      "entry_long": "crossabove(sma(close, 5) - sma(close, 20), 0)",
+      "exit_long": "crossbelow(sma(close, 5) - sma(close, 20), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The linear-regression slope of median price is approximated by the 5/20 SMA spread, so its documented zero crossing (negative to positive) opens the long and the mirror crossing closes. Slope Period and Signal Bar carry no values so 5/20 are fallbacks, and the short side plus candle-type binding are dropped."
+    },
+    {
+      "id": 2486,
+      "name": "Money Fixed Risk",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The script is a fixed-risk position-sizing utility that buys unconditionally every N ticks and then supervises symmetric stops, so no market-derived entry signal exists and the impossible negative-price guard prevents fabricating one. Tick counting, pip stop/target conversion, and equity-based sizing are not roster fields."
+    },
+    {
+      "id": 1357,
+      "name": "Bollinger Channel Rebound",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, bb_lower(close, 20)) and bars_since(close < bb_lower(close, 20)) < 5",
+      "exit_long": "crossabove(close, bb_mid(close, 20)) or high > bb_upper(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Length 20 two-sigma bands are used: a close back above the lower band within five bars of an earlier breach is the rebound entry, and the middle-band cross or upper-band touch exits as documented. The BufferFactor 0.2, the 1-minute timeframe, and the channel-based stop (no numeric value given) are omitted."
+    },
+    {
+      "id": 2021,
+      "name": "News Hour Trade",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are pending stop orders placed at a configured clock hour/minute around a news calendar, so the strategy is schedule-driven with no market-derived signal and the impossible negative-price guard avoids inventing one. Pending-order offsets, trailing, and step-based stop/target are not roster fields."
+    },
+    {
+      "id": 819,
+      "name": "Weighted Standard Deviation",
+      "family": "volume",
+      "entry_long": "close < sma(close * volume, 20) / sma(volume, 20) - std(close, 20)",
+      "exit_long": "close > sma(close * volume, 20) / sma(volume, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The volume-weighted mean is exact as sma(close*volume,20)/sma(volume,20) and the weighted standard deviation is approximated by std(close,20), so a close under the lower band buys and a return to the mean closes. No band length is documented so 20 is a fallback, the short side is omitted, and no stops are documented."
+    }
+  ]
+}

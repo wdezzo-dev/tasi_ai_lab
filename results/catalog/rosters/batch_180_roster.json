@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 595,
+      "name": "Bollinger Bands",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,120,2)",
+      "exit_long": "close < sma(close,110)",
+      "stop_loss_pct": 6.0,
+      "take_profit_pct": null,
+      "notes": "All documented values are exact: a close above the upper band with BbLength=120 and BbDeviation=2 opens the long, and a close below SMA(close,110) with SmaLength=110 closes it, with the short side simply mirrored outside this long-only roster. The documented StopLossPercent=6m becomes the 6.0 percent stop; the 5-minute candle type is unavailable and no take profit is documented."
+    },
+    {
+      "id": 1184,
+      "name": "Previous Day High Low Long",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,1)) and roc(adx(high,low,close,11),1) > 0",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,1)) or roc(adx(high,low,close,11),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On daily bars the previous day is the previous bar, so the break of the prior high is a cross above donchian_high_prev(high,1) filtered by rising ADX with the documented AdxLength=11, and the previous-low break is the exit. MaxProfit=150 and MaxStopLoss=15 are point distances rather than percents, so both fields are null, and the session window and trailing stop cannot be expressed."
+    },
+    {
+      "id": 600,
+      "name": "CANX MA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high + low) / 2,10), ema((high + low) / 2,30))",
+      "exit_long": "crossbelow(ema((high + low) / 2,10), ema((high + low) / 2,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is exact, an EMA crossover of the median price (high+low)/2, with the fast EMA above the slow one opening the long and the reverse cross closing it. The docs list no numeric values, so FastLength=10 and Multiplier=3 (slow 30) are fallbacks, and the start-year filter plus the long-only/short toggles are not DSL fields."
+    },
+    {
+      "id": 2654,
+      "name": "Tipu EA Multi-Timeframe",
+      "family": "trend",
+      "entry_long": "ema(close,50) > ema(close,200) and ema(close,9) > ema(close,21) and adx(high,low,close,14) > 25",
+      "exit_long": "ema(close,50) < ema(close,200) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The proprietary Tipu indicators are replaced as documented by EMA trend pairs plus an ADX filter, and because the engine runs a single series the higher-timeframe context is the 50/200 pair while the signal leg is the 9/21 pair with close confirmation implied by the crossover. Every length and the ADX threshold are fallbacks, and the pyramiding module, MaxRiskPips cap, trailing stop, and fixed take profit are not expressible."
+    },
+    {
+      "id": 1482,
+      "name": "Triangle Breakout Strategy with TP SL and EMA Filter",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5) and close > ema(close,20) and close > ema(close,50)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": 1.5,
+      "take_profit_pct": 3.0,
+      "notes": "The converging triangle trendline needs pivot state the DSL cannot hold, so the upper boundary is the prior PivotLength=5 pivot high and the exit is the mirrored pivot low. The documented TakeProfitPercent=3 and StopLossPercent=1.5 become the 3.0 and 1.5 percent fields, and the EMA20/EMA50 filter with UseEmaFilter=true is exact while the 1-hour candle type is unavailable."
+    },
+    {
+      "id": 3503,
+      "name": "Manual Position Tracking Panel",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system is a visual management panel that only deletes, recalculates, or moves take-profit orders on positions a human opens across five long and five short tickets, so there is no market-derived entry signal to translate. Its pips-based take-profit and break-even logic is order management rather than a DSL condition, so the never-true guard is used."
+    },
+    {
+      "id": 3174,
+      "name": "Three Typical Candles",
+      "family": "volatility",
+      "entry_long": "roc((high + low + close) / 3,1) > 0 and roc((high + low + close) / 3,2) > 0",
+      "exit_long": "roc((high + low + close) / 3,1) < 0 and roc((high + low + close) / 3,2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The typical price (high+low+close)/3 is exact and a rising sequence triggers the long, with the falling sequence mirroring the documented reversal; because a lag of the middle candle is not available, both the 1-bar and 2-bar horizons must rise instead of the strict three-bar monotonic test. The 11-17 hour trading window, the forced-flat filter, and the fixed volume are not DSL fields."
+    },
+    {
+      "id": 2681,
+      "name": "Multi Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "donchian_high(high,5) - donchian_low(low,5) > 0 and crossabove(sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3), 20)",
+      "exit_long": "donchian_high(high,5) - donchian_low(low,5) > 0 and crossbelow(sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3), 80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "StochasticLength=5 with the documented 3/3 %K smoothing is exact, guarded against a zero range, so the oversold crossover of OversoldLevel=20 opens the long and the overbought crossover of OverboughtLevel=80 closes it. StopLossPips=50 and TakeProfitPips=10 are pip distances, not percents, so both fields are null, and the extra currency pairs and per-slot toggles are unavailable."
+    },
+    {
+      "id": 859,
+      "name": "Grid Bot Backtesting",
+      "family": "other",
+      "entry_long": "crossbelow(close, (donchian_high(high,250) * 1.10 + donchian_low(low,250) * 0.90) / 2)",
+      "exit_long": "crossabove(close, (donchian_high(high,250) * 1.10 + donchian_low(low,250) * 0.90) / 2 + (donchian_high(high,250) * 1.10 - donchian_low(low,250) * 0.90) / 30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "AutoBounds=true with BoundLookback=250 and BoundDeviation=0.10 give the recent high and low expanded by 10%, and the ladder is split by GridLines=30, so a fall through the centre grid line accumulates the long and a rise of one grid step closes it. The 30-order ladder, the no-active-order rule, and the manual UpperBound=0.285/LowerBound=0.225 inputs are not representable, and no stops are documented."
+    },
+    {
+      "id": 2249,
+      "name": "Multicurrency Trading Panel",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The demo panel scores BUY against SELL by comparing the latest and previous candle across seven price metrics, but the scores aggregate three external pairs (EURUSD, USDJPY, GBPUSD) that the single-security engine cannot read, and no market-derived long signal survives that cross-instrument view. The never-true guard is used instead of an invented proxy, and no stops are documented."
+    }
+  ]
+}

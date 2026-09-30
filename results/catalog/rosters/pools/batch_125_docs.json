@@ -1,0 +1,98 @@
+{
+ "batch_125": {
+  "strategy_ids": [
+   3707,
+   1987,
+   2614,
+   2669,
+   2896,
+   3850,
+   2195,
+   2591,
+   814,
+   2369
+  ],
+  "docs": {
+   "3707": {
+    "id": 3707,
+    "name": "Mean Reverse",
+    "family": "trend",
+    "overview": "The Mean Reverse Strategy replicates the \"MeanReversionTrendEA\" expert advisor. It mixes a moving average crossover trend module with a mean-reversion overlay driven by Average True Range (ATR) volatility bands. The idea is to open a position when price either confirms a bullish or bearish trend shift or stretches too far away from the slower moving average by a volatility-adjusted distance.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `FastMaPeriod` | Lookback of the fast SMA used in both trend detection and mean-reversion bands. | 20 |\n| `SlowMaPeriod` | Lookback of the slow SMA that represents the equilibrium mean. | 50 |\n| `AtrPeriod` | Number of candles for ATR volatility calculation. | 14 |\n| `AtrMultiplier` | Multiplier applied to ATR for distance checks. | 2.0 |\n| `StopLossPoints` | Stop-loss distance measured in `Security.Step` units. | 500 |\n| `TakeProfitPoints` | Take-profit distance measured in `Security.Step` units. | 1000 |\n| `TradeVolume` | Volume sent with each market order. | 1 |\n| `CandleType` | Candle data type that feeds the indicators. | 1-hour time frame |"
+   },
+   "1987": {
+    "id": 1987,
+    "name": "Color Step Xccx",
+    "family": "trend",
+    "overview": "Strategy based on the Color Step XCCX indicator. The indicator measures the deviation of price from a smoothed average and plots two step lines. A long trade is opened when the fast line falls below the slow line. A short trade is opened when the fast line rises above the slow line.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: fast line crosses below slow line\n  - Short: fast line crosses above slow line\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: fast line crosses above slow line\n  - Short: fast line crosses below slow line\n- **Stops**: None\n- **Default Values**:\n  - `DPeriod` = 30\n  - `MPeriod` = 7\n  - `StepSizeFast` = 5\n  - `StepSizeSlow` = 30\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: fast line crosses below slow line\n  - Short: fast line crosses above slow line\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: fast line crosses above slow line\n  - Short: fast line crosses below slow line\n- **Stops**: None\n- **Default Values**:\n  - `DPeriod` = 30\n  - `MPeriod` = 7\n  - `StepSizeFast` = 5\n  - `StepSizeSlow` = 30\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2614": {
+    "id": 2614,
+    "name": "Bollinger Bands N Positions",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor **Bollinger Bands N positions**. It monitors closing prices relative to a Bollinger Bands envelope and enters a position whenever the market finishes a bar outside of the channel. Position management replicates the original expert by enforcing a cap on total exposure, placing fixed stop-loss and take-profit offsets, and activating a trailing stop once the trade is sufficiently in profit.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Volume` | Order size in lots used for every entry. | `0.1` |\n| `MaxPositions` | Net position cap expressed in multiples of `Volume`. | `9` |\n| `BollingerPeriod` | Lookback period for the Bollinger moving average. | `20` |\n| `BollingerWidth` | Standard deviation multiplier for the Bollinger Bands. | `2` |\n| `StopLossPips` | Stop-loss distance in pips. | `50` |\n| `TakeProfitPips` | Take-profit distance in pips. | `50` |\n| `TrailingStopPips` | Trailing stop distance in pips. Set to `0` to disable trailing. | `5` |\n| `TrailingStepPips` | Minimum profit increment required before the trailing stop advances. | `5` |\n| `CandleType` | Time-frame or custom candle type used to build the Bollinger Bands. | `1 minute time frame` |"
+   },
+   "2669": {
+    "id": 2669,
+    "name": "Chaos Trader Lite",
+    "family": "trend",
+    "overview": "The Chaos Trader Lite strategy replicates Bill Williams' three wise men entry techniques using StockSharp's high level API. It analyses each finished candle of the configured timeframe (1 hour by default) and places stop orders when any of the following conditions are met:\n\n1. **First Wise Man – Divergent bar**: detects bullish or bearish divergent candles and requires a minimum gap between price and the Alligator lips line.\n2. **Second Wise Man – Awesome Oscillator acceleration**: waits for five consecutive Awesome Oscillator readings to show accelerating momentum.\n3. **Third Wise Man – Fractal breakout**: confirms a fractal two candles back and checks that price is trading sufficiently far from the Alligator teeth line before queuing a breakout order.\n\nWhenever a long setup appears the strategy cancels existing sell stops, closes short positions, places a new buy stop just above the previous high and records a protective stop below the candle. The opposite happens for short setups. Protective stops are monitored on each bar; if price crosses the stored level the position is exited at market.\n\n## Indicators and calculations\n\n- **Alligator lips**: 5-period smoothed moving average of the median price shifted three candles forward. The strategy keeps a queue so that the value aligned with the current bar matches the MetaTrader implementation.\n- **Alligator teeth**: 8-period smoothed moving average of the median price shifted five candles forward. The shifted value drives the third wise man filter.\n- **Awesome Oscillator**: StockSharp's built-in indicator (5 vs 34 SMA of the median price) provides the momentum series used by the second wise man.\n- **Fractals**: the code inspects the high/low of the candle that sits two bars behind the latest bar. A valid fractal requires that candle to be higher (or lower) than the two candles on both sides.\n\n## Trading logic\n\n1. Subscribe to the requested candle type and process only finished candles.\n2. Update Alligator and Awesome O",
+    "details": "",
+    "parameters": "- `MagnitudePips` *(default 10)* – minimal pip distance between the divergent bar and the Alligator lips.\n- `UseFirstWiseMan` *(default true)* – enable or disable the divergent bar entry.\n- `UseSecondWiseMan` *(default true)* – enable or disable the Awesome Oscillator acceleration entry.\n- `UseThirdWiseMan` *(default true)* – enable or disable the fractal breakout entry.\n- `Volume` *(default 0.01)* – order size for stop entries.\n- `CandleType` *(default 1 hour)* – data type processed by the strategy."
+   },
+   "2896": {
+    "id": 2896,
+    "name": "WAMI Cloud X2",
+    "family": "trend",
+    "overview": "The strategy replicates the dual timeframe behaviour of the original MetaTrader \"Exp_WAMI_Cloud_X2\" expert advisor. It uses the Warren Momentum Indicator (WAMI) on a higher timeframe to define the dominant bias and a second instance of the same indicator on a lower timeframe to time entries and exits. The main WAMI line is compared against its internal signal line on both timeframes, which mirrors the logic of the original MQL implementation.\n\n## Concept\n\n- **WAMI construction** – WAMI is built from the first difference of closing prices, smoothed by three sequential moving averages with individually selectable methods (SMA, EMA, SMMA or LWMA). A fourth moving average produces the signal line. The custom indicator in the strategy reproduces this chain exactly, so both main and signal lines are available in one value payload.\n- **Trend filter (higher timeframe)** – The default six-hour candles drive the trend WAMI. Whenever the main line is above the signal line the trend direction becomes bullish; below it becomes bearish. A neutral state is kept when both lines are equal or the indicator is still forming.\n- **Signal engine (lower timeframe)** – The default 30-minute candles are used to search for entries. For every finished candle the strategy stores recent WAMI values and evaluates the last closed bar defined by `SignalBar`. Crossings are detected by comparing the most recent value (`SignalBar`) against the previous one (`SignalBar + 1`).\n\n## Trading Rules\n\n1. **Exits**\n   - Long positions are closed when the signal timeframe shows persistent bearishness (`previous.Main < previous.Signal`) if `CloseLongOnSignal` is enabled.\n   - Short positions are closed analogously when `CloseShortOnSignal` is enabled.\n   - When the higher timeframe flips direction (`_trendDirection`), the respective `CloseLongOnTrendFlip` or `CloseShortOnTrendFlip` flag forces an exit.\n2. **Entries**\n   - Short entries are allowed when the higher timeframe is bearish and the signal WAMI crosses",
+    "details": "",
+    "parameters": "- **Trend WAMI** – `TrendPeriod1/2/3`, `TrendMethod1/2/3`, `TrendSignalPeriod`, `TrendSignalMethod`, `TrendCandleType`.\n- **Signal WAMI** – `SignalPeriod1/2/3`, `SignalMethod1/2/3`, `SignalSignalPeriod`, `SignalSignalMethod`, `SignalCandleType`.\n- **Control Flags** – `SignalBar`, `EnableBuyEntries`, `EnableSellEntries`, `CloseLongOnTrendFlip`, `CloseShortOnTrendFlip`, `CloseLongOnSignal`, `CloseShortOnSignal`.\n- **Trading Size** – `TradeVolume` defines the market order size used for new entries. Reversals send the opposite volume plus the configured size.\n\nAll parameters are exposed through `StrategyParam<T>` objects, so they can be optimised or modified from the StockSharp UI just as the MetaTrader inputs allowed."
+   },
+   "3850": {
+    "id": 3850,
+    "name": "Fractured Fractals (MT4)",
+    "family": "breakout",
+    "overview": "Detailed C# port of the classic MetaTrader 4 expert advisor `MQL/7696/Fractured_fractals.mq4`. The strategy watches for newly confirmed\nWilliams fractal levels, queues breakout stop orders, and trails risk using the previous fractal swings. Position sizing follows the\noriginal risk-per-trade logic with the adaptive \"DecreaseFactor\" volume reduction after drawdowns.\n\n## Details\n\n- **Source**: Converted from `MQL/7696/Fractured_fractals.mq4`.\n- **Market Regime**: Breakout continuation, works on any instrument that forms reliable fractal structures.\n- **Order Types**: Uses stop orders for entries and protective stop orders for exits.\n- **Position Sizing**: Percentage risk model controlled by `MaximumRiskPercent` with loss-streak damping via `DecreaseFactor`.\n- **Default Parameters**:\n  - `MaximumRiskPercent` = 2%\n  - `DecreaseFactor` = 3\n  - `CandleType` = 1-hour time frame\n- **Core Indicators**: Native five-bar Williams fractal detection implemented in the strategy.\n- **Strategy Type**: Symmetric long/short breakout with fractal-based trailing stops.\n\n## Strategy Logic\n\n### Fractal detection\n\n- Maintains a rolling window of five candle highs and lows to reproduce MetaTrader's `iFractals` buffers.\n- A new up fractal is confirmed when the middle high exceeds the surrounding two highs on each side; a down fractal requires the\n  middle low to be the lowest in the five-bar sequence.\n- When a fresh fractal appears, it is stored together with the three previous values, mirroring the EA's `cfu`, `pfu`, and\n  `pfu.1` style buffers for later comparisons and trailing calculations.\n\n### Entry setup\n\n- Long trades require the most recent up fractal to exceed the previous one and the latest down fractal to define a risk floor.\n  The strategy then places a buy stop slightly above the fractal (spread compensation) with a protective stop below the opposing\n  down fractal.\n- Short trades mirror the logic: a lower low fractal combined with a higher up fractal generates a sell stop and a",
+    "details": "- **Source**: Converted from `MQL/7696/Fractured_fractals.mq4`.\n- **Market Regime**: Breakout continuation, works on any instrument that forms reliable fractal structures.\n- **Order Types**: Uses stop orders for entries and protective stop orders for exits.\n- **Position Sizing**: Percentage risk model controlled by `MaximumRiskPercent` with loss-streak damping via `DecreaseFactor`.\n- **Default Parameters**:\n  - `MaximumRiskPercent` = 2%\n  - `DecreaseFactor` = 3\n  - `CandleType` = 1-hour time frame\n- **Core Indicators**: Native five-bar Williams fractal detection implemented in the strategy.\n- **Strategy Type**: Symmetric long/short breakout with fractal-based trailing stops.",
+    "parameters": ""
+   },
+   "2195": {
+    "id": 2195,
+    "name": "Extrem N",
+    "family": "breakout",
+    "overview": "The Extrem N strategy trades reversals based on new highs and lows detected over a rolling window.\n\nThe strategy relies on the Donchian Channel indicator to mark price extremes. When a bar sets a new high relative to the lookback period and the following bar sets a new low, a long position is opened. A short position is opened when a new low is followed by a new high. Opposite signals close existing positions.\n\n- **Entry conditions**:\n  - Long: previous bar made a new high and current bar made a new low.\n  - Short: previous bar made a new low and current bar made a new high.\n- **Exit conditions**:\n  - Long positions are closed on a short entry signal.\n  - Short positions are closed on a long entry signal.\n- **Parameters**:\n  - `Period` – Donchian lookback period (default 9).\n  - `CandleType` – timeframe of processing (default 4 hours).\n  - `BuyPosOpen` – allow opening long positions (default true).\n  - `SellPosOpen` – allow opening short positions (default true).\n  - `BuyPosClose` – allow closing long positions (default true).\n  - `SellPosClose` – allow closing short positions (default true).\n- **Indicators**: Donchian Channel.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2591": {
+    "id": 2591,
+    "name": "N Candles",
+    "family": "momentum",
+    "overview": "- **Market Regime**: Works best in markets that exhibit short momentum bursts.\n- **Instruments**: Any instrument supporting continuous trading (FX, futures, crypto).\n- **Timeframes**: Configurable; default is 1-hour candles.\n- **Order Types**: Market orders without protective stops or targets.",
+    "details": "",
+    "parameters": "- **Consecutive Candles**: Number of identical candles required before placing an order.\n- **Volume**: Market order size sent on each signal.\n- **Candle Type**: Candle series used for streak detection (timeframe or custom candle type)."
+   },
+   "814": {
+    "id": 814,
+    "name": "FTMO Rules Monitor",
+    "family": "volatility",
+    "overview": "Strategy that tracks FTMO challenge rules and manages trades based on ATR risk.\n\nThe strategy sizes positions using ATR and stops when challenge objectives are met. It monitors maximum daily loss, total loss, profit target and minimum trading days.\n\n## Details\n\n- **Entry Criteria**: Bullish candle opens long, bearish candle opens short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Challenge completed or opposite signal.\n- **Stops**: ATR-based.\n- **Default Values**:\n  - `AccountSize` = 10000m\n  - `RiskPercent` = 1m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Risk Management\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: ATR\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Bullish candle opens long, bearish candle opens short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Challenge completed or opposite signal.\n- **Stops**: ATR-based.\n- **Default Values**:\n  - `AccountSize` = 10000m\n  - `RiskPercent` = 1m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Risk Management\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: ATR\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2369": {
+    "id": 2369,
+    "name": "WPR Slowdown",
+    "family": "mean_reversion",
+    "overview": "The WPR Slowdown strategy utilizes the Williams %R oscillator to detect reversals when momentum stalls near extreme levels. A slowdown occurs when the current Williams %R value differs from the previous value by less than one point. When such a slowdown appears above the upper threshold, the strategy closes short positions and optionally opens a long position. A slowdown below the lower threshold closes long positions and optionally opens a short position.\n\n## Entry and Exit Rules\n- **Long entry**: Williams %R is above `LevelMax` and the slowdown condition is satisfied. Short positions can be closed if allowed.\n- **Short entry**: Williams %R is below `LevelMin` and the slowdown condition is satisfied. Long positions can be closed if allowed.\n- **Long exit**: Triggered by a short entry signal when `BuyPosClose` is enabled.\n- **Short exit**: Triggered by a long entry signal when `SellPosClose` is enabled.\n\n## Parameters\n- `WprPeriod` – period for calculating Williams %R.\n- `LevelMax` – upper signal level (default -20) marking the overbought zone.\n- `LevelMin` – lower signal level (default -80) marking the oversold zone.\n- `SeekSlowdown` – enables slowdown detection between consecutive Williams %R values.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions on sell signals.\n- `SellPosClose` – allow closing short positions on buy signals.\n- `CandleType` – candle type used for indicator calculations (default 6-hour candles).\n\n## Notes\nThe strategy focuses solely on the Williams %R slowdown logic from the original MQL5 expert. Alerting, money management and other auxiliary features are omitted for clarity. Stop-loss and take-profit functionality can be added manually if required.\n",
+    "details": "",
+    "parameters": "- `WprPeriod` – period for calculating Williams %R.\n- `LevelMax` – upper signal level (default -20) marking the overbought zone.\n- `LevelMin` – lower signal level (default -80) marking the oversold zone.\n- `SeekSlowdown` – enables slowdown detection between consecutive Williams %R values.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions on sell signals.\n- `SellPosClose` – allow closing short positions on buy signals.\n- `CandleType` – candle type used for indicator calculations (default 6-hour candles)."
+   }
+  }
+ }
+}

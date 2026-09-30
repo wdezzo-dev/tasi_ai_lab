@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1956,
+      "name": "FatlSatlOsma",
+      "family": "trend",
+      "entry_long": "roc(macd(close, 39, 65), 1) > 0 and roc(macd(close, 39, 65), 2) > 0",
+      "exit_long": "roc(macd(close, 39, 65), 1) < 0 and roc(macd(close, 39, 65), 2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Fatl/Satl oscillator is the built-in MACD signal line, so the documented two-bar rising acceleration with a higher latest value becomes a positive one- and two-bar ROC of MACD(39, 65) using the documented Fast 39 / Slow 65. Docs state there are no stops."
+    },
+    {
+      "id": 2273,
+      "name": "Color RSI MACD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default MACD Disposition mode is a crossing between the MACD line and its signal line, using the documented 12/26/9 periods; the opposite cross is the documented exit. Docs state no stop-loss or take-profit levels."
+    },
+    {
+      "id": 3017,
+      "name": "Sensitive MACD Trailing",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9)) and macd(close, 12, 26) > 0.01 * close",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 12/26/9 MACD crossover is combined with the MacdOpenLevel magnitude filter, which is given as 3 price points and is therefore normalised to 1% of price. The 35/75 pip stop and target and the pip trailing stop are not percentage fields."
+    },
+    {
+      "id": 3303,
+      "name": "Crypto Scalper Momentum",
+      "family": "trend",
+      "entry_long": "roc(close, 14) > 0.3 and macd(close, 12, 26) > macd_signal(close, 12, 26, 9) and volume_ratio(volume, 20) > 1 and rsi(close, 14) < 70",
+      "exit_long": "roc(close, 14) < -0.3 or crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MFI is unavailable, so the documented 30/70 MFI thresholds are approximated by RSI(14) and volume_ratio as the volume component, while Momentum and MACD use the documented 14 / 12-26-9 settings. Separate momentum and macro candle feeds, basket targets and money trailing are not expressible."
+    },
+    {
+      "id": 3223,
+      "name": "Heikin Ashi Trader",
+      "family": "trend",
+      "entry_long": "close > (open + high + low) / 3 and rsi(close, 5) > 80 and ema((high + low + close) / 3, 10) > ema((high + low + close) / 3, 30) and roc(close, 14) > 0.3 and macd(close, 12, 26) > macd_signal(close, 12, 26, 9)",
+      "exit_long": "close < (open + high + low) / 3 and ema((high + low + close) / 3, 10) < ema((high + low + close) / 3, 30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish Heikin Ashi bar is approximated by close above the bar average, the stochastic overbought read by RSI(5) above 80, and the fast/slow LWMA by EMAs 10/30 of typical price. All periods are explicit fallbacks because the docs list them without values; pip stops, break-even and the kill switch are dropped."
+    },
+    {
+      "id": 2705,
+      "name": "Spreader 2",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a two-instrument pair-trading system requiring a configured SecondSecurity and a correlation check, so no single-symbol market signal exists. A never-true guard is used rather than faking the second leg."
+    },
+    {
+      "id": 1606,
+      "name": "VWAP Mean Magnet v9 (Simple Alert)",
+      "family": "mean_reversion",
+      "entry_long": "close < sma((high + low + close) / 3, 60) and rsi(close, 14) < 25",
+      "exit_long": "close > sma((high + low + close) / 3, 60)",
+      "stop_loss_pct": 0.5,
+      "take_profit_pct": null,
+      "notes": "VWAP is approximated by the 60-bar typical-price average and the documented RSI oversold 25 drives the long; the volume filter of the v2 version is intentionally absent here. The documented Stop loss 0.5% is applied and the exit is the documented VWAP reversion."
+    },
+    {
+      "id": 2987,
+      "name": "Renko Chart",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Docs state the strategy does not place orders and instead rebuilds a Renko symbol stream from tick data. There is no market-derived entry, so a never-true guard is used and the brick-size workflow is not translated."
+    },
+    {
+      "id": 370,
+      "name": "Earnings Quality Factor",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An annual July 1 cross-sectional rebalance long high-quality and short low-quality stocks needs fundamental scores and multi-name ranking, which a single-symbol DSL cannot express. A never-true guard prevents fabricating a price signal."
+    },
+    {
+      "id": 934,
+      "name": "IS",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a switch on an unspecified external source equalling a configurable long/short value, so no market-derived rule can be recovered from the docs. A never-true guard is used; the percentage take-profit and stop-loss also have no documented values."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2237,
+  "ticker": "6002",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2237,
+    "name": "NRTR Trailing Stop",
+    "family": "trend",
+    "entry_long": "crossabove(close, donchian_high(high,1.0) - 1.0 * atr(high,low,close,2.0)) and close < ema(close,15)",
+    "exit_long": "crossbelow(close, donchian_high(high,10) - 2.0 * atr(high,low,close,10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "NRTR is unavailable, so its range-derived trailing level is approximated by a 10-bar high minus two ATR(10) values and the documented 'after a downtrend' condition by price below EMA(20). TakeProfit 2000 and StopLoss 1000 points are absolute price distances, not percentages, so both protection fields stay null."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2010-02-03",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3610,
+      "engine_win_ret": 4.544479692047819,
+      "alpha": 4.456856516678804,
+      "benchmark_ret": 0.0876231753690151,
+      "trades": 126,
+      "win_rate": 0.5793650793650794,
+      "sharpe": 0.7758507872199897,
+      "max_drawdown": -0.2605680986782658,
+      "profit_factor": 1.876159369421029
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.03380055147454253,
+      "alpha": 0.4809033552128603,
+      "benchmark_ret": -0.4471028037383178,
+      "trades": 14,
+      "win_rate": 0.42857142857142855,
+      "sharpe": 0.22441849985088197,
+      "max_drawdown": -0.32660108701115864,
+      "profit_factor": 1.9081249107398486
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.09059873489675696,
+      "alpha": 0.15537071110296985,
+      "benchmark_ret": -0.06477197620621289,
+      "trades": 6,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.5646279721065647,
+      "max_drawdown": -0.16566920846178845,
+      "profit_factor": 0.5287468211813904
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2010-02-03",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3610,
+      "engine_win_ret": 1.95449386671539,
+      "alpha": 1.8668706913463748,
+      "benchmark_ret": 0.0876231753690151,
+      "trades": 126,
+      "win_rate": 0.5238095238095238,
+      "sharpe": 0.5180278611879651,
+      "max_drawdown": -0.33371979744488534,
+      "profit_factor": 1.4904859831940787
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.03888022177912287,
+      "alpha": 0.4082225819591949,
+      "benchmark_ret": -0.4471028037383178,
+      "trades": 14,
+      "win_rate": 0.42857142857142855,
+      "sharpe": 0.049711269496085383,
+      "max_drawdown": -0.3372483772767264,
+      "profit_factor": 1.598291377870959
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.06108549754589454,
+      "alpha": 0.12585747375210743,
+      "benchmark_ret": -0.06477197620621289,
+      "trades": 6,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.4298027947163372,
+      "max_drawdown": -0.1743231690923016,
+      "profit_factor": 0.4596005358642284
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

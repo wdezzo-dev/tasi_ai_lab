@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 420,
+      "name": "EMA Moving Away",
+      "family": "trend",
+      "entry_long": "close <= ema(close,55) * 0.98",
+      "exit_long": "close >= ema(close,55)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented long threshold is close at least 2% below EMA(55), with return to EMA as exit. Streak and candle-size filters have no documented thresholds and are omitted; 2% is the documented stop."
+    },
+    {
+      "id": 516,
+      "name": "All Divergences",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,2) and roc(rsi(close,14),1) > 0 and close > sma(close,50)",
+      "exit_long": "high > donchian_high_prev(high,2) and roc(rsi(close,14),1) < 0 or (close < sma(close,50) and bars_since(close > sma(close,50)) >= 4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A new two-bar low with a one-bar-higher RSI proxy retains bullish divergence under SMA(50). The exit combines the mirror divergence with a three-close MA-risk proxy; optional protection has no supplied values."
+    },
+    {
+      "id": 674,
+      "name": "Dema RSI",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(2 * ema(close,20) - ema(ema(close,20),20),14),ema(rsi(2 * ema(close,20) - ema(ema(close,20),20),14),9))",
+      "exit_long": "crossbelow(rsi(2 * ema(close,20) - ema(ema(close,20),20),14),ema(rsi(2 * ema(close,20) - ema(ema(close,20),20),14),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DEMA is approximated by 2*EMA(20)-EMA(EMA(20),20), then RSI(14) crosses its EMA(9) smoother; these lengths are explicit fallbacks because none are documented. Session, point target, and trailing-stop controls are unsupported."
+    },
+    {
+      "id": 1214,
+      "name": "R Based Strategy Template",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long entry follows the documented RSI(14) downward cross below 30. An RSI recross above 50 is an explicit mean-reversion exit proxy; fixed 100-point and ATR protection and 2R sizing are not expressible percentage exits."
+    },
+    {
+      "id": 1545,
+      "name": "VoVix DEVMA",
+      "family": "trend",
+      "entry_long": "crossabove(sma(std(atr(high,low,close,14),59),20),sma(std(atr(high,low,close,14),59),60))",
+      "exit_long": "crossbelow(sma(std(atr(high,low,close,14),59),20),sma(std(atr(high,low,close,14),59),60))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast and slow DEVMA are approximated by SMA(20) and SMA(60) of 59-bar standard deviation of ATR; ATR(14) is an explicit fallback. ATR 2x/3x protection is not a fixed percentage field."
+    },
+    {
+      "id": 1952,
+      "name": "DSS Bressert",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(ema((close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)),8),8),ema((close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)),8))",
+      "exit_long": "crossabove(ema(ema((close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)),8),8),ema((close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)),8))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "A 13-bar range stochastic with one and two EMA(8) smoothings proxies DSS and MIT. The docs repeat the same relation for buy and sell, so the documented DSS-below-MIT cross enters and the opposite cross supplies a distinct long exit; protection is 1%/2%."
+    },
+    {
+      "id": 2545,
+      "name": "Eugene Inside Breakout",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A current high above the prior candle high is the fresh-high long breakout, with the mirrored fresh low as exit. The two-bar compression comparison and 08:00 time filter require shifted bars or time fields unavailable in the DSL."
+    },
+    {
+      "id": 2619,
+      "name": "Percentage Crossover Channel System",
+      "family": "breakout",
+      "entry_long": "close <= ema(close,20) * 1.02 and close >= ema(close,20) * 0.98 and bars_since(close > ema(close,20) * 1.02) < 3",
+      "exit_long": "close <= ema(close,20) * 1.02 and close >= ema(close,20) * 0.98 and bars_since(close < ema(close,20) * 0.98) < 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) with 2% bands is an explicit fallback for the parameterless adaptive channel. The entry and exit retain breakout-then-reentry sequences; price-step protection and the configured historical-band shift are not represented."
+    },
+    {
+      "id": 3713,
+      "name": "RRS Tangled EA",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source randomly chooses direction and provides no deterministic entry signal, so the impossible negative-price guard prevents fabricating one. Pip targets, trailing, spread limits, order caps, and portfolio risk controls are not percentage/DSL fields."
+    },
+    {
+      "id": 4192,
+      "name": "Udy Ivan Madumere",
+      "family": "momentum",
+      "entry_long": "roc(open,4) > 0",
+      "exit_long": "roc(open,4) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(open,4)>0 is a rolling proxy for the positive difference between opens two and six bars apart; the inverse exits. The 18:00 once-daily gate, point thresholds, asymmetric protection, short trailing stop, and holding timer are unavailable."
+    }
+  ]
+}

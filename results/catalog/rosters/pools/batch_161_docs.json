@@ -1,0 +1,98 @@
+{
+ "batch_161": {
+  "strategy_ids": [
+   1727,
+   2282,
+   3885,
+   2015,
+   835,
+   1340,
+   2679,
+   2406,
+   2295,
+   3527
+  ],
+  "docs": {
+   "1727": {
+    "id": 1727,
+    "name": "Three Parabolic SAR",
+    "family": "trend",
+    "overview": "The Three Parabolic SAR Strategy uses three Parabolic SAR indicators computed on 6‑hour, 3‑hour and 1‑hour candles. A trade is opened on the 1‑hour timeframe when the higher two timeframes confirm the direction and the 1‑hour SAR flips.\n\n## Details\n\n- **Entry Criteria**:\n  - SAR on 6h candle is below close and SAR on 3h candle is below close for long; above for short.\n  - On 1h candles the SAR crosses price: from above to below for long, from below to above for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position is closed when the 1h SAR moves against the position or when either higher timeframe SAR reverses.\n- **Stops**: No.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `HigherTimeframe` = TimeSpan.FromHours(6)\n  - `MiddleTimeframe` = TimeSpan.FromHours(3)\n  - `TradingTimeframe` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - SAR on 6h candle is below close and SAR on 3h candle is below close for long; above for short.\n  - On 1h candles the SAR crosses price: from above to below for long, from below to above for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position is closed when the 1h SAR moves against the position or when either higher timeframe SAR reverses.\n- **Stops**: No.\n- **Default Values**:\n  - `Acceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `HigherTimeframe` = TimeSpan.FromHours(6)\n  - `MiddleTimeframe` = TimeSpan.FromHours(3)\n  - `TradingTimeframe` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2282": {
+    "id": 2282,
+    "name": "DeMarker Sign",
+    "family": "trend",
+    "overview": "This strategy uses the DeMarker oscillator to detect potential trend reversals. On each completed candle (4-hour timeframe by default), the DeMarker value is compared to configurable upper and lower thresholds. When the oscillator rises above the lower threshold (0.3 by default), the strategy enters a long position and closes any short position. When the oscillator falls below the upper threshold (0.7 by default), it enters a short position and closes any long position. Positions are held until an opposite signal appears.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: DeMarker crosses upward through the lower level.\n  - **Short**: DeMarker crosses downward through the upper level.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None by default.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: DeMarker crosses upward through the lower level.\n  - **Short**: DeMarker crosses downward through the upper level.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None by default.\n- **Filters**: None.",
+    "parameters": ""
+   },
+   "3885": {
+    "id": 3885,
+    "name": "Weekly Rebound Corridor",
+    "family": "trend",
+    "overview": "The Weekly Rebound Corridor strategy replicates the behavior of the MetaTrader 4 Expert Advisor `2_Otkat_Sys_v1_1`. The system searches for a strong gap between the previous session close and the open price that occurred 24 candles earlier. When the detected gap exceeds a configurable corridor threshold and it is the specified trading day of the week, the strategy enters the market during the first minutes of the new trading day. Protective stop-loss and take-profit levels are applied, and all open positions are force-closed shortly before the trading session ends.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `TakeProfitPoints` | Take-profit distance in points. Long trades add three additional points, as defined in the MT4 script. | `5` |\n| `StopLossPoints` | Stop-loss distance in points. | `49` |\n| `TradeVolume` | Volume submitted with market orders. The value is automatically aligned with the instrument volume step. | `1` |\n| `CorridorPoints` | Minimum required gap between the historical open and the most recent close. | `10` |\n| `TradeDayOfWeek` | Trading day in MetaTrader numbering (`0 = Sunday` … `6 = Saturday`). | `5` (Friday) |\n| `CandleType` | Candle data type used for analysis. | `1 minute` |"
+   },
+   "2015": {
+    "id": 2015,
+    "name": "Color Schaff Momentum Trend Cycle",
+    "family": "trend",
+    "overview": "The strategy uses the Color Schaff Momentum Trend Cycle (STC) to detect trend reversals when the indicator leaves overbought or oversold zones.\n\n## Details\n\n- **Entry Criteria**:\n  - Buy when previous STC color was above the upper zone (>5) and current color drops below 6, closing any short positions.\n  - Sell when previous STC color was below the lower zone (<2) and current color rises above 1, closing any long positions.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal closes the opposite position.\n- **Stops**: No explicit stop loss or take profit.\n- **Default Values**:\n  - `FastMomentum` = 23\n  - `SlowMomentum` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n\n",
+    "details": "- **Entry Criteria**:\n  - Buy when previous STC color was above the upper zone (>5) and current color drops below 6, closing any short positions.\n  - Sell when previous STC color was below the lower zone (<2) and current color rises above 1, closing any long positions.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal closes the opposite position.\n- **Stops**: No explicit stop loss or take profit.\n- **Default Values**:\n  - `FastMomentum` = 23\n  - `SlowMomentum` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true",
+    "parameters": ""
+   },
+   "835": {
+    "id": 835,
+    "name": "Gaussian Detrended Reversion",
+    "family": "trend",
+    "overview": "Gaussian Detrended Reversion is a mean-reversion strategy that uses a detrended price oscillator smoothed with an Arnaud Legoux Moving Average (ALMA). Long positions open when the smoothed oscillator crosses above its lagged version while below zero; shorts open on downward crosses above zero. Positions exit on opposite crosses or when the oscillator crosses the zero line.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: ALMA-smoothed DPO crosses above its lag line and is below zero.\n  - **Short**: ALMA-smoothed DPO crosses below its lag line and is above zero.\n- **Exit Criteria**: Opposite lag cross or zero-line cross.\n- **Stops**: None.\n- **Default Values**:\n  - `PriceLength` = 52\n  - `SmoothingLength` = 52\n  - `LagLength` = 26\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: EMA, ALMA\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: ALMA-smoothed DPO crosses above its lag line and is below zero.\n  - **Short**: ALMA-smoothed DPO crosses below its lag line and is above zero.\n- **Exit Criteria**: Opposite lag cross or zero-line cross.\n- **Stops**: None.\n- **Default Values**:\n  - `PriceLength` = 52\n  - `SmoothingLength` = 52\n  - `LagLength` = 26\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: EMA, ALMA\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1340": {
+    "id": 1340,
+    "name": "Stochastic RSI OHLC",
+    "family": "momentum",
+    "overview": "This strategy builds OHLC bars from the Stochastic RSI indicator and trades on momentum shifts. It calculates RSI for high, low and close prices and applies a stochastic oscillator to each series. A long position opens when Stochastic RSI rises from a pivot and crosses above the long entry level. A short position opens when it falls from a pivot and crosses below the short entry level.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Stochastic RSI turns up and any of the last three values exceed `LongEntry` after a low pivot.\n  - **Short**: Stochastic RSI turns down and any of the last three values fall below `ShortEntry` after a high pivot.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14\n  - `K Length` = 14\n  - `D Length` = 3\n  - `LongEntry` = 30\n  - `ShortEntry` = 60\n  - `LongPivot` = 2\n  - `ShortPivot` = 98\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Stochastic\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Stochastic RSI turns up and any of the last three values exceed `LongEntry` after a low pivot.\n  - **Short**: Stochastic RSI turns down and any of the last three values fall below `ShortEntry` after a high pivot.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14\n  - `K Length` = 14\n  - `D Length` = 3\n  - `LongEntry` = 30\n  - `ShortEntry` = 60\n  - `LongPivot` = 2\n  - `ShortPivot` = 98\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Stochastic\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2679": {
+    "id": 2679,
+    "name": "Multicurrency Overlay Hedge",
+    "family": "volatility",
+    "overview": "- Works on a universe of forex symbols supplied by the user and monitors all unique pairs.\n- Computes rolling Pearson correlation and ATR ratios to determine which symbols move together and how to size both legs.\n- Builds synthetic price overlays to detect when the main instrument deviates from its correlated partner beyond a configurable threshold.\n- Opens hedged blocks (buy/sell, buy/buy, sell/buy, sell/sell) depending on the correlation sign and overlay direction.\n- Closes the entire block once a mutual take-profit target is reached either in points or portfolio currency.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Universe` | Collection of `Security` objects to scan. Needs at least two entries. | empty |\n| `CandleType` | Candle data type used for calculations. | 1 minute time frame |\n| `RangeLength` | Number of bars used to compute price envelopes. | 400 |\n| `CorrelationLookback` | Bars used for Pearson correlation. | 500 |\n| `AtrLookback` | Bars used for ATR ratio sizing. | 200 |\n| `CorrelationThreshold` | Minimum absolute correlation to keep a pair (0–1). | 0.90 |\n| `OverlayThreshold` | Overlay distance in points measured using the main instrument step. | 100 |\n| `TakeProfitByPoints` / `TakeProfitPoints` | Enables and configures point-based mutual take profit. | true / 10 |\n| `TakeProfitByCurrency` / `TakeProfitCurrency` | Enables and configures currency-based mutual take profit. | false / 10 |\n| `MaxOpenPairs` | Maximum simultaneously open hedge blocks. | 10 |\n| `BaseVolume` | Volume of the secondary leg (main leg volume = `BaseVolume * ATR ratio`). | 1 |\n| `RecalculationHour` | Hour of the day when correlations are recalculated. | 1 |\n| `MaxSpread` | Maximum allowed bid-ask spread per leg (in points). | 10 |"
+   },
+   "2406": {
+    "id": 2406,
+    "name": "RSI Threshold",
+    "family": "mean_reversion",
+    "overview": "Converts the MetaTrader *Exp_RSI* expert into StockSharp. The strategy opens and closes positions when the Relative Strength Index (RSI) crosses predefined overbought and oversold levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: RSI crosses above `RSI Low Level`.\n  - **Short**: RSI crosses below `RSI High Level`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal or stop parameters.\n- **Stops**: Take Profit & Stop Loss in absolute price units.\n- **Default Values**:\n  - `RSI Period` = 14\n  - `RSI High Level` = 60\n  - `RSI Low Level` = 40\n  - `Stop Loss` = 1000\n  - `Take Profit` = 2000\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI crosses above `RSI Low Level`.\n  - **Short**: RSI crosses below `RSI High Level`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal or stop parameters.\n- **Stops**: Take Profit & Stop Loss in absolute price units.\n- **Default Values**:\n  - `RSI Period` = 14\n  - `RSI High Level` = 60\n  - `RSI Low Level` = 40\n  - `Stop Loss` = 1000\n  - `Take Profit` = 2000\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2295": {
+    "id": 2295,
+    "name": "Trade Panel With Autopilot",
+    "family": "volume",
+    "overview": "This strategy ports the MQL5 **Trade panel with autopilot** example to the StockSharp framework.\nIt calculates bullish and bearish pressure across multiple time frames. A position is opened when the corresponding percentage exceeds the *Open %* threshold and closed when it falls below the *Close %* level. Optionally a fractal based stop loss can be applied using 10‑minute candles.\n\n## Parameters\n\n- **Autopilot** – enable or disable automated trading.\n- **Open %** – threshold of votes required to open a position.\n- **Close %** – threshold for closing existing position.\n- **Use Fixed Volume** – if true, use the value from *Fixed Volume*.\n- **Fixed Volume** – absolute order volume.\n- **Volume %** – portfolio percentage used when volume is dynamic.\n- **Use Stop Loss** – enable stop loss based on recent fractals.\n\n## Logic\n\nFor every time frame from 1 minute to 1 month the strategy compares the latest candle with the previous one. Each comparison of open, high, low and derived averages adds a vote for buying or selling. The percentages of buy and sell votes drive order placement. When enabled, the last fractal from 10‑minute candles acts as a trailing stop.\n\nThis example is intended for educational purposes and does not represent trading advice.\n",
+    "details": "",
+    "parameters": "- **Autopilot** – enable or disable automated trading.\n- **Open %** – threshold of votes required to open a position.\n- **Close %** – threshold for closing existing position.\n- **Use Fixed Volume** – if true, use the value from *Fixed Volume*.\n- **Fixed Volume** – absolute order volume.\n- **Volume %** – portfolio percentage used when volume is dynamic.\n- **Use Stop Loss** – enable stop loss based on recent fractals."
+   },
+   "3527": {
+    "id": 3527,
+    "name": "TurnGrid",
+    "family": "volume",
+    "overview": "The **TurnGrid Strategy** replicates the behaviour of the original MQL5 Expert Advisor `TurnGrid.mq5`. It constructs a symmetric price grid around the current market price and alternates between long and short orders whenever the price migrates from one grid cell to another. The strategy continuously rebalances open orders to maintain both bullish and bearish exposure until the configured equity target is achieved.\n\nThe conversion uses StockSharp's high-level API: candle subscriptions drive the grid updates, market orders handle entries and exits, and risk management is expressed through strategy parameters. All comments have been translated into English and the naming follows StockSharp conventions.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `GridDistance` | Relative distance between adjacent grid levels. | `0.01` |\n| `GridShares` | Maximum number of concurrent grid positions that can be active. | `50` |\n| `EquityTakeProfit` | Percentage gain over the initial balance required to reset the grid. | `0.02` |\n| `FeeRate` | Estimated transaction fee per trade, applied to executed volume. | `0.0008` |\n| `CandleType` | Candle series used to drive the strategy. | `1` minute timeframe |"
+   }
+  }
+ }
+}

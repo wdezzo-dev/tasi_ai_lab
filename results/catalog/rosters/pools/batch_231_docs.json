@@ -1,0 +1,98 @@
+{
+ "batch_231": {
+  "strategy_ids": [
+   4092,
+   2374,
+   134,
+   3584,
+   649,
+   651,
+   2209,
+   1935,
+   830,
+   1302
+  ],
+  "docs": {
+   "4092": {
+    "id": 4092,
+    "name": "Elli",
+    "family": "trend",
+    "overview": "The Elli Strategy ports the MetaTrader 4 expert advisor \"Elli\" to the StockSharp high level API. The original robot combined the Ichimoku Kinko Hyo structure on the H1 timeframe with a lower timeframe ADX filter and strict risk parameters. The conversion keeps the same directional logic, replaces manual order management with `StartProtection`, and exposes every tuning knob as an optimisable `StrategyParam<T>` so that the behaviour can be adapted to different markets.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `OrderVolume` | `1` | Base market order volume. |\n| `TakeProfitPips` | `60` | Take-profit distance expressed in pips. |\n| `StopLossPips` | `30` | Stop-loss distance expressed in pips. |\n| `TenkanPeriod` | `19` | Tenkan-sen period for the Ichimoku indicator. |\n| `KijunPeriod` | `60` | Kijun-sen period for the Ichimoku indicator. |\n| `SenkouSpanBPeriod` | `120` | Senkou Span B period for the Ichimoku cloud. |\n| `TenkanKijunGapPips` | `20` | Minimum Tenkan/Kijun distance (in pips) required before trading. |\n| `ConvertHigh` | `13` | DI threshold the current value must exceed to confirm momentum. |\n| `ConvertLow` | `6` | DI threshold the previous value must stay below before a new trade. |\n| `AdxPeriod` | `10` | Period used for the ADX computation. |\n| `CandleType` | `H1` | Timeframe that drives the Ichimoku calculation. |\n| `AdxCandleType` | `M1` | Timeframe used for ADX and DI monitoring. |\n\nAll parameters are implemented with `StrategyParam<T>` helpers, enabling optimisation and runtime adjustments inside StockSharp Designer."
+   },
+   "2374": {
+    "id": 2374,
+    "name": "XMA Candles",
+    "family": "trend",
+    "overview": "## Description\nThe XMA Candles strategy monitors the direction of smoothed candles calculated from the XMA (Exponential Moving Average) of open and close prices. A candle is considered **bullish** when the smoothed open price is below the smoothed close price, and **bearish** when the smoothed open price is above the smoothed close price. The strategy reacts to color changes of these smoothed candles.\n\n- When a new bullish candle appears after a non-bullish one, the strategy closes any short position and opens a long position.\n- When a new bearish candle appears after a non-bearish one, the strategy closes any long position and opens a short position.\n\n## Parameters\n- `Length` – number of periods for smoothing open and close prices.\n- `CandleType` – timeframe of candles used for calculations.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions when bearish signal appears.\n- `SellPosClose` – allow closing short positions when bullish signal appears.\n- `StopLoss` – protective stop in percent.\n- `TakeProfit` – profit target in percent.\n\n## Trading Rules\n1. Wait for each candle of the selected timeframe to finish.\n2. Calculate exponential moving averages for open and close prices.\n3. Determine candle color:\n   - Green (bullish) if smoothed open < smoothed close.\n   - Red (bearish) if smoothed open > smoothed close.\n4. If color changes to bullish, close shorts and optionally open a long position.\n5. If color changes to bearish, close longs and optionally open a short position.\n6. Protective stops and targets are managed by built‑in risk controls.\n\nThis strategy is a conversion of the original MQL5 expert \"Exp_XMACandles\".\n",
+    "details": "",
+    "parameters": "- `Length` – number of periods for smoothing open and close prices.\n- `CandleType` – timeframe of candles used for calculations.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions when bearish signal appears.\n- `SellPosClose` – allow closing short positions when bullish signal appears.\n- `StopLoss` – protective stop in percent.\n- `TakeProfit` – profit target in percent."
+   },
+   "134": {
+    "id": 134,
+    "name": "ADX MACD",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 139%. It performs best in the stocks market.\n\nThe strategy trades those aligned signals and exits once ADX starts to weaken or MACD flips against the position.\n\nA modest percent stop contains losses during choppy markets.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ADX, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ADX, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3584": {
+    "id": 3584,
+    "name": "MultiCurrency Template MT5",
+    "family": "trend",
+    "overview": "The **MultiCurrency Template MT5 Strategy** replicates the behaviour of the MetaTrader expert adviser with the same name. It trades a simple two-candle pattern on the daily timeframe while allowing the user to operate a basket of instruments simultaneously. The strategy opens an initial position only when the previous daily candle is bullish or bearish enough to trigger the pattern, then manages the trade on a faster control timeframe. A martingale averaging block adds additional tickets when price moves against the position by a configurable number of MetaTrader points, while the exit logic combines fixed take profit, break-even averaging and an optional trailing stop.\n\nThe StockSharp port keeps the multi-symbol management by letting the user define a comma-separated list of securities. Each symbol is handled independently with its own tracking context, position basket and money-management values. When the `TradeMultipair` parameter is disabled the strategy trades the main `Security` attached to the strategy instance.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Lots` | Base trading volume for the first ticket in each basket. |\n| `StopLossPips` | Initial stop-loss distance expressed in MetaTrader pips. |\n| `TakeProfitPips` | Initial take-profit distance in MetaTrader pips. |\n| `TrailingStopPoints` | Trailing distance (MetaTrader points) when only one ticket is active. |\n| `TrailingStepPoints` | Extra buffer (points) required before the trailing stop is moved again. |\n| `SlippagePoints` | Reserved for analytics to mimic the MetaTrader slippage input (not used for execution). |\n| `NewBarTrade` | Enables the trade-on-new-bar filter based on the `TradeCandleType` candles. |\n| `TradeCandleType` | Heartbeat timeframe that drives new-bar detection and money management. |\n| `TradeMultipair` | When true, activates multi-symbol mode. |\n| `PairsToTrade` | Comma-separated list of additional security identifiers resolved through `GetSecurity`. |\n| `Commentary` | Order comment preserved for reference. |\n| `EnableMartingale` | Activates the averaging block that adds tickets on adverse moves. |\n| `NextLotMultiplier` | Multiplier applied to the previous ticket volume when a new averaging order is placed. |\n| `StepPoints` | Distance in MetaTrader points that triggers the next averaging order. |\n| `EnableTakeProfitAverage` | Enables the break-even + offset target for baskets with multiple tickets. |\n| `TakeProfitOffsetPoints` | MetaTrader points added above (long) or below (short) the break-even price when averaging is active. |\n| `SignalCandleType` | Timeframe used to build the two-candle pattern (daily by default). |"
+   },
+   "649": {
+    "id": 649,
+    "name": "CVD Divergence Volume HMA RSI MACD",
+    "family": "trend",
+    "overview": "This strategy combines Hull Moving Averages, RSI, MACD, volume filter, and cumulative volume delta (CVD) divergence to identify trend opportunities.\n\nLong positions open when HMA20 is above HMA50, RSI shows bullish momentum, MACD histogram rises, volume exceeds its average, and CVD forms bullish divergence or increases. Short positions mirror these conditions.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: HMA20 > HMA50 & price > HMA20; RSI between 40 and `RsiOverbought`; MACD line above signal & histogram rising; volume > SMA * `VolumeMultiplier`; bullish CVD divergence or increasing CVD.\n  - **Short**: HMA20 < HMA50 & price < HMA20; RSI between `RsiOversold` and 60; MACD line below signal & histogram falling; volume > SMA * `VolumeMultiplier`; bearish CVD divergence or decreasing CVD.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Price < HMA20 or RSI > `RsiOverbought` or MACD line crosses below signal.\n  - **Short**: Price > HMA20 or RSI < `RsiOversold` or MACD line crosses above signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Hma20Length` = 20\n  - `Hma50Length` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `VolumeMaLength` = 20\n  - `VolumeMultiplier` = 1.5\n  - `CvdLength` = 14\n  - `DivergenceLookback` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: HMA, RSI, MACD, Volume, CVD\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: HMA20 > HMA50 & price > HMA20; RSI between 40 and `RsiOverbought`; MACD line above signal & histogram rising; volume > SMA * `VolumeMultiplier`; bullish CVD divergence or increasing CVD.\n  - **Short**: HMA20 < HMA50 & price < HMA20; RSI between `RsiOversold` and 60; MACD line below signal & histogram falling; volume > SMA * `VolumeMultiplier`; bearish CVD divergence or decreasing CVD.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Price < HMA20 or RSI > `RsiOverbought` or MACD line crosses below signal.\n  - **Short**: Price > HMA20 or RSI < `RsiOversold` or MACD line crosses above signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Hma20Length` = 20\n  - `Hma50Length` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `VolumeMaLength` = 20\n  - `VolumeMultiplier` = 1.5\n  - `CvdLength` = 14\n  - `DivergenceLookback` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: HMA, RSI, MACD, Volume, CVD\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "651": {
+    "id": 651,
+    "name": "Cycle Biologique",
+    "family": "other",
+    "overview": "The Cycle Biologique strategy trades a sine-based cycle. It goes long when the cycle crosses above zero and exits when the cycle crosses below zero.\n\n## Details\n\n- **Entry Criteria**: Cycle crosses above zero.\n- **Exit Criteria**: Cycle crosses below zero.\n- **Default Values**:\n  - `CycleLength` = 30\n  - `Amplitude` = 1.0\n  - `Offset` = 0\n- **Filters**:\n  - Category: Cycle\n  - Direction: Long\n  - Indicators: Sine Wave\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Cycle crosses above zero.\n- **Exit Criteria**: Cycle crosses below zero.\n- **Default Values**:\n  - `CycleLength` = 30\n  - `Amplitude` = 1.0\n  - `Offset` = 0\n- **Filters**:\n  - Category: Cycle\n  - Direction: Long\n  - Indicators: Sine Wave\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2209": {
+    "id": 2209,
+    "name": "CCI Histogram",
+    "family": "other",
+    "overview": "This strategy uses the Commodity Channel Index (CCI) to detect reversals when the indicator leaves extreme zones. A long position is opened when CCI falls back below the upper level after being above it. A short position is opened when CCI rises above the lower level after being below it. Optional stop loss and take profit levels in points can protect open positions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous CCI > `UpperLevel` and current CCI ≤ `UpperLevel`.\n  - **Short**: Previous CCI < `LowerLevel` and current CCI ≥ `LowerLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal closes existing position and opens a new one.\n- **Stops**: Optional fixed stop loss and take profit in points.\n- **Default Values**:\n  - `CCI Period` = 14\n  - `Upper Level` = 100\n  - `Lower Level` = -100\n  - `Stop Loss` = 100 points\n  - `Take Profit` = 200 points\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Any (default 4H)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous CCI > `UpperLevel` and current CCI ≤ `UpperLevel`.\n  - **Short**: Previous CCI < `LowerLevel` and current CCI ≥ `LowerLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal closes existing position and opens a new one.\n- **Stops**: Optional fixed stop loss and take profit in points.\n- **Default Values**:\n  - `CCI Period` = 14\n  - `Upper Level` = 100\n  - `Lower Level` = -100\n  - `Stop Loss` = 100 points\n  - `Take Profit` = 200 points\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Any (default 4H)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1935": {
+    "id": 1935,
+    "name": "Vortex Indicator Cross",
+    "family": "other",
+    "overview": "This strategy trades the crossing of positive (VI+) and negative (VI-) lines of the Vortex indicator.\nWhen VI+ crosses above VI- the strategy goes long; when VI- crosses above VI+ it goes short.\nA stop loss and take profit in price steps are managed automatically.\n\n## Parameters\n\n- **Vortex Length** – period of the Vortex indicator.\n- **Candle Type** – timeframe used for indicator calculation.\n- **Stop Loss** – protective stop in price steps.\n- **Take Profit** – target profit in price steps.\n\n## Details\n\n- **Indicator**: Vortex\n- **Direction**: Long and short\n- **Timeframe**: Configurable\n- **Risk Management**: Stop loss and take profit via `StartProtection`.\n",
+    "details": "- **Indicator**: Vortex\n- **Direction**: Long and short\n- **Timeframe**: Configurable\n- **Risk Management**: Stop loss and take profit via `StartProtection`.",
+    "parameters": "- **Vortex Length** – period of the Vortex indicator.\n- **Candle Type** – timeframe used for indicator calculation.\n- **Stop Loss** – protective stop in price steps.\n- **Take Profit** – target profit in price steps."
+   },
+   "830": {
+    "id": 830,
+    "name": "Gann Swing Multi Layer",
+    "family": "other",
+    "overview": "Strategy using simplified multi-layer Gann swing analysis.\nTrades when three consecutive swing directions align.\n\nThe approach follows the classic Gann idea of swing direction changes.\nIt waits for three consistent swing shifts before entering a position.\n\n## Details\n\n- **Entry Criteria**: Three consecutive swing directions in same orientation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite swing direction.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Swing\n  - Direction: Both\n  - Indicators: Gann\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Three consecutive swing directions in same orientation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite swing direction.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Swing\n  - Direction: Both\n  - Indicators: Gann\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1302": {
+    "id": 1302,
+    "name": "Simple APF Strategy Backtesting",
+    "family": "other",
+    "overview": "This strategy implements a simplified Autocorrelation Price Forecasting model. It detects price cycles via autocorrelation and forecasts future price using a linear regression of recent returns. A long position is opened when the predicted gain exceeds a specified threshold. The position is closed when the target price is reached.\n\n## Parameters\n\n- `Length` – number of bars used for autocorrelation and regression.\n- `Threshold Gain` – minimum expected price increase to enter a trade.\n- `Signal Threshold` – autocorrelation level required to store a forecast.\n- `Candle Type` – type of candles for calculations.\n",
+    "details": "",
+    "parameters": "- `Length` – number of bars used for autocorrelation and regression.\n- `Threshold Gain` – minimum expected price increase to enter a trade.\n- `Signal Threshold` – autocorrelation level required to store a forecast.\n- `Candle Type` – type of candles for calculations."
+   }
+  }
+ }
+}

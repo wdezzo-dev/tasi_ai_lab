@@ -1,0 +1,98 @@
+{
+ "batch_255": {
+  "strategy_ids": [
+   905,
+   3069,
+   1786,
+   127,
+   1280,
+   2696,
+   1187,
+   1476,
+   1131,
+   3985
+  ],
+  "docs": {
+   "905": {
+    "id": 905,
+    "name": "Ichimoku Daily Candle X Hull MA X MACD",
+    "family": "trend",
+    "overview": "This strategy combines Ichimoku lead lines, daily candle direction, Hull Moving Average trend and an HMA-based MACD. Long positions are opened when all components align bullish; shorts occur when all conditions turn bearish.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: HMA rising, current price above previous HMA, current daily candle higher than previous, SenkouA > SenkouB, MACD line > signal.\n  - **Short**: HMA falling, price below previous HMA, current daily candle lower than previous, SenkouA < SenkouB, MACD line < signal.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HmaPeriod` = 14\n  - `ConversionPeriod` = 9\n  - `BasePeriod` = 26\n  - `SpanPeriod` = 52\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `PriceSource` = Open\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Ichimoku, Hull MA, MACD\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: HMA rising, current price above previous HMA, current daily candle higher than previous, SenkouA > SenkouB, MACD line > signal.\n  - **Short**: HMA falling, price below previous HMA, current daily candle lower than previous, SenkouA < SenkouB, MACD line < signal.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HmaPeriod` = 14\n  - `ConversionPeriod` = 9\n  - `BasePeriod` = 26\n  - `SpanPeriod` = 52\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `PriceSource` = Open\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Ichimoku, Hull MA, MACD\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3069": {
+    "id": 3069,
+    "name": "Exp XWPR Histogram Vol",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert **Exp_XWPR_Histogram_Vol**. It trades on the colour changes of the\nXWPR Histogram Vol custom indicator, which multiplies the Williams %R oscillator by the candle volume and smooths the result. The\nport keeps the original two-slot money management scheme (primary and secondary volume) and reproduces the same colour-driven\nentry and exit rules while using the StockSharp high-level API.\n\nThe algorithm processes finished candles only. On each new bar it inspects the histogram colour a configurable number of bars\nahead in the past and reacts when the colour transitions cross the bullish or bearish thresholds defined by the indicator.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Timeframe used to build the candles supplied to the indicator. |\n| `PrimaryVolume`, `SecondaryVolume` | Volumes applied by the level-one and level-two slots. |\n| `AllowLongEntry`, `AllowShortEntry` | Enable opening new long or short positions. |\n| `AllowLongExit`, `AllowShortExit` | Enable closing long or short exposure when exit signals appear. |\n| `StopLossSteps`, `TakeProfitSteps` | Optional protective distances in price steps (0 disables the respective protection). |\n| `DeviationSteps` | Reserved for compatibility; has no effect on StockSharp orders. |\n| `SignalBar` | Number of closed candles to shift the signal evaluation (0 = latest finished candle). |\n| `WprPeriod` | Lookback period for the Williams %R calculation. |\n| `VolumeMode` | Selects between tick count (`Tick`) or real volume (`Real`) in the histogram. |\n| `HighLevel2`, `HighLevel1` | Multipliers defining the upper bullish thresholds. |\n| `LowLevel1`, `LowLevel2` | Multipliers defining the lower bearish thresholds. |\n| `SmoothingMethod` | Moving average type used for both the histogram and the baseline volume. |\n| `SmoothingLength` | Length of the smoothing filters. |\n| `SmoothingPhase` | Phase forwarded to Jurik-based smoothers (ignored by other methods). |"
+   },
+   "1786": {
+    "id": 1786,
+    "name": "EURUSD V2.0",
+    "family": "trend",
+    "overview": "Mean-reversion system for EURUSD using a long-term simple moving average (SMA) and volatility filter based on Average True Range (ATR).\n\n## Strategy Logic\n\n- Calculate an SMA of length *MA Length* on the chosen candle type.\n- Enter **short** when price is above the SMA and pulls back within *Buffer* pips while ATR is below *ATR Threshold*.\n- Enter **long** when price is below the SMA and approaches it within *Buffer* pips with low ATR.\n- Position size is derived from account balance and *Risk Factor Z*.\n- Stop-loss and take-profit are placed in fixed pip distances from entry.\n- After exit, the system waits for price to move *Noise Filter* pips away from the entry level before a new trade is allowed.\n\n## Parameters\n\n- **MA Length** – period for the simple moving average (default 218).\n- **Buffer (pips)** – maximum distance from SMA to trigger entry (default 0).\n- **Stop Loss (pips)** – stop loss distance from entry (default 20).\n- **Take Profit (pips)** – take profit distance from entry (default 350).\n- **Noise Filter (pips)** – distance to reset trading permission (default 50).\n- **ATR Length** – ATR calculation period (default 200).\n- **ATR Threshold (pips)** – maximum ATR to allow new positions (default 40).\n- **Max Spread (pips)** – maximum allowed spread (default 4).\n- **Risk Factor Z** – money management factor (default 2).\n- **Candle Type** – timeframe of processed candles (default 15 minutes).\n\nThis strategy uses market orders for entries and exits.\n\n",
+    "details": "",
+    "parameters": "- **MA Length** – period for the simple moving average (default 218).\n- **Buffer (pips)** – maximum distance from SMA to trigger entry (default 0).\n- **Stop Loss (pips)** – stop loss distance from entry (default 20).\n- **Take Profit (pips)** – take profit distance from entry (default 350).\n- **Noise Filter (pips)** – distance to reset trading permission (default 50).\n- **ATR Length** – ATR calculation period (default 200).\n- **ATR Threshold (pips)** – maximum ATR to allow new positions (default 40).\n- **Max Spread (pips)** – maximum allowed spread (default 4).\n- **Risk Factor Z** – money management factor (default 2).\n- **Candle Type** – timeframe of processed candles (default 15 minutes).\n\nThis strategy uses market orders for entries and exits."
+   },
+   "127": {
+    "id": 127,
+    "name": "Open Drive",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 118%. It performs best in the stocks market.\n\nThe strategy joins that momentum, entering long or short within the opening range and trailing a stop as price extends.\n\nPositions close quickly if the drive stalls, keeping losses small during choppy opens.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1280": {
+    "id": 1280,
+    "name": "RSI-Adaptive T3 + Squeeze Momentum",
+    "family": "trend",
+    "overview": "Combines an RSI-adaptive Tillson T3 trend filter with the Squeeze Momentum technique. The T3 length adjusts between the minimum and maximum values based on RSI. A long position opens when the adaptive T3 turns up during a squeeze release with positive momentum. Short entries occur when the T3 turns down with negative momentum after the squeeze ends.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2696": {
+    "id": 2696,
+    "name": "MAMACD",
+    "family": "trend",
+    "overview": "This strategy is a direct conversion of the MetaTrader 5 expert advisor **MAMACD (barabashkakvn's edition)** from the `MQL/19334` folder into StockSharp's high-level API. The approach combines trend detection on low prices through two linear weighted moving averages (LWMA) with a fast exponential moving average (EMA) trigger and confirmation from the MACD main line. Trading is performed once per finished candle and keeps the logic of the original EA, including the reset flags that require the fast EMA to leave the LWMA channel before a new entry is allowed.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `FirstLowMaLength` | Period of the first LWMA applied to low prices (default 85). |\n| `SecondLowMaLength` | Period of the second LWMA applied to low prices (default 75). |\n| `TriggerEmaLength` | Period of the fast EMA trigger on closing prices (default 5). |\n| `MacdFastLength` | Fast EMA length of the MACD main line (default 15). |\n| `MacdSlowLength` | Slow EMA length of the MACD main line (default 26). |\n| `StopLossPips` | Stop-loss distance in pips; set to zero to disable (default 15). |\n| `TakeProfitPips` | Take-profit distance in pips; set to zero to disable (default 15). |\n| `CandleType` | Time frame of candles processed by the strategy (default 1 hour). |"
+   },
+   "1187": {
+    "id": 1187,
+    "name": "Price Based Z-Trend",
+    "family": "trend",
+    "overview": "Trades based on the price Z-score relative to an EMA. Enters when the Z-score crosses user-defined thresholds and supports long, short, or both directions.\n\n## Details\n\n- **Entry Criteria**:\n  - Z-score crosses above `Threshold` for long.\n  - Z-score crosses below `-Threshold` for short.\n- **Long/Short**: Configurable via `TradeDirection`.\n- **Exit Criteria**: Opposite threshold crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `PriceDeviationLength` = 100\n  - `PriceAverageLength` = 100\n  - `Threshold` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: EMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 5-minute\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Z-score crosses above `Threshold` for long.\n  - Z-score crosses below `-Threshold` for short.\n- **Long/Short**: Configurable via `TradeDirection`.\n- **Exit Criteria**: Opposite threshold crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `PriceDeviationLength` = 100\n  - `PriceAverageLength` = 100\n  - `Threshold` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: EMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 5-minute\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1476": {
+    "id": 1476,
+    "name": "TrendMaster Pro 2.3 with Alerts",
+    "family": "trend",
+    "overview": "This strategy is a compact version of TrendMaster Pro. It trades when a short moving average crosses a long moving average and the RSI confirms momentum. An optional higher‑timeframe moving average can restrict trades to the major trend. Risk is managed with percentage based take‑profit and stop‑loss levels.\n\n## Details\n- **Entry**: fast MA crosses slow MA with RSI filter and optional trend confirmation.\n- **Exit**: opposite crossover or protective orders.\n- **Indicators**: SMA or EMA, RSI.\n- **Filters**: optional higher timeframe trend.\n",
+    "details": "- **Entry**: fast MA crosses slow MA with RSI filter and optional trend confirmation.\n- **Exit**: opposite crossover or protective orders.\n- **Indicators**: SMA or EMA, RSI.\n- **Filters**: optional higher timeframe trend.",
+    "parameters": ""
+   },
+   "1131": {
+    "id": 1131,
+    "name": "OBVious MA",
+    "family": "trend",
+    "overview": "The strategy enters a long position when OBV crosses above its long entry moving average and exits when OBV crosses below the long exit average. Short positions are entered when OBV crosses below its short entry average and exited when it crosses above the short exit average. A direction filter allows enabling only long or short trades.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: OBV crosses above long entry MA and direction is not Short.\n  - **Short**: OBV crosses below short entry MA and direction is not Long.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: OBV crosses below long exit MA.\n  - Short: OBV crosses above short exit MA.\n- **Stops**: None.\n- **Default Values**:\n  - `LongEntryLength` = 190\n  - `LongExitLength` = 202\n  - `ShortEntryLength` = 395\n  - `ShortExitLength` = 300\n  - `TradeDirection` = \"Long\"\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: OBV, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: OBV crosses above long entry MA and direction is not Short.\n  - **Short**: OBV crosses below short entry MA and direction is not Long.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: OBV crosses below long exit MA.\n  - Short: OBV crosses above short exit MA.\n- **Stops**: None.\n- **Default Values**:\n  - `LongEntryLength` = 190\n  - `LongExitLength` = 202\n  - `ShortEntryLength` = 395\n  - `ShortExitLength` = 300\n  - `TradeDirection` = \"Long\"\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: OBV, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3985": {
+    "id": 3985,
+    "name": "MAMACD No Volatility",
+    "family": "trend",
+    "overview": "MAMACD No Volatility is a direct port of the MetaTrader 4 expert advisor `MAMACD_novlt.mq4`. The strategy combines three moving averages calculated on candle lows and closes with a MACD momentum filter. It waits until the fast EMA drops below (for longs) or rises above (for shorts) two low-based LWMA filters, arms a pending setup, and triggers an entry only after the MACD main line confirms the momentum shift.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `FirstLowWmaPeriod` | Period of the first LWMA built from candle lows. | 85 |\n| `SecondLowWmaPeriod` | Period of the second LWMA built from candle lows. | 75 |\n| `FastEmaPeriod` | Period of the fast EMA built from candle closes. | 5 |\n| `SlowEmaPeriod` | Slow EMA period for the MACD calculation. | 26 |\n| `FastSignalEmaPeriod` | Fast EMA period for the MACD calculation. | 15 |\n| `StopLossPoints` | Stop-loss distance in price steps (0 disables the stop-loss). | 15 |\n| `TakeProfitPoints` | Take-profit distance in price steps (0 disables the take-profit). | 15 |\n| `TradeVolume` | Order volume used for market entries. | 0.1 |\n| `CandleType` | Candle series used for all indicators. | 5-minute timeframe |"
+   }
+  }
+ }
+}

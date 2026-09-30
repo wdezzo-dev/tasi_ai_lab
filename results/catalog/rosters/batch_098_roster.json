@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2624,
+      "name": "NRTR ATR Stop",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20)) and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) and ATR(14)/ATR-SMA(20) are explicit fallbacks for the NRTR trailing reversal because no values are supplied. Its coefficient, signal-bar delay, and stateful ATR stop are not exactly representable."
+    },
+    {
+      "id": 1264,
+      "name": "RSI Buy Sell Force",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),ema(rsi(close,14),9))",
+      "exit_long": "crossbelow(rsi(close,14),ema(rsi(close,14),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) versus its EMA(9) is an explicit fallback for the smoothed cc/bb pressure lines. The source supplies no periods or signal exit, so the inverse cross is used."
+    },
+    {
+      "id": 3792,
+      "name": "PivotEMA3RLHv4",
+      "family": "trend",
+      "entry_long": "ema(open,3) > ema(close,3) and close > sma(close,20) and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "ema(open,3) < ema(close,3) or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(3) open/close relation is exact; SMA(20) and ATR expansion are explicit fallbacks for the pivot and multi-ATR filters. Heikin-Ashi confirmation and staged pip trailing are unavailable."
+    },
+    {
+      "id": 749,
+      "name": "EMA Trend Heikin Ashi Entry",
+      "family": "trend",
+      "entry_long": "low <= bb_lower(close,20,2) and close > open and ema(close,9) > ema(close,21)",
+      "exit_long": "close < bb_mid(close,20) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish regular candle at Bollinger(20,2) and EMA 9/21 proxy the Heikin-Ashi pullback reversal. Explicit prior-candle lows, higher-timeframe EMA, first-R target, and trailing state are not expressible."
+    },
+    {
+      "id": 2093,
+      "name": "XDerivative",
+      "family": "trend",
+      "entry_long": "crossabove(ema(roc(close,34),7),0)",
+      "exit_long": "crossbelow(ema(roc(close,34),7),0)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "EMA-smoothed ROC(34) with length 7 approximates the Jurik-smoothed derivative and its zero turn. The documented 1% stop and 2% target are retained."
+    },
+    {
+      "id": 1549,
+      "name": "VWAP Breakout ATR",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close * volume,20) / sma(volume,20))",
+      "exit_long": "crossbelow(close,sma(close * volume,20) / sma(volume,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar volume-weighted mean is an explicit period fallback for VWAP. ATR stop and target multipliers are dynamic price distances and are omitted from percentage fields."
+    },
+    {
+      "id": 2120,
+      "name": "Levels With Revolve",
+      "family": "breakout",
+      "entry_long": "crossabove(close,100)",
+      "exit_long": "crossbelow(close,100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented default LevelPrice=100 is used directly for both crossings. Stop and target default to zero, and optional reversal order handling is omitted."
+    },
+    {
+      "id": 2275,
+      "name": "RSI Sign",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) thresholds 30 and 70 provide the long reversal entry and mirror-signal exit. ATR(14) is only an arrow offset in the source, and no stop is implemented."
+    },
+    {
+      "id": 2145,
+      "name": "I Gap",
+      "family": "volatility",
+      "entry_long": "open < close * 0.995",
+      "exit_long": "open > close * 1.005",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 0.5% opening gap is an explicit normalization for the documented five price steps, with the mirror gap closing long. The broker price step and position flags are unavailable."
+    },
+    {
+      "id": 619,
+      "name": "Classic Nacked Z-Score Arbitrage",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close,60) < -1",
+      "exit_long": "zscore(close,60) >= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 60-day single-price z-score and thresholds -1/0 proxy the unsupported two-asset spread. This represents the long second leg; simultaneous legs and second-security data are unavailable."
+    }
+  ]
+}

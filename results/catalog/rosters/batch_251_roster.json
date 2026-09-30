@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1612,
+      "name": "Backtest UT Bot + RSI",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,10) - 1.0 * atr(high,low,close,10)) and bars_since(rsi(close,14) < 40) < 5",
+      "exit_long": "rsi(close,14) > 60",
+      "stop_loss_pct": 1.5,
+      "take_profit_pct": 3.0,
+      "notes": "UT Bot has no DSL function, so its trailing band is placed one documented ATR(10) below the prior 10-bar high (UT Bot Factor 1.0) and the bullish flip is a close back above that band; the oversold gate is expressed as RSI(14) < 40 within the last four bars because an oversold reading rarely coincides with the flip bar itself. The documented Take Profit 3.0% and Stop Loss 1.5% are encoded as percentage fields and the overbought 60 is the exit."
+    },
+    {
+      "id": 1977,
+      "name": "ADX Smoothed Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(roc(close,10),14),14), 0)",
+      "exit_long": "crossbelow(ema(ema(roc(close,10),14),14), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "adx() returns only the ADX line here, so smoothed +DI versus -DI is proxied by a twice-smoothed 10-bar rate of change crossing zero, with Alpha1/Alpha2 smoothing approximated by two EMA(14) passes. AdxPeriod has no documented value, and StopLoss/TakeProfit are in points, so no percentages can be filled."
+    },
+    {
+      "id": 1875,
+      "name": "Genie",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,3)) and roc(close,1) > 0 and adx(high,low,close,14) > 20",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so the documented SAR flip up becomes a cross above the prior 3-bar high, the +DI-over--DI flip is proxied by a positive one-bar return, and ADX(14) > 20 stands in for the ADX-above-both-DI condition. SarStep, TakeProfit 500 and TrailingStop 200 are absolute price units with no percentage field."
+    },
+    {
+      "id": 2130,
+      "name": "Color XCCX Candle",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(open,20))",
+      "exit_long": "crossbelow(sma(close,20), sma(open,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a cross of the close-based SMA over the open-based SMA and the opposite cross closes; SMA Length has no documented value so 20 is an explicit fallback. The Stop Loss % and Take Profit % inputs are documented without values, so both percentage fields stay null and the short branch is dropped."
+    },
+    {
+      "id": 913,
+      "name": "ICT Indicator with Paper Trading",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,10))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stored order-block highs and lows are stateful and cannot be rebuilt in the DSL, so the latest order-block high/low is approximated by the prior 10-bar extreme and the documented close-above / low-crosses-above rules become the entry and its mirror exit. No stops are documented and the 1-minute candle type has no field equivalent."
+    },
+    {
+      "id": 1586,
+      "name": "Horizontal Ray",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(close,50))",
+      "exit_long": "crossbelow(sma(close,20), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented FastLength 20 and SlowLength 50 are used directly, with the opposite cross as the documented exit. The ray drawing itself has no DSL role, so only the signal is kept and the short branch plus 5-minute candle type are dropped for a long-only schema."
+    },
+    {
+      "id": 375,
+      "name": "January Barometer",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The decision is calendar-driven: on the first February session it measures January's total return of an equity ETF and rotates between EquityETF and CashETF, held to year end. The DSL has no month/session field and evaluates a single instrument, so no market-derived long entry exists and the never-true guard is used instead of inventing one."
+    },
+    {
+      "id": 3706,
+      "name": "BreakRevert Pro",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10) and ema(close,9) > sma(close,30) and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "close < ema(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On one series a prior 10-bar high break, EMA(9) above SMA(30), and ATR(14) above its 20-bar average stand in for the Poisson/Weibull probability scores, the 1m/15m trend alignment, and the hourly volatility check; the flattening rule is a close back under EMA(9). TradeDelaySeconds, MaxPositions, portfolio risk sizing and the three candle streams are not expressible."
+    },
+    {
+      "id": 532,
+      "name": "ATR Stop Loss Double SMA",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,15), sma(close,45))",
+      "exit_long": "crossbelow(sma(close,15), sma(close,45))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented FastLength 15 and SlowLength 45 are used directly, with the opposite cross acting as the exit in place of the optional protection. The optional stop is ATR(14) x AtrMultiplier 2 measured from the entry price, which is not a fixed percentage, so the percentage field stays null."
+    },
+    {
+      "id": 2575,
+      "name": "RSI Trader",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,45) and sma(rsi(close,14),9) > sma(rsi(close,14),45)",
+      "exit_long": "ema(close,9) < ema(close,45) or sma(rsi(close,14),9) < sma(rsi(close,14),45)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented lengths are kept: RsiPeriod 14, ShortRsiMaPeriod and ShortPriceMaPeriod 9, LongRsiMaPeriod and LongPriceMaPeriod 45, with the weighted long price average approximated by EMA(45). The Reverse flag and the mirrored order swap are dropped for a long-only schema."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 206,
+      "name": "MACD Bollinger",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and close < bb_lower(close,20,2)",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MacdFast 12, MacdSlow 26, MacdSignal 9, BollingerPeriod 20 and BollingerDeviation 2.0 are all documented and written literally, with the exit taken when price returns to the middle band. The AtrPeriod 14 / AtrMultiplier 2 protection is a dynamic ATR distance, not a percentage."
+    },
+    {
+      "id": 2962,
+      "name": "XWAMI Multi-Layer MMRec",
+      "family": "trend",
+      "entry_long": "crossabove(ema(roc(close,10),4),ema(roc(close,10),20))",
+      "exit_long": "crossbelow(ema(roc(close,10),4),ema(roc(close,10),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The XWAMI momentum series price minus price[iPeriod] is approximated by roc(close,10) and its four smoothing stages by a fast EMA(4) and slow EMA(20) up/down pair, entered on the up-over-down cross. Layers A/B/C (8h/4h/1h), the MMRec loss-triggered volume reduction and point-based protection are not representable in a single long-only series."
+    },
+    {
+      "id": 3610,
+      "name": "MA Price Cross",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,14),close)",
+      "exit_long": "crossbelow(sma(close,14),close)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a moving average crossing the current price, written literally with a 14-bar SMA because the default-parameter table is truncated in the docs. The [StartTime, StopTime) window, MetaTrader point stops and the applied-price/method options are not expressible."
+    },
+    {
+      "id": 1523,
+      "name": "VIDYA Auto-Trading (Reversal Logic)",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10) + 2 * atr(high,low,close,14))",
+      "exit_long": "crossbelow(close,ema(close,10) - 2 * atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VidyaLength=10, VidyaMomentum=20 and BandDistance=2 are documented, with the variable average approximated by EMA(10) and the wide bands by plus/minus 2*ATR(14); the exit is the opposite band breakout. The docs explicitly state no stops, so both percentage fields are null."
+    },
+    {
+      "id": 2546,
+      "name": "MacdPatternTrader Advanced",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and macd(close,12,26) < 0",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only one of the six MACD patterns is encoded because the docs list parameter names without values, so 12/26 EMAs are fallbacks and the min/max threshold pair is approximated by requiring the main line below zero. History-block stop/target offsets, partial exits, time filters and martingale sizing are not DSL features."
+    },
+    {
+      "id": 3886,
+      "name": "Morning Pullback Corridor",
+      "family": "volatility",
+      "entry_long": "low <= sma(close,29) and roc(close,5) > 0",
+      "exit_long": "close >= sma(close,29)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 29-bar price corridor is anchored with SMA(29): a pullback into it with a positive 5-bar change buys and a close back at the anchor exits, following the documented morning-pullback idea. TradeHour/TradeMinuteLimit/CloseHour gates and the asymmetric point take-profit, stop and pullback distances are not expressible."
+    },
+    {
+      "id": 281,
+      "name": "Parabolic SAR Distance Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close,sma(close,20)) and bars_since(close < bb_lower(close,20,2)) <= 5",
+      "exit_long": "close >= sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is replaced by the documented LookbackPeriod=20 and DeviationMultiplier=2.0 statistics: the entry fires when price recrosses the mean after having closed two standard deviations below it within the last five bars, and the exit is reversion to the average. AccelerationFactor 0.02 / limit 0.2 are SAR internals, and the protective stop has no documented value."
+    },
+    {
+      "id": 2009,
+      "name": "Color Stochastic NR",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,5),ema(rsi(close,5),3))",
+      "exit_long": "crossbelow(rsi(close,5),ema(rsi(close,5),3))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 2.0,
+      "notes": "Mode=OscDisposition is the documented default, and KPeriod=5 / DPeriod=3 are mapped to a bounded oscillator versus its EMA(3) because no stochastic is whitelisted. StopLossPercent=2 and TakeProfitPercent=2 are used; the Breakdown, OscTwist, SignalTwist and SignalBreakdown modes are not the default and are not encoded."
+    },
+    {
+      "id": 361,
+      "name": "Crude Oil Predicts Equity",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a cross-asset rotation: the trailing oil return decides whether the equity ETF or a cash/bond ETF is held, rebalanced monthly. The DSL is single-symbol with no cross-security data, so the never-true guard is used."
+    },
+    {
+      "id": 2876,
+      "name": "Equity Percent Lock",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An account-level overlay that liquidates all positions once equity reaches EquityPercentFromBalance=1.20 of the last flat balance; it trades only securities opened by other strategies. With no single-symbol market entry signal the never-true guard is used."
+    }
+  ]
+}

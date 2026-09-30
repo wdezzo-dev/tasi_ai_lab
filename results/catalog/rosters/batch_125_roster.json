@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3707,
+      "name": "Mean Reverse",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(close,50)) or close < sma(close,50) - 2.0 * atr(high,low,close,14)",
+      "exit_long": "close > sma(close,50) + 2.0 * atr(high,low,close,14) or crossbelow(sma(close,20),sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented entry modules are kept: the SMA(20)/SMA(50) trend cross and the ATR(14) x 2.0 stretch from the slow average, with the symmetric band touch and opposite cross as exit. StopLossPoints 500 and TakeProfitPoints 1000 are Security.Step price units, not percentages, so the stop fields are null."
+    },
+    {
+      "id": 1987,
+      "name": "Color Step Xccx",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,7),ema(close,30))",
+      "exit_long": "crossabove(ema(close,7),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom step lines are approximated by the documented MPeriod 7 and DPeriod 30 EMAs, and the documented long rule (fast line crossing below the slow line) with the reverse cross as exit is preserved. StepSizeFast 5 / StepSizeSlow 30 offsets cannot be built without the proprietary indicator, and the docs state there are no stops."
+    },
+    {
+      "id": 2614,
+      "name": "Bollinger Bands N Positions",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented BollingerPeriod 20 and BollingerWidth 2 and fires when a bar closes outside the upper channel, with the return to the middle band as exit. The position cap, and the fixed StopLossPips 50 / TakeProfitPips 50 / trailing pair are pip distances, so the stop fields are null."
+    },
+    {
+      "id": 2669,
+      "name": "Chaos Trader Lite",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5) and sma(close,5) > sma(close,34) and roc(sma(close,5) - sma(close,34),5) > 0",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three wise men collapse into one condition: a break above the previous high (fractal/divergent-bar proxy) with the documented 5-versus-34 Awesome Oscillator positive and accelerating over five bars; close is used because a median price is not available. Alligator lips/teeth offsets, stop-order queues and the MagnitudePips 10 filter are not expressible."
+    },
+    {
+      "id": 2896,
+      "name": "WAMI Cloud X2",
+      "family": "trend",
+      "entry_long": "crossabove(ema(roc(close,1),5),ema(ema(roc(close,1),5),10)) and roc(close,10) > 0",
+      "exit_long": "crossbelow(ema(roc(close,1),5),ema(ema(roc(close,1),5),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "WAMI is built from the first difference of closes, so ROC(1) smoothed by SMA 5 stands in for the main line with a 10-period signal line, and the documented higher-timeframe bullish bias is approximated by a positive 10-bar ROC. Smoothing 5/10 are fallbacks, the 6H/30M split and selectable MA methods are not expressible, and no stops are documented."
+    },
+    {
+      "id": 3850,
+      "name": "Fractured Fractals (MT4)",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5) and roc(donchian_high(high,5),5) > 0",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The native five-bar fractal buffers are approximated by five-bar Donchian levels with the documented rising-fractal condition (the latest high exceeds the prior one) gating the long entry, and the opposite fractal acts as the trailing-style exit. Stop orders, fractal swing storage and the MaximumRiskPercent 2% risk-per-trade sizing are not a percentage stop, so the stop fields are null."
+    },
+    {
+      "id": 2195,
+      "name": "Extrem N",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,9) and low < donchian_low_prev(low,9)",
+      "exit_long": "low > donchian_low_prev(low,9) and high < donchian_high_prev(high,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Donchian Period 9 is used directly: the long setup is an outside bar that takes a new 9-bar high and a new 9-bar low at the same time, standing in for new-high-then-new-low, and the exit is the mirrored inside bar. This alternating-extremes pattern is inherently rare on daily bars (zero occurrences on the validation ticker, a handful across the universe) and no stops are documented."
+    },
+    {
+      "id": 2591,
+      "name": "N Candles",
+      "family": "momentum",
+      "entry_long": "sma(close > open,3) >= 1.0",
+      "exit_long": "sma(close > open,3) < 1.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Identical-candle streaks are expressed as an SMA of the bullish-candle test reaching 1.0, i.e. three consecutive up closes-bars; the streak length is an explicit fallback because Consecutive Candles has no documented value. The streak is broken as exit since only market orders without stops or targets are documented."
+    },
+    {
+      "id": 814,
+      "name": "FTMO Rules Monitor",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented market signal survives: a bullish candle opens long and a bearish candle closes it (the challenge-completed exit). ATR(14) x 2 sizing/stops are volatility distances, not percentages, and the daily-loss, total-loss, profit-target and minimum-day accounting is a portfolio overlay the DSL cannot express."
+    },
+    {
+      "id": 2369,
+      "name": "WPR Slowdown",
+      "family": "mean_reversion",
+      "entry_long": "100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)) > -20 and roc(100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)),1) < 1 and roc(100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)),1) > -1",
+      "exit_long": "100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)) < -80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is not in the DSL, so it is rebuilt as the -100..0 oscillator position inside the 14-bar range, with the documented LevelMax -20 plus the one-point slowdown (a one-bar ROC inside +/-1) for the long entry and LevelMin -80 for the exit. WprPeriod 14 is an explicit fallback, a flat range yields infinity instead of an error, and the docs offer no stops."
+    }
+  ]
+}

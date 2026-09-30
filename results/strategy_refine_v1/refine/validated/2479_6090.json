@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2479,
+  "ticker": "6090",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2479,
+    "name": "Pipsover",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,4,8), sma(macd(close,4,10),20)) and close <= sma(close,20)",
+    "exit_long": "crossbelow(macd(close,3,10), sma(macd(close,3,10),20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "No Chaikin or accumulation/distribution input exists, so the oscillator is rebuilt from the documented ChaikinFastLength=3 and ChaikinSlowLength=10 as a fast-minus-slow EMA spread, and the spike is its cross above its own average while price has retraced to the MaLength=20 SMA. The absolute OpenLevel/CloseLevel Chaikin thresholds and the 65/100 point stop and target are not expressible."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-11-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 7838,
+      "engine_win_ret": 0.10876774754373231,
+      "alpha": -1.3577113122145856,
+      "benchmark_ret": 1.466479059758318,
+      "trades": 173,
+      "win_rate": 0.3988439306358382,
+      "sharpe": 0.11681147751532237,
+      "max_drawdown": -0.7561954359892707,
+      "profit_factor": 1.0419651355073636
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.026088088090895134,
+      "alpha": 0.4896016016044087,
+      "benchmark_ret": -0.46351351351351355,
+      "trades": 10,
+      "win_rate": 0.4,
+      "sharpe": 0.2230777141293243,
+      "max_drawdown": -0.08871726070871477,
+      "profit_factor": 1.2114358666546994
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.1694445486035141,
+      "alpha": 0.24534816306134555,
+      "benchmark_ret": -0.07590361445783145,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": 0.9981392609651492,
+      "max_drawdown": -0.10454542847854109,
+      "profit_factor": 4.628700861221186
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-11-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 7838,
+      "engine_win_ret": -0.5352353572436874,
+      "alpha": -2.001714417002005,
+      "benchmark_ret": 1.466479059758318,
+      "trades": 173,
+      "win_rate": 0.3815028901734104,
+      "sharpe": -0.02254804960711879,
+      "max_drawdown": -0.8398521390798085,
+      "profit_factor": 0.7340797800953363
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.02411177199787884,
+      "alpha": 0.4394017415156347,
+      "benchmark_ret": -0.46351351351351355,
+      "trades": 10,
+      "win_rate": 0.4,
+      "sharpe": -0.10229142207144883,
+      "max_drawdown": -0.09595028531957006,
+      "profit_factor": 0.8389521532784413
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.14653561249474278,
+      "alpha": 0.22243922695257423,
+      "benchmark_ret": -0.07590361445783145,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": 0.8845271877303392,
+      "max_drawdown": -0.10923156113757271,
+      "profit_factor": 3.815488477002013
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

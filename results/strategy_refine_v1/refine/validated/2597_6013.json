@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2597,
+  "ticker": "6013",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2597,
+    "name": "Morse Code",
+    "family": "volatility",
+    "entry_long": "close > open and close / (100.0 + roc(close, 100.0) / 100.0) < open / (2 + roc(open, 1) / 100.0) and close / (1 + roc(close, 2) / 100) > open / (1 + roc(open, 2) / 100)",
+    "exit_long": "close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bullish candles are 1 and bearish 0, so prior bars are reconstructed as price/(1+roc(price,n)/100) and the bullish three-bar Morse code 1-0-1 is used as the mask; the mask itself is user-selected with no documented default. A bearish completed candle is the exit, and the pip take-profit/stop-loss and direction choice are not roster fields."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2017-02-26",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1807,
+      "engine_win_ret": 6.881240050402215,
+      "alpha": 4.1637450511715635,
+      "benchmark_ret": 2.717494999230651,
+      "trades": 193,
+      "win_rate": 0.45595854922279794,
+      "sharpe": 1.0458333159966826,
+      "max_drawdown": -0.34178356840793744,
+      "profit_factor": 1.545758953919849
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 357,
+      "engine_win_ret": 0.1440984023384675,
+      "alpha": 0.22687432207090885,
+      "benchmark_ret": -0.08277591973244136,
+      "trades": 53,
+      "win_rate": 0.39622641509433965,
+      "sharpe": 0.5528726470701762,
+      "max_drawdown": -0.1982297942387291,
+      "profit_factor": 1.190693199088637
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.021344991730281926,
+      "alpha": 0.29749747399978543,
+      "benchmark_ret": -0.2761524822695035,
+      "trades": 18,
+      "win_rate": 0.3888888888888889,
+      "sharpe": 0.24113511370202032,
+      "max_drawdown": -0.08685840560095048,
+      "profit_factor": 1.0814498051799963
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2017-02-26",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1807,
+      "engine_win_ret": 2.0009124528176168,
+      "alpha": -0.7165825464130342,
+      "benchmark_ret": 2.717494999230651,
+      "trades": 193,
+      "win_rate": 0.39378238341968913,
+      "sharpe": 0.6216450974435777,
+      "max_drawdown": -0.48345108190905284,
+      "profit_factor": 1.2201776219834837
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 357,
+      "engine_win_ret": -0.12299864486737733,
+      "alpha": -0.040222725134935966,
+      "benchmark_ret": -0.08277591973244136,
+      "trades": 53,
+      "win_rate": 0.3584905660377358,
+      "sharpe": -0.3107331410469027,
+      "max_drawdown": -0.2712402922813506,
+      "profit_factor": 0.8513214670722881
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.0668810379037349,
+      "alpha": 0.2092714443657686,
+      "benchmark_ret": -0.2761524822695035,
+      "trades": 18,
+      "win_rate": 0.3888888888888889,
+      "sharpe": -0.33146346359440965,
+      "max_drawdown": -0.11106366748543473,
+      "profit_factor": 0.7821820626800997
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

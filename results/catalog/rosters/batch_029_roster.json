@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 254,
+      "name": "Volume Breakout",
+      "family": "breakout",
+      "entry_long": "volume_ratio(volume,20) > 2",
+      "exit_long": "volume_ratio(volume,20) < 1",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented volume deviation uses volume_ratio(20), with 2.0 as the long breakout threshold and 1.0 as mean reversion. The short side is omitted; 2% is the documented stop."
+    },
+    {
+      "id": 320,
+      "name": "MACD Hidden Markov Model",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The HMM state filter is unavailable, so MACD(12,26,9) bullish and bearish crosses proxy Markov-confirmed trend changes. ATR stop logic has no documented multiplier and is not a percentage field."
+    },
+    {
+      "id": 654,
+      "name": "Daily Bollinger Band",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_upper(close,20,2)) and roc(bb_mid(close,20),1) > 0",
+      "exit_long": "crossbelow(close,bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) is an explicit fallback because the docs give no period or deviation. A positive middle-band slope retains the long rule, the middle-band cross is the exit, and ATR sizing is not representable."
+    },
+    {
+      "id": 1256,
+      "name": "RK's Framework Auto Color Gradient",
+      "family": "mean_reversion",
+      "entry_long": "crossabove((zscore((close - bb_lower(close,20,2)) / (bb_upper(close,20,2) - bb_lower(close,20,2)),14) + zscore(rsi(close,14),14)) / 2,0)",
+      "exit_long": "crossbelow((zscore((close - bb_lower(close,20,2)) / (bb_upper(close,20,2) - bb_lower(close,20,2)),14) + zscore(rsi(close,14),14)) / 2,0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The unavailable stochastic normalization is proxied by averaging z-score(14) Bollinger %B and RSI(14). Bollinger(20,2) and RSI(14) are explicit fallbacks because no defaults are documented."
+    },
+    {
+      "id": 1865,
+      "name": "Liquidex",
+      "family": "breakout",
+      "entry_long": "close > ema(close,10) + 2 * atr(high,low,close,10)",
+      "exit_long": "crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner(10) is approximated by EMA(10) plus or minus 2 ATR(10); the multiplier is an explicit fallback because none is documented. A center-line cross is the exit proxy; point stop, disabled target, break-even, and trailing logic are omitted."
+    },
+    {
+      "id": 1967,
+      "name": "Exp XMA Range Bands",
+      "family": "trend",
+      "entry_long": "close <= ema(close,20) + 2 * atr(high,low,close,14) and close >= ema(close,20) - 2 * atr(high,low,close,14) and bars_since(close > ema(close,20) + 2 * atr(high,low,close,14)) < 3",
+      "exit_long": "crossbelow(close,ema(close,20) - 2 * atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20), ATR(14), and 2 ATR are explicit fallbacks for the parameterless Keltner channel. The entry requires a recent upper break followed by re-entry inside; a lower break exits. Point stop and target values are not percentages."
+    },
+    {
+      "id": 3475,
+      "name": "Day Opening MACD Histogram",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,58,195),macd_signal(close,58,195,183)) and roc(macd(close,58,195),1) > 0",
+      "exit_long": "crossbelow(macd(close,58,195),macd_signal(close,58,195,183)) or roc(macd(close,58,195),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(58,195,183) above a positive one-bar MACD slope proxies bullish histogram direction, with the inverse as exit. Daily-open timing and trailing management are unsupported; all documented exits are price points."
+    },
+    {
+      "id": 3862,
+      "name": "5/8 EMA Cross Protect",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5),ema(open,8))",
+      "exit_long": "crossbelow(ema(close,5),ema(open,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast EMA(5) uses close and slow EMA(8) uses open; their bullish crossover enters and bearish crossover exits. The 40-pip target, disabled stop, and disabled trailing stop are not percentage fields."
+    },
+    {
+      "id": 3996,
+      "name": "Open Close",
+      "family": "momentum",
+      "entry_long": "roc(open,1) > 0 and roc(close,1) < 0",
+      "exit_long": "roc(open,1) < 0 and roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(open,1)>0 with ROC(close,1)<0 exactly proxies a current open above the prior open and close below the prior close. The exit requires both values to continue lower; portfolio-risk protection is not a fixed percentage stop."
+    },
+    {
+      "id": 4002,
+      "name": "SimpleTrade Flip",
+      "family": "volatility",
+      "entry_long": "roc(open,3) > 0",
+      "exit_long": "roc(open,3) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(open,3)>0 compares the current open with the open three bars earlier and selects the documented long flip; the inverse exits. Reopening every bar cannot be represented by a one-position long-only simulator, and the 120-point stop is not a percentage."
+    }
+  ]
+}

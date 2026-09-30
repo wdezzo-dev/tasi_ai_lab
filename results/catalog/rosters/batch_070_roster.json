@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3458,
+      "name": "Smart Forex System",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 1 and close > open",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive one-bar ROC above the documented pseudo-pip threshold 1 and a bullish close proxy the candle-momentum start. Basket averaging, pip grid spacing, lot multipliers, and 30/7/400-pip exits are stateful and not DSL fields."
+    },
+    {
+      "id": 2476,
+      "name": "Straddle Trail",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close above the prior five-bar high proxies the buy-stop straddle leg; five bars are an explicit fallback. Pending-order pairing, event scheduling, break-even, pip trailing, shutdown commands, and absolute protection are unavailable."
+    },
+    {
+      "id": 506,
+      "name": "ADX Volume Multiplier",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,21) > 26 and volume_ratio(volume,20) >= 1.8 and close > ema(close,20)",
+      "exit_long": "adx(high,low,close,21) < 26 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented ADX(21)>26 and 1.8x volume are exact; EMA(20) is an explicit proxy for DI+>DI- because directional-index lines are not exposed. The opposite state exits, and the source documents no stops."
+    },
+    {
+      "id": 3065,
+      "name": "Probe",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),70)",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing 70 proxies a bullish CCI channel break; RSI/level values are fallbacks because the docs supply none. CCI, pending-stop indentation, and pip stop/trailing settings are unavailable."
+    },
+    {
+      "id": 1902,
+      "name": "Exp Candles XSmoothed",
+      "family": "trend",
+      "entry_long": "close > sma(high,14) + 0.005 * close",
+      "exit_long": "close < sma(low,14) - 0.005 * close",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(14) replaces WMA for smoothed high/low lines; 0.5% is a normalized fallback for the undocumented point buffer. Exact weighting, permissions, opposite exits, and built-in protection are otherwise preserved in intent."
+    },
+    {
+      "id": 2656,
+      "name": "Trade in Channel",
+      "family": "breakout",
+      "entry_long": "high - low <= sma(high - low,20) and low <= donchian_low_prev(low,20) and close > open",
+      "exit_long": "high >= donchian_high_prev(high,20) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A quiet 20-bar range touching prior support with a bullish close approximates a flat lower band and long fade; the pivot branch is omitted. ATR(4) stops, 30-step trailing, and exact previous-pivot/channel state are unavailable."
+    },
+    {
+      "id": 3049,
+      "name": "Signal Count With Array",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is explicitly a Donchian signal-count diagnostic that executes no trades, so the impossible guard preserves that behavior. Offset arrays, sentinel counters, per-candle logging, and ChannelPeriod=24 statistics are outside the trading DSL."
+    },
+    {
+      "id": 2164,
+      "name": "Super Woodies CCI",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),50)",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) zero-level crosses are an explicit proxy for CCI crossing zero; RSI(14) is a fallback because CciPeriod has no value. Exact CCI and timeframe options are unavailable, and no stops are documented."
+    },
+    {
+      "id": 3203,
+      "name": "Horizontal Line Levels",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented strategy is a Level1 alert logger and never submits orders, so the impossible guard preserves no trading. Dynamic bid/ask offsets, timer checks, 50-point levels, and journal alerts require quote/timer state unavailable in the DSL."
+    },
+    {
+      "id": 581,
+      "name": "Black-Scholes Delta Hedge",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Without an option position, contract data, or defaults for strike/rate/volatility/expiry/side, no deterministic underlying long hedge can be expressed. Black-Scholes pricing, delta, hedge interval, and position accounting are outside the indicator DSL."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_083": {
+  "strategy_ids": [
+   1354,
+   213,
+   1338,
+   767,
+   1452,
+   1955,
+   655,
+   2623,
+   2771,
+   927
+  ],
+  "docs": {
+   "1354": {
+    "id": 1354,
+    "name": "Strategy Stats [presentTrading]",
+    "family": "trend",
+    "overview": "C# port of the TradingView strategy **Strategy Stats [presentTrading]** by PresentTrading.\n\nThe strategy combines two SuperTrend indicators whose multipliers are adjusted by the width of a Vegas channel. A position is opened only when both trends agree. Optional holding period and multi‑step take profits based on fixed percentage levels or ATR multiples are supported. Stop loss is managed via the built‑in protection service.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "213": {
+    "id": 213,
+    "name": "MA Parabolic SAR",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 76%. It performs best in the forex market.\n\nA long position is opened when the closing price sits above the moving average and the Parabolic SAR dots flip below the market. A short position is taken when price is below the average and the SAR dots flip above price, signalling downward pressure. The strategy exits once price crosses the SAR in the opposite direction, locking in profits or limiting losses.\n\nThis approach is best suited for traders who prefer systematic trend following with clear, mechanical stops. The Parabolic SAR continuously adjusts as volatility changes, keeping exposure in line with market conditions while the moving average prevents trades against the broader trend.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price > MA && Price > Parabolic SAR\n  - **Short**: Price < MA && Price < Parabolic SAR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price falls below Parabolic SAR\n  - **Short**: Exit when price rises above Parabolic SAR\n- **Stops**: Yes, dynamic via Parabolic SAR and optional fixed stop.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `SarStep` = 0.02m\n  - `SarMaxStep` = 0.2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `TakeValue` = new Unit(0, UnitTypes.Absolute)\n  - `StopValue` = new Unit(2, UnitTypes.Percent)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Parabolic SAR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price > MA && Price > Parabolic SAR\n  - **Short**: Price < MA && Price < Parabolic SAR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price falls below Parabolic SAR\n  - **Short**: Exit when price rises above Parabolic SAR\n- **Stops**: Yes, dynamic via Parabolic SAR and optional fixed stop.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `SarStep` = 0.02m\n  - `SarMaxStep` = 0.2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `TakeValue` = new Unit(0, UnitTypes.Absolute)\n  - `StopValue` = new Unit(2, UnitTypes.Percent)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Parabolic SAR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1338": {
+    "id": 1338,
+    "name": "Stepped Trailing Strategy Example",
+    "family": "trend",
+    "overview": "A sample strategy demonstrating three-step trade management with optional trailing stop.\n\nThe strategy enters long when the 14-period SMA crosses above the 28-period SMA. Risk is controlled by a stop-loss and three profit targets:\n- After the first target, the stop moves to break-even.\n- After the second target, the stop moves to the first target.\n- On the third step the position either exits at target three or starts a trailing stop.\n\nThis example shows how to stage profits and protect positions as they progress.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "767": {
+    "id": 767,
+    "name": "ETH Signal 15m",
+    "family": "trend",
+    "overview": "The ETH Signal 15m strategy uses the Supertrend indicator to detect direction changes and the RSI to filter entries. A long position opens when the Supertrend direction decreases and RSI is below the overbought level. A short position opens when the Supertrend direction increases and RSI is above the oversold level. Exits use ATR-based stop loss and take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Supertrend direction decreases and RSI below `RsiOverbought`.\n  - **Short**: Supertrend direction increases and RSI above `RsiOversold`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: ATR-based stop loss and take profit.\n- **Stops**: 4×ATR stop loss, 2×ATR long take profit, 2.237×ATR short take profit.\n- **Default Values**:\n  - `AtrPeriod` = 12\n  - `Factor` = 2.76\n  - `RsiLength` = 12\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend, RSI, ATR\n  - Stops: ATR stop loss and take profit\n  - Complexity: Low\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Supertrend direction decreases and RSI below `RsiOverbought`.\n  - **Short**: Supertrend direction increases and RSI above `RsiOversold`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: ATR-based stop loss and take profit.\n- **Stops**: 4×ATR stop loss, 2×ATR long take profit, 2.237×ATR short take profit.\n- **Default Values**:\n  - `AtrPeriod` = 12\n  - `Factor` = 2.76\n  - `RsiLength` = 12\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend, RSI, ATR\n  - Stops: ATR stop loss and take profit\n  - Complexity: Low\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1452": {
+    "id": 1452,
+    "name": "Trailing Monster",
+    "family": "trend",
+    "overview": "Strategy combining KAMA trend detection with RSI filter and a trailing stop. Positions open when RSI crosses extreme levels in the direction of the KAMA trend. After a delay, a percentage trailing stop protects profits.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: RSI > `RsiOverbought`, close above SMA, KAMA rising\n  - **Short**: RSI < `RsiOversold`, close below SMA, KAMA falling\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Percentage trailing stop after `DelayBars`\n- **Stops**: Trailing stop in percent\n- **Default Values**:\n  - `KamaLength` = 40\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `SmaLength` = 200\n  - `BarsBetweenEntries` = 3\n  - `TrailingStopPct` = 12m\n  - `DelayBars` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: KAMA, RSI, SMA\n  - Stops: Trailing\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI > `RsiOverbought`, close above SMA, KAMA rising\n  - **Short**: RSI < `RsiOversold`, close below SMA, KAMA falling\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Percentage trailing stop after `DelayBars`\n- **Stops**: Trailing stop in percent\n- **Default Values**:\n  - `KamaLength` = 40\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `SmaLength` = 200\n  - `BarsBetweenEntries` = 3\n  - `TrailingStopPct` = 12m\n  - `DelayBars` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: KAMA, RSI, SMA\n  - Stops: Trailing\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1955": {
+    "id": 1955,
+    "name": "Exp HLRSign",
+    "family": "breakout",
+    "overview": "This strategy implements the HLRSign indicator logic in StockSharp.\nIt opens and closes positions when the High-Low Ratio (HLR) crosses predefined levels.\n\n## How It Works\n\n- Calculates Donchian Channel values over a configurable range.\n- Computes the HLR value as a percentage position of the mid-price within the channel.\n- Generates buy or sell signals when the HLR crosses the upper or lower thresholds depending on the selected mode:\n  - **ModeIn** – buy on crossing above the upper level and sell on crossing below the lower level.\n  - **ModeOut** – sell on crossing below the upper level and buy on crossing above the lower level.\n- Allows enabling or disabling opening and closing of long and short positions separately.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `Mode` | Indicator operation mode (ModeIn or ModeOut). |\n| `Range` | Lookback period for highest and lowest prices. |\n| `UpLevel` | Upper threshold in percent for HLR. |\n| `DnLevel` | Lower threshold in percent for HLR. |\n| `CandleType` | Timeframe of candles used for calculations. |\n| `BuyOpen` | Allow opening long positions. |\n| `SellOpen` | Allow opening short positions. |\n| `BuyClose` | Allow closing long positions. |\n| `SellClose` | Allow closing short positions. |\n\n## Notes\n\n- The strategy uses the high-level API with `DonchianChannels` indicator.\n- It processes only finished candles and checks position permissions before trading.\n- No stop-loss or take-profit levels are defined; position protection can be added manually.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Mode` | Indicator operation mode (ModeIn or ModeOut). |\n| `Range` | Lookback period for highest and lowest prices. |\n| `UpLevel` | Upper threshold in percent for HLR. |\n| `DnLevel` | Lower threshold in percent for HLR. |\n| `CandleType` | Timeframe of candles used for calculations. |\n| `BuyOpen` | Allow opening long positions. |\n| `SellOpen` | Allow opening short positions. |\n| `BuyClose` | Allow closing long positions. |\n| `SellClose` | Allow closing short positions. |"
+   },
+   "655": {
+    "id": 655,
+    "name": "Daily Breakout Daily Shadow",
+    "family": "breakout",
+    "overview": "This strategy trades daily breakouts using the last two completed daily candles. It closes any open position at the start of each new day.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Previous day closes above the body high of the candle before it and opens below that level.\n  - Short: Previous day closes below the body low of the candle before it and opens above that level.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed at the start of a new day.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 1 Day\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Previous day closes above the body high of the candle before it and opens below that level.\n  - Short: Previous day closes below the body low of the candle before it and opens above that level.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed at the start of a new day.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 1 Day\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2623": {
+    "id": 2623,
+    "name": "Amstell Grid Manager",
+    "family": "momentum",
+    "overview": "High-level port of the MetaTrader expert \"exp_Amstell-SL\" that runs a bi-directional averaging grid. The strategy keeps track of the most recent fill price on each side and issues additional market orders when price drifts far enough away, while liquidating the open batch once a fixed take-profit or stop-loss distance is reached. The implementation uses StockSharp's candle subscriptions and high-level order helpers, so it can be plugged into any environment that provides candle data for a single security.\n\nThe translated logic is slightly adapted for StockSharp's netted portfolio model: long and short grids are still managed separately, but they are not held at the same time. The long grid is active while the net position is non-negative, and the short grid takes over only after all long exposure has been flattened.\n\n## How it works\n\n### Market data and execution flow\n- Subscribes to the configured `CandleType` (default: 1 minute time-frame candles) and processes only finished candles.\n- Calculates pip-based offsets from the security's `PriceStep`. If the step has 3 or 5 decimal places, it is multiplied by 10 to mimic MetaTrader's 3/5 digit pip adjustment.\n- All trades are placed through `BuyMarket`/`SellMarket` helpers; no pending orders are used.\n\n### Long-side management\n- Opens the first long position (`OrderVolume`) as soon as there is no existing long exposure and the strategy is not in the middle of closing shorts.\n- Tracks the most recent long fill price and the volume-weighted average entry price for the active long batch.\n- Places additional long orders of size `OrderVolume` whenever the closing price has fallen by at least `BuyDistancePips` (converted to price units) below the last long fill.\n\n### Short-side management\n- Once the long batch is fully closed and the net position is non-positive, the strategy allows short entries.\n- Places the initial short order when there is no short exposure; further shorts are opened after the price rises by `BuyDistance",
+    "details": "",
+    "parameters": "| Parameter | Default | Optimization range | Description |\n|-----------|---------|--------------------|-------------|\n| `OrderVolume` | `0.01` | `0.01` – `0.10` (step `0.01`) | Quantity submitted with every grid order. Must be positive. |\n| `TakeProfitPips` | `30` | `10` – `150` (step `10`) | Profit target for the active batch expressed in pips. |\n| `StopLossPips` | `30` | `10` – `150` (step `10`) | Maximum adverse move before abandoning the batch. |\n| `BuyDistancePips` | `10` | `5` – `60` (step `5`) | Minimum drop from the last long fill to add another buy. Must be less than both TP and SL. |\n| `SellDistanceMultiplier` | `10` | `2` – `15` (step `1`) | Multiplier applied to the long distance when spacing short entries. |\n| `CandleType` | 1-minute time-frame | — | Candle series used for signal generation. |"
+   },
+   "2771": {
+    "id": 2771,
+    "name": "Trailing Stop And Take",
+    "family": "volatility",
+    "overview": "The **Trailing Stop And Take Strategy** is a direct StockSharp adaptation of the MetaTrader expert advisor from `MQL/19963`. It focuses on active trade management: once a position is open, the strategy attaches initial stop-loss and take-profit levels and then trails both levels as price moves. Trailing adjustments respect configurable minimum step sizes, breakeven protection, and the option to avoid trailing while a trade is still losing.\n\nThe strategy operates on a single security using finished candles. When the strategy is flat it opens a position in the direction of the most recent candle body (bullish closes lead to longs, bearish closes lead to shorts). This mirrors the original test behavior used by the MQL script and provides a continuous flow of positions for the trailing engine to manage.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle aggregation used for price evaluation. |\n| `Volume` | Default order volume for entries and exits. |\n| `PositionType` | Restricts the engine to manage long positions, short positions, or both. |\n| `InitialStopLossPoints` | Initial stop-loss size in price points (uses trailing distance if zero). |\n| `InitialTakeProfitPoints` | Initial take-profit size in price points (uses trailing distance if zero). |\n| `TrailingStopLossPoints` | Distance between price and trailing stop. |\n| `TrailingTakeProfitPoints` | Distance between price and trailing take profit. |\n| `TrailingStepPoints` | Minimum movement in points required before adjusting stops or targets. |\n| `AllowTrailingLoss` | Enables trailing while the trade is still below breakeven. |\n| `BreakevenPoints` | Offset in points added to the entry price to form the breakeven barrier. |\n| `SpreadMultiplier` | Multiplier for the minimal stop distance approximation (simulates the MQL `StopLevel`). |"
+   },
+   "927": {
+    "id": 927,
+    "name": "Internal Bar Strength IBS",
+    "family": "mean_reversion",
+    "overview": "This strategy enters long when the internal bar strength (IBS) is below a lower threshold and exits when IBS rises above an upper threshold within a specified time window.\n\n## Details\n\n- **Entry Criteria**:\n  - IBS < `LowerThreshold`.\n  - Time between `StartTime` and `EndTime`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - IBS >= `UpperThreshold`.\n- **Stops**: None.\n- **Default Values**:\n  - `UpperThreshold` = 0.8\n  - `LowerThreshold` = 0.2\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - IBS < `LowerThreshold`.\n  - Time between `StartTime` and `EndTime`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - IBS >= `UpperThreshold`.\n- **Stops**: None.\n- **Default Values**:\n  - `UpperThreshold` = 0.8\n  - `LowerThreshold` = 0.2\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1413,
+  "ticker": "3080",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1413,
+    "name": "HSI1 First 30m Candle",
+    "family": "breakout",
+    "entry_long": "crossabove(close,donchian_high_prev(high,4))",
+    "exit_long": "close < donchian_low_prev(low,2)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The first 30-minute range is approximated by the prior two 15-minute bars; a cross above that rolling high is the long breakout. Session reset, one-trade-per-day, and range-derived TP/SL cannot be represented in this daily OHLCV DSL, and the short side is omitted."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8312,
+      "engine_win_ret": 199.63720369118647,
+      "alpha": 199.3004925361362,
+      "benchmark_ret": 0.3367111550502555,
+      "trades": 360,
+      "win_rate": 0.4722222222222222,
+      "sharpe": 1.1249499576987332,
+      "max_drawdown": -0.2957770030515491,
+      "profit_factor": 3.097057765356144
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.05596860774669388,
+      "alpha": 0.3289499742063212,
+      "benchmark_ret": -0.27298136645962734,
+      "trades": 17,
+      "win_rate": 0.5882352941176471,
+      "sharpe": 0.3440331656984613,
+      "max_drawdown": -0.11224644578295762,
+      "profit_factor": 1.2990726710678249
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.14550647042772202,
+      "alpha": 0.14802324895121188,
+      "benchmark_ret": -0.00251677852348986,
+      "trades": 9,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 1.421381397204457,
+      "max_drawdown": -0.049696364557428985,
+      "profit_factor": 4.014952865277217
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8312,
+      "engine_win_ret": 32.239739537134376,
+      "alpha": 31.90302838208412,
+      "benchmark_ret": 0.3367111550502555,
+      "trades": 360,
+      "win_rate": 0.4166666666666667,
+      "sharpe": 0.7595736649535181,
+      "max_drawdown": -0.3307573283763502,
+      "profit_factor": 2.05371695071145
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.030319693483513377,
+      "alpha": 0.24266167297611396,
+      "benchmark_ret": -0.27298136645962734,
+      "trades": 17,
+      "win_rate": 0.4117647058823529,
+      "sharpe": -0.08169341918428048,
+      "max_drawdown": -0.12572339830598478,
+      "profit_factor": 0.8667583152443225
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.09519189012198837,
+      "alpha": 0.09770866864547822,
+      "benchmark_ret": -0.00251677852348986,
+      "trades": 9,
+      "win_rate": 0.4444444444444444,
+      "sharpe": 0.9461403739686759,
+      "max_drawdown": -0.06291910483206709,
+      "profit_factor": 2.358258775033298
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

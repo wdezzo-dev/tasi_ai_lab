@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2689,
+      "name": "e-Skoch Pending Orders",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,2) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Breaking the two most recent highs on the traded timeframe with the daily-trend confirmation approximated by SMA(20) gives the long; the mirrored two-bar low break exits. IndentHighPips/IndentLowPips order offsets, the daily-timeframe analysis, CheckExistingTrade and the PercentEquity money-based exit are not expressible."
+    },
+    {
+      "id": 2930,
+      "name": "Ang Zad C Time MM Recovery",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The proprietary Ang_Zad_C channel is replaced by a 20-bar Donchian envelope (no period is documented) and the long is a close above the channel with the mirrored close as exit. The session filter, applied price, Signal Bar shift, Ki smoothing, loss-trigger volume model and step-based stop/target are not expressible."
+    },
+    {
+      "id": 348,
+      "name": "Stochastic Implied Volatility Skew",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),50) and zscore(roc(close,20),20) > 0",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry conditions are not documented ('see implementation'), so the documented Stochastic is approximated by RSI(14) with a trend-confirmation cross and the IvPeriod 20 implied-volatility proxy as a 20-bar z-score of ROC(20) above zero. StochK/StochD smoothing and the ATR-multiple stop logic are not percent fields."
+    },
+    {
+      "id": 349,
+      "name": "ADX Sentiment Momentum",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and roc(close,5) > 0",
+      "exit_long": "adx(high,low,close,14) < 20 or roc(close,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented AdxPeriod 14 above AdxThreshold 25 for trend strength with the documented SentimentPeriod 5 momentum leg deciding direction, and momentum loss or fading ADX closes. The unspecified extra indicators and the 2m indicator-based stop are not percentage fields."
+    },
+    {
+      "id": 2096,
+      "name": "Breakout Bars Trend",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20)) and sma(close - open,3) < 0",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so its direction flip is proxied by a close crossing EMA(20) after a stretch of negative bodies (the Negative Signals count is a 3-bar fallback and Delta is not numerically documented). The pip/percent Reversal Mode switch for stop and target values is not expressible."
+    },
+    {
+      "id": 521,
+      "name": "Anands",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2) and close > open",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented two-bar-ago breakout is kept, with the bullish breakout bar standing in for the previous-day close-outside-its-range bias test that needs a shifted close. The 15-minute timeframe and the optional stop at the opposite side of the breakout bar are not translated."
+    },
+    {
+      "id": 3334,
+      "name": "Range Breakout",
+      "family": "breakout",
+      "entry_long": "close >= donchian_high_prev(high,20) and (donchian_high(high,20) - donchian_low(low,20)) / close <= 0.15",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented close-at-or-past-the-range-high rule uses RangePeriod 20, and MaxRangePoints is expressed as a share of price (15% is a fallback because no point value is documented and 5% would be unreachable on daily bars). Docs give only protective exits, whose point distances are not percentages, so the mirrored range-low break is used."
+    },
+    {
+      "id": 3617,
+      "name": "Resonance Hunter",
+      "family": "momentum",
+      "entry_long": "rsi(close,14) < 40 and crossabove(rsi(close,14),sma(rsi(close,14),3))",
+      "exit_long": "rsi(close,14) > 70 or crossbelow(rsi(close,14),sma(rsi(close,14),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three-slot design needs secondary and confirmation instruments, so only the primary symbol's Stochastic resonance is translated, with RSI(14) and its SMA(3) standing in for %K/%D. The K/D/Slowing periods and the point stop-loss are not documented percent values and are noted as fallbacks."
+    },
+    {
+      "id": 2915,
+      "name": "AOCCI",
+      "family": "volatility",
+      "entry_long": "crossabove(sma((high + low) / 2,5) - sma((high + low) / 2,34),0) and zscore(close,55) > 0",
+      "exit_long": "crossbelow(sma((high + low) / 2,5) - sma((high + low) / 2,34),0) or zscore(close,55) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Awesome Oscillator is the standard 5/34 SMA spread of the median price and the documented CciPeriod 55 is rendered as a close z-score, matching the docs' statement that the short setup reuses the long conditions. The pivot filter, BigJumpPips/DoubleJumpPips spread protection, higher-timeframe confirmation and 50-pip brackets are not expressible."
+    },
+    {
+      "id": 2192,
+      "name": "Stochastic Automated",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and crossabove(rsi(close,14),sma(rsi(close,14),3))",
+      "exit_long": "rsi(close,14) > 70 or crossbelow(rsi(close,14),sma(rsi(close,14),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "%K and %D are mapped to RSI(14) and its SMA(3): the documented long is a bullish %D/%K cross from the oversold zone, and leaving the extreme zone or the opposite cross closes. KPeriod, DPeriod, Slowing and the OverSold/OverBought values are not documented (14/3 and 30/70 are fallbacks) and price-unit take-profit, stop and trailing are not percent fields."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3737,
+      "name": "Cs2011",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,30,500), macd_signal(close,30,500,36)) and macd(close,30,500) < 0",
+      "exit_long": "crossbelow(macd(close,30,500), macd_signal(close,30,500,36))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastEmaPeriod 30, SlowEmaPeriod 500 and SignalPeriod 36 build the MACD core, and the exhaustion logic is kept as a bullish MACD/signal cross that still happens below the zero line, with the opposite cross exiting. TakeProfitPoints 2200 and StopLossPoints 0 (disabled) are price-point distances, and TargetVolume replaces the original risk-based sizing."
+    },
+    {
+      "id": 1170,
+      "name": "Pivot Point Supertrend",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close, 2)) and atr(high,low,close,10) > sma(atr(high,low,close,10), 10)",
+      "exit_long": "crossbelow(close, sma(close, 2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The PivotPeriod 2 center line is approximated by a 2-bar average and the documented trend switch by price crossing it, but the AtrFactor 3 x AtrPeriod 10 band lies far outside daily ranges here, so ATR(10) appears as an expansion filter instead of as a trailing band. Both directions, the 5-minute timeframe and the documented no-stop rule are handled by the long-only output."
+    },
+    {
+      "id": 1653,
+      "name": "MACD EMA SAR Bollinger BullBear",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) < macd_signal(close,12,26,9) and high < bb_upper(close,20,2) and ema(close,3) > ema(close,34) and high > ema(close,13) and roc(high - ema(close,13),1) < 0",
+      "exit_long": "macd(close,12,26) > macd_signal(close,12,26,9) or ema(close,3) < ema(close,34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD 12/26/9, EMA 3/34, Bollinger 20/2.0 and the Power Period 13 are all used as documented, and Bulls Power is rebuilt as high minus EMA(13) with a falling one-bar change. Parabolic SAR (Step 0.02 / Max 0.2) is replaced by the EMA trend filter it duplicates, the 'last two highs below the band' test uses the current high, and the 09:00-17:00 session gate is not available."
+    },
+    {
+      "id": 1752,
+      "name": "Charles Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 1) * 1.0002 and rsi(close,14) > 55 and ema(close,18) > ema(close,60)",
+      "exit_long": "close < ema(close,18) or rsi(close,14) < 45",
+      "stop_loss_pct": 0.5,
+      "take_profit_pct": 1.0,
+      "notes": "The previous day's high is the prior-bar Donchian high with the documented Delta 0.0002 applied as a 0.02% buffer, and RsiPeriod 14 with the documented 55/45 levels plus FastPeriod 18 / SlowPeriod 60 are exact. The docs describe TakeProfit and StopLoss as percentages, so the documented 1 and 0.5 defaults populate the percent fields; the 1-hour timeframe and short leg are dropped."
+    },
+    {
+      "id": 2673,
+      "name": "EA Trix",
+      "family": "trend",
+      "entry_long": "crossabove(roc(ema(ema(ema(close,5),5),5),1), ema(roc(ema(ema(ema(close,5),5),5),1),3))",
+      "exit_long": "crossbelow(roc(ema(ema(ema(close,5),5),5),1), ema(roc(ema(ema(ema(close,5),5),5),1),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "TRIX is rebuilt as the one-bar rate of change of the documented triple-smoothed moving average with the signal curve as its own EMA, and the documented cross-to-enter rule with its opposite cross as exit is preserved. EmaPeriod 5 and SignalPeriod 3 are explicit fallbacks since the table lists no values, and TradeOnCloseBar, StopLoss, TakeProfit, TrailingStop and BreakEven are price-distance or execution-timing settings."
+    },
+    {
+      "id": 391,
+      "name": "Residual Momentum Factor",
+      "family": "momentum",
+      "entry_long": "roc(close,21) > 10",
+      "exit_long": "roc(close,21) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented top-decile residual momentum ranking comes from an external data feed, so a strong one-month return above 10% stands in for being selected as a top-decile name and the exit is the monthly-rebalance proxy when that return turns negative. The 10% threshold is an explicit fallback, and Decile 10, MinTradeUsd 200 and the seasonality flag are cross-sectional or currency settings."
+    },
+    {
+      "id": 3140,
+      "name": "Exp Slow Stoch Duplex",
+      "family": "volatility",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), ema(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), ema(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long module is translated with the documented LongKPeriod 5, LongDPeriod 3 and a smoothed secondary filter as the %D EMA, so the documented %K above %D cross enters and the reverse cross closes. The 8-hour long timeframe, LongSlowing 3, LongSignalBar 1, the short module and the 2000/1000-point protection are approximated or unsupported."
+    },
+    {
+      "id": 150,
+      "name": "Vwap Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close, 14) and close < 0.2 * donchian_high(high, 14) + 0.8 * donchian_low(low, 14)",
+      "exit_long": "close > sma(close, 14)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP is approximated by the documented StochPeriod 14 average and the StochK < OversoldLevel 20 filter is written division-free as the 20/80 channel position over the same 14 bars. Exit is the documented close back above VWAP, StopLossPercent 2.0 is documented, and StochKPeriod/StochDPeriod 3, the ATR-multiple wording and the short leg are dropped."
+    },
+    {
+      "id": 2138,
+      "name": "Session Order Sentiment",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries depend on order-book imbalance ratios (MinVolume, MinTraders, DiffVolumesEx 2.0, DiffTradersEx 1.5) from a Level1 subscription, which the OHLCV DSL cannot express, and the trading window is clock-based, so the never-true close<0 guard avoids fabricating a signal. The reduced post-entry thresholds, SleepMinutes and the 500-point bracket are book/clock settings."
+    },
+    {
+      "id": 2288,
+      "name": "Timer Trade",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a schedule-only EA: a 30-second timer alternates long and short market orders with no market-derived signal (Indicators: None), so the never-true close<0 guard is used. StopLossLevel 10 and TakeProfitLevel 50 are point distances attached at entry, and the alternating side cannot be expressed for a long-only roster."
+    }
+  ]
+}

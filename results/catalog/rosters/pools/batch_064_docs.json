@@ -1,0 +1,98 @@
+{
+ "batch_064": {
+  "strategy_ids": [
+   2853,
+   1616,
+   650,
+   137,
+   492,
+   3560,
+   915,
+   3219,
+   3694,
+   1496
+  ],
+  "docs": {
+   "2853": {
+    "id": 2853,
+    "name": "Alli Heik",
+    "family": "trend",
+    "overview": "The Alli Heik strategy is a conversion of the MetaTrader 5 expert advisor \"AlliHeik\". It trades the **Heiken Ashi Smoothed Oscillator** (HASO) originally published by mladen. The indicator builds a custom Heiken Ashi candle by smoothing the raw open, high, low, and close prices with a selectable moving average, applies an additional smoothing pass to the Heiken Ashi midpoint, and then measures the bar-to-bar difference of that smoothed value. A moving average of the difference forms the signal line.\n\nTrading decisions are made on the crossover of the oscillator and signal line evaluated on fully closed candles. The strategy offers an optional reverse mode, the ability to automatically close opposite positions, static stop-loss/take-profit handling, and a trailing stop that mimics the step logic of the original MetaTrader version.\n\n## Trading rules\n\n1. **Indicator preparation**\n   - Pre-smooth OHLC data with one of SMA, EMA, SMMA, or LWMA.\n   - Build Heiken Ashi candles from the smoothed data and average open/close to obtain a midpoint.\n   - Post-smooth the midpoint and compute the oscillator as the difference between consecutive smoothed values.\n   - Smooth the oscillator with a configurable moving average to create the signal line.\n2. **Entry conditions**\n   - *Normal mode*: open a **long** when the oscillator crosses **below** the signal line, open a **short** when it crosses **above** the signal line (exactly reproducing the MQL logic).\n   - *Reverse mode*: swap the long and short conditions.\n   - Signals are evaluated on finished candles only. Existing positions can optionally be closed before entering a new trade in the opposite direction.\n3. **Exit management**\n   - Static stop-loss and take-profit distances are expressed in pips and converted to price using the security tick size and decimals.\n   - A trailing stop becomes active once price advances by *TrailingStop + TrailingStep* pips in profit. The stop is then shifted to `current price - TrailingStop` for ",
+    "details": "",
+    "parameters": "- **Volume** – order volume in lots.\n- **Stop Loss (pips)** – distance for the protective stop; set to 0 to disable.\n- **Take Profit (pips)** – distance for the profit target; set to 0 to disable.\n- **Trailing Stop (pips)** – trailing stop distance; set to 0 to disable trailing.\n- **Trailing Step (pips)** – minimum advance beyond the trailing stop before the stop is moved (must be positive when trailing is enabled).\n- **Reverse Signals** – invert long/short interpretation of the oscillator crossover.\n- **Close Opposite** – close an existing position before opening a new trade in the opposite direction.\n- **Pre Smooth Period / Method** – moving average period and type used to smooth the raw OHLC data.\n- **Post Smooth Period / Method** – moving average parameters for smoothing the Heiken Ashi midpoint.\n- **Signal Period / Method** – moving average parameters for the oscillator signal line.\n- **Candle Type** – candle source used for calculations (default 15-minute time frame)."
+   },
+   "1616": {
+    "id": 1616,
+    "name": "Yuri Garcia Smart Money",
+    "family": "trend",
+    "overview": "This smart money concept strategy searches for price reactions inside high volume zones and four-hour support/resistance areas. It confirms entries with cumulative delta and wick pullbacks, aiming to follow institutional order flow.\n\nTesting indicates an average annual return of about 42%. It works best on BTC and major indices.\n\nThe system calculates ATR-based stop loss and take profit with a configurable risk/reward ratio. Trades are allowed long, short or both, and positions are opened only when price is inside the zone, a wick pullback occurs and delta supports the move.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price within buffered high/low zone, bullish wick pullback, cumulative delta rising.\n  - **Short**: Price within zone, bearish wick pullback, cumulative delta falling.\n- **Long/Short**: Configurable (both, buy only or sell only).\n- **Exit Criteria**:\n  - ATR-based stop loss or take profit.\n- **Stops**: Yes, ATR-based.\n- **Filters**:\n  - HTF zone, cumulative delta confirmation, wick pullback.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price within buffered high/low zone, bullish wick pullback, cumulative delta rising.\n  - **Short**: Price within zone, bearish wick pullback, cumulative delta falling.\n- **Long/Short**: Configurable (both, buy only or sell only).\n- **Exit Criteria**:\n  - ATR-based stop loss or take profit.\n- **Stops**: Yes, ATR-based.\n- **Filters**:\n  - HTF zone, cumulative delta confirmation, wick pullback.",
+    "parameters": ""
+   },
+   "650": {
+    "id": 650,
+    "name": "CVD Divergence",
+    "family": "trend",
+    "overview": "The strategy combines cumulative volume delta (CVD) divergence with Hull Moving Averages, RSI, MACD and a volume filter. A trade opens when trend, momentum and volume agree and CVD shows divergence or continues in trade direction. Positions close on opposite signals or indicator cross.\n\n## Details\n\n- **Entry Criteria**: Trend alignment by HMA, RSI and MACD confirmation, high volume and CVD divergence/continuation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or indicator cross.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `HmaFastLength` = 20\n  - `HmaSlowLength` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `VolumeMaLength` = 20\n  - `VolumeMultiplier` = 1.5m\n  - `CvdLength` = 14\n  - `DivergenceLookback` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: HMA, RSI, MACD, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Trend alignment by HMA, RSI and MACD confirmation, high volume and CVD divergence/continuation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or indicator cross.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `HmaFastLength` = 20\n  - `HmaSlowLength` = 50\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `VolumeMaLength` = 20\n  - `VolumeMultiplier` = 1.5m\n  - `CvdLength` = 14\n  - `DivergenceLookback` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: HMA, RSI, MACD, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "137": {
+    "id": 137,
+    "name": "Bollinger RSI",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 148%. It performs best in the forex market.\n\nThe system takes counter-trend trades on that divergence, exiting once price re-enters the bands or RSI crosses back.\n\nA tight percent stop limits exposure in case volatility expands further.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "492": {
+    "id": 492,
+    "name": "Adaptive KDJ (MTF)",
+    "family": "trend",
+    "overview": "The Adaptive KDJ strategy blends KDJ oscillator values from three timeframes. Each timeframe is smoothed with an EMA and combined using adjustable weights. Trend strength is measured with an SMA of the combined oscillator, which adapts the overbought and oversold levels.\n\nThe strategy enters long when the J line is below the adaptive buy level and the K line crosses above the D line. It enters short when the J line is above the adaptive sell level and the K line crosses below the D line.\n\n## Details\n\n- **Entry Criteria**: KDJ cross with J below/above dynamic levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `TimeFrame1` = TimeSpan.FromMinutes(1)\n  - `TimeFrame2` = TimeSpan.FromMinutes(3)\n  - `TimeFrame3` = TimeSpan.FromMinutes(15)\n  - `KdjLength` = 9\n  - `SmoothingLength` = 5\n  - `TrendLength` = 40\n  - `WeightOption` = 1\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic, EMA, SMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: KDJ cross with J below/above dynamic levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `TimeFrame1` = TimeSpan.FromMinutes(1)\n  - `TimeFrame2` = TimeSpan.FromMinutes(3)\n  - `TimeFrame3` = TimeSpan.FromMinutes(15)\n  - `KdjLength` = 9\n  - `SmoothingLength` = 5\n  - `TrendLength` = 40\n  - `WeightOption` = 1\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic, EMA, SMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3560": {
+    "id": 3560,
+    "name": "SR Breakout",
+    "family": "breakout",
+    "overview": "## Summary\nSR Breakout Strategy monitors support and resistance levels derived from Donchian Channels on two timeframes (H1 and H4). When a completed candle closes above resistance or below support, the strategy writes an informational log message. The implementation mirrors the alerting logic of the original MQL4 expert without placing any orders.\n\n## How It Works\n1. Two candle subscriptions are created: one for the 1-hour timeframe and another for the 4-hour timeframe.\n2. Each subscription is bound to its own `DonchianChannels` indicator with a configurable lookback length (default `26`).\n3. Once the indicator is formed, the strategy keeps track of the previous candle close for each timeframe.\n4. On every finished candle, the current close is compared with the Donchian upper and lower bands:\n   - If the close moves from below to above the upper band, a \"cross above resistance\" message is logged.\n   - If the close moves from above to below the lower band, a \"cross below support\" message is logged.\n5. The logic reproduces the notification behavior of the MQL4 script by using `LogInfo` entries as alerts.\n\n## Parameters\n| Name | Description | Default |\n| --- | --- | --- |\n| `LookbackLength` | Number of candles used to compute Donchian support/resistance. | 26 |\n| `Hour1CandleType` | Candle type for the one-hour subscription. | `TimeFrame(1h)` |\n| `Hour4CandleType` | Candle type for the four-hour subscription. | `TimeFrame(4h)` |\n\n## Signals\n- **H1 breakout** – logs when the one-hour candle close crosses above resistance or below support.\n- **H4 breakout** – logs when the four-hour candle close crosses above resistance or below support.\n\n## Notes\n- The strategy is intended for alerting only; it does not execute trades.\n- Both candle subscriptions must provide high and low data for the Donchian indicator to operate correctly.\n- Adjust the lookback length or candle types to match other trading sessions or instruments.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `LookbackLength` | Number of candles used to compute Donchian support/resistance. | 26 |\n| `Hour1CandleType` | Candle type for the one-hour subscription. | `TimeFrame(1h)` |\n| `Hour4CandleType` | Candle type for the four-hour subscription. | `TimeFrame(4h)` |"
+   },
+   "915": {
+    "id": 915,
+    "name": "ICT NY Kill Zone Auto Trading",
+    "family": "breakout",
+    "overview": "Strategy that trades during the New York kill zone using fair value gaps and order blocks.\n\n## Details\n\n- **Entry Criteria**: Fair value gap and order block within kill zone.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position protection.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLoss` = 30\n  - `TakeProfit` = 60\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Fair value gap and order block within kill zone.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position protection.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLoss` = 30\n  - `TakeProfit` = 60\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3219": {
+    "id": 3219,
+    "name": "Exp Cronex MFI",
+    "family": "momentum",
+    "overview": "The strategy replicates the **Exp_CronexMFI** expert advisor. It smooths the Money Flow Index (MFI) twice and trades **against** the crossover of the resulting lines. The port keeps the original contrarian philosophy while exposing every setting as a StockSharp strategy parameter.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `MfiPeriod` | `int` | `25` | Length of the Money Flow Index. |\n| `FastPeriod` | `int` | `14` | Period of the first smoothing stage (fast Cronex line). |\n| `SlowPeriod` | `int` | `25` | Period of the second smoothing stage (slow Cronex line). |\n| `SignalShift` | `int` | `1` | Number of completed candles to delay signal processing, reproducing the `SignalBar` behaviour from MQL. |\n| `Smoothing` | `SmoothingMethod` | `Simple` | Moving-average algorithm used for both smoothing stages. |\n| `EnableLongEntries` | `bool` | `true` | Enables market orders that open or add to long positions. |\n| `EnableShortEntries` | `bool` | `true` | Enables market orders that open or add to short positions. |\n| `EnableLongExits` | `bool` | `true` | Allows signals to close existing long exposure. |\n| `EnableShortExits` | `bool` | `true` | Allows signals to close existing short exposure. |\n| `CandleType` | `DataType` | `TimeFrame(4h)` | Candle series used for indicator calculations. |\n| `Volume` | `decimal` | `1` | Order size used when opening new positions. |"
+   },
+   "3694": {
+    "id": 3694,
+    "name": "Trailing Stop Trigger Manager",
+    "family": "volatility",
+    "overview": "The **Trailing Stop Trigger Manager Strategy** is a StockSharp port of the MetaTrader expert advisor `Trailing Sl.mq5`. The original EA\ndid not open trades on its own. Instead, it monitored already open positions with a matching *magic number* and tightened their\nstop-loss levels when the market moved in the desired direction. This C# implementation reproduces that behaviour using\nStockSharp's high-level strategy API, delivering transparent trailing-stop management that works with any instrument supported by\nStockSharp.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `TrailingPoints` | `int` | `1000` | Distance between the current price and the trailing stop, measured in price steps. |\n| `TriggerPoints` | `int` | `1500` | Minimum profit in price steps required to start trailing the position. |"
+   },
+   "1496": {
+    "id": 1496,
+    "name": "Turn of the Month Strategy on Steroids",
+    "family": "mean_reversion",
+    "overview": "A seasonal strategy that buys near the end of each month after two consecutive down closes and exits when a short RSI signals overbought conditions.\n\n## Details\n\n- **Entry Criteria**: day of month above threshold and two-day decline\n- **Long/Short**: Long\n- **Exit Criteria**: RSI above threshold\n- **Stops**: None\n- **Default Values**:\n  - `DayOfMonth` = 25\n  - `RsiLength` = 2\n  - `RsiThreshold` = 65\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: day of month above threshold and two-day decline\n- **Long/Short**: Long\n- **Exit Criteria**: RSI above threshold\n- **Stops**: None\n- **Default Values**:\n  - `DayOfMonth` = 25\n  - `RsiLength` = 2\n  - `RsiThreshold` = 65\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

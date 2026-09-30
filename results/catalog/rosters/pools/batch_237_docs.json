@@ -1,0 +1,98 @@
+{
+ "batch_237": {
+  "strategy_ids": [
+   1520,
+   3820,
+   2006,
+   335,
+   2141,
+   3207,
+   3262,
+   2767,
+   405,
+   2818
+  ],
+  "docs": {
+   "1520": {
+    "id": 1520,
+    "name": "Vegas SuperTrend Enhanced",
+    "family": "trend",
+    "overview": "Combines a Vegas channel with an adjusted SuperTrend.\nEnters when the SuperTrend flips direction with volatility-based multiplier.\n\n## Details\n\n- **Entry Criteria**: trend changes detected by adjusted SuperTrend\n- **Long/Short**: Both (configurable)\n- **Exit Criteria**: opposite trend flip\n- **Stops**: No\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `VegasWindow` = 100\n  - `SuperTrendMultiplier` = 5\n  - `VolatilityAdjustment` = 5\n  - `TradeDirection` = \"Both\"\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: trend changes detected by adjusted SuperTrend\n- **Long/Short**: Both (configurable)\n- **Exit Criteria**: opposite trend flip\n- **Stops**: No\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `VegasWindow` = 100\n  - `SuperTrendMultiplier` = 5\n  - `VolatilityAdjustment` = 5\n  - `TradeDirection` = \"Both\"\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3820": {
+    "id": 3820,
+    "name": "Binario 3",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert \"Binario_3\" from `MQL/7658/Binario_3.mq4`. The original EA surrounds the market with two 144-period exponential moving averages calculated on the candle highs and lows and trades the breakout of this adaptive channel. Pending stop orders are placed above the upper band and below the lower band, while protective stops, take profit targets and an optional trailing stop emulate the MetaTrader behaviour.\n\nThe StockSharp version keeps the same decision rules but is implemented with the high-level API:\n\n1. Subscribes to the configured candle series and recalculates the two EMA envelopes every time a candle is completed.\n2. When the latest close remains inside the channel, places buy stop and sell stop orders at the required offset from the EMA values.\n3. Records the stop-loss and take-profit levels associated with each pending order so they can be applied to the position once an order is filled.\n4. Tracks Level-1 quotes to manage open positions: closes trades if the price reaches the recorded stop-loss, the target or the trailing stop distance.\n5. Cancels pending orders if price leaves the channel or if the opposite position becomes active, mirroring the clean-up logic in the MQL script.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `TakeProfit` | `850` points | Additional distance (in points) added to the breakout side when computing the take profit. |\n| `TrailingStop` | `850` points | Distance in points used for trailing exits. Set to `0` to disable trailing. |\n| `PipDifference` | `25` points | Offset from the EMA channel before placing pending orders. |\n| `Lots` | `0.1` | Base trade volume used when risk-based sizing cannot be derived. |\n| `MaximumRisk` | `10` | Risk multiplier copied from the original EA. The strategy estimates volume as `max(Lots, Balance * MaximumRisk / 50000)`. |\n| `EmaPeriod` | `144` | Period of the exponential moving averages built on high and low prices. |\n| `CandleType` | `1 hour` time frame | Candle series that drives indicator updates and order placement. |\n\nAll points are converted into actual price distances using the instrument's `PriceStep`. If the symbol does not expose a step the strategy falls back to `1`."
+   },
+   "2006": {
+    "id": 2006,
+    "name": "Color Zerolag X10 MA",
+    "family": "trend",
+    "overview": "This strategy is a simplified port of the MetaTrader example **Exp_ColorZerolagX10MA.mq5**. It uses a zero lag exponential moving average to detect slope changes. When the moving average turns upward after decreasing for two bars, the strategy opens or reverses to a long position. Conversely, when the moving average turns downward after increasing, it opens or reverses to a short position.\n\nThe logic mimics the original idea where a combined set of ten smoothed moving averages produces a single color-coded line. Here we replace that complex indicator with StockSharp's built-in `ZeroLagExponentialMovingAverage` to keep the implementation compact and reusable. The system works on the selected candle timeframe and can enable or disable individual actions (open/close long/short) via parameters.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `ZLEMA[t-2] > ZLEMA[t-1]` and `ZLEMA[t] > ZLEMA[t-1]`.\n  - **Short**: `ZLEMA[t-2] < ZLEMA[t-1]` and `ZLEMA[t] < ZLEMA[t-1]`.\n- **Long/Short**: Both directions supported.\n- **Exit Criteria**:\n  - Long positions are closed when a short signal appears and `BuyPosClose` is enabled.\n  - Short positions are closed when a long signal appears and `SellPosClose` is enabled.\n- **Stops**: None by default; exits rely on opposite signals.\n- **Default Values**:\n  - `Length` = 20.\n  - `CandleType` = 4-hour timeframe.\n  - All action flags (`BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose`) enabled.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `ZLEMA[t-2] > ZLEMA[t-1]` and `ZLEMA[t] > ZLEMA[t-1]`.\n  - **Short**: `ZLEMA[t-2] < ZLEMA[t-1]` and `ZLEMA[t] < ZLEMA[t-1]`.\n- **Long/Short**: Both directions supported.\n- **Exit Criteria**:\n  - Long positions are closed when a short signal appears and `BuyPosClose` is enabled.\n  - Short positions are closed when a long signal appears and `SellPosClose` is enabled.\n- **Stops**: None by default; exits rely on opposite signals.\n- **Default Values**:\n  - `Length` = 20.\n  - `CandleType` = 4-hour timeframe.\n  - All action flags (`BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose`) enabled.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "335": {
+    "id": 335,
+    "name": "VWAP Hidden Markov Model",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 100%. It performs best in the forex market.\n\nSignals trigger when Markov confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like HmmDataLength, StopLossPercent. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmmDataLength = 100`\n  - `StopLossPercent = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Markov\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmmDataLength = 100`\n  - `StopLossPercent = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Markov\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2141": {
+    "id": 2141,
+    "name": "Color Bears",
+    "family": "trend",
+    "overview": "The strategy builds a double-smoothed Bears Power oscillator and trades on changes in its slope.\n\n## Idea\n1. Calculate an exponential moving average (MA1) of closing prices.\n2. Compute Bears Power as the difference between the candle low and MA1.\n3. Smooth Bears Power with another exponential moving average (MA2).\n4. Track whether the smoothed value rises or falls and react to slope reversals.\n\n## Trading Rules\n- When the indicator switches from rising to falling (color 0 → 2), close short positions and open a long one.\n- When the indicator switches from falling to rising (color 2 → 0), close long positions and open a short one.\n- Each position uses the strategy `Volume` property as order size.\n\n## Parameters\n| Name | Description |\n|------|-------------|\n| `Ma1Period` | Period of the first EMA used to build Bears Power. |\n| `Ma2Period` | Period of the smoothing EMA. |\n| `CandleType` | Candle timeframe for calculations. |\n\n## Notes\nThis C# implementation is adapted from the MQL \"ColorBears\" expert (folder `MQL/14314`).\nThe algorithm relies on standard StockSharp indicators and high-level API bindings.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Ma1Period` | Period of the first EMA used to build Bears Power. |\n| `Ma2Period` | Period of the smoothing EMA. |\n| `CandleType` | Candle timeframe for calculations. |"
+   },
+   "3207": {
+    "id": 3207,
+    "name": "3207 – MA Trend",
+    "family": "trend",
+    "overview": "The **MA Trend Strategy** replicates the MetaTrader expert *MA Trend.mq5* using StockSharp's high-level API. The bot follows a single linear weighted moving average with a configurable forward shift. When the closing price rises above the shifted average the strategy goes long, while a drop below the average opens short positions. Optional stop-loss, take-profit, and trailing-stop rules mirror the risk controls from the original MQL implementation.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n|------|------|---------|-------------|\n| `OrderVolume` | `decimal` | `0.1` | Order size in lots/contracts. |\n| `StopLossPips` | `int` | `50` | Stop-loss distance in pips. Zero disables the fixed stop. |\n| `TakeProfitPips` | `int` | `140` | Take-profit distance in pips. Zero disables the target. |\n| `TrailingStopPips` | `int` | `15` | Trailing stop distance. Set to zero to disable trailing. |\n| `TrailingStepPips` | `int` | `5` | Extra pips required before moving the trailing stop. Must stay positive when `TrailingStopPips` is greater than zero. |\n| `MaPeriod` | `int` | `12` | Moving average length. |\n| `MaShift` | `int` | `3` | Number of completed bars used to shift the moving average forward. |\n| `MaMethod` | `MovingAverageKind` | `Weighted` | Moving average calculation mode (Simple, Exponential, Smoothed, Weighted). |\n| `AppliedPrice` | `AppliedPriceMode` | `Weighted` | Candle price used as indicator input (Close, Open, High, Low, Median, Typical, Weighted). |\n| `OnlyOnePosition` | `bool` | `false` | Restrict the strategy to a single open position. |\n| `ReverseSignals` | `bool` | `false` | Swap long/short signal directions. |\n| `CloseOpposite` | `bool` | `false` | Close opposite exposure before entering a new position. |\n| `CandleType` | `DataType` | `1 minute` | Candle type/time frame supplied to the indicator. |"
+   },
+   "3262": {
+    "id": 3262,
+    "name": "Three EMA",
+    "family": "trend",
+    "overview": "The strategy reproduces the MetaTrader \"ThreeEMA\" expert advisor by stacking three exponential moving averages (EMAs). It looks for directional alignment between a fast, medium, and slow EMA on the same timeframe. When the averages are strictly ordered in ascending fashion (fast above medium above slow) the strategy opens or maintains a long position. When the order flips (fast below medium below slow) it opens or maintains a short position. Protective stop-loss and take-profit offsets mirror the original MQL parameters and are expressed in price points relative to the instrument's tick size.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | 1-minute time frame | Time frame of the candle subscription used for EMAs. |\n| `FastPeriod` | 5 | Length of the fast EMA. Must be lower than `MediumPeriod`. |\n| `MediumPeriod` | 12 | Length of the medium EMA. Must be between the fast and slow periods. |\n| `SlowPeriod` | 24 | Length of the slow EMA. Must be the highest period value. |\n| `StopLossPoints` | 400 | Protective stop-loss distance expressed in instrument points (converted to price using `PriceStep`). Set to zero to disable. |\n| `TakeProfitPoints` | 900 | Take-profit distance in instrument points (converted to price using `PriceStep`). Set to zero to disable. |"
+   },
+   "2767": {
+    "id": 2767,
+    "name": "Ambush",
+    "family": "trend",
+    "overview": "The Ambush strategy continuously surrounds the market with a pair of buy-stop and sell-stop orders. The pending orders are placed\nat a configurable indentation above the best ask and below the best bid, with a dynamic override that enforces a minimal distance\nbased on the current spread. Whenever one side is triggered the strategy immediately rebuilds both orders so that the market stays\n\"ambushed\" from both directions. A simple equity-based circuit breaker can flatten positions once a daily profit target or loss\nlimit is reached.\n\nThis C# implementation replicates the behaviour of the original MetaTrader 5 expert by Zuzabush. It operates purely on Level 1\nquotes and does not require candles or indicators. Every decision is driven by real-time bid/ask changes, so the strategy is best\nsuited for liquid instruments with tight spreads.\n\n## Trading Logic\n\n1. **Market data intake**\n   - The strategy subscribes to Level 1 updates and tracks the latest best bid and best ask.\n   - Calculations stop until both sides of the order book are available and the strategy is allowed to trade.\n2. **Equity safeguards**\n   - The realised PnL (`PnL`) and the unrealised component derived from the current bid/ask and `PositionPrice` are summed.\n   - If the combined equity exceeds `EquityTakeProfit`, or drops below `-EquityStopLoss`, the current net position is flattened\n     with a market order. Pending orders are left intact, matching the original expert behaviour.\n3. **Pending order placement**\n   - Spread in price units is compared with `MaxSpreadPoints`. If the spread is too wide, no new orders are placed.\n   - Otherwise a distance is calculated as `max(IndentationPoints * step, spread * 3)`. That value replicates the MT5 logic of\n     either respecting the user indentation or enforcing three spreads when the broker `StopsLevel` is zero.\n   - A buy-stop order is placed at `ask + distance` and a sell-stop at `bid - distance`. Prices are normalised to the nearest\n     tick. Only one act",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `IndentationPoints` | Base distance in points between the market and each pending stop order. |\n| `MaxSpreadPoints` | Maximum allowed spread (in points). Orders are suspended while the spread is wider. |\n| `TrailingStopPoints` | Base trailing distance in points applied to existing pending orders. Set to zero to disable trailing. |\n| `TrailingStepPoints` | Additional buffer added on top of the trailing base distance. |\n| `Pause` | Minimum time between two trailing recalculations. The default mirrors the one-second pause from the MT5 expert. |\n| `EquityTakeProfit` | Equity profit in account currency that triggers an immediate position flattening. |\n| `EquityStopLoss` | Allowed equity drawdown before the open position is closed. |\n| `Volume` | Order size inherited from the base `Strategy` class. Use the broker minimum to mimic the MT5 default. |\n\nAll price offsets are converted from points to actual price units using `Security.PriceStep`. If the instrument does not expose a\nprice step, a fallback value of 1 is used."
+   },
+   "405": {
+    "id": 405,
+    "name": "Trend Following Stocks",
+    "family": "trend",
+    "overview": "The strategy trades individual equities using a simple trend filter. Stocks trading above a moving average are bought, while those below are avoided or shorted.\n\nThe portfolio is refreshed weekly with equal position sizing and trailing stops to protect capital.\n\n## Details\n\n- **Data**: Daily stock closes.\n- **Entry**: Buy when price > moving average; short when below.\n- **Exit**: Price crosses back through average or stop hit.\n- **Instruments**: Liquid equities.\n- **Risk**: Trailing stop and position cap.\n\n",
+    "details": "- **Data**: Daily stock closes.\n- **Entry**: Buy when price > moving average; short when below.\n- **Exit**: Price crosses back through average or stop hit.\n- **Instruments**: Liquid equities.\n- **Risk**: Trailing stop and position cap.",
+    "parameters": ""
+   },
+   "2818": {
+    "id": 2818,
+    "name": "ChannelEA2",
+    "family": "trend",
+    "overview": "ChannelEA2 Strategy replicates the MetaTrader expert \"ChannelEA2\" in StockSharp. The strategy builds an intraday price channel between the configured session start and end hours. When the session ends, it places stop orders above the channel high and below the channel low. Each stop order carries a protective stop loss defined by the opposite edge of the channel. The approach aims to capture breakouts after a period of consolidation during the session window.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `BeginHour` | Hour (0-23) when the session resets and the channel starts collecting data. | `1` |\n| `EndHour` | Hour (0-23) when stop orders are scheduled. Supports overnight sessions when `BeginHour > EndHour`. | `10` |\n| `TradeVolume` | Volume used for each entry order. | `1` |\n| `CandleType` | Candle series used to build the channel (defaults to 1-hour candles). | `1 hour` |\n| `StopBufferMultiplier` | Multiplier of the instrument price step used as a safety buffer for entry activation and protective stops. | `2` |"
+   }
+  }
+ }
+}

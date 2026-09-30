@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1170,
+  "ticker": "3030",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1170,
+    "name": "Pivot Point Supertrend",
+    "family": "trend",
+    "entry_long": "crossabove(close, sma(close, 4)) and atr(high,low,close,10) > sma(atr(high,low,close,1), 10)",
+    "exit_long": "crossbelow(close, sma(close, 2))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The PivotPeriod 2 center line is approximated by a 2-bar average and the documented trend switch by price crossing it, but the AtrFactor 3 x AtrPeriod 10 band lies far outside daily ranges here, so ATR(10) appears as an expansion filter instead of as a trailing band. Both directions, the 5-minute timeframe and the documented no-stop rule are handled by the long-only output."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8384,
+      "engine_win_ret": 5.682406949183354,
+      "alpha": 5.158321757645333,
+      "benchmark_ret": 0.5240851915380216,
+      "trades": 622,
+      "win_rate": 0.48231511254019294,
+      "sharpe": 0.5468745924484881,
+      "max_drawdown": -0.3897982069719693,
+      "profit_factor": 1.4976874289797983
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.005374135252352419,
+      "alpha": 0.19089190908837117,
+      "benchmark_ret": -0.1962660443407236,
+      "trades": 29,
+      "win_rate": 0.3793103448275862,
+      "sharpe": 0.016875639700145176,
+      "max_drawdown": -0.15637617481921873,
+      "profit_factor": 0.9748268160265156
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.012654452120820059,
+      "alpha": 0.22260239891087208,
+      "benchmark_ret": -0.20994794679005202,
+      "trades": 9,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.21421905045571635,
+      "max_drawdown": -0.03809288009151102,
+      "profit_factor": 1.2393996487360708
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8384,
+      "engine_win_ret": -0.7047251173473124,
+      "alpha": -1.228810308885334,
+      "benchmark_ret": 0.5240851915380216,
+      "trades": 622,
+      "win_rate": 0.3360128617363344,
+      "sharpe": -0.2332185314396159,
+      "max_drawdown": -0.8149132652697131,
+      "profit_factor": 0.7285892215209709
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.14014749802387694,
+      "alpha": 0.05611854631684665,
+      "benchmark_ret": -0.1962660443407236,
+      "trades": 29,
+      "win_rate": 0.27586206896551724,
+      "sharpe": -0.9016449116684778,
+      "max_drawdown": -0.20523493795089043,
+      "profit_factor": 0.5084252858622691
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.03205926380116009,
+      "alpha": 0.17788868298889193,
+      "benchmark_ret": -0.20994794679005202,
+      "trades": 9,
+      "win_rate": 0.2222222222222222,
+      "sharpe": -0.3459953719834554,
+      "max_drawdown": -0.05492596836495789,
+      "profit_factor": 0.6268165629957327
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

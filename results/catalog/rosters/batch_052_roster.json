@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1525,
+      "name": "Vinicius Setup ATR",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and close - open > atr(high,low,close,14) and volume_ratio(volume,20) > 1 and rsi(close,14) < 70",
+      "exit_long": "close < ema(close,20) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long setup is SuperTrend direction plus an ATR-scaled body, above-average SMA volume and RSI below 70; SuperTrend is proxied by close above EMA(20) and the body threshold is 1x ATR(14) because no multiplier is documented. The short-side mirror supplies the exit."
+    },
+    {
+      "id": 3546,
+      "name": "DeMarker Pending 2",
+      "family": "trend",
+      "entry_long": "crossbelow((donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)),0.3)",
+      "exit_long": "crossabove((donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)),0.7)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMax/DeMin are approximated by the close's position in the 14-bar Donchian range, with 0.3/0.7 as the standard DeMarker entry/exit thresholds since the docs list no values. Pending stop/limit orders with an indent, point-based trailing stops, session and spread filters cannot be expressed in a single signal."
+    },
+    {
+      "id": 911,
+      "name": "Ichimoku Clouds Strategy Long and Short",
+      "family": "trend",
+      "entry_long": "crossabove((donchian_high(high,9)+donchian_low(low,9))/2,(donchian_high(high,26)+donchian_low(low,26))/2) and (donchian_high(high,9)+donchian_low(low,9))/2 > (donchian_high(high,52)+donchian_low(low,52))/2",
+      "exit_long": "crossbelow((donchian_high(high,9)+donchian_low(low,9))/2,(donchian_high(high,26)+donchian_low(low,26))/2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tenkan-sen (9), Kijun-sen (26) and the 52-period cloud are rebuilt as Donchian mid-points using the documented periods, and a Tenkan-above-cloud confirmation selects the strong long signal. TakeProfitPct and StopLossPct both default to 0, so no percentage protection is set."
+    },
+    {
+      "id": 2641,
+      "name": "EURUSD Session Breakout",
+      "family": "trend",
+      "entry_long": "low > donchian_high_prev(high,24)",
+      "exit_long": "high < donchian_low_prev(low,24)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stored pre-US range is the prior 24 completed candles, so a bar whose low stays above the range top is the documented upside breakout and the mirrored low-violation exits; the point buffer is treated as zero. Session hours, Monday gating, the small-range pip filter and pip stop/target need clock and price-scale state that the DSL lacks."
+    },
+    {
+      "id": 2912,
+      "name": "Global Stop Loss & Trading Window",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the module generates no entry signals and only overlays a global loss threshold plus an intraday window on existing positions, so the impossible negative-price guard is used rather than inventing an entry. Equity-based StopLoss modes and UTC session windows depend on portfolio and clock state."
+    },
+    {
+      "id": 825,
+      "name": "FVG Breakout Lite",
+      "family": "breakout",
+      "entry_long": "low > donchian_low_prev(low,2) and close > donchian_high_prev(high,2)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The exact 3-candle imbalance (low[t-2] above high[t-1]) cannot be isolated with windowed Donchians, so the pattern is approximated by a candle trading wholly above the prior two-bar range and closing beyond its high, with a fall back into that range as the gap-fill exit. The percentage stop-loss is mentioned without a value."
+    },
+    {
+      "id": 3263,
+      "name": "Explosion Range Expansion",
+      "family": "breakout",
+      "entry_long": "(high - low) > 1.5 * (donchian_high_prev(high,1) - donchian_low_prev(low,1)) and close > open",
+      "exit_long": "close < open and (high - low) > 1.5 * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The current candle range is compared with the previous candle's high-low and the up-body direction gives the long; 1.5x is an explicit default for the undocumented Range Ratio. Lot caps, pause seconds, hour window, one-trade-per-day and point-based stop/target/trailing are scheduling and price-scale fields."
+    },
+    {
+      "id": 1798,
+      "name": "Bulls & Bears Power Cross",
+      "family": "momentum",
+      "entry_long": "crossabove(high - ema(close,13), low - ema(close,13))",
+      "exit_long": "crossbelow(high - ema(close,13), low - ema(close,13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power (high minus EMA) and Bears Power (low minus EMA) are translated literally, with EMA(13) the standard documented-by-convention span since the doc gives no period. The 4-hour execution timeframe and always-in-position reversal mean the daily cross is rare; no stops are documented."
+    },
+    {
+      "id": 3834,
+      "name": "Elderv30aug05v",
+      "family": "volatility",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)),sma(100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)),3)) and 100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)) < 36 and macd(close,13,30) > macd_signal(close,13,30,9) and macd(close,14,56) > macd_signal(close,14,56,9)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)),sma(100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)),3)) or 100 * (close - donchian_low(low,2)) / (donchian_high(high,2) - donchian_low(low,2)) > 66",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast stochastic is rebuilt from its documented 2/3/3 parameters as close position in the 2-bar range versus its 3-period average, gated by LongStochasticThreshold 36, and both MACDs use the documented 13/30/9 and 14/56/9 periods as bullish filters. Point stops (17) and trailing distances (18) are not percentage fields, and the 1m/15m/1h timeframes collapse onto the single validated series."
+    },
+    {
+      "id": 3253,
+      "name": "MultiTrader Currency Strength Strategy (3253)",
+      "family": "mean_reversion",
+      "entry_long": "100 * (close - low) / (high - low) > 90",
+      "exit_long": "100 * (close - low) / (high - low) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented % position of close within the current candle range is used directly with the default BuyLevel 90 and SellLevel 10 thresholds, applied to the single traded symbol instead of an FX cross-currency ranking. Universe lists, pair construction, symbol prefixes and order placement are portfolio features outside the DSL."
+    }
+  ]
+}

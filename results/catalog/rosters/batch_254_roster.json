@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1048,
+      "name": "MESA Stochastic Multi Length",
+      "family": "trend",
+      "entry_long": "rsi(close,9) > sma(rsi(close,9),3) and rsi(close,14) > sma(rsi(close,14),3) and rsi(close,21) > sma(rsi(close,21),3) and rsi(close,28) > sma(rsi(close,28),3)",
+      "exit_long": "rsi(close,9) < sma(rsi(close,9),3) and rsi(close,14) < sma(rsi(close,14),3) and rsi(close,21) < sma(rsi(close,21),3) and rsi(close,28) < sma(rsi(close,28),3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MESA stochastic is unavailable, so each of the four documented oscillators becomes an RSI reading with its trigger moving average, and the long rule requires all four above their triggers with the bearish mirror as exit. No values are documented, so lengths 9/14/21/28 and TriggerLength 3 are explicit fallbacks; the short branch and candle type are dropped."
+    },
+    {
+      "id": 204,
+      "name": "Parabolic SAR CCI",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and zscore(close,20) < -1.2",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable so the documented price-above-SAR trend test becomes price above EMA(20), and CCI is proxied by a 20-period close z-score where the documented CCI -100 threshold maps to roughly -1.2 standard deviations; the documented exit is price dropping below the SAR proxy. SarAccelerationFactor, the 5-minute candle type and the short branch are dropped."
+    },
+    {
+      "id": 2966,
+      "name": "XIT Three MA Cross",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and sma(close,4) > sma(close,14) and sma(close,14) > sma(close,60)",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9)) or sma(close,4) < sma(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used directly: Simple moving averages 60/14/4 in fast-to-slow order plus MACD 12/26/9, with a bullish MACD cross while the three averages are stacked. MacdTriggerPoints 7 is an instrument-point distance that is not scale-invariant, and the separate-timeframe ATR(14) stop/target plus RiskPercent sizing have no DSL field, so both percentage fields stay null."
+    },
+    {
+      "id": 1368,
+      "name": "Supertrend + MACD Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,10)) and crossabove(macd(close,12,26), macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(close, sma(close,10)) and crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD 12/26/9 is exact, but the recursive Supertrend state machine cannot be rebuilt, so the documented price-above-Supertrend test becomes a cross back over the ATR 10 basis average, with the documented factor 3 band width noted but unused. The documented exit is the mirror (price below the line with a bearish MACD cross); no stops are documented."
+    },
+    {
+      "id": 2434,
+      "name": "Color Zerolag Momentum X2",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,34), 2 * ema(roc(close,34),15) - ema(ema(roc(close,34),15),15)) and ema(close,50) > ema(close,200)",
+      "exit_long": "crossbelow(roc(close,34), 2 * ema(roc(close,34),15) - ema(ema(roc(close,34),15),15)) or ema(close,50) < ema(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MomentumPeriod 34 is a rate of change and the zero-lag average is approximated by 2*EMA(15)-EMA(EMA(15),15) with the documented MaLength 15, so the entry is momentum crossing that line in the trend direction. The 6h/30m streams collapse to one series, making the EMA(50)/EMA(200) pair an explicit fallback for the higher-timeframe trend, and the short branch plus position flags are dropped."
+    },
+    {
+      "id": 2196,
+      "name": "Forex Line",
+      "family": "trend",
+      "entry_long": "crossabove(sma(sma(close,5),10), sma(sma(close,20),20))",
+      "exit_long": "crossbelow(sma(sma(close,5),10), sma(sma(close,20),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented FastLength1/2 = 5/10 and SlowLength1/2 = 20/20 are applied as two-step smoothed averages, with SMA standing in for the unavailable weighted moving average, and the opposite crossover closes as documented. The 8-hour candle type and short branch are dropped for a long-only schema, and no stops are documented."
+    },
+    {
+      "id": 3839,
+      "name": "Flat Trend",
+      "family": "trend",
+      "entry_long": "ema(close,10) > ema(close,30) and ema(close,30) > ema(close,60) and adx(high,low,close,14) > 25 and close > sma(close,20) + 1.0 * std(close,20)",
+      "exit_long": "ema(close,10) < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three multi-speed EMA filters, the ADX strength confirmation and the standard-deviation juice breakout are all retained, with the documented moderate/strong trend switches approximated by the stacked-EMA requirement. No lengths or thresholds are documented, so 10/30/60, ADX 14 with 25/20 levels, and a 20-period one-sigma juice band are explicit fallbacks; the trading-hour window, ATR trailing, break-even and pip stop are unsupported."
+    },
+    {
+      "id": 1541,
+      "name": "Volume-Weighted Supertrend",
+      "family": "trend",
+      "entry_long": "close > sma(close * volume,20) / (sma(volume,20) + 0.0001) + 1.0 * atr(high,low,close,20) and volume_ratio(volume,20) > 1.1",
+      "exit_long": "close < sma(close * volume,20) / (sma(volume,20) + 0.0001) - 1.0 * atr(high,low,close,20) or volume_ratio(volume,20) < 0.9",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The volume-weighted average is built as sma(close*volume)/sma(volume) with a small constant guarding the denominator, and the price supertrend is that average plus the ATR band, while volume_ratio supplies the second, volume-based supertrend confirmation. No values are documented, so 20 periods, factor 1.0 and the 1.1/0.9 volume thresholds are explicit fallbacks."
+    },
+    {
+      "id": 1563,
+      "name": "XAUUSD 10-Minute",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and bars_since(rsi(close,14) < 35 or close < bb_lower(close,20)) < 3",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9)) and bars_since(rsi(close,14) > 65 or close > bb_upper(close,20)) < 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented levels are kept (MACD 12/26/9, RSI 14 with 35/65, Bollinger 20x2) and the oversold-or-lower-band condition is applied within three bars of the MACD cross because it rarely lands on the cross bar itself. The 3x ATR stop and 5x ATR target are price distances rather than percentages, so both fields stay null, and the XAUUSD-specific 38-tick spread and 10-minute timeframe are noted as instrument bindings."
+    },
+    {
+      "id": 3048,
+      "name": "Ichimoku Retracement",
+      "family": "trend",
+      "entry_long": "ema(close,6) > ema(close,85) and donchian_low_prev(low,1) < sma(close,26) and open > sma(close,26) and roc(close,14) > 0.3 and ema(close,50) > ema(close,200)",
+      "exit_long": "ema(close,6) < ema(close,85)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented Fast LWMA 6 / Slow LWMA 85 are kept with EMA proxying the linear weighted average, the Kijun 26 line stands in for the touched Ichimoku level, and the Momentum Period 14 threshold 0.3 is read as a 0.3% deviation of the close-to-close momentum ratio from its neutral 100. The monthly MACD 12/26/9 becomes an EMA(50)/EMA(200) proxy on one series, and the 50/20 pip stop and target are not percentages."
+    }
+  ]
+}

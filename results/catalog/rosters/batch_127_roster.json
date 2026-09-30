@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1991,
+      "name": "Binario 31",
+      "family": "trend",
+      "entry_long": "close > ema(high,144)",
+      "exit_long": "close < ema(low,144)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 144-period EMA channel over highs and lows is used directly, with a close above the upper line as the long breakout entry and the lower line as the exit. The Pip Difference buffer, the price-step take profit, the channel-based protective stop and the optional trailing cannot be expressed as percentage fields, so both stops are null."
+    },
+    {
+      "id": 979,
+      "name": "Linear Regression Channel",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20) and close > ema(close,50)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Least-squares regression is not in the DSL, so the channel is approximated by Bollinger 20/2 bands (band period is an explicit fallback) with the uptrend read from a close above EMA(50), and the exit is a return to the middle band as the regression line. Channel-width risk limits are not expressible."
+    },
+    {
+      "id": 2854,
+      "name": "RSI Bollinger Bands EA (StockSharp Conversion)",
+      "family": "trend",
+      "entry_long": "roc(rsi(close,10),1) > 0 and rsi(close,10) < 66 and 100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)) < 26",
+      "exit_long": "rsi(close,10) > 66",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the M15 leg of the fixed trigger can be translated: the documented RsiPeriod1 10, the rising slope limit RDeltaM15Lim1 -3.5, the 66 overbought cap and the stochastic bound 26 are kept, with the stochastic expressed as a 14-bar range position. The H1/H4 timeframes, the adaptive asymmetric-sigma trigger and the pip-denominated Bollinger spread gates are not expressible."
+    },
+    {
+      "id": 2652,
+      "name": "Color Fisher M11",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,10),70)",
+      "exit_long": "crossbelow(rsi(close,10),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom Fisher Transform is not in the DSL, so its five colour states are approximated by a normalised momentum oscillator using the documented Range Periods 10, with the +/-1.01 extreme levels mapped to RSI 70/30 on that scale. SignalBar 1 means the colour is read on the completed bar, which crossabove already enforces, and the price-step stops have no percentage equivalent."
+    },
+    {
+      "id": 2350,
+      "name": "Color JSatl Digit",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,30),sma(ema(close,30),5))",
+      "exit_long": "crossbelow(ema(close,30),sma(ema(close,30),5))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Jurik MA is approximated by an EMA at the documented JMA Length 30, and a digit flip to 1 (JMA turning upward) becomes a cross of that line above its own 5-bar average, with the opposite flip as exit. The documented Stop Loss % 1 and Take Profit % 2 are applied directly; DirectMode is true so no inversion is needed."
+    },
+    {
+      "id": 879,
+      "name": "High Low Breakout Statistical Analysis",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_high_prev(high,1))",
+      "exit_long": "crossbelow(close,donchian_high_prev(high,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "With EntryOption LongAtHigh and TimeframeOption Daily, the level is the prior period high, so the entry is a close crossing above it and the exit is the documented opposite-signal case, a cross back below. The HoldingPeriod 5-bar timeout and the EntryOption/SellPosOpen switches are not expressible, and the docs state there are no stops."
+    },
+    {
+      "id": 3545,
+      "name": "Adaptive Grid MT4 (StockSharp Port)",
+      "family": "breakout",
+      "entry_long": "close - open > 1.0 * atr(high,low,close,14)",
+      "exit_long": "close - open < -1.0 * atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The symmetric resting-order grid cannot be staged in this engine, so the first ATR-normalised grid level is approximated by a bar whose body exceeds one ATR(14) (the documented hard-coded period) in the trade direction, with the opposite expansion as exit. GridLevels, TimerBars, the spacing and stop/target multipliers and the pending-order expiry are dropped."
+    },
+    {
+      "id": 1011,
+      "name": "MACD of Relative Strenght",
+      "family": "momentum",
+      "entry_long": "macd(close / donchian_high_prev(high,20),12,26) > macd_signal(close / donchian_high_prev(high,20),12,26,9)",
+      "exit_long": "macd(close / donchian_high_prev(high,20),12,26) < macd_signal(close / donchian_high_prev(high,20),12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Relative strength is close over the prior highest high (20-bar lookback as an explicit fallback) and the documented histogram sign is approximated by the MACD line versus its signal on that ratio. The 12/26/9 lengths are fallbacks since none are documented, and the percentage stop-loss is mentioned but never quantified, so the stop fields are null."
+    },
+    {
+      "id": 3127,
+      "name": "Breakeven v3 Manager",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documentation states the original script opens no trades and only repositions protective orders around a portfolio break-even level for positions opened elsewhere, so there is no entry signal to translate. Marked with a never-true guard."
+    },
+    {
+      "id": 298,
+      "name": "Correlation Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close,20),-2.0)",
+      "exit_long": "zscore(close,20) >= 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The Correlation indicator is not in the DSL, so the documented swing-and-reverse rule is applied to a z-score over the documented LookbackPeriod 20 with DeviationThreshold 2.0, entering as the score recovers through -2. CorrelationPeriod 20 is folded into the same window, and the documented StopLossPercent 2.0 is applied directly."
+    }
+  ]
+}

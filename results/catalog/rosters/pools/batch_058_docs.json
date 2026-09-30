@@ -1,0 +1,98 @@
+{
+ "batch_058": {
+  "strategy_ids": [
+   1181,
+   3965,
+   505,
+   1801,
+   801,
+   846,
+   3509,
+   2631,
+   2869,
+   2205
+  ],
+  "docs": {
+   "1181": {
+    "id": 1181,
+    "name": "Premarket Gap MomoTrader",
+    "family": "trend",
+    "overview": "This strategy trades a single long breakout during the premarket session when the current candle gains at least a specified percentage above the previous close, prints a bullish candle with sufficient volume, and the candle body occupies a large part of its range. Position size is scaled depending on the body size.\n\nAfter entry the strategy holds the position while the next candles remain bullish and their volume increases. A red candle or non-increasing volume exits the position. Only one trade is allowed per day and trading can be restricted to the 04:00–09:30 session.\n\n## Details\n\n- **Entry Criteria**:\n  - Current candle gain ≥ `MinGainPct` compared to previous close.\n  - Candle is green and `Volume` > `MinVolume`.\n  - Body percent defines position size: ≥90% → 100%, ≥85% → 50%, ≥75% → 25%.\n  - Optional session filter 04:00–09:30 if `UseSession` is enabled.\n- **Exit Criteria**:\n  - First red candle or candle with non-increasing volume after entry.\n- **Stops**: No.\n- **Default Values**:\n  - `MinGainPct` = 5.\n  - `MinVolume` = 15000.\n  - `UseSession` = true.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Intraday\n",
+    "details": "- **Entry Criteria**:\n  - Current candle gain ≥ `MinGainPct` compared to previous close.\n  - Candle is green and `Volume` > `MinVolume`.\n  - Body percent defines position size: ≥90% → 100%, ≥85% → 50%, ≥75% → 25%.\n  - Optional session filter 04:00–09:30 if `UseSession` is enabled.\n- **Exit Criteria**:\n  - First red candle or candle with non-increasing volume after entry.\n- **Stops**: No.\n- **Default Values**:\n  - `MinGainPct` = 5.\n  - `MinVolume` = 15000.\n  - `UseSession` = true.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Intraday",
+    "parameters": ""
+   },
+   "3965": {
+    "id": 3965,
+    "name": "Macd Pattern Trader Trigger",
+    "family": "trend",
+    "overview": "Macd Pattern Trader Trigger Strategy ports the MetaTrader 4 expert advisor `MacdPatternTraderv05cb` to StockSharp's high-level strategy API. The system trades pure MACD histogram patterns, looking for a double-top structure below the zero line to open shorts and a mirror image double-bottom above the zero line to open longs. Trade management mirrors the original EA: every entry is submitted at market with a configurable fixed stop loss and take profit measured in instrument points.",
+    "details": "",
+    "parameters": "* **Trade Volume** – market order volume. Opposite positions are closed automatically before opening the new trade.\n* **Fast EMA / Slow EMA / Signal EMA** – MACD lengths. Defaults replicate the original advisor but may be optimised.\n* **Bullish Trigger / Reset** – positive MACD thresholds (in indicator units) that arm the long setup and define its pullback zone.\n* **Bearish Trigger / Reset** – absolute MACD thresholds for the short setup. The trigger is applied with a negative sign during runtime.\n* **Stop Loss / Take Profit** – distances in points (price steps). A value of `0` disables the corresponding protection.\n* **Candle Type** – timeframe used for the MACD calculation and trading decisions."
+   },
+   "505": {
+    "id": 505,
+    "name": "ADX CCI MA",
+    "family": "trend",
+    "overview": "Strategy combines ADX, CCI and a configurable moving average to trade strong trends.\n\nThe system buys when +DI crosses above -DI, CCI > 100 and ADX exceeds the threshold (optionally close above MA). It sells short when -DI crosses above +DI, CCI < -100 and ADX exceeds the threshold (close below MA).\n\nIncludes percentage-based stop-loss and take-profit plus optional MA risk management that exits after several candles close against the moving average.\n\n## Details\n\n- **Entry Criteria**: +DI/-DI cross with CCI extreme and ADX > `AdxThreshold`, optional close vs MA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss or take-profit hit, optional MA risk management.\n- **Stops**: Yes, take profit and stop loss.\n- **Default Values**:\n  - `EnableLong` = true\n  - `EnableShort` = true\n  - `TakeProfitPercent` = 2m\n  - `StopLossPercent` = 1m\n  - `CciPeriod` = 15\n  - `AdxLength` = 10\n  - `AdxThreshold` = 20m\n  - `UseMaTrend` = true\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `MaLength` = 200\n  - `UseMaRiskManagement` = false\n  - `MaRiskExitCandles` = 2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, CCI, MA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: +DI/-DI cross with CCI extreme and ADX > `AdxThreshold`, optional close vs MA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss or take-profit hit, optional MA risk management.\n- **Stops**: Yes, take profit and stop loss.\n- **Default Values**:\n  - `EnableLong` = true\n  - `EnableShort` = true\n  - `TakeProfitPercent` = 2m\n  - `StopLossPercent` = 1m\n  - `CciPeriod` = 15\n  - `AdxLength` = 10\n  - `AdxThreshold` = 20m\n  - `UseMaTrend` = true\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `MaLength` = 200\n  - `UseMaRiskManagement` = false\n  - `MaRiskExitCandles` = 2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, CCI, MA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1801": {
+    "id": 1801,
+    "name": "Artificial Intelligence Perceptron",
+    "family": "trend",
+    "overview": "This strategy uses the Accelerator Oscillator (AC) values as inputs to a simple linear perceptron. Four AC readings spaced seven bars apart are weighted by user-defined coefficients. A positive perceptron output opens a long position, and a negative output opens a short.\n\nThe strategy always applies a stop-loss. If an opposite signal appears after profit exceeds twice the stop-loss, the position reverses with increased volume. Otherwise, the stop-loss moves to break-even.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Perceptron output > 0.\n  - **Short**: Perceptron output < 0.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal with profit > 2 * StopLoss → reverse.\n  - Opposite signal with smaller profit → stop moved to entry.\n  - Stop-loss hit.\n- **Stops**: Fixed stop-loss in points.\n- **Filters**: None.\n\n## Parameters\n- `StopLoss` – stop-loss distance in points (default 850).\n- `Shift` – bar shift for indicator values (default 1).\n- `X1`, `X2`, `X3`, `X4` – perceptron weights.\n- `CandleType` – candle timeframe.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Perceptron output > 0.\n  - **Short**: Perceptron output < 0.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal with profit > 2 * StopLoss → reverse.\n  - Opposite signal with smaller profit → stop moved to entry.\n  - Stop-loss hit.\n- **Stops**: Fixed stop-loss in points.\n- **Filters**: None.",
+    "parameters": "- `StopLoss` – stop-loss distance in points (default 850).\n- `Shift` – bar shift for indicator values (default 1).\n- `X1`, `X2`, `X3`, `X4` – perceptron weights.\n- `CandleType` – candle timeframe."
+   },
+   "801": {
+    "id": 801,
+    "name": "FlexiMA Variance Tracker",
+    "family": "trend",
+    "overview": "Tracks price deviation around a moving average and opens trades when the deviation exceeds a volatility threshold while SuperTrend direction confirms.\n\n## Details\n\n- **Entry Criteria**:\n  - Price above SuperTrend and deviation > average + stddev × multiplier → buy.\n  - Price below SuperTrend and deviation < -(average + stddev × multiplier) → sell.\n- **Long/Short**: Both directions can be enabled.\n- **Exit Criteria**:\n  - Opposite deviation or SuperTrend reversal.\n- **Stops**: No stop logic by default.\n- **Default Values**:\n  - MA length = 20.\n  - StdDev length = 20.\n  - StdDev multiplier = 1.0.\n  - ATR period = 10.\n  - ATR factor = 3.0.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, SuperTrend\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price above SuperTrend and deviation > average + stddev × multiplier → buy.\n  - Price below SuperTrend and deviation < -(average + stddev × multiplier) → sell.\n- **Long/Short**: Both directions can be enabled.\n- **Exit Criteria**:\n  - Opposite deviation or SuperTrend reversal.\n- **Stops**: No stop logic by default.\n- **Default Values**:\n  - MA length = 20.\n  - StdDev length = 20.\n  - StdDev multiplier = 1.0.\n  - ATR period = 10.\n  - ATR factor = 3.0.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, SuperTrend\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "846": {
+    "id": 846,
+    "name": "Gold ORB",
+    "family": "breakout",
+    "overview": "The strategy captures the high and low of the Asia session and trades breakouts during the following hours. Stops and targets are derived from the range size with a reward multiplier.\n\n## Details\n\n- **Entry Criteria**:\n  - During the trade window, go long when the price closes above the recorded Asia high.\n  - Go short when the price closes below the recorded Asia low.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop and target based on the range size and reward multiplier.\n- **Stops**: Yes\n- **Default Values**:\n  - `AsiaStart` = 00:00\n  - `AsiaEnd` = 06:00\n  - `TradeStart` = 06:00\n  - `TradeEnd` = 10:00\n  - `RewardMultiplier` = 2.0\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: 5m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - During the trade window, go long when the price closes above the recorded Asia high.\n  - Go short when the price closes below the recorded Asia low.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop and target based on the range size and reward multiplier.\n- **Stops**: Yes\n- **Default Values**:\n  - `AsiaStart` = 00:00\n  - `AsiaEnd` = 06:00\n  - `TradeStart` = 06:00\n  - `TradeEnd` = 10:00\n  - `RewardMultiplier` = 2.0\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: 5m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3509": {
+    "id": 3509,
+    "name": "OpenPendingorderAfterPositionGetStopLoss",
+    "family": "breakout",
+    "overview": "The **OpenPendingorderAfterPositionGetStopLoss** strategy ports the MetaTrader 5 expert advisor of the same name into the StockSharp high-level API. It continuously evaluates the slope of the Stochastic %K line on the selected timeframe. When %K turns down it places a sell stop order below the market, and when %K turns up it places a buy stop order above the market. Each filled entry immediately receives a protective stop-loss and take-profit order. If a stop-loss closes the position, the strategy automatically reinstalls the corresponding pending order so that the grid of breakout trades is restored without waiting for the next candle.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `OrderVolume` | Trade volume in lots for each pending order. |\n| `StopLossPoints` | Stop-loss distance in symbol points. Set to 0 to disable. |\n| `TakeProfitPoints` | Take-profit distance in symbol points. Set to 0 to disable. |\n| `MinStopDistancePoints` | Minimal price buffer (in points) added to the spread before placing a pending order. |\n| `MaxPositions` | Maximum number of simultaneous positions per direction (netting accounts effectively use 0 or 1). |\n| `KPeriod` | Number of bars used for the %K calculation. |\n| `DPeriod` | Length of the smoothing %D line. |\n| `Slowing` | Additional smoothing factor applied to %K before comparison. |\n| `PendingExpiry` | Optional lifetime of pending stop orders. Expired orders are cancelled on the next candle. |\n| `CandleType` | Timeframe used for candle subscription and indicator calculations. |"
+   },
+   "2631": {
+    "id": 2631,
+    "name": "N Candles v3",
+    "family": "momentum",
+    "overview": "This strategy scans the latest finished candles and looks for a sequence where the last *N* bars share the same direction (all bullish or all bearish). When such a streak appears it enters in the direction of the sequence while respecting a cap on how many positions can be opened at once. The implementation migrates the original MetaTrader 5 expert advisor to the StockSharp high level API.",
+    "details": "",
+    "parameters": "- **Candle Type** – Time frame or candle source to analyse.\n- **Identical Candles** – Required number of consecutive candles with the same direction to trigger an entry.\n- **Volume** – Order size for each new entry in security units.\n- **Max Positions** – Maximum number of entry units that may be open in the same direction simultaneously.\n- **Take Profit Points** – Take-profit distance in multiples of the instrument price step.\n- **Stop Loss Points** – Stop-loss distance in multiples of the instrument price step.\n- **Trailing Stop Points** – Distance from the current price used to activate and maintain the trailing stop. Set to zero to disable trailing.\n- **Trailing Step Points** – Extra distance in price steps that must be covered before the trailing stop is moved again."
+   },
+   "2869": {
+    "id": 2869,
+    "name": "Coin Flip Martingale",
+    "family": "volatility",
+    "overview": "The Coin Flip strategy emulates the original MetaTrader expert advisor where entries are determined by a pseudo random coin toss. Only one position can be opened at a time. Each finished candle acts as a decision point: when the previous trade is flat the strategy flips a coin and immediately opens a long or short position using the calculated trade volume. Every trade is protected with both stop loss and take profit levels, while an optional trailing stop can tighten risk as the market moves in favour of the position.\n\nA martingale style position sizing model is implemented. If the previous position was stopped out, the next trade will increase its size by a configurable multiplier. Successful trades reset the volume back to the base size. A user defined maximum volume prevents uncontrolled growth of trade size.",
+    "details": "",
+    "parameters": "- **Stop Loss** – distance in price steps used to calculate the stop loss from the entry price.\n- **Take Profit** – distance in price steps added to the entry price for the take profit.\n- **Trailing Stop** – profit distance that activates the trailing stop mechanism. Set to zero to disable trailing.\n- **Trailing Step** – minimum additional profit required before the trailing stop is moved again.\n- **Base Volume** – volume of the first trade in a martingale cycle.\n- **Martingale Mult** – multiplier applied to the last stopped-out volume to determine the next order size.\n- **Max Volume** – hard cap for the order size. When exceeded the trade is skipped and a warning is logged.\n- **Candle Type** – candle series that defines when coin flips and risk management checks are executed."
+   },
+   "2205": {
+    "id": 2205,
+    "name": "Stochastic Histogram",
+    "family": "mean_reversion",
+    "overview": "This strategy is a StockSharp port of the original MQL expert `Exp_Stochastic_Histogram`.\nIt uses the Stochastic oscillator to produce contrarian trading signals in two modes:\n\n- **Levels** – a signal appears when %K exits the overbought or oversold areas defined by `HighLevel` and `LowLevel`.\n- **Cross** – a signal appears when %K crosses the %D line. The trade is opened in the opposite direction of the crossover.\n\nWhenever a new signal is received, the strategy closes an existing position and opens a new one in the required direction.\n\n## Parameters\n\n- `KPeriod` – main %K period.\n- `DPeriod` – %D smoothing period.\n- `Slowing` – additional smoothing of %K.\n- `HighLevel` – upper threshold for the Levels mode.\n- `LowLevel` – lower threshold for the Levels mode.\n- `Mode` – either Levels or Cross.\n- `CandleType` – candle timeframe used for calculations.\n\n## How it works\n\nFor every finished candle the Stochastic oscillator is updated and evaluated. In **Levels** mode a long trade is opened when %K returns below the high level and a short trade when %K rises above the low level. In **Cross** mode a long trade is opened on downward crossovers of %K below %D, while upward crossovers trigger short trades. The strategy always has at most one open position.\n",
+    "details": "",
+    "parameters": "- `KPeriod` – main %K period.\n- `DPeriod` – %D smoothing period.\n- `Slowing` – additional smoothing of %K.\n- `HighLevel` – upper threshold for the Levels mode.\n- `LowLevel` – lower threshold for the Levels mode.\n- `Mode` – either Levels or Cross.\n- `CandleType` – candle timeframe used for calculations."
+   }
+  }
+ }
+}

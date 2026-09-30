@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 202,
+      "name": "Donchian CCI",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and rsi(close,20) < 30",
+      "exit_long": "close < (donchian_high(high,20) + donchian_low(low,20)) / 2",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI(20) is unavailable, so RSI(20)<30 proxies the documented oversold condition. The prior 20-bar Donchian high preserves breakout semantics; the Donchian midpoint approximates the middle-band exit. The short side is omitted by the long-only schema, and the documented 2m stop is retained as 2%."
+    },
+    {
+      "id": 484,
+      "name": "5 EMA",
+      "family": "trend",
+      "entry_long": "bars_since(close < ema(close,5) and high < ema(close,5)) < 3 and crossabove(close,donchian_high_prev(high,3)) and close > ema(close,5)",
+      "exit_long": "close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A completed candle below EMA(5) is treated as the signal state, and a cross above the prior three-bar high within three bars is the breakout proxy. Signal-candle opposite-extreme stop, TargetRR=3, and time-based exits are not percentage/DSL fields; the short side is omitted."
+    },
+    {
+      "id": 1413,
+      "name": "HSI1 First 30m Candle",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_high_prev(high,2))",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first 30-minute range is approximated by the prior two 15-minute bars; a cross above that rolling high is the long breakout. Session reset, one-trade-per-day, and range-derived TP/SL cannot be represented in this daily OHLCV DSL, and the short side is omitted."
+    },
+    {
+      "id": 2033,
+      "name": "EMA Crossover Signal",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,26))",
+      "exit_long": "crossbelow(ema(close,12),ema(close,26))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The configurable fast/slow EMA crossover is translated with the standard 12/26 periods because no numeric defaults are supplied. The long-only roster omits the short-entry switch; tick-based stop and target distances are not percentage exits."
+    },
+    {
+      "id": 2601,
+      "name": "Ma SAR ADX Bind",
+      "family": "trend",
+      "entry_long": "close > sma(close,100) and roc(adx(high,low,close,14),1) > 0 and close > open",
+      "exit_long": "close < sma(close,100) or roc(adx(high,low,close,14),1) < 0 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(100) filter and ADX(14) are retained; rising ADX plus a bullish completed candle proxies unavailable +DI/-DI alignment and bullish SAR direction. A bearish candle, falling ADX, or loss of SMA alignment proxies the SAR/ADX reversal exit. SarStep/SarMax and pip-free risk details are not represented."
+    },
+    {
+      "id": 2768,
+      "name": "SAR RSI MTS",
+      "family": "momentum",
+      "entry_long": "close > open and rsi(close,14) > 50",
+      "exit_long": "close < open or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish completed candle is the long-side proxy for bullish Parabolic SAR direction, confirmed by RSI(14)>50; the neutral RSI and bearish candle proxy the opposite exit. The short side, SAR acceleration, net-position cap, and pip-based protection/trailing settings are not representable in this long-only roster."
+    },
+    {
+      "id": 2856,
+      "name": "Rollback Rebound",
+      "family": "volatility",
+      "entry_long": "close > open and (high - close) > (high - low) / 2",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 15-pip rollback threshold is instrument-specific, so a bullish candle closing below half its range is used as a normalized rollback proxy. A bearish candle approximates rebound failure; the 30/90/1/15-pip protection and trailing logic are not percentage exits, and the short side is omitted."
+    },
+    {
+      "id": 3229,
+      "name": "MACD Power",
+      "family": "trend",
+      "entry_long": "sma((high + low + close) / 3,6) > sma((high + low + close) / 3,85) and roc(close,14) > 0.3 and macd(close,12,26) > macd_signal(close,12,26,9) and close > open",
+      "exit_long": "sma((high + low + close) / 3,6) < sma((high + low + close) / 3,85) or roc(close,14) < 0.3 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "LWMA is approximated by SMA on typical price with documented lengths 6/85; ROC(14)>0.3 proxies higher-timeframe bullish momentum, and MACD 12/26/9 is the standard period choice because no MACD defaults are listed. The second MACD, monthly bias, multi-timeframe alignment, trailing/breakeven, and point-based TP/SL are unavailable; the short side is omitted."
+    },
+    {
+      "id": 3428,
+      "name": "Hammer Hanging Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "close > open and (close - open) <= 0.35 * (high - low) and (high - close) <= 0.3 * (high - low) and (close - low) >= 2.5 * (close - open) and rsi(close,15) < 30",
+      "exit_long": "crossabove(rsi(close,15),20) or crossabove(rsi(close,15),80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long hammer is encoded with the documented body and shadow ratios; RSI(15)<30 proxies unavailable stochastic %D below 30. Crosses above the documented recovery/overbought levels 20/80 proxy exits. The hanging-man short side and account-level StartProtection without a percentage are not encoded."
+    },
+    {
+      "id": 3966,
+      "name": "Three MA Cross Channel",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,2),ema(close,30)) and ema(close,4) > ema(close,30)",
+      "exit_long": "close < donchian_low_prev(low,15)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA defaults 2/4/30 are retained, with a fast-over-slow cross and medium-average alignment for the long setup. The prior 15-bar Donchian low is used for the enabled channel exit; absolute TakeProfit and StopLoss are disabled/default zero and are not percentage fields, and the short side is omitted."
+    }
+  ]
+}

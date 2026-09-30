@@ -1,0 +1,98 @@
+{
+ "batch_253": {
+  "strategy_ids": [
+   796,
+   111,
+   1949,
+   1396,
+   3777,
+   2280,
+   1753,
+   3445,
+   2950,
+   4224
+  ],
+  "docs": {
+   "796": {
+    "id": 796,
+    "name": "Fine-tune Inputs Gann + Laplace Smooth Volume Zone Oscillator",
+    "family": "trend",
+    "overview": "This strategy uses a volume oscillator smoothed by exponential moving averages.\nA long position is opened when the smoothed oscillator rises above the threshold.\nA short position is opened when it falls below the negative threshold.\nIf signals disappear and **Close All** is enabled, any open position is closed.\n\n## Parameters\n- **Fast Volume EMA** – period for fast volume average.\n- **Slow Volume EMA** – period for slow volume average.\n- **Smooth Length** – smoothing period for oscillator.\n- **Threshold** – signal level for entries.\n- **Close All** – close position when no signal.\n- **Candle Type** – candle type used for calculations.\n",
+    "details": "",
+    "parameters": "- **Fast Volume EMA** – period for fast volume average.\n- **Slow Volume EMA** – period for slow volume average.\n- **Smooth Length** – smoothing period for oscillator.\n- **Threshold** – signal level for entries.\n- **Close All** – close position when no signal.\n- **Candle Type** – candle type used for calculations."
+   },
+   "111": {
+    "id": 111,
+    "name": "Stochastic Failure Swing",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 70%. It performs best in the stocks market.\n\nThe strategy buys when a higher low forms below 20 and %K crosses back above %D, or sells when a lower high occurs above 80 and %K crosses under.\n\nTrades employ a small percent stop and close when the stochastic crosses back through the prior swing level.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1949": {
+    "id": 1949,
+    "name": "Ozymandias Trend",
+    "family": "trend",
+    "overview": "Strategy based on Ozymandias indicator. The indicator combines ATR with moving averages of highs and lows to build a dynamic channel. When direction switches from bearish to bullish, the strategy buys and closes short positions. A switch to bearish sells and closes longs. Optional take profit and stop loss parameters manage risk.\n\n## Details\n\n- **Entry Criteria**: Direction change of Ozymandias indicator.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or configured stops.\n- **Stops**: Take profit and stop loss.\n- **Default Values**:\n  - `Length` = 2\n  - `CandleType` = TimeSpan.FromHours(4)\n  - `TakeProfitPoints` = 2000\n  - `StopLossPoints` = 1000\n  - `BuyEntry` = true\n  - `SellEntry` = true\n  - `BuyExit` = true\n  - `SellExit` = true\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Ozymandias (ATR + MA)\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Direction change of Ozymandias indicator.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or configured stops.\n- **Stops**: Take profit and stop loss.\n- **Default Values**:\n  - `Length` = 2\n  - `CandleType` = TimeSpan.FromHours(4)\n  - `TakeProfitPoints` = 2000\n  - `StopLossPoints` = 1000\n  - `BuyEntry` = true\n  - `SellEntry` = true\n  - `BuyExit` = true\n  - `SellExit` = true\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Ozymandias (ATR + MA)\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1396": {
+    "id": 1396,
+    "name": "Ta",
+    "family": "trend",
+    "overview": "Strategy based on MACD crossover with support and resistance pivots, RSI and ADX confirmation. Two profit targets with partial exit are used.\n\n## Details\n\n- **Entry**\n  - **Long**: MACD crosses above signal, price above resistance, RSI > 50, +DI > -DI, ADX > 20.\n  - **Short**: MACD crosses below signal, price below support, RSI < 50, -DI > +DI, ADX > 20.\n- **Exit**: two take-profit levels and a stop-loss.\n",
+    "details": "- **Entry**\n  - **Long**: MACD crosses above signal, price above resistance, RSI > 50, +DI > -DI, ADX > 20.\n  - **Short**: MACD crosses below signal, price below support, RSI < 50, -DI > +DI, ADX > 20.\n- **Exit**: two take-profit levels and a stop-loss.",
+    "parameters": ""
+   },
+   "3777": {
+    "id": 3777,
+    "name": "SurefireThing",
+    "family": "trend",
+    "overview": "The SurefireThing strategy is a StockSharp high-level port of the MetaTrader 4 expert advisor *Surefirething*. It operates on completed candles, computes pending order levels from the previous session range, and resets exposure at the turn of each trading day. The logic is centred on deploying a symmetrical pair of limit orders that attempt to capture mean reversion around the prior close.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `OrderVolume` | Volume submitted with each pending order. | `0.1` |\n| `TakeProfitPoints` | Distance (in price steps) for the profit target. Converted to an absolute offset when the step is known. | `10` |\n| `StopLossPoints` | Distance (in price steps) for the protective stop. Converted the same way as the profit target. | `15` |\n| `RangeMultiplier` | Factor applied to the previous candle range before computing entry prices. | `1.1` |\n| `CandleType` | Primary timeframe processed by the strategy. Defaults to 1-minute candles but can be adjusted to match the original chart. | `TimeSpan.FromMinutes(1)` |"
+   },
+   "2280": {
+    "id": 2280,
+    "name": "ColorX2MA Digit",
+    "family": "trend",
+    "overview": "This strategy is a port of the MQL5 expert **Exp_ColorX2MA_Digit**.\nThe original algorithm paints a double smoothed moving average in different colors depending on its slope and uses these colors to generate trading signals.\nIn this C# version the behavior is approximated by two simple moving averages and trades on their crossovers.\n\n## Trading Logic\n\n- A **fast** moving average smooths the price series.\n- A **slow** moving average smooths the result of the fast one.\n- When the fast average crosses above the slow average, the strategy opens a long position and closes any existing short position.\n- When the fast average crosses below the slow average, the strategy opens a short position and closes any existing long position.\n- Signals are processed only after the candle is finished.\n\n## Parameters\n\n- `FastLength` – length of the first smoothing (default 12).\n- `SlowLength` – length of the second smoothing (default 5).\n- `CandleType` – timeframe of candles used for calculations.\n\nThe strategy uses only high level API: `SubscribeCandles` with `Bind` to feed indicators and `BuyMarket`/`SellMarket` to manage positions. Comments in the code explain each step in English for easier maintenance.\n",
+    "details": "",
+    "parameters": "- `FastLength` – length of the first smoothing (default 12).\n- `SlowLength` – length of the second smoothing (default 5).\n- `CandleType` – timeframe of candles used for calculations.\n\nThe strategy uses only high level API: `SubscribeCandles` with `Bind` to feed indicators and `BuyMarket`/`SellMarket` to manage positions. Comments in the code explain each step in English for easier maintenance."
+   },
+   "1753": {
+    "id": 1753,
+    "name": "VR Setka Grid",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp implementation of the MetaTrader \"VR---SETKAa3hM\" grid system. It opens a sequence of buy or sell orders based on percentage deviation from the daily range and optionally increases volume using a martingale multiplier. The average entry price of all open orders is tracked to place a unified take-profit target.\n\n## Parameters\n- `Distance`: Price distance in points between grid levels.\n- `TakeProfit`: Profit target in points for the initial order.\n- `Correction`: Extra profit in points added to the average price when more than one order is open.\n- `SignalPercent`: Percentage threshold used to detect deviation from the daily range.\n- `UseMartingale`: Multiply volume by the number of open orders.\n- `CandleType`: Candle timeframe used for signal calculations.\n\n## Logic\n1. When a finished candle appears, compute the current close in relation to the day high and low.\n2. If the previous candle was bullish and the close is sufficiently below the day high, start or continue a buy grid.\n3. If the previous candle was bearish and the close is sufficiently above the day low, start or continue a sell grid.\n4. Additional orders are placed whenever price moves against the position by `Distance` points.\n5. Once price returns to the average entry price plus `Correction` for buys or minus `Correction` for sells, all positions are closed with a market order.\n",
+    "details": "",
+    "parameters": "- `Distance`: Price distance in points between grid levels.\n- `TakeProfit`: Profit target in points for the initial order.\n- `Correction`: Extra profit in points added to the average price when more than one order is open.\n- `SignalPercent`: Percentage threshold used to detect deviation from the daily range.\n- `UseMartingale`: Multiply volume by the number of open orders.\n- `CandleType`: Candle timeframe used for signal calculations."
+   },
+   "3445": {
+    "id": 3445,
+    "name": "Universal Signal Demo",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader 5 \"Universal Signal\" expert using StockSharp high-level APIs. It evaluates eight weighted market patterns and aggregates them into a single composite score. When the score crosses configurable thresholds the strategy opens or closes long and short positions, optionally using pending limit orders that expire after a set number of bars.\n\n## Strategy Parameters\n- `CandleType` – candle data used for the analysis.\n- `SignalThresholdOpen` – minimum composite score required to open a position.\n- `SignalThresholdClose` – opposing score required to exit an existing position.\n- `PriceLevel` – price offset for placing pending limit entries (0 means market execution).\n- `StopLevel` / `TakeLevel` – absolute stop-loss and take-profit distances used by the built-in protection module.\n- `SignalExpiration` – number of bars after which still-active pending entries are cancelled.\n- `Pattern0Weight` … `Pattern7Weight` – weight applied to each pattern before aggregation.\n- `UniversalWeight` – final multiplier applied to the sum of all pattern contributions.\n- `ShortMaPeriod`, `LongMaPeriod`, `RsiPeriod`, `BollingerPeriod`, `BollingerWidth`, `TrendSmaPeriod`, `VolumeSmaPeriod` – indicator settings used inside the pattern checks.\n\n## Trading Logic\n1. Subscribe to the configured candle stream and bind EMA, RSI, MACD Signal, Bollinger Bands, and supporting SMAs.\n2. After every finished candle, compute eight boolean patterns (trend alignment, RSI momentum, MACD histogram, Bollinger positioning, candle direction, and volume expansion).\n3. Multiply each pattern by its weight, sum the contributions, and apply the global weight to obtain the final score.\n4. Close open positions when the score crosses the closing threshold in the opposite direction.\n5. Open new long or short positions when the score exceeds the opening threshold. If `PriceLevel` is positive, submit a limit order offset by the configured distance and cancel it automatically after `SignalExpi",
+    "details": "",
+    "parameters": ""
+   },
+   "2950": {
+    "id": 2950,
+    "name": "GBP 9 AM Breakout",
+    "family": "trend",
+    "overview": "The **GBP 9 AM Breakout Strategy** replicates the legacy MetaTrader \"GBP9AM\" expert advisor in StockSharp. The system prepares a straddle around the London open (9:00 local time) by placing buy-stop and sell-stop orders at configurable distances from the current price. It aims to capture the post-open momentum move while enforcing disciplined risk management through stop-loss and take-profit levels measured in pips.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order size used for both sides of the straddle.\n| `LookHour` | Exchange hour (0-23) that represents 9 AM London in your data feed.\n| `LookMinute` | Minute offset within the look hour when orders should be prepared.\n| `CloseHour` | Hour at which all positions and orders are forcefully closed.\n| `UseCloseHour` | Enables or disables the automatic close hour behaviour.\n| `TakeProfitPips` | Distance in pips from the entry price to the profit target for both directions.\n| `BuyDistancePips` | Pip distance above the current price for the buy-stop order.\n| `SellDistancePips` | Pip distance below the current price for the sell-stop order.\n| `BuyStopLossPips` | Stop-loss distance in pips for long positions.\n| `SellStopLossPips` | Stop-loss distance in pips for short positions.\n| `CandleType` | Candle subscription used for timing and exit management (defaults to 1-minute time frame).\n\nAll pip distances automatically adapt to 3- or 5-digit FX quotes by multiplying the exchange price step by ten where needed, mirroring the original expert advisor."
+   },
+   "4224": {
+    "id": 4224,
+    "name": "Daily Trend Reversal",
+    "family": "trend",
+    "overview": "Daily Trend Reversal is a port of the MetaTrader 4 expert advisor `dailyTrendReversal_D1`. The strategy anchors intraday trades to the current day's open, high, and low, and only participates when both price action and the Commodity Channel Index (CCI) confirm the same directional bias. Trading is limited to a configurable GMT session, optionally halts after reaching a daily profit goal, and can exit positions immediately when the filters flip to the opposite side.",
+    "details": "",
+    "parameters": "* **Auto Trading** – toggles whether the strategy may open new trades.\n* **Reversal Exit** – enables immediate exits when the opposite daily trend is confirmed.\n* **Trend Steps** – selects how many step filters (1–3) must pass to validate the daily bias.\n* **Volume** – order volume for market entries.\n* **Take Profit (pips)** – fixed profit target distance; set to `0` to disable.\n* **Stop Loss (pips)** – protective stop distance; set to `0` to disable.\n* **Profit Stop** – profit target in price units that pauses trading for the rest of the day; `0` disables the feature.\n* **GMT Diff** – chart time minus GMT (in hours). Used to convert GMT session boundaries into chart time.\n* **Start Hour / End Hour** – GMT hours that bound the trading window for new positions.\n* **Closing Hour** – GMT hour after which the strategy forces exits or arms the break-even logic.\n* **Holding Hours** – maximum amount of time a trade may remain open before the session logic triggers.\n* **Risk (pips)** – pip distance used by the directional steps.\n* **CCI Period** – number of periods for the Commodity Channel Index.\n* **Candle Type** – timeframe that drives calculations (default: 15-minute candles)."
+   }
+  }
+ }
+}

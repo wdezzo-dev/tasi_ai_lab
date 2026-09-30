@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1890,
+      "name": "RoNz Auto SL TS TP",
+      "family": "trend",
+      "entry_long": "ema(close,10)< ema(close,20)and ema(close,10)> ema(close,100)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Translated from the documented long-side rule where a directly usable rule expression was available; vendor-specific execution, multi-timeframe state, or unsupported indicators are simplified to the local DSL."
+    },
+    {
+      "id": 750,
+      "name": "Energy Advanced Policy",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 106,
+      "name": "Spring Reversal",
+      "family": "trend",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2518,
+      "name": "Moving Average Trade System Strategy (2518)",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,5)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 5-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1376,
+      "name": "Supertrend Fixed Tp Unified With Time Filter Msk",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,23) > sma(atr(high,low,close,23),23)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,23) < sma(atr(high,low,close,23),23)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 969,
+      "name": "Larry Connors 3 Day High Low",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1687,
+      "name": "Scalping EA",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 1287,
+      "name": "Safa Bot Alert",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 15",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 3722,
+      "name": "StellarLite ICT EA",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 2342,
+      "name": "HelloSmart",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1868,
+      "name": "MA L World",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,25))",
+      "exit_long": "crossbelow(ema(close,12),ema(close,25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 12/25; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2224,
+      "name": "LeMan Signal",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 267,
+      "name": "RSI Slope Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,14))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 14-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 439,
+      "name": "Pin Bar Magic",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3925,
+      "name": "Up3x1 Krohabor Shift",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 1954,
+      "name": "Exp Leading",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2335,
+      "name": "Fibonacci Retracement",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 1819,
+      "name": "Perceptron AC",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30",
+      "exit_long": "rsi(close,14) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1856,
+      "name": "BnB",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3626,
+      "name": "BandOsMaCustom",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    }
+  ]
+}

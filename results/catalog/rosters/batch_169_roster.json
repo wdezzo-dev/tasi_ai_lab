@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 777,
+      "name": "Faith Indicator",
+      "family": "trend",
+      "entry_long": "crossabove(volume_ratio(volume, 20), 1.2) and close > open",
+      "exit_long": "crossbelow(volume_ratio(volume, 20), 1) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 'faith' grade is approximated by volume expansion: volume_ratio(20) crossing above 1.2 on an up candle marks a positive grade and crossing below 1.0 the negative grade. Highest/SMA inputs carry no documented values so 20 bars is a fallback, and the short branch is omitted."
+    },
+    {
+      "id": 3856,
+      "name": "Disaster Strategy (MQL #7704)",
+      "family": "trend",
+      "entry_long": "close < sma(close, 200) - 2 * atr(high, low, close, 20) and roc(close, 5) > 0",
+      "exit_long": "close > sma(close, 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Pending stop orders cannot be expressed, so the snap-back entry is a recovery bar (positive ROC(5)) while price sits more than 2 ATR(20) below a very long SMA(200), and the mean reversion exit is a return to that average. The SMA length is a fallback because none is documented, and the per-minute order nudging, fixed stop, and adaptive take-profit are omitted."
+    },
+    {
+      "id": 2864,
+      "name": "Absolutely No Lag LWMA",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close, 14), sma(sma(close, 14), 14))",
+      "exit_long": "crossbelow(sma(close, 14), sma(sma(close, 14), 14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The double linear-weighted average is approximated by SMA(14) applied twice, and the documented color transitions become its bullish and bearish crosses. LWMA Length, Price Type and Signal Bar have no documented values so 14 and close are fallbacks, and the three-state color machine plus short side are dropped."
+    },
+    {
+      "id": 2463,
+      "name": "Universum 3.0",
+      "family": "trend",
+      "entry_long": "rsi(close, 10) > 50",
+      "exit_long": "rsi(close, 10) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is unavailable, so RSI(10) supplies the bounded oscillator whose 50 level is the documented 0.5 threshold, with entries taken on every completed bar as described. TakeProfitPoints/StopLossPoints 50 are price distances rather than percentages, and the martingale volume scheme with LossesLimit 100 is not representable."
+    },
+    {
+      "id": 446,
+      "name": "Strategy Base Template",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the scaffold has no implemented entry or exit rules and is not meant to be traded as-is, so there is no market-derived signal and the impossible negative-price guard avoids inventing one. The optional percentage protection module, enable flags, and optimization ranges are not roster fields."
+    },
+    {
+      "id": 2157,
+      "name": "Color Bears Gap",
+      "family": "momentum",
+      "entry_long": "crossbelow(sma(high, 12) - sma(open, 5) - (sma(high, 5) - sma(close, 12)), 0)",
+      "exit_long": "crossabove(sma(high, 12) - sma(open, 5) - (sma(high, 5) - sma(close, 12)), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two smoothed gaps between the high and the smoothed open/close are rebuilt with the documented Length1 12 and Length2 5 assignments, and a downward zero cross buys while the upward cross closes. The 8-hour timeframe, BuyOpen/SellOpen permission flags, and the short side are not representable."
+    },
+    {
+      "id": 2838,
+      "name": "Breakeven Trailing Stop Tick",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a tick-level position manager that only moves a virtual stop to break-even plus a step and closes the position when price retraces; its demo mode opens trades randomly, so no market-derived entry exists and the impossible negative-price guard avoids inventing one. Tick monitoring and stop offsets are not roster fields."
+    },
+    {
+      "id": 572,
+      "name": "BTCUSD Adjustable SLTP",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close, 5)) and roc(close, 10) <= -1 and sma(close, 10) > sma(close, 25) and close > ema(close, 150)",
+      "exit_long": "crossbelow(sma(close, 10), sma(close, 25)) or close < ema(close, 150)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long rule is expressed as the documented SMA(10)/SMA(25) bullish state, a 1% pullback (RetracementPercentage 0.01 via ROC(10)) and a reclaim of the fast line under the EMA(150) filter, exiting on the bearish cross or the filter break. TakeProfitDistance 1000, StopLossDistance 250 and BreakEvenTrigger 500 are point distances, not percentages."
+    },
+    {
+      "id": 3944,
+      "name": "RndTrade",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are a fully random long/short coin flip with a four-hour holding timer and no market-derived trigger, so the impossible negative-price guard prevents fabricating a deterministic signal. The time-seeded generator, timer, and short leg are not roster fields."
+    },
+    {
+      "id": 2323,
+      "name": "Cm Manual Grid",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is a pending-order grid (buy/sell stop and limit levels around the current price) with lot increments and separate profit-target closes, so it has no market-derived directional entry and the impossible negative-price guard avoids inventing one. Order counts, step sizes, lot increment, and the trailing-profit mechanism are not expressible."
+    }
+  ]
+}

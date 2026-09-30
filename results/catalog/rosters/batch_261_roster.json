@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2349,
+      "name": "Candle Trend",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) > 0 and roc(close,2) > 0",
+      "exit_long": "close < open and roc(close,1) < 0 and roc(close,2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a run of same-direction candles, so a bullish body plus one- and two-bar rising closes approximates the run; the mirrored bear run is the documented opposite-signal exit. TrendCandles has no documented value so three bars is the fallback, and the optional percentage take profit and stop loss have no supplied numbers."
+    },
+    {
+      "id": 1371,
+      "name": "SuperTrend AI Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high(high,2) - atr(high,low,close,10)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(close, donchian_high(high,2) - atr(high,low,close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The SuperTrend line is built from the documented AtrLength=10 with Factor=1, so a cross above the band-offset line is the trend flip, and RSI(14) above 50 stands in for the custom oscillator. The trailing stop and RiskReward=2 exit are ATR-relative rather than fixed percentages, so both fields stay null."
+    },
+    {
+      "id": 3476,
+      "name": "Averaging By Signal",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,28), sma(close,50))",
+      "exit_long": "crossbelow(sma(close,28), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast/slow lengths FastPeriod=28 and SlowPeriod=50 give the crossover entry, with the opposite cross as the exit since the basket target is a pip aggregate. Martingale averaging layers, LayerDistancePips, MaxLayers, Multiplier sizing and the first-order-only trailing stop are not representable in a single-position DSL."
+    },
+    {
+      "id": 2010,
+      "name": "ColorMaRsi Trigger",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10) - ema(close,50) + rsi(close,5) - rsi(close,20), 0)",
+      "exit_long": "crossbelow(ema(close,10) - ema(close,50) + rsi(close,5) - rsi(close,20), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The combined EMA-minus-RSI difference reproduces the -1/0/+1 signal, so a cross above zero is the documented sign flip that opens the long. No periods are documented so EMA 10/50 and RSI 5/20 are fallbacks, and the short side plus BuyMarket/SellMarket routing are not long-roster fields."
+    },
+    {
+      "id": 2992,
+      "name": "XCCI Histogram Vol",
+      "family": "trend",
+      "entry_long": "crossabove(sma(zscore(close,20) * volume_ratio(volume,20), 20), 1)",
+      "exit_long": "crossbelow(sma(zscore(close,20) * volume_ratio(volume,20), 20), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI times volume smoothed by a moving average is approximated by the standardized price deviation times volume_ratio and then SMA, with the high zone and midline as the zone thresholds. CciPeriod, MaLength and the four level multipliers have no documented values so 20/20 and 1/0 are fallbacks, and SignalBarOffset and point-based stops are not expressible."
+    },
+    {
+      "id": 1974,
+      "name": "Jpalonso Modoki",
+      "family": "trend",
+      "entry_long": "close <= sma(close,200) * 0.9965 or (close > sma(close,200) and close <= sma(close,200) * 1.0035)",
+      "exit_long": "close >= sma(close,200) * 1.0035 and close > sma(close,200) * 0.9965",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The envelope uses the documented SmaPeriod=200 and Deviation=0.35%, and the long rule keeps both the lower-envelope touch and the documented upper-half band case. TakeProfit=127 and StopLoss=77 are point distances rather than percentages, so both fields are null."
+    },
+    {
+      "id": 802,
+      "name": "FlexiMA x FlexiST",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and close > donchian_high(high,2) - atr(high,low,close,10)",
+      "exit_long": "close < sma(close,20) or close < donchian_high(high,2) - atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price must sit above the simple moving average and above the SuperTrend band line, which is built here from a two-bar extreme offset by one ATR. The SMA length and SuperTrend factor are undocumented fallbacks (20 and ATR 10 with factor 1), and the docs state no stops."
+    },
+    {
+      "id": 3091,
+      "name": "Extreme EA (StockSharp Conversion)",
+      "family": "trend",
+      "entry_long": "roc(ema((high + low + close) / 3,15),1) > 0 and roc(ema((high + low + close) / 3,75),1) > 0 and crossbelow(zscore(close,12), -2)",
+      "exit_long": "roc(ema((high + low + close) / 3,75),1) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastMaPeriod=15 and SlowMaPeriod=75 exponential averages on the median price supply the two rising-slope conditions, and the CCI filter is approximated by a 12-bar z-score with the CciLowerLevel=-50 mapped to -2. MaximumRisk sizing, DecreaseFactor loss reduction, MaxPositions and the multi-timeframe CCI subscription are not expressible."
+    },
+    {
+      "id": 1414,
+      "name": "TF Segmented Linear Regression",
+      "family": "trend",
+      "entry_long": "crossabove(close, bb_upper(close,20,2))",
+      "exit_long": "crossbelow(close, bb_lower(close,20,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-deviation linear channel around the mean is the closest available proxy for the regression channel, so the documented upper-band crossing enters and the opposite band crossing exits. The Segment time window is not expressible on a single series, and the docs state no stops."
+    },
+    {
+      "id": 3743,
+      "name": "Build Your Grid",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document describes a two-sided order ladder with pip steps, geometric or exponential lot progression, a basket profit target and hedge orders sized from the volume difference, so there is no single-symbol market-derived entry signal to translate. The never-true guard is used instead of inventing one, and no percentage stops are documented."
+    }
+  ]
+}

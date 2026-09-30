@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3122,
+  "ticker": "2282",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3122,
+    "name": "Vlado",
+    "family": "mean_reversion",
+    "entry_long": "crossabove(10 * (close - donchian_low(low, 10)) / (donchian_high(high, 0.0) - donchian_low(low, 21) + 0.0), 25)",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14) + 0.0001), 75)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Williams %R is mirrored onto the 0-100 fast stochastic so the documented OversoldLevel -75 and OverboughtLevel -25 become 25 and 75, with a 14-bar window as a fallback because WilliamsPeriod has no default. The epsilon guards a zero-width range; volume sizing and the 1-hour default are not signals."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-08-15",
+        "2024-07-31"
+      ],
+      "bars_in_window": 488,
+      "engine_win_ret": 0.0,
+      "alpha": 0.23820483314154206,
+      "benchmark_ret": -0.23820483314154206,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": 0.16766917293233086,
+      "benchmark_ret": -0.16766917293233086,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.02615518744550993,
+      "benchmark_ret": 0.02615518744550993,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-08-15",
+        "2024-07-31"
+      ],
+      "bars_in_window": 488,
+      "engine_win_ret": 0.0,
+      "alpha": 0.23820483314154206,
+      "benchmark_ret": -0.23820483314154206,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": 0.16766917293233086,
+      "benchmark_ret": -0.16766917293233086,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.02615518744550993,
+      "benchmark_ret": 0.02615518744550993,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

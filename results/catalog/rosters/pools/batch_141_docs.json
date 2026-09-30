@@ -1,0 +1,98 @@
+{
+ "batch_141": {
+  "strategy_ids": [
+   696,
+   778,
+   1565,
+   4209,
+   1418,
+   2235,
+   2658,
+   2931,
+   1721,
+   1537
+  ],
+  "docs": {
+   "696": {
+    "id": 696,
+    "name": "Double Vegas SuperTrend Enhanced",
+    "family": "trend",
+    "overview": "This strategy combines two SuperTrend indicators whose multipliers adapt to Vegas channel volatility. A long position opens when both trends are bullish and a short position opens when both are bearish. Optional holding period and take-profit or stop-loss protections are supported.\n\n## Parameters\n- Candle Type\n- ATR Period 1\n- Vegas Window 1\n- Multiplier 1\n- Volatility Adjustment 1\n- ATR Period 2\n- Vegas Window 2\n- Multiplier 2\n- Volatility Adjustment 2\n- Trade Direction\n- Use Hold Days\n- Hold Days\n- TPSL Condition\n- Take Profit (%)\n- Stop Loss (%)\n",
+    "details": "",
+    "parameters": "- Candle Type\n- ATR Period 1\n- Vegas Window 1\n- Multiplier 1\n- Volatility Adjustment 1\n- ATR Period 2\n- Vegas Window 2\n- Multiplier 2\n- Volatility Adjustment 2\n- Trade Direction\n- Use Hold Days\n- Hold Days\n- TPSL Condition\n- Take Profit (%)\n- Stop Loss (%)"
+   },
+   "778": {
+    "id": 778,
+    "name": "Falcon Liquidity Grab",
+    "family": "trend",
+    "overview": "This strategy trades liquidity grabs during major market sessions using a simple moving average to define trend. It enters when price wicks beyond recent swing levels and reverses with the trend. Each trade uses fixed stop loss and take profit measured in ticks.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: `Low < lowest(swing period)` && `Close > SMA` && `session filter`\n  - **Short**: `High > highest(swing period)` && `Close < SMA` && `session filter`\n- **Exit Conditions**: fixed stop loss and take profit.\n- **Type**: Reversal\n- **Indicators**: SMA, Highest, Lowest\n- **Timeframe**: 15 minutes (default)\n- **Stops**: `StopLossPoints` ticks, `TakeProfitMultiplier`× stop distance\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: `Low < lowest(swing period)` && `Close > SMA` && `session filter`\n  - **Short**: `High > highest(swing period)` && `Close < SMA` && `session filter`\n- **Exit Conditions**: fixed stop loss and take profit.\n- **Type**: Reversal\n- **Indicators**: SMA, Highest, Lowest\n- **Timeframe**: 15 minutes (default)\n- **Stops**: `StopLossPoints` ticks, `TakeProfitMultiplier`× stop distance",
+    "parameters": ""
+   },
+   "1565": {
+    "id": 1565,
+    "name": "XAUUSD Trend",
+    "family": "trend",
+    "overview": "This strategy trades XAUUSD using EMA crossovers, RSI extremes and Bollinger Bands.\nA long position is opened when the fast EMA crosses above the slow EMA, RSI is below the oversold level and price closes above the upper Bollinger Band.\nShort positions are opened on the opposite conditions.\nRisk management sets stop-loss and take-profit levels based on portfolio risk percentage and a take-profit to stop-loss ratio.\n\n## Details\n\n- **Entry**:\n  - Long: fast EMA crossover up, RSI < oversold, close > upper band.\n  - Short: fast EMA crossover down, RSI > overbought, close < lower band.\n- **Exit**: stop-loss or take-profit calculated from risk settings.\n- **Indicators**: EMA, RSI, Bollinger Bands.\n",
+    "details": "- **Entry**:\n  - Long: fast EMA crossover up, RSI < oversold, close > upper band.\n  - Short: fast EMA crossover down, RSI > overbought, close < lower band.\n- **Exit**: stop-loss or take-profit calculated from risk settings.\n- **Indicators**: EMA, RSI, Bollinger Bands.",
+    "parameters": ""
+   },
+   "4209": {
+    "id": 4209,
+    "name": "Slope RSI MTF",
+    "family": "trend",
+    "overview": "The **Slope RSI MTF Strategy** ports the MetaTrader 4 expert advisor `SLOPE_RSI_MTF_LBranjord.mq4` together with its companion indicator `Slope_Direction_Line_Alert.mq4`. The original setup stacked multiple Hull moving averages (named \"Slope Direction Line\") across several timeframes and only opened trades when all of them pointed in the same direction while a four-tier RSI filter confirmed the momentum. The StockSharp version reproduces this multi-timeframe confirmation logic with high-level subscriptions, keeps the ATR-based exit targets, and adds extensive configuration support through strategy parameters.",
+    "details": "",
+    "parameters": "| Name | Type | Default | MetaTrader counterpart | Description |\n| --- | --- | --- | --- | --- |\n| `SlopeTriggerLength` | `int` | `60` | `SDL1_trigger` | Hull length on the trading timeframe. |\n| `SlopeTrendLength` | `int` | `200` | `SDL1_period` | Hull length on hourly, four-hour and daily confirmations. |\n| `RsiPeriod` | `int` | `14` | RSI period | RSI lookback applied to every timeframe. |\n| `RsiLowerBound` | `decimal` | `10` | RSI lower bound | Lower RSI filter for short signals. |\n| `RsiMiddleLevel` | `decimal` | `50` | RSI mid level (implicit) | Neutral RSI level separating long and short regimes. |\n| `RsiUpperBound` | `decimal` | `90` | RSI upper bound | Upper RSI filter for long signals. |\n| `AtrPeriod` | `int` | `21` | `ATR_Period` | ATR length for stop and take-profit calculations. |\n| `MaxOrders` | `int` | `5` | `MaxOrders` | Maximum number of scale-in entries per direction. |\n| `UseCompounding` | `bool` | `true` | `compounding` | Enables portfolio-based position sizing. |\n| `BaseVolume` | `decimal` | `0.1` | `Lots` | Fixed lot when compounding is disabled. |\n| `BalanceDivider` | `decimal` | `100000` | implicit (`AccountBalance()/100000`) | Divider for the compounding formula. |\n| `BaseTimeframe` | `DataType` | `5m` | chart timeframe | Candle series that drives trade execution. |\n| `HourTimeframe` | `DataType` | `1h` | `PERIOD_H1` | First confirmation series. |\n| `FourHourTimeframe` | `DataType` | `4h` | `PERIOD_H4` | Second confirmation series. |\n| `DayTimeframe` | `DataType` | `1d` | `PERIOD_D1` | Highest confirmation series. |"
+   },
+   "1418": {
+    "id": 1418,
+    "name": "Flash Strategy Minervini Qualifier",
+    "family": "trend",
+    "overview": "Combines EMA crossover, SuperTrend and momentum RSI with Minervini stage analysis to qualify trades.\n\n## Details\n\n- **Entry Criteria**: EMA above trailing line, SuperTrend trend and momentum RSI above threshold with Minervini stage filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite trailing or SuperTrend flip\n- **Stops**: No\n- **Default Values**:\n  - `MomRsiLength` = 10\n  - `MomRsiThreshold` = 60\n  - `EmaLength` = 12\n  - `EmaPercent` = 0.01\n  - `SuperTrendPeriod` = 10\n  - `SuperTrendMultiplier` = 3\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, SuperTrend, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: EMA above trailing line, SuperTrend trend and momentum RSI above threshold with Minervini stage filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite trailing or SuperTrend flip\n- **Stops**: No\n- **Default Values**:\n  - `MomRsiLength` = 10\n  - `MomRsiThreshold` = 60\n  - `EmaLength` = 12\n  - `EmaPercent` = 0.01\n  - `SuperTrendPeriod` = 10\n  - `SuperTrendMultiplier` = 3\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, SuperTrend, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2235": {
+    "id": 2235,
+    "name": "WPRSI Signal",
+    "family": "momentum",
+    "overview": "This strategy replicates the WPRSIsignal MetaTrader expert. It combines the Williams Percent Range (WPR) and Relative Strength Index (RSI) to generate buy and sell signals.",
+    "details": "",
+    "parameters": "- `Period` – calculation length for WPR and RSI.\n- `FilterUp` – number of bars that must keep WPR above -20 to confirm a buy signal.\n- `FilterDown` – number of bars that must keep WPR below -80 to confirm a sell signal.\n- `CandleType` – timeframe of candles used for the calculations."
+   },
+   "2658": {
+    "id": 2658,
+    "name": "Nevalyashka Flip",
+    "family": "volatility",
+    "overview": "A direct StockSharp port of the MetaTrader expert \"Nevalyashka\". The strategy always alternates between long and short trades: it starts with a market sell order, waits for the position to close by stop loss or take profit, and then immediately opens a market order in the opposite direction. Protective orders are recreated for every entry using the same pip-based offsets as in the original code.\n\n## Strategy Logic\n\n1. **Initialization**\n   - Detects the instrument price step and decimals to derive a pip size identical to the MQL version (3/5 digit pairs are multiplied by 10).\n   - Multiplies the exchange `MinVolume` by the `LotMultiplier` parameter to obtain the order size and rounds it to the volume step if necessary.\n2. **Quote Handling**\n   - Subscribes to order book updates to capture the latest best bid/ask prices, mirroring the `RefreshRates()` call from the expert.\n3. **Order Flow**\n   - Places an initial sell market order once best bid/ask quotes are available.\n   - After a position is closed, flips the side (buy after sell, sell after buy) and issues a new market order with the same volume.\n   - For every filled entry the strategy places separate stop-loss and take-profit orders using the pip distance parameters.\n\n## Risk Management\n\n- **Stop Loss**: Optional. When `StopLossPips` is greater than zero, the strategy submits a protective stop order (`SellStop` for long positions, `BuyStop` for short positions) at `entry ± StopLossPips * pip`.\n- **Take Profit**: Optional. When `TakeProfitPips` is greater than zero, the strategy submits a protective limit order (`SellLimit` for long positions, `BuyLimit` for short positions) at `entry ± TakeProfitPips * pip`.\n- Both protective orders are cancelled whenever the position is flat to avoid dangling orders before the next flip.\n\n## Parameters\n\n| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `LotMultiplier` | Multiplier applied to the instrument minimum volume. The result is rounded to the exchange",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `LotMultiplier` | Multiplier applied to the instrument minimum volume. The result is rounded to the exchange volume step. | `1` |\n| `StopLossPips` | Stop-loss distance in pips. Set to `0` to disable the stop. | `50` |\n| `TakeProfitPips` | Take-profit distance in pips. Set to `0` to disable the target. | `50` |"
+   },
+   "2931": {
+    "id": 2931,
+    "name": "Return",
+    "family": "mean_reversion",
+    "overview": "This strategy replicates the classic \"Return Strategy\" expert advisor. It prepares a grid of paired buy-limit and sell-limit orders at the start of a configured trading window. The grid is symmetric around the market price, uses fixed spacing in pips, and can be sized either by a fixed volume or a percentage risk model. Once orders are filled the strategy supervises the position with static and trailing stop-loss logic, monitors cumulative open profit, and forces a full flattening at the daily cut-off time or every Friday.\n\nThe original system was designed for netting accounts and focused on capturing mean-reversion moves after scheduled times. The conversion keeps that structure while adapting order management, trailing, and capital controls to the StockSharp high-level API.\n\n## Trading Rules\n\n- **Daily preparation** – At the `StartHour` the strategy checks that no grid orders are active and places `PendingOrderCount` buy limits below and sell limits above the current price. The first level is offset by `DistancePips` and each subsequent level adds `StepPips` of spacing.\n- **Risk control** – Each pending order can use either a fixed `OrderVolume` or a risk-based size derived from `RiskPercent`. When risk sizing is used the available capital and stop-loss distance determine the per-order volume so that the total grid risk equals the configured percentage.\n- **Stop management** – Every filled position receives an initial stop loss based on `StopLossPips`. If `TrailingStopPips` is greater than zero, once price advances beyond the trailing threshold the stop is ratcheted in steps of `TrailingStepPips`.\n- **Profit target and session exit** – The net open profit is tracked in pips. When it reaches `TotalProfitPips` the strategy marks all positions and orders for closure. It also performs the same flush at the configured `EndHour` and on every Friday regardless of profit.\n- **Order expiration** – Pending orders can automatically expire after `ExpirationHours`. Expired or ",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `StopLossPips` | Initial stop distance for any filled position (in adjusted pips). |\n| `StartHour` | Hour (0–23) when the pending-order grid is created. |\n| `EndHour` | Hour (0–23) that triggers a complete exit of positions and orders. |\n| `TotalProfitPips` | Net open profit target (in pips) that forces all trades to be closed. |\n| `TrailingStopPips` | Distance of the trailing stop from price once activated. Set to zero to disable trailing. |\n| `TrailingStepPips` | Additional advance required before moving the trailing stop. Must be positive when trailing is enabled. |\n| `DistancePips` | Initial offset for the first pending order on each side of the market. |\n| `StepPips` | Incremental spacing between consecutive pending orders. |\n| `PendingOrderCount` | Number of buy limits and sell limits to register at `StartHour`. |\n| `ExpirationHours` | Lifetime of pending orders in hours. Zero disables expiration. |\n| `OrderVolume` | Fixed volume per pending order. Leave at zero to enable risk-based sizing. |\n| `RiskPercent` | Portfolio percentage allocated to the entire grid. Per-order size is derived from this value when `OrderVolume` is zero. |\n| `CandleType` | Candle series used to drive timing and stop management logic. |"
+   },
+   "1721": {
+    "id": 1721,
+    "name": "Volume EA",
+    "family": "volume",
+    "overview": "This strategy trades based on spikes in volume and the Commodity Channel Index (CCI). It opens positions at the start of a new hour when the previous candle's volume exceeds that of the candle before it by a configurable factor. CCI values must fall within specific bands to confirm the signal.",
+    "details": "",
+    "parameters": "- `Factor` – volume multiplier threshold.\n- `TrailingStop` – trailing distance in price steps.\n- `CciLevel1` / `CciLevel2` – CCI bounds for long trades.\n- `CciLevel3` / `CciLevel4` – CCI bounds for short trades.\n- `CandleType` – candle timeframe used for calculations."
+   },
+   "1537": {
+    "id": 1537,
+    "name": "Volume per Point",
+    "family": "volume",
+    "overview": "This strategy calculates the volume per price point for each candle. A long trade is opened when the candle range decreases but volume increases and the RSI filter (if enabled) confirms the signal. A short trade is opened when the range expands while volume contracts.\n\n## Parameters\n- **RSI Length** – period for RSI calculation.\n- **RSI Above/Below** – thresholds for the optional RSI filter.\n- **Use RSI Filter** – enable or disable RSI filtering.\n- **Candle Type** – timeframe of input candles.\n",
+    "details": "",
+    "parameters": "- **RSI Length** – period for RSI calculation.\n- **RSI Above/Below** – thresholds for the optional RSI filter.\n- **Use RSI Filter** – enable or disable RSI filtering.\n- **Candle Type** – timeframe of input candles."
+   }
+  }
+ }
+}

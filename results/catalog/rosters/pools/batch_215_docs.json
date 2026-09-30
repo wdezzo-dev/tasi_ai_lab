@@ -1,0 +1,98 @@
+{
+ "batch_215": {
+  "strategy_ids": [
+   2045,
+   2346,
+   1656,
+   3372,
+   1344,
+   895,
+   1218,
+   1199,
+   1044,
+   966
+  ],
+  "docs": {
+   "2045": {
+    "id": 2045,
+    "name": "Force DiverSign",
+    "family": "trend",
+    "overview": "The Force DiverSign strategy trades based on divergence signals between two Force Index indicators computed with different smoothing periods.\nIt looks for a three-candle reversal pattern together with opposite swings in the fast and slow Force values. When a bullish divergence appears,\nthe strategy buys; when a bearish divergence appears, it sells.\n\n## Parameters\n- `Period1` – period for the fast Force Index.\n- `Period2` – period for the slow Force Index.\n- `MaType1` – moving average type used to smooth the fast Force Index.\n- `MaType2` – moving average type used to smooth the slow Force Index.\n- `CandleType` – timeframe of candles for calculations.\n\n## Trading Logic\n1. Calculate raw Force Index as the volume multiplied by the change of close price.\n2. Smooth the raw value with two moving averages to obtain fast and slow Force series.\n3. Store the last five Force values and the last four candles.\n4. **Buy** when:\n   - Three previous candles form a down–up–down pattern.\n   - Both Force series form a local bottom then rise.\n   - Fast and slow Force move in opposite directions between the first and third candle.\n5. **Sell** when:\n   - Three previous candles form an up–down–up pattern.\n   - Both Force series form a local top then fall.\n   - Fast and slow Force move in opposite directions between the first and third candle.\n\nPositions are reversed on each signal: a buy closes an existing short and a sell closes a long.\n",
+    "details": "",
+    "parameters": "- `Period1` – period for the fast Force Index.\n- `Period2` – period for the slow Force Index.\n- `MaType1` – moving average type used to smooth the fast Force Index.\n- `MaType2` – moving average type used to smooth the slow Force Index.\n- `CandleType` – timeframe of candles for calculations."
+   },
+   "2346": {
+    "id": 2346,
+    "name": "JSatl Digit System",
+    "family": "trend",
+    "overview": "The JSatl Digit System uses a Jurik Moving Average (JMA) to determine trend direction.\nThe strategy measures the slope of the JMA and opens a position when price confirms the slope direction.\n\nA long position is opened when the JMA is rising and the close price is above the average.\nA short position is opened when the JMA is falling and the close price is below the average.\nOpposite signals close any open position.\n\n## Details\n\n- **Entry Criteria**: JMA slope with price confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `JmaLength` = 14\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: JMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: JMA slope with price confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `JmaLength` = 14\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: JMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1656": {
+    "id": 1656,
+    "name": "EMA Sticker",
+    "family": "trend",
+    "overview": "This strategy uses an Exponential Moving Average (EMA) to follow short‑term trends. A long position is opened when the close price crosses above the EMA, while a short position is opened when the close price crosses below the EMA. Optional fixed stop‑loss and take‑profit levels help manage risk.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close > EMA`.\n  - **Short**: `Close < EMA`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal or configured stop levels reached.\n- **Stops**: Yes, optional stop‑loss and take‑profit in price units.\n- **Default Values**:\n  - `MA period` = 5.\n  - `Stop loss` = 0.001.\n  - `Take profit` = 0.001.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close > EMA`.\n  - **Short**: `Close < EMA`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal or configured stop levels reached.\n- **Stops**: Yes, optional stop‑loss and take‑profit in price units.\n- **Default Values**:\n  - `MA period` = 5.\n  - `Stop loss` = 0.001.\n  - `Take profit` = 0.001.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term",
+    "parameters": ""
+   },
+   "3372": {
+    "id": 3372,
+    "name": "Basic MA Template",
+    "family": "trend",
+    "overview": "The **Basic MA Template Strategy** is a faithful StockSharp port of the MetaTrader 4 expert advisor from repository entry `MQL/27964`. The original robot traded a single symbol on a higher timeframe moving average and opened a position whenever the previous candle crossed the average. This C# version keeps the minimalist structure while exposing every control as a parameter so that the behaviour can be tuned or optimized directly inside StockSharp.\n\nThe template waits for a fully finished candle and compares its open and close prices with a shifted moving average. If the bar opens above the average and closes below it, the strategy opens a short position. When the reverse happens, it opens a long trade. The system only allows one market position at a time, mirroring the MQL \"no active ticket\" check. Protective stop-loss and take-profit distances are defined in pips. At start-up the strategy converts those pip distances into absolute price offsets using the instrument step and decimal precision, replicating the point-to-pip conversion logic that depended on quote digits in MetaTrader.\n\n## Trading logic\n\n- **Data source**: a single candle series determined by the `CandleType` parameter (default H4).\n- **Indicator**: configurable moving average (`SMA`, `EMA`, `SMMA`, or `LWMA`). The `MovingAverageShift` parameter shifts the indicator forward exactly like the MetaTrader `iMA` function.\n- **Entry rules**:\n  - Long: the previous candle opened below and closed above the shifted moving average while no position is open.\n  - Short: the previous candle opened above and closed below the shifted moving average while no position is open.\n- **Exit rules**: handled automatically by the StockSharp `StartProtection` module using pip-based take-profit and stop-loss distances. When both targets are zero the strategy still enables the protection service so trailing or manual exits remain possible.\n- **Position filter**: the strategy ignores new signals while a position is active, keepi",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle aggregation used for signals. | H4 (4-hour candles) |\n| `MovingAveragePeriod` | Period length of the moving average. | 49 |\n| `MovingAverageShift` | Forward shift applied to the moving average buffer. | 0 |\n| `MovingAverageMethod` | Moving average calculation mode (`Simple`, `Exponential`, `Smoothed`, `LinearWeighted`). | `Simple` |\n| `TakeProfitPips` | Take-profit distance in pips converted to absolute price offsets at runtime. | 38.5 |\n| `StopLossPips` | Stop-loss distance in pips converted to absolute price offsets at runtime. | 48.5 |\n\n### Risk handling\n\nThe protection subsystem receives the computed absolute distances and attaches them to every market order. Because the pip size is derived from the symbol step and decimal precision (5-digit and 3-digit quotes multiply the step by ten), the stop levels respect the minimum spacing enforced by brokers in the MetaTrader version.\n\n### Conversion notes\n\n- The original ECN-style two-step order placement is simplified to StockSharp market orders with automatic protection, which already handles attaching SL/TP after execution.\n- The `CheckVolumeValue` and `CheckMoneyForTrade` routines are omitted. Position sizing should be configured through the standard StockSharp risk settings.\n- Logging statements are replaced by chart drawing hooks so the moving average and executed trades can be visualized directly in the strategy chart area.\n\nThis conversion keeps the decision model identical while adopting idiomatic high-level StockSharp APIs (`SubscribeCandles`, `Bind`, and `StartProtection`). Use it as a lightweight scaffold for building more advanced moving-average systems."
+   },
+   "1344": {
+    "id": 1344,
+    "name": "VWAP Pro V21",
+    "family": "trend",
+    "overview": "Strategy combines fast and slow EMA with VWAP and ATR-based risk management. A higher timeframe EMA filter (1h, length 50) confirms the trend. Trades open when price aligns with the trend and close at ATR-based take profit or stop loss levels.\n\n## Details\n\n- **Entry Criteria**: Price above/below fast EMA, VWAP, and trend filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR take profit or stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaFastPeriod` = 9\n  - `EmaSlowPeriod` = 21\n  - `AtrPeriod` = 14\n  - `TakeProfitAtrMultiplier` = 0.7\n  - `StopLossAtrMultiplier` = 1.4\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: EMA, VWAP, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price above/below fast EMA, VWAP, and trend filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR take profit or stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaFastPeriod` = 9\n  - `EmaSlowPeriod` = 21\n  - `AtrPeriod` = 14\n  - `TakeProfitAtrMultiplier` = 0.7\n  - `StopLossAtrMultiplier` = 1.4\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: EMA, VWAP, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "895": {
+    "id": 895,
+    "name": "HTF Candles Lib",
+    "family": "other",
+    "overview": "HTF Candles Lib is a utility strategy that reconstructs higher timeframe candles from lower timeframe data and logs their detailed structure.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**: None.\n- **Exit Criteria**: None.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `HigherCandleType` = 5 minutes\n- **Filters**:\n  - Category: Utility\n  - Direction: None\n  - Indicators: None\n  - Complexity: Low\n  - Risk level: Low\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**: None.\n- **Exit Criteria**: None.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `HigherCandleType` = 5 minutes\n- **Filters**:\n  - Category: Utility\n  - Direction: None\n  - Indicators: None\n  - Complexity: Low\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1218": {
+    "id": 1218,
+    "name": "Random Entry and Exit",
+    "family": "other",
+    "overview": "This strategy uses random numbers to enter and exit positions. For each finished candle a random value between 0 and 1 is generated. If the value is below the entry threshold, a trade is opened. Another random value controls exits. Long and short trades can be enabled separately.\n\n## Details\n\n- **Entry Criteria**: random value < Entry Threshold.\n- **Exit Criteria**: random value < Exit Threshold.\n- **Long/Short**: Both, individually configurable.\n",
+    "details": "- **Entry Criteria**: random value < Entry Threshold.\n- **Exit Criteria**: random value < Exit Threshold.\n- **Long/Short**: Both, individually configurable.",
+    "parameters": ""
+   },
+   "1199": {
+    "id": 1199,
+    "name": "PS January Barometer Backtester",
+    "family": "other",
+    "overview": "Implements the January Barometer where a long position is taken when the close in February–June exceeds the January high. Optional filters require a positive Santa Claus Rally and/or First Five Days return.\n\n## Details\n\n- **Entry Criteria**: February–June close above January high with optional seasonal filters\n- **Long/Short**: Long\n- **Exit Criteria**: close position in December\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 month\n  - `UseSantaClausRally` = false\n  - `UseFirstFiveDays` = false\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: Seasonality\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Monthly\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: February–June close above January high with optional seasonal filters\n- **Long/Short**: Long\n- **Exit Criteria**: close position in December\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 month\n  - `UseSantaClausRally` = false\n  - `UseFirstFiveDays` = false\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: Seasonality\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Monthly\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1044": {
+    "id": 1044,
+    "name": "Mechanical Trading",
+    "family": "other",
+    "overview": "A time-based mechanical strategy that executes one trade at a specified hour each day. The position direction can be configured to go long or short. The trade is automatically protected with percent-based take profit and stop loss levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: At `TradeHour` when `Short Mode` is disabled.\n  - **Short**: At `TradeHour` when `Short Mode` is enabled.\n- **Long/Short**: Both, depending on `Short Mode`.\n- **Exit Criteria**:\n  - `Profit Target (%)` above/below entry.\n  - `Stop Loss (%)` below/above entry.\n- **Stops**: Both stop loss and take profit.\n- **Default Values**:\n  - `Profit Target (%)` = 0.4.\n  - `Stop Loss (%)` = 0.2.\n  - `Trade Hour` = 16.\n- **Filters**:\n  - Category: Time\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: At `TradeHour` when `Short Mode` is disabled.\n  - **Short**: At `TradeHour` when `Short Mode` is enabled.\n- **Long/Short**: Both, depending on `Short Mode`.\n- **Exit Criteria**:\n  - `Profit Target (%)` above/below entry.\n  - `Stop Loss (%)` below/above entry.\n- **Stops**: Both stop loss and take profit.\n- **Default Values**:\n  - `Profit Target (%)` = 0.4.\n  - `Stop Loss (%)` = 0.2.\n  - `Trade Hour` = 16.\n- **Filters**:\n  - Category: Time\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "966": {
+    "id": 966,
+    "name": "Larry Conners SMTP",
+    "family": "other",
+    "overview": "A long-only strategy that buys after a 10-bar low when the current bar has the largest range in the last 10 bars and closes in the top 25% of its range. Entry is placed one tick above the high; stop-loss trails at successive lows.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: current low equals the lowest of the last 10 bars, today's range is the largest of the last 10, and the close is in the top 25% of the range; place a buy stop at `High + TickSize`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trailing stop at the highest low since entry.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TickSize` = 0.01\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: current low equals the lowest of the last 10 bars, today's range is the largest of the last 10, and the close is in the top 25% of the range; place a buy stop at `High + TickSize`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trailing stop at the highest low since entry.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TickSize` = 0.01\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

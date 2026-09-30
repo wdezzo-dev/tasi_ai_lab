@@ -1,0 +1,98 @@
+{
+ "batch_148": {
+  "strategy_ids": [
+   1228,
+   1805,
+   2907,
+   507,
+   713,
+   2075,
+   4087,
+   1432,
+   3564,
+   2198
+  ],
+  "docs": {
+   "1228": {
+    "id": 1228,
+    "name": "RCI",
+    "family": "trend",
+    "overview": "Uses the Rank Correlation Index and its moving average to trade crossovers. A long position opens when the RCI rises above its moving average. A short position opens when it drops below. Trade direction can be restricted to long-only or short-only.\n\n## Details\n- **Entry Criteria**: RCI crossing its moving average.\n- **Long/Short**: Configurable (both, long only, short only).\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `RciLength` = 10\n  - `MaType` = SMA\n  - `MaLength` = 14\n  - `Direction` = Long & Short\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: RCI, MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: RCI crossing its moving average.\n- **Long/Short**: Configurable (both, long only, short only).\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `RciLength` = 10\n  - `MaType` = SMA\n  - `MaLength` = 14\n  - `Direction` = Long & Short\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: RCI, MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1805": {
+    "id": 1805,
+    "name": "Triple Moving Average Crossover",
+    "family": "trend",
+    "overview": "This strategy trades based on the relationship between three moving averages: fast, medium and slow. It is a conversion of the **X3MA_EA_V2_0** MQL expert.\n\n## Trading Logic\n\n* **Entry**\n  * When *EnableEntryMediumSlowCross* is true, a long position is opened when the medium moving average crosses above the slow one. The inverse crossover triggers a short entry.\n  * When the option is false, the strategy waits for the fast average to cross the medium one while both stay on the same side of the slow average. Long positions require `fast > medium > slow` and short positions require `fast < medium < slow`.\n* **Exit**\n  * When *EnableExitFastSlowCross* is true, open positions are closed when the fast and slow averages cross in the opposite direction.\n\nAll signals are evaluated on finished candles.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `FastMaLength` | Period of the fast moving average. |\n| `MediumMaLength` | Period of the medium moving average. |\n| `SlowMaLength` | Period of the slow moving average. |\n| `EnableEntryMediumSlowCross` | Allow entries on medium/slow crossover. |\n| `EnableExitFastSlowCross` | Close positions on fast/slow crossover. |\n| `CandleType` | Timeframe of candles. |\n\n## Notes\n\nThe strategy uses the high-level API with `SubscribeCandles` and `Bind`. Indicator values are accessed through the `ProcessCandle` callback without using `GetValue`. Protective logic is enabled with `StartProtection()` in `OnStarted`.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `FastMaLength` | Period of the fast moving average. |\n| `MediumMaLength` | Period of the medium moving average. |\n| `SlowMaLength` | Period of the slow moving average. |\n| `EnableEntryMediumSlowCross` | Allow entries on medium/slow crossover. |\n| `EnableExitFastSlowCross` | Close positions on fast/slow crossover. |\n| `CandleType` | Timeframe of candles. |"
+   },
+   "2907": {
+    "id": 2907,
+    "name": "CCFp Currencies Strength",
+    "family": "trend",
+    "overview": "This strategy ports the classic MetaTrader CCFp expert advisor into the StockSharp high-level API. It calculates a relative strength score for the eight major currencies (USD, EUR, GBP, CHF, JPY, AUD, CAD, NZD) using ratios between fast and slow simple moving averages on the seven USD-based majors (EURUSD, GBPUSD, AUDUSD, NZDUSD, USDCAD, USDCHF, USDJPY). When the difference between two currency strengths breaks above a configurable threshold, the strategy opens market positions that express the stronger currency against the weaker one.\n\nThe implementation follows the recommended high-level architecture: each instrument has its own candle subscription, indicators are bound via `Bind`, and order management uses `RegisterOrder` with market orders. Comments on executed orders reuse the original `(TOPDOWN)` format to keep the same bookkeeping style as the MQL version.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Fast MA` | Fast moving average period used inside the strength calculation. |\n| `Slow MA` | Slow moving average period used inside the strength calculation. |\n| `Strength Step` | Minimal difference between two currencies that must be exceeded to trigger a new signal. |\n| `Close Opposite` | If enabled the strategy closes opposite positions before submitting a new order. |\n| `Candle Type` | Candle series processed by the indicators. |\n| Base `Volume` | Taken from the standard `Strategy.Volume` property and used for every submitted market order. |"
+   },
+   "507": {
+    "id": 507,
+    "name": "ADX Range Breakout",
+    "family": "trend",
+    "overview": "This strategy enters long positions when the close breaks above the highest close of a lookback period while the ADX remains below a specified threshold, indicating a quiet market. Trading is limited to a defined session and a maximum number of trades per day. A fixed stop-loss in price units protects every position.\n\n## Details\n\n- **Entry Criteria**: `Close >= previous highest close` and `ADX < threshold` within session\n- **Long/Short**: Long only\n- **Exit Criteria**: Stop-loss or session end\n- **Stops**: Yes\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `HighestPeriod` = 34\n  - `AdxThreshold` = 17.5\n  - `StopLoss` = 1000\n  - `MaxTradesPerDay` = 3\n  - `CandleType` = TimeSpan.FromMinutes(30)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: `Close >= previous highest close` and `ADX < threshold` within session\n- **Long/Short**: Long only\n- **Exit Criteria**: Stop-loss or session end\n- **Stops**: Yes\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `HighestPeriod` = 34\n  - `AdxThreshold` = 17.5\n  - `StopLoss` = 1000\n  - `MaxTradesPerDay` = 3\n  - `CandleType` = TimeSpan.FromMinutes(30)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "713": {
+    "id": 713,
+    "name": "Dual Supertrend MACD",
+    "family": "trend",
+    "overview": "Dual Supertrend MACD combines two Supertrend indicators with a MACD filter.\nA long position is opened when price trades above both Supertrend lines and the MACD histogram is positive.\nShort positions appear when price is below both lines and the histogram is negative.\nPositions are closed once any Supertrend flips direction or the MACD histogram crosses zero.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - Long: `Close > Supertrend1 && Close > Supertrend2 && MACD Histogram > 0`\n  - Short: `Close < Supertrend1 && Close < Supertrend2 && MACD Histogram < 0`\n- **Exit Criteria**:\n  - Long: `Close < Supertrend1 || Close < Supertrend2 || MACD Histogram < 0`\n  - Short: `Close > Supertrend1 || Close > Supertrend2 || MACD Histogram > 0`\n- **Stops**: None by default.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `OscillatorMaType` = Exponential\n  - `SignalMaType` = Exponential\n  - `AtrPeriod1` = 10\n  - `Factor1` = 3.0\n  - `AtrPeriod2` = 20\n  - `Factor2` = 5.0\n  - `TradeDirection` = \"Both\"\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: Supertrend, MACD\n  - Complexity: Intermediate\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - Long: `Close > Supertrend1 && Close > Supertrend2 && MACD Histogram > 0`\n  - Short: `Close < Supertrend1 && Close < Supertrend2 && MACD Histogram < 0`\n- **Exit Criteria**:\n  - Long: `Close < Supertrend1 || Close < Supertrend2 || MACD Histogram < 0`\n  - Short: `Close > Supertrend1 || Close > Supertrend2 || MACD Histogram > 0`\n- **Stops**: None by default.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `OscillatorMaType` = Exponential\n  - `SignalMaType` = Exponential\n  - `AtrPeriod1` = 10\n  - `Factor1` = 3.0\n  - `AtrPeriod2` = 20\n  - `Factor2` = 5.0\n  - `TradeDirection` = \"Both\"\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: Supertrend, MACD\n  - Complexity: Intermediate\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2075": {
+    "id": 2075,
+    "name": "Virtual Trailing Stop",
+    "family": "momentum",
+    "overview": "This strategy emulates a virtual trailing stop for both long and short positions. It does not generate entry signals; orders should be opened externally or manually. Once a position exists, the strategy maintains a trailing stop that follows price as it moves in a favorable direction. If price hits the stop level, the position is closed by market.\n\n## Parameters\n\n- `StopLoss` – fixed stop-loss distance in price steps.\n- `TakeProfit` – fixed take-profit distance in price steps.\n- `TrailingStop` – distance from current price to the trailing stop.\n- `TrailingStart` – minimal profit in price steps before trailing begins.\n- `TrailingStep` – minimal additional profit required to move the trailing level.\n- `CandleType` – candle series used to process price data.\n\n## Notes\n\nThe strategy subscribes to candles of the specified type and evaluates the trailing logic on closed candles only.\n",
+    "details": "",
+    "parameters": "- `StopLoss` – fixed stop-loss distance in price steps.\n- `TakeProfit` – fixed take-profit distance in price steps.\n- `TrailingStop` – distance from current price to the trailing stop.\n- `TrailingStart` – minimal profit in price steps before trailing begins.\n- `TrailingStep` – minimal additional profit required to move the trailing level.\n- `CandleType` – candle series used to process price data."
+   },
+   "4087": {
+    "id": 4087,
+    "name": "Open Time Daily Window",
+    "family": "volatility",
+    "overview": "The strategy reproduces the behaviour of the MetaTrader expert \"OpenTime\". It places market orders at a configurable time of day, optionally closes all exposure during a dedicated exit window, and applies simple money-management rules such as fixed stop-loss, take-profit, and trailing protection. The port uses the high-level StockSharp `Strategy` API, so the strategy can be combined with other components inside the framework.",
+    "details": "",
+    "parameters": "- **Enable Close Window** – mirrors the `TimeClose` flag. When enabled, `Close Position Time` and `Window Length` define when existing trades are closed.\n- **Close Position Time** – daily time at which the exit window begins (default 20:50).\n- **Trading Time** – daily time when new trades are allowed (default 18:50).\n- **Window Length** – duration of both the trading and closing windows (default 5 minutes, corresponding to the original `Duration` input).\n- **Allow Sell Entries** – corresponds to the MQL `Sell` switch; enables short entries (default true).\n- **Allow Buy Entries** – corresponds to the MQL `Buy` switch; enables long entries (default false).\n- **Order Volume** – target net volume for each new trade (default 0.1 lots). The strategy adds the absolute value of the current position when an opposite signal appears, so reversals occur in a single market order.\n- **Stop-Loss Points** – distance in points for the protective stop (default 0 disables the stop).\n- **Take-Profit Points** – distance in points for the profit target (default 0 disables the target).\n- **Use Trailing Stop** – enables the trailing stop logic from the original `SimpleTrailing` helper.\n- **Trailing Stop Points** – trailing distance expressed in points (default 300).\n- **Trailing Step Points** – additional progress required before advancing the trailing stop (default 3).\n- **Candle Type** – timeframe used for the time checks (default 1-minute candles)."
+   },
+   "1432": {
+    "id": 1432,
+    "name": "Ticker Pulse Meter + Fear EKG",
+    "family": "mean_reversion",
+    "overview": "Combines short and long lookbacks to spot oversold conditions and recoveries.\nIt buys when the combined percentile crosses the upper trigger and exits on a profit take cross.\n\n## Details\n\n- **Entry Criteria**: percentile crosses above `EntryThresholdHigh` or below `OrangeEntryThreshold`\n- **Long/Short**: Long only\n- **Exit Criteria**: cross below `ProfitTake`\n- **Stops**: No\n- **Default Values**:\n  - `LookbackShort` = 50\n  - `LookbackLong` = 200\n  - `ProfitTake` = 95\n  - `EntryThresholdHigh` = 20\n  - `EntryThresholdLow` = 40\n  - `OrangeEntryThreshold` = 95\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: percentile crosses above `EntryThresholdHigh` or below `OrangeEntryThreshold`\n- **Long/Short**: Long only\n- **Exit Criteria**: cross below `ProfitTake`\n- **Stops**: No\n- **Default Values**:\n  - `LookbackShort` = 50\n  - `LookbackLong` = 200\n  - `ProfitTake` = 95\n  - `EntryThresholdHigh` = 20\n  - `EntryThresholdLow` = 40\n  - `OrangeEntryThreshold` = 95\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3564": {
+    "id": 3564,
+    "name": "Turbo Scaler Grid",
+    "family": "volume",
+    "overview": "The Turbo Scaler Grid strategy is a high-level StockSharp implementation of the MQL5 \"Turbo Scaler Grid Pending\" expert advisor. The strategy focuses on managing pending stop grids around predefined price levels, dynamically protecting open positions with break-even and trailing logic, and supervising the account equity to close positions when profit or loss thresholds are reached.\n\nThe logic works on multiple timeframes simultaneously:\n\n- A configurable trigger timeframe watches for price proximity signals that activate the pending grid.\n- Additional 30-minute, 2-hour, and daily candles provide confirmation for optional conditional triggers.\n- Level1 data supplies the latest bid/ask values used to position pending orders and to manage trailing stops.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `StopLossPoints` | Initial stop-loss distance in points. |\n| `BreakevenTriggerPoints` | Points required to activate the break-even move. |\n| `BreakevenOffsetPoints` | Offset added to the entry price when the stop is moved to break-even. |\n| `TrailPoints` | Distance used for trailing after break-even. |\n| `TrailMultiplier` | Multiplier applied before a new trailing stop is set. |\n| `BuyStopLossPrice` / `SellStopLossPrice` | Optional fixed stop prices for long/short positions. |\n| `BuyStopEntry` / `SellStopEntry` | Base prices for the pending stop grids. |\n| `OrderVolume` | Volume per pending order. |\n| `PendingQuantity` | Maximum number of active pending orders. |\n| `PendingStepPoints` | Distance between consecutive pending orders. |\n| `TriggerCandleType` | Candle series used for the price trigger logic. |\n| `PendingPriceTrigger` | Enables the price proximity trigger. |\n| `PendingConditionTrigger` | Enables the multi-timeframe confirmation trigger. |\n| `OrderBuyBlockStart` / `OrderBuyBlockEnd` | Daily low block used to validate long setups. |\n| `OrderSellBlockStart` / `OrderSellBlockEnd` | Daily high block used to validate short setups. |\n| `MaxFloatLoss` | Maximum allowed floating loss (scaled by volume). |\n| `EquityBreakeven` | Equity level maintained after the profit trigger activates. |\n| `EquityTrigger` | Floating profit required to create the equity lock. |\n| `EquityTrail` | Trailing distance applied to the equity lock. |"
+   },
+   "2198": {
+    "id": 2198,
+    "name": "Exp Multic",
+    "family": "volume",
+    "overview": "Multi-currency strategy that trades a fixed set of major Forex pairs without technical indicators.\nFor each pair the algorithm maintains a direction and volume. After each profitable move the volume is increased, after a loss the direction is flipped. Trading stops and all positions are closed once overall profit or loss exceeds specified thresholds.\n\n## Details\n\n- **Entry Criteria**:\n  - If no position and account balance above `Margin`, open position in predefined direction with `MinVolume`.\n- **Long/Short**: Both, depending on internal direction per pair.\n- **Exit Criteria**:\n  - Close position when profit exceeds `KClose * MinVolume`.\n  - Reverse direction and close when loss exceeds `KChange * current volume`.\n- **Stops**: No explicit stops; risk controlled by profit/loss thresholds.\n- **Default Values**:\n  - `Loss` = 1900\n  - `Profit` = 4000\n  - `Margin` = 5000\n  - `MinVolume` = 0.01\n  - `KChange` = 2100\n  - `KClose` = 4600\n- **Filters**:\n  - Category: Money management\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Tick-based\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n",
+    "details": "- **Entry Criteria**:\n  - If no position and account balance above `Margin`, open position in predefined direction with `MinVolume`.\n- **Long/Short**: Both, depending on internal direction per pair.\n- **Exit Criteria**:\n  - Close position when profit exceeds `KClose * MinVolume`.\n  - Reverse direction and close when loss exceeds `KChange * current volume`.\n- **Stops**: No explicit stops; risk controlled by profit/loss thresholds.\n- **Default Values**:\n  - `Loss` = 1900\n  - `Profit` = 4000\n  - `Margin` = 5000\n  - `MinVolume` = 0.01\n  - `KChange` = 2100\n  - `KClose` = 4600\n- **Filters**:\n  - Category: Money management\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Tick-based\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

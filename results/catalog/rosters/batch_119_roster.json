@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1580,
+      "name": "Zigzag Candles",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low, 5) and close > open",
+      "exit_long": "high > donchian_high_prev(high, 5) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag pivot detection is not available, so a fresh ZigzagLength=5 extreme with a reversal close stands in for a new pivot low entering long, and a new pivot high is the documented opposite-pivot exit. The 1-minute default timeframe is a series detail and the docs state no stops."
+    },
+    {
+      "id": 3931,
+      "name": "HBS System Strategy (StockSharp Version)",
+      "family": "trend",
+      "entry_long": "close > ema(close, 200) and close > donchian_high_prev(high, 20)",
+      "exit_long": "close < ema(close, 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA Period 200 filter is kept as the regime gate and the two layered breakout stop orders are approximated by a close above the prior 20-bar extreme, with losing the filter as the exit. Entry Offset, the 50-point protective stops, 10-point trails, order rounding to fixed price levels and the two-order volume structure are pending-order and point fields."
+    },
+    {
+      "id": 1247,
+      "name": "Revelations",
+      "family": "trend",
+      "entry_long": "atr(high, low, close, 14) > atr(high, low, close, 21) and low <= donchian_low(low, 3) and close > open",
+      "exit_long": "atr(high, low, close, 14) < atr(high, low, close, 21) and high >= donchian_high(high, 3) and close < open",
+      "stop_loss_pct": 0.9,
+      "take_profit_pct": 1.8,
+      "notes": "The documented ATR Fast 14 versus ATR Slow 21 spike is used with the Local Window 3 extreme and the reversal close, entering long on an upward spike at a local low; the ATR(12) deviation, Super Spike Mult 1.5, Regime Window 8 and Regime Events 3 confirmation and adaptive Min/Max Quantity sizing are not expressible. The documented Stop % of 0.9 and Take Profit % of 1.8 are applied."
+    },
+    {
+      "id": 2494,
+      "name": "Two MA Four Level",
+      "family": "trend",
+      "entry_long": "crossabove(sma((high + low) / 2, 50), sma((high + low) / 2, 130))",
+      "exit_long": "crossbelow(sma((high + low) / 2, 50), sma((high + low) / 2, 130))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastPeriod 50 and SlowPeriod 130 smoothed averages are kept on the median price, and the five confirmation levels are collapsed to the raw slow MA because MostTopLevel, TopLevel, LowerLevel and LowermostLevel are pip offsets that have no DSL equivalent; the cross below the slow MA is the mirror exit. SMMA smoothing, pip-based stop/target and the one-position rule are approximation or engine-level details."
+    },
+    {
+      "id": 3689,
+      "name": "SUPERMACBOT by The Guardian Forex TV",
+      "family": "trend",
+      "entry_long": "macd(close, 12, 24) > macd_signal(close, 12, 24, 9) and sma(close, 12) > sma(close, 26)",
+      "exit_long": "macd(close, 12, 24) < macd_signal(close, 12, 24, 9) or sma(close, 12) < sma(close, 26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MacdFast 12, MacdSlow 24, MacdSignal 9 and FastMaPeriod 12 / SlowMaPeriod 26 filters are kept, and the default HistogramThreshold of 0.0 collapses to the histogram sign test; the TrailingPeriod average is used only as the exit side of the confluence. The 1-minute default and tick-by-tick avoidance are execution details."
+    },
+    {
+      "id": 2846,
+      "name": "PLC",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On every finished higher-timeframe candle the EA arms paired breakout stop orders above and below the last candle and liquidates the whole basket when aggregate floating profit clears a currency threshold, so its exposure is a pending-order manager with no market-derived direction. The impossible negative-price guard avoids fabricating one; pip shifts, fractal volume multipliers and the entry/fractal timeframes are not DSL fields."
+    },
+    {
+      "id": 1453,
+      "name": "Trailing Stop with RSI - Momentum-Based",
+      "family": "breakout",
+      "entry_long": "roc(close, 10) > 0 and roc(roc(close, 10), 1) > 0",
+      "exit_long": "rsi(close, 14) > 70 or roc(close, 10) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry, momentum and its change aligned in the same direction, is expressed as a positive 10-bar return whose own change is positive, with 10 as a fallback period since none is given. The RSI overbought/oversold levels reverse positions while the trailing stop is price-following rather than a percent field, so the percent fields stay null."
+    },
+    {
+      "id": 1626,
+      "name": "Parabolic SAR Bug5",
+      "family": "momentum",
+      "entry_long": "crossabove(close, ema(close, 10)) and volume_ratio(volume, 20) > 1",
+      "exit_long": "crossbelow(close, ema(close, 10)) and volume_ratio(volume, 20) > 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so a price/EMA(10) crossing stands in for the documented price crossing the SAR, with an above-average volume confirmation on the documented 20-period baseline; the opposite cross with confirmation is the exit. Step, Maximum, StopLossPoints, TakeProfitPoints, TrailPoints, Reverse and SarClose are acceleration, point and boolean fields."
+    },
+    {
+      "id": 2794,
+      "name": "Aeron JJN Scalper EA",
+      "family": "volatility",
+      "entry_long": "roc(close, 1) < 0 and close > open",
+      "exit_long": "roc(close, 1) > 0 and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented bullish/bearish two-candle reversal is captured by a down bar immediately followed by an up bar, with the mirror closing; the entry level taken from the last opposite candle's open is a pending stop level rather than a bar condition. ATR(8) risk targets, TrailingStopPips, TrailingStepPips, DojiDiff1Pips, DojiDiff2Pips and ResetMinutes are price-distance and timer fields."
+    },
+    {
+      "id": 2633,
+      "name": "IStochastic Trading",
+      "family": "mean_reversion",
+      "entry_long": "ema(100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5) + 0.0001), 3) < 30",
+      "exit_long": "ema(100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5) + 0.0001), 3) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic oscillator is rebuilt over a five-bar range with EMA(3) smoothing because no oscillator period is documented, entering long in oversold and closing in overbought. TakeProfitPips 50, StopLossPips 50, TrailingStopPips 10, TrailingStepPips 5, MaxPositions 3, GapPips 7 and the doubling volume ladder are pip and position-management fields; the epsilon guards a zero-width range."
+    }
+  ]
+}

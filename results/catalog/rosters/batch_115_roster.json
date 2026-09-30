@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2541,
+      "name": "IBS RSI CCI v4",
+      "family": "trend",
+      "entry_long": "crossabove(((close - low) / (high - low + 0.0001) - 0.5) + (rsi(close, 14) - 50) / 50 + zscore(close, 20), 0)",
+      "exit_long": "crossbelow(((close - low) / (high - low + 0.0001) - 0.5) + (rsi(close, 14) - 50) / 50 + zscore(close, 20), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three documented oscillators are scaled and summed into one composite: internal bar strength, RSI centred on 50, and a CCI proxy given by the price z-score, with 14/20 as fallbacks because no periods are documented. The step threshold, the Donchian envelope with band smoothing and the SignalBar confirmation cannot be expressed; the epsilon guards a zero-range bar."
+    },
+    {
+      "id": 2237,
+      "name": "NRTR Trailing Stop",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high(high,10) - 2 * atr(high,low,close,10)) and close < ema(close,20)",
+      "exit_long": "crossbelow(close, donchian_high(high,10) - 2 * atr(high,low,close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "NRTR is unavailable, so its range-derived trailing level is approximated by a 10-bar high minus two ATR(10) values and the documented 'after a downtrend' condition by price below EMA(20). TakeProfit 2000 and StopLoss 1000 points are absolute price distances, not percentages, so both protection fields stay null."
+    },
+    {
+      "id": 1992,
+      "name": "Exp Moving Average FN",
+      "family": "trend",
+      "entry_long": "roc(ema(close, 12), 1) > 0 and bars_since(roc(ema(close, 12), 1) < 0) <= 2",
+      "exit_long": "roc(ema(close, 12), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA Length 12 slope reversal is expressed as a one-bar EMA return turning positive within two bars of a prior decline, since shifted series access is unavailable. Stop Loss 1000 and Take Profit 2000 are absolute price units and are not percentage fields."
+    },
+    {
+      "id": 144,
+      "name": "Hull Ma Volume",
+      "family": "trend",
+      "entry_long": "roc(ema(close, 9), 1) > 0 and volume_ratio(volume, 20) > 1.5",
+      "exit_long": "roc(ema(close, 9), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Hull moving average is approximated by EMA(9) with the documented HullPeriod and the documented VolumePeriod=20 with VolumeMultiplier=1.5 becomes volume_ratio > 1.5; the documented long exit is a falling Hull slope. StopLossAtr of 2.0 ATR(14) is an ATR multiple, not a percentage field."
+    },
+    {
+      "id": 2861,
+      "name": "Martingale MA Breakout",
+      "family": "trend",
+      "entry_long": "close > sma(close, 20) and (close - sma(close, 20)) > 1 * atr(high, low, close, 14)",
+      "exit_long": "close < sma(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The distance trigger is translated as a one-ATR gap from a 20-period moving average, with the MA period and ATR factor as fallbacks because the docs name MaPeriod, MaShift, MaMethod and DistanceFromMaPips without values. The MA shift, pip stops/target, trailing and martingale volume scaling are not single-series signals."
+    },
+    {
+      "id": 3674,
+      "name": "Raymond Cloudy Day",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and close > open",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The higher-timeframe Raymond pivot levels cannot be reproduced from a single candle series, so the prior 20-bar extreme stands in for the momentum-resumption level and the loss of a fresh 5-bar low exits. ProtectiveOffsetTicks=500 is an instrument-tick distance for both stop and target, not a percentage."
+    },
+    {
+      "id": 3271,
+      "name": "Breakthrough Volatility",
+      "family": "breakout",
+      "entry_long": "high - low > 1.05 * (donchian_high(high, 2) - donchian_low(low, 2)) / 2 and close > open",
+      "exit_long": "high - low > 1.05 * (donchian_high(high, 2) - donchian_low(low, 2)) / 2 and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented range-expansion filter becomes a current range exceeding the two-bar mean range by at most 5 percent, standing in for the two-pip upper band, and the candle colour sets direction. StopLossPoints/TakeProfitPoints/TrailingStopPoints and the reverse-on-loss sequence with MaxReverseOrders are point and position-management fields."
+    },
+    {
+      "id": 98,
+      "name": "Gap Fill Reversal",
+      "family": "momentum",
+      "entry_long": "low < donchian_low_prev(low, 1) and close > donchian_low_prev(low, 1) and close > open",
+      "exit_long": "close < ema(close, 20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Because prior open/close buffers are unavailable, a gap break-and-close is approximated by a low below the prior bar's low that closes back inside it on a bullish close, matching the documented gap-fill snap-back. The documented 2 percent stop is used and the 'momentum faded' exit is proxied by losing EMA(20)."
+    },
+    {
+      "id": 3952,
+      "name": "Waddah Attar Win Grid",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA maintains a symmetric ladder of buy and sell limit orders around the live quote and closes everything on a floating-profit threshold, so it contains no market-derived directional entry; the impossible negative-price guard avoids fabricating one. Step Points, Increment Volume and Min Profit are ladder and account fields."
+    },
+    {
+      "id": 605,
+      "name": "Cci Threshold",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close, 12) < -1.35",
+      "exit_long": "roc(close, 1) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so the documented BuyThreshold of -90 is mapped to -1.35 mean deviations of the price over the documented LookbackPeriod=12, and the documented exit is a close above the previous close. StopLossPoints/TakeProfitPoints are optional absolute distances that default to disabled, so they are left null."
+    }
+  ]
+}

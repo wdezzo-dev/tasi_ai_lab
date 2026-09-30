@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2139,
+      "name": "MACD Waterline Cross Expectator",
+      "family": "trend",
+      "entry_long": "crossabove(macd_signal(close,12,26,9),0)",
+      "exit_long": "crossbelow(macd_signal(close,12,26,9),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD signal-line crossings of zero are translated directly; 12/26/9 are explicit fallbacks because the parameters have no values. Absolute stop distance, preset risk-reward targets, and reversal position state are not percentage/DSL fields."
+    },
+    {
+      "id": 1051,
+      "name": "MH Hull Moving Average Based Trading",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,210))",
+      "exit_long": "crossbelow(close,ema(close,210))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(210) is an explicit proxy for the documented HullPeriod=210 trend level, and a close crossing it represents the opposite breakouts. Hull offsets and the 5-minute timeframe are not expressible, and the docs specify no stops."
+    },
+    {
+      "id": 4051,
+      "name": "Profit Hunter HSI with Fibonacci",
+      "family": "trend",
+      "entry_long": "close > ema(close,5) and high > donchian_high_prev(high,3)",
+      "exit_long": "close < ema(close,5) or low < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The numeric EMA(5) and three-bar shifted swing settings are retained; the otherwise tautological EMA state is paired with a prior-swing break because the Fibonacci-grid rules are not supplied. Daily-chart levels, adaptive stops, stepped trailing, and intraday streaming are unavailable."
+    },
+    {
+      "id": 1130,
+      "name": "OBV Traffic Lights",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > ema(volume_ratio(volume,20),20) and ema(close,5) > ema(close,20)",
+      "exit_long": "volume_ratio(volume,20) <= ema(volume_ratio(volume,20),20) or ema(close,5) <= ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "volume_ratio(20) versus its EMA(20) is a volume-flow proxy for OBV versus slow EMA, paired with fast/slow price EMAs. Heikin-Ashi candles and the unparameterized Highest/Lowest filter are unsupported; disagreement exits."
+    },
+    {
+      "id": 3443,
+      "name": "Expert AML MFI",
+      "family": "trend",
+      "entry_long": "close > open and close - open >= 0.5 * atr(high,low,close,14) and rsi(close,12) <= 40",
+      "exit_long": "close < open or rsi(close,12) >= 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(12) at the documented 40/70/30 levels proxies MFI, while a full-size bullish candle is a simplified Meeting Lines proxy. The equal-close two-candle pattern and BodyAveragePeriod=4 body test cannot be reconstructed without shifted OHLC; no percentage stops are documented."
+    },
+    {
+      "id": 570,
+      "name": "Binomial Option Pricing Model",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source explicitly produces no trading signals, so an impossible negative-price guard preserves that behavior. Option-tree pricing, expiry, volatility estimation, and logging have no entry/exit expression in the DSL."
+    },
+    {
+      "id": 2677,
+      "name": "II Outbreak",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,10) and std(close,10) / close < 0.002",
+      "exit_long": "low < donchian_low_prev(low,10) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A fresh ten-bar high plus the documented StdDevLimit=0.002, normalized for price scale, is a breakout/volatility proxy. The proprietary timing oscillator, volatility score, spread gate, pyramiding, and point-based trailing stop are unsupported."
+    },
+    {
+      "id": 1668,
+      "name": "Close Orders",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a one-shot liquidation utility that never opens positions, so the impossible guard preserves its no-entry behavior. Portfolio filters, order IDs, ranges, and clock windows require order-book and time fields unavailable in the DSL."
+    },
+    {
+      "id": 3697,
+      "name": "Symbol Swap",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented strategy is an informational market-data panel and places no orders, so no fabricated signal is used. Security switching, Level1 spread display, chart rendering, and logging are outside the catalog DSL."
+    },
+    {
+      "id": 3290,
+      "name": "Awesome Oscillator Trader",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(macd(close,3,32),0) and bars_since(macd(close,3,32) < 0) <= 4 and rsi(close,8) > 18",
+      "exit_long": "crossbelow(macd(close,3,32),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(3,32) is a documented-length proxy for Awesome Oscillator, and RSI(8)>18 stands in for stochastic leaving oversold. Pip-scaled Bollinger-spread limits, trading hours, and fixed pip protection are not represented; the exit is the oscillator zero cross."
+    }
+  ]
+}

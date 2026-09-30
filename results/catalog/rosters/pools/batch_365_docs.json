@@ -1,0 +1,98 @@
+{
+ "batch_365": {
+  "strategy_ids": [
+   622,
+   975,
+   3257,
+   303,
+   277,
+   603,
+   2863,
+   470,
+   3871,
+   2455
+  ],
+  "docs": {
+   "622": {
+    "id": 622,
+    "name": "Cnagda Fixed Swing",
+    "family": "trend",
+    "overview": "A strategy using Heikin Ashi candles with two modes:\n- **RSI**: entries when short EMA of RSI crosses long EMA on high volume.\n- **Scalp**: entries based on EMA and WMA crossovers of Heikin Ashi close.\n\nStop loss is placed at recent swing high or low and take profit uses a fixed risk/reward multiple.\n\n## Parameters\n- Candle Type\n- Trade Logic\n- Swing Lookback\n- Risk Reward\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Trade Logic\n- Swing Lookback\n- Risk Reward"
+   },
+   "975": {
+    "id": 975,
+    "name": "Linear Cross Trading",
+    "family": "trend",
+    "overview": "This strategy calculates a linear regression of price based on volume to produce a predicted price. A long position is opened when the predicted price crosses above its weighted moving average and the MACD line is rising above its signal. A short position is opened when the MACD line falls below its signal and recent lows are declining.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Predicted price crosses above its WMA and MACD is rising above the signal.\n  - **Short**: MACD is falling below the signal and lows are making lower lows.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: None; positions are reversed on opposite signals.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 21.\n  - `LinearLength` = 9.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression, WMA, MACD\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Predicted price crosses above its WMA and MACD is rising above the signal.\n  - **Short**: MACD is falling below the signal and lows are making lower lows.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: None; positions are reversed on opposite signals.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 21.\n  - `LinearLength` = 9.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression, WMA, MACD\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3257": {
+    "id": 3257,
+    "name": "Gann Line",
+    "family": "trend",
+    "overview": "This strategy replicates the core ideas of the MetaTrader 4 \"Gann Line\" expert advisor (source ID 24877) using the StockSharp high-level API. It keeps the same trend, momentum and long-term MACD filters while expressing all money-management tools in **price steps**, which makes the logic broker-independent.\n\n## Trading Logic\n\n1. **Trend filter (primary timeframe)**\n   - Two linear weighted moving averages (LWMA) are applied to the typical candle price (high + low + close) / 3.\n   - A long bias requires the fast LWMA to close above the slow LWMA; a short bias requires the opposite.\n2. **Momentum confirmation (higher timeframe)**\n   - A momentum oscillator calculated on a configurable higher timeframe checks how far the oscillator deviates from the equilibrium level (100).\n   - At least one of the last three finished momentum values must exceed the configured deviation threshold before any trade is allowed.\n3. **Slow MACD filter (very high timeframe)**\n   - A MACD filter calculated on a slow timeframe (monthly by default) must confirm the direction: MACD main line above signal for longs, below for shorts.\n4. **Position management**\n   - Fixed stop-loss and take-profit targets are converted from price steps into absolute prices when a trade opens.\n   - Optional break-even logic moves the stop to the entry price plus an offset once the trade has moved a given amount of steps in profit.\n   - Optional trailing logic shifts the stop behind the highest high (for longs) or lowest low (for shorts) once the price has travelled a configurable number of steps.\n\n## Risk Management\n\n- All distances (stop-loss, take-profit, break-even and trailing) are entered in price **steps**. The helper converts them to prices by using the instrument `PriceStep`.\n- The strategy works with the base `Volume` property. If it is zero, one contract/lot is used by default.\n- Only a single net position is managed. Opposite signals close the current trade before opening a new one.\n\n## Differences from ",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Fast LWMA` | Length of the fast LWMA used for the trend filter. |\n| `Slow LWMA` | Length of the slow LWMA used for the trend filter. |\n| `Momentum Period` | Lookback of the momentum oscillator on the secondary timeframe. |\n| `Momentum Threshold` | Minimum deviation from 100 required by any of the last three momentum values. |\n| `MACD Fast / Slow / Signal` | EMA lengths of the slow MACD filter. |\n| `Take Profit (steps)` | Take-profit distance in price steps. |\n| `Stop Loss (steps)` | Stop-loss distance in price steps. |\n| `Use Trailing`, `Trail Activation`, `Trail Distance` | Enable trailing, profit needed before trailing starts, and distance between price extreme and trailing stop. |\n| `Use BreakEven`, `BreakEven Activation`, `BreakEven Offset` | Enable break-even, profit required before moving the stop, and additional profit locked afterwards. |\n| `Primary Timeframe` | Candle type used by the LWMA crossover. |\n| `Momentum Timeframe` | Candle type forwarded into the momentum oscillator. |\n| `MACD Timeframe` | Candle type forwarded into the slow MACD filter. |"
+   },
+   "303": {
+    "id": 303,
+    "name": "Seasonality Adjusted Momentum",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 172%. It performs best in the forex market.\n\nSignals trigger when Seasonality confirms momentum shifts on daily data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like MomentumPeriod, SeasonalityThreshold. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `MomentumPeriod = 14`\n  - `SeasonalityThreshold = 0.5m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Seasonality, Adjusted\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `MomentumPeriod = 14`\n  - `SeasonalityThreshold = 0.5m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Seasonality, Adjusted\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "277": {
+    "id": 277,
+    "name": "Keltner Width Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 160%. It performs best in the forex market.\n\nTrades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the Keltner returns toward balance. Starting parameter `EmaPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `KeltnerMultiplier` = 2.0m\n  - `WidthLookbackPeriod` = 20\n  - `WidthDeviationMultiplier` = 2.0m\n  - `AtrStopMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `KeltnerMultiplier` = 2.0m\n  - `WidthLookbackPeriod` = 20\n  - `WidthDeviationMultiplier` = 2.0m\n  - `AtrStopMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "603": {
+    "id": 603,
+    "name": "CC Trend Strategy 2 Downtrend Short",
+    "family": "trend",
+    "overview": "Short-only strategy that sells when the previous close is below a dynamic Fibonacci high and EMA21 is below EMA55. Exits when the price crosses above EMA200 with non-negative profit or when the previous close rises above the 0.236 Fibonacci level and no new short signal appears.\n\n## Details\n\n- **Entry Criteria**:\n  - Short: previous close below Fibonacci high and EMA21 below EMA55\n- **Long/Short**: Short\n- **Exit Criteria**:\n  - Price crosses above EMA200 with profit\n  - Previous close above 0.236 Fibonacci level without new short signal\n- **Stops**: None\n- **Default Values**:\n  - `FibLength` = 100\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Short\n  - Indicators: EMA, Fibonacci\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Short: previous close below Fibonacci high and EMA21 below EMA55\n- **Long/Short**: Short\n- **Exit Criteria**:\n  - Price crosses above EMA200 with profit\n  - Previous close above 0.236 Fibonacci level without new short signal\n- **Stops**: None\n- **Default Values**:\n  - `FibLength` = 100\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Short\n  - Indicators: EMA, Fibonacci\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2863": {
+    "id": 2863,
+    "name": "Lock",
+    "family": "trend",
+    "overview": "Lock Strategy recreates the classic “lock” expert advisor from MetaTrader: it always maintains a hedged pair of long and short positions and keeps recycling them until a profit-lock condition is satisfied. The algorithm is designed for instruments with small tick sizes where a fixed pip-based take profit can be applied.\n\n## Trading Workflow\n\n1. **Initial Hedge** – as soon as market data becomes available the strategy opens a long and a short position with the same volume. If both orders are filled the volume used for the next hedge is multiplied by the `LotExponential` factor.\n2. **Take Profit Management** – every leg stores its entry price. When the candle close moves by `TakeProfitPips` (converted to instrument ticks) from the entry, the leg is closed with a market order. The opposite side remains open, preserving the hedge-like behaviour from the MQL version.\n3. **Re-Hedging** – whenever the total number of active legs is one or zero, the strategy immediately opens a fresh pair. If there are no open legs the base volume resets to `LotSize` before the new pair is created.\n4. **Volume Control** – the helper method `AdjustVolume` enforces exchange restrictions: it rounds volumes to the security’s `VolumeStep`, clamps them by `MinVolume` and `MaxVolume`, and cancels the scale-up if the adjusted value becomes zero.\n\n## Profit Lock Condition\n\nThe original MQL logic monitors account balance versus equity: when balance exceeds equity by `ExcessBalanceOverEquity` and the equity is at least `MinProfit` above the last locked balance, every leg is closed. The C# implementation mirrors this behaviour by tracking the equity observed when the strategy is flat and treating it as the running balance. Once the condition is triggered all legs are liquidated and the baseline balance is updated before the cycle restarts with `LotSize`.\n\n## Parameters\n\n- `LotSize` – base volume for the first hedge cycle (default: `0.1m`).\n- `TakeProfitPips` – pip distance for closing each leg (default",
+    "details": "",
+    "parameters": "- `LotSize` – base volume for the first hedge cycle (default: `0.1m`).\n- `TakeProfitPips` – pip distance for closing each leg (default: `100`). A value of `0` disables the automatic exit.\n- `LotExponential` – multiplier applied to the current volume after both legs open successfully (default: `2m`).\n- `ExcessBalanceOverEquity` – tolerated gap between balance and equity before profits are secured (default: `3000m`).\n- `MinProfit` – additional equity growth that must be achieved before closing all legs (default: `500m`).\n- `CandleType` – timeframe driving the strategy logic (default: 1 minute time frame)."
+   },
+   "470": {
+    "id": 470,
+    "name": "Three Red / Three Green Strategy with ATR Filter",
+    "family": "trend",
+    "overview": "Enters long after three consecutive bearish candles if ATR is above its 30-period SMA. Exits after three bullish candles or when maximum trade duration is reached.\n\n## Parameters\n\n- **CandleType**: Type of candles.\n- **MaxTradeDuration**: Maximum number of bars to keep an open position.\n- **UseGreenExit**: Whether to exit after three green candles.\n- **AtrPeriod**: Period for ATR calculation (0 disables the filter).\n",
+    "details": "",
+    "parameters": "- **CandleType**: Type of candles.\n- **MaxTradeDuration**: Maximum number of bars to keep an open position.\n- **UseGreenExit**: Whether to exit after three green candles.\n- **AtrPeriod**: Period for ATR calculation (0 disables the filter)."
+   },
+   "3871": {
+    "id": 3871,
+    "name": "MA2CCI Classic",
+    "family": "trend",
+    "overview": "The MA2CCI strategy ports the classic MetaTrader expert advisor built around the interaction of two simple moving averages (SMA) and the Commodity Channel Index (CCI). It filters trades using the CCI zero line and applies protective stops derived from the Average True Range (ATR). The system is designed for trend-following entries with fast reaction to reversals.\n\nThe StockSharp version keeps the original trading logic while adapting risk management to the .NET environment. Position sizing follows a risk-per-thousand rule with an additional decrease factor that cuts trade size after consecutive losses. Each entry attaches a volatility-driven stop that mirrors the ATR distance used in the MQL implementation.\n\n## Trading Logic\n\n- **Indicators**\n  - Fast SMA with default length 4.\n  - Slow SMA with default length 8.\n  - CCI filter using 4-period lookback.\n  - ATR with period 4 for stop placement.\n- **Entry Conditions**\n  - **Long**: fast SMA crosses above the slow SMA and the previous finished bar shows CCI rising through zero (from negative to positive).\n  - **Short**: fast SMA crosses below the slow SMA and the previous bar shows CCI falling through zero (from positive to negative).\n- **Exit Conditions**\n  - Opposite SMA crossover closes open positions even if no new trade is initiated.\n  - ATR stop: long positions exit when price falls to `entry - ATR`; short positions exit when price rises to `entry + ATR`.\n\n## Risk Management\n\n- Base order volume is configurable; by default 0.1 lots (or exchange equivalent).\n- Optional dynamic sizing scales the volume to `free capital * MaxRiskPerThousand / 1000` when portfolio data is available.\n- After more than one consecutive loss, the position size is linearly reduced by `losses / DecreaseFactor` of the calculated volume.\n- Volatility stops rely on the most recent finished candle; intrabar spikes beyond stop levels trigger a market exit on the next strategy tick.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- | ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Working timeframe for all indicators. | 1 hour candles |\n| `OrderVolume` | Minimum trade size when risk-based sizing is unavailable. | 0.1 |\n| `FastMaPeriod` | Period of the fast SMA. | 4 |\n| `SlowMaPeriod` | Period of the slow SMA. | 8 |\n| `CciPeriod` | Period of the CCI filter. | 4 |\n| `AtrPeriod` | ATR length for stop calculation. | 4 |\n| `MaxRiskPerThousand` | Fraction of free capital allocated per trade (per 1000 units). | 0.02 |\n| `DecreaseFactor` | Divisor used to shrink volume after losing streaks. | 3 |"
+   },
+   "2455": {
+    "id": 2455,
+    "name": "EMA WMA Crossover",
+    "family": "trend",
+    "overview": "Strategy based on crossover between exponential moving average (EMA) and weighted moving average (WMA) calculated on candle open prices.\nEnters long when EMA crosses below WMA and short when EMA crosses above WMA.\nPosition size is determined by risk percent of account equity.\nThe strategy uses fixed take profit and stop loss distances defined in ticks.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `EMA crosses below WMA`\n  - Short: `EMA crosses above WMA`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `EmaPeriod` = 28\n  - `WmaPeriod` = 8\n  - `StopLossTicks` = 50\n  - `TakeProfitTicks` = 50\n  - `RiskPercent` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Moving average crossover\n  - Direction: Both\n  - Indicators: EMA, WMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `EMA crosses below WMA`\n  - Short: `EMA crosses above WMA`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `EmaPeriod` = 28\n  - `WmaPeriod` = 8\n  - `StopLossTicks` = 50\n  - `TakeProfitTicks` = 50\n  - `RiskPercent` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Moving average crossover\n  - Direction: Both\n  - Indicators: EMA, WMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

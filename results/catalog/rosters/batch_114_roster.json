@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1320,
+      "name": "SMB Magic",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and volume_ratio(volume,20) > 1.5 and close > ema(close,50) and high - low > 1.5 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule combines a large-candle breakout, volume confirmation and an EMA filter, but no numeric values are supplied, so the 20-bar channel, 1.5x volume ratio, EMA(50) and 1.5x ATR candle size are explicit fallbacks. Balance-based position sizing and the documented risk models are not signals."
+    },
+    {
+      "id": 4112,
+      "name": "Moving Average with Frames",
+      "family": "trend",
+      "entry_long": "open < sma(close,18) and close > sma(close,18)",
+      "exit_long": "open > sma(close,18) and close < sma(close,18)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented open-below/close-above crossover of the shifted SMA is kept; MovingPeriod=12 combined with MovingShift=6 is approximated by SMA(18) because shifted buffers are unavailable. The 100-bar warm-up is engine-level, and MaximumRisk/DecreaseFactor are sizing rules rather than percentage exits."
+    },
+    {
+      "id": 3562,
+      "name": "TenKijun Cross Alert",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states explicitly that no trades are executed: the EA only logs Tenkan/Kijun cross push notifications between StartHour 0 and LastHour 20, so the impossible negative-price guard prevents inventing a market signal. Ichimoku periods, session hours and the chart bindings are not DSL fields."
+    },
+    {
+      "id": 998,
+      "name": "LSMA Fast And Simple Alternative Calculation",
+      "family": "trend",
+      "entry_long": "crossabove(close, 3 * ema(close,25) - 2 * sma(close,25))",
+      "exit_long": "crossbelow(close, 3 * ema(close,25) - 2 * sma(close,25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 3*WMA-2*SMA approximation is kept with the documented length 25, substituting EMA(25) for the unavailable weighted moving average; a close crossing the line enters and the opposite cross exits. Stops are documented as absent."
+    },
+    {
+      "id": 710,
+      "name": "Dual Strategy Selector V2 - Cryptogyani",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(close,50)) and close > sma(close,200)",
+      "exit_long": "crossbelow(sma(close,20), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The second of the two documented modes is translated: fast/slow SMA crossover with the higher-timeframe trend filter, using 20/50/200 as fallbacks because no periods are documented. The trailing/fixed target, ATR stop and partial take profit are order-management modules, not percentage fields."
+    },
+    {
+      "id": 102,
+      "name": "Bearish Harami",
+      "family": "breakout",
+      "entry_long": "high <= donchian_high_prev(high,1) and low >= donchian_low_prev(low,1) and close > open",
+      "exit_long": "high <= donchian_high_prev(high,1) and low >= donchian_low_prev(low,1) and close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented rule sells the inside candle close, so the long side uses the bullish mirror: an inside bar that closes up enters and an inside bar closing down is the opposite signal that exits. The documented percent-based StopLoss of 2 is applied; the 15-minute timeframe and pattern-high stop placement are not expressible."
+    },
+    {
+      "id": 3259,
+      "name": "AeroSpine",
+      "family": "breakout",
+      "entry_long": "close > open * 1.01 and volume_ratio(volume, 20) > 1.2 and close > donchian_high_prev(high, 10)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The daily open is represented by the bar open, with the documented Entry Offset converted to a 1 percent fallback since pip values are not given, plus the documented volume filter and a 10-bar breakout context. Entry Hour, pip-based exit/recovery/break-even offsets and the MaxSpread check are time or pip fields."
+    },
+    {
+      "id": 383,
+      "name": "Mutual Fund Momentum",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy ranks a list of mutual funds on 126-day trailing returns and holds the single winner each quarter, which is a cross-sectional rotation with no single-instrument market signal; the impossible negative-price guard avoids fabricating one. Rebalance dates and MinTradeUsd are calendar and account fields."
+    },
+    {
+      "id": 3086,
+      "name": "Tunnel Gen4 Hedged Grid",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA opens a simultaneous buy/sell hedge, adds a doubled reinforcement leg after a pip-sized step and then liquidates the basket, so it is a market-neutral position overlay with no directional entry to translate. StartVolume, StepPips and tick-size adjustments are volume and pip fields."
+    },
+    {
+      "id": 2207,
+      "name": "Bollinger Bands Automated",
+      "family": "mean_reversion",
+      "entry_long": "low <= bb_lower(close, 20, 2)",
+      "exit_long": "crossabove(close, bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented buy limit at the lower band becomes a touch of the lower band with the documented BbPeriod=20 and BbDeviation=2, and the middle-band cross is the exit. Pending-order refresh each candle and the 15-minute timeframe are engine/execution details; stops are documented as absent."
+    }
+  ]
+}

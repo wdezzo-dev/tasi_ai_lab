@@ -1,0 +1,98 @@
+{
+ "batch_337": {
+  "strategy_ids": [
+   941,
+   1380,
+   2713,
+   2124,
+   618,
+   1224,
+   4113,
+   898,
+   3633,
+   1063
+  ],
+  "docs": {
+   "941": {
+    "id": 941,
+    "name": "IU Higher Timeframe MA Cross",
+    "family": "trend",
+    "overview": "IU Higher Timeframe MA Cross Strategy trades when a fast moving average computed on a user-selected timeframe crosses a slower moving average from possibly another timeframe. A long position opens on a bullish cross and a short position on a bearish cross. Stop loss is placed at the previous candle's extreme, and take profit uses a configurable risk-to-reward ratio.\n\n## Details\n- **Data**: Candles from specified timeframes.\n- **Entry Criteria**:\n  - **Long**: MA1 crosses above MA2.\n  - **Short**: MA1 crosses below MA2.\n- **Exit Criteria**: Stop loss or take profit hit.\n- **Stops**: Previous candle high/low with `RiskToReward` multiplier.\n- **Default Values**:\n  - `Ma1CandleType` = 60m\n  - `Ma1Length` = 20\n  - `Ma1Type` = MovingAverageTypeEnum.Exponential\n  - `Ma2CandleType` = 60m\n  - `Ma2Length` = 50\n  - `Ma2Type` = MovingAverageTypeEnum.Exponential\n  - `RiskToReward` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: Moving Average\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Candles from specified timeframes.\n- **Entry Criteria**:\n  - **Long**: MA1 crosses above MA2.\n  - **Short**: MA1 crosses below MA2.\n- **Exit Criteria**: Stop loss or take profit hit.\n- **Stops**: Previous candle high/low with `RiskToReward` multiplier.\n- **Default Values**:\n  - `Ma1CandleType` = 60m\n  - `Ma1Length` = 20\n  - `Ma1Type` = MovingAverageTypeEnum.Exponential\n  - `Ma2CandleType` = 60m\n  - `Ma2Length` = 50\n  - `Ma2Type` = MovingAverageTypeEnum.Exponential\n  - `RiskToReward` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: Moving Average\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1380": {
+    "id": 1380,
+    "name": "Supertrend Nitin",
+    "family": "trend",
+    "overview": "Supertrend strategy by Nitin on 5-minute candles.\n\n## Details\n\n- **Entry Criteria**: Direction change upward.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Direction change downward.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Multiplier` = 3m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Direction change upward.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Direction change downward.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Multiplier` = 3m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2713": {
+    "id": 2713,
+    "name": "Martin 1",
+    "family": "trend",
+    "overview": "Conversion of the MetaTrader 5 expert advisor \"Martin 1\" into the StockSharp high level strategy API. The algorithm continuously maintains exposure and uses hedging-style martingale steps to recover drawdowns while pyramiding into profitable trends.\n\n## Trading Logic\n\n1. **Initial exposure** – when the strategy is flat it immediately opens a position in the direction defined by `StartDirection`, regardless of the time filter. The base order size is taken from `InitialVolume` after rounding to the instrument volume step.\n2. **Time window filter** – when `UseTradingHours` is enabled, only scaling actions (pyramiding or hedging) are allowed between `StartHour` and `EndHour` inclusive, using the exchange time contained in candle timestamps.\n3. **Pyramiding winners** – every open position is evaluated on each finished candle. If the floating profit of a long position exceeds the take-profit distance and remains positive, an additional long order with the current volume is sent. Short positions behave symmetrically. The new order price is assumed to be the close of the current candle.\n4. **Hedging martingale** – when the start direction is long and a long position loses more than `(StopLossPips × pip size × (multiplication index + 1))`, the strategy opens an opposite short order. Before placing the hedge the volume is multiplied by `LotMultiplier`, rounded to the allowed step, and the multiplication counter is increased. The same logic is applied in reverse for short start direction. Hedging stops once `MaxMultiplications` steps have been reached.\n5. **Global profit target** – the unrealized profit across all remaining positions (converted to money using `PriceStep`/`StepPrice`) is summed. If it exceeds `MinProfit`, every open position is closed by issuing a market order in the opposite direction, and the martingale state is reset.\n\n## Risk and Money Management\n\n- The pip size is computed from the security price step. Three- and five-digit quotes multiply the step by ten ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle type that drives all calculations. | 1 minute timeframe |\n| `UseTradingHours` | Enables or disables the time window filter. | `true` |\n| `StartHour` | Inclusive hour when the time filter allows new scaling actions. | 2 |\n| `EndHour` | Inclusive hour when scaling actions stop. | 21 |\n| `LotMultiplier` | Factor applied to the current volume before opening a hedge. | 1.6 |\n| `MaxMultiplications` | Maximum number of hedging steps that may be triggered. | 5 |\n| `StartDirection` | Direction of the very first order after the strategy becomes flat. | Buy |\n| `MinProfit` | Floating profit (in money) that forces all positions to close. | 1.5 |\n| `InitialVolume` | Base volume for the very first order and reset state. | 0.1 |\n| `StopLossPips` | Pip distance that triggers the next martingale hedge. | 40 |\n| `TakeProfitPips` | Pip distance that triggers a pyramiding entry. | 100 |"
+   },
+   "2124": {
+    "id": 2124,
+    "name": "JMA Candle Sign",
+    "family": "trend",
+    "overview": "This strategy uses two Jurik Moving Averages (JMA) calculated on the open and close prices of each candle. A bullish signal occurs when the JMA of the open price crosses below the JMA of the close price, prompting a long entry. A bearish signal occurs when the JMA of the open price crosses above the JMA of the close price, prompting a short entry.\n\nThe default timeframe is four-hour candles with a JMA period of seven. Stop loss and take profit levels are defined in points and applied through built-in risk management. The strategy acts only on finished candles and maintains at most one open position.\n\n## Parameters\n- **JMA Length** – period for both JMAs.\n- **Candle Type** – timeframe of processed candles.\n- **Take Profit** – profit target in points.\n- **Stop Loss** – maximum loss in points.\n",
+    "details": "",
+    "parameters": "- **JMA Length** – period for both JMAs.\n- **Candle Type** – timeframe of processed candles.\n- **Take Profit** – profit target in points.\n- **Stop Loss** – maximum loss in points."
+   },
+   "618": {
+    "id": 618,
+    "name": "ChopFlow ATR Scalp",
+    "family": "trend",
+    "overview": "ChopFlow ATR Scalp enters when the market leaves choppy conditions and OBV crosses its EMA. Exits use symmetric ATR-based stops and targets.\n\nThe goal is to capture quick moves during early trend formation.\n\n## Details\n\n- **Entry Criteria**: `Choppiness < ChopThreshold` and OBV above/below its EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR stop or take-profit distance.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `ChopLength` = 14\n  - `ChopThreshold` = 60\n  - `ObvEmaLength` = 10\n  - `SessionInput` = \"1700-1600\"\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: ATR, Choppiness, OBV\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: `Choppiness < ChopThreshold` and OBV above/below its EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR stop or take-profit distance.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 1.5\n  - `ChopLength` = 14\n  - `ChopThreshold` = 60\n  - `ObvEmaLength` = 10\n  - `SessionInput` = \"1700-1600\"\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: ATR, Choppiness, OBV\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1224": {
+    "id": 1224,
+    "name": "Range Filter",
+    "family": "trend",
+    "overview": "Range filter strategy with realistic range calculation and fixed risk/reward levels.\n\nIt uses a smoothed range to create dynamic bands around price. Trades are taken when price breaks above or below these bands. Risk management uses fixed stop loss and take profit distances.\n\n## Details\n\n- **Entry Criteria**: Price breaks range filter bands.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SamplingPeriod` = 100\n  - `RangeMultiplier` = 3\n  - `RiskPoints` = 50\n  - `RewardPoints` = 100\n  - `MaxTradesPerDay` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Range filter\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price breaks range filter bands.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SamplingPeriod` = 100\n  - `RangeMultiplier` = 3\n  - `RiskPoints` = 50\n  - `RewardPoints` = 100\n  - `MaxTradesPerDay` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Range filter\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4113": {
+    "id": 4113,
+    "name": "Forex Sky",
+    "family": "trend",
+    "overview": "The **Forex Sky Strategy** is a direct port of the MetaTrader expert advisor `Forex_SKY.mq4`. It trades MACD momentum swings and strictly limits itself to a single position per trading day. The StockSharp implementation keeps the original MACD thresholds and the safety check that prevents more than one order per candle.\n\nThe strategy subscribes to the timeframe defined by `CandleType` (15-minute candles by default) and evaluates the classic MACD (12/26/9) on the close of each completed candle.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `FastPeriod` | 12 | Fast EMA length of the MACD indicator. |\n| `SlowPeriod` | 26 | Slow EMA length of the MACD indicator. |\n| `SignalPeriod` | 9 | Signal EMA length of the MACD indicator. |\n| `TakeProfitPoints` | 100 | Distance to the take-profit order expressed in instrument points. Converted to price by multiplying with the security price step. |\n| `StopLossPoints` | 3000 | Distance to the stop-loss order in instrument points. |\n| `TradeVolume` | 0.1 | Base market order size (lots). |\n| `CandleType` | 15-minute time frame | Timeframe that feeds the MACD calculations and trade decisions. |\n\n### Instrument point calculation\n`TakeProfitPoints` and `StopLossPoints` are specified exactly like the MetaTrader version—`Point` in MQL4 corresponds to `Security.PriceStep` in StockSharp. For a five-digit forex pair (`PriceStep = 0.00001`), the default settings translate to:\n- Take-profit: `100 × 0.00001 = 0.001` price units.\n- Stop-loss: `3000 × 0.00001 = 0.03` price units."
+   },
+   "898": {
+    "id": 898,
+    "name": "Hull Suite by MRS",
+    "family": "trend",
+    "overview": "A trend-following strategy that compares the selected Hull-type moving average with its value two bars ago. Long positions open when the average rises above its two-bar-old value, and short positions when it falls below.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `MA > MA[2]`.\n  - **Short**: `MA < MA[2]`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 55\n  - `Mode` = Hma\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Hull MA\n  - Stops: None\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `MA > MA[2]`.\n  - **Short**: `MA < MA[2]`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 55\n  - `Mode` = Hma\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Hull MA\n  - Stops: None\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3633": {
+    "id": 3633,
+    "name": "Scalper EMA Simple",
+    "family": "trend",
+    "overview": "The **Scalper EMA Simple Strategy** is a conversion of the MetaTrader expert advisor `ScalperEMAEASimple`. It uses a combination of fast/slow exponential moving averages, a stochastic oscillator, and an Average Directional Index (ADX) filter to identify short-lived pullback entries within an existing trend. The strategy is designed for intraday scalping on liquid FX pairs but can be applied to any instrument where pip-based risk management makes sense.\n\nThe implementation follows the StockSharp high-level API and evaluates only finished candles. All calculations are performed incrementally without reprocessing historical data, making the logic suitable for live trading.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Base trading volume for each signal. The strategy automatically adds existing exposure to ensure full reversal when changing direction. |\n| `FastEmaPeriod` / `SlowEmaPeriod` | Period lengths for the exponential moving averages. |\n| `StochasticLength`, `StochasticKPeriod`, `StochasticDPeriod` | Stochastic oscillator configuration mirroring the original EA defaults. |\n| `StochasticOversold` / `StochasticOverbought` | Extreme levels that define the retracement zones. |\n| `AdxThreshold` | Maximum ADX value allowed before rejecting trades. |\n| `SignalCooldownBars` | Minimum bars between successive signals in the same direction. |\n| `ConditionWindowBars` | Number of bars during which retracement, EMA breakout, and stochastic confirmation must align. |\n| `StopLossPips` | Initial stop-loss distance expressed in pips. |\n| `TrailingDistancePips` | Distance maintained by the trailing stop once activated. |\n| `TrailingActivationPips` | Profit threshold that arms the trailing stop. |\n| `CandleType` | Candle series used for all indicators. Default is a 5-minute timeframe. |"
+   },
+   "1063": {
+    "id": 1063,
+    "name": "Momentum Keltner Stochastic Combo",
+    "family": "trend",
+    "overview": "Strategy combining momentum comparison with a Keltner-based stochastic oscillator.  \nPositions are scaled dynamically based on equity and protected by a fixed stop loss.\n\n## Details\n\n- **Entry Criteria**:  \n  - Long: `Momentum > 0` and `KeltnerStoch < Threshold`  \n  - Short: `Momentum < 0` and `KeltnerStoch > Threshold`\n- **Long/Short**: Both  \n- **Exit Criteria**:  \n  - Long: `KeltnerStoch > Threshold`  \n  - Short: `KeltnerStoch < Threshold`\n- **Stops**: Fixed `SlPoints` below/above entry  \n- **Default Values**:  \n  - `MomLength` = 7  \n  - `KeltnerLength` = 9  \n  - `KeltnerMultiplier` = 0.5  \n  - `Threshold` = 99  \n  - `AtrLength` = 20  \n  - `SlPoints` = 1185  \n  - `EnableScaling` = true  \n  - `BaseContracts` = 1  \n  - `InitialCapital` = 30000  \n  - `EquityStep` = 150000  \n  - `MaxContracts` = 15  \n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:  \n  - Category: Trend following  \n  - Direction: Both  \n  - Indicators: Momentum, EMA, ATR  \n  - Stops: Yes  \n  - Complexity: Intermediate  \n  - Timeframe: Mid-term  \n  - Seasonality: No  \n  - Neural Networks: No  \n  - Divergence: No  \n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:  \n  - Long: `Momentum > 0` and `KeltnerStoch < Threshold`  \n  - Short: `Momentum < 0` and `KeltnerStoch > Threshold`\n- **Long/Short**: Both  \n- **Exit Criteria**:  \n  - Long: `KeltnerStoch > Threshold`  \n  - Short: `KeltnerStoch < Threshold`\n- **Stops**: Fixed `SlPoints` below/above entry  \n- **Default Values**:  \n  - `MomLength` = 7  \n  - `KeltnerLength` = 9  \n  - `KeltnerMultiplier` = 0.5  \n  - `Threshold` = 99  \n  - `AtrLength` = 20  \n  - `SlPoints` = 1185  \n  - `EnableScaling` = true  \n  - `BaseContracts` = 1  \n  - `InitialCapital` = 30000  \n  - `EquityStep` = 150000  \n  - `MaxContracts` = 15  \n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:  \n  - Category: Trend following  \n  - Direction: Both  \n  - Indicators: Momentum, EMA, ATR  \n  - Stops: Yes  \n  - Complexity: Intermediate  \n  - Timeframe: Mid-term  \n  - Seasonality: No  \n  - Neural Networks: No  \n  - Divergence: No  \n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3494,
+      "name": "MA Break Impulse Buy",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,30) and ema(close,30) > ema(close,50) and close > ema(close,30) and low <= ema(close,20) and close > open and (close-open) > 1.1 * atr(high,low,close,2)",
+      "exit_long": "ema(close,20) < ema(close,30) or close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA filters and breakout touch are retained, with ATR(2) as a proxy for the quiet-range impulse multiplier. Wick limits, quiet-bar state, timeframes, and pip stops are unavailable in the DSL."
+    },
+    {
+      "id": 1066,
+      "name": "MomentumSync PSAR RSI ADX Filtered 3-Tier Exit",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),55) and adx(high,low,close,14) > 25",
+      "exit_long": "crossbelow(rsi(close,14),45) or bars_since(crossbelow(rsi(close,14),45)) < 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so an RSI(14) reversal with ADX(14) strength is used; the three-bar exit is represented by a recent RSI bearish cross. SAR parameters and the exact three-tier state machine are omitted."
+    },
+    {
+      "id": 4015,
+      "name": "Corrected Average Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20) + 2 * std(close,20))",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) plus or minus two standard deviations approximates the corrected-average sigma channel because its MA type and period are unspecified. Point-based protection, trailing, and the corrected-average calculation are not expressible."
+    },
+    {
+      "id": 1707,
+      "name": "Intraday Beta",
+      "family": "trend",
+      "entry_long": "crossabove(roc(sma(close,10),1),0) and rsi(close,14) < 70 and close > open",
+      "exit_long": "crossbelow(roc(sma(close,10),1),0) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rising SMA(10) ROC, RSI(14) below 70, and a bullish candle proxy the documented turning-point entry; the inverse slope/RSI conditions exit. The ATR threshold, adaptive trailing stop, and intraday clock have no supplied DSL values."
+    },
+    {
+      "id": 1345,
+      "name": "Stop Loss Take Profit Money",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,14),sma(close,28))",
+      "exit_long": "crossbelow(sma(close,14),sma(close,28))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(14)/SMA(28) bullish crossover and bearish exit are preserved. Money-based profit and loss targets cannot be represented by percentage fields, and the short side is omitted."
+    },
+    {
+      "id": 3180,
+      "name": "Fraktrak XonaX Advanced",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,5)",
+      "exit_long": "low < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A fresh break above the prior five-bar high is the long proxy for a Williams-fractal breakout, with the mirrored low break as exit. Fractal buffers, reverse mode, order state, and pip-based management are unsupported."
+    },
+    {
+      "id": 633,
+      "name": "Contrarian DC",
+      "family": "breakout",
+      "entry_long": "low <= donchian_low_prev(low,20)",
+      "exit_long": "high >= donchian_high_prev(high,20)",
+      "stop_loss_pct": 0.3,
+      "take_profit_pct": 0.51,
+      "notes": "Prior 20-bar Donchian boundaries retain the documented lower-pierce entry and opposite-band exit; 0.3% and 1.7R imply a 0.51% target. The three-candle post-stop pause and short side are stateful and omitted."
+    },
+    {
+      "id": 841,
+      "name": "Macd Momentum Reversal",
+      "family": "momentum",
+      "entry_long": "close < open and crossabove(macd(close,12,26)-macd_signal(close,12,26,9),0)",
+      "exit_long": "close > open and crossbelow(macd(close,12,26)-macd_signal(close,12,26,9),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bearish candle with a rising MACD(12,26,9) histogram is the documented long reversal setup, and the bullish opposite signal exits. The short branch and intraday timeframe are omitted by this long-only roster."
+    },
+    {
+      "id": 3390,
+      "name": "Ring System EA",
+      "family": "volatility",
+      "entry_long": "close > open and volume_ratio(volume,20) > 1",
+      "exit_long": "close < open or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Multi-currency triangular baskets, martingale layers, and portfolio PnL targets cannot be expressed on one OHLCV series; bullish candles with average-volume activity are an explicit activity proxy. No deterministic ring signal is available."
+    },
+    {
+      "id": 2416,
+      "name": "DoubleUp2 CCI MACD",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,8) < 30 and macd(close,13,33) < 0",
+      "exit_long": "crossabove(macd(close,13,33),0) or rsi(close,8) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so RSI(8) below 30 is an oversold proxy while MACD(13,33) preserves the documented negative-momentum filter. The CCI threshold, signal period 2, martingale sizing, and point-based target are omitted."
+    }
+  ]
+}

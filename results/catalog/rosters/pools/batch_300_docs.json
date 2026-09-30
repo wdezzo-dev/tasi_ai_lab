@@ -1,0 +1,98 @@
+{
+ "batch_300": {
+  "strategy_ids": [
+   673,
+   3568,
+   2744,
+   3070,
+   1040,
+   3903,
+   2466,
+   1191,
+   4200,
+   432
+  ],
+  "docs": {
+   "673": {
+    "id": 673,
+    "name": "DEMA Trend Oscillator",
+    "family": "trend",
+    "overview": "Strategy normalizes the Double Exponential Moving Average (DEMA) with a moving average and standard deviation. Goes long when the normalized value exceeds the long threshold and price stays above the upper band; goes short when below the short threshold and price stays under the lower band. Uses ATR based trailing stop, band stop-loss and risk-reward take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: normalized value > `LongThreshold` and low > upper band\n  - Short: normalized value < `ShortThreshold` and high < lower band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price hits take profit, band stop-loss or trailing stop\n  - Short: price hits take profit, band stop-loss or trailing stop\n- **Stops**: Band stop-loss, ATR trailing, risk-reward take profit\n- **Default Values**:\n  - `DemaPeriod` = 40\n  - `BaseLength` = 20\n  - `LongThreshold` = 55m\n  - `ShortThreshold` = 45m\n  - `RiskReward` = 1.5m\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: DEMA, SMA, StandardDeviation, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: normalized value > `LongThreshold` and low > upper band\n  - Short: normalized value < `ShortThreshold` and high < lower band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price hits take profit, band stop-loss or trailing stop\n  - Short: price hits take profit, band stop-loss or trailing stop\n- **Stops**: Band stop-loss, ATR trailing, risk-reward take profit\n- **Default Values**:\n  - `DemaPeriod` = 40\n  - `BaseLength` = 20\n  - `LongThreshold` = 55m\n  - `ShortThreshold` = 45m\n  - `RiskReward` = 1.5m\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: DEMA, SMA, StandardDeviation, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3568": {
+    "id": 3568,
+    "name": "Mean Reversion Momentum",
+    "family": "trend",
+    "overview": "The Mean Reversion strategy is a direct port of the MetaTrader expert advisor *Mean reversion.mq4*. The StockSharp version keeps the original trading idea: buy after an extended series of declining closes and sell after a similar bullish run. Entries are confirmed by trend alignment using two linear weighted moving averages, momentum strength on a higher timeframe, and a monthly MACD filter.\n\nOnce in position, the strategy recreates the money management rules from the MQL version: configurable stop-loss and take-profit in pips, optional break-even relocation, and a trailing stop that locks in profits as the market moves in the trade's favor.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `OrderVolume` | Order size used for market entries. | `1` |\n| `CandleType` | Primary candle series used for signals. | `M15` |\n| `BarsToCount` | Number of previous closes checked for exhaustion. | `10` |\n| `FastMaLength` | Fast LWMA period. | `6` |\n| `SlowMaLength` | Slow LWMA period. | `85` |\n| `MomentumLength` | Momentum period on the higher timeframe. | `14` |\n| `MomentumThreshold` | Minimum absolute deviation from 100 for momentum confirmation. | `0.3` |\n| `StopLossPips` | Stop-loss distance in pips. | `20` |\n| `TakeProfitPips` | Take-profit distance in pips. | `50` |\n| `UseBreakEven` | Enable stop relocation to break-even. | `false` |\n| `BreakEvenTriggerPips` | Profit in pips needed before moving the stop. | `30` |\n| `BreakEvenOffsetPips` | Extra pips added when moving to break-even. | `30` |\n| `EnableTrailing` | Activate trailing stop management. | `true` |\n| `TrailingStopPips` | Profit in pips required to start trailing. | `40` |\n| `TrailingStepPips` | Distance maintained by the trailing stop. | `40` |"
+   },
+   "2744": {
+    "id": 2744,
+    "name": "Martin For Small Deposits",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"Martin for small deposits\" averaging expert in StockSharp. It looks at 15 completed candles and opens a position only when the newest close is below (for longs) or above (for shorts) the close recorded 14 bars earlier. All trades are executed at market using the high-level strategy API, and the logic is applied once per finished candle.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| Initial Volume | 0.01 | Base lot size for the first trade. |\n| Take Profit (pips) | 65 | Distance in pips from the latest fill that triggers a full exit. Use 0 to disable this check. |\n| Step (pips) | 15 | Adverse movement in pips required before averaging into the position. |\n| Bars To Skip | 45 | Minimum number of finished candles to wait between averaging orders. |\n| Increase Factor | 1.7 | Multiplier applied to the trade volume each time a new order is added on the same side. |\n| Max Volume | 6 | Upper bound for aggregated volume (before normalization by market limits). |\n| Min Profit | 10 | Profit target used to close the entire grid when the net profit exceeds this amount. |\n| Candle Type | 1 hour | Timeframe used for candle subscription and signal calculations. |"
+   },
+   "3070": {
+    "id": 3070,
+    "name": "Exp XWPR Histogram Vol Direct",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor **Exp_XWPR_Histogram_Vol_Direct**. It reproduces the original\napproach of weighting Williams %R values by volume, smoothing the result, and opening trades when the histogram slope changes\ncolor. Orders are triggered on fully-formed candles and use optional protective stop-loss and take-profit measured in price steps.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `WilliamsPeriod` | Lookback length for Williams %R. |\n| `HighLevel2`, `HighLevel1`, `LowLevel1`, `LowLevel2` | Multipliers applied to the smoothed volume to rebuild the indicator bands. |\n| `SmoothingType` | Moving average family used for both the weighted value and the volume streams (SMA, EMA, SMMA, WMA, Hull, VWMA, DEMA, TEMA). |\n| `SmoothingLength` | Length of the smoothing moving average. |\n| `SignalShift` | How many bars back to read the color buffer (1 reproduces the MetaTrader default). |\n| `EnableLongEntries` / `EnableShortEntries` | Allow or block opening long/short positions. |\n| `EnableLongExits` / `EnableShortExits` | Allow or block closing long/short positions. |\n| `VolumeSource` | Choose between tick count or real volume for weighting. |\n| `StopLossPoints` / `TakeProfitPoints` | Optional protective targets expressed in price steps. |\n| `CandleType` | Candle type and timeframe used for analysis and trading. |\n\nUse the base `Volume` property of the strategy to define the entry size. Position reversal is handled by sending the absolute\nposition quantity plus the configured lot size, similar to the MQL expert advisor."
+   },
+   "1040": {
+    "id": 1040,
+    "name": "Mean Deviation Index",
+    "family": "trend",
+    "overview": "The strategy uses the Mean Deviation Index (MDX) to trade deviations from an ATR-filtered EMA.\nA long position is opened when the MDX rises above the specified level,\nand a short position is opened when it falls below the negative level.\n\n## Details\n\n- **Entry**:\n  - Long when MDX > Level\n  - Short when MDX < -Level\n- **Exit**: Opposite signal.\n- **Indicators**: EMA and ATR.\n",
+    "details": "- **Entry**:\n  - Long when MDX > Level\n  - Short when MDX < -Level\n- **Exit**: Opposite signal.\n- **Indicators**: EMA and ATR.",
+    "parameters": ""
+   },
+   "3903": {
+    "id": 3903,
+    "name": "Trade Channel ATR",
+    "family": "trend",
+    "overview": "The Trade Channel strategy replicates the original MetaTrader expert advisor that traded price channels with ATR-based stops. It waits for channel boundaries to remain unchanged and for the latest candle to touch or reject those levels. When the setup appears, the strategy opens a position in the opposite direction of the touch and applies an adaptive trailing stop measured in points.\n\nThe approach seeks to exploit mean-reversion around a stable price channel. It filters signals so that the channel must be flat (no new highs or lows) before it enters. Protective stops are placed beyond the channel using the Average True Range, and an optional trailing stop locks in profits once the move develops.\n\n## Details\n\n- **Entry Criteria**:\n  - Short: Channel high equals the previous channel high and the latest candle either breaks that high or closes between the high and pivot `(high + low + close) / 3`.\n  - Long: Channel low equals the previous channel low and the latest candle either breaks that low or closes between the low and pivot.\n- **Long/Short**: Both directions, but only one position at a time.\n- **Exit Criteria**:\n  - Long: Price touches the channel high while the high stayed unchanged.\n  - Short: Price touches the channel low while the low stayed unchanged.\n  - Optional trailing stop tightens behind the market once profit exceeds `TrailingDistance` points.\n- **Stops**: Initial stop loss at `channel boundary ± ATR`. Trailing stop replaces it when activated.\n- **Default Values**:\n  - `Volume` = 0.1m\n  - `ChannelPeriod` = 20\n  - `AtrPeriod` = 4\n  - `TrailingDistance` = 30\n  - `CandleType` = 30-minute candles\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Highest, Lowest, Average True Range\n  - Stops: ATR stop, Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (30 minutes)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n## Notes\n\n- `Volume` controls the order size; only one position c",
+    "details": "- **Entry Criteria**:\n  - Short: Channel high equals the previous channel high and the latest candle either breaks that high or closes between the high and pivot `(high + low + close) / 3`.\n  - Long: Channel low equals the previous channel low and the latest candle either breaks that low or closes between the low and pivot.\n- **Long/Short**: Both directions, but only one position at a time.\n- **Exit Criteria**:\n  - Long: Price touches the channel high while the high stayed unchanged.\n  - Short: Price touches the channel low while the low stayed unchanged.\n  - Optional trailing stop tightens behind the market once profit exceeds `TrailingDistance` points.\n- **Stops**: Initial stop loss at `channel boundary ± ATR`. Trailing stop replaces it when activated.\n- **Default Values**:\n  - `Volume` = 0.1m\n  - `ChannelPeriod` = 20\n  - `AtrPeriod` = 4\n  - `TrailingDistance` = 30\n  - `CandleType` = 30-minute candles\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Highest, Lowest, Average True Range\n  - Stops: ATR stop, Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (30 minutes)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2466": {
+    "id": 2466,
+    "name": "Heiken Ashi Waves",
+    "family": "trend",
+    "overview": "Strategy blending Heikin-Ashi candles with a dual moving average wave filter. The fast SMA (2) crossing the slow SMA (30) signals potential wave changes and is confirmed by the current Heikin-Ashi candle direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: bullish Heikin-Ashi candle and fast SMA crossing above slow SMA\n  - Short: bearish Heikin-Ashi candle and fast SMA crossing below slow SMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite cross\n  - Trailing stop loss\n- **Stops**: Trailing stop in points via `StopLoss`\n- **Default Values**:\n  - `FastLength` = 2\n  - `SlowLength` = 30\n  - `StopLoss` = new Unit(20, UnitTypes.Point)\n  - `UseTrailing` = true\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Heikin Ashi, SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: bullish Heikin-Ashi candle and fast SMA crossing above slow SMA\n  - Short: bearish Heikin-Ashi candle and fast SMA crossing below slow SMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite cross\n  - Trailing stop loss\n- **Stops**: Trailing stop in points via `StopLoss`\n- **Default Values**:\n  - `FastLength` = 2\n  - `SlowLength` = 30\n  - `StopLoss` = new Unit(20, UnitTypes.Point)\n  - `UseTrailing` = true\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Heikin Ashi, SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1191": {
+    "id": 1191,
+    "name": "Probability of ATR Index",
+    "family": "trend",
+    "overview": "Strategy based on the Probability of ATR Index indicator.\n\n## Details\n\n- **Entry Criteria**: Probability crossing above or below its moving average.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrDistance` = 1.5m\n  - `Bars` = 8\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Probability crossing above or below its moving average.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `AtrDistance` = 1.5m\n  - `Bars` = 8\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4200": {
+    "id": 4200,
+    "name": "Second Easiest",
+    "family": "trend",
+    "overview": "The Second Easiest strategy is the StockSharp port of the MetaTrader expert *Second_Easiest.mq4*. The original robot scans the\ndaily candle of the current trading session and opens a single intraday position once price proves it is trending away from the\nday's open. When the market closes the expert liquidates any exposure, preparing itself for the next session. The StockSharp\nversion preserves this intraday breakout behaviour while taking advantage of the framework's high-level API for candle\nsubscriptions, order management and position tracking.\n\nUnlike momentum strategies that require multiple indicators, Second Easiest only needs the running open, high and low of the\ncurrent day. This makes it very lightweight while still reacting to the earliest signs of directional conviction. The code keeps\none position at a time and never reverses immediately; the new trade can be opened only after the previous one has been closed.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute time frame | Primary intraday candles driving the entry and exit logic. |\n| `TradeVolume` | `decimal` | `1` | Lot size used for every market order. |\n| `EntryCutoffHour` | `int` | `16` | Hour (0-23) after which the strategy refuses to open new positions. |\n| `MarketCloseHour` | `int` | `20` | Hour (0-23) when any open position is forcefully closed. |\n| `RangePointsThreshold` | `decimal` | `15` | Minimum distance, expressed in broker points, between the daily open and the closest extreme. |"
+   },
+   "432": {
+    "id": 432,
+    "name": "MACD + DMI",
+    "family": "trend",
+    "overview": "Combines the Moving Average Convergence Divergence with the Directional Movement Index to trade only when trend strength is confirmed. The system waits for a MACD crossover and checks that the dominant directional line exceeds the opposite line while the ADX is above a key level.\n\nThe strategy is designed for both long and short positions. By pairing momentum and trend filters, it aims to avoid whipsaws in sideways markets. Protective stops based on volatility keep risk contained.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal, +DI > -DI, and ADX above the key level.\n  - **Short**: MACD line crosses below signal, -DI > +DI, and ADX above the key level.\n- **Exit Criteria**:\n  - Reverse signal or volatility stop hit.\n- **Indicators**:\n  - MACD (fast 12, slow 26, signal 9)\n  - Directional Movement Index (length 14, ADX smoothing 14)\n- **Stops**: Uses built-in stop-loss and take-profit via StartProtection.\n- **Default Values**:\n  - `Ma1Length` = 10\n  - `Ma2Length` = 20\n  - `DmiLength` = 14\n  - `AdxSmoothing` = 14\n  - `KeyLevel` = 20\n- **Filters**:\n  - Trend following\n  - Works on multiple timeframes\n  - Indicators: MACD, DMI\n  - Stops: Yes\n  - Complexity: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal, +DI > -DI, and ADX above the key level.\n  - **Short**: MACD line crosses below signal, -DI > +DI, and ADX above the key level.\n- **Exit Criteria**:\n  - Reverse signal or volatility stop hit.\n- **Indicators**:\n  - MACD (fast 12, slow 26, signal 9)\n  - Directional Movement Index (length 14, ADX smoothing 14)\n- **Stops**: Uses built-in stop-loss and take-profit via StartProtection.\n- **Default Values**:\n  - `Ma1Length` = 10\n  - `Ma2Length` = 20\n  - `DmiLength` = 14\n  - `AdxSmoothing` = 14\n  - `KeyLevel` = 20\n- **Filters**:\n  - Trend following\n  - Works on multiple timeframes\n  - Indicators: MACD, DMI\n  - Stops: Yes\n  - Complexity: Moderate",
+    "parameters": ""
+   }
+  }
+ }
+}

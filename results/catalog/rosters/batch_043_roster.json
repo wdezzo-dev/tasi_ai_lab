@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3008,
+      "name": "OCO Pending Orders",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is driven only by manually configured live price triggers and has no historical indicator entry, so an impossible negative-price guard avoids fabricating one. OCO levels, Level1 quotes, arming state, and pip protections are not expressible."
+    },
+    {
+      "id": 3197,
+      "name": "555 Scalper",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30)) and roc(close,14) > 0",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30)) or roc(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10/30) and positive 14-bar ROC are explicit fallbacks for the source's LWMA, higher-timeframe momentum, and monthly MACD filters. Layered trades, pip stops, break-even, trailing, equity, and money exits are unsupported."
+    },
+    {
+      "id": 1971,
+      "name": "ADX Crossing",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,5),0) and adx(high,low,close,50) > 20",
+      "exit_long": "crossbelow(roc(close,5),0) or adx(high,low,close,50) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The +DI/-DI crossover is approximated by a five-bar price-momentum cross confirmed by ADX(50)>20; the inverse is the long exit. The documented absolute 1000/2000 price-unit protections and optional short handling are not percentage fields."
+    },
+    {
+      "id": 3285,
+      "name": "Zone Recovery Formula",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and roc(close,1) > 0",
+      "exit_long": "close < ema(close,20) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) with positive one-bar momentum is a long-side proxy for the moving-average trend direction. The alternating recovery cycles, increasing volume, and floating-profit exit are stateful and omitted."
+    },
+    {
+      "id": 2764,
+      "name": "Time EA",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a time-of-day scheduler with no price/indicator signal, so an impossible negative-price guard is used rather than inventing a deterministic entry. Open/close times, position direction, daily state, and point protections are unavailable."
+    },
+    {
+      "id": 1620,
+      "name": "MSL EA",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior 10-bar extremes are a direct proxy for the dynamic local support/resistance levels. Fractal offsets, tick distance, maximum positions, and the source's close-beyond-level details are not available in the DSL."
+    },
+    {
+      "id": 2991,
+      "name": "Pending Orders By Time 2",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and roc(close,1) > 0",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior-range high break with positive momentum is a market-entry proxy for the scheduled buy-stop. Opening/closing hours, pending-order placement, tick offsets, trailing, and point-based stop/target values are omitted."
+    },
+    {
+      "id": 474,
+      "name": "30-Minute Candle",
+      "family": "momentum",
+      "entry_long": "close > open and roc(close,1) > 0",
+      "exit_long": "close < open or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish current-candle direction and one-bar momentum proxy the documented gap/open comparison. The 30-minute clock, prior-candle access, one-minute-before-close exit, and reversal state are unavailable."
+    },
+    {
+      "id": 1625,
+      "name": "Scalp RSI",
+      "family": "volatility",
+      "entry_long": "roc(rsi(close,14),5) < -5 and roc(rsi(close,14),1) < -3 and rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) ROC over 5 and 1 bars plus RSI<30 is an explicit proxy for the documented rapid-drop rules; -5/-3 are fallback movement levels. Tick stops, timing, position caps, and sell-side parameters are not percentage/DSL fields."
+    },
+    {
+      "id": 286,
+      "name": "RSI Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),sma(rsi(close,14),20)) and rsi(close,14) < 40",
+      "exit_long": "rsi(close,14) >= 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing back above its 20-bar mean from below 40 proxies the documented reversal toward balance. The documented 2% protective stop is retained; the 2x threshold and candle timeframe are not otherwise expressible."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 538,
+      "name": "Automatic Trendlines",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,100)) and close > sma(close,20)",
+      "exit_long": "crossbelow(close,sma(close,100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(100) is a conservative long-only proxy for a pivot-derived 100/15-bar resistance line, with SMA(20) confirming the short trend. Actual pivot queues, connecting lines, and the short-side reversal are unavailable; no stops are documented."
+    },
+    {
+      "id": 4091,
+      "name": "TrainYourself",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 20-candle Donchian channel and breakout execution are retained with the mirrored breakdown as exit. The 50/2-point buffer and activation margin, re-entry arming state, and 100/100-point protection are omitted."
+    },
+    {
+      "id": 1792,
+      "name": "Magna Rapax Copper",
+      "family": "trend",
+      "entry_long": "macd_signal(close,12,26,9) > 0 and ema(close,2) > ema(close,3) and ema(close,3) > ema(close,5) and ema(close,5) > ema(close,8) and ema(close,8) > ema(close,13) and ema(close,13) > ema(close,21) and ema(close,21) > ema(close,34) and ema(close,34) > ema(close,55) and ema(close,55) > ema(close,89) and ema(close,89) > ema(close,144) and ema(close,144) > ema(close,233) and adx(high,low,close,14) > 25",
+      "exit_long": "macd_signal(close,12,26,9) < 0 and ema(close,2) < ema(close,3) and ema(close,3) < ema(close,5) and ema(close,5) < ema(close,8) and ema(close,8) < ema(close,13) and ema(close,13) < ema(close,21) and ema(close,21) < ema(close,34) and ema(close,34) < ema(close,55) and ema(close,55) < ema(close,89) and ema(close,89) < ema(close,144) and ema(close,144) < ema(close,233) and adx(high,low,close,14) > 25",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All eleven documented EMA lengths are retained in strict bullish and bearish stacks with positive/negative MACD signal and ADX(14)>25. MACD and ADX parameters and the threshold are not supplied, so 12/26/9, 14, and 25 are explicit fallbacks."
+    },
+    {
+      "id": 3381,
+      "name": "Multi Currency Template",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21))",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9/21) is an explicit fallback translation of the unspecified EMA crossover. Martingale averaging, pip stop/target, trailing, direction modes, and multiple-currency state are omitted."
+    },
+    {
+      "id": 3924,
+      "name": "Up3x1 Shifted SMA Strategy (MT4 Conversion)",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,24),sma(close,60)) and sma(close,60) > sma(close,120)",
+      "exit_long": "crossbelow(sma(close,24),sma(close,60)) or sma(close,60) < sma(close,120)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(24/60/120) triple alignment is retained without a positive shift because shifted values cannot be addressed. The 150/100-point target and stop and trailing/lot controls are not percentage exits."
+    },
+    {
+      "id": 2496,
+      "name": "Big Dog Range Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,14) and atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "exit_long": "close < donchian_low_prev(low,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 14-bar range approximates the default 14:00-16:00 two-hour box, with ATR(14) below its average proxying the narrow-range filter. Session timing, point distance filters, and consolidation-extreme targets are omitted."
+    },
+    {
+      "id": 2489,
+      "name": "Master MM Droid",
+      "family": "breakout",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),30) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The RSI money-management block is represented by a cross above the fallback lower level 30, exiting on renewed weakness or overbought 70. Other box, weekly-gap, schedule, pyramiding, and point-trailing modules are omitted."
+    },
+    {
+      "id": 621,
+      "name": "CME Equity Futures Price Limits",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source only captures and logs CME limit levels, so impossible price guards deliberately prevent fabricated trades. Reference-hour capture, manual override, and percentage-limit logging are outside the trading DSL."
+    },
+    {
+      "id": 2881,
+      "name": "On Tick Market Watch",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is intentionally a non-trading tick monitor, so impossible guards preserve its lack of orders. Symbol lists, Level1 events, bid/spread logging, and cross-security subscriptions are unavailable."
+    },
+    {
+      "id": 3844,
+      "name": "Get Rich GBP Session Reversal",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,18) < 0 and rsi(close,14) < 30",
+      "exit_long": "roc(close,5) > 0 or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 18-bar bearish count is approximated by negative 18-bar return with RSI confirmation for a long reversal. London/New York hours, 100/40/30-point partial exits, and money management are unavailable."
+    }
+  ]
+}

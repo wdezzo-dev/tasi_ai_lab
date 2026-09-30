@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1591,
+      "name": "Mustang Algo Channel",
+      "family": "trend",
+      "entry_long": "crossabove(sma(rsi(close,14),20),55)",
+      "exit_long": "crossbelow(sma(rsi(close,14),20),48)",
+      "stop_loss_pct": 4.0,
+      "take_profit_pct": 12.0,
+      "notes": "The RSI(14) sentiment oscillator is smoothed with SMA(20) in place of the documented WMA(20) and traded against the documented UpperBound 55 / LowerBound 48. The documented StopLossPercent 4 and TakeProfitPercent 12 are used, while the MedianPeriod 25 bound smoothing and TradeMode switches are dropped."
+    },
+    {
+      "id": 706,
+      "name": "Dual Keltner Channels",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,50) + 2.75 * atr(high,low,close,10)) and bars_since(crossabove(close,ema(close,50) + 3.75 * atr(high,low,close,10))) < 5",
+      "exit_long": "crossbelow(close,ema(close,50) - 2.75 * atr(high,low,close,10)) and bars_since(crossbelow(close,ema(close,50) - 3.75 * atr(high,low,close,10))) < 5",
+      "stop_loss_pct": 10.0,
+      "take_profit_pct": 10.0,
+      "notes": "Keltner bands are built as the documented EMA(50) plus the InnerMultiplier 2.75 / OuterMultiplier 3.75 times ATR(10) (the ATR period is not documented), and the entry requires an outer-band pierce followed within 5 bars by an inner-band re-cross upward, mirrored on exit. MaxStopPercent 10 with SlTpRatio 1 gives the 10%/10% protection."
+    },
+    {
+      "id": 1459,
+      "name": "Trend Deviation BTC",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,15),ema(close,30)) and close < bb_upper(close,13,2.3) and (roc(close,10) > 0 or macd(close,15,200) > macd_signal(close,15,200,25))",
+      "exit_long": "crossbelow(ema(close,15),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "+DI/-DI are not exposed (adx returns a single DX line), so the DmiPeriod 15 crossover is approximated by a 15/30 EMA cross; the Bollinger(13, 2.3) price-below-upper-band test and the documented MACD(15,200,25) and MomentumLength 10 confirmations are kept, with momentum/MACD as the documented 'any confirmation'. SuperTrend and Aroon legs are dropped and docs state no stops."
+    },
+    {
+      "id": 457,
+      "name": "Averaging Down",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) - 2 * atr(high,low,close,14)",
+      "exit_long": "close > ema(close,20) * 1.01",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first entry of the DCA ladder is the ATR-band break around the EMA (EMA 20, ATR 14, multiplier 2 are fallbacks because no values are documented) and the exit is the return to the average entry plus 1% TP. The step-scaled deviation levels, DCA size multiplier, Max DCA Levels and the undocumented TP % cannot be expressed as documented percent stops."
+    },
+    {
+      "id": 3279,
+      "name": "Eliot Wave Strategy (Ported from MQL4 \"Eliot Wave I\")",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,6),ema(close,85)) and roc(close,14) > 0.3 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(ema(close,6),ema(close,85))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "LWMA is unavailable so the documented Fast/Slow LWMA 6 and 85 are EMA, and the MomentumPeriod 14 confirmation keeps the documented 0.3 threshold above the neutral 100 level. The multi-timeframe layout (15m/1h/30-day) collapses to one series, and the 20-point stop and 50-point target are instrument points, not percentages."
+    },
+    {
+      "id": 95,
+      "name": "Williams %R Hook Reversal",
+      "family": "breakout",
+      "entry_long": "rsi(close,14) < 35 and bars_since(rsi(close,14) >= 35) > 2 and low <= donchian_low_prev(low,10) and roc(rsi(close,14),1) > 0",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Williams %R is approximated with RSI(14): several bars of oversold, a fresh 10-bar low and a rising one-bar RSI change express the documented 'reverses higher from oversold while price presses new lows' hook, and the overbought hook down at 70 exits. The documented 2% stop is used; the 10-bar lookback and the 35 level are fallbacks."
+    },
+    {
+      "id": 4210,
+      "name": "Huge Income",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and roc(close,1) > 1",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The minimum distance from the session open is rendered as a 1% range expansion (roc(close,1)) plus a 10-bar range break, with EMA(10) as the exit since the source only has protective orders. The intraday daily-open reconstruction, Buy/SellCutoffHour limits and the forced market-close liquidation need time fields and are dropped; pips are not percentages."
+    },
+    {
+      "id": 3760,
+      "name": "e-TurboFx Classic",
+      "family": "momentum",
+      "entry_long": "sma(close - open,3) < 0 and (close - open) > 0.5 * atr(high,low,close,14)",
+      "exit_long": "sma(close - open,3) > 0 and (open - close) > 0.5 * atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Momentum exhaustion is a large counter-trend body after a SequenceLength 3 stretch of decaying bodies, approximated by a 3-bar average body on the opposite side of a body above 0.5xATR(14); the exit is the mirrored exhaustion bar. TakeProfitSteps 120 and StopLossSteps 70 are price steps, not percentages."
+    },
+    {
+      "id": 3775,
+      "name": "Terminator",
+      "family": "volatility",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented MACD-slope direction is kept as a long entry (Macd lengths have no documented values, so 12/26/9 is a fallback); the averaging grid, MaxTrades ladder, basket take-profit, initial and trailing pip stops, secure-profit rule, ReverseSignals switch and date window are not DSL signals."
+    },
+    {
+      "id": 1091,
+      "name": "Multi-Confluence Swing Hunter V1",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,21) < 30 and crossabove(macd(close,3,10),macd_signal(close,3,10,3)) and close > open",
+      "exit_long": "rsi(close,21) > 70 or crossbelow(macd(close,3,10),macd_signal(close,3,10,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weighted entry/exit scores of 13 are not computable, so the documented components stand in: RsiLength 21 below RsiOversold 30, MACD(3,10,3) up-cross and a bullish candle (standing in for the MinLowerWickPercent 50 bullish structure), with the mirror for the exit score. The full score weighting and hourly candle choice are dropped; docs state no stops."
+    }
+  ]
+}

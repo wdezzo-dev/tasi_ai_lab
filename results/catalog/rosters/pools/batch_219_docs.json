@@ -1,0 +1,98 @@
+{
+ "batch_219": {
+  "strategy_ids": [
+   1996,
+   613,
+   3429,
+   3216,
+   3327,
+   393,
+   1611,
+   2344,
+   353,
+   560
+  ],
+  "docs": {
+   "1996": {
+    "id": 1996,
+    "name": "Color Zerolag RVI",
+    "family": "trend",
+    "overview": "This strategy uses the Relative Vigor Index and its signal line.\nIt buys when the main RVI line crosses below the signal line and sells when the main line crosses above the signal line.\n\n## Details\n\n- **Entry Criteria**: Cross of RVI and signal line\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 14\n  - `SignalLength` = 9\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n  - `CandleType` = 4 hours\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RVI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (H4)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Cross of RVI and signal line\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 14\n  - `SignalLength` = 9\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n  - `CandleType` = 4 hours\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RVI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (H4)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "613": {
+    "id": 613,
+    "name": "Chande Momentum Oscillator",
+    "family": "trend",
+    "overview": "Strategy buys when the Chande Momentum Oscillator drops below a lower threshold and closes the position when it rises above an upper threshold or after a fixed number of bars.\n\nTesting indicates an average annual return of about 40%. It performs best in trending markets.\n\nThe oscillator compares recent gains and losses to gauge momentum. Extreme negative values suggest oversold conditions, which the strategy uses for long entries. Positions are closed when momentum turns positive or the holding period expires.\n\n## Details\n\n- **Entry Criteria**: `CMO < LowerThreshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: `CMO > UpperThreshold` or `MaxBarsInPosition` bars elapsed.\n- **Stops**: No.\n- **Default Values**:\n  - `CmoPeriod` = 9\n  - `LowerThreshold` = -50\n  - `UpperThreshold` = 50\n  - `MaxBarsInPosition` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: CMO\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: `CMO < LowerThreshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: `CMO > UpperThreshold` or `MaxBarsInPosition` bars elapsed.\n- **Stops**: No.\n- **Default Values**:\n  - `CmoPeriod` = 9\n  - `LowerThreshold` = -50\n  - `UpperThreshold` = 50\n  - `MaxBarsInPosition` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: CMO\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3429": {
+    "id": 3429,
+    "name": "Template M5 Envelopes",
+    "family": "trend",
+    "overview": "Converted from the MetaTrader 4 expert advisor \"Template_M5_Envelopes.mq4\". The strategy tracks a linear weighted moving average (LWMA) envelope on five-minute candles and arms breakout stop orders whenever price stretches far enough away from the channel. Pending orders are dynamically repriced to follow the market, and filled positions are protected by configurable stop-loss, take-profit and trailing-stop logic.\n\n## Trading logic\n\n1. A LWMA based on the median candle price is calculated with the configured `EnvelopePeriod`. Upper and lower envelope bands are derived by applying the `EnvelopeDeviation` percentage.\n2. Every finished five-minute candle stores its envelope values alongside the high and low. Signals are only evaluated once a full set of \"previous\" values is available, matching the MetaTrader implementation that referenced `iEnvelopes(..., shift = 1)` and the prior bar.\n3. A **buy** setup appears when:\n   * The previous candle low sits at least `DistancePoints` below the previous lower envelope, and\n   * The current bid price remains at least `DistancePoints` below the same envelope value.\n4. A **sell** setup mirrors the logic with the previous high and the upper envelope.\n5. When a setup is active, only one stop order is allowed (the original EA also restricted itself to a single market or pending order). The order is placed at the current ask/bid plus the `EntryOffsetPoints` distance.\n6. While the pending order remains active, the strategy monitors the market. If the difference between the order price and the current bid/ask exceeds `EntryOffsetPoints + SlippagePoints`, the order is cancelled and immediately re-registered at the new reference price, keeping the attached stop-loss and take-profit aligned with the desired offsets.\n7. If the current spread exceeds `MaxSpreadPoints`, all pending entries are cancelled to avoid trading during unfavourable liquidity conditions.\n\n## Order management\n\n* Upon entry order activation, the strategy records the exe",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `MaxSpreadPoints` | Maximum allowed spread before pending orders are cancelled. |\n| `TakeProfitPoints` | Take-profit distance applied to filled positions. |\n| `StopLossPoints` | Stop-loss distance applied to pending and filled positions. |\n| `EntryOffsetPoints` | Offset (in points) from bid/ask where stop entries are placed. |\n| `UseTrailingStop` | Enables trailing stop management for open positions. |\n| `TrailingStopPoints` | Distance (in points) maintained by the trailing stop. |\n| `FixedVolume` | Trading volume submitted with each entry order. |\n| `EnvelopePeriod` | Length of the LWMA used as the envelope basis. |\n| `EnvelopeDeviation` | Width of the envelope in percent. |\n| `DistancePoints` | Minimum gap between price and envelope required for a signal. |\n| `SlippagePoints` | Extra tolerance (in points) added to the repricing threshold. |\n| `CandleType` | Timeframe used to calculate the LWMA envelope (default M5). |"
+   },
+   "3216": {
+    "id": 3216,
+    "name": "Trend Is Your Friend",
+    "family": "trend",
+    "overview": "The Trend Is Your Friend strategy is a multi-timeframe trend-following system inspired by the original MetaTrader expert advisor. It aligns intraday momentum with a higher timeframe MACD filter, while risk is managed via Bollinger Bands exits, classic stop-loss and take-profit targets, an optional break-even lock and trailing stop management.\n\nThe strategy works on a configurable base timeframe (default 1 hour) and analyses candle structure for a short-term momentum pattern: a bearish candle followed by a stronger bullish candle for long trades, or the inverse for short trades. These patterns must agree with a moving average trend filter and a monthly MACD signal before a position is opened.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| Entry Candle | Candle type for entry logic | 1 hour |\n| MACD Candle | Higher timeframe used for MACD filter | 30 days |\n| Fast MA | Fast EMA length | 8 |\n| Slow MA | Slow LWMA length | 20 |\n| Bollinger Length | Bollinger Bands period | 20 |\n| Bollinger Width | Bollinger Bands standard deviation multiplier | 2.0 |\n| Stop Loss (pips) | Protective stop distance | 20 |\n| Take Profit (pips) | Profit target distance | 50 |\n| Use Break-Even | Enable break-even adjustment | true |\n| Break-Even Trigger | Profit (pips) required to move stop | 10 |\n| Break-Even Offset | Offset applied to break-even stop | 5 |\n| Use Trailing | Enable trailing stop | true |\n| Trailing Activation | Profit (pips) required to arm trailing | 40 |\n| Trailing Distance | Distance (pips) maintained by trailing stop | 40 |"
+   },
+   "3327": {
+    "id": 3327,
+    "name": "Sail System EA",
+    "family": "trend",
+    "overview": "Sail System EA is a hedging scalper that keeps a symmetrical long/short exposure while\nconstantly checking broker requirements such as maximum spread, minimal stop level and\ntrading session limits. The StockSharp port recreates the original behaviour with the\nhigh-level `Strategy` API: the engine subscribes to level-1 quotes, opens or re-arms\nboth sides of the hedge, and manages virtual stop-loss/take-profit levels without using\nlow-level connector calls.\n\nThe implementation keeps two internal `PositionState` objects (long and short). For each\nside the strategy tracks entry price, remaining volume, virtual protection levels and\npending orders. This mirrors the MQL expert that maintained separate ticket counters for\nmarket and pending orders.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` / `ManualLotSize` | Base volume per order when automatic sizing is disabled. |\n| `AutoLotSize`, `RiskFactor` | Enables equity-based lot sizing. |\n| `UseVirtualLevels` | Keeps the stop-loss/take-profit logic on the strategy side. |\n| `OrdersStopLoss`, `OrdersTakeProfit`, `PutTakeProfit` | Protection distances in pips. |\n| `DelayModifyOrders`, `StepModifyOrders` | Control how quickly virtual levels are refreshed. |\n| `PipsReplaceOrders`, `SafeMultiplier` | Force re-entry when pending orders are too far from the market. |\n| `UsePendingOrders`, `DistancePending` | Switch between limit and market entries. |\n| `UseTimeFilter`, `TimeStartTrade`, `TimeStopTrade`, `ManageExistingOrders` | Trading window configuration. |\n| `MaxSpread`, `TypeOfSpreadUse`, `HighSpreadAction`, `MultiplierIncrease`, `CloseOnHighSpread` | Spread filter and reaction. |\n| `CommissionInPip`, `CountAvgSpread`, `TimesForAverage` | Spread averaging controls. |\n| `AcceptStopLevel`, `Slippage`, `OrdersId` | Broker stop level, execution slippage and the magic-number equivalent. |\n\nAll parameters are exposed through `StrategyParam<T>` so they are available in the\nDesigner UI and compatible with optimization runs."
+   },
+   "393": {
+    "id": 393,
+    "name": "ROA Effect Stocks",
+    "family": "other",
+    "overview": "The **ROA Effect Stocks** strategy targets equities with high returns on assets. An external fundamental data feed supplies the ROA values for the trading universe. At the beginning of each month, the stocks are ranked by ROA, and the portfolio goes long the top decile and short the bottom decile.\n\nPositions are sized equally and rebalanced monthly, capturing the tendency for profitable firms to outperform.\n\n## Details\n- **Entry Criteria**: Monthly ranking by external ROA data.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `Decile = 10`\n  - `MinTradeUsd = 200`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly ranking by external ROA data.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `Decile = 10`\n  - `MinTradeUsd = 200`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1611": {
+    "id": 1611,
+    "name": "Calculation Position Size Based on Risk",
+    "family": "other",
+    "overview": "Demonstrates sizing trades from account risk and a stop-loss percentage. Entries are random to show position sizing logic.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: every 333rd bar.\n  - **Short**: every 444th bar.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Stop loss only.\n- **Stops**: Stop Loss.\n- **Default Values**:\n  - `Stop Loss %` = 10\n  - `Risk Value` = 2\n  - `Risk Is Percent` = true\n  - `Long Period` = 333\n  - `Short Period` = 444\n- **Filters**:\n  - Category: Risk Management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: every 333rd bar.\n  - **Short**: every 444th bar.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Stop loss only.\n- **Stops**: Stop Loss.\n- **Default Values**:\n  - `Stop Loss %` = 10\n  - `Risk Value` = 2\n  - `Risk Is Percent` = true\n  - `Long Period` = 333\n  - `Short Period` = 444\n- **Filters**:\n  - Category: Risk Management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2344": {
+    "id": 2344,
+    "name": "AFL Winner V2",
+    "family": "other",
+    "overview": "This sample strategy replicates the logic of the AFL Winner V2 indicator using the high-level StockSharp API. The indicator is approximated by a stochastic oscillator and signals are derived from its relative position and predefined threshold levels.",
+    "details": "",
+    "parameters": "| Parameter   | Description                       |\n|-------------|-----------------------------------|\n| `KPeriod`   | %K period of the stochastic oscillator. |\n| `DPeriod`   | %D period of the stochastic oscillator. |\n| `HighLevel` | Upper threshold for bullish signals. |\n| `LowLevel`  | Lower threshold for bearish signals. |"
+   },
+   "353": {
+    "id": 353,
+    "name": "Asset Growth Effect",
+    "family": "other",
+    "overview": "This strategy goes long on companies with the lowest growth in total assets and shorts those with the highest asset growth. Each July the portfolio is rebalanced using the most recent fundamental data.\n\nTesting indicates an average annual return of about 15%. It performs best in the equities market.\n\nAsset growth is calculated from total assets reported in company filings. Stocks are ranked into quantiles and the lowest bucket is bought while the highest is sold short. Positions are sized to meet a target leverage and are adjusted annually.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Stock in lowest asset growth quantile.\n  - Short: Stock in highest asset growth quantile.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions adjusted on annual rebalance.\n- **Stops**: No.\n- **Default Values**:\n  - `Quantiles` = 10\n  - `Leverage` = 1m\n  - `MinTradeUsd` = 50m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Long-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Stock in lowest asset growth quantile.\n  - Short: Stock in highest asset growth quantile.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions adjusted on annual rebalance.\n- **Stops**: No.\n- **Default Values**:\n  - `Quantiles` = 10\n  - `Leverage` = 1m\n  - `MinTradeUsd` = 50m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Long-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "560": {
+    "id": 560,
+    "name": "Bot for Spot Market - Custom Grid",
+    "family": "other",
+    "overview": "The Bot for Spot Market - Custom Grid strategy buys an initial position and adds new orders when price drops by a specified percentage below the last entry. It closes all positions when price rises above the average entry price by the profit target.\n\n## Details\n\n- **Entry Criteria**:\n  - Buy at start time.\n  - Buy additional quantity when price drops `NextEntryPercent`% below the last entry.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close all positions when price exceeds the average entry price by `ProfitPercent`% and the open position is profitable.\n- **Stops**: None.\n- **Default Values**:\n  - `OrderValue` = 10\n  - `MinAmountMovement` = 0.00001\n  - `Rounding` = 5\n  - `NextEntryPercent` = 0.5\n  - `ProfitPercent` = 2\n- **Filters**:\n  - Category: Grid trading\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Buy at start time.\n  - Buy additional quantity when price drops `NextEntryPercent`% below the last entry.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close all positions when price exceeds the average entry price by `ProfitPercent`% and the open position is profitable.\n- **Stops**: None.\n- **Default Values**:\n  - `OrderValue` = 10\n  - `MinAmountMovement` = 0.00001\n  - `Rounding` = 5\n  - `NextEntryPercent` = 0.5\n  - `ProfitPercent` = 2\n- **Filters**:\n  - Category: Grid trading\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_200": {
+  "strategy_ids": [
+   3963,
+   3732,
+   687,
+   850,
+   2471,
+   3277,
+   637,
+   1337,
+   2194,
+   623
+  ],
+  "docs": {
+   "3963": {
+    "id": 3963,
+    "name": "Cash Machine 5 min Legacy",
+    "family": "trend",
+    "overview": "Cash Machine 5 min Legacy is a StockSharp port of the MetaTrader 4 expert advisor `CashMachine_5min`. The system reacts to momentum reversals detected by the DeMarker oscillator and the fast Stochastic oscillator on five-minute candles. Once a position is open, the strategy hides its protective stop-loss and take-profit levels, revealing them only to the internal logic so that broker-side stops are not visible. Profit is protected incrementally across three user-defined milestones.",
+    "details": "",
+    "parameters": "* **Hidden Take Profit** – hidden take-profit distance in pips (default: `60`).\n* **Hidden Stop Loss** – hidden stop-loss distance in pips (default: `30`).\n* **Target TP1 / TP2 / TP3** – profit milestones in pips that arm the staged trailing stop (default: `20`, `35`, `50`).\n* **Order Volume** – market order volume used for entries (default: `0.2`).\n* **DeMarker Length** – averaging period for the DeMarker oscillator (default: `14`).\n* **Stochastic Length** – base lookback for the Stochastic oscillator (default: `5`).\n* **Stochastic %K** – smoothing factor for the %K line (default: `3`).\n* **Stochastic %D** – smoothing factor for the %D line (default: `3`).\n* **Candle Type** – timeframe used to compute indicators (default: five-minute candles)."
+   },
+   "3732": {
+    "id": 3732,
+    "name": "Tuyul Gap End Of Week",
+    "family": "trend",
+    "overview": "Tuyul Gap End Of Week ports the MetaTrader 5 expert advisor `TuyulGAP` to StockSharp. The strategy prepares for the weekly market open by scanning a configurable number of recent candles on Friday night, placing a pair of breakout stop orders around the highest high and lowest low. Only one trading session per week is allowed; once the orders are staged the strategy waits for price to gap through either level. Any open position that reaches a secure profit target in account currency is closed immediately, and all remaining pending orders are cancelled on Monday to reset the workflow for the next week.",
+    "details": "",
+    "parameters": "* **Volume** – order volume for the breakout stop orders.\n* **Stop Loss (points)** – distance from the entry price, expressed in instrument points, used to place a protective stop after a position opens. Set to `0` to disable the stop.\n* **Lookback Bars** – number of finished candles inspected to compute the weekly high and low levels.\n* **Setup Day Of Week** – day index (0=Sunday … 6=Saturday) that triggers the weekly setup. The default value of `5` keeps the original Friday behavior.\n* **Setup Hour** – exchange hour used as the anchor for staging the breakout orders.\n* **Setup Minute Window** – number of minutes after `Setup Hour` when the setup remains valid. With the default value `15` the strategy runs between 23:00 and 23:15 inclusive.\n* **Secure Profit Target** – minimum unrealized profit per position (in portfolio currency) that triggers an immediate market exit.\n* **Candle Type** – timeframe used for the high/low scan and the monitoring loop."
+   },
+   "687": {
+    "id": 687,
+    "name": "Donchian WMA Crossover",
+    "family": "trend",
+    "overview": "Donchian channel low crossing above a weighted moving average triggers long entries only during calendar year 2025. Positions are closed when a take profit level is reached, the crossover reverses with a falling WMA, or the date exits 2025.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `DonchianLow` crosses above `WMA` and date within 2025\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Take profit via `TakeProfitPercent`\n  - Crossunder of `DonchianLow` below `WMA` while `WMA` declines\n  - Date outside 2025\n- **Stops**: Take profit only\n- **Default Values**:\n  - `DonchianLength` = 7\n  - `WmaLength` = 62\n  - `TakeProfitPercent` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Donchian Channel, Weighted Moving Average\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: Year 2025 only\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `DonchianLow` crosses above `WMA` and date within 2025\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Take profit via `TakeProfitPercent`\n  - Crossunder of `DonchianLow` below `WMA` while `WMA` declines\n  - Date outside 2025\n- **Stops**: Take profit only\n- **Default Values**:\n  - `DonchianLength` = 7\n  - `WmaLength` = 62\n  - `TakeProfitPercent` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Donchian Channel, Weighted Moving Average\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: Year 2025 only\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "850": {
+    "id": 850,
+    "name": "Gold Scalping Strategy with Precise Entries",
+    "family": "trend",
+    "overview": "Scalping strategy for gold using EMA trend filter, RSI range and engulfing patterns.\n\n## Details\n\n- **Entry Criteria**: EMA trend filter with RSI between 45 and 55 plus bullish/bearish engulfing near EMA50.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take profit or stop loss.\n- **Stops**: ATR-based stop loss and fixed pip target.\n- **Default Values**:\n  - `EmaFastPeriod` = 50\n  - `EmaSlowPeriod` = 200\n  - `RsiPeriod` = 14\n  - `AtrPeriod` = 14\n  - `RsiLower` = 45\n  - `RsiUpper` = 55\n  - `PipTarget` = 2\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: EMA trend filter with RSI between 45 and 55 plus bullish/bearish engulfing near EMA50.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take profit or stop loss.\n- **Stops**: ATR-based stop loss and fixed pip target.\n- **Default Values**:\n  - `EmaFastPeriod` = 50\n  - `EmaSlowPeriod` = 200\n  - `RsiPeriod` = 14\n  - `AtrPeriod` = 14\n  - `RsiLower` = 45\n  - `RsiUpper` = 55\n  - `PipTarget` = 2\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2471": {
+    "id": 2471,
+    "name": "Fractal MFI",
+    "family": "trend",
+    "overview": "This strategy is a translation of the `Exp_Fractal_MFI.mq5` expert advisor. It uses the Money Flow Index (MFI) indicator to generate trading signals when the oscillator crosses predefined upper and lower levels.\n\n## How It Works\n- Calculates MFI over a configurable period.\n- When the previous MFI value was above the **Low Level** and the current value falls below it, a signal is generated.\n  - In **Direct** mode this opens a long position and optionally closes shorts.\n  - In **Against** mode this opens a short position and optionally closes longs.\n- When the previous MFI value was below the **High Level** and the current value rises above it, another signal is generated.\n  - In **Direct** mode this opens a short position and optionally closes longs.\n  - In **Against** mode this opens a long position and optionally closes shorts.\n\nOnly completed candles are processed. The strategy can be configured to enable or disable opening and closing of long or short positions separately.\n\n## Parameters\n- `MfiPeriod` – period of the Money Flow Index calculation.\n- `HighLevel` – upper threshold for the MFI.\n- `LowLevel` – lower threshold for the MFI.\n- `CandleType` – candle timeframe used in calculations.\n- `Trend` – choose `Direct` to trade with the indicator direction or `Against` to invert signals.\n- `BuyPosOpen` / `SellPosOpen` – allow opening long or short positions.\n- `BuyPosClose` / `SellPosClose` – allow closing existing positions on opposite signals.\n\n## Notes\nThis C# version focuses on high level API usage and does not implement the original money management rules or stop levels from the MQL code.\n",
+    "details": "",
+    "parameters": "- `MfiPeriod` – period of the Money Flow Index calculation.\n- `HighLevel` – upper threshold for the MFI.\n- `LowLevel` – lower threshold for the MFI.\n- `CandleType` – candle timeframe used in calculations.\n- `Trend` – choose `Direct` to trade with the indicator direction or `Against` to invert signals.\n- `BuyPosOpen` / `SellPosOpen` – allow opening long or short positions.\n- `BuyPosClose` / `SellPosClose` – allow closing existing positions on opposite signals."
+   },
+   "3277": {
+    "id": 3277,
+    "name": "ZeeZee Level",
+    "family": "volatility",
+    "overview": "The ZeeZee Level strategy replicates the behaviour of the original MetaTrader \"ZeeZee Level\" expert advisor using StockSharp's high level API. The strategy analyses ZigZag swings on the selected timeframe and trades in the direction of the most recent extreme. Protective stop loss, take profit and trailing stop distances are expressed in pips and the position size follows a martingale-style progression after losing trades.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `ZigZagDepth` | Number of candles considered when searching for new ZigZag pivots. |\n| `ZigZagDeviation` | Minimum price movement (in price steps) required to confirm a new pivot. |\n| `ZigZagBackstep` | Minimum number of bars before the indicator can switch direction. |\n| `ZigZagIdInterval` | Maximum number of bars used to look back for the last ZigZag highs and lows. |\n| `StopLossPips` | Stop loss distance in pips. Set to zero to disable. |\n| `TakeProfitPips` | Take profit distance in pips. Set to zero to disable. |\n| `TrailingStopPips` | Trailing stop distance in pips. Set to zero to disable. |\n| `InitialVolume` | Base trade volume used at the start of a martingale cycle. |\n| `MartingaleMultiplier` | Factor applied to the next trade volume after a losing position. |\n| `CandleType` | Candle type and timeframe used for the analysis. |"
+   },
+   "637": {
+    "id": 637,
+    "name": "COSTAR",
+    "family": "mean_reversion",
+    "overview": "The COSTAR strategy builds a linear regression of closing prices and measures the standard deviation of residuals. Upper and lower bands are created by adding and subtracting the deviation multiplied by a factor. Trades attempt to fade extreme deviations and exit when price returns to the regression line.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price crosses above the lower band.\n  - **Short**: Price crosses below the upper band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price crosses back through the regression line.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 100\n  - `Multiplier` = 1\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Linear Regression, Standard Deviation\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price crosses above the lower band.\n  - **Short**: Price crosses below the upper band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price crosses back through the regression line.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 100\n  - `Multiplier` = 1\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Linear Regression, Standard Deviation\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1337": {
+    "id": 1337,
+    "name": "Statistical Arbitrage Spread",
+    "family": "other",
+    "overview": "This strategy trades the spread between two correlated instruments. A long position in the first security is opened when the spread falls below its mean by a multiple of the spread's standard deviation. The position is closed once the spread returns to the mean.\n\n## Details\n- **Entry Criteria**:\n  - Long: Spread < Mean - Multiplier * StdDev\n- **Long/Short**: Long only\n- **Exit Criteria**: Close when spread > Mean\n- **Stops**: No\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `StdMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Arbitrage\n  - Direction: Long\n  - Indicators: Spread statistics\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Spread < Mean - Multiplier * StdDev\n- **Long/Short**: Long only\n- **Exit Criteria**: Close when spread > Mean\n- **Stops**: No\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `StdMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Arbitrage\n  - Direction: Long\n  - Indicators: Spread statistics\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2194": {
+    "id": 2194,
+    "name": "Pending Order",
+    "family": "other",
+    "overview": "Strategy that places four pending orders around the current bid and ask during specified hours. It continuously maintains buy limit, sell limit, buy stop, and sell stop orders at a configurable distance from market price. Each pending order uses fixed stop-loss and take-profit offsets.\n\n## Details\n\n- **Entry Criteria**: Place pending orders at `Distance` ticks from current bid/ask within allowed hours.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take-profit or stop-loss relative to entry price.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StartHour` = 6\n  - `EndHour` = 20\n  - `TakeProfit` = 20\n  - `StopLoss` = 100\n  - `Distance` = 15\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Range\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: Place pending orders at `Distance` ticks from current bid/ask within allowed hours.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take-profit or stop-loss relative to entry price.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StartHour` = 6\n  - `EndHour` = 20\n  - `TakeProfit` = 20\n  - `StopLoss` = 100\n  - `Distance` = 15\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Range\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "623": {
+    "id": 623,
+    "name": "Color Code Overlay",
+    "family": "other",
+    "overview": "Trades on candle color changes using a custom color code calculation with fixed pip-based stops.\n\n## Logic\n- Builds custom color code candles from OHLC values.\n- Detects color switches when body exceeds 1% of the candle range.\n- Goes long on red-to-green, short on green-to-red according to trade type.\n- Operates only between `StartTime` and `EndTime`.\n- Applies `StopLossPips` and `TakeProfitPips` protections.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

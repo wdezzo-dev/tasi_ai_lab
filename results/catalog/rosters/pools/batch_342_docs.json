@@ -1,0 +1,98 @@
+{
+ "batch_342": {
+  "strategy_ids": [
+   3552,
+   88,
+   419,
+   3943,
+   1448,
+   899,
+   829,
+   1719,
+   926,
+   301
+  ],
+  "docs": {
+   "3552": {
+    "id": 3552,
+    "name": "VIDYA N Bars Borders Martingale",
+    "family": "trend",
+    "overview": "The original MetaTrader strategy combines the \"VIDYA N Bars Borders\" channel indicator with a martingale position sizing module. The StockSharp port keeps the idea of buying when price drops below the adaptive lower band and selling when price rallies above the upper band. The channel centre is produced by an adaptive moving average (VIDYA analogue) and its width is controlled by an Average True Range envelope. A money management block increases the trade size after losing trades while observing maximum position and exposure limits.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Candle Type` | Data type of candles to trade. |\n| `CMO Period` | Efficiency ratio window for the adaptive moving average. |\n| `EMA Period` | Smoothing period of the adaptive moving average. |\n| `ATR Period` | Number of bars for the ATR channel half-width. |\n| `Profit Target` | Money profit threshold that triggers a full exit. |\n| `Increase Ratio` | Multiplier applied to the next trade volume after a losing trade. |\n| `Max Position Volume` | Hard ceiling for a single order/position volume. |\n| `Max Total Volume` | Upper bound on the total exposure opened by the strategy. |\n| `Max Positions` | Maximum number of concurrent positions (the port keeps one net position). |\n| `Minimum Step` | Minimum distance between two consecutive entries, measured in points. |\n| `Base Volume` | Starting order size before martingale adjustments. |\n| `Reverse Signals` | Inverts the long/short interpretation of the channel breakout. |"
+   },
+   "88": {
+    "id": 88,
+    "name": "Supertrend Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 151%. It performs best in the stocks market.\n\nOn each candle an ATR-based calculation updates the Supertrend level. A switch from above price to below triggers a long entry, while a move from below to above creates a short. The code sample omits explicit stops, so exits are discretionary or managed by a separate risk module.\n\nThe indicator can react quickly to volatility, so traders often combine it with additional filters to reduce whipsaws.\n\n## Details\n\n- **Entry Criteria**: Supertrend switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Manual or external stop.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `Period` = 10\n  - `Multiplier` = 3.0\n  - `CandleType` = 15 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Supertrend switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Manual or external stop.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `Period` = 10\n  - `Multiplier` = 3.0\n  - `CandleType` = 15 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "419": {
+    "id": 419,
+    "name": "Double Supertrend",
+    "family": "trend",
+    "overview": "Double Supertrend employs two ATR‑based moving averages with different periods\nand multipliers. The first line sets the trade direction, while the second can\nact as a target or trailing exit. This combination allows flexible trend\nfollowing with defined profit and risk parameters.\n\nWhen price moves above both lines and the strategy is set to trade long, a\nposition is opened. For short trades the conditions are mirrored. Exits depend on\nthe selected take‑profit type or a percentage stop loss.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**: Price crosses supertrend lines in the allowed `Direction`.\n- **Exit Criteria**: Opposite line break, take‑profit (`TPType`/`TPPercent`) or stop‑loss (`SLPercent`).\n- **Stops**: Percentage stop based on `SLPercent`.\n- **Default Values**:\n  - `ATRPeriod1` = 10\n  - `Factor1` = 3.0\n  - `ATRPeriod2` = 20\n  - `Factor2` = 5.0\n  - `Direction` = \"Long\"\n  - `TPType` = \"Supertrend\"\n  - `TPPercent` = 1.5\n  - `SLPercent` = 10.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: ATR‑based Supertrend\n  - Complexity: Advanced\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**: Price crosses supertrend lines in the allowed `Direction`.\n- **Exit Criteria**: Opposite line break, take‑profit (`TPType`/`TPPercent`) or stop‑loss (`SLPercent`).\n- **Stops**: Percentage stop based on `SLPercent`.\n- **Default Values**:\n  - `ATRPeriod1` = 10\n  - `Factor1` = 3.0\n  - `ATRPeriod2` = 20\n  - `Factor2` = 5.0\n  - `Direction` = \"Long\"\n  - `TPType` = \"Supertrend\"\n  - `TPPercent` = 1.5\n  - `SLPercent` = 10.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: ATR‑based Supertrend\n  - Complexity: Advanced\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3943": {
+    "id": 3943,
+    "name": "AMA Trader v2.1",
+    "family": "trend",
+    "overview": "The AMA Trader v2.1 strategy is a conversion of the MetaTrader 4 expert advisor **AMA_TRADER_v2_1.mq4** that combines Kaufman's Adaptive Moving Average (AMA) bursts with a double-smoothed Heiken Ashi filter and RSI momentum checks.\n\n## Core Logic\n\n1. **Adaptive Trend Filter** – A custom AMA engine reproduces the original indicator, including the fast/slow constants, efficiency ratio, and the power parameter. The algorithm watches for momentum bursts where the AMA value jumps by more than `AmaThreshold` price steps compared with the previous bar.\n2. **Heiken Ashi Confirmation** – Price candles are smoothed twice: first by a configurable moving average on the raw OHLC prices, then by a second moving average on the Heiken Ashi buffers. A bullish (close above open) smoothed bar allows long trades, while a bearish bar allows shorts.\n3. **RSI Momentum Check** – A classic RSI with configurable period confirms momentum: longs require the RSI to pull back from a previous value while staying below 70, shorts require a bounce while the oscillator remains above 30.\n4. **Position Management** – The strategy opens a single position at a time, applies optional stop-loss and take-profit distances (in price steps), and can trail the stop once price moves in the trade direction. When RSI crosses the 70/30 extremes, an optional partial close is performed before a full exit occurs on the next crossing.\n\n## Parameters\n\n| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Timeframe for all calculations. |\n| `TradeVolume` | 0.1 | Base market order volume. |\n| `AmaLength` | 9 | Lookback used by the adaptive moving average. |\n| `AmaFastPeriod` | 2 | Fast constant in bars for the AMA smoothing. |\n| `AmaSlowPeriod` | 30 | Slow constant in bars for the AMA smoothing. |\n| `AmaPower` | 2 | Exponent applied to the smoothing constant (matches `G` in the MQ4 code). |\n| `AmaThreshold` | 2 steps | Minimum AMA change (in price steps) to trigger a signal. |\n| `First",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Timeframe for all calculations. |\n| `TradeVolume` | 0.1 | Base market order volume. |\n| `AmaLength` | 9 | Lookback used by the adaptive moving average. |\n| `AmaFastPeriod` | 2 | Fast constant in bars for the AMA smoothing. |\n| `AmaSlowPeriod` | 30 | Slow constant in bars for the AMA smoothing. |\n| `AmaPower` | 2 | Exponent applied to the smoothing constant (matches `G` in the MQ4 code). |\n| `AmaThreshold` | 2 steps | Minimum AMA change (in price steps) to trigger a signal. |\n| `FirstMaMethod` | Smoothed | First smoothing method for Heiken Ashi construction. |\n| `FirstMaPeriod` | 6 | Length of the first smoothing moving average. |\n| `SecondMaMethod` | LinearWeighted | Second smoothing method applied to the Heiken Ashi buffers. |\n| `SecondMaPeriod` | 2 | Length of the second smoothing moving average. |\n| `RsiPeriod` | 14 | RSI period used by the momentum filter. |\n| `PartialClosePercent` | 70% | Portion of the active position to close when RSI crosses an extreme. Set to `0` to disable. |\n| `StopLossSteps` | 50 | Stop-loss distance expressed in instrument price steps. Set to `0` to disable. |\n| `TakeProfitSteps` | 100 | Take-profit distance expressed in price steps. Set to `0` to disable. |\n| `TrailingSteps` | 30 | Trailing stop distance in price steps. Set to `0` to disable trailing. |"
+   },
+   "1448": {
+    "id": 1448,
+    "name": "Trading ABC",
+    "family": "trend",
+    "overview": "This strategy approximates the Trading ABC concept using trend filters and a stochastic oscillator. A long trade is opened when price stays above several moving averages and the stochastic %K crosses above %D. A short trade is opened on the opposite conditions. Previous bar extremes act as protective stops.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "899": {
+    "id": 899,
+    "name": "Hull Suite Strategy – 1% Risk, No SL/TP",
+    "family": "trend",
+    "overview": "The Hull Suite strategy opens long positions when the selected Hull moving average rises compared to two bars ago and opens short positions when it falls. No stop loss or take profit is used.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Hull value greater than the value two bars ago.\n  - **Short**: Hull value less than the value two bars ago.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HullLength` = 55\n  - `Mode` = Hma\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: HMA, EHMA, THMA\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 5m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Hull value greater than the value two bars ago.\n  - **Short**: Hull value less than the value two bars ago.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `HullLength` = 55\n  - `Mode` = Hma\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: HMA, EHMA, THMA\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 5m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "829": {
+    "id": 829,
+    "name": "Gann Laplace Smoothed Hybrid VSA",
+    "family": "trend",
+    "overview": "This strategy combines a Gann-style trend filter with Laplace-smoothed volume spread analysis (VSA). The VSA value is calculated as the price spread divided by the candle range and multiplied by volume, then smoothed with an EMA. Trades are taken when the smoothed VSA aligns with the price relative to the trend moving average.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: smoothed VSA > 0 and close > trend MA.\n  - **Short**: smoothed VSA < 0 and close < trend MA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: smoothed VSA turns negative.\n  - **Short**: smoothed VSA turns positive.\n- **Stops**: Uses StartProtection.\n- **Default Values**:\n  - `Trend Period` = 20\n  - `VSA Smoothing` = 14\n  - `Candle Type` = 15m\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, Volume\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: smoothed VSA > 0 and close > trend MA.\n  - **Short**: smoothed VSA < 0 and close < trend MA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: smoothed VSA turns negative.\n  - **Short**: smoothed VSA turns positive.\n- **Stops**: Uses StartProtection.\n- **Default Values**:\n  - `Trend Period` = 20\n  - `VSA Smoothing` = 14\n  - `Candle Type` = 15m\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, Volume\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "1719": {
+    "id": 1719,
+    "name": "Adaptive Cyber Cycle",
+    "family": "trend",
+    "overview": "This strategy utilizes the Adaptive Cyber Cycle oscillator by John Ehlers. It calculates a smoothed price cycle and uses the previous value as a trigger line. A long position is opened when the cycle crosses above the trigger, and a short position is opened on a downward cross.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: cycle > previous cycle.\n  - **Short**: cycle < previous cycle.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes and reverses the position.\n- **Stops**: None by default; protection can be enabled separately.\n- **Default Values**:\n  - `Alpha` = 0.07\n  - `Candle Type` = 1-minute time frame\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Adaptive Cyber Cycle\n  - Stops: Optional\n  - Complexity: Moderate\n  - Timeframe: Intraday\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: cycle > previous cycle.\n  - **Short**: cycle < previous cycle.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes and reverses the position.\n- **Stops**: None by default; protection can be enabled separately.\n- **Default Values**:\n  - `Alpha` = 0.07\n  - `Candle Type` = 1-minute time frame\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Adaptive Cyber Cycle\n  - Stops: Optional\n  - Complexity: Moderate\n  - Timeframe: Intraday",
+    "parameters": ""
+   },
+   "926": {
+    "id": 926,
+    "name": "Intelle city World Cycle Ath Atl Logarithmic",
+    "family": "trend",
+    "overview": "Strategy uses scaled moving averages to mark all-time-high (ATH) and all-time-low (ATL) signals based on the Pi Cycle concept.\n\nThe system sells when the scaled ATH long MA crosses below the short MA and buys when the scaled ATL long MA crosses above the short MA.\n\n## Details\n\n- **Entry Criteria**: Scaled ATH long MA crosses below ATH short MA for sell. Scaled ATL long MA crosses above ATL short MA for buy.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `AthLongLength` = 350\n  - `AthShortLength` = 111\n  - `AtlLongLength` = 471\n  - `AtlShortLength` = 150\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Scaled ATH long MA crosses below ATH short MA for sell. Scaled ATL long MA crosses above ATL short MA for buy.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `AthLongLength` = 350\n  - `AthShortLength` = 111\n  - `AtlLongLength` = 471\n  - `AtlShortLength` = 150\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "301": {
+    "id": 301,
+    "name": "Adaptive EMA Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 166%. It performs best in the stocks market.\n\nSignals trigger when its indicators confirms breakout opportunities on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like Fast, Slow. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `Fast = 2`\n  - `Slow = 30`\n  - `Lookback = 10`\n  - `StopMultiplier = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `Fast = 2`\n  - `Slow = 30`\n  - `Lookback = 10`\n  - `StopMultiplier = 2m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

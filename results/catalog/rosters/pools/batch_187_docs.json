@@ -1,0 +1,98 @@
+{
+ "batch_187": {
+  "strategy_ids": [
+   3007,
+   888,
+   112,
+   1076,
+   2506,
+   4041,
+   1635,
+   1614,
+   1609,
+   817
+  ],
+  "docs": {
+   "3007": {
+    "id": 3007,
+    "name": "Neuro Nirvaman EA 2",
+    "family": "trend",
+    "overview": "Neuro Nirvaman EA 2 is a multi-layer perceptron strategy that was originally written for MetaTrader 5. The logic combines four Laguerre-smoothed +DI streams with two SilverTrend breakout detectors. Each bar the strategy evaluates three perceptrons whose weights are controlled by the X parameters. A supervisor module chooses which perceptron output should be traded based on the selected pass mode. Trading is allowed only inside the configured session window and all positions are flattened once the window closes.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Risk1`, `Risk2` | SilverTrend risk settings. Higher values shrink the envelope and generate more frequent signals. |\n| `LaguerreXPeriod` | ADX length that feeds the Laguerre smoother (for each of the four streams). |\n| `LaguerreXDistance` | Percentage distance around the 0.5 center line that defines bullish/bearish tension. |\n| `X11`, `X12`, `X21`, `X22`, `X31`, `X32` | Perceptron weights (values are offset by 100 inside the formula, exactly as in the MQL version). |\n| `TakeProfit1`, `StopLoss1`, `TakeProfit2`, `StopLoss2` | Profit target and protective stop distances in price steps for the respective perceptron signals. |\n| `Pass` | Supervisor mode selector (1–4). |\n| `TradeVolume` | Base order size used for market entries. |\n| `StartHour`, `StartMinute`, `EndHour`, `EndMinute` | Trading session boundaries. When the current time is outside this window all positions are closed and no new trades are allowed. |\n| `CandleType` | Candle subscription to drive the high-level strategy. |"
+   },
+   "888": {
+    "id": 888,
+    "name": "Hoffman Heiken Bias",
+    "family": "trend",
+    "overview": "Hoffman Heiken Bias combines a group of moving averages with a Heikin Ashi net volume model to gauge trend direction. A long position is opened when the fast SMA rises above the fast EMA while all longer-term averages stay below it and the net volume regression is positive. Shorts trigger on the opposite conditions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `SMA(5) > EMA(18)` && all longer averages below `EMA(18)` && net volume regression > 0.\n  - **Short**: `SMA(5) < EMA(18)` && all longer averages above `EMA(18)` && net volume regression < 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast SMA` = 5\n  - `Fast EMA` = 18\n  - `Net volume length` = 25\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, EMA, ATR, Linear Regression\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `SMA(5) > EMA(18)` && all longer averages below `EMA(18)` && net volume regression > 0.\n  - **Short**: `SMA(5) < EMA(18)` && all longer averages above `EMA(18)` && net volume regression < 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast SMA` = 5\n  - `Fast EMA` = 18\n  - `Net volume length` = 25\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, EMA, ATR, Linear Regression\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "112": {
+    "id": 112,
+    "name": "CCI Failure Swing",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 73%. It performs best in the crypto market.\n\nThe strategy goes long when CCI holds above -100 and turns up, or short when it fails near +100 and turns down.\n\nA percent stop keeps risk small and trades exit if the CCI crosses back through the previous swing level.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1076": {
+    "id": 1076,
+    "name": "MA Crossover Strategy with Take Profit and Stop Loss",
+    "family": "trend",
+    "overview": "Strategy enters long when a fast SMA crosses above a slow SMA. Take-profit and stop-loss levels are percentage based and move when price rises above the entry price.\n\n## Parameters\n- Fast MA Length\n- Slow MA Length\n- Take Profit %\n- Stop Loss %\n- Dynamic Take Profit %\n- Dynamic Stop Loss %\n- Candle Type\n",
+    "details": "",
+    "parameters": "- Fast MA Length\n- Slow MA Length\n- Take Profit %\n- Stop Loss %\n- Dynamic Take Profit %\n- Dynamic Stop Loss %\n- Candle Type"
+   },
+   "2506": {
+    "id": 2506,
+    "name": "e-TurboFx Steps",
+    "family": "trend",
+    "overview": "The **e-TurboFx** strategy is a momentum exhaustion reversal system originally written for MetaTrader 5. It monitors the most recent finished candles and looks for sequences where the candle bodies keep expanding in the same direction. A growing series of bearish candles indicates capitulation and therefore a potential long setup, while a growing series of bullish candles announces a possible short opportunity. The StockSharp port uses the high-level API with candle subscriptions and automated position protection.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `DepthAnalysis` | Number of recent finished candles used to validate the expansion pattern. Higher values demand longer streaks before trading. | `3` |\n| `TakeProfitSteps` | Take-profit distance in exchange price steps (ticks). `0` disables the take profit. | `120` |\n| `StopLossSteps` | Stop-loss distance in exchange price steps (ticks). `0` disables the stop-loss. | `70` |\n| `TradeVolume` | Order volume sent with each market entry. | `0.1` |\n| `CandleType` | Candle data type (time frame) subscribed for the analysis. | `1 hour` time frame |\n\nAll numeric parameters have optimization metadata so they can be included in StockSharp optimizations if desired."
+   },
+   "4041": {
+    "id": 4041,
+    "name": "PROphet",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor \"PROphet\". The original EA evaluates the recent trading ran\nge across four historical candles and uses those weighted ranges to trigger new trades. It keeps positions open only between the\nEuropean and U.S. sessions and trails the stop-loss whenever price moves a fixed distance in favour of the trade. The StockSharp\nimplementation keeps all of those mechanics while adapting them to the netting model used by StockSharp portfolios.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `AllowBuy` | Enables long trades. |\n| `AllowSell` | Enables short trades. |\n| `X1`, `X2`, `X3`, `X4` | Weights applied to the long-side range components inside the `Qu` formula. |\n| `BuyStopLossPoints` | Stop-loss distance for long trades expressed in MetaTrader points. |\n| `Y1`, `Y2`, `Y3`, `Y4` | Weights applied to the short-side range components inside the `Qu` formula. |\n| `SellStopLossPoints` | Stop-loss distance for short trades expressed in MetaTrader points. |\n| `TradeVolume` | Base volume (lots) used for new entries. Extra volume is added automatically to close opposite exposure. |\n| `TradeStartHour` | First hour of the trading window (inclusive). |\n| `TradeEndHour` | Last hour of the trading window (inclusive). |\n| `ExitHour` | Hour after which all open trades are closed. |\n| `CandleType` | Timeframe of the candles used for analysis. |"
+   },
+   "1635": {
+    "id": 1635,
+    "name": "Exp ATR Trailing",
+    "family": "volatility",
+    "overview": "This example demonstrates how to manage existing positions with a trailing stop based on the **Average True Range (ATR)** indicator. The strategy does not generate entry signals; it only adjusts the exit level of an open position according to market volatility.\n\n## How it works\n\n1. The strategy subscribes to candle data of a chosen timeframe.\n2. An `AverageTrueRange` indicator is calculated on each candle.\n3. For long positions the stop level is moved up to `Close - ATR * BuyFactor`.\n4. For short positions the stop level is moved down to `Close + ATR * SellFactor`.\n5. When price crosses the trailing level the position is closed at market.\n\nThe trailing stop only moves in the direction of the trade and never retreats, providing a volatility adjusted exit.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `AtrPeriod` | ATR calculation period. |\n| `BuyFactor` | Multiplier applied to ATR when trailing a long position. |\n| `SellFactor` | Multiplier applied to ATR when trailing a short position. |\n| `CandleType` | Timeframe of candles used for analysis. |\n\n## Usage notes\n\n- Attach the strategy to a security and open a position manually or from another strategy.\n- Suitable for risk management where exits are controlled separately from entries.\n- Chart area displays candles, ATR values and executed trades for visual analysis.\n\n## References\n\n- [Average True Range on StockSharp documentation](https://doc.stocksharp.com/en/topics/indicator_average_true_range.html)\n- [Strategy Designer](https://doc.stocksharp.com/en/topics/designer.html)\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `AtrPeriod` | ATR calculation period. |\n| `BuyFactor` | Multiplier applied to ATR when trailing a long position. |\n| `SellFactor` | Multiplier applied to ATR when trailing a short position. |\n| `CandleType` | Timeframe of candles used for analysis. |"
+   },
+   "1614": {
+    "id": 1614,
+    "name": "UNMITIGATED LEVELS ACCUMULATION",
+    "family": "mean_reversion",
+    "overview": "Accumulates long positions by placing limit orders at previous day, week, month and year lows that have not been revisited recently. Orders are only placed during the London session and all positions are closed on new all‑time highs.\n\n## Details\n\n- **Entry Criteria**:\n  - Limit buys at unmitigated historical lows during session hours.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close all on new all-time high.\n- **Stops**: None.\n- **Default Values**:\n  - `Max Lookback` = 50\n  - `Session Start` = 09:00\n  - `Session End` = 17:00\n  - `Base PDL` = 0.1\n  - `Base PWL` = 0.2\n  - `Base PML` = 0.4\n  - `Base PYL` = 0.8\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: Yes (London session)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Limit buys at unmitigated historical lows during session hours.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close all on new all-time high.\n- **Stops**: None.\n- **Default Values**:\n  - `Max Lookback` = 50\n  - `Session Start` = 09:00\n  - `Session End` = 17:00\n  - `Base PDL` = 0.1\n  - `Base PWL` = 0.2\n  - `Base PML` = 0.4\n  - `Base PYL` = 0.8\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: Yes (London session)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1609": {
+    "id": 1609,
+    "name": "Session Input Parser",
+    "family": "other",
+    "overview": "Session Input Parser demonstrates how to parse TradingView session strings into start/end times and weekdays.\n\n## Details\n\n- **Purpose**: parse session strings\n- **Trading**: none\n- **Indicators**: none\n- **Stops**: no\n- **Default Values**:\n  - `SessionSimple` = \"0800-1530\"\n  - `SessionWithWeekdays` = \"0800-1530:1234567\"\n",
+    "details": "- **Purpose**: parse session strings\n- **Trading**: none\n- **Indicators**: none\n- **Stops**: no\n- **Default Values**:\n  - `SessionSimple` = \"0800-1530\"\n  - `SessionWithWeekdays` = \"0800-1530:1234567\"",
+    "parameters": ""
+   },
+   "817": {
+    "id": 817,
+    "name": "Function Simple Markov Chain Monte Carlo Simulation",
+    "family": "other",
+    "overview": "Demonstrates a basic Markov Chain Monte Carlo (MCMC) simulation that generates a random walk path.\n\n## Details\n- **Purpose**: random path generation via simple MCMC.\n- **Indicators**: none.\n- **Long/Short**: n/a.\n- **Stops**: none.\n",
+    "details": "- **Purpose**: random path generation via simple MCMC.\n- **Indicators**: none.\n- **Long/Short**: n/a.\n- **Stops**: none.",
+    "parameters": ""
+   }
+  }
+ }
+}

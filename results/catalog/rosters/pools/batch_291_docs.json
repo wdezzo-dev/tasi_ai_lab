@@ -1,0 +1,98 @@
+{
+ "batch_291": {
+  "strategy_ids": [
+   667,
+   2957,
+   2420,
+   30,
+   933,
+   3823,
+   3879,
+   3119,
+   2173,
+   1195
+  ],
+  "docs": {
+   "667": {
+    "id": 667,
+    "name": "DCA Support and Resistance with RSI and Trend Filter",
+    "family": "trend",
+    "overview": "Dollar-cost averaging strategy using support/resistance levels, RSI, and EMA trend filter. Buys at support in an uptrend when RSI is oversold and sells at resistance in a downtrend when RSI is overbought.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price at support, RSI below oversold, above EMA\n  - Short: price at resistance, RSI above overbought, below EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price reaches resistance or RSI above overbought\n  - Short: price reaches support or RSI below oversold\n- **Stops**: None\n- **Default Values**:\n  - `LookbackPeriod` = 50\n  - `RsiLength` = 14\n  - `Overbought` = 70\n  - `Oversold` = 40\n  - `EmaPeriod` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, EMA, Highest, Lowest\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price at support, RSI below oversold, above EMA\n  - Short: price at resistance, RSI above overbought, below EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price reaches resistance or RSI above overbought\n  - Short: price reaches support or RSI below oversold\n- **Stops**: None\n- **Default Values**:\n  - `LookbackPeriod` = 50\n  - `RsiLength` = 14\n  - `Overbought` = 70\n  - `Oversold` = 40\n  - `EmaPeriod` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, EMA, Highest, Lowest\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2957": {
+    "id": 2957,
+    "name": "Sidus Alligator",
+    "family": "trend",
+    "overview": "The Sidus strategy reproduces the classic MetaTrader \"Sidus\" expert advisor logic in StockSharp. It combines the Bill Williams Alligator indicator with a 14-period Relative Strength Index (RSI) filter. The system looks for an RSI cross above or below the 50 midline while all three Alligator moving averages expand in the same direction. Each entry immediately calculates protective stops and optional trailing management expressed in pip distances that respect the security's price step.",
+    "details": "",
+    "parameters": "- `OrderVolume` (default **0.1**): trade size in lots or contracts.\n- `OffsetPips` (default **3**): distance from the previous candle extreme to the stop-loss. Zero disables the initial stop.\n- `TakeProfitPips` (default **75**): take-profit distance. Zero disables the target.\n- `TrailingStopPips` (default **5**): trailing stop distance. Must be positive if trailing is enabled.\n- `TrailingStepPips` (default **15**): additional move required before the trailing stop advances. Must be positive when trailing is enabled.\n- `Delta` (default **0.00003**): minimum slope difference for each Alligator line between consecutive samples.\n- `CloseOpposite` (default **false**): if `true`, opposite positions are closed before opening a new trade; if `false`, the strategy waits for the current position to flatten naturally.\n- `JawPeriod`, `TeethPeriod`, `LipsPeriod`: lengths of the smoothed moving averages for the Alligator jaw, teeth, and lips (defaults 13/8/5).\n- `JawShift`, `TeethShift`, `LipsShift`: forward shifts (defaults 8/5/3) used when retrieving slope comparisons.\n- `RsiPeriod` (default **14**): RSI averaging window.\n- `CandleType`: candle data type/time frame to subscribe to (default 1 minute)."
+   },
+   "2420": {
+    "id": 2420,
+    "name": "MACD Stochastic 2",
+    "family": "trend",
+    "overview": "- Works on any instrument and time frame provided through the `CandleType` parameter.\n- Uses the MACD main line to confirm local troughs/peaks while the MACD histogram and signal line remain available for visualization.\n- Confirms entries with a stochastic %K reading below 20 for longs and above 80 for shorts.\n- Adapts MetaTrader pip handling by deriving pip size from the instrument's price step, multiplying by 10 when the symbol has 3 or 5 decimal places.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TradeVolume` | `1` | Order volume sent with each new trade. |\n| `StopLossBuyPips` | `50` | Pip distance for long stop-loss. Set to `0` to disable. |\n| `StopLossSellPips` | `50` | Pip distance for short stop-loss. Set to `0` to disable. |\n| `TakeProfitBuyPips` | `50` | Pip distance for long take-profit. Set to `0` to disable. |\n| `TakeProfitSellPips` | `50` | Pip distance for short take-profit. Set to `0` to disable. |\n| `TrailingStopPips` | `0` | Trailing stop distance in pips. `0` disables trailing. |\n| `TrailingStepPips` | `5` | Minimum pip gain before updating the trailing stop. Must stay positive when trailing is enabled. |\n| `MacdFastPeriod` | `12` | Fast EMA length for MACD. |\n| `MacdSlowPeriod` | `26` | Slow EMA length for MACD. |\n| `MacdSignalPeriod` | `9` | Signal smoothing length for MACD. |\n| `StochasticKPeriod` | `5` | Lookback period for stochastic %K. |\n| `StochasticDPeriod` | `3` | Smoothing period for stochastic %D. |\n| `StochasticSlowing` | `3` | Additional smoothing applied to stochastic %K. |\n| `CandleType` | `1h time frame` | Candle type (time frame) used for indicator calculations. |"
+   },
+   "30": {
+    "id": 30,
+    "name": "VWAP Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 127%. It performs best in the stocks market.\n\nVWAP Reversion trades deviations from the volume-weighted average price. If price strays too far above or below VWAP, the strategy fades the move and exits on a snap back.\n\nBecause VWAP reflects typical transaction levels, extreme deviations often lure price back toward it. Some traders combine this signal with intraday trend filters for higher probability.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on RSI, VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `DeviationPercent` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, VWAP\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on RSI, VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `DeviationPercent` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, VWAP\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "933": {
+    "id": 933,
+    "name": "Iron Bot Statistical Trend Filter",
+    "family": "trend",
+    "overview": "The strategy trades breakouts based on statistical trend levels computed from Fibonacci ranges and Z-score.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price crosses above trend line and high trend level with non-negative Z-score.\n  - **Short**: price crosses below trend line and low trend level with non-positive Z-score.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at `SlRatio` percent from entry.\n  - Take profit at one of four levels (`Tp1Ratio`–`Tp4Ratio`) from entry.\n- **Stops**: Yes.\n- **Default Values**:\n  - `ZLength` = 40.\n  - `AnalysisWindow` = 44.\n  - `HighTrendLimit` = 0.236.\n  - `LowTrendLimit` = 0.786.\n  - `EmaLength` = 200.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Z-score, EMA, price action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price crosses above trend line and high trend level with non-negative Z-score.\n  - **Short**: price crosses below trend line and low trend level with non-positive Z-score.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at `SlRatio` percent from entry.\n  - Take profit at one of four levels (`Tp1Ratio`–`Tp4Ratio`) from entry.\n- **Stops**: Yes.\n- **Default Values**:\n  - `ZLength` = 40.\n  - `AnalysisWindow` = 44.\n  - `HighTrendLimit` = 0.236.\n  - `LowTrendLimit` = 0.786.\n  - `EmaLength` = 200.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Z-score, EMA, price action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3823": {
+    "id": 3823,
+    "name": "Bruno Trend",
+    "family": "trend",
+    "overview": "Bruno Trend Strategy is a StockSharp port of the MetaTrader expert advisor \"Bruno_v1\". The strategy trades on 30-minute candles and focuses on synchronized bullish signals from several classic trend-following and momentum indicators. Only long positions are opened, mimicking the original expert that concentrated on bullish breakouts confirmed by indicator alignment.",
+    "details": "",
+    "parameters": ""
+   },
+   "3879": {
+    "id": 3879,
+    "name": "MoStAsHaR15 Pivot Line",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"MoStAsHaR15 FoReX - Pivot Line\" MetaTrader 4 expert using StockSharp's high level strategy API. It keeps the original daily floor-pivot map combined with momentum filters from ADX, EMA spreads and the MACD histogram (OsMA). Intraday logic operates on an hourly candle stream while a second subscription consumes the previous completed daily candle to rebuild the pivot ladder before each decision.",
+    "details": "",
+    "parameters": ""
+   },
+   "3119": {
+    "id": 3119,
+    "name": "Exp XFisher org v1",
+    "family": "trend",
+    "overview": "The strategy reproduces the MetaTrader 5 expert **Exp_XFisher_org_v1**. It trades reversals detected on the Fisher transform of\nprice that is additionally smoothed with a configurable moving average. The StockSharp port keeps the counter-trend nature of\nthe original robot: when the Fisher curve turns downward after an upswing a long position is opened, and when the curve turns\nupward after a downswing a short position is opened. Existing positions are closed once the indicator reverses in the opposite\ndirection.\n\nThe helper indicator `XFisherOrgIndicator` implemented in `CS/ExpXFisherOrgV1Strategy.cs` follows the MT5 logic:\n\n1. Take the highest high and lowest low over `Length` finished candles.\n2. Convert the selected price source (see *Applied Price* below) into the 0–1 range using those extremes.\n3. Apply the recursive filter `value = (wpr - 0.5) + 0.67 * value[prev]` followed by the Fisher transform\n   `fish = 0.5 * ln((1 + value) / (1 - value)) + 0.5 * fish[prev]`.\n4. Smooth the result with one of the supported moving averages. The smoothed Fisher value forms the main line; the signal line\n   is simply the previous bar’s smoothed value, exactly as in the MQL version where buffer #1 stores a one-bar shift.\n\nThe conversion keeps the original defaults (`Length = 7`, Jurik smoothing of length 5, phase 15, H4 candles) and exposes the\nsame enable/disable switches for opening and closing long/short trades.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `OrderVolume` | Volume of every market order. | `1` |\n| `BuyOpenAllowed` / `SellOpenAllowed` | Permit opening long/short trades. | `true` |\n| `BuyCloseAllowed` / `SellCloseAllowed` | Permit closing existing long/short trades. | `true` |\n| `SignalBar` | Shift (in closed candles) used to read the Fisher buffers. | `1` |\n| `Length` | Lookback for highest/lowest price extremes. | `7` |\n| `SmoothingLength` | Period of the smoothing average. | `5` |\n| `Phase` | Jurik phase (ignored by other methods). | `15` |\n| `SmoothingMethod` | Moving average applied to the Fisher output. | `Jjma` |\n| `PriceType` | Applied price forwarded to the indicator (close, open, median, etc.). | `Close` |\n| `CandleType` | Candle series used for the calculation (default: 4 hour candles). | `H4` |"
+   },
+   "2173": {
+    "id": 2173,
+    "name": "TMA Breakout",
+    "family": "trend",
+    "overview": "This strategy exploits breakouts relative to a Triangular Moving Average (TMA). It watches a configurable candle series and compares the previous candle's close to the TMA value plus or minus user defined offsets. A long position is opened when the previous close is above `TMA + UpLevel`, and a short position is opened when it is below `TMA - DownLevel`. Opposite signals reverse the position.\n\n## Parameters\n\n- **TMA Length** – period used to calculate the Triangular Moving Average.\n- **Upper Level** – price offset added to the TMA to detect long signals.\n- **Lower Level** – price offset subtracted from the TMA to detect short signals.\n- **Candle Type** – timeframe of candles used by the strategy.\n\n## How it works\n\n1. Subscribes to the selected candle series.\n2. Binds a Triangular Moving Average indicator to the candles.\n3. On each finished candle it:\n   - Stores the previous TMA and close values.\n   - Checks if the previous close exceeded the upper or lower level.\n   - Sends market orders to open or reverse positions accordingly.\n4. Charts candles, indicator line and own trades for visual analysis.\n\n## Notes\n\nThe strategy uses market orders without stop-loss or take-profit management. It is intended for educational purposes and should be extended with proper risk controls before live trading.\n",
+    "details": "",
+    "parameters": "- **TMA Length** – period used to calculate the Triangular Moving Average.\n- **Upper Level** – price offset added to the TMA to detect long signals.\n- **Lower Level** – price offset subtracted from the TMA to detect short signals.\n- **Candle Type** – timeframe of candles used by the strategy."
+   },
+   "1195": {
+    "id": 1195,
+    "name": "ProfitView Strategy Template",
+    "family": "trend",
+    "overview": "A basic moving average crossover strategy with configurable smoothing types, derived from the ProfitView template.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MA1 crosses above MA2.\n  - **Short**: MA1 crosses below MA2.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `MA1 Type` = SMA, `MA1 Length` = 10\n  - `MA2 Type` = SMA, `MA2 Length` = 100\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving averages\n  - Stops: No\n  - Complexity: Basic\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MA1 crosses above MA2.\n  - **Short**: MA1 crosses below MA2.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `MA1 Type` = SMA, `MA1 Length` = 10\n  - `MA2 Type` = SMA, `MA2 Length` = 100\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving averages\n  - Stops: No\n  - Complexity: Basic",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_360": {
+  "strategy_ids": [
+   2928,
+   3447,
+   2883,
+   2774,
+   3493,
+   2976,
+   2690,
+   2792,
+   670,
+   1493
+  ],
+  "docs": {
+   "2928": {
+    "id": 2928,
+    "name": "OverHedge V2 Grid",
+    "family": "trend",
+    "overview": "The strategy replicates the MetaTrader OverHedge V2 expert advisor on the StockSharp high-level API. It builds a hedged grid by following the direction of a fast and a slow EMA, then alternates long and short orders inside a dynamic tunnel. Positions are added according to a geometric lot progression and the whole basket is liquidated once the aggregated unrealized profit reaches the configured target.\n\n## Trading Logic\n\n- **Trend filter:** An 8-period EMA must diverge from a 21-period EMA by at least `MinDistancePips`. The filter decides the direction of the first trade in each cycle.\n- **Grid tunnel:** The tunnel width equals the current spread multiplied by two plus `TunnelWidthPips` converted to price units. It defines the opposite-side trigger once the cycle starts.\n- **Order alternation:** The first three positions are opened in the trend direction. Afterwards the algorithm alternates side to hedge the exposure using the same tunnel anchors as the reference.\n- **Lot escalation:** Each subsequent order multiplies the previous volume by `BaseMultiplier` starting from `StartVolume`. The size is aligned to instrument volume constraints.\n- **Cycle exit:** When the net unrealized gain per instrument lot is above `MinProfitTargetPips` and the total basket profit exceeds `ProfitTargetPips`, the strategy closes all open positions and resets the state.\n- **Manual shutdown:** Setting `ShutdownGrid` to `true` closes any remaining position and prevents new orders until it is toggled off.\n\n## Entry Conditions\n\n### Long entries\n- Trend filter indicates an uptrend (`EMA_short - EMA_long > MinDistancePips`).\n- Ask price is greater than or equal to the current buy anchor.\n- The strategy is not in shutdown mode and the basket has not reached its profit target.\n\n### Short entries\n- Trend filter indicates a downtrend (`EMA_long - EMA_short > MinDistancePips`).\n- Ask price is less than or equal to the current sell anchor.\n- Shutdown flag is false and the basket profit target is not",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `StartVolume` | Initial volume of the first order in a cycle. |\n| `BaseMultiplier` | Geometric multiplier applied to the volume of each subsequent order. |\n| `TunnelWidthPips` | Additional tunnel width in pips added to twice the current spread. |\n| `ProfitTargetPips` | Basket profit target measured in pips converted to price distance. |\n| `MinProfitTargetPips` | Minimum favorable move per side before the basket can close. |\n| `ShortEmaPeriod` | Period of the fast EMA used for direction confirmation. |\n| `LongEmaPeriod` | Period of the slow EMA used for direction confirmation. |\n| `MinDistancePips` | Minimum EMA separation required to declare a trend. |\n| `CandleType` | Time frame of the candles feeding the EMAs and the trading loop. |\n| `ShutdownGrid` | Boolean switch that forces liquidation and blocks new trades. |"
+   },
+   "3447": {
+    "id": 3447,
+    "name": "Simple Martingale Template",
+    "family": "trend",
+    "overview": "This strategy replicates the original MetaTrader \"Simple Martingale Template\" idea in StockSharp. It analyzes finished candles of a configurable timeframe using a pair of simple moving averages (SMA). A breakout filter checks whether the previous candle's close breaks the high or low of an even earlier candle to confirm direction. The position size follows a martingale sequence: after each losing cycle the next trade volume is multiplied, while profitable cycles reset the volume to the configured base size.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `StopLossPoints` | Distance from entry to the protective stop in price points. |\n| `TakeProfitPoints` | Distance from entry to the profit target in price points. |\n| `BaseVolume` | Initial lot size for the martingale cycle. |\n| `Multiplier` | Factor applied to the previous lot size after a loss. |\n| `FastPeriod` | Length of the fast SMA used for directional bias. |\n| `SlowPeriod` | Length of the slow SMA for trend confirmation. |\n| `CandleType` | Timeframe of candles processed by the strategy. |"
+   },
+   "2883": {
+    "id": 2883,
+    "name": "Interceptor Strategy (StockSharp Port)",
+    "family": "trend",
+    "overview": "The Interceptor strategy is a C# port of the original MetaTrader5 expert advisor. It combines multi-timeframe EMA \"fan\" alignment with Stochastic oscillators, flat-range breakout detection, divergence analysis, hammer candlestick filters and horn (fan convergence) confirmation. The goal is to exploit strong trend continuation following periods of consolidation on the GBP/USD 5-minute chart.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order volume used for each entry. |\n| `FlatnessCoefficient` | Multiplier that controls the maximum allowable width of a detected flat range. |\n| `StopLossPoints` | Initial stop-loss distance in price points. |\n| `TakeProfitPoints` | Initial take-profit distance in price points (0 disables). |\n| `TakeProfitAfterBreakeven` | Required profit (points) before breakeven logic activates. |\n| `StopLossAfterBreakeven` | Distance of the breakeven stop once activated. |\n| `MaxFanDistanceM5/M15/H1` | Maximum EMA spread allowed on each timeframe. |\n| `StochasticKPeriodM5/M15` | %K length for Stochastic oscillators on M5 and M15. |\n| `StochasticUpperM5/M15` | Overbought thresholds. |\n| `StochasticLowerM5/M15` | Oversold thresholds. |\n| `MinBodyPoints` | Minimum candle body size to qualify as a strong bar. |\n| `MinFlatBars` | Minimum bars required to define a flat range. |\n| `MaxFlatPoints` | Maximum flat-range width (points). |\n| `MinDivergenceBars` | Minimum separation between divergence pivots. |\n| `HammerLongShadowPercent` | Minimum long shadow percentage for hammer detection. |\n| `HammerShortShadowPercent` | Maximum opposite shadow percentage for hammer detection. |\n| `HammerMinSizePoints` | Minimum total range of the hammer candle. |\n| `HammerLookbackBars` | Lookback window to search for hammer patterns. |\n| `HammerRangeBars` | Number of bars used to validate hammer highs/lows. |\n| `MaxFanWidthAtNarrowest` | Maximum EMA spread when the fan is considered converged. |\n| `FanConvergedBars` | Number of bars the fan can remain converged for horn signals. |\n| `RangeBreakLookback` | Lookback window for range breakout detection. |\n| `TrailingStepPoints` | Minimal increment for trailing stop adjustments. |\n| `TrailingDistancePoints` | Distance between price and the trailing stop. |\n| `CandleType` | Primary candle series (default M5 time candles). |"
+   },
+   "2774": {
+    "id": 2774,
+    "name": "MACD Simple Reshetov",
+    "family": "trend",
+    "overview": "This strategy reproduces the behavior of Yury Reshetov's \"MACDSimple\" MetaTrader expert advisor inside the StockSharp framework. It works with a single security and evaluates classic MACD signals that are modified by two offset parameters. The algorithm processes completed candles only, ensuring that all trading decisions are made on confirmed data and avoiding intrabar noise.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Volume` | Order size used for every market entry. | 2 |\n| `DF` | Offset added to the fast MACD EMA length. Must be zero or positive. | 1 |\n| `DS` | Additional offset applied to the slow MACD EMA length. Must be zero or positive. | 2 |\n| `SignalPeriod` | Base period from which the fast and slow EMA lengths are derived. | 10 |\n| `CandleType` | Timeframe of the candles used for analysis and trading. | 30-minute time frame |"
+   },
+   "3493": {
+    "id": 3493,
+    "name": "M.A Break",
+    "family": "trend",
+    "overview": "This strategy replicates the behaviour of the MetaTrader \"M.A break mt5 buy\" and \"M.A break mt5 sell\" experts by combining both breakout directions into a single StockSharp implementation. It watches a configurable candle series, analyses several exponential moving averages, and confirms a strong impulse candle before opening trades. Positions are managed through fixed protective stops and targets measured in pips.\n\n## Trading logic\n\n1. **Trend confirmation.** Two EMA pairs (fast vs. slow) must be aligned in the trade direction on the completed candle. For longs both fast averages must be above their slow counterparts; for shorts the relationships are inverted. The previous candle open also has to be on the correct side of a dedicated EMA filter.\n2. **Quiet-range measurement.** A configurable number of earlier candles (excluding the most recent impulse candle) define the \"quiet\" period. Their highest range is compared against a minimum pip threshold.\n3. **Impulse detection.** The latest finished candle must expand by at least `ImpulseStrength` times the quiet range. Candle size limits in pips can be enforced to ignore unusually small or large moves.\n4. **Candlestick template.** The impulse candle must exhibit a specific wick structure:\n   - Long trades: bullish body, upper wick not exceeding `BullUpperWickPercent` of the candle range, and lower wick at least `BullLowerWickPercent` of the range.\n   - Short trades: bearish body, upper wick of at least `BearUpperWickPercent`, and lower wick not larger than `BearLowerWickPercent` of the range.\n5. **Pullback condition.** The impulse low (for longs) or high (for shorts) must test an additional EMA to guarantee that the breakout emerged from a pullback.\n6. **Position control.** Only one net position is allowed. The strategy closes the opposite side before entering a new trade and never opens a position against the trend filter.\n7. **Exit management.** Stop-loss and take-profit levels are calculated in pips from the entry p",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Candle Type** | Primary candle series used for all calculations. |\n| **Fast MA 1 / Slow MA 1** | Periods of the first EMA pair that defines the primary trend. |\n| **Fast MA 2 / Slow MA 2** | Periods of the secondary EMA pair used as an additional trend filter. |\n| **Open Filter MA** | EMA period that filters the previous candle open price. |\n| **Pullback MA** | EMA period whose value must be touched by the impulse wick. |\n| **Quiet Bars** | Number of historical candles used to measure the quiet market range. |\n| **Quiet Range (pips)** | Minimal pip range required across the quiet candles before considering a breakout. |\n| **Impulse Multiplier** | Minimal ratio between the impulse candle size and the quiet range. |\n| **Min / Max Candle Size (pips)** | Optional limits for the impulse candle range. Zero disables the respective bound. |\n| **Bull Upper Wick % / Bull Lower Wick %** | Shape filters for the bullish impulse candle, expressed as percentages of the candle range. |\n| **Bear Upper Wick % / Bear Lower Wick %** | Shape filters for the bearish impulse candle. |\n| **Volume** | Order size in lots used for both long and short entries. |\n| **Stop-Loss (pips)** | Distance to the protective stop measured from the entry price. Zero disables the stop. |\n| **Take-Profit (pips)** | Distance to the profit target. Zero disables the target. |\n| **Enable Long / Enable Short** | Toggle breakout trading in each direction independently. |"
+   },
+   "2976": {
+    "id": 2976,
+    "name": "Ultra MFI Money Management Recount",
+    "family": "trend",
+    "overview": "The **Ultra MFI MMRec Strategy** is a direct port of the MetaTrader 5 expert advisor `Exp_UltraMFI_MMRec`. It combines a multi-step smoothed Money Flow Index (MFI) oscillator with streak-based money management. Two internal counters accumulate how many smoothing layers point upward or downward. Crossovers between these counters generate trade signals, while recent trade outcomes determine whether the next position uses the normal or reduced position size.",
+    "details": "",
+    "parameters": "- **CandleType** – instrument data type (time frame) used for signal generation.\n- **MfiPeriod** – length of the Money Flow Index oscillator.\n- **StepSmoothing / FinalSmoothing** – moving average type for the ladder steps and the final counters.\n- **StartLength / StepSize / StepsTotal** – geometry of the smoothing ladder (first length, increment, number of steps).\n- **FinalSmoothingLength** – length of the counter smoothing stage.\n- **SignalShift** – number of completed bars to look back when evaluating signals.\n- **NormalVolume / ReducedVolume** – trade size for normal conditions and after a losing streak.\n- **BuyTotalTrigger / BuyLossTrigger** – history depth and loss threshold to switch the next long trade to reduced size.\n- **SellTotalTrigger / SellLossTrigger** – analogous settings for short trades.\n- **AllowLongEntries / AllowShortEntries / AllowLongExits / AllowShortExits** – enable or disable entries and exits for each direction.\n- **TakeProfitPercent / StopLossPercent** – optional percentage-based protection levels."
+   },
+   "2690": {
+    "id": 2690,
+    "name": "Moving Averages",
+    "family": "trend",
+    "overview": "The Moving Averages strategy replicates the classic MetaTrader expert that trades crosses of price relative to a shifted simple moving average (SMA). The algorithm processes completed candles only, ensuring that all trading decisions are based on fully formed bars. Position sizing follows a dynamic risk model tied to account equity and adapts to losing streaks, mimicking the original MQL implementation.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `MaximumRisk` | Fraction of account equity risked on each trade. | `0.02` |\n| `DecreaseFactor` | Divisor used to shrink volume after consecutive losses. | `3` |\n| `MovingPeriod` | Period of the SMA used for signals. | `12` |\n| `MovingShift` | Number of completed bars used to shift the SMA forward. | `6` |\n| `CandleType` | Candle series used for calculations (time frame). | `5m` candles |"
+   },
+   "2792": {
+    "id": 2792,
+    "name": "Farhad Crab Strategy (C#)",
+    "family": "trend",
+    "overview": "The Farhad Crab strategy is a trend-following system that enters trades on pullbacks to an exponential moving average (EMA) and manages exits using fixed stops, take-profits, a Parabolic SAR-inspired trailing stop, and a higher time frame filter. The original MetaTrader 5 expert advisor relies on hourly candles for execution while referencing daily data to decide when to close open positions. This C# port keeps the same core logic by combining a working timeframe EMA filter with a daily EMA crossover exit rule.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-hour time frame | Working time frame used for the execution EMA and entry logic. |\n| `MaLength` | `int` | 15 | Period of the EMA on the working time frame. |\n| `MaShift` | `int` | 0 | Number of completed candles used to shift the EMA backwards. |\n| `DailyMaLength` | `int` | 15 | Period of the daily EMA that provides the crossover exit filter. |\n| `StopLossPips` | `decimal` | 50 | Stop-loss distance in pips. Set to `0` to disable. |\n| `TakeProfitPips` | `decimal` | 50 | Take-profit distance in pips. Set to `0` to disable. |\n| `TrailingStopPips` | `decimal` | 10 | Trailing stop distance in pips. Set to `0` to disable trailing. |\n| `TrailingStepPips` | `decimal` | 5 | Minimum additional gain in pips before the trailing stop is updated again. |\n| `Volume` | `decimal` | 0.1 | Base trade size in lots/contracts. |"
+   },
+   "670": {
+    "id": 670,
+    "name": "Dekidaka-Ashi Candles Volume",
+    "family": "trend",
+    "overview": "This strategy combines candle body with smoothed volume using the Dekidaka-Ashi approach. It buys on bullish signals and sells on bearish ones. Candles that span both ranges close open positions.\n\n## Details\n\n- **Entry Criteria**:\n  - Strong or weak bullish signal: high above upper range and low above lower range.\n  - Strong or weak bearish signal: high below upper range and low below lower range.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal or candle spanning both ranges (uncertainty).\n- **Stops**: No.\n- **Default Values**:\n  - `BodySize` = 1\n  - `VolumeSmooth` = 1\n  - `CandleType` = 5-minute timeframe\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long & Short\n  - Indicators: EMA, Volume\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Strong or weak bullish signal: high above upper range and low above lower range.\n  - Strong or weak bearish signal: high below upper range and low below lower range.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal or candle spanning both ranges (uncertainty).\n- **Stops**: No.\n- **Default Values**:\n  - `BodySize` = 1\n  - `VolumeSmooth` = 1\n  - `CandleType` = 5-minute timeframe\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long & Short\n  - Indicators: EMA, Volume\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1493": {
+    "id": 1493,
+    "name": "TTP Intelligent Accumulator",
+    "family": "trend",
+    "overview": "Strategy that accumulates long positions when RSI falls below its mean by one standard deviation and distributes them when RSI rises above the same threshold.\n\n## Details\n\n- **Entry Criteria**: RSI < SMA(RSI, `MaPeriod`) - StdDev(RSI, `StdPeriod`)\n- **Long/Short**: Long only\n- **Exit Criteria**: RSI > SMA(RSI, `MaPeriod`) + StdDev(RSI, `StdPeriod`) and profit above `MinProfit`\n- **Stops**: No\n- **Default Values**:\n  - `RsiPeriod` = 7\n  - `MaPeriod` = 14\n  - `StdPeriod` = 14\n  - `AddWhileInLossOnly` = true\n  - `MinProfit` = 0m\n  - `ExitPercent` = 100m\n  - `UseDateFilter` = false\n  - `StartDate` = 2022-06-01\n  - `EndDate` = 2030-07-01\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: RSI, MA, StdDev\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: RSI < SMA(RSI, `MaPeriod`) - StdDev(RSI, `StdPeriod`)\n- **Long/Short**: Long only\n- **Exit Criteria**: RSI > SMA(RSI, `MaPeriod`) + StdDev(RSI, `StdPeriod`) and profit above `MinProfit`\n- **Stops**: No\n- **Default Values**:\n  - `RsiPeriod` = 7\n  - `MaPeriod` = 14\n  - `StdPeriod` = 14\n  - `AddWhileInLossOnly` = true\n  - `MinProfit` = 0m\n  - `ExitPercent` = 100m\n  - `UseDateFilter` = false\n  - `StartDate` = 2022-06-01\n  - `EndDate` = 2030-07-01\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: RSI, MA, StdDev\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

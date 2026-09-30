@@ -1,0 +1,98 @@
+{
+ "batch_033": {
+  "strategy_ids": [
+   1334,
+   1483,
+   2163,
+   1546,
+   3399,
+   1074,
+   4143,
+   2091,
+   3289,
+   288
+  ],
+  "docs": {
+   "1334": {
+    "id": 1334,
+    "name": "Squeeze Momentum Indicator",
+    "family": "trend",
+    "overview": "The Squeeze Momentum Indicator strategy detects volatility contraction when Bollinger Bands fall inside Keltner Channels. A long position is opened when the squeeze releases upward with rising momentum and price above the 100-period EMA. Shorts are taken on a downward release with falling momentum and price below the EMA. Positions exit when momentum reverses.\n\n## Details\n\n- **Entry Criteria**:\n  - Bollinger Bands move outside Keltner Channels (squeeze release).\n  - **Long**: Momentum increases, price above previous close and EMA100, and squeeze color changes from black to gray.\n  - **Short**: Momentum decreases, price below previous close and EMA100, and color changes from gray to black.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Momentum reverses.\n- **Stops**: None.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbMultiplier` = 2\n  - `KcLength` = 20\n  - `KcMultiplier` = 1.5\n  - `EmaLength` = 100\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, Linear Regression, EMA\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Bollinger Bands move outside Keltner Channels (squeeze release).\n  - **Long**: Momentum increases, price above previous close and EMA100, and squeeze color changes from black to gray.\n  - **Short**: Momentum decreases, price below previous close and EMA100, and color changes from gray to black.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Momentum reverses.\n- **Stops**: None.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbMultiplier` = 2\n  - `KcLength` = 20\n  - `KcMultiplier` = 1.5\n  - `EmaLength` = 100\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, Linear Regression, EMA\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1483": {
+    "id": 1483,
+    "name": "Triangular Hull Moving Average",
+    "family": "trend",
+    "overview": "Strategy based on Hull Moving Average cross with a two-bar lag.\n\nThe strategy compares the Hull Moving Average with its value two bars ago. A crossover upwards opens a long position, while a downward cross opens a short one. Direction can be limited to long-only or short-only modes.\n\n## Details\n- **Entry Criteria**: HMA cross with 2-bar lag.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal or direction filter.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 40\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `EntryMode` = EntryDirection.LongAndShort\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: HMA cross with 2-bar lag.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal or direction filter.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 40\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `EntryMode` = EntryDirection.LongAndShort\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: MA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2163": {
+    "id": 2163,
+    "name": "RSI MA Trend",
+    "family": "trend",
+    "overview": "This strategy combines the Relative Strength Index (RSI) with a moving average trend filter.\nA long position is opened when the RSI drops below a specified buy level while the fast moving average is above the slow moving average. \nA short position is opened when the RSI rises above a specified sell level while the fast moving average is below the slow moving average.\n\n## Parameters\n\n- `RSI Period` – length of the RSI indicator.\n- `RSI Buy Level` – RSI value below which a long position is opened.\n- `RSI Sell Level` – RSI value above which a short position is opened.\n- `Fast MA Period` – period of the fast moving average.\n- `Slow MA Period` – period of the slow moving average.\n- `Candle Type` – candle series used for calculations.\n\n## Logic\n\n1. Subscribe to the selected candle series.\n2. Calculate RSI, fast MA, and slow MA for each finished candle.\n3. Detect uptrend when fast MA is above slow MA and downtrend when it is below.\n4. Enter long when RSI < buy level and trend is up, closing short positions if any.\n5. Enter short when RSI > sell level and trend is down, closing long positions if any.\n\n## Notes\n\n- The strategy uses market orders for entries.\n- Trade signals are processed only on finished candles.\n- Parameters are exposed for optimization in the user interface.\n",
+    "details": "",
+    "parameters": "- `RSI Period` – length of the RSI indicator.\n- `RSI Buy Level` – RSI value below which a long position is opened.\n- `RSI Sell Level` – RSI value above which a short position is opened.\n- `Fast MA Period` – period of the fast moving average.\n- `Slow MA Period` – period of the slow moving average.\n- `Candle Type` – candle series used for calculations."
+   },
+   "1546": {
+    "id": 1546,
+    "name": "VQZL Z-Score",
+    "family": "trend",
+    "overview": "Strategy using z-score relative to a smoothed average.\n\nTesting indicates an average annual return of about 42%. It performs best in the stock market.\n\nThe strategy calculates a smoothed moving average and standard deviation to compute a z-score. When price deviates beyond a threshold, it enters in the direction of the move.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Z-Score > threshold`.\n  - **Short**: `Z-Score < -threshold`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `PriceSmoothing` = 15\n  - `ZLength` = 100\n  - `Threshold` = 1.64\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Z-Score > threshold`.\n  - **Short**: `Z-Score < -threshold`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `PriceSmoothing` = 15\n  - `ZLength` = 100\n  - `Threshold` = 1.64\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3399": {
+    "id": 3399,
+    "name": "Basket Close Utility",
+    "family": "trend",
+    "overview": "The Basket Close Utility strategy mirrors the behaviour of the MetaTrader expert \"Basket Close 2\". It continuously monitors the floating profit and loss of every open position in the connected portfolio. When either a configurable profit objective or a loss limit is reached, the strategy sends market orders to flatten **all** exposures in every instrument involved. Optionally, it can automatically open a small test position whenever the book is flat, which is useful inside backtests for validating that the protection logic works as expected.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `LossMode` | Chooses whether the loss guard compares percentages or currency values. |\n| `LossPercentage` | Negative percentage drawdown (expressed in absolute value) that triggers the loss exit when `LossMode` is `Percentage`. |\n| `LossCurrency` | Floating loss in account currency that triggers the exit when `LossMode` is `Currency`. |\n| `ProfitMode` | Chooses whether the profit objective compares percentages or currency values. |\n| `ProfitPercentage` | Percentage gain that closes all positions when `ProfitMode` is `Percentage`. |\n| `ProfitCurrency` | Floating profit in account currency that closes all positions when `ProfitMode` is `Currency`. |\n| `CandleType` | Timeframe used to trigger periodic checks of the floating profit and loss. |\n| `EnableTestOrders` | When enabled the strategy sends a single market buy order whenever no positions are open. |\n| `TestOrderVolume` | Trade size used when the optional test order is active. |"
+   },
+   "1074": {
+    "id": 1074,
+    "name": "Monthly Returns",
+    "family": "breakout",
+    "overview": "Tracks pivot highs and lows to trade breakouts and computes compounded monthly and yearly returns for strategy equity.\n\n## Details\n\n- **Entry Criteria**: Buy when price breaks above latest pivot high; sell when price breaks below latest pivot low.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions reverse on opposite signals.\n- **Stops**: None.\n- **Default Values**:\n  - `LeftBars` = 2\n  - `RightBars` = 1\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Buy when price breaks above latest pivot high; sell when price breaks below latest pivot low.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions reverse on opposite signals.\n- **Stops**: None.\n- **Default Values**:\n  - `LeftBars` = 2\n  - `RightBars` = 1\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4143": {
+    "id": 4143,
+    "name": "MACD Sample 1010",
+    "family": "breakout",
+    "overview": "This module ports the MetaTrader expert advisor **macd_sample_1010.mq4** to the StockSharp high-level API. The original script combined Bollinger Bands with simple money-management rules: when the close price finished above the upper band plus a configurable buffer it opened a sell order, while a close below the lower band minus the buffer triggered a buy order. Positions were closed once a fixed profit or loss amount (expressed in pips) was reached. The StockSharp version reproduces the same logic by subscribing to the requested candle series, binding a `BollingerBands` indicator, and issuing market orders and position management calls from the candle callback.\n\nThe conversion keeps the behaviour of the legacy expert on finished candles. Every evaluation happens when a candle is fully formed, ensuring the breakout and exit decisions match the bar-close processing of the MetaTrader platform. Optional balance-based scaling of the trade volume is also implemented to emulate the `LotIncrease` flag from the MQL4 code.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n| --- | --- | --- | --- |\n| `ProfitTargetPips` | `decimal` | `3` | Number of pips of favourable movement required to close a position in profit. Set to `0` to disable the take-profit rule. |\n| `LossLimitPips` | `decimal` | `20` | Number of pips of adverse movement tolerated before the position is liquidated. Set to `0` to disable the stop-loss rule. |\n| `BandDistancePips` | `decimal` | `3` | Buffer (in pips) added above the upper band and below the lower band before a breakout is confirmed. |\n| `BollingerPeriod` | `int` | `4` | Number of candles used to calculate the Bollinger Bands. |\n| `BollingerDeviation` | `decimal` | `2` | Standard deviation multiplier applied by the Bollinger Bands indicator. |\n| `BaseVolume` | `decimal` | `1` | Initial trade size, expressed in lots. This value is also used as the baseline for the scaling logic. |\n| `LotIncrease` | `bool` | `true` | When enabled, recalculates the trade volume on every candle so it follows the ratio between the current portfolio balance and the starting balance. |\n| `OneOrderOnly` | `bool` | `true` | Prevents the strategy from opening a new position when one is already active. When disabled the net position is still managed because StockSharp uses aggregate positions. |\n| `CandleType` | `DataType` | `TimeFrame(15m)` | Candle series used for both indicator calculations and trading decisions. |"
+   },
+   "2091": {
+    "id": 2091,
+    "name": "Robust EA Template",
+    "family": "momentum",
+    "overview": "Strategy implementing the Robust EA Template from MQL.\nIt uses Commodity Channel Index (CCI) and Relative Strength Index (RSI) to generate entry signals and applies fixed take profit and stop loss.\n\n## Logic\n- Buy when CCI is in -200..-150 or -100..-50 and RSI is between 0 and 25.\n- Sell when CCI is between 50 and 150 and RSI is between 80 and 100.\n- Stop loss and take profit are defined in pips and converted to price points.\n\n## Parameters\n- `Candle Type` – candle data series.\n- `CCI Period` – period of the CCI indicator.\n- `RSI Period` – period of the RSI indicator.\n- `Take Profit (pips)` – distance for profit target.\n- `Stop Loss (pips)` – distance for stop loss.\n- `Volume` – order volume.\n",
+    "details": "",
+    "parameters": "- `Candle Type` – candle data series.\n- `CCI Period` – period of the CCI indicator.\n- `RSI Period` – period of the RSI indicator.\n- `Take Profit (pips)` – distance for profit target.\n- `Stop Loss (pips)` – distance for stop loss.\n- `Volume` – order volume."
+   },
+   "3289": {
+    "id": 3289,
+    "name": "Pending Stop Grid",
+    "family": "volatility",
+    "overview": "The **Pending Stop Grid Strategy** is a direct conversion of the MetaTrader 4 expert advisor `new.mq4`. The strategy maintains two symmetric ladders of pending orders:\n\n- A sequence of buy stop orders above the current ask price.\n- A sequence of sell stop orders below the current bid price.\n\nEach additional level increases both the order distance and traded volume proportionally to its position within the ladder. Stop-loss and take-profit targets are assigned to every order individually.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `BaseVolume` | Volume of the first pending order. Each subsequent order multiplies this base by its index. | `0.1` |\n| `NumberOfTrades` | Number of buy stop and sell stop orders maintained simultaneously. | `10` |\n| `DistancePips` | Distance (in pips) between the market price and each pending order level. | `10` |\n| `StopLossPips` | Stop-loss distance assigned to every order. Set to zero to disable stop-loss placement. | `10` |\n| `TakeProfitPips` | Take-profit distance assigned to every order. Set to zero to disable take-profit placement. | `10` |\n\nAll parameters are exposed as optimisable strategy parameters and are validated to avoid negative or zero values (where applicable)."
+   },
+   "288": {
+    "id": 288,
+    "name": "CCI Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the CCI returns toward balance. Starting parameter `CciPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

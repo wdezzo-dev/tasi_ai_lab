@@ -1,0 +1,98 @@
+{
+ "batch_186": {
+  "strategy_ids": [
+   2903,
+   2095,
+   512,
+   1262,
+   2073,
+   3504,
+   3855,
+   1969,
+   1982,
+   1073
+  ],
+  "docs": {
+   "2903": {
+    "id": 2903,
+    "name": "Alexav D1 Profit GBPUSD",
+    "family": "trend",
+    "overview": "Daily breakout system for GBPUSD that combines an EMA calculated on highs, RSI filters, MACD momentum confirmation and ATR-based risk management. The script reproduces the four-layer profit taking and breakeven behaviour of the original MetaTrader version.\n\n## Key Facts\n\n- **Market**: GBP/USD spot or CFD\n- **Timeframe**: Daily candles (configurable)\n- **Direction**: Long and short\n- **Position Style**: Multi-target scaling with shared stop loss\n- **Instruments Used**: EMA (High), RSI, MACD main line, ATR\n\n## Indicator Setup\n\n1. **EMA on High prices** – default length 6, approximates the dynamic breakout level.\n2. **RSI** – default length 10, defines overbought/oversold corridors used as momentum filters.\n3. **MACD main line** – fast 5, slow 21, signal 14. Only the main line is used to measure momentum slope.\n4. **ATR** – length 28, delivers volatility-dependent stops and targets.\n\n## Entry Logic\n\n### Long Entries\n\n1. The previous daily bar opens below the EMA (High) and closes above it (cross-over confirmation).\n2. RSI stays between **60** and **80** – prevents trades during weak momentum and avoids overextended rallies.\n3. MACD main line satisfies one of two momentum checks:\n   - The value two bars ago is negative (indicating the trend recently turned positive), **or**\n   - The relative reduction in absolute MACD between the last two bars exceeds the configurable **MacdDiffBuy** threshold (default 0.5).\n\nIf all conditions hold, four equal market buy orders are placed (default 0.1 lots each). Any existing short exposure is flattened before the new batch is sent.\n\n### Short Entries\n\n1. The bar opens above the EMA (High) and closes below it.\n2. RSI is between **25** and **39** – mirrors the long side thresholds.\n3. MACD two bars ago is positive **or** the relative change in absolute MACD between the last two bars is above **MacdDiffSell** (default 0.15).\n\nOn confirmation, the strategy flattens existing longs, then submits four equal market sells.\n\n## Trade Management\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `OrderVolume` | Volume per individual market order in the batch | `0.1` |\n| `EmaPeriod` | EMA length applied to candle highs | `6` |\n| `RsiPeriod` | RSI averaging period | `10` |\n| `AtrPeriod` | ATR averaging period | `28` |\n| `StopLossMultiplier` | ATR multiple for the protective stop | `1.6` |\n| `TakeProfitMultiplier` | Base ATR multiple for profit targets | `1.0` |\n| `MacdFastPeriod` | MACD fast EMA length | `5` |\n| `MacdSlowPeriod` | MACD slow EMA length | `21` |\n| `MacdSignalPeriod` | MACD signal EMA length | `14` |\n| `MacdDiffBuyThreshold` | Minimum MACD slope improvement for long trades | `0.5` |\n| `MacdDiffSellThreshold` | Minimum MACD slope improvement for short trades | `0.15` |\n| `RsiUpperLimit` | Maximum RSI allowed before a long entry | `80` |\n| `RsiUpperLevel` | Minimum RSI required for a long entry | `60` |\n| `RsiLowerLevel` | Maximum RSI allowed for a short entry | `39` |\n| `RsiLowerLimit` | Minimum RSI required before shorts | `25` |\n| `CandleType` | Timeframe used for candle subscription | `1 Day` |"
+   },
+   "2095": {
+    "id": 2095,
+    "name": "XKRI Histogram",
+    "family": "trend",
+    "overview": "Strategy based on the Kairi Relative Index (KRI) smoothed by an exponential moving average. The system looks for local minima and maxima of the smoothed oscillator and enters long or short positions when a reversal pattern appears.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Kri[1] < Kri[2] && Kri[0] > Kri[1]`\n  - Short: `Kri[1] > Kri[2] && Kri[0] < Kri[1]`\n- **Long/Short**: Both\n- **Stops**: Point take profit and stop loss\n- **Default Values**:\n  - `KriPeriod` = 20\n  - `SmoothPeriod` = 7\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Kairi, EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Kri[1] < Kri[2] && Kri[0] > Kri[1]`\n  - Short: `Kri[1] > Kri[2] && Kri[0] < Kri[1]`\n- **Long/Short**: Both\n- **Stops**: Point take profit and stop loss\n- **Default Values**:\n  - `KriPeriod` = 20\n  - `SmoothPeriod` = 7\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Kairi, EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "512": {
+    "id": 512,
+    "name": "Williams Alligator ATR",
+    "family": "trend",
+    "overview": "This strategy uses the Williams Alligator indicator combined with an ATR-based stop-loss. A long position is opened when the Lips line crosses above the Jaw line. The position is closed when the Lips cross below the Jaw or when price falls to an ATR-based stop level.\n\n## Details\n- **Entry Criteria**: Lips crossing above Jaw.\n- **Exit Criteria**: Lips crossing below Jaw or ATR stop-loss.\n- **Indicators**: Smoothed Moving Averages, Average True Range.\n- **Type**: Long only.\n",
+    "details": "- **Entry Criteria**: Lips crossing above Jaw.\n- **Exit Criteria**: Lips crossing below Jaw or ATR stop-loss.\n- **Indicators**: Smoothed Moving Averages, Average True Range.\n- **Type**: Long only.",
+    "parameters": ""
+   },
+   "1262": {
+    "id": 1262,
+    "name": "RSI and ATR Trend Reversal SL TP",
+    "family": "trend",
+    "overview": "Strategy using RSI and ATR to detect trend reversals with dynamic stop-loss and take-profit levels.\n\n## Details\n\n- **Entry Criteria**: Price crossing adaptive RSI/ATR threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: Integrated through dynamic threshold.\n- **Default Values**:\n  - `RsiLength` = 8\n  - `RsiMultiplier` = 1.5\n  - `Lookback` = 1\n  - `MinDifference` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing adaptive RSI/ATR threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: Integrated through dynamic threshold.\n- **Default Values**:\n  - `RsiLength` = 8\n  - `RsiMultiplier` = 1.5\n  - `Lookback` = 1\n  - `MinDifference` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2073": {
+    "id": 2073,
+    "name": "ColorXADX",
+    "family": "trend",
+    "overview": "Strategy based on the crossing of +DI and -DI lines confirmed by ADX strength.\n\nThe system monitors the Directional Movement indicators. When +DI crosses above -DI with the Average Directional Index exceeding a\nset threshold, it enters a long position and exits any existing short. Conversely, a bearish cross (-DI above +DI) with strong ADX\nopens a short and closes longs. Stop-loss and take-profit levels are applied to manage risk.\n\n## Details\n\n- **Entry Criteria**: +DI/-DI cross with ADX above threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Yes, fixed stop-loss and take-profit.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 30m\n  - `StopLoss` = 1000\n  - `TakeProfit` = 2000\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, DMI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: +DI/-DI cross with ADX above threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Yes, fixed stop-loss and take-profit.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 30m\n  - `StopLoss` = 1000\n  - `TakeProfit` = 2000\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, DMI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3504": {
+    "id": 3504,
+    "name": "Sample Trailing Stop",
+    "family": "momentum",
+    "overview": "The **SampleTrailingStopStrategy** is a direct C# port of the MetaTrader expert advisor `SampleTrailingstop.mq4`. The strategy does not generate its own entries; instead, it continuously watches the current position and maintains protective stop-loss and take-profit orders. The logic mirrors the original EA by respecting broker-imposed stop and freeze levels while applying a trailing stop measured in price points.\n\nWhenever a long position becomes profitable and the best bid travels far enough from the entry price, the strategy first moves the stop-loss just below the bid by the minimal allowed distance. Subsequent updates trail the stop behind the bid by the configured number of points plus broker buffers. Short positions are processed symmetrically, with the stop above the ask. Optional take-profit targets are recalculated on every trailing event.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TrailingStopPoints` | `200` | Distance between the market and the trailing stop measured in price points. This value is added to the broker buffers during trailing calculations. |\n| `TakeProfitPoints` | `1000` | Optional take-profit distance in points. Set to `0` to disable take-profit management. |\n| `StopLevelPoints` | `0` | Broker stop-level restriction expressed in points. It is added to the trailing distance to keep stop orders valid. |\n| `FreezeLevelPoints` | `0` | Broker freeze-level restriction expressed in points. Trailing waits until the market moves beyond this buffer from the entry price. |\n\nAll distances are translated into price values with the instrument tick size to emulate the `_Point` behaviour from MetaTrader."
+   },
+   "3855": {
+    "id": 3855,
+    "name": "E-Friday Session",
+    "family": "volatility",
+    "overview": "The E-Friday Session strategy replicates the classic MetaTrader expert advisor that trades only on Fridays. It observes the previous daily candle and opens a position at a configured hour at the start of Friday's session. The direction is contrarian: if the previous day closed below its open (bearish candle), the strategy buys; if the previous day closed above its open (bullish candle), the strategy sells. Positions are managed intraday and can be closed automatically after a configurable hour or by protective stops.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Trade size in lots/contracts. | `0.1` |\n| `StopLossPoints` | Stop-loss distance in price steps (0 disables). | `75` |\n| `TakeProfitPoints` | Take-profit distance in price steps (0 disables). | `0` |\n| `HourOpen` | Hour of the day (0-23) to open the position. | `7` |\n| `UseClosePositions` | Enable automatic closing after the exit hour. | `true` |\n| `HourClose` | Hour of the day (0-23) to close the position if enabled. | `19` |\n| `UseTrailing` | Enable trailing stop adjustments. | `true` |\n| `ProfitTrailing` | Require profit to exceed trailing distance before trailing activates. | `true` |\n| `TrailingStopPoints` | Trailing stop distance in price steps. | `60` |\n| `TrailingStepPoints` | Additional points required before tightening the trailing stop. | `5` |\n| `IntradayCandleType` | Candle type for intraday timing (default 1-minute candles). | `TimeSpan.FromMinutes(1)` |\n| `DailyCandleType` | Candle type for daily sentiment detection (default 1-day candles). | `TimeSpan.FromDays(1)` |"
+   },
+   "1969": {
+    "id": 1969,
+    "name": "Asimmetric Stoch NR",
+    "family": "mean_reversion",
+    "overview": "Strategy based on asymmetric stochastic oscillator lines. The strategy reacts to %K and %D crossovers and supports optional position protection.\n\nThe method switches periods for %K calculation to adapt to market noise. Stop loss and take profit are applied in absolute price units.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `%K` crosses above `%D`\n  - Short: `%K` crosses below `%D`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `%K` crosses below `%D`\n  - Short: `%K` crosses above `%D`\n- **Stops**: absolute at `StopLoss` and `TakeProfit`\n- **Default Values**:\n  - `KPeriodShort` = 5\n  - `KPeriodLong` = 12\n  - `DPeriod` = 7\n  - `Slowing` = 3\n  - `Overbought` = 80m\n  - `Oversold` = 20m\n  - `StopLoss` = 1000m\n  - `TakeProfit` = 2000m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `%K` crosses above `%D`\n  - Short: `%K` crosses below `%D`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `%K` crosses below `%D`\n  - Short: `%K` crosses above `%D`\n- **Stops**: absolute at `StopLoss` and `TakeProfit`\n- **Default Values**:\n  - `KPeriodShort` = 5\n  - `KPeriodLong` = 12\n  - `DPeriod` = 7\n  - `Slowing` = 3\n  - `Overbought` = 80m\n  - `Oversold` = 20m\n  - `StopLoss` = 1000m\n  - `TakeProfit` = 2000m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1982": {
+    "id": 1982,
+    "name": "ColorMETRO",
+    "family": "other",
+    "overview": "This strategy trades based on the ColorMETRO indicator, which builds fast and slow step lines around the RSI.\nA long position is opened when the fast line crosses above the slow line. A short position is opened when the fast line crosses below the slow line. Opposite positions are closed on the same signals.\n\n## Parameters\n- **Candle Type** – candle type used for calculations.\n- **RSI Period** – period for RSI calculation.\n- **Fast Step** – step size for the fast line.\n- **Slow Step** – step size for the slow line.\n- **Stop Loss** – distance in points for stop-loss protection.\n- **Take Profit** – distance in points for take-profit protection.\n- **Allow Buy** – permission to open long positions.\n- **Allow Sell** – permission to open short positions.\n- **Close Long** – permission to close long positions.\n- **Close Short** – permission to close short positions.\n\nThe strategy uses `StartProtection` to manage stop-loss and take-profit levels.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – candle type used for calculations.\n- **RSI Period** – period for RSI calculation.\n- **Fast Step** – step size for the fast line.\n- **Slow Step** – step size for the slow line.\n- **Stop Loss** – distance in points for stop-loss protection.\n- **Take Profit** – distance in points for take-profit protection.\n- **Allow Buy** – permission to open long positions.\n- **Allow Sell** – permission to open short positions.\n- **Close Long** – permission to close long positions.\n- **Close Short** – permission to close short positions.\n\nThe strategy uses `StartProtection` to manage stop-loss and take-profit levels."
+   },
+   "1073": {
+    "id": 1073,
+    "name": "Monthly Purchase Strategy with Dynamic Contract Size",
+    "family": "other",
+    "overview": "Buys a dynamic number of contracts on a chosen day each month using a fixed percentage of account equity. Drawdown is tracked for informational purposes.\n\n## Details\n\n- **Entry Criteria**: time >= StartDate AND day of month = BuyDay\n- **Long/Short**: Long only\n- **Exit Criteria**: none\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 1 day\n  - `StartDate` = 2010-01-01\n  - `PercentOfEquity` = 0.03\n  - `BuyDay` = 1\n- **Filters**:\n  - Category: Dollar cost averaging\n  - Direction: Long\n  - Indicators: No\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Long-term\n  - Seasonality: Monthly\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: time >= StartDate AND day of month = BuyDay\n- **Long/Short**: Long only\n- **Exit Criteria**: none\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 1 day\n  - `StartDate` = 2010-01-01\n  - `PercentOfEquity` = 0.03\n  - `BuyDay` = 1\n- **Filters**:\n  - Category: Dollar cost averaging\n  - Direction: Long\n  - Indicators: No\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Long-term\n  - Seasonality: Monthly\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

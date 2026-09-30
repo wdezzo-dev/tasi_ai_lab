@@ -1,0 +1,98 @@
+{
+ "batch_269": {
+  "strategy_ids": [
+   1868,
+   2224,
+   267,
+   439,
+   3925,
+   1954,
+   2335,
+   1819,
+   1856,
+   3626
+  ],
+  "docs": {
+   "1868": {
+    "id": 1868,
+    "name": "MA L World",
+    "family": "trend",
+    "overview": "Weighted moving average crossover strategy with trailing stop based on EMA.\n\nOpens long when the fast WMA crosses above the slow WMA. Opens short when the fast WMA crosses below the slow WMA. Uses a 92-period EMA as a trailing exit and fixed stop-loss and take-profit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Fast WMA` crosses above `Slow WMA`\n  - Short: `Fast WMA` crosses below `Slow WMA`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite crossover or price crossing trailing EMA\n- **Stops**: Stop loss and take profit via `StartProtection`\n- **Default Values**:\n  - `FastMaLength` = 12\n  - `SlowMaLength` = 25\n  - `TrailingMaPeriod` = 92\n  - `StopLoss` = 95m\n  - `TakeProfit` = 670m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: WMA, EMA\n  - Stops: Stop loss, take profit, trailing EMA\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Fast WMA` crosses above `Slow WMA`\n  - Short: `Fast WMA` crosses below `Slow WMA`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite crossover or price crossing trailing EMA\n- **Stops**: Stop loss and take profit via `StartProtection`\n- **Default Values**:\n  - `FastMaLength` = 12\n  - `SlowMaLength` = 25\n  - `TrailingMaPeriod` = 92\n  - `StopLoss` = 95m\n  - `TakeProfit` = 670m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: WMA, EMA\n  - Stops: Stop loss, take profit, trailing EMA\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2224": {
+    "id": 2224,
+    "name": "LeMan Signal",
+    "family": "trend",
+    "overview": "LeMan Signal Strategy is a port of the original MetaTrader LeManSignal expert advisor. The approach analyses recent highs and lows over two sequential periods to detect potential trend reversals. When specific patterns are found a long or short position is opened at the next candle.",
+    "details": "",
+    "parameters": "- **Period** – lookback length of the indicator.\n- **Signal Bar** – offset used to confirm the signal (default 1).\n- **Candle Type** – timeframe of the candles to analyse."
+   },
+   "267": {
+    "id": 267,
+    "name": "RSI Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 136%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `RsiPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "439": {
+    "id": 439,
+    "name": "Pin Bar Magic",
+    "family": "trend",
+    "overview": "Detects bullish and bearish pin bars within a trend defined by a trio of moving averages. Orders are placed at the candle extremes and cancelled after a few bars if not filled. Position size is calculated from an equity risk percentage and ATR-based stop distance.\n\nThe method aims to capture sharp reversals at significant support or resistance. It exits positions when the fast and medium EMAs cross in the opposite direction, signalling trend weakness.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA > Medium EMA > Slow SMA, bullish pin bar piercing one of the averages.\n  - **Short**: Fast EMA < Medium EMA < Slow SMA, bearish pin bar piercing one of the averages.\n- **Exit Criteria**:\n  - Fast EMA crosses the medium EMA in the opposite direction.\n- **Indicators**:\n  - Slow SMA (period 50)\n  - Medium EMA (18) and Fast EMA (6)\n  - ATR (length 14)\n- **Stops**: Position risk = EquityRisk% of account with stop at ATR * multiplier.\n- **Default Values**:\n  - `EquityRisk` = 3\n  - `AtrMultiplier` = 0.5\n  - `SlowSmaLength` = 50\n  - `MediumEmaLength` = 18\n  - `FastEmaLength` = 6\n  - `AtrLength` = 14\n  - `CancelEntryBars` = 3\n- **Filters**:\n  - Price action reversal\n  - Works on 1h candles by default\n  - Indicators: EMA, SMA, ATR\n  - Stops: Yes\n  - Complexity: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA > Medium EMA > Slow SMA, bullish pin bar piercing one of the averages.\n  - **Short**: Fast EMA < Medium EMA < Slow SMA, bearish pin bar piercing one of the averages.\n- **Exit Criteria**:\n  - Fast EMA crosses the medium EMA in the opposite direction.\n- **Indicators**:\n  - Slow SMA (period 50)\n  - Medium EMA (18) and Fast EMA (6)\n  - ATR (length 14)\n- **Stops**: Position risk = EquityRisk% of account with stop at ATR * multiplier.\n- **Default Values**:\n  - `EquityRisk` = 3\n  - `AtrMultiplier` = 0.5\n  - `SlowSmaLength` = 50\n  - `MediumEmaLength` = 18\n  - `FastEmaLength` = 6\n  - `AtrLength` = 14\n  - `CancelEntryBars` = 3\n- **Filters**:\n  - Price action reversal\n  - Works on 1h candles by default\n  - Indicators: EMA, SMA, ATR\n  - Stops: Yes\n  - Complexity: High",
+    "parameters": ""
+   },
+   "3925": {
+    "id": 3925,
+    "name": "Up3x1 Krohabor Shift",
+    "family": "trend",
+    "overview": "The **up3x1 Krohabor D** strategy is a conversion of the MetaTrader 4 expert advisor `up3x1_Krohabor_D.mq4`. It keeps the original idea of aligning three displaced simple moving averages (SMA) to detect trend continuation breakouts on the active timeframe. The C# implementation uses the high-level StockSharp API with candle subscriptions and indicator bindings, while adapting risk and position management to the .NET environment.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `FastPeriod` | Period of the fast SMA. |\n| `MediumPeriod` | Period of the medium SMA. |\n| `SlowPeriod` | Period of the slow SMA. |\n| `MaShift` | Number of completed candles used to shift all moving averages forward. |\n| `Volume` | Base order volume for new entries. |\n| `MinVolume` | Minimum allowed volume after loss-based adjustments. |\n| `LossReductionFactor` | Divisor applied when shrinking volume after consecutive losing trades. |\n| `StopLossPoints` | Stop-loss distance measured in price steps. |\n| `TakeProfitPoints` | Take-profit distance measured in price steps. |\n| `TrailingPoints` | Trailing-stop distance and activation threshold in price steps. |\n| `CandleType` | Candle data type (timeframe) used for analysis. |"
+   },
+   "1954": {
+    "id": 1954,
+    "name": "Exp Leading",
+    "family": "trend",
+    "overview": "This strategy implements a crossover system based on the custom **Leading** indicator described by John F. Ehlers in *Cybernetics Analysis for Stock and Futures*. The indicator calculates two lines:\n\n1. **NetLead** – smoothed leading filter controlled by the `Alpha1` and `Alpha2` coefficients.\n2. **EMA** – a simple exponential moving average with a constant factor of 0.5.\n\nThe strategy operates on finished candles from the selected timeframe. When the NetLead line crosses **below** the EMA line, an upward reversal is anticipated and a long position is opened. Conversely, when NetLead crosses **above** the EMA line, a short position is opened. The previous position, if any, is closed implicitly when an opposite order is sent.\n\n## Parameters\n\n- `Alpha1` – coefficient for the intermediate leading calculation. Default: `0.25`.\n- `Alpha2` – smoothing factor applied to the leading result. Default: `0.33`.\n- `CandleType` – candle data type used for calculations. Default: 4‑hour timeframe.\n- `StopLoss` – stop loss in absolute price units. Default: `1000`.\n- `TakeProfit` – take profit in absolute price units. Default: `2000`.\n\n## Trading Logic\n\n1. Each finished candle updates the NetLead and EMA values.\n2. If the previous bar showed NetLead above EMA and the latest bar shows NetLead below EMA, a **buy** market order is sent.\n3. If the previous bar showed NetLead below EMA and the latest bar shows NetLead above EMA, a **sell** market order is sent.\n4. `StartProtection` is used to automatically apply stop‑loss and take‑profit rules.\n\nThis example is intended for educational purposes to demonstrate how a MetaTrader strategy can be ported to the StockSharp high‑level API.\n",
+    "details": "",
+    "parameters": "- `Alpha1` – coefficient for the intermediate leading calculation. Default: `0.25`.\n- `Alpha2` – smoothing factor applied to the leading result. Default: `0.33`.\n- `CandleType` – candle data type used for calculations. Default: 4‑hour timeframe.\n- `StopLoss` – stop loss in absolute price units. Default: `1000`.\n- `TakeProfit` – take profit in absolute price units. Default: `2000`."
+   },
+   "2335": {
+    "id": 2335,
+    "name": "Fibonacci Retracement",
+    "family": "trend",
+    "overview": "This strategy trades Fibonacci retracement breakouts derived from ZigZag pivots.\n\n## Idea\n\n1. Detect swing highs and lows using a ZigZag approach.\n2. Build Fibonacci retracement levels (23.6%, 38.2%, 61.8%, 76.4%) between the last two pivots.\n3. In an uptrend the strategy buys when price closes above any Fibonacci level.\n4. In a downtrend the strategy sells when price closes below any Fibonacci level.\n5. Every order is protected with a fixed stop-loss and a take-profit based on the swing range.\n6. After a position is closed the strategy waits a number of bars before trading again.\n\n## Parameters\n\n- `ZigzagDepth` – depth used to search for new pivots.\n- `SafetyBuffer` – distance in points that price must move beyond the level.\n- `TrendPrecision` – minimal difference between pivots to detect trend direction.\n- `CloseBarPause` – number of bars to wait after closing a trade.\n- `TakeProfitFactor` – fraction of the swing range used as take-profit extension.\n- `StopLossPoints` – stop-loss distance from the entry price in points.\n- `CandleType` – candle type used for calculations.\n\n## Notes\n\nImplementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "- `ZigzagDepth` – depth used to search for new pivots.\n- `SafetyBuffer` – distance in points that price must move beyond the level.\n- `TrendPrecision` – minimal difference between pivots to detect trend direction.\n- `CloseBarPause` – number of bars to wait after closing a trade.\n- `TakeProfitFactor` – fraction of the swing range used as take-profit extension.\n- `StopLossPoints` – stop-loss distance from the entry price in points.\n- `CandleType` – candle type used for calculations."
+   },
+   "1819": {
+    "id": 1819,
+    "name": "Perceptron AC",
+    "family": "trend",
+    "overview": "This strategy implements a simple perceptron on top of the Accelerator Oscillator (AC).\nThe AC value of the current candle and of three past offsets are multiplied by adjustable weights.\nThe sum of these products forms the perceptron output that determines the trade direction.\n\n## How It Works\n\n1. Calculate the Accelerator Oscillator (AC) from the difference between the Awesome Oscillator and its 5-period SMA.\n2. Store the latest 22 AC values to access offsets of 0, 7, 14 and 21 bars.\n3. Compute the perceptron output:\n   `P = (X1-100)*AC[0] + (X2-100)*AC[7] + (X3-100)*AC[14] + (X4-100)*AC[21]`.\n4. If `P > 0` open or maintain a long position; if `P < 0` open or maintain a short position.\n5. When a position gains at least `StopLoss` points beyond the initial stop level:\n   - If the perceptron flips direction, reverse the position.\n   - Otherwise trail the stop to the new price minus/plus `StopLoss`.\n\n## Parameters\n\n- **X1** – weight for the current AC value (default 288).\n- **X2** – weight for AC 7 bars ago (default 216).\n- **X3** – weight for AC 14 bars ago (default 144).\n- **X4** – weight for AC 21 bars ago (default 72).\n- **Stop Loss** – trailing and reversal threshold in price units (default 300).\n- **Volume** – order volume (default 1).\n- **Candle Type** – candle series to subscribe to (default 5-minute).\n\n## Trading Rules\n\n- Enter long when `P > 0` and no position is open.\n- Enter short when `P < 0` and no position is open.\n- For open positions, move the stop loss after the price moves in profit by `Stop Loss * 2`.\n- Reverse the position if the perceptron output changes sign at that time.\n\n## Original Version\n\nConverted from the MQL4 script `auto_m5.mq4` located in `MQL/11102`.\n",
+    "details": "",
+    "parameters": "- **X1** – weight for the current AC value (default 288).\n- **X2** – weight for AC 7 bars ago (default 216).\n- **X3** – weight for AC 14 bars ago (default 144).\n- **X4** – weight for AC 21 bars ago (default 72).\n- **Stop Loss** – trailing and reversal threshold in price units (default 300).\n- **Volume** – order volume (default 1).\n- **Candle Type** – candle series to subscribe to (default 5-minute)."
+   },
+   "1856": {
+    "id": 1856,
+    "name": "BnB",
+    "family": "trend",
+    "overview": "This strategy is a port of the MetaTrader 5 Expert Advisor \"Exp_BnB\". It operates on the custom BnB (Bulls and Bears) indicator that measures bullish and bearish pressure inside each candle and smooths them with an exponential moving average.\n\n## How it works\n\n1. For each finished candle the strategy calculates bulls and bears values.\n2. Both series are smoothed with EMA.\n3. When the bulls line crosses above the bears line:\n   - Any short position is closed.\n   - A long position is opened.\n4. When the bears line crosses above the bulls line:\n   - Any long position is closed.\n   - A short position is opened.\n5. Stop loss and take profit levels are managed in absolute price points.\n\n## Parameters\n\n- `Candle Type` – time frame of the candles used for calculations.\n- `EMA Length` – smoothing period for bulls and bears.\n- `Stop Loss` – distance to the protective stop in price points.\n- `Take Profit` – distance to the profit target in price points.\n- `Allow Long Entry` – enable long position opening.\n- `Allow Short Entry` – enable short position opening.\n- `Allow Long Exit` – enable long position closing.\n- `Allow Short Exit` – enable short position closing.\n\n## Notes\n\nThe original indicator supports multiple smoothing methods. In this port the universal filter is approximated with a standard exponential moving average.\n",
+    "details": "",
+    "parameters": "- `Candle Type` – time frame of the candles used for calculations.\n- `EMA Length` – smoothing period for bulls and bears.\n- `Stop Loss` – distance to the protective stop in price points.\n- `Take Profit` – distance to the profit target in price points.\n- `Allow Long Entry` – enable long position opening.\n- `Allow Short Entry` – enable short position opening.\n- `Allow Long Exit` – enable long position closing.\n- `Allow Short Exit` – enable short position closing."
+   },
+   "3626": {
+    "id": 3626,
+    "name": "BandOsMaCustom",
+    "family": "trend",
+    "overview": "This strategy is a direct port of the MetaTrader 5 expert advisor located at\n`MQL/45596/mql5/Experts/MQL5Book/p7/BandOsMACustom.mq5`. The original robot\ncombines the MACD histogram (also known as OsMA) with Bollinger Bands and a\nmoving average that are applied to the histogram values instead of raw prices.\nWhenever the histogram pierces the lower band, the expert opens a long trade,\nwhile touches of the upper band trigger short entries. The histogram crossing a\nseparate moving average closes the position. A protective stop and a\ntrailing-stop step (equal to one-fiftieth of the stop) keep risk under control.\n\nThe StockSharp implementation preserves this behaviour using the high-level API,\nso the trading logic stays readable and debuggable inside the framework.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 1-hour time-frame | Primary timeframe used for all indicator calculations. |\n| `FastOsmaPeriod` | 12 | Fast EMA length from the OsMA calculation. |\n| `SlowOsmaPeriod` | 26 | Slow EMA length from the OsMA calculation. |\n| `SignalPeriod` | 9 | Signal SMA length from the OsMA calculation. |\n| `AppliedPrice` | Typical | MetaTrader-style applied price that feeds the histogram. |\n| `BandsPeriod` | 26 | Length of the Bollinger Bands drawn on the histogram values. |\n| `BandsShift` | 0 | Right shift (in bars) applied to the Bollinger values. |\n| `BandsDeviation` | 2.0 | Standard deviation multiplier for the bands. |\n| `MaPeriod` | 10 | Length of the exit moving average calculated on the histogram. |\n| `MaShift` | 0 | Right shift (in bars) applied to the exit moving average. |\n| `MaMethod` | Simple | Moving-average method (SMA, EMA, SMMA, LWMA). |\n| `StopLossPoints` | 1000 | Protective stop distance expressed in price steps. |\n| `OrderVolume` | 0.01 | Trading volume, identical to the MetaTrader “Lots” input. |"
+   }
+  }
+ }
+}

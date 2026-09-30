@@ -1,0 +1,98 @@
+{
+ "batch_216": {
+  "strategy_ids": [
+   4093,
+   3006,
+   2782,
+   788,
+   2708,
+   1712,
+   965,
+   1489,
+   1188,
+   579
+  ],
+  "docs": {
+   "4093": {
+    "id": 4093,
+    "name": "Neuro Nirvaman MQ4",
+    "family": "trend",
+    "overview": "The **Neuro Nirvaman MQ4 Strategy** is a faithful port of the MetaTrader 4 expert advisor `NeuroNirvaman.mq4`. The original robot combines a custom Laguerre filter applied to the +DI component of the ADX indicator with a SilverTrend breakout detector. Three perceptrons evaluate these inputs and a supervisor decides whether to buy or sell. The StockSharp version mirrors that workflow and executes one position at a time, recalculating its logic only on fully closed candles.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 15-minute time frame | Candle type processed by the strategy. |\n| `TradeVolume` | `decimal` | 0.1 | Order volume in lots. |\n| `SilverTrend1Length` | `int` | 7 | Lookback length for the first SilverTrend calculation (SSP). |\n| `Laguerre1Period` | `int` | 14 | ADX period for the first Laguerre stream. |\n| `Laguerre1Distance` | `decimal` | 0 | Neutral zone width (percent) around 0.5 for Laguerre stream #1. |\n| `X11`, `X12` | `decimal` | 100 | Weights used inside perceptron #1 (the code subtracts 100 before applying them). |\n| `TakeProfit1`, `StopLoss1` | `decimal` | 100 / 50 | Protective distances in points for the first risk profile and all short trades. |\n| `SilverTrend2Length` | `int` | 7 | Lookback length for the second SilverTrend calculation. |\n| `Laguerre2Period` | `int` | 14 | ADX period for the second Laguerre stream. |\n| `Laguerre2Distance` | `decimal` | 0 | Neutral zone width (percent) around 0.5 for Laguerre stream #2. |\n| `X21`, `X22` | `decimal` | 100 | Weights used inside perceptron #2. |\n| `TakeProfit2`, `StopLoss2` | `decimal` | 100 / 50 | Protective distances in points for the second risk profile. |\n| `Laguerre3Period`, `Laguerre4Period` | `int` | 14 | ADX periods for the third and fourth Laguerre streams. |\n| `Laguerre3Distance`, `Laguerre4Distance` | `decimal` | 0 | Neutral zone widths (percent) for the third and fourth Laguerre streams. |\n| `X31`, `X32` | `decimal` | 100 | Weights used inside perceptron #3. |\n| `Pass` | `int` | 3 | Supervisor branch that selects which perceptrons can trigger trades. |"
+   },
+   "3006": {
+    "id": 3006,
+    "name": "Bread and Butter 2 (ADX + AMA)",
+    "family": "trend",
+    "overview": "This strategy is a port of the MetaTrader 5 expert advisor *Breadandbutter2* created by Ron Thompson. The original logic waits for a fresh bar, compares the latest Average Directional Index (ADX) value with the previous one, and checks whether the Kaufman Adaptive Moving Average (KAMA, also known as AMA) is rising or falling. A long position is opened when the trend strength weakens while price momentum improves, whereas a short position is opened when trend strength increases while momentum deteriorates. The StockSharp version keeps the behaviour of closing any opposite exposure before opening a new order, and applies the same fixed stop-loss and take-profit distances that were specified in pips in the original script.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | `TimeSpan.FromHours(1).TimeFrame()` | Candle type used for all calculations. |\n| `AdxPeriod` | `14` | Averaging length of the ADX main line. |\n| `AmaPeriod` | `9` | Base period of the Kaufman Adaptive Moving Average. |\n| `AmaFastPeriod` | `2` | Fast EMA period used inside the AMA. |\n| `AmaSlowPeriod` | `30` | Slow EMA period used inside the AMA. |\n| `StopLossPips` | `50` | Distance to the protective stop-loss in pips. Set to `0` to disable. |\n| `TakeProfitPips` | `50` | Distance to the profit target in pips. Set to `0` to disable. |"
+   },
+   "2782": {
+    "id": 2782,
+    "name": "Serial MA Swing Strategy (API/2782)",
+    "family": "trend",
+    "overview": "## Summary\n- Converts the MetaTrader SerialMA expert advisor into a StockSharp high-level strategy using candle subscriptions and a custom serial moving average indicator.\n- Opens new swing positions whenever the serial moving average flips its direction relative to price, optionally reversing the signal and limiting the number of concurrent swings.\n- Implements the same protective stop-loss and take-profit distances measured in instrument points, recalculated on every finished candle.\n\n## Serial Moving Average indicator\nThe original EA depends on the custom *SerialMA* indicator that rebuilds its moving average after each price crossover. The ported indicator replicates this behaviour by:\n1. Accumulating closing prices from the most recent crossover and calculating their arithmetic mean.\n2. Tracking the difference between the mean and the current close to detect a sign change.\n3. Resetting the internal window whenever the sign changes, effectively restarting the average from the crossover bar and flagging the event for the strategy.\n\nThis implementation exposes the moving average value together with a boolean flag indicating that a crossover occurred on the previous bar, allowing the strategy to mirror the MQL logic without manual buffer access.\n\n## Trading logic\n1. On every finished candle the strategy reads the serial moving average value and the crossover flag.\n2. When the previous candle triggered a crossover:\n   - If the previous close was above the previous moving average, a long signal is generated.\n   - If the previous close was below the previous moving average, a short signal is generated.\n3. The **ReverseSignals** parameter optionally swaps long and short entries.\n4. The **OpenedMode** parameter controls position stacking:\n   - **AllSwing** opens a new order on every signal, even if a position already exists in that direction.\n   - **SingleSwing** only opens a new order when no exposure exists in that direction.\n5. Before submitting a new order the strate",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OpenedMode` | Allows either stacking swings or keeping a single swing per direction. | `AllSwing` |\n| `EnableBuy` | Enables or disables long entries. | `true` |\n| `EnableSell` | Enables or disables short entries. | `true` |\n| `ReverseSignals` | Inverts the trading direction. | `false` |\n| `TradeVolume` | Order size (lots) for each new swing. | `1` |\n| `StopLossPoints` | Stop-loss distance in price steps (points). A value of `0` disables the stop. | `0` |\n| `TakeProfitPoints` | Take-profit distance in price steps (points). A value of `0` disables the take profit. | `0` |\n| `CandleType` | Candle data type used for calculations. | `5 minute candles` |"
+   },
+   "788": {
+    "id": 788,
+    "name": "Fibonacci Trend",
+    "family": "trend",
+    "overview": "Converted from TradingView script \"Fibonacci Trend - Aynet\". The strategy detects swing highs and lows, builds Fibonacci retracement levels, and trades when price crosses the 50% level.\n\n## Parameters\n- **Lookback Period** – bars used for swing detection.\n- **Fib Level 1-5** – Fibonacci retracement ratios.\n- **Candle Type** – candle time frame.\n\n",
+    "details": "",
+    "parameters": "- **Lookback Period** – bars used for swing detection.\n- **Fib Level 1-5** – Fibonacci retracement ratios.\n- **Candle Type** – candle time frame."
+   },
+   "2708": {
+    "id": 2708,
+    "name": "Stopreversal Tm",
+    "family": "trend",
+    "overview": "The Stopreversal Tm strategy is a direct translation of the original MetaTrader 5 expert advisor `Exp_Stopreversal_Tm.mq5`. The trading idea follows the Stopreversal custom indicator, which maintains a dynamic trailing stop around price and generates reversal alerts whenever price crosses that trailing boundary. The strategy operates on a single instrument and a single candle feed and is designed for trend reversal trading with a user-defined session filter.",
+    "details": "",
+    "parameters": "- **Allow Buy Entries / Allow Sell Entries** – enable or disable opening new long or short positions when the corresponding signal is received.\n- **Allow Long Exits / Allow Short Exits** – control whether opposite signals are allowed to close existing positions.\n- **Use Time Filter** – toggles the trading session window.\n- **Start Hour / Start Minute / End Hour / End Minute** – define the inclusive start and exclusive end of the trading window. The time filter supports overnight sessions where the end time is earlier than the start time.\n- **Sensitivity (`nPips`)** – relative distance (expressed as a multiplier, e.g., `0.004 = 0.4%`) used to move the trailing stop closer or further from price.\n- **Signal Bar Delay (`SignalBar`)** – number of completed candles to wait before acting on a signal. `0` executes immediately on the closing candle, `1` reproduces the default behaviour of acting on the previous bar.\n- **Candle Type** – timeframe of the candle subscription used for indicator calculations.\n- **Applied Price** – choice of price series (close, open, median, trend-following modes, Demark price, etc.) that feeds the trailing stop calculation."
+   },
+   "1712": {
+    "id": 1712,
+    "name": "Close At Profit",
+    "family": "other",
+    "overview": "This strategy monitors the realized profit and loss of all trades executed by the strategy. When the accumulated profit exceeds a user defined threshold, it immediately closes any open position and optionally cancels active orders. The same behavior can be enabled for drawdown by setting a loss limit.\n\nThe strategy does not analyze indicators or price movement. Instead, it acts as a protective overlay that exits the market once a monetary target or stop level is reached. A simple candle subscription is used only to provide periodic checks of the current PnL value.\n\n## Parameters\n\n- **UseProfitToClose** – enable or disable closing by profit target. Default: `true`.\n- **ProfitToClose** – profit value in currency units that triggers a full exit. Default: `20`.\n- **UseLossToClose** – enable or disable closing by loss limit. Default: `false`.\n- **LossToClose** – loss value in currency units that triggers a full exit when exceeded. Default: `100`.\n- **ClosePendingOrders** – cancel all active orders when closing positions. Default: `true`.\n- **CandleType** – type of candles used to trigger periodic checks. Default: `1` minute timeframe.\n\n## Trading Logic\n\n1. Subscribe to candles of the selected timeframe.\n2. On each finished candle calculate current realized PnL.\n3. If profit is greater than or equal to `ProfitToClose`, close the entire position and optionally cancel pending orders.\n4. If loss monitoring is enabled and current PnL is less than or equal to `-LossToClose`, close the entire position and optionally cancel pending orders.\n\n## Additional Notes\n\n- The strategy closes only the position for the security it is attached to.\n- Pending orders are canceled using the built-in `CancelActiveOrders` method.\n- The logic can be combined with other entry strategies to implement profit taking or portfolio protection.\n\n## Filters\n\n- Category: Risk management\n- Direction: Both\n- Indicators: None\n- Stops: Yes\n- Complexity: Basic\n- Timeframe: Any\n- Seasonality: No\n- Neural networks",
+    "details": "",
+    "parameters": "- **UseProfitToClose** – enable or disable closing by profit target. Default: `true`.\n- **ProfitToClose** – profit value in currency units that triggers a full exit. Default: `20`.\n- **UseLossToClose** – enable or disable closing by loss limit. Default: `false`.\n- **LossToClose** – loss value in currency units that triggers a full exit when exceeded. Default: `100`.\n- **ClosePendingOrders** – cancel all active orders when closing positions. Default: `true`.\n- **CandleType** – type of candles used to trigger periodic checks. Default: `1` minute timeframe."
+   },
+   "965": {
+    "id": 965,
+    "name": "LANZ Strategy 6.0 [Backtest]",
+    "family": "other",
+    "overview": "Implements LANZ Strategy 6.0: trades the 09:00 New York one-hour candle with configurable risk parameters. Positions are closed at 15:00 New York time.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1489": {
+    "id": 1489,
+    "name": "Tripple MACD",
+    "family": "other",
+    "overview": "Combines four MACD calculations with an RSI filter. A long position opens when the averaged MACD histogram turns positive on a bullish candle and RSI is below 55. The trade closes on the opposite condition.\n\n- Indicators: MACD, RSI\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1188": {
+    "id": 1188,
+    "name": "Price Convergence",
+    "family": "other",
+    "overview": "This strategy estimates the probability of price rising or falling by comparing the sum of OHLC4 values for bullish and bearish candles. A long position is opened when the probability of rising exceeds 50%, and a short position when the probability of falling exceeds 50%.\n\nTesting indicates an average annual return of about 37%. It performs best in the crypto market.\n\nThe strategy can operate on the entire history or on a rolling window defined by the `Range` parameter. The OHLC4 value of each candle is used to weight contributions from up and down moves.\n\n## Details\n\n- **Entry Criteria**: Probability of rising above 50% triggers a long entry, probability of falling above 50% triggers a short entry.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FullHistory` = true\n  - `Range` = 200\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Probability of rising above 50% triggers a long entry, probability of falling above 50% triggers a short entry.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FullHistory` = true\n  - `Range` = 200\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "579": {
+    "id": 579,
+    "name": "Bj Candle Patterns",
+    "family": "pattern",
+    "overview": "This strategy looks for Dragonfly Doji and Gravestone Doji candlestick patterns. A Dragonfly Doji with a long lower wick can signal bullish reversal, while a Gravestone Doji with a long upper wick may indicate bearish reversal. The strategy buys after a Dragonfly Doji and sells after a Gravestone Doji.\n\n## Details\n\n- **Entry Criteria**: Dragonfly Doji → long; Gravestone Doji → short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or discretionary.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `DojiThreshold` = 0.1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Dragonfly Doji → long; Gravestone Doji → short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or discretionary.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `DojiThreshold` = 0.1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

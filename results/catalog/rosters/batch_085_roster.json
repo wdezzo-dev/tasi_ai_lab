@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 590,
+      "name": "Bollinger Bands Enhanced",
+      "family": "trend",
+      "entry_long": "low > ema(close,200) and low <= bb_lower(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(200) trend filter and lower Bollinger(20,2) touch are direct for the long branch. The ATR(14) 1.75x stop and 2.25x trailing target are dynamic and cannot be represented as fixed percentage fields."
+    },
+    {
+      "id": 2629,
+      "name": "XROC2 VG Time Filter",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(roc(close,4),3),ema(roc(close,12),6))",
+      "exit_long": "crossabove(ema(roc(close,4),3),ema(roc(close,12),6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Smoothed ROC(4) and ROC(12) approximate the fast/slow crossover while following the documented contrarian direction. ROC formula options, shifted signal bars, session controls, and absolute stop/target values are unavailable; smoothing lengths are fallbacks."
+    },
+    {
+      "id": 3360,
+      "name": "MACD Sample Hedging Grid",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and ema(close,26) > ema(close,50) and roc(close,14) > 0",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or ema(close,26) < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9), EMA(26) slope, and positive ROC(14) retain the short-term and local-trend filters. Higher-timeframe momentum, grid scaling, order limits, and 20/50-step protection are not available in a stateless long-only translation."
+    },
+    {
+      "id": 3878,
+      "name": "True Scalper Profit Lock BreakEven",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or rsi(close,14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast EMA crossover and RSI polarity are retained, with 9/21 and 14 as explicit fallbacks because no numeric settings are documented. Abandon logic, break-even activation, money management, and point stops/targets cannot be expressed."
+    },
+    {
+      "id": 262,
+      "name": "Hull MA Slope Breakout",
+      "family": "trend",
+      "entry_long": "zscore(roc(ema(close,9),1),20) > 2",
+      "exit_long": "zscore(roc(ema(close,9),1),20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A z-scored EMA(9) slope above the documented 2-deviation threshold approximates a Hull-slope breakout. The Hull calculation and incomplete StopLoss unit are not representable, so protection remains null."
+    },
+    {
+      "id": 3202,
+      "name": "Plan X",
+      "family": "breakout",
+      "entry_long": "crossabove(close,ema(close,20)) and close > ema(close,20) * 1.01",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) is a fallback for the shifted reference candle and a 1% channel is a normalized stand-in for unspecified pip height. Candle shift, pip protection, trailing, and session filters are not available."
+    },
+    {
+      "id": 256,
+      "name": "Bollinger Band Width Breakout",
+      "family": "breakout",
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) > sma(bb_upper(close,20,2) - bb_lower(close,20,2),20) and close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) width above its 20-bar mean plus an upper-band pierce approximates the documented deviation breakout and mean exit. The exact width statistic and StopMultiplier=2 are not fixed percentage fields."
+    },
+    {
+      "id": 2716,
+      "name": "KDJ Expert Advisor",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,30),30) and rsi(close,30) < 50",
+      "exit_long": "crossabove(rsi(close,30),70) or crossbelow(rsi(close,30),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(30) with a six-period smoother is a fallback for the KDJ/Stochastic lines and retains the oversold recross concept. The 3/6 smoothing, 25/45 pip protection, and exact J-line signals are not directly available."
+    },
+    {
+      "id": 3489,
+      "name": "BuySellOnYourPrice",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source sends one operator-selected order at startup rather than deriving a market signal, so the impossible guard avoids fabricating an entry. Order modes, absolute price levels, and protection management are outside the DSL."
+    },
+    {
+      "id": 296,
+      "name": "Z-Score Volume Filter",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close,20),-2) and volume_ratio(volume,20) >= 1",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A 20-bar z-score recross above -2 with average volume approximates the documented threshold and volatility/participation filter. The explicit 2% stop is retained; the exact volume criterion and short branch are omitted."
+    }
+  ]
+}

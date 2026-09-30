@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 427,
+      "name": "Heikin Ashi V2",
+      "family": "trend",
+      "entry_long": "close > open and close > ema(close,20)",
+      "exit_long": "close < open and close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Heikin-Ashi values are unsupported, so a bullish regular candle above EMA(20) proxies HA_Close > HA_Open and close > EMA; the bearish counterpart exits."
+    },
+    {
+      "id": 688,
+      "name": "Donchian Zig-Zag LuxAlgo",
+      "family": "breakout",
+      "entry_long": "crossabove(roc(close,3),0) and bars_since(close <= donchian_low_prev(low,20)) <= 5",
+      "exit_long": "crossbelow(roc(close,3),0) or close > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Zig-Zag and Bounce Speed are unsupported; ROC(3) turning positive within five bars of a prior 20-bar Donchian-low touch proxies the long reversal. Numeric lengths are explicit translation choices because the corpus gives none."
+    },
+    {
+      "id": 837,
+      "name": "Gemini Trend Following System",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,50)) and sma(close,50) > sma(close,200) and roc(close,252) > 15",
+      "exit_long": "crossbelow(sma(close,50),sma(close,200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The recovery cross above SMA(50), SMA(50) above SMA(200), and 252-day ROC above 15% retain the documented long filter. No catastrophic-stop percentage is supplied."
+    },
+    {
+      "id": 1360,
+      "name": "Sunil 2 Bar Breakout",
+      "family": "breakout",
+      "entry_long": "roc(close,1) > 0 and high > donchian_high_prev(high,3)",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Exact lagged-bar comparisons are unavailable; an up close plus a new three-bar high proxies the two-bar bullish setup, while a prior three-bar-low break approximates the signal-bar stop."
+    },
+    {
+      "id": 1529,
+      "name": "Volatility Arbitrage Spread Oscillator Model (VASOM)",
+      "family": "volatility",
+      "entry_long": "rsi(close,2) < 46",
+      "exit_long": "rsi(close,2) > 76",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The VIX front/second-contract spread and second security are unavailable, so single-stock close RSI(2) preserves the documented 46/76 thresholds."
+    },
+    {
+      "id": 2608,
+      "name": "Breakthrough BB",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,28,1.6) and close > sma(close,9)",
+      "exit_long": "close < sma(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(9) filter and Bollinger(28,1.6) breakout are retained. SMA trend loss is an exit proxy because the corpus gives no explicit exit rule."
+    },
+    {
+      "id": 2845,
+      "name": "Exp KWAN NRP",
+      "family": "trend",
+      "entry_long": "crossabove(sma(rsi(close,14),3),50) and sma(roc(close,14),3) > 0",
+      "exit_long": "crossbelow(sma(rsi(close,14),3),50) or sma(roc(close,14),3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic and the undocumented KWAN ratio are unsupported; SMA(3)-smoothed RSI(14) and ROC(14) proxy a bullish ratio turn and bearish reversal. Price-step SL/TP are not percentages."
+    },
+    {
+      "id": 3131,
+      "name": "FT CCI MA (StockSharp port)",
+      "family": "trend",
+      "entry_long": "(close > sma((high + low + 2 * close) / 4,200) and zscore((high + low + close) / 3,14) < -1.67) or zscore((high + low + close) / 3,14) < -2.67",
+      "exit_long": "close < sma((high + low + 2 * close) / 4,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI and LWMA are unavailable; SMA of the documented weighted price and z-score of typical price approximate them, with -1.67/-2.67 proxying the -100/-200 long thresholds. The 150-pip SL/TP are not percentages."
+    },
+    {
+      "id": 4103,
+      "name": "SuperForexV2",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,4),42)",
+      "exit_long": "crossabove(rsi(close,4),62)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RSI(4) crossings are exact: below 42 enters long and above 62 exits it. Pip-based TP, SL, and trail are not percentage exits."
+    },
+    {
+      "id": 4153,
+      "name": "4153 Vortex Oscillator System",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,14),0)",
+      "exit_long": "crossbelow(roc(close,14),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Vortex is unavailable and oscillator threshold defaults are omitted; ROC(14) zero crossings proxy a long momentum escape and return to neutral. Oscillator SL/TP levels are unsupported."
+    }
+  ]
+}

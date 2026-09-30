@@ -1,0 +1,98 @@
+{
+ "batch_043": {
+  "strategy_ids": [
+   3008,
+   3197,
+   1971,
+   3285,
+   2764,
+   1620,
+   2991,
+   474,
+   1625,
+   286
+  ],
+  "docs": {
+   "3008": {
+    "id": 3008,
+    "name": "OCO Pending Orders",
+    "family": "trend",
+    "overview": "The **OCO Pending Orders Strategy** replicates the behaviour of the MetaTrader4 expert advisor `OCO_EA.mq4` inside the StockSharp high-level API. The algorithm allows a trader to arm up to four independent price triggers (buy limit, buy stop, sell limit, sell stop). Whenever the live best bid or best ask touches the configured price level the strategy sends an immediate market order, optionally cancelling all other pending triggers in a classic \"one-cancels-the-others\" (OCO) fashion.\n\nThe strategy relies purely on level-1 market data – no historical indicators are required. It is intended for discretionary or semi-automated trading workflows where traders manually define price levels and want the platform to execute as soon as the level is hit, while also attaching protective exit orders.",
+    "details": "",
+    "parameters": "- **Order volume** – volume sent with each market order. The value must be positive.\n- **Buy limit price** – ask price threshold that activates a limit-style long entry. Set to `0` to disable.\n- **Buy stop price** – ask price threshold that activates a stop-style long entry. Set to `0` to disable.\n- **Sell limit price** – bid price threshold that activates a limit-style short entry. Set to `0` to disable.\n- **Sell stop price** – bid price threshold that activates a stop-style short entry. Set to `0` to disable.\n- **Stop loss (pips)** – distance in instrument points for the protective stop. Converted to price by multiplying with `Security.PriceStep` (fallback `1` when the instrument does not report a tick size).\n- **Take profit (pips)** – distance in instrument points for the profit target. The same conversion logic as for the stop loss is used.\n- **Use OCO link** – if `true`, the first filled order clears the remaining price levels and disarms the strategy. If `false`, remaining levels stay active until triggered individually.\n- **Armed** – safety switch that enables or disables trading logic. The strategy automatically resets it to `false` whenever no active trigger levels remain."
+   },
+   "3197": {
+    "id": 3197,
+    "name": "555 Scalper",
+    "family": "trend",
+    "overview": "The 555 Scalper strategy is a direct port of the \"555 Scalper\" MetaTrader expert advisor. It operates on any primary timeframe while relying on higher timeframe filters and monthly momentum confirmation. The algorithm combines a fast/slow linear weighted moving average crossover with a higher timeframe momentum confirmation and a monthly MACD filter. Protective logic mirrors the original EA, including break-even movements, classic pip-based trailing, equity-based emergency stops, and money-based exits.",
+    "details": "",
+    "parameters": "- **BaseVolume / LotExponent:** Define the initial trade size and the multiplier for additional entries.\n- **StopLossSteps / TakeProfitSteps:** Pip distances for protective levels.\n- **FastMaPeriod / SlowMaPeriod:** Periods of the fast and slow LWMA trend filter.\n- **Momentum thresholds:** Required deviation from 100 for long and short setups.\n- **MaxTrades:** Maximum number of layered entries per direction.\n- **BreakEven and Trailing settings:** Configure the pip-based break-even trigger, offset, and trailing distance.\n- **Money management:** Enable or disable money take-profit, percent take-profit, and money trailing controls.\n- **Equity stop:** Percentage drawdown from the equity peak that triggers a global exit."
+   },
+   "1971": {
+    "id": 1971,
+    "name": "ADX Crossing",
+    "family": "trend",
+    "overview": "The **ADX Crossing Strategy** is built around the Average Directional Index (ADX) indicator. It analyzes the crossover of the positive directional index (+DI) and the negative directional index (-DI) to identify potential trend shifts.\n\nWhen +DI crosses above -DI, the strategy considers it a bullish signal and can open long positions while optionally closing any existing short positions. Conversely, when +DI crosses below -DI, it is treated as a bearish signal, prompting short entries and optional closure of long positions. Optional stop-loss and take-profit levels are supported through built-in risk management.\n\n## Indicator\n\nThe strategy uses the `AverageDirectionalIndex` indicator from StockSharp. Only the directional lines are needed; the ADX main value is not used in decision making.\n\n## Parameters\n\n- `ADX Period` – length of the ADX calculation. Default is `50`.\n- `Candle Type` – timeframe used for candle subscription. Default is `1 hour`.\n- `Allow Buy Open` – enable opening long positions. Default is `true`.\n- `Allow Sell Open` – enable opening short positions. Default is `true`.\n- `Allow Buy Close` – allow closing long positions on sell signal. Default is `true`.\n- `Allow Sell Close` – allow closing short positions on buy signal. Default is `true`.\n- `Stop Loss` – stop-loss distance in absolute price units. Default is `1000`.\n- `Take Profit` – take-profit distance in absolute price units. Default is `2000`.\n\n## Trading Logic\n\n1. Subscribe to candles of the selected timeframe and compute the ADX indicator.\n2. Track the previous values of +DI and -DI to detect crossovers.\n3. On a bullish crossover (+DI crosses above -DI):\n   - Close short position if `Allow Sell Close` is enabled.\n   - Open long position if `Allow Buy Open` is enabled.\n4. On a bearish crossover (+DI crosses below -DI):\n   - Close long position if `Allow Buy Close` is enabled.\n   - Open short position if `Allow Sell Open` is enabled.\n5. Protective stop-loss and take-profit levels are applied us",
+    "details": "",
+    "parameters": "- `ADX Period` – length of the ADX calculation. Default is `50`.\n- `Candle Type` – timeframe used for candle subscription. Default is `1 hour`.\n- `Allow Buy Open` – enable opening long positions. Default is `true`.\n- `Allow Sell Open` – enable opening short positions. Default is `true`.\n- `Allow Buy Close` – allow closing long positions on sell signal. Default is `true`.\n- `Allow Sell Close` – allow closing short positions on buy signal. Default is `true`.\n- `Stop Loss` – stop-loss distance in absolute price units. Default is `1000`.\n- `Take Profit` – take-profit distance in absolute price units. Default is `2000`."
+   },
+   "3285": {
+    "id": 3285,
+    "name": "Zone Recovery Formula",
+    "family": "trend",
+    "overview": "The **Zone Recovery Formula Strategy** is a port of the MetaTrader 4 \"Zone Recovery Formula\" expert advisor. The algorithm follows a moving-average driven trend direction and then applies a zone recovery technique to mitigate adverse price moves. The core idea is to alternate long and short cycles with gradually increasing volume until price action exits the defined recovery zone, locking in profit even after several reversals.",
+    "details": "",
+    "parameters": ""
+   },
+   "2764": {
+    "id": 2764,
+    "name": "Time EA",
+    "family": "trend",
+    "overview": "The **Time EA Strategy** replicates the original MetaTrader \"TimeEA\" expert advisor inside StockSharp. It manages a single position based exclusively on the time of day: it opens at a configured moment, keeps the position in a fixed direction, and exits either at a scheduled closing time or once optional stop-loss / take-profit levels are breached.\n\nUnlike indicator-driven systems, this implementation focuses on disciplined session management. It ensures only one entry per trading day, cleans up opposite exposure before opening, and enforces configurable minimum distances for protective orders to mimic broker stop-level limitations.\n\n## How It Works\n\n1. The strategy subscribes to a configurable candle series (1-minute by default) and evaluates only completed candles.\n2. When the close of a candle crosses the configured **Open Time**, the strategy:\n   - Closes any opposite position that might still be open.\n   - Places a market order in the chosen direction (Buy or Sell) with the specified volume.\n   - Records stop-loss and take-profit prices in points (price steps) from the entry, applying the minimal distance multiplier.\n3. Throughout the session the strategy monitors candles:\n   - If a candle touches the stored stop-loss or take-profit level, the position is immediately closed.\n   - If the candle crosses the **Close Time** window, the position is flattened regardless of profit or loss.\n4. After closing the trade (by stop, target, or schedule) the strategy remains flat until the next trading day.\n\nThis flow reproduces the \"open once per day\" behavior of the MetaTrader version that relied on `TimeCurrent()` and `Time[0]` comparisons.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| **Open Time** | Time of day to open the trade. Accepts `HH:MM:SS`. |\n| **Close Time** | Time of day to flatten all positions. Can be the same day or spill into the next day. |\n| **Position Type** | Direction of the position (`Buy` or `Sell`). |\n| **Order Volume** | Quantity used whe",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| **Open Time** | Time of day to open the trade. Accepts `HH:MM:SS`. |\n| **Close Time** | Time of day to flatten all positions. Can be the same day or spill into the next day. |\n| **Position Type** | Direction of the position (`Buy` or `Sell`). |\n| **Order Volume** | Quantity used when submitting the market order. |\n| **Stop Loss (points)** | Distance in price steps for the protective stop. Set to 0 to disable. |\n| **Take Profit (points)** | Distance in price steps for the profit target. Set to 0 to disable. |\n| **Minimum Distance Multiplier** | Minimal offset applied to both stop and target (in price steps) to emulate the original stop-level check against spread. |\n| **Candle Type** | Data series used to detect time boundaries. Default is 1-minute candles. |"
+   },
+   "1620": {
+    "id": 1620,
+    "name": "MSL EA",
+    "family": "breakout",
+    "overview": "MSL EA is a breakout strategy that builds dynamic support and resistance lines from recent local extremes. The strategy detects short-term fractal highs and lows, adjusts them by a specified distance in ticks, and opens positions when price closes beyond these levels. It was converted from the original MQL4 implementation.",
+    "details": "",
+    "parameters": "- **Max Trades** – maximum allowed open positions.\n- **Level** – number of local extremes used to build levels.\n- **Distance** – offset from extreme in ticks when placing lines.\n- **Candle Type** – timeframe of candles processed by the strategy."
+   },
+   "2991": {
+    "id": 2991,
+    "name": "Pending Orders By Time 2",
+    "family": "breakout",
+    "overview": "This strategy reproduces the behavior of the original MetaTrader \"Pending orders by time 2\" expert by scheduling breakout-style entry orders around a configurable opening hour. At the start of the trading session the algorithm places both a buy stop above the current ask price and a sell stop below the current bid price. Each pending entry carries its own stop-loss and take-profit levels expressed in instrument price steps, and once an entry fires the strategy maintains the open position with trailing stop logic and mutually exclusive exit orders. The code is designed for the StockSharp high-level API and uses tabs for indentation as required by the project guidelines.",
+    "details": "",
+    "parameters": "- `OpeningHour` – Hour (0–23) when the pending orders are created.\n- `ClosingHour` – Hour (0–23) when pending orders are removed and positions are closed.\n- `DistanceTicks` – Breakout distance from the current bid/ask expressed in price steps.\n- `StopLossTicks` – Fixed protective distance for the initial stop.\n- `TakeProfitTicks` – Fixed distance for the profit target.\n- `TrailingStopTicks` – Distance maintained by the trailing stop once activated.\n- `TrailingStepTicks` – Minimum additional profit required before the trailing stop is moved again.\n- `Volume` – Size of both pending orders.\n- `CandleType` – Timeframe used for session tracking and signal evaluation (defaults to 15-minute time frame)."
+   },
+   "474": {
+    "id": 474,
+    "name": "30-Minute Candle",
+    "family": "momentum",
+    "overview": "This approach compares the current 30-minute candle opening price with the previous candle's close.\nIf a new candle opens above the prior close, a long position is opened.\nWhen already long and the next candle gaps down below the previous close, the strategy reverses to a short position.\nAll open positions are closed one minute before the current candle finishes.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: current candle open > previous candle close.\n  - **Short**: current candle open < previous candle close while holding a long position.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Close any position one minute before the candle closes.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(30).TimeFrame().\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: current candle open > previous candle close.\n  - **Short**: current candle open < previous candle close while holding a long position.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Close any position one minute before the candle closes.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(30).TimeFrame().\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1625": {
+    "id": 1625,
+    "name": "Scalp RSI",
+    "family": "volatility",
+    "overview": "Scalping strategy using rapid RSI changes. Converted from MetaTrader script `scalpen_rsi.mq4`.\nThe strategy opens trades when the RSI drops or rises sharply and applies fixed take-profit and stop-loss levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Buy**: RSI value `buy_period` bars ago minus current RSI ≥ `BuyMovement`,\n    previous RSI minus current RSI > `BuyBreakdown`, and current RSI < `BuyRsiValue`.\n  - **Sell**: Current RSI minus RSI `sell_period` bars ago ≥ `SellMovement`,\n    current RSI minus previous RSI > `SellBreakdown`, and current RSI > `SellRsiValue`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take-profit and stop-loss in ticks.\n- **Stops**: Yes, using `BuyStopLoss`, `BuyTakeProfit`, `SellStopLoss`, and `SellTakeProfit`.\n- **Filters**:\n  - Minimum delay between trades (`TradeDelaySeconds`).\n  - Maximum simultaneous open trades (`MaxOpenTrades`).\n",
+    "details": "- **Entry Criteria**:\n  - **Buy**: RSI value `buy_period` bars ago minus current RSI ≥ `BuyMovement`,\n    previous RSI minus current RSI > `BuyBreakdown`, and current RSI < `BuyRsiValue`.\n  - **Sell**: Current RSI minus RSI `sell_period` bars ago ≥ `SellMovement`,\n    current RSI minus previous RSI > `SellBreakdown`, and current RSI > `SellRsiValue`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take-profit and stop-loss in ticks.\n- **Stops**: Yes, using `BuyStopLoss`, `BuyTakeProfit`, `SellStopLoss`, and `SellTakeProfit`.\n- **Filters**:\n  - Minimum delay between trades (`TradeDelaySeconds`).\n  - Maximum simultaneous open trades (`MaxOpenTrades`).",
+    "parameters": ""
+   },
+   "286": {
+    "id": 286,
+    "name": "RSI Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the RSI returns toward balance. Starting parameter `RsiPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

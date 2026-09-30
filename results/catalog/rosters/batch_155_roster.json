@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3810,
+      "name": "Alexav D1 Profit GBPUSD",
+      "family": "trend",
+      "entry_long": "close > ema(high,6) and rsi(close,10) > 60 and rsi(close,10) < 80 and macd(close,5,24) > macd_signal(close,5,24,14) and macd(close,5,24) > 0",
+      "exit_long": "rsi(close,10) < 39 or macd(close,5,24) < macd_signal(close,5,24,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaPeriod=6 (applied to highs as the breakout line), RsiPeriod=10 with RsiUpperLevel=60 / RsiUpperLimit=80 and the 5/24/14 MACD with a positive MacdDiffBuy are used directly. The Tuesday-Friday session, ATR(28) stop at 1.6x, staggered 1.0x ATR targets and MacdDiffSell are unsupported, so the ATR-scaled risk fields are left null."
+    },
+    {
+      "id": 970,
+      "name": "Larry Connors RSI 3",
+      "family": "trend",
+      "entry_long": "close > sma(close,200) and rsi(close,2) < 10 and bars_since(crossabove(rsi(close,2),60)) < 6",
+      "exit_long": "rsi(close,2) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SmaPeriod=200 trend filter, RsiPeriod=2, DropTrigger=60, OversoldLevel=10 and OverboughtLevel=70 are all used; the three-day RSI decline is expressed as an oversold reading within five bars of the last cross back above 60. The docs state no stops."
+    },
+    {
+      "id": 2639,
+      "name": "Expert RSI Stochastic MA",
+      "family": "trend",
+      "entry_long": "close > sma(close,50) and rsi(close,14) > 55 and roc(rsi(close,2),3) > 0",
+      "exit_long": "close < sma(close,50) or rsi(close,2) < 30",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No parameters are documented at all, so MA=50, RSI=14 and a three-bar RSI(2) momentum tick are explicit defaults; the dual-line Stochastic is replaced by short RSI for timing and the stochastic-driven trailing exit by an RSI(2) reversal. The optional fixed loss threshold has no percentage value and the trailing logic is path dependent, so both stop fields are null."
+    },
+    {
+      "id": 4007,
+      "name": "Swetten",
+      "family": "trend",
+      "entry_long": "sma(close,10) > sma(close,233) and sma(close,20) > sma(close,233) and sma(close,50) > sma(close,233)",
+      "exit_long": "sma(close,20) < sma(close,233)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The radial basis network that maps the MA spreads to a bullish/bearish activation cannot be expressed, so the documented SlowPeriod=233 baseline is kept and the ten fast averages are approximated by three consensus SMAs (10/20/50) above it. The one-minute timeframe, TradeVolume and the TakeProfitPoints=150 / StopLossPoints=40 point distances are unsupported, so stops are null."
+    },
+    {
+      "id": 3762,
+      "name": "Mc Valute Cloud",
+      "family": "trend",
+      "entry_long": "ema(close,20) > sma(close,50) and ema(close,20) > sma(close,100) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,20) < sma(close,50) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The filter EMA above the blue and lime smoothed averages and the MACD confirmation are kept, using 20/50/100 and 12/26/9 as explicit defaults because no lengths are documented. The Ichimoku Senkou-span cloud test (Tenkan/Kijun/Senkou) is dropped as unavailable, and TakeProfit/StopLoss are price points, so both stop fields are null."
+    },
+    {
+      "id": 2702,
+      "name": "JS Chaos",
+      "family": "momentum",
+      "entry_long": "sma(close,13) > sma(close,8) and close > donchian_high_prev(high,5) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "sma(close,13) < sma(close,8) or close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bill Williams' Alligator structure is approximated with 8/13-period SMAs and a five-bar prior breakout stands in for the fractal levels, while MACD supplies the momentum confirmation in place of the Awesome and Acceleration/Deceleration oscillators. The indented pending orders, Fibonacci targets, staged sizing, breakeven, trailing and time filter are unsupported, so stops are null."
+    },
+    {
+      "id": 2984,
+      "name": "Gordago EA",
+      "family": "volatility",
+      "entry_long": "crossabove(macd(close,12,26),0) and roc(rsi(close,5),1) > 0",
+      "exit_long": "crossbelow(macd(close,12,26),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MACD 12/26/9 leg is a cross of zero, which encodes both the rising MACD and the previously negative value; Stochastic is unavailable so its length 5 becomes RSI(5) and only the documented rising condition is kept, because the absolute 37 level cannot hold at the same time as a MACD zero-line up-cross. The separate MACD/stochastic timeframes, the 40/70 long pip stop and target and the ratcheting trailing stop are unsupported, so stops are null."
+    },
+    {
+      "id": 2162,
+      "name": "CCI Normalized Reversal",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close,20),-2)",
+      "exit_long": "crossabove(zscore(close,20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is not in the DSL, so the normalized deviation it measures is represented by zscore(close,20) and the documented 'cross back inside the oversold bound' long rule becomes an up-cross of -2; the exit uses the middle level, taken as 0. CciPeriod and the High/Middle/Low values are not documented so -2/0/2 are explicit defaults, and the 8-hour candle type is not selectable here."
+    },
+    {
+      "id": 3099,
+      "name": "Hedge Any Positions",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only reacts to legs it already holds: once a position loses LosingPips=5 it opens an amplified opposite order (LotCoefficient=2.0) and marks the leg hedged, with an optional start-up trade. That is a hedging/position-management tool with no market-derived entry signal, so it is marked non-trading."
+    },
+    {
+      "id": 1979,
+      "name": "Grid Trading",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are a ladder of buy-stop and sell-stop orders spaced GridStep apart, each with its own fixed take profit, and the basket is flattened at a global ProfitTarget; there is no directional market signal to translate. Marked non-trading; the optional martingale volume growth and per-order take profit are multi-order mechanics the single-position engine cannot hold."
+    }
+  ]
+}

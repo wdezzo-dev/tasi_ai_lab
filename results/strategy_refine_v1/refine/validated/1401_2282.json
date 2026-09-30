@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1401,
+  "ticker": "2282",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1401,
+    "name": "Gap Momentum System",
+    "family": "momentum",
+    "entry_long": "crossabove(roc(close,60), sma(roc(close,30),20))",
+    "exit_long": "crossbelow(roc(close,40), sma(roc(close,40),20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Accumulated up/down gaps are approximated by the documented Period=40 return measured against its SignalPeriod=20 mean, and a rising signal buys while a falling one reverses. LongOnly=true is honoured by producing only the long side, and the docs specify no stops."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-08-15",
+        "2024-07-31"
+      ],
+      "bars_in_window": 488,
+      "engine_win_ret": 0.7002274006257267,
+      "alpha": 0.9384322337672688,
+      "benchmark_ret": -0.23820483314154206,
+      "trades": 9,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 1.6474061093559418,
+      "max_drawdown": -0.0684681964416054,
+      "profit_factor": 5.712405343740907
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.09746574928694651,
+      "alpha": 0.07020342364538434,
+      "benchmark_ret": -0.16766917293233086,
+      "trades": 12,
+      "win_rate": 0.25,
+      "sharpe": -0.3708162394541903,
+      "max_drawdown": -0.18957638575650104,
+      "profit_factor": 0.5707276156346844
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.015430683072328089,
+      "alpha": -0.04158587051783802,
+      "benchmark_ret": 0.02615518744550993,
+      "trades": 6,
+      "win_rate": 0.6666666666666666,
+      "sharpe": -0.03136989662506316,
+      "max_drawdown": -0.16434272766938884,
+      "profit_factor": 0.8692921959114361
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-08-15",
+        "2024-07-31"
+      ],
+      "bars_in_window": 488,
+      "engine_win_ret": 0.6225705334335536,
+      "alpha": 0.8607753665750957,
+      "benchmark_ret": -0.23820483314154206,
+      "trades": 9,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 1.500538085834079,
+      "max_drawdown": -0.07373211840494709,
+      "profit_factor": 4.689016664169018
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.14828361526963085,
+      "alpha": 0.019385557662700004,
+      "benchmark_ret": -0.16766917293233086,
+      "trades": 12,
+      "win_rate": 0.25,
+      "sharpe": -0.6166360849611003,
+      "max_drawdown": -0.23344460921716192,
+      "profit_factor": 0.37971374525939
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.044690789249922536,
+      "alpha": -0.07084597669543247,
+      "benchmark_ret": 0.02615518744550993,
+      "trades": 6,
+      "win_rate": 0.6666666666666666,
+      "sharpe": -0.2620202042289435,
+      "max_drawdown": -0.16884650493254538,
+      "profit_factor": 0.6476589324748298
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

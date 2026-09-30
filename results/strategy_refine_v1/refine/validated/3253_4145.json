@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3253,
+  "ticker": "4145",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3253,
+    "name": "MultiTrader Currency Strength Strategy (3253)",
+    "family": "mean_reversion",
+    "entry_long": "95.0 * (close - low) / (high - low) > 95.0",
+    "exit_long": "100 * (close - low) / (high - low) < 10",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented % position of close within the current candle range is used directly with the default BuyLevel 90 and SellLevel 10 thresholds, applied to the single traded symbol instead of an FX cross-currency ranking. Universe lists, pair construction, symbol prefixes and order placement are portfolio features outside the DSL."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-02-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 591,
+      "engine_win_ret": 0.2971309536680584,
+      "alpha": 0.542983140696716,
+      "benchmark_ret": -0.24585218702865763,
+      "trades": 9,
+      "win_rate": 0.7777777777777778,
+      "sharpe": 0.9518343093509833,
+      "max_drawdown": -0.12423806736084342,
+      "profit_factor": 26.667040336920707
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 355,
+      "engine_win_ret": 0.13191363429056424,
+      "alpha": 0.7024221088668354,
+      "benchmark_ret": -0.5705084745762712,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 1.198947569920058,
+      "max_drawdown": -0.03145198052985132,
+      "profit_factor": 8.842821614042512
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.029850746268656803,
+      "benchmark_ret": -0.029850746268656803,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-02-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 591,
+      "engine_win_ret": 0.24045863906680442,
+      "alpha": 0.48631082609546206,
+      "benchmark_ret": -0.24585218702865763,
+      "trades": 9,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 0.8004620921969782,
+      "max_drawdown": -0.12885278526985067,
+      "profit_factor": 9.044330111646223
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 355,
+      "engine_win_ret": 0.11525926458011404,
+      "alpha": 0.6857677391563852,
+      "benchmark_ret": -0.5705084745762712,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 1.0516719619850106,
+      "max_drawdown": -0.03636436216346706,
+      "profit_factor": 6.292781689814588
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.029850746268656803,
+      "benchmark_ret": -0.029850746268656803,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

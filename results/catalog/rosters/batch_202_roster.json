@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2809,
+      "name": "Hans123 Trader v2",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,80)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented buy-stop above the BreakoutPeriod=80 high is expressed as a prior-bar range breakout; the sell-stop side is dropped for a long-only test. Session StartHour/EndHour gating, pip stop/target, trailing step and the pending-order cap are not DSL constructs."
+    },
+    {
+      "id": 1781,
+      "name": "XMACD Modes",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "Mode=MacdDisposition is the documented default, so the entry is the MACD(12/26) main line crossing its signal(9) line and the inverse cross exits. The other three modes (zero-line breakdown, MACD twist, signal twist) are not the default and are not encoded; StopLossPercent=2m and TakeProfitPercent=4m are used as percentages."
+    },
+    {
+      "id": 329,
+      "name": "MACD Volume Cluster",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and volume_ratio(volume,20) > 2",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "FastMacdPeriod 12 / SlowMacdPeriod 26 / MacdSignalPeriod 9 and VolumePeriod=20 with VolumeDeviationFactor=2.0 are documented, and volume_ratio(volume,20) is volume over its 20-bar average. The entry criteria are only referenced as 'see implementation', so the volume gate stands in for that cluster, and ATR-multiple stops are not percentages."
+    },
+    {
+      "id": 2062,
+      "name": "Anchored Momentum Breakout",
+      "family": "trend",
+      "entry_long": "ema(close,9) / sma(close,21) > 1 and roc(ema(close,9) / sma(close,21),1) > 0",
+      "exit_long": "roc(ema(close,9) / sma(close,21),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA/SMA momentum ratio is written literally, entering while the ratio is above one and rising and exiting when it turns down. SmaPeriod/EmaPeriod are names only, so 9/21 are chosen fallbacks; StopLossPercent/TakeProfitPercent have no values, so both are null."
+    },
+    {
+      "id": 698,
+      "name": "Dskyz (DAFE) Adaptive Regime - Quant Machine Pro",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and close > bb_mid(close,20) and close > open",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Regime classification with ATR, moving averages, Bollinger Bands and ADX becomes a trending-regime gate (ADX above 25, price above the Bollinger middle) plus a bullish candle at support. All thresholds are explicit fallbacks because the docs list no numeric values, and the short/candlestick-pattern side is dropped."
+    },
+    {
+      "id": 3751,
+      "name": "Swaper Strategy (API 3751)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA rebuilds a virtual swap balance and rebalances a synthetic long/short portfolio against a fair-value equation with margin-based lot reduction, so it is a multi-leg money-flow engine with no single-symbol entry signal. The never-true guard prevents fabricating one."
+    },
+    {
+      "id": 2441,
+      "name": "MasterMind 3",
+      "family": "mean_reversion",
+      "entry_long": "close <= donchian_low(low,26) and close <= donchian_low(low,27) and close <= donchian_low(low,29) and close <= donchian_low(low,30)",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is not whitelisted, so the documented -99.99 extreme for all four periods (26/27/29/30) is expressed as a close at or below each period's lowest low. The exit is mean reversion back to the 20-bar middle; the docs explicitly include no stops and reverse on the opposite signal."
+    },
+    {
+      "id": 722,
+      "name": "Earnings, Splits, Dividends",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state entry criteria none and long/short no trading: it only logs corporate-action news feed items. There is no market-derived signal to translate, so the never-true guard is used."
+    },
+    {
+      "id": 501,
+      "name": "Advanced Multi-Seasonality",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries come from up to four preconfigured calendar dates and exits from a holding-day counter, with no indicators, so the signal is purely calendar-based. The DSL has no date or bar-count field, so the never-true guard is used instead of inventing one."
+    },
+    {
+      "id": 1728,
+      "name": "Autostop",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a position-management utility that attaches TakeProfitTicks=30 and StopLossTicks=30 to externally opened positions and generates no signals of its own. The never-true guard is used; tick offsets are not percentage fields."
+    }
+  ]
+}

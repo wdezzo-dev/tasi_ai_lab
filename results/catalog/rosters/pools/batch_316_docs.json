@@ -1,0 +1,98 @@
+{
+ "batch_316": {
+  "strategy_ids": [
+   1855,
+   2892,
+   2048,
+   2967,
+   1983,
+   57,
+   1943,
+   4013,
+   3444,
+   2129
+  ],
+  "docs": {
+   "1855": {
+    "id": 1855,
+    "name": "Center of Gravity",
+    "family": "trend",
+    "overview": "Strategy based on the Center of Gravity indicator that multiplies SMA and WMA and smooths the result. A long position opens when the center line crosses above its smoothed average and a short position opens on the opposite crossover. Positions are closed when the signal flips against the current direction.\n\n## Details\n\n- **Entry Criteria**: Center line crosses its smoothed average\n- **Long/Short**: Both\n- **Exit Criteria**: Signal changes side\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = H4\n  - `Period` = 10\n  - `SmoothPeriod` = 3\n- **Filters**:\n  - Category: Indicator\n  - Direction: Both\n  - Indicators: SMA, WMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Center line crosses its smoothed average\n- **Long/Short**: Both\n- **Exit Criteria**: Signal changes side\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = H4\n  - `Period` = 10\n  - `SmoothPeriod` = 3\n- **Filters**:\n  - Category: Indicator\n  - Direction: Both\n  - Indicators: SMA, WMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2892": {
+    "id": 2892,
+    "name": "Ultra Absolutely No Lag LWMA",
+    "family": "trend",
+    "overview": "The **Ultra Absolutely No Lag LWMA Strategy** replicates the signals of the Ultra Absolutely No Lag LWMA MetaTrader expert using the StockSharp high-level API. The indicator stack evaluates a double weighted moving average ladder and measures how many smoothing stages point upward or downward. The resulting counts are smoothed again to generate a color-coded state that drives the trading logic. The strategy optionally places protective stop-loss and take-profit orders for every new position.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `CandleType` | Candle type/time frame used for the indicator calculations. |\n| `BaseLength` | Length of the double LWMA pre-filter. |\n| `AppliedPriceMode` | Applied price (close, open, typical, DeMark, etc.) used as indicator input. |\n| `TrendMethod` | Moving average method for the smoothing ladder (Jurik, SMA, EMA, etc.). |\n| `StartLength` | Initial length of the smoothing ladder. |\n| `StepSize` | Step added to the smoothing length on each ladder stage. |\n| `StepsTotal` | Number of stages in the smoothing ladder. |\n| `SmoothingMethod` | Method used to smooth the bull/bear counters. |\n| `SmoothingLength` | Length of the final smoothing stage. |\n| `UpLevelPercent` | Percentage threshold that marks a strong bullish state. |\n| `DownLevelPercent` | Percentage threshold that marks a strong bearish state. |\n| `SignalBar` | Index of the bar used for trading signals (1 = previous closed bar). |\n| `AllowBuyOpen` / `AllowSellOpen` | Enable opening long/short positions. |\n| `AllowBuyClose` / `AllowSellClose` | Enable closing existing long/short positions. |\n| `StopLossOffset` | Absolute distance between entry price and the protective stop-loss (0 disables). |\n| `TakeProfitOffset` | Absolute distance between entry price and the take-profit (0 disables). |"
+   },
+   "2048": {
+    "id": 2048,
+    "name": "Fractal AMA MBK Crossover",
+    "family": "trend",
+    "overview": "The Fractal AMA MBK Crossover strategy uses the **Fractal Adaptive Moving Average (FRAMA)** together with an **Exponential Moving Average (EMA)** trigger line. Trading signals are generated when the FRAMA line crosses the EMA line.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle type and timeframe used for calculations (default: 4-hour candles). |\n| `FramaPeriod` | Period length for the FRAMA indicator. |\n| `SignalPeriod` | Period length for the EMA trigger line. |\n| `StopLoss` | Stop-loss distance from entry price in absolute price units (0 disables). |\n| `TakeProfit` | Take-profit distance from entry price in absolute price units (0 disables). |\n| `Volume` | Trade volume in lots. |"
+   },
+   "2967": {
+    "id": 2967,
+    "name": "BW WiseMan-1 Breakout",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor **Exp_BW-wiseMan-1**. It automates Bill Williams' WiseMan-1 breakout logic built around the Alligator indicator. Signals are produced whenever a completed candle escapes from the Alligator's jaws and simultaneously breaks the most recent swing extremes. Optional counter-trend mode swaps the signals so that the strategy can fade the same breakouts.\n\n## Core Idea\n- Compute the Bill Williams Alligator using smoothed moving averages of the median price (high + low) / 2.\n- Shift the jaw, teeth and lips lines forward by configurable offsets to match the original indicator's visualization.\n- Confirm a breakout only when the current candle expands beyond the highs or lows of the last *N* bars, ensuring that the move is stronger than recent noise.\n- Delay execution by the selected number of completed candles so the trader can operate on older signals if desired.\n\n## Trading Rules\n### Long direction\n1. The bar must finish **below** all three Alligator lines (high price less than jaw, teeth and lips).\n2. The close price needs to be in the upper half of the candle, i.e., above the candle's median.\n3. The low of the candle must be strictly lower than the lows of the previous `Back` bars.\n4. When the signal becomes active after the `SignalBar` delay:\n   - Close any open short if `Close Short` is enabled.\n   - Open a new long position if `Enable Long` is enabled and no position is currently open.\n\n### Short direction\n1. The bar must finish **above** all three Alligator lines (low price greater than jaw, teeth and lips).\n2. The close price must be in the lower half of the candle, i.e., below the candle's median.\n3. The high of the candle has to be greater than the highs of the previous `Back` bars.\n4. When the signal becomes active:\n   - Close any existing long if `Close Long` is enabled.\n   - Open a new short position if `Enable Short` is enabled and there is no current position.\n\n### Counter-trend mode\nSetting `C",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe used to build candles and calculate all indicator values (default: 1 hour).\n- **Counter-Trend Mode** – invert the breakout logic to trade against the primary trend (default: enabled, matching the original EA).\n- **Breakout Depth (`Back`)** – number of prior bars compared against the current high/low when validating a breakout (default: 2).\n- **Jaw Length / Shift** – smoothed moving average length and forward displacement for the jaw line (defaults: 13 / 8).\n- **Teeth Length / Shift** – smoothed moving average length and forward displacement for the teeth line (defaults: 8 / 5).\n- **Lips Length / Shift** – smoothed moving average length and forward displacement for the lips line (defaults: 5 / 3).\n- **Signal Bar** – number of already finished candles to wait before executing a detected signal (default: 1).\n- **Enable Long / Enable Short** – toggles for opening new long or short positions.\n- **Close Long / Close Short** – toggles for closing opposite positions when the signal fires."
+   },
+   "1983": {
+    "id": 1983,
+    "name": "Aeron JJN Breakout",
+    "family": "trend",
+    "overview": "This strategy replicates the logic of the original Aeron JJN expert advisor. It watches for a strong reversal candle and places a stop order at the open of the last opposite candle. The stop and target are set one ATR away, and an optional trailing stop protects open positions.\n\nTesting shows the idea works best on major Forex pairs using 1-minute candles.\n\nA long stop order is placed when the previous candle is bearish with body larger than **DojiDiff1** and the current candle is bullish but still below the last significant bearish open. A short stop order uses the mirror conditions. Pending orders are removed after **ResetTime** minutes if they remain unfilled.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous candle bearish, current candle bullish and closes below last bearish open.\n  - **Short**: Previous candle bullish, current candle bearish and closes above last bullish open.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - ATR-based stop-loss and take-profit.\n  - Optional trailing stop in pips.\n- **Stops**: Yes, initial stop and target based on ATR plus optional trailing.\n- **Filters**:\n  - Pending orders expire after the configured time.\n\n## Parameters\n\n- `AtrPeriod` – ATR calculation period.\n- `DojiDiff1` – body size threshold for previous candle.\n- `DojiDiff2` – body size threshold when searching last opposite candle.\n- `TrailSl` – enable trailing stop.\n- `TrailPips` – trailing distance in pips.\n- `ResetTime` – minutes before canceling stop orders.\n- `CandleType` – working timeframe.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous candle bearish, current candle bullish and closes below last bearish open.\n  - **Short**: Previous candle bullish, current candle bearish and closes above last bullish open.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - ATR-based stop-loss and take-profit.\n  - Optional trailing stop in pips.\n- **Stops**: Yes, initial stop and target based on ATR plus optional trailing.\n- **Filters**:\n  - Pending orders expire after the configured time.",
+    "parameters": "- `AtrPeriod` – ATR calculation period.\n- `DojiDiff1` – body size threshold for previous candle.\n- `DojiDiff2` – body size threshold when searching last opposite candle.\n- `TrailSl` – enable trailing stop.\n- `TrailPips` – trailing distance in pips.\n- `ResetTime` – minutes before canceling stop orders.\n- `CandleType` – working timeframe."
+   },
+   "57": {
+    "id": 57,
+    "name": "Double Top Pattern",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 58%. It performs best in the stocks market.\n\nThe strategy sells short upon confirmation with a stop above the pattern highs, aiming to profit from a trend change after buyers are exhausted.\n\nPositions are closed via stop-loss or discretionary targets.\n\n## Details\n\n- **Entry Criteria**: Two tops within `SimilarityPercent` after `Distance` bars.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Price rallies or stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Distance` = 5\n  - `SimilarityPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `StopLossPercent` = 1.0m\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Two tops within `SimilarityPercent` after `Distance` bars.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Price rallies or stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Distance` = 5\n  - `SimilarityPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `StopLossPercent` = 1.0m\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1943": {
+    "id": 1943,
+    "name": "Back to the Future",
+    "family": "trend",
+    "overview": "This momentum strategy compares the current closing price with the price from a specified number of minutes ago. When the price advances beyond a defined threshold relative to the historical price, the system opens a long position. Conversely, when the price falls below the negative threshold, it opens a short position. The approach assumes that strong moves away from the past price indicate emerging trends.\n\nThe strategy operates on completed candles and works on any instrument and timeframe supported by StockSharp. Built‑in take‑profit and stop‑loss levels manage risk once a position is opened. A queue of past prices maintains a rolling history to evaluate the price difference.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close(t) - Close(t-Δ) > BarSize`.\n  - **Short**: `Close(t) - Close(t-Δ) < -BarSize`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `Close >= Entry + TakeProfit` or `Close <= Entry - StopLoss`.\n  - **Short**: `Close <= Entry - TakeProfit` or `Close >= Entry + StopLoss`.\n- **Stops**: Yes, fixed take‑profit and stop‑loss in price units.\n- **Default Values**:\n  - `BarSize = 0.25`\n  - `HistoryMinutes = 60`\n  - `TakeProfit = 10`\n  - `StopLoss = 5000`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short‑term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close(t) - Close(t-Δ) > BarSize`.\n  - **Short**: `Close(t) - Close(t-Δ) < -BarSize`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `Close >= Entry + TakeProfit` or `Close <= Entry - StopLoss`.\n  - **Short**: `Close <= Entry - TakeProfit` or `Close >= Entry + StopLoss`.\n- **Stops**: Yes, fixed take‑profit and stop‑loss in price units.\n- **Default Values**:\n  - `BarSize = 0.25`\n  - `HistoryMinutes = 60`\n  - `TakeProfit = 10`\n  - `StopLoss = 5000`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short‑term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4013": {
+    "id": 4013,
+    "name": "FT Trend Follower",
+    "family": "trend",
+    "overview": "FT Trend Follower is a StockSharp port of the MetaTrader 4 expert advisor `FT_TrendFollower.mq4`. The strategy rides medium-term trends by stacking a Guppy Multiple Moving Average (GMMA) fan with a Laguerre oscillator trigger, a fast/slow EMA crossover and a MACD filter. Entries only fire after the market dips into the GMMA bundle, rebounds from a Laguerre extreme, and the majority of GMMA lines resume sloping in the direction of the trade. Profit management mirrors the original EA: an optional swing-based stop, a fixed-distance stop, and three mutually exclusive staged exit modules driven by daily pivot levels or channel averages.",
+    "details": "",
+    "parameters": "* **Volume** – Order size for new trades.\n* **StartGmmaPeriod / EndGmmaPeriod** – Bounds for the GMMA fan.\n* **BandsPerGroup** – Number of GMMA lines sampled per group (CountLine in MT4).\n* **FastSignalLength / SlowSignalLength** – EMA lengths used for the crossover confirmation.\n* **TradeShift** – Kept for compatibility; the implementation operates on finished candles, so values other than 0 or 1 are rejected.\n* **UseSwingStop / SwingStopPips** – Enables and configures the swing-based protective stop.\n* **UseFixedStop / FixedStopPips** – Enables the fixed-distance stop measured in price points.\n* **EnablePivotExit / EnablePivotRangeExit / EnableChannelExit** – Mutually exclusive staged exit modules.\n* **LaguerreOversold / LaguerreOverbought / LaguerreGamma** – Laguerre trigger thresholds and smoothing factor.\n* **HmaPeriod** – Hull MA length used by the pivot exit module.\n* **ChannelPeriod** – Length of the high/low SMA channel for Quit2.\n* **CandleType** – Timeframe driving the strategy calculations (default: 1-hour candles)."
+   },
+   "3444": {
+    "id": 3444,
+    "name": "AML RSI Meeting Lines",
+    "family": "trend",
+    "overview": "The **AML RSI Meeting Lines Strategy** is a StockSharp port of the MetaTrader 5 expert advisor `Expert_AML_RSI.mq5`. The original system combines Japanese candlestick pattern recognition with the Relative Strength Index (RSI) to trade bullish and bearish \"Meeting Lines\" reversals. This conversion keeps the core trading logic while adapting it to StockSharp's high-level API with candle subscriptions and built-in indicators.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Timeframe used to evaluate candlestick patterns. | 1 hour time frame |\n| `RsiPeriod` | RSI lookback length. | 11 |\n| `BodyAveragePeriod` | Number of candles for the average body size. | 3 |\n| `BullishRsiLevel` | Maximum RSI that validates bullish Meeting Lines. | 40 |\n| `BearishRsiLevel` | Minimum RSI that validates bearish Meeting Lines. | 60 |\n| `LowerExitLevel` | RSI level that closes shorts on upward crosses. | 30 |\n| `UpperExitLevel` | RSI level that closes longs on downward crosses. | 70 |\n\nAll parameters are exposed as `StrategyParam<T>` objects so they can be optimized in the StockSharp designer."
+   },
+   "2129": {
+    "id": 2129,
+    "name": "Color Schaff Trend Cycle",
+    "family": "trend",
+    "overview": "This strategy trades based on the **Schaff Trend Cycle (STC)** indicator. STC applies a double stochastic calculation to a MACD series and oscillates between -100 and 100. Values above the high level suggest bullish pressure, while values below the low level suggest bearish pressure.\n\n## Trading Logic\n\n- Subscribe to candles of the selected timeframe.\n- Compute MACD using fast and slow exponential averages.\n- Apply two consecutive stochastic calculations to derive STC.\n- When STC rises above the high level and continues upward:\n  - Close any short position.\n  - Enter a long position.\n- When STC falls below the low level and continues downward:\n  - Close any long position.\n  - Enter a short position.\n\nThe strategy always acts on fully formed candles.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `FastPeriod` | Fast EMA period used in MACD | `23` |\n| `SlowPeriod` | Slow EMA period used in MACD | `50` |\n| `Cycle` | Stochastic cycle length | `10` |\n| `HighLevel` | Overbought threshold for STC | `60` |\n| `LowLevel` | Oversold threshold for STC | `-60` |\n| `CandleType` | Timeframe of processed candles | `4h` |\n\n## Notes\n\n- STC values are rescaled to a range of -100…100 for easier comparison with the default levels.\n- Orders are sent with `BuyMarket()` and `SellMarket()` calls; positions are reversed automatically when opposite signals appear.\n- This strategy focuses solely on the indicator signals and does not use stop-loss or take-profit orders.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `FastPeriod` | Fast EMA period used in MACD | `23` |\n| `SlowPeriod` | Slow EMA period used in MACD | `50` |\n| `Cycle` | Stochastic cycle length | `10` |\n| `HighLevel` | Overbought threshold for STC | `60` |\n| `LowLevel` | Oversold threshold for STC | `-60` |\n| `CandleType` | Timeframe of processed candles | `4h` |"
+   }
+  }
+ }
+}

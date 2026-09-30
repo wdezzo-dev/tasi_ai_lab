@@ -1,0 +1,98 @@
+{
+ "batch_208": {
+  "strategy_ids": [
+   3153,
+   1571,
+   2649,
+   3191,
+   1946,
+   61,
+   1936,
+   1204,
+   1427,
+   2436
+  ],
+  "docs": {
+   "3153": {
+    "id": 3153,
+    "name": "Puria Method",
+    "family": "trend",
+    "overview": "The Puria Method strategy is a trend-following system originally designed for MetaTrader. It combines three moving averages with a MACD trend filter to detect momentum breakouts. The StockSharp conversion keeps the original entry logic and adds modern risk controls such as partial profit taking and automated trailing stops.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `StopLossPips` | Stop loss distance in pips. |\n| `TakeProfitPips` | Take profit distance in pips. |\n| `TrailingStopPips` | Trailing stop distance in pips. |\n| `TrailingStepPips` | Minimum profit advance before the trailing stop is updated. |\n| `MinProfitStepPips` | Minimum distance in pips before taking a partial profit. |\n| `MinProfitFraction` | Fraction of the position to close when the minimum profit step is reached. |\n| `CandleType` | Primary candle series used by the strategy. |\n| `Ma0Period`, `Ma1Period`, `Ma2Period` | Periods for the three moving averages. |\n| `Ma0Shift`, `Ma1Shift`, `Ma2Shift` | Optional bar shifts applied to each moving average. |\n| `Ma0Method`, `Ma1Method`, `Ma2Method` | Moving average smoothing methods (simple, exponential, smoothed, linear weighted). |\n| `Ma0Price`, `Ma1Price`, `Ma2Price` | Candle price sources for the moving averages. |\n| `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` | MACD configuration. |\n| `MacdTrendBars` | Number of bars used to verify the MACD monotonic trend (minimum 3). |\n| `MacdPrice` | Candle price source for the MACD calculation. |"
+   },
+   "1571": {
+    "id": 1571,
+    "name": "Z-Score RSI",
+    "family": "trend",
+    "overview": "Z-Score RSI Strategy calculates RSI on price z-score and uses an EMA of RSI for signals. A long position is opened when RSI crosses above its EMA and a short position when it crosses below.\n\n## Details\n\n- **Entry Criteria**: RSI of z-score crosses its EMA\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite crossover\n- **Stops**: No\n- **Default Values**:\n  - `ZScoreLength` = 20\n  - `RsiLength` = 9\n  - `SmoothingLength` = 15\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, RSI, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI of z-score crosses its EMA\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite crossover\n- **Stops**: No\n- **Default Values**:\n  - `ZScoreLength` = 20\n  - `RsiLength` = 9\n  - `SmoothingLength` = 15\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: SMA, StandardDeviation, RSI, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2649": {
+    "id": 2649,
+    "name": "Stop Loss Take Profit",
+    "family": "trend",
+    "overview": "This port replicates the MetaTrader \"Stop Loss Take Profit\" expert advisor. The strategy flips a coin whenever the account is flat and opens a market order in the chosen direction. Each position immediately receives pip-based stop-loss and take-profit orders. If the stop is hit the next trade doubles its size (capped by the security's volume limits). A take-profit resets the volume back to the initial amount. The behaviour mirrors the original martingale-style position sizing while using StockSharp's high-level API.\n\n## Trading Logic\n\n- **Market Data**: Uses the `CandleType` parameter (default 1-minute time frame) to drive decision points.\n- **Entry Rules**:\n  - When `Position == 0` and no entry order is pending, the strategy generates a pseudo-random boolean.\n  - `true` opens a long position with `BuyMarket(volume)`; `false` opens a short with `SellMarket(volume)`.\n- **Exit Rules**:\n  - Protective stop-loss and take-profit orders are placed as soon as the entry fill is received.\n  - A stop exit doubles the size for the next trade, while a take-profit resets it.\n  - If either stop or take-profit distance is set to `0`, the respective protective order is skipped.\n- **Money Management**:\n  - `InitialVolume` defines the base order size.\n  - After a losing trade the size is doubled but clipped to `Security.MaxVolume` when that value is available.\n  - Volume is normalised to the instrument's `VolumeStep`, `MinVolume` and `MaxVolume` so orders remain valid.\n- **Pip Handling**:\n  - By default the strategy infers a pip from the instrument's `PriceStep` and `Decimals` (5-digit FX symbols map to 0.0001).\n  - Set `PipSize` to a positive value to override the automatic pip size detection.\n\n## Parameters\n\n| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | 1-minute candles | Time frame used to trigger coin flips and entries. |\n| `StopLossPips` | 1 | Stop-loss distance expressed in pips. `0` disables the stop. |\n| `TakeProfitPips` | 1 | Take-profit ",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | 1-minute candles | Time frame used to trigger coin flips and entries. |\n| `StopLossPips` | 1 | Stop-loss distance expressed in pips. `0` disables the stop. |\n| `TakeProfitPips` | 1 | Take-profit distance expressed in pips. `0` disables the take-profit. |\n| `InitialVolume` | 0.01 | Starting trade volume. Doubled after stop-loss events and reset after wins. |\n| `PipSize` | 0 (auto) | Optional pip size override in absolute price units. |"
+   },
+   "3191": {
+    "id": 3191,
+    "name": "Stochastic Momentum Filter",
+    "family": "trend",
+    "overview": "The **Stochastic Momentum Filter Strategy** is a StockSharp port of the MetaTrader expert advisor `Stochastic.mq4` (folder `MQL/23473`). The original robot combines two stochastic oscillators, linear weighted moving averages (LWMA), a momentum deviation filter, and a higher timeframe MACD trend check. This C# version recreates the same building blocks on top of the StockSharp high-level API and keeps the multi-layered confirmation workflow:\n\n1. **Trend filter** – a fast LWMA must be above (or below) a slow LWMA before long (or short) trades are allowed.\n2. **Oscillator confirmation** – both a fast stochastic (5/2/2) and a slow stochastic (21/4/10) must agree on oversold/overbought zones.\n3. **Momentum deviation** – at least one of the three most recent momentum readings must deviate from the 100 baseline by more than a configurable threshold, matching the expert's use of the MT4 `iMomentum` function.\n4. **Higher timeframe MACD** – the MACD main line on a configurable higher timeframe must stay above the signal line for longs (and below for shorts). The default 30-day timeframe approximates the original monthly filter.\n5. **Risk logic** – stop loss, take profit, and optional trailing are handled through `StartProtection`, mirroring the EA's protective parameters. Position flips close opposing exposure automatically before establishing the new net position.\n\nThe strategy subscribes to two candle streams: the trading timeframe and the higher timeframe that feeds the MACD filter. All calculations are performed with StockSharp indicators and processed through the high-level `Bind` helpers.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `StochasticBuyLevel` | `30` | Oversold level that both stochastic oscillators must breach for long setups. |\n| `StochasticSellLevel` | `80` | Overbought level that both stochastic oscillators must reach for short setups. |\n| `FastMaPeriod` | `6` | Length of the fast LWMA trend filter. |\n| `SlowMaPeriod` | `85` | Length of the slow LWMA trend filter. |\n| `FastStochasticPeriod` | `5` | `%K` period of the fast stochastic oscillator. |\n| `FastStochasticSignal` | `2` | `%D` smoothing period of the fast stochastic. |\n| `FastStochasticSmoothing` | `2` | Extra smoothing applied to the fast stochastic (matches MT4 “slowing”). |\n| `SlowStochasticPeriod` | `21` | `%K` period of the slow stochastic oscillator. |\n| `SlowStochasticSignal` | `4` | `%D` smoothing period of the slow stochastic. |\n| `SlowStochasticSmoothing` | `10` | Extra smoothing applied to the slow stochastic. |\n| `MomentumPeriod` | `14` | Look-back of the momentum oscillator (same as MT4 `iMomentum`). |\n| `MomentumThreshold` | `0.3` | Minimum absolute deviation from the 100 baseline required within the last three momentum values. |\n| `MacdFastPeriod` | `12` | Fast EMA period for the higher timeframe MACD. |\n| `MacdSlowPeriod` | `26` | Slow EMA period for the higher timeframe MACD. |\n| `MacdSignalPeriod` | `9` | Signal EMA period for the higher timeframe MACD. |\n| `TakeProfitPoints` | `50` | Take-profit distance (in price points). Set to `0` to disable. |\n| `StopLossPoints` | `20` | Stop-loss distance (in price points). Set to `0` to disable. |\n| `EnableTrailing` | `true` | Enables StockSharp trailing of the protective stop. |\n| `TradeVolume` | `1` | Net position size targeted on each signal. |\n| `MaxNetPositions` | `1` | Caps the stacked net exposure (multiplies `TradeVolume`). |\n| `CandleType` | `15m` time frame | Main trading timeframe. |\n| `HigherTimeframe` | `30d` time frame | Timeframe used for MACD confirmation. |"
+   },
+   "1946": {
+    "id": 1946,
+    "name": "Fisher Cyber Cycle",
+    "family": "trend",
+    "overview": "This strategy applies the Fisher Transform to Ehlers' Cyber Cycle indicator. A long position is opened when the Fisher line crosses above its trigger line, while a short position is opened on a downward cross. Positions are closed or reversed on the opposite cross.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Fisher > Trigger` && `previous Fisher <= previous Trigger`\n  - **Short**: `Fisher < Trigger` && `previous Fisher >= previous Trigger`\n- **Exit Criteria**:\n  - Opposite crossover of Fisher and Trigger\n- **Stops**: None\n- **Default Values**:\n  - `Alpha` = 0.07\n  - `Length` = 8\n  - `Candle Type` = 8-hour timeframe\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long and Short\n  - Indicators: Fisher Transform, Cyber Cycle\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Fisher > Trigger` && `previous Fisher <= previous Trigger`\n  - **Short**: `Fisher < Trigger` && `previous Fisher >= previous Trigger`\n- **Exit Criteria**:\n  - Opposite crossover of Fisher and Trigger\n- **Stops**: None\n- **Default Values**:\n  - `Alpha` = 0.07\n  - `Length` = 8\n  - `Candle Type` = 8-hour timeframe\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long and Short\n  - Indicators: Fisher Transform, Cyber Cycle\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "61": {
+    "id": 61,
+    "name": "MACD Divergence",
+    "family": "other",
+    "overview": "Testing indicates an average annual return of about 70%. It performs best in the stocks market.\n\nAfter detecting divergence, the system waits for MACD to cross its signal line before entering. The trade is closed if MACD crosses back or the stop-loss triggers.\n\n## Details\n\n- **Entry Criteria**: Bullish or bearish divergence plus MACD crossing signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crosses opposite direction or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastMacdPeriod` = 12\n  - `SlowMacdPeriod` = 26\n  - `SignalPeriod` = 9\n  - `DivergencePeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Bullish or bearish divergence plus MACD crossing signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crosses opposite direction or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastMacdPeriod` = 12\n  - `SlowMacdPeriod` = 26\n  - `SignalPeriod` = 9\n  - `DivergencePeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1936": {
+    "id": 1936,
+    "name": "Exp Extremum",
+    "family": "other",
+    "overview": "This strategy trades reversals detected by comparing price extremes over a lookback window. It observes whether the current candle pushes the price beyond previous highs or lows and reacts when the sign of this comparison changes.\n\n## How It Works\n\n1. For each finished candle the strategy finds:\n   - The lowest high over the last *N* bars.\n   - The highest low over the last *N* bars.\n2. Differences between the current high/low and these levels are summed.\n3. A positive sum indicates upward pressure, a negative sum indicates downward pressure.\n4. When the sign two bars ago opposes the sign one bar ago, a reversal signal appears:\n   - Up then Down &rarr; open a long position.\n   - Down then Up &rarr; open a short position.\n5. Optional permissions allow disabling opening or closing of long/short positions independently.\n\n## Parameters\n\n- `Length` – indicator period for extreme calculations.\n- `CandleType` – timeframe of incoming candles.\n- `BuyPosOpen` / `SellPosOpen` – permissions to open long or short positions.\n- `BuyPosClose` / `SellPosClose` – permissions to close long or short positions.\n\n## Notes\n\nThe strategy uses the high-level API with candle subscriptions and built-in `Highest`/`Lowest` indicators. Positions are opened with market orders and closed via `ClosePosition()` when the opposite signal appears.\n",
+    "details": "",
+    "parameters": "- `Length` – indicator period for extreme calculations.\n- `CandleType` – timeframe of incoming candles.\n- `BuyPosOpen` / `SellPosOpen` – permissions to open long or short positions.\n- `BuyPosClose` / `SellPosClose` – permissions to close long or short positions."
+   },
+   "1204": {
+    "id": 1204,
+    "name": "Pure Price Action",
+    "family": "other",
+    "overview": "Simplified price action strategy detecting Break of Structure (BOS) and Market Structure Shift (MSS) from recent highs and lows.\n\nThe strategy enters long on BOS and short on MSS with fixed stop-loss and take-profit percentages.\n\n## Details\n\n- **Entry Criteria**: BOS for long, MSS for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Fixed percentage.\n- **Default Values**:\n  - `Length` = 5\n  - `SlPercent` = 1m\n  - `TpPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: BOS for long, MSS for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Fixed percentage.\n- **Default Values**:\n  - `Length` = 5\n  - `SlPercent` = 1m\n  - `TpPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1427": {
+    "id": 1427,
+    "name": "Tian Di Grid Merge",
+    "family": "other",
+    "overview": "Grid trading system placing orders on price levels between upper and lower bounds. Supports arithmetic or geometric spacing and can close positions when profit exceeds a grid step.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2436": {
+    "id": 2436,
+    "name": "Stochastic Three Periods",
+    "family": "other",
+    "overview": "The **Stochastic Three Periods** strategy aligns fast stochastic signals with confirmation from two higher timeframes. Trades are opened when the fast oscillator crosses while both higher timeframes agree.\n\n## Details\n\n- **Entry Criteria**: Fast %K crosses %D with opposite reading `ShiftEntrance` bars ago; both higher timeframe stochastics show %K above %D; close price must move in signal direction.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite fast stochastic cross measured on previous candle.\n- **Stops**: Fixed stop-loss and take-profit in points via `StartProtection`.\n- **Default Values**:\n  - `CandleType1` = 5m\n  - `CandleType2` = 15m\n  - `CandleType3` = 30m\n  - `KPeriod1` = 5\n  - `KPeriod2` = 5\n  - `KPeriod3` = 5\n  - `KExitPeriod` = 5\n  - `ShiftEntrance` = 3\n  - `TakeProfitPoints` = 30\n  - `StopLossPoints` = 10\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Fast %K crosses %D with opposite reading `ShiftEntrance` bars ago; both higher timeframe stochastics show %K above %D; close price must move in signal direction.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite fast stochastic cross measured on previous candle.\n- **Stops**: Fixed stop-loss and take-profit in points via `StartProtection`.\n- **Default Values**:\n  - `CandleType1` = 5m\n  - `CandleType2` = 15m\n  - `CandleType3` = 30m\n  - `KPeriod1` = 5\n  - `KPeriod2` = 5\n  - `KPeriod3` = 5\n  - `KExitPeriod` = 5\n  - `ShiftEntrance` = 3\n  - `TakeProfitPoints` = 30\n  - `StopLossPoints` = 10\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

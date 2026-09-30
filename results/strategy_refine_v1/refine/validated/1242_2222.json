@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1242,
+  "ticker": "2222",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1242,
+    "name": "Renko RSI",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,4),40)",
+    "exit_long": "crossbelow(rsi(close,3),80)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented RsiLength 2 crossing RsiOversold 20 opens the long and RsiOverbought 80 closes, exactly as written. Renko ATR(14) bricks cannot be built from OHLC bars in the DSL, so standard candles are used; docs state no stops."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2019-12-11",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1155,
+      "engine_win_ret": 0.05496600820206354,
+      "alpha": 0.106675336496171,
+      "benchmark_ret": -0.05170932829410746,
+      "trades": 43,
+      "win_rate": 0.5813953488372093,
+      "sharpe": 0.15298015735035503,
+      "max_drawdown": -0.20985214913989692,
+      "profit_factor": 1.1304679430303446
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.009773231774086066,
+      "alpha": 0.12368131368045943,
+      "benchmark_ret": -0.1334545454545455,
+      "trades": 13,
+      "win_rate": 0.6153846153846154,
+      "sharpe": -0.011823415378646365,
+      "max_drawdown": -0.11870611406181675,
+      "profit_factor": 1.4879427011991415
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.047959313363400424,
+      "alpha": -0.027417571058710122,
+      "benchmark_ret": 0.07537688442211055,
+      "trades": 6,
+      "win_rate": 0.5,
+      "sharpe": 0.6272361533591296,
+      "max_drawdown": -0.06665469147046266,
+      "profit_factor": 0.7087735705772066
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2019-12-11",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1155,
+      "engine_win_ret": -0.15194893922191433,
+      "alpha": -0.10023961092780687,
+      "benchmark_ret": -0.05170932829410746,
+      "trades": 43,
+      "win_rate": 0.5348837209302325,
+      "sharpe": -0.1942627651812621,
+      "max_drawdown": -0.23368303653292755,
+      "profit_factor": 0.8052344825701924
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.0723610136093471,
+      "alpha": 0.06109353184519839,
+      "benchmark_ret": -0.1334545454545455,
+      "trades": 13,
+      "win_rate": 0.46153846153846156,
+      "sharpe": -0.43213842308209455,
+      "max_drawdown": -0.14302869921950045,
+      "profit_factor": 0.7855156147710273
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.019509626948826186,
+      "alpha": -0.05586725747328436,
+      "benchmark_ret": 0.07537688442211055,
+      "trades": 6,
+      "win_rate": 0.5,
+      "sharpe": 0.28990801654942144,
+      "max_drawdown": -0.07443855893565987,
+      "profit_factor": 0.49611941966493156
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

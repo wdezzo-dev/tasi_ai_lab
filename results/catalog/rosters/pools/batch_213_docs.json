@@ -1,0 +1,98 @@
+{
+ "batch_213": {
+  "strategy_ids": [
+   2700,
+   3089,
+   486,
+   317,
+   1804,
+   1661,
+   2336,
+   912,
+   526,
+   1688
+  ],
+  "docs": {
+   "2700": {
+    "id": 2700,
+    "name": "Blau C-Momentum",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor **Exp_BlauCMomentum**. It trades on a single instrument using candles from a configurable timeframe and interprets Blau's triple-smoothed momentum in one of two modes:\n\n* **Breakdown mode** – reacts to the momentum line crossing the zero level.\n* **Twist mode** – reacts to changes in the direction of the smoothed momentum slope.\n\nThe indicator is calculated on an external timeframe and can optionally use different applied prices for the momentum calculation. Positions are opened with market orders and can be protected using built-in stop-loss and take-profit modules.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n|-------|------|-------------|\n| Trading | `MoneyManagement` | Share of capital for position sizing. Negative value = fixed volume. |\n| Trading | `MarginModes` | Interpretation of money management (`FreeMarginShare`, `BalanceShare`, `FreeMarginRisk`, `BalanceRisk`). Risk modes use stop-loss distance and `StepPrice`. |\n| Risk | `StopLossPoints` | Stop-loss distance in instrument price steps (set `0` to disable). |\n| Risk | `TakeProfitPoints` | Take-profit distance in instrument price steps (set `0` to disable). |\n| Trading | `SlippagePoints` | Allowed slippage (kept for compatibility, not used for order placement). |\n| Trading | `EnableLongEntry`, `EnableShortEntry` | Allow opening long/short positions. |\n| Trading | `EnableLongExit`, `EnableShortExit` | Allow closing existing positions according to the indicator. |\n| Logic | `EntryModes` | `Breakdown` or `Twist`. |\n| Data | `CandleType` | Timeframe used for indicator calculations (default 4h). |\n| Indicator | `SmoothingMethod` | Moving-average method: `Simple`, `Exponential`, `Smoothed`, `LinearWeighted`, `Jurik`, `TripleExponential`, `Adaptive`. |\n| Indicator | `MomentumLength` | Raw momentum averaging depth (bars between the two price values). |\n| Indicator | `FirstSmoothLength`, `SecondSmoothLength`, `ThirdSmoothLength` | Lengths of the three smoothing stages. |\n| Indicator | `Phase` | Jurik phase parameter (used when smoothing method is `Jurik`). |\n| Indicator | `PriceForClose`, `PriceForOpen` | Applied prices used for momentum (see code comments for formulas). |\n| Logic | `SignalBar` | Bar index used for signals (0 = current closed bar, 1 = previous bar, etc.). |"
+   },
+   "3089": {
+    "id": 3089,
+    "name": "ScalpWiz 9001",
+    "family": "trend",
+    "overview": "ScalpWiz 9001 is a layered breakout scalping system that replicates the behaviour of the MetaTrader expert advisor with the same name. The strategy measures how far the latest candle closes beyond the Bollinger Bands envelope and, when volatility expands sharply, it deploys a grid of pending stop orders above or below the market. The original money-management module is preserved: each pending order can either use a fixed lot or risk a configurable percentage of account equity.\n\nOnce one of the stop orders is filled, the remaining orders are cancelled, while the active position is protected with a traditional stop loss, take-profit and a trailing component that only starts trailing after an additional buffer is achieved. The strategy is intended for high-frequency scalping on lower timeframes, but it can be executed on any instrument supported by StockSharp.",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe for Bollinger calculations.\n- **Bands Period / Bands Deviation** – Bollinger configuration.\n- **Stop Loss (pips)** – protective stop distance in pips.\n- **Take Profit (pips)** – profit target distance in pips.\n- **Trailing Stop (pips)** – trailing stop distance that follows the move after the extra buffer.\n- **Trailing Step (pips)** – additional distance required before trailing activates.\n- **Expiration (minutes)** – lifetime of pending stop orders. Set to 0 to keep orders indefinitely.\n- **Management Mode** – choose between `FixedVolume` and `RiskPercent`.\n- **Level 0-3 Value** – fixed lot or risk percent for each pending layer.\n- **Level 0-3 Pips** – entry offsets for each pending layer."
+   },
+   "486": {
+    "id": 486,
+    "name": "Adaptive HMA Plus",
+    "family": "trend",
+    "overview": "Adaptive Hull Moving Average strategy that adjusts its period based on volatility or volume. It opens long or short positions when the HMA slope points in the trend direction during active market conditions.\n\n## Details\n\n- **Entry Criteria**: Signals based on adaptive HMA, ATR or volume.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `MinPeriod` = 172\n  - `MaxPeriod` = 233\n  - `AdaptPercent` = 0.031m\n  - `FlatThreshold` = 0m\n  - `UseVolume` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, ATR, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on adaptive HMA, ATR or volume.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `MinPeriod` = 172\n  - `MaxPeriod` = 233\n  - `AdaptPercent` = 0.031m\n  - `FlatThreshold` = 0m\n  - `UseVolume` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, ATR, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "317": {
+    "id": 317,
+    "name": "CCI Volatility Filter",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 58%. It performs best in the stocks market.\n\nSignals trigger when its indicators confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like CciPeriod, AtrPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `CciPeriod = 20`\n  - `AtrPeriod = 14`\n  - `CciOversold = -100m`\n  - `CciOverbought = 100m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `CciPeriod = 20`\n  - `AtrPeriod = 14`\n  - `CciOversold = -100m`\n  - `CciOverbought = 100m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1804": {
+    "id": 1804,
+    "name": "Coensio Swing Trader",
+    "family": "trend",
+    "overview": "Trendline breakout strategy using user-defined trend lines. The strategy computes linear projections from slope and intercept parameters for both bullish and bearish lines. When the close price exceeds the projected buy line by a threshold, a long position is opened. When the price falls below the sell line minus the threshold, a short position is entered.\n\nPositions are protected by take profit and stop loss values in ticks. Optional trailing stop updates the protective stop as price moves in favor. An additional option closes the trade if the breakout fails on the next candle.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > BuyLine + EntryThreshold`\n  - Short: `Close < SellLine - EntryThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, take profit, trailing stop or opposite signal\n- **Stops**:\n  - Take profit in ticks\n  - Stop loss in ticks\n  - Optional trailing stop in ticks\n  - Optional false breakout close on next candle\n- **Default Values**:\n  - `EntryThreshold` = 15m\n  - `StopLossTicks` = 50\n  - `TakeProfitTicks` = 100\n  - `EnableTrailing` = false\n  - `TrailingStepTicks` = 5\n  - `FalseBreakClose` = true\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `BuyLineSlope` = 0m\n  - `BuyLineIntercept` = 0m\n  - `SellLineSlope` = 0m\n  - `SellLineIntercept` = 0m\n- **Filters**:\n  - Category: Trend line breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > BuyLine + EntryThreshold`\n  - Short: `Close < SellLine - EntryThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, take profit, trailing stop or opposite signal\n- **Stops**:\n  - Take profit in ticks\n  - Stop loss in ticks\n  - Optional trailing stop in ticks\n  - Optional false breakout close on next candle\n- **Default Values**:\n  - `EntryThreshold` = 15m\n  - `StopLossTicks` = 50\n  - `TakeProfitTicks` = 100\n  - `EnableTrailing` = false\n  - `TrailingStepTicks` = 5\n  - `FalseBreakClose` = true\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `BuyLineSlope` = 0m\n  - `BuyLineIntercept` = 0m\n  - `SellLineSlope` = 0m\n  - `SellLineIntercept` = 0m\n- **Filters**:\n  - Category: Trend line breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1661": {
+    "id": 1661,
+    "name": "Symr New Bar",
+    "family": "other",
+    "overview": "The **Symr New Bar Strategy** demonstrates how to detect the beginning of new candles across multiple timeframes using a single subscription. The strategy monitors a base timeframe and calculates when larger intervals such as 5m, 15m, 30m, 1h, 4h, 1d, 20m and 55m begin. Each detected bar is logged.\n\n## Details\n\n- **Entry Criteria**: None. The strategy does not place trades.\n- **Exit Criteria**: None.\n- **Long/Short**: Not applicable.\n- **Stops**: No stops are used.\n\n### Parameters\n\n| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | `TimeSpan.FromMinutes(1).TimeFrame()` | Base timeframe for new bar detection. |\n\n### Notes\n\n- Stores the last open time for each predefined period.\n- When the base period advances, larger periods are evaluated and logged if they roll over.\n- Useful as a template for multi-timeframe event handling.\n",
+    "details": "- **Entry Criteria**: None. The strategy does not place trades.\n- **Exit Criteria**: None.\n- **Long/Short**: Not applicable.\n- **Stops**: No stops are used.\n\n### Parameters\n\n| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | `TimeSpan.FromMinutes(1).TimeFrame()` | Base timeframe for new bar detection. |\n\n### Notes\n\n- Stores the last open time for each predefined period.\n- When the base period advances, larger periods are evaluated and logged if they roll over.\n- Useful as a template for multi-timeframe event handling.",
+    "parameters": ""
+   },
+   "2336": {
+    "id": 2336,
+    "name": "STLMCandle",
+    "family": "other",
+    "overview": "This strategy trades based on the direction of the last finished candle.\nIf the close price is above the open price, it opens a long position and closes any short position.\nIf the close price is below the open price, it opens a short position and closes any long position.\nIt supports stop loss and take profit levels and operates on a configurable candle timeframe.\n\n## Parameters\n- `CandleType` – timeframe of candles used for analysis.\n- `StopLoss` – absolute stop loss value in price units.\n- `TakeProfit` – absolute take profit value in price units.\n\n## Notes\nThe strategy is a simplified adaptation of the original MQL `STLMCandle` expert advisor.\nIt approximates the indicator by using the standard candle open and close prices.\n",
+    "details": "",
+    "parameters": "- `CandleType` – timeframe of candles used for analysis.\n- `StopLoss` – absolute stop loss value in price units.\n- `TakeProfit` – absolute take profit value in price units."
+   },
+   "912": {
+    "id": 912,
+    "name": "ICT Bread and Butter Sell-Setup",
+    "family": "other",
+    "overview": "This strategy tracks the highs and lows of the London, New York, and Asia sessions and trades predefined setups around them.\n\n## Details\n\n- **Entry Criteria**:\n  - **NY Short**: price makes a higher high than the London session and the candle closes bearish during the NY session.\n  - **London Close Buy**: between 10:30 and 13:00 if price closes below the London session low.\n  - **Asia Short**: during the Asia session if price closes above the Asia session high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Each trade uses stop loss and take profit defined in ticks.\n- **Stops**: Yes.\n- **Default Values**:\n  - `ShortStopTicks` = 10\n  - `ShortTakeTicks` = 20\n  - `BuyStopTicks` = 10\n  - `BuyTakeTicks` = 20\n  - `AsiaStopTicks` = 10\n  - `AsiaTakeTicks` = 15\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **NY Short**: price makes a higher high than the London session and the candle closes bearish during the NY session.\n  - **London Close Buy**: between 10:30 and 13:00 if price closes below the London session low.\n  - **Asia Short**: during the Asia session if price closes above the Asia session high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Each trade uses stop loss and take profit defined in ticks.\n- **Stops**: Yes.\n- **Default Values**:\n  - `ShortStopTicks` = 10\n  - `ShortTakeTicks` = 20\n  - `BuyStopTicks` = 10\n  - `BuyTakeTicks` = 20\n  - `AsiaStopTicks` = 10\n  - `AsiaTakeTicks` = 15\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "526": {
+    "id": 526,
+    "name": "Spot Futures Arbitrage",
+    "family": "other",
+    "overview": "Arbitrages the price difference between a spot asset and its futures contract.\nEnters long spot/short futures when the futures trades above the spot by a threshold, and the opposite when below.\nThresholds can be dynamic based on the spread average and standard deviation, and trades are closed when the spread reverts or after a maximum holding time.\n\n## Parameters\n- **Spot** — spot security.\n- **Future** — futures security.\n- **CandleType** — candle timeframe.\n- **MinSpreadPct** — minimum spread percentage to enter.\n- **LookbackPeriod** — period for spread statistics.\n- **AdaptiveThreshold** — enable dynamic thresholds.\n- **MaxHoldHours** — maximum position holding time in hours.\n",
+    "details": "",
+    "parameters": "- **Spot** — spot security.\n- **Future** — futures security.\n- **CandleType** — candle timeframe.\n- **MinSpreadPct** — minimum spread percentage to enter.\n- **LookbackPeriod** — period for spread statistics.\n- **AdaptiveThreshold** — enable dynamic thresholds.\n- **MaxHoldHours** — maximum position holding time in hours."
+   },
+   "1688": {
+    "id": 1688,
+    "name": "Manager Trailing",
+    "family": "other",
+    "overview": "This strategy opens a single long position and then manages it using several risk controls:\n\n- Percentage-based **take profit** and **stop loss**.\n- Profit **trailing** that activates after a configurable gain.\n- **Partial closing** at custom profit levels.\n\nThe algorithm demonstrates how to manage an existing position with StockSharp using only candle data.\n\n## Details\n\n- **Entry Criteria**: Buy market on the first finished candle.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Take profit percentage.\n  - Stop loss percentage.\n  - Trailing profit trigger.\n  - Partial closing portions.\n- **Stops**: Yes, via percentages.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**: Buy market on the first finished candle.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Take profit percentage.\n  - Stop loss percentage.\n  - Trailing profit trigger.\n  - Partial closing portions.\n- **Stops**: Yes, via percentages.\n- **Filters**: None.",
+    "parameters": ""
+   }
+  }
+ }
+}

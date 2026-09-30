@@ -1,0 +1,98 @@
+{
+ "batch_209": {
+  "strategy_ids": [
+   2231,
+   2795,
+   1421,
+   2558,
+   2543,
+   1759,
+   365,
+   1795,
+   1397,
+   351
+  ],
+  "docs": {
+   "2231": {
+    "id": 2231,
+    "name": "Stalin Indicator",
+    "family": "trend",
+    "overview": "This strategy replicates the \"Stalin\" indicator logic from MQL5.\nIt uses a pair of exponential moving averages (EMAs) and an optional RSI filter.\nA long signal appears when the fast EMA crosses above the slow EMA and RSI is above 50.\nA short signal appears when the fast EMA crosses below the slow EMA and RSI is below 50.\n\nSignals may be confirmed by a required price move and filtered by the distance from the last signal.\nPositions are opened with market orders and reversed on opposite signals.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `FastEMA(t-1) < SlowEMA(t-1)` && `FastEMA(t) > SlowEMA(t)` && `RSI(t) > 50`.\n  - **Short**: `FastEMA(t-1) > SlowEMA(t-1)` && `FastEMA(t) < SlowEMA(t)` && `RSI(t) < 50`.\n- **Confirm**: Trade is delayed until price moves by `Confirm` points from the breakout level.\n- **Flat Filter**: New signals are ignored if they are closer than `Flat` points to the previous signal price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 14.\n  - `SlowLength` = 21.\n  - `RsiLength` = 17.\n  - `Confirm` = 0 points (disabled).\n  - `Flat` = 0 points (disabled).\n  - `CandleType` = 1 hour candles.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Multiple.\n  - Stops: No.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `FastEMA(t-1) < SlowEMA(t-1)` && `FastEMA(t) > SlowEMA(t)` && `RSI(t) > 50`.\n  - **Short**: `FastEMA(t-1) > SlowEMA(t-1)` && `FastEMA(t) < SlowEMA(t)` && `RSI(t) < 50`.\n- **Confirm**: Trade is delayed until price moves by `Confirm` points from the breakout level.\n- **Flat Filter**: New signals are ignored if they are closer than `Flat` points to the previous signal price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 14.\n  - `SlowLength` = 21.\n  - `RsiLength` = 17.\n  - `Confirm` = 0 points (disabled).\n  - `Flat` = 0 points (disabled).\n  - `CandleType` = 1 hour candles.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Multiple.\n  - Stops: No.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   },
+   "2795": {
+    "id": 2795,
+    "name": "Two MA RSI",
+    "family": "trend",
+    "overview": "Two MA RSI Strategy is a conversion of the original MetaTrader \"2MA_RSI\" expert advisor. It uses a fast and a slow exponential moving average (EMA) crossover confirmed by a Relative Strength Index (RSI) filter. Orders are sized with a martingale-style money management block that increases the next order volume after a loss. The StockSharp version works entirely on finished candles and reproduces the original take-profit and stop-loss behaviour in price points.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `FastLength` | Length of the fast EMA. | 5 |\n| `SlowLength` | Length of the slow EMA. | 20 |\n| `RsiLength` | Number of bars used in RSI calculation. | 14 |\n| `RsiOverbought` | RSI level that blocks new longs and allows shorts. | 70 |\n| `RsiOversold` | RSI level that allows longs. | 30 |\n| `StopLossPoints` | Stop loss distance expressed in price steps. | 500 |\n| `TakeProfitPoints` | Take profit distance in price steps. | 1500 |\n| `BalanceDivider` | Divides portfolio value to obtain the base order size. | 1000 |\n| `MaxDoublings` | Maximum number of martingale doublings after consecutive losses. | 1 |\n| `CandleType` | Candle series used by the strategy. | 5-minute timeframe |"
+   },
+   "1421": {
+    "id": 1421,
+    "name": "The VoVix Experiment",
+    "family": "trend",
+    "overview": "The strategy analyzes the ratio of fast ATR to slow ATR. When the z-score of this ratio spikes and reaches a local maximum, it enters in the direction of the candle. Positions are closed when the z-score falls below the exit threshold.\n\n## Details\n\n- **Entry Criteria**: VoVix z-score above `EntryZ` and at local maximum\n- **Long/Short**: Both\n- **Exit Criteria**: VoVix z-score below `ExitZ`\n- **Stops**: No\n- **Default Values**:\n  - `FastAtrLength` = 13\n  - `SlowAtrLength` = 26\n  - `ZScoreWindow` = 81\n  - `EntryZ` = 1.0\n  - `ExitZ` = 1.4\n  - `LocalMaxWindow` = 6\n  - `SuperZ` = 2.0\n  - `MinVolume` = 1\n  - `MaxVolume` = 2\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, Highest, SMA, StdDev\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: VoVix z-score above `EntryZ` and at local maximum\n- **Long/Short**: Both\n- **Exit Criteria**: VoVix z-score below `ExitZ`\n- **Stops**: No\n- **Default Values**:\n  - `FastAtrLength` = 13\n  - `SlowAtrLength` = 26\n  - `ZScoreWindow` = 81\n  - `EntryZ` = 1.0\n  - `ExitZ` = 1.4\n  - `LocalMaxWindow` = 6\n  - `SuperZ` = 2.0\n  - `MinVolume` = 1\n  - `MaxVolume` = 2\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, Highest, SMA, StdDev\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2558": {
+    "id": 2558,
+    "name": "CGOscillator X2",
+    "family": "trend",
+    "overview": "The **CGOscillator X2 Strategy** is a multi-timeframe trend-following system that uses the Center of Gravity oscillator to trade pullbacks. The strategy evaluates the slope of the oscillator on a higher timeframe to determine the dominant trend and waits for a corrective hook on a lower timeframe before entering a trade in the direction of the trend. Optional stop-loss and take-profit distances expressed in absolute price units can be used to manage risk after an entry is opened.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `TrendCandleType` | Candle type (timeframe) used for the higher timeframe CG oscillator. |\n| `SignalCandleType` | Candle type used for the lower timeframe signal oscillator. |\n| `TrendLength` | Length of the CG oscillator on the trend timeframe. |\n| `SignalLength` | Length of the CG oscillator on the signal timeframe. |\n| `BuyOpen` | Enables or disables long entries aligned with the higher timeframe trend. |\n| `SellOpen` | Enables or disables short entries aligned with the higher timeframe trend. |\n| `BuyClose` | Closes long positions when the higher timeframe trend turns bearish. |\n| `SellClose` | Closes short positions when the higher timeframe trend turns bullish. |\n| `BuyCloseSignal` | Closes long positions when the latest lower timeframe hook is bearish. |\n| `SellCloseSignal` | Closes short positions when the latest lower timeframe hook is bullish. |\n| `StopLoss` | Absolute price distance for the protective stop (0 disables the stop). |\n| `TakeProfit` | Absolute price distance for the profit target (0 disables the target). |"
+   },
+   "2543": {
+    "id": 2543,
+    "name": "Weight Oscillator Direct",
+    "family": "trend",
+    "overview": "This strategy reproduces the MetaTrader expert **Exp_WeightOscillator_Direct** inside the StockSharp high-level API. It blends four classic oscillators—RSI, Money Flow Index, Williams %R and DeMarker—into a single weighted composite. The composite signal is smoothed by a configurable moving average and used to detect momentum swings. A rising composite opens long trades (or closes shorts) when the strategy works in the \"Direct\" mode, while the \"Against\" mode inverts the logic for contrarian trading.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n|-------|------|-------------|\n| General | **Candle Type** | Timeframe for data subscription and indicator calculations. |\n| Trading | **Trend Mode** | `Direct` follows the oscillator slope, `Against` trades counter-trend. |\n| Trading | **Signal Bar** | Number of latest closed bars to skip (1 = last closed bar). |\n| Oscillator | **RSI / MFI / WPR / DeMarker Weight** | Relative contribution of each oscillator in the weighted blend. Zero disables a component. |\n| Oscillator | **RSI / MFI / WPR / DeMarker Period** | Lookback length for each oscillator. |\n| Oscillator | **Smoothing Method** | Moving average applied to the composite (Simple, Exponential, Smoothed, Weighted, Jurik, Kaufman). |\n| Oscillator | **Smoothing Length** | Period for the smoothing average. |\n| Risk Management | **Stop Loss Points** | Distance in price steps; `0` disables the stop. |\n| Risk Management | **Take Profit Points** | Distance in price steps; `0` disables the target. |\n| Trading | **Allow Long/Short Entries** | Enable or disable opening new long/short positions. |\n| Trading | **Close Shorts/Longs on Signal** | Allow closing existing exposure when an opposite signal arrives. |\n\nAll numeric parameters are exposed as `StrategyParam` objects, allowing optimisation inside the StockSharp Designer."
+   },
+   "1759": {
+    "id": 1759,
+    "name": "Time Trader Intraday",
+    "family": "other",
+    "overview": "Strategy opens long and/or short positions at a specific time of day with predefined stop loss and take profit distances. It is useful for testing time-based entries without any indicator confirmation.\n\n## Details\n\n- **Entry Criteria**: Time-based trigger at configured hour and minute.\n- **Long/Short**: Both directions (configurable).\n- **Exit Criteria**: Protective stop or target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TradeHour` = 0\n  - `TradeMinute` = 0\n  - `AllowBuy` = true\n  - `AllowSell` = true\n  - `TakeProfitTicks` = 20\n  - `StopLossTicks` = 20\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Time-based trigger at configured hour and minute.\n- **Long/Short**: Both directions (configurable).\n- **Exit Criteria**: Protective stop or target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TradeHour` = 0\n  - `TradeMinute` = 0\n  - `AllowBuy` = true\n  - `AllowSell` = true\n  - `TakeProfitTicks` = 20\n  - `StopLossTicks` = 20\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "365": {
+    "id": 365,
+    "name": "Dispersion Trading",
+    "family": "other",
+    "overview": "The dispersion trading strategy exploits periods when an equity index and its constituents diverge. When the average pairwise correlation between index members drops below a threshold, the strategy buys the individual stocks and shorts the index, betting that correlations will mean‑revert.\n\nDaily candles feed a rolling correlation window. If correlations recover above the threshold, all positions are closed. A minimum trade value is enforced to avoid tiny orders.\n\n## Details\n\n- **Universe**: One index security plus its constituent stocks.\n- **Signal**: Open a dispersion trade when the average correlation of constituents is below `CorrThreshold`.\n- **Rebalance**: Correlation checked every day.\n- **Positioning**: Long constituents and short the index while the signal is active.\n- **Parameters**:\n  - `Constituents` – list of component securities.\n  - `LookbackDays` – window size for correlation calculation.\n  - `CorrThreshold` – correlation level that triggers trades.\n  - `MinTradeUsd` – minimum order value in USD.\n  - `CandleType` – timeframe for candles (default: 1 day).\n- **Note**: The example omits transaction costs and assumes equal weighting.\n",
+    "details": "- **Universe**: One index security plus its constituent stocks.\n- **Signal**: Open a dispersion trade when the average correlation of constituents is below `CorrThreshold`.\n- **Rebalance**: Correlation checked every day.\n- **Positioning**: Long constituents and short the index while the signal is active.\n- **Parameters**:\n  - `Constituents` – list of component securities.\n  - `LookbackDays` – window size for correlation calculation.\n  - `CorrThreshold` – correlation level that triggers trades.\n  - `MinTradeUsd` – minimum order value in USD.\n  - `CandleType` – timeframe for candles (default: 1 day).\n- **Note**: The example omits transaction costs and assumes equal weighting.",
+    "parameters": ""
+   },
+   "1795": {
+    "id": 1795,
+    "name": "Close Positions",
+    "family": "other",
+    "overview": "Closes open positions based on profit, loss or time rules. No new orders are opened by this strategy.\n\n## Details\n\n- **Entry Criteria**: none, positions are assumed to be opened externally.\n- **Exit Criteria**:\n  - Reached profit or loss limit measured in pips.\n  - Position age exceeds time limit in minutes.\n  - Current time is after configured close time.\n- **Stops**: implicit profit and loss thresholds.\n- **Filters**: time of day and holding time.\n",
+    "details": "- **Entry Criteria**: none, positions are assumed to be opened externally.\n- **Exit Criteria**:\n  - Reached profit or loss limit measured in pips.\n  - Position age exceeds time limit in minutes.\n  - Current time is after configured close time.\n- **Stops**: implicit profit and loss thresholds.\n- **Filters**: time of day and holding time.",
+    "parameters": ""
+   },
+   "1397": {
+    "id": 1397,
+    "name": "Ta Library",
+    "family": "other",
+    "overview": "Calculates the compound annual growth rate (CAGR) between consecutive candles and trades in the direction of the growth rate.\n\n## Details\n\n- **Entry**: buy when CAGR > 0, sell when CAGR < 0.\n- **Exit**: opposite signal.\n",
+    "details": "- **Entry**: buy when CAGR > 0, sell when CAGR < 0.\n- **Exit**: opposite signal.",
+    "parameters": ""
+   },
+   "351": {
+    "id": 351,
+    "name": "Accrual Anomaly",
+    "family": "other",
+    "overview": "The **Accrual Anomaly** strategy implements the accrual anomaly factor. It rebalances annually on the first trading day of May, going long low-accrual stocks and short high-accrual ones.\n\nTesting indicates an average annual return of about 12%. It performs best in the U.S. equity market.\n\nPositions are adjusted once per year; no intraday signals are used.\n\n## Details\n- **Entry Criteria**: see implementation for accrual calculations.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Rebalance on next scheduled date.\n- **Stops**: No explicit stop logic.\n- **Default Values**:\n  - `Deciles = 10`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for accrual calculations.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Rebalance on next scheduled date.\n- **Stops**: No explicit stop logic.\n- **Default Values**:\n  - `Deciles = 10`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

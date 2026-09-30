@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 139,
+      "name": "ATR MACD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The MACD(12,26,9) crossover and opposite crossover are preserved, with the documented 2% stop retained. The unspecified ATR filter/volatility period, short side, and intraday timing are omitted."
+    },
+    {
+      "id": 2734,
+      "name": "Ema612CrossoverStrategy",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,6),sma(close,54))",
+      "exit_long": "crossbelow(sma(close,6),sma(close,54))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source explicitly calculates SMA despite its EMA name; documented SMA(6)/SMA(54) bullish and bearish crosses are retained. Absolute take-profit, trailing, and short handling are not percentage/DSL fields."
+    },
+    {
+      "id": 2730,
+      "name": "VR ZVER",
+      "family": "trend",
+      "entry_long": "ema(close,10) > ema(close,20) and ema(close,20) > ema(close,50) and rsi(close,14) > 50",
+      "exit_long": "ema(close,10) < ema(close,50) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10)/EMA(20)/EMA(50) and RSI(14) are explicit fallbacks for the unnamed confirmation layers and retain the bullish long stack. Stochastic, exact thresholds, break-even, pip protection, and short entries are unsupported."
+    },
+    {
+      "id": 3063,
+      "name": "RSI Expert Trend Filter",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),30) and ema(close,9) > ema(close,21)",
+      "exit_long": "crossbelow(rsi(close,14),70) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) levels 30/70 and EMA(9)/EMA(21) are chosen fallbacks because the docs provide names but no values; the bullish RSI/trend setup and loss of either condition exit. Pip protection, martingale, and exact MA mode are unsupported."
+    },
+    {
+      "id": 681,
+      "name": "Divergence",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,20) and roc(rsi(close,14),1) > 0",
+      "exit_long": "high > donchian_high_prev(high,20) and roc(rsi(close,14),1) < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A new prior 20-bar low with rising RSI(14) is the bullish price/RSI divergence proxy; the mirrored high/RSI condition exits. The documented 2% stop is retained, while pivot confirmation, RiskReward 2, and the short side are omitted."
+    },
+    {
+      "id": 452,
+      "name": "TTM Squeeze",
+      "family": "breakout",
+      "entry_long": "bb_upper(close,20,2) > ema(close,20) + 1.5 * atr(high,low,close,20) and roc(close,1) > 0 and rsi(close,14) > 30",
+      "exit_long": "roc(close,1) < 0 or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) outside an EMA(20)+1.5-ATR Keltner proxy, positive ROC, and RSI(14)>30 represent the documented squeeze release. Linear-regression momentum, exact zero-cross state, optional 1.2% target, and short entries are unsupported."
+    },
+    {
+      "id": 3264,
+      "name": "Reverse Day Fractal",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,3) and close > open",
+      "exit_long": "close < open or high > donchian_high_prev(high,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A new three-bar low followed by a bullish close is the long failed-breakout reversal proxy; a bearish close or prior-high break exits. Exact three-candle state, point stops, target, and trailing are unavailable."
+    },
+    {
+      "id": 2678,
+      "name": "MT45",
+      "family": "momentum",
+      "entry_long": "roc(open,1) > 0",
+      "exit_long": "roc(open,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source alternates direction on every completed bar; positive one-bar open ROC is a state-free long-side proxy and the inverse exits. Alternation history, martingale sizing, and fixed point stop/target cannot be represented."
+    },
+    {
+      "id": 2922,
+      "name": "CloseProfit V2",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CloseProfit V2 is explicitly a portfolio PnL protection utility that never opens positions. An impossible negative-price guard avoids inventing a signal; currency thresholds and multi-symbol liquidation are unsupported."
+    },
+    {
+      "id": 718,
+      "name": "Dynamic Ticks Oscillator Model (DTOM)",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,5) < -1.6 * std(roc(close,5),24)",
+      "exit_long": "roc(close,5) > 1.4 * std(roc(close,5),24)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(close,5) is a current-price proxy for the unavailable NYSE Down Ticks index, and its 24-bar standard deviation supplies the documented dynamic thresholds. Stops, the source index, and session details are omitted."
+    }
+  ]
+}

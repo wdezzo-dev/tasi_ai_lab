@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 340,
+      "name": "Ichimoku Implied Volatility",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma((high+low)/2,9)) and sma((high+low)/2,9) > sma((high+low)/2,26) and close > sma(close,52)",
+      "exit_long": "crossbelow(close, sma((high+low)/2,9)) or sma((high+low)/2,9) < sma((high+low)/2,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs defer entry conditions to the implementation, so the Ichimoku structure is rebuilt from the documented periods: Tenkan 9 and Kijun 26 as mid-point SMAs, SenkouSpanB 52 as the cloud reference, and IVPeriod 20 implied-volatility context is not expressible as a gate. The ATR-multiple and Tenkan/Kijun-derived stops have no fixed percentage values, so both percentage fields are null."
+    },
+    {
+      "id": 2400,
+      "name": "DVD Level",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,2), ema(close,24))",
+      "exit_long": "crossabove(ema(close,2), ema(close,24))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RAVI is (EMA2-EMA24)/EMA24*100, so a RAVI cross below zero is exactly the documented EMA(2)/EMA(24) downward cross that buys, and the upward cross is the sell/reversal case used here as the long exit. Order volume and the StartProtection distances are not documented, so no percentage stop or target is set, and the 1-hour CandleType is not selectable."
+    },
+    {
+      "id": 1601,
+      "name": "Consecutive Close High1 Mean Reversion",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) and bars_since(close <= donchian_high_prev(high,1)) >= 4",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry counts Threshold 3 consecutive closes above the prior-bar high, expressed as the close above that high with bars_since of the complementary test >= 4, and the exit is the documented close below the prior low. The source trades that exhaustion short with an EmaPeriod 200 downtrend filter, so the long roster uses the same count as its long-side break signal and the 200 EMA filter is omitted; no stops are documented."
+    },
+    {
+      "id": 4197,
+      "name": "OsMaMaster",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,9,26) - macd_signal(close,9,26,5), 0)",
+      "exit_long": "crossbelow(macd(close,9,26) - macd_signal(close,9,26,5), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented MACD parameters are used (fast 9, slow 26, signal 5) and the OsMA turning point is approximated by the histogram crossing zero, which is the documented momentum-reversal event. The four Shift parameters select which histogram values are compared and cannot be reproduced without bar shifting, and the 50/50 pip stop and target are pip offsets rather than percentages."
+    },
+    {
+      "id": 3434,
+      "name": "AH HM RSI",
+      "family": "trend",
+      "entry_long": "close > open and open - low > 2 * (close - open) and rsi(close,33) < 40",
+      "exit_long": "crossbelow(rsi(close,33),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A hammer is approximated by a bullish body whose lower shadow (open minus low) exceeds twice the body, and the documented HammerRsiThreshold 40 with RsiPeriod 33 confirms it; the MaPeriod 2 trend filter is implicit in the bullish body requirement. The exit uses the documented UpperExitLevel 70 downward cross, while the hanging-man short, HangingManRsiThreshold 60, LowerExitLevel 30 and the reverse-on-signal sizing are not part of a long-only roster."
+    },
+    {
+      "id": 2535,
+      "name": "Backbone",
+      "family": "momentum",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only market-derived element is the break beyond the running extreme that defines the first traded cycle, approximated by a close above the prior 20-bar high with 20 an explicit fallback for the trailing-stop-scaled distance. Cycle flipping, MaxRisk/MaxTrades scaling and the 170 pip target, 40 pip stop and 300 pip trailing measured from the cycle VWAP are not expressible in the DSL."
+    },
+    {
+      "id": 2488,
+      "name": "Big Bar Sound",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is explicitly informational: it only logs (and would play a sound for) candles whose range exceeds BarPoint 200, submitting no orders, so the never-true negative-price guard is used instead of a fabricated signal. DifferenceMode, SoundFile and ShowAlert are notification settings."
+    },
+    {
+      "id": 2199,
+      "name": "RSI Histogram",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),60)",
+      "exit_long": "crossabove(rsi(close,14),40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used: RSI period 14 with High level 60 and Low level 40, where crossbelow encodes the 'previous bar above the high level, last bar moved below it' long entry and crossabove is the mirror exit for the oversold side. The short entry is the mirror of the same rule, the 4-hour timeframe is not selectable, and no built-in stops exist, so the percentage fields are null."
+    },
+    {
+      "id": 2418,
+      "name": "VR Setka 3",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are pending limit orders placed at fixed price offsets around the current quote (Start Offset, then Grid Distance plus Step Distance per level) with optional martingale sizing, so no market-derived directional signal exists and the never-true guard is used. Recalculating the take-profit from the average entry price and resetting the grid are order-book state features."
+    },
+    {
+      "id": 1619,
+      "name": "FT CCI",
+      "family": "volume",
+      "entry_long": "crossabove(zscore((high+low+close)/3,14), -1)",
+      "exit_long": "crossbelow(zscore((high+low+close)/3,14), 1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is not in the DSL, so it is approximated by the z-score of typical price over the documented CCI Period 14 and the upper/lower thresholds are taken as the conventional +/-100 CCI levels, i.e. +/-1 z; an upward cross out of the lower band is the long entry and the mirror cross is the exit. The pip-based Stop Loss and Take Profit (0 disables each) and the 30-minute CandleType are not expressible."
+    }
+  ]
+}

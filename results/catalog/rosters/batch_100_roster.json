@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1289,
+      "name": "Scalping 15m EMA MACD RSI ATR",
+      "family": "trend",
+      "entry_long": "close > ema(close,50) and macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) >= 50 and rsi(close,14) < 70",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(50), MACD 12/26/9, and RSI 50-70 retain the documented long setup. The inverse momentum/RSI condition is an exit proxy; 1x/2x ATR protections are dynamic price distances."
+    },
+    {
+      "id": 430,
+      "name": "MACD + Bollinger Bands + RSI",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > 0 and close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "macd(close,12,26) < 0 and close > bb_upper(close,20,2) and rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD 12/26, Bollinger(20,2), and RSI(14) thresholds are exact for the long pullback and mirror exit. The documented signal length is unused by the stated entry, and no stops are specified."
+    },
+    {
+      "id": 2393,
+      "name": "Pivot Heiken",
+      "family": "trend",
+      "entry_long": "close > open and close > sma(close,20)",
+      "exit_long": "close < open and close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Regular bullish/bearish candles and SMA(20) are explicit fallbacks for Heikin-Ashi direction and the previous daily pivot. Pip stop, target, and trailing levels are not percentage fields."
+    },
+    {
+      "id": 723,
+      "name": "Economic Policy Uncertainty",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,2),sma(close,20))",
+      "exit_long": "crossbelow(sma(close,2),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A price-trend SMA cross is a single-security fallback because the external EPU index and its fixed threshold 187 are unavailable. The documented SMA length 2 is retained; the 10-bar holding timer is unsupported."
+    },
+    {
+      "id": 1915,
+      "name": "Kolier SuperTrend",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10))",
+      "exit_long": "crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10) is an explicit proxy for the unavailable ATR-based SuperTrend and retains its period. The multiplier-three band state, four-hour context, and short side are omitted."
+    },
+    {
+      "id": 3637,
+      "name": "BBStrategy",
+      "family": "breakout",
+      "entry_long": "bars_since(close > bb_upper(close,20,2)) < 3 and close <= bb_upper(close,20,1) and close > bb_mid(close,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Period 20 with inner/outer deviations 1/2 are explicit fallbacks; a recent two-SD pierce followed by return inside the one-SD band retains the delayed-entry logic. Point protection is unsupported."
+    },
+    {
+      "id": 3896,
+      "name": "Twenty200 Time Breakout",
+      "family": "breakout",
+      "entry_long": "roc(open,4) > 0.1",
+      "exit_long": "roc(open,4) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Four-bar open ROC approximates the far/near six-versus-two-bar comparison, and 0.1% is an explicit delta fallback. Trade-hour scheduling, pip thresholds, 504-hour exit, and auto sizing are unavailable."
+    },
+    {
+      "id": 2493,
+      "name": "Altarius RSI Stochastic",
+      "family": "momentum",
+      "entry_long": "rsi(close,3) < 30 and crossabove(rsi(close,3),ema(rsi(close,3),9))",
+      "exit_long": "rsi(close,3) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(3) versus EMA(9) is a fallback for the two stochastic pipelines, with oversold 30 and documented long-exit RSI 60. Stochastic differences, adaptive sizing, and drawdown exits are unsupported."
+    },
+    {
+      "id": 2587,
+      "name": "List Positions",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is explicitly a monitoring-only position logger, so an impossible negative-price guard avoids inventing trades. Portfolio snapshots, filters, and timers are unsupported."
+    },
+    {
+      "id": 2439,
+      "name": "The MasterMind",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,100) < 3",
+      "exit_long": "rsi(close,100) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(100) is a fallback for stochastic %D and Williams %R, retaining the extreme long threshold 3. Point-based stop, target, trailing, and break-even settings are not percentage fields."
+    }
+  ]
+}

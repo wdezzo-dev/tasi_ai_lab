@@ -1,0 +1,98 @@
+{
+ "batch_067": {
+  "strategy_ids": [
+   3786,
+   3554,
+   113,
+   1372,
+   1734,
+   2814,
+   1110,
+   1880,
+   2672,
+   2363
+  ],
+  "docs": {
+   "3786": {
+    "id": 3786,
+    "name": "Martingail Expert",
+    "family": "trend",
+    "overview": "Martingail Expert is a trend-following martingale strategy that relies on the Stochastic Oscillator to time new sequences of trades. Once the indicator generates a direction, the strategy starts a ladder of market orders and manages the exposure using a dynamic profit target and a geometric position sizing scheme.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Volume` | Base market order volume used for the first trade and every favorable add-on. |\n| `Multiplier` | Factor applied to the last executed volume when averaging during adverse moves. |\n| `StepPoints` | Distance in points that triggers a martingale averaging order. |\n| `ProfitFactor` | Profit target per open order expressed in points. The actual distance is `ProfitFactor × number_of_orders`. |\n| `KPeriod` | Lookback length for the %K line. |\n| `DPeriod` | Smoothing length for the %D line. |\n| `Slowing` | Additional smoothing applied to %K before comparing with %D. |\n| `BuyLevel` | Minimum %D value required to allow a new long sequence. |\n| `SellLevel` | Maximum %D value required to allow a new short sequence. |\n| `CandleType` | Candle series used for calculations (default: 5-minute timeframe). |"
+   },
+   "3554": {
+    "id": 3554,
+    "name": "iVIDyA Simple",
+    "family": "trend",
+    "overview": "This strategy is a high-level StockSharp port of the MetaTrader expert **\"iVIDyA Simple\"**. It trades a single symbol by tracking a Variable Index Dynamic Average (VIDYA) that adapts to market momentum via the Chande Momentum Oscillator (CMO). Whenever the most recent finished candle crosses the shifted VIDYA line, the strategy opens a market position in the direction of the breakout and optionally attaches protective stop-loss and take-profit orders.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `Volume` | `1` | Base trading volume used for orders. Existing exposure is netted automatically when reversing positions. |\n| `StopLossPoints` | `150` | Stop-loss distance in price steps. Set to `0` to disable. |\n| `TakeProfitPoints` | `460` | Take-profit distance in price steps. Set to `0` to disable. |\n| `CmoPeriod` | `15` | Length of the Chande Momentum Oscillator that determines the adaptive VIDYA weight. |\n| `EmaPeriod` | `12` | EMA length that defines the base smoothing coefficient in the VIDYA formula. |\n| `MaShift` | `1` | Number of completed candles used to shift the VIDYA line forward, matching the `ma_shift` input of the MetaTrader indicator. |\n| `AppliedPrice` | `Close` | Price source passed to the VIDYA calculation (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). |\n| `CandleType` | `TimeSpan.FromMinutes(5)` | Candle type and timeframe used for all calculations and signals. |"
+   },
+   "113": {
+    "id": 113,
+    "name": "Bullish Abandoned Baby",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 76%. It performs best in the forex market.\n\nThe strategy buys at the open of the third candle once it gaps above the doji, anticipating strong follow-through as shorts cover.\n\nStops reside just beneath the doji low, ensuring losses remain small if the reversal fails to hold.\n\n## Details\n\n- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1372": {
+    "id": 1372,
+    "name": "Supertrend And MACD",
+    "family": "trend",
+    "overview": "Strategy combining Supertrend, MACD, and EMA 200 filter.\n\n## Details\n\n- **Entry Criteria**: Price above or below Supertrend and EMA, MACD line vs signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crossover or stop based on recent extremes.\n- **Stops**: Highest/Lowest trailing stops.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Factor` = 3\n  - `EmaPeriod` = 200\n  - `StopLookback` = 10\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SuperTrend, EMA, MACD, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price above or below Supertrend and EMA, MACD line vs signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crossover or stop based on recent extremes.\n- **Stops**: Highest/Lowest trailing stops.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Factor` = 3\n  - `EmaPeriod` = 200\n  - `StopLookback` = 10\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SuperTrend, EMA, MACD, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1734": {
+    "id": 1734,
+    "name": "MACD Cross AUDUSD D1",
+    "family": "trend",
+    "overview": "Strategy trades AUDUSD on the daily timeframe using MACD line crossovers.\n\nThe strategy opens a long position when the MACD main line crosses above the signal line and a short position when it crosses below. Trading is allowed only between 06:00 and 14:00 server time, and only one position can be open at a time. Each trade sets a stop loss of 40 pips and a take profit three times larger by default.\n\n## Details\n\n- **Entry Criteria**: MACD main line crossing the signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Volume` = 0.1\n  - `StopLossPips` = 40\n  - `RewardRatio` = 3\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD main line crossing the signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Volume` = 0.1\n  - `StopLossPips` = 40\n  - `RewardRatio` = 3\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2814": {
+    "id": 2814,
+    "name": "Maximus vX Lite",
+    "family": "breakout",
+    "overview": "Conversion of the \"maximus_vX lite\" MetaTrader 5 expert advisor to the StockSharp high-level API.\nThe strategy searches for consolidation zones above and below the current price and waits for price to move a configurable\nnumber of points away from those zones before entering. Position size is determined from an optional risk-percentage budget,\nand floating profit can trigger a forced liquidation of all open exposure.\n\n## Strategy Logic\n\n1. **Historical scan** – on every finished candle the strategy keeps up to `HistoryDepth` candles and uses a sliding\n   `RangeLookback` window to detect compact highs and lows that build consolidation areas.\n2. **Upper channel** – when a valid upper block is detected the channel is anchored around the current close with a\n   width of `RangePoints`. If no historical block qualifies, the channel falls back to the same width snapped to the\n   current price.\n3. **Lower channel** – the lower block is either taken directly from historical highs/lows that satisfy the range\n   conditions or, if none exist, from a synthetic level around the current close minus `RangePoints`.\n4. **Long entries** – two long setups are allowed:\n   - Break above the lower consolidation: price must exceed `_lowerMax` by `DistancePoints` and the upper channel must be\n     available. The take profit uses two thirds of the distance between `_lowerMax` and `_upperMin`, with a minimum equal to\n     `RangePoints`.\n   - Break above the upper channel: price must exceed `_upperMax` by `DistancePoints`. The take profit is set to\n     `2 * RangePoints`.\n5. **Short entries** – symmetric logic fires when price drops below `_upperMin` or `_lowerMin` by `DistancePoints`.\n   The primary short setup also uses the dynamic two-thirds target while the secondary one uses `2 * RangePoints`.\n6. **Stops and exits** – `StopLossPoints` define a fixed protective stop when greater than zero. `MinProfitPercent` monitors\n   floating equity versus last flat balance and closes all positions once",
+    "details": "- **Long/Short**: Both directions\n- **Exit Criteria**: Fixed stop or take profit, equity lock via `MinProfitPercent`\n- **Stops**: Optional fixed stop from `StopLossPoints`\n- **Indicators**: None (pure price action with sliding-window analysis)\n- **Timeframe**: Configurable via `CandleType` (default 15 minutes)\n- **Complexity**: Intermediate (combines history scanning, dynamic targets, and risk sizing)\n- **Risk Level**: High when risk percentage is used due to breakout nature",
+    "parameters": "- `DelayOpen` (default `2`) – number of timeframe bars during which adding to the same side is allowed.\n- `DistancePoints` (default `850`) – minimum distance from a consolidation border before entering.\n- `RangePoints` (default `500`) – width of the consolidation boxes.\n- `HistoryDepth` (default `1000`) – number of candles kept in memory for historical scans.\n- `RangeLookback` (default `40`) – window length used to compute local maxima and minima.\n- `CandleType` (default `TimeSpan.FromMinutes(15).TimeFrame()`) – timeframe used for calculations.\n- `RiskPercent` (default `5m`) – percent of portfolio value risked per trade. Set to zero to use fixed volume.\n- `StopLossPoints` (default `1000`) – protective stop distance; zero disables the stop.\n- `MinProfitPercent` (default `1m`) – floating profit percentage that forces all positions to close."
+   },
+   "1110": {
+    "id": 1110,
+    "name": "Narrow Range",
+    "family": "breakout",
+    "overview": "This strategy trades breakouts after an inside bar where the latest candle range is narrower than a reference bar `Length` periods ago. Stop orders are placed at the reference high and low with a take profit equal to the reference range and a stop loss set as a percentage of that range.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price breaks above the reference high after a narrow range bar\n  - Short: price breaks below the reference low after a narrow range bar\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Take profit at reference range\n  - Stop loss at percentage of range\n- **Stops**: Yes\n- **Default Values**:\n  - `Length` = 4\n  - `StopLossPercent` = 0.35m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price breaks above the reference high after a narrow range bar\n  - Short: price breaks below the reference low after a narrow range bar\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Take profit at reference range\n  - Stop loss at percentage of range\n- **Stops**: Yes\n- **Default Values**:\n  - `Length` = 4\n  - `StopLossPercent` = 0.35m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1880": {
+    "id": 1880,
+    "name": "Genie Pivot",
+    "family": "momentum",
+    "overview": "This strategy implements the **Genie Pivot** reversal scalping idea originally written in MQL4. It waits for a pivot pattern formed by seven consecutive candles and manages the open position with a fixed take profit and trailing stop.\n\n## Strategy Logic\n\n1. **Pattern detection** – a long signal appears when seven previous lows are strictly decreasing and the last completed candle makes a higher low with a close above the prior high. A short signal is generated by the mirrored condition on highs.\n2. **Order execution** – once a signal is confirmed the strategy opens a market order with the volume calculated from account equity and the configured risk parameters.\n3. **Trade management** – after entry a take-profit and trailing stop are set. The trailing stop activates only once the profit exceeds the trailing distance. If price reverses on the following candle (bearish for long, bullish for short) the position is closed immediately.\n4. **Volume reduction** – consecutive losing trades reduce the traded volume according to the `Decrease Factor` parameter.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `TakeProfit` | Profit target in price steps from the entry price. |\n| `TrailingStop` | Trailing stop distance in price steps. |\n| `MaximumRisk` | Fraction of account value used to size the position. |\n| `DecreaseFactor` | Reduces volume after consecutive losses. |\n| `BaseVolume` | Fallback volume when portfolio value is unknown. |\n| `CandleType` | Timeframe of candles to analyze. |\n\n## Notes\n\nThe strategy processes only finished candles. Implementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `TakeProfit` | Profit target in price steps from the entry price. |\n| `TrailingStop` | Trailing stop distance in price steps. |\n| `MaximumRisk` | Fraction of account value used to size the position. |\n| `DecreaseFactor` | Reduces volume after consecutive losses. |\n| `BaseVolume` | Fallback volume when portfolio value is unknown. |\n| `CandleType` | Timeframe of candles to analyze. |"
+   },
+   "2672": {
+    "id": 2672,
+    "name": "Open Two Pending Orders",
+    "family": "volatility",
+    "overview": "This strategy replicates the MetaTrader expert advisor that simultaneously places a buy stop and a sell stop order around the current spread. It works on a single security and uses high-level StockSharp API calls to subscribe to the order book, manage pending orders, and handle portfolio risk controls. As soon as one pending order is filled, the opposite order is cancelled and the active position is managed with stop-loss, take-profit, and trailing-stop rules.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `UseMoneyManagement` | Enables risk-based position sizing. Default: `true`. |\n| `RiskPercent` | Percentage of portfolio equity to risk per trade when money management is active. Default: `2`. |\n| `FixedVolume` | Lot size used when money management is disabled. Default: `1`. |\n| `StopLossPoints` | Stop-loss distance in price steps from the entry price. Default: `100`. |\n| `TakeProfitPoints` | Take-profit distance in price steps from the entry price. Default: `300`. |\n| `TrailingStopPoints` | Trailing stop distance in price steps. A value of `0` disables trailing. Default: `50`. |\n| `EntryOffsetPoints` | Distance in price steps used to place the pending orders away from the spread. Default: `50`. |\n| `SlippagePoints` | Extra cushion in price steps reserved for slippage. Currently informational and not used directly. Default: `5`. |"
+   },
+   "2363": {
+    "id": 2363,
+    "name": "Rock Trader Neuro",
+    "family": "mean_reversion",
+    "overview": "Strategy that trades using Bollinger Bands and a simple neuron.\nThe last seven Bollinger Band widths are normalized to the range [-1,1] and\ncombined with fixed weights. The weighted sum is passed through a hyperbolic\ntangent activation. A negative output opens a long position, while a positive\noutput opens a short position. Positions are closed by stop loss or take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: neuron output < 0\n  - Short: neuron output > 0\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit reached\n- **Stops**: Absolute price distance\n- **Default Values**:\n  - `StopLoss` = 30\n  - `TakeProfit` = 100\n  - `Lot` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Neural\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: neuron output < 0\n  - Short: neuron output > 0\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit reached\n- **Stops**: Absolute price distance\n- **Default Values**:\n  - `StopLoss` = 30\n  - `TakeProfit` = 100\n  - `Lot` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Neural\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

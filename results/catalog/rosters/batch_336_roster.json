@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3942,
+      "name": "Full Damp",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,1,2)",
+      "exit_long": "close > bb_mid(close,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 1 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 3050,
+      "name": "Engulfing Momentum",
+      "family": "trend",
+      "entry_long": "crossabove((macd(close,12,26) - macd_signal(close,12,26,9)), atr(high,low,close,14))",
+      "exit_long": "crossbelow((macd(close,12,26) - macd_signal(close,12,26,9)), -atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 889,
+      "name": "Honest Volatility Grid",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3173,
+      "name": "Spreader",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3359,
+      "name": "VR Smart Grid Lite Averaging",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3753,
+      "name": "Dealers Trade MACD MQL4",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,14,26),macd_signal(close,14,26,1))",
+      "exit_long": "crossbelow(macd(close,14,26),macd_signal(close,14,26,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3690,
+      "name": "Close Agent",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 1104,
+      "name": "Multi-Timeframe Trend Following with 200 EMA Filter - Longs Only",
+      "family": "trend",
+      "entry_long": "close > ema(close,21)",
+      "exit_long": "close < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 9/21; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 530,
+      "name": "ATR Based Trendlines",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,30))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 30-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1909,
+      "name": "SmartAssTrade V2",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    }
+  ]
+}

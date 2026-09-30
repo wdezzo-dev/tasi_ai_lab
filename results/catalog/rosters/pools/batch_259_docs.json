@@ -1,0 +1,98 @@
+{
+ "batch_259": {
+  "strategy_ids": [
+   727,
+   1062,
+   900,
+   2894,
+   1722,
+   964,
+   1065,
+   2185,
+   194,
+   21
+  ],
+  "docs": {
+   "727": {
+    "id": 727,
+    "name": "Elliott Wave Supertrend Exit",
+    "family": "trend",
+    "overview": "Strategy that enters on ZigZag-like reversals and exits on Supertrend direction changes with a fixed percentage stop-loss.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price forms a local low\n  - Short: price forms a local high\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Supertrend direction flip or stop-loss level\n- **Stops**: Fixed percentage from entry price\n- **Default Values**:\n  - `WaveLength` = 4\n  - `SupertrendLength` = 10\n  - `SupertrendMultiplier` = 3\n  - `StopLossPercent` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price forms a local low\n  - Short: price forms a local high\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Supertrend direction flip or stop-loss level\n- **Stops**: Fixed percentage from entry price\n- **Default Values**:\n  - `WaveLength` = 4\n  - `SupertrendLength` = 10\n  - `SupertrendMultiplier` = 3\n  - `StopLossPercent` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1062": {
+    "id": 1062,
+    "name": "Molly ETF EMA Crossover",
+    "family": "trend",
+    "overview": "The strategy enters a long position when the fast EMA crosses above the slow EMA and exits when the fast EMA crosses below. It includes optional parameters to restrict trading to a specific date range.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA within the date range.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fast EMA crosses below slow EMA or the date range ends.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast EMA` = 10\n  - `Slow EMA` = 21\n  - `Start Date` = 2018-01-01\n  - `End Date` = 2023-09-07\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA within the date range.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fast EMA crosses below slow EMA or the date range ends.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast EMA` = 10\n  - `Slow EMA` = 21\n  - `Start Date` = 2018-01-01\n  - `End Date` = 2023-09-07\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "900": {
+    "id": 900,
+    "name": "Hull Suite No SL/TP",
+    "family": "trend",
+    "overview": "Hull Suite No SL/TP is a trend-following strategy based on Hull Moving Average variations. It flips position when the hull line changes direction compared to two candles ago.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Hull value is greater than two candles ago.\n  - **Short**: Hull value is less than two candles ago.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 55\n  - `Mode` = `Hma`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Hull Moving Average\n  - Complexity: Low\n  - Risk level: Low\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Hull value is greater than two candles ago.\n  - **Short**: Hull value is less than two candles ago.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 55\n  - `Mode` = `Hma`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Hull Moving Average\n  - Complexity: Low\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2894": {
+    "id": 2894,
+    "name": "Color X Derivative",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert \"Exp_ColorXDerivative\". It works on a configurable candle timeframe (12-hour candles by default) and analyses the ColorXDerivative momentum histogram. The indicator measures how fast the chosen price source changes over a fixed shift, smooths the result with a moving average, and then classifies each bar into one of five colour states. Trades follow the same logic as in the original EA: the robot buys when bullish momentum accelerates or a bearish move starts to contract, and it sells when bearish pressure increases or a bullish leg loses strength.",
+    "details": "",
+    "parameters": "- `OrderVolume` – market order size.\n- `CandleType` – timeframe for the indicator calculations (default 12-hour time frame).\n- `DerivativePeriod` – distance in bars used for the derivative shift.\n- `AppliedPrice` – price source passed into the derivative (close, median, weighted, Demark, etc.).\n- `SmoothingMethod` – smoothing filter applied to the derivative. Supported values: SMA, EMA, SMMA, LWMA, Jurik.\n- `SmoothingLength` – period of the smoothing filter.\n- `SignalShift` – how many finished bars back to read the colour values (1 = most recent closed bar).\n- `StopLossTicks` / `TakeProfitTicks` – optional protective distances in security steps.\n- `EnableLongEntry`, `EnableShortEntry`, `EnableLongExit`, `EnableShortExit` – toggles matching the original EA inputs."
+   },
+   "1722": {
+    "id": 1722,
+    "name": "AMkA Signal",
+    "family": "trend",
+    "overview": "This strategy uses the Kaufman Adaptive Moving Average (KAMA) derivative combined with a volatility filter based on standard deviation. A long position is opened when the rate of change of KAMA rises above a dynamic threshold; a short position is opened when it falls below the negative threshold. The threshold is calculated by multiplying the standard deviation of KAMA changes by a user-defined factor.",
+    "details": "",
+    "parameters": "- **KAMA Length** – lookback period for the KAMA indicator.\n- **Fast Period** – fast EMA period used in KAMA smoothing.\n- **Slow Period** – slow EMA period used in KAMA smoothing.\n- **Deviation Multiplier** – multiplier applied to the standard deviation to form the signal threshold.\n- **Take Profit** – percentage for automatic profit fixing.\n- **Stop Loss** – percentage for protective stop.\n- **Candle Type** – timeframe of candles used for calculations."
+   },
+   "964": {
+    "id": 964,
+    "name": "LANZ Strategy 5.0",
+    "family": "trend",
+    "overview": "The LANZ Strategy 5.0 trades in the direction of a 200-period EMA and requires three consecutive candles of the same color. It limits trades by daily count, New York time window, and minimum distance between entries.\n\n## Details\n\n- **Entry Criteria**:\n  - Price above EMA and three bullish candles for long entries.\n  - Price below EMA and three bearish candles for short entries (optional).\n- **Long/Short**: Long by default.\n- **Exit Criteria**:\n  - Fixed stop loss or take profit.\n  - Manual close at configured time.\n- **Stops**:\n  - Stop loss = 40 pips.\n  - Take profit = 120 pips.\n- **Default Values**:\n  - `EmaPeriod` = 200\n  - `MaxTrades` = 99\n  - `MinDistancePips` = 25\n  - `StopLossPips` = 40\n  - `TakeProfitPips` = 120\n  - `StartHour` = 19\n  - `EndHour` = 15\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price above EMA and three bullish candles for long entries.\n  - Price below EMA and three bearish candles for short entries (optional).\n- **Long/Short**: Long by default.\n- **Exit Criteria**:\n  - Fixed stop loss or take profit.\n  - Manual close at configured time.\n- **Stops**:\n  - Stop loss = 40 pips.\n  - Take profit = 120 pips.\n- **Default Values**:\n  - `EmaPeriod` = 200\n  - `MaxTrades` = 99\n  - `MinDistancePips` = 25\n  - `StopLossPips` = 40\n  - `TakeProfitPips` = 120\n  - `StartHour` = 19\n  - `EndHour` = 15\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1065": {
+    "id": 1065,
+    "name": "Momentum Long + Short",
+    "family": "trend",
+    "overview": "This momentum strategy trades both long and short positions on a 3-hour timeframe. Long setups require price to stay above the 100 and 500 period moving averages and can be filtered by RSI, ADX, ATR and trend alignment. Short entries look for price breaking below the lower Bollinger Band while remaining under both averages, with optional ATR confirmation and the ability to block shorts during strong uptrends.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price above MA100 and MA500, trend alignment optional, RSI above its smoothed value, ADX above its smoothed value and ATR above its smoothed value.\n  - **Short**: price below MA100 and MA500, below lower Bollinger Band, RSI below threshold, ATR above its smoothed value and optional uptrend block.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: stop-loss at `slPercentLong`% below entry; closes early if price drops under MA500.\n  - **Short**: stop-loss and take-profit based on percentages `slPercentShort` and `tpPercentShort`.\n- **Stops**: Yes.\n- **Default Values**:\n  - `slPercentLong = 3`\n  - `slPercentShort = 3`\n  - `tpPercentShort = 4`\n  - `rsiLengthLong = 14`\n  - `rsiLengthShort = 14`\n  - `adxLength = 14`\n  - `atrLength = 14`\n  - `bbLength = 20`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price above MA100 and MA500, trend alignment optional, RSI above its smoothed value, ADX above its smoothed value and ATR above its smoothed value.\n  - **Short**: price below MA100 and MA500, below lower Bollinger Band, RSI below threshold, ATR above its smoothed value and optional uptrend block.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: stop-loss at `slPercentLong`% below entry; closes early if price drops under MA500.\n  - **Short**: stop-loss and take-profit based on percentages `slPercentShort` and `tpPercentShort`.\n- **Stops**: Yes.\n- **Default Values**:\n  - `slPercentLong = 3`\n  - `slPercentShort = 3`\n  - `tpPercentShort = 4`\n  - `rsiLengthLong = 14`\n  - `rsiLengthShort = 14`\n  - `adxLength = 14`\n  - `atrLength = 14`\n  - `bbLength = 20`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "2185": {
+    "id": 2185,
+    "name": "Simple Multiple Time Frame Moving Average",
+    "family": "trend",
+    "overview": "This strategy replicates the logic of `simple_multiple_time_frame_moving_average.mq4`. It aligns trends across two time frames by using simple moving averages.\n\n## Strategy Logic\n- Calculate SMA with period `Length` on 1-hour and 4-hour candles.\n- Enter long when both SMAs are rising.\n- Enter short when both SMAs are falling.\n- Close a long position when either SMA turns down.\n- Close a short position when either SMA turns up.\n- Only one position can be active at any time.\n\n## Parameters\n- **MA Length** (`Length`): period used for both moving averages.\n- **Short Time Frame** (`ShortCandleType`): time frame for the first SMA (default 1 hour).\n- **Long Time Frame** (`LongCandleType`): time frame for the second SMA (default 4 hours).\n\nTrade volume is taken from the strategy's `Volume` property.\n\n## Notes\nThis implementation focuses on the hourly and four-hour averages used in the original MQL version and omits unused higher time frame calculations.\n",
+    "details": "",
+    "parameters": "- **MA Length** (`Length`): period used for both moving averages.\n- **Short Time Frame** (`ShortCandleType`): time frame for the first SMA (default 1 hour).\n- **Long Time Frame** (`LongCandleType`): time frame for the second SMA (default 4 hours).\n\nTrade volume is taken from the strategy's `Volume` property."
+   },
+   "194": {
+    "id": 194,
+    "name": "Keltner Macd",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 169%. It performs best in the crypto market.\n\nKeltner Channel breakouts serve as the trigger, and MACD momentum filters the direction. The strategy initiates trades once both signals align.\n\nGood for traders chasing volatility expansions with momentum backing. An ATR-based stop contains risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > UpperBand && MACD > Signal`\n  - Short: `Close < LowerBand && MACD < Signal`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `Multiplier` = 2m\n  - `AtrPeriod` = 14\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > UpperBand && MACD > Signal`\n  - Short: `Close < LowerBand && MACD < Signal`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `Multiplier` = 2m\n  - `AtrPeriod` = 14\n  - `MacdFastPeriod` = 12\n  - `MacdSlowPeriod` = 26\n  - `MacdSignalPeriod` = 9\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "21": {
+    "id": 21,
+    "name": "Bollinger Squeeze",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 100%. It performs best in the forex market.\n\nBollinger Squeeze waits for narrow band width indicating low volatility. A break outside the bands starts a trade in that direction and it exits when momentum fails or an opposite break appears.\n\nThe squeeze condition hints at an upcoming volatility expansion. Once triggered, the trade rides the breakout and relies on an ATR stop or band crossover to exit.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on Bollinger.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2m\n  - `SqueezeThreshold` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on Bollinger.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2m\n  - `SqueezeThreshold` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

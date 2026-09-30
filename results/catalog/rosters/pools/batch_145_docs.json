@@ -1,0 +1,98 @@
+{
+ "batch_145": {
+  "strategy_ids": [
+   340,
+   2400,
+   1601,
+   4197,
+   3434,
+   2535,
+   2488,
+   2199,
+   2418,
+   1619
+  ],
+  "docs": {
+   "340": {
+    "id": 340,
+    "name": "Ichimoku Implied Volatility",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 109%. It performs best in the crypto market.\n\nSignals trigger when its indicators confirms trend changes on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like TenkanPeriod, KijunPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `IVPeriod = 20`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `IVPeriod = 20`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2400": {
+    "id": 2400,
+    "name": "DVD Level",
+    "family": "trend",
+    "overview": "This strategy is a simplified translation of the original \"DVD Level\" MQL5 expert advisor. It employs the Range Action Verification Index (RAVI) to determine market direction. RAVI is calculated using 2- and 24-period exponential moving averages on 1-hour candles.\n\n## Parameters\n- `Volume` – order volume used for trades.\n\n## Logic\n1. Subscribe to 1-hour candles and compute EMA(2) and EMA(24).\n2. Calculate `RAVI = (EMA2 - EMA24) / EMA24 * 100`.\n3. If RAVI crosses below zero, the strategy buys if it is flat or short.\n4. If RAVI crosses above zero, the strategy sells if it is flat or long.\n5. Built-in position protection is activated via `StartProtection()`.\n\nThe approach captures potential reversals when short-term momentum diverges from the longer-term trend.\n",
+    "details": "",
+    "parameters": "- `Volume` – order volume used for trades."
+   },
+   "1601": {
+    "id": 1601,
+    "name": "Consecutive Close High1 Mean Reversion",
+    "family": "trend",
+    "overview": "Short-only strategy that counts consecutive closes above the prior high and sells once the count reaches a threshold. Position exits when price falls below the prior low. Optional 200 EMA filter confirms the downtrend.\n\n## Details\n\n- **Entry Criteria**: consecutive closes above previous high reach threshold\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `Threshold` = 3\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Short\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: consecutive closes above previous high reach threshold\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `Threshold` = 3\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Short\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4197": {
+    "id": 4197,
+    "name": "OsMaMaster",
+    "family": "trend",
+    "overview": "The OsMaMaster strategy reproduces the behaviour of the original **OsMaSter_V0** MetaTrader 4 expert by relying on the MACD histogram (OsMA) to detect momentum reversals. The strategy subscribes to a single candle series and evaluates the most recent OsMA turning point once a candle is closed, which aligns with the repository guideline of working on finished bars only.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Time frame of the candle series used for all calculations. | 1 hour |\n| `FastEmaPeriod` | Fast EMA length inside the MACD indicator. | 9 |\n| `SlowEmaPeriod` | Slow EMA length inside the MACD indicator. | 26 |\n| `SignalPeriod` | Signal EMA length used to build the histogram. | 5 |\n| `AppliedPrice` | MetaTrader `PRICE_*` code defining which candle price feeds the MACD. | 0 (close) |\n| `Shift1` | First OsMA shift (usually the current bar). | 0 |\n| `Shift2` | Second OsMA shift. | 1 |\n| `Shift3` | Third OsMA shift. | 2 |\n| `Shift4` | Fourth OsMA shift. | 3 |\n| `StopLossPips` | Protective stop distance in pips. | 50 |\n| `TakeProfitPips` | Profit target distance in pips. | 50 |"
+   },
+   "3434": {
+    "id": 3434,
+    "name": "AH HM RSI",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert **Expert_AH_HM_RSI**. It looks for hammer or hanging man candlestick patterns and requires a confirming signal from the Relative Strength Index (RSI) before trading. The approach mirrors the original Expert Advisor, including its risk management philosophy of reversing positions when a fresh signal appears.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Order size used for entries. | `1` |\n| `RsiPeriod` | RSI lookback period. | `33` |\n| `MaPeriod` | Moving-average period for the trend filter. | `2` |\n| `HammerRsiThreshold` | Maximum RSI value that allows a hammer long entry. | `40` |\n| `HangingManRsiThreshold` | Minimum RSI value that allows a hanging-man short entry. | `60` |\n| `LowerExitLevel` | RSI boundary used to close shorts after an upward cross. | `30` |\n| `UpperExitLevel` | RSI boundary used to close longs after a downward cross. | `70` |\n| `CandleType` | Timeframe processed by the strategy. | `1 hour` candles |\n\nAll parameters can be optimised via the StockSharp parameter UI."
+   },
+   "2535": {
+    "id": 2535,
+    "name": "Backbone",
+    "family": "momentum",
+    "overview": "This strategy reproduces the core behaviour of the original **Backbone** MQL5 expert advisor using the StockSharp high-level API. It alternates between bullish and bearish trading cycles, scales into positions according to a risk fraction, and protects open trades with fixed targets together with a trailing stop.\n\n## Core Idea\n\n1. **Initial direction detection** – the strategy tracks the highest high and the lowest low after startup. A move larger than the trailing-stop distance away from either extreme defines which side will trade first.\n2. **Directional cycles** – after a cycle starts, the algorithm only trades in that direction until all positions are closed. When the last position exits, it immediately flips and prepares for the opposite cycle.\n3. **Risk-based scaling** – each additional entry uses a dynamic volume derived from the account equity, the `MaxRisk` fraction, the configured limit `MaxTrades`, and the stop-loss distance. This mimics the lot-sizing function from the original EA.\n4. **Protective exits** – every entry recalculates a stop-loss and a take-profit level around the volume-weighted average price of the current cycle. A trailing stop tightens the protective stop whenever the unrealised profit exceeds the configured trailing distance.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `MaxRisk` | 0.5 | Fraction of account equity available for all positions in the current direction. |\n| `MaxTrades` | 10 | Maximum number of sequential entries per directional cycle. |\n| `TakeProfitPips` | 170 | Distance (in pips) between the entry average and the take-profit target. |\n| `StopLossPips` | 40 | Distance (in pips) between the entry average and the protective stop. |\n| `TrailingStopPips` | 300 | Distance (in pips) used both to determine the initial direction and to trail profits. |\n| `CandleType` | 5-minute time frame | Candle type used for signal evaluation. |\n\n> **Pip definition** – the strategy automaticall",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `MaxRisk` | 0.5 | Fraction of account equity available for all positions in the current direction. |\n| `MaxTrades` | 10 | Maximum number of sequential entries per directional cycle. |\n| `TakeProfitPips` | 170 | Distance (in pips) between the entry average and the take-profit target. |\n| `StopLossPips` | 40 | Distance (in pips) between the entry average and the protective stop. |\n| `TrailingStopPips` | 300 | Distance (in pips) used both to determine the initial direction and to trail profits. |\n| `CandleType` | 5-minute time frame | Candle type used for signal evaluation. |\n\n> **Pip definition** – the strategy automatically adjusts the pip size based on the instrument `PriceStep`. Symbols quoted with 3 or 5 decimal places use a 10× multiplier, which replicates the original MetaTrader pip handling."
+   },
+   "2488": {
+    "id": 2488,
+    "name": "Big Bar Sound",
+    "family": "volatility",
+    "overview": "The **Big Bar Sound Strategy** reproduces the behaviour of the MetaTrader expert advisor \"BigBarSound\". The algorithm watches finished candles of a configurable timeframe and reports whenever the candle range is wide enough to be considered a \"big bar\". Instead of playing an audio file it writes detailed log messages, which can be further routed to any notification subsystem supported by StockSharp.\n\nThe strategy is purely informational – it does not submit orders or manage positions. It is designed to be used as an alerting component inside a larger automated or discretionary trading workflow.",
+    "details": "",
+    "parameters": "- **Point Threshold (`BarPoint`)** – number of price steps that must be exceeded before an alert is triggered. The default value of 200 matches the original script. Optimisation boundaries (50–500 with step 50) are provided for convenience.\n- **Difference Mode (`DifferenceMode`)** – selects how the candle size is measured: open/close distance or full high/low range.\n- **Sound File (`SoundFile`)** – name of the WAV file that should be played. The strategy only logs this value to emulate the MetaTrader `PlaySound` call.\n- **Show Alert (`ShowAlert`)** – when enabled the strategy emits an extra log message to mimic the optional `Alert` popup from the MQL version.\n- **Candle Type (`CandleType`)** – candle data type (timeframe) to subscribe to. By default the strategy uses 1-minute candles."
+   },
+   "2199": {
+    "id": 2199,
+    "name": "RSI Histogram",
+    "family": "mean_reversion",
+    "overview": "This strategy uses the Relative Strength Index (RSI) histogram to detect reversals when the oscillator leaves extreme zones. The histogram colors the RSI value based on two thresholds: a high level marking the overbought area and a low level marking the oversold area. When the color changes from green (overbought) to gray or red, the strategy closes short positions and opens a long position. When the color changes from red (oversold) to gray or green, it closes long positions and opens a short position.\n\nThe implementation is built with the high-level StockSharp API and subscribes to candle data of a selected timeframe. An RSI indicator processes the candles and generates signals whenever its value exits the defined zones. Optional parameters allow enabling or disabling entries and exits for each side separately.\n\nThe strategy is meant for educational purposes and demonstrates how to convert an MQL expert advisor to the StockSharp framework.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous bar was above the high level and the last bar moved below it.\n  - **Short**: Previous bar was below the low level and the last bar moved above it.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal closes the current position if allowed.\n- **Stops**: No built-in stops; the `StartProtection` framework is prepared for adding them.\n- **Default Values**:\n  - `RSI period` = 14\n  - `High level` = 60\n  - `Low level` = 40\n  - `Timeframe` = 4 hours\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous bar was above the high level and the last bar moved below it.\n  - **Short**: Previous bar was below the low level and the last bar moved above it.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal closes the current position if allowed.\n- **Stops**: No built-in stops; the `StartProtection` framework is prepared for adding them.\n- **Default Values**:\n  - `RSI period` = 14\n  - `High level` = 60\n  - `Low level` = 40\n  - `Timeframe` = 4 hours\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Single\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "2418": {
+    "id": 2418,
+    "name": "VR Setka 3",
+    "family": "volume",
+    "overview": "The **VR Setka 3 Strategy** implements a grid-based trading approach. The strategy places symmetrical buy and sell limit orders around the current market price. After an order is filled, the take-profit level is recalculated using the average entry price of all positions in the active direction. New grid orders are placed with increasing spacing and, optionally, with increasing volume (martingale).\n\n## Parameters\n- **Start Offset** – initial distance from the current price for the first pair of limit orders.\n- **Take Profit** – distance from the average entry price where all positions are closed for profit.\n- **Grid Distance** – base step between grid levels.\n- **Step Distance** – additional distance added for each subsequent grid level.\n- **Use Martingale** – when enabled, each new grid order increases its volume using the multiplier.\n- **Martingale Multiplier** – factor for volume increase when martingale is active.\n- **Volume** – base order volume for the first level.\n- **Candle Type** – timeframe used to synchronize strategy operations.\n\n## Algorithm\n1. At start, the strategy places a **buy limit** below and a **sell limit** above the current price.\n2. When one side is filled, the opposite order is cancelled.\n3. The strategy recalculates a common take-profit level at the average price ± *Take Profit*.\n4. If the price moves against the position, a new limit order is placed at **Grid Distance + Step Distance × level** from the average price. Volume increases if martingale is enabled.\n5. When price reaches the take-profit level, all positions in that direction are closed and the grid is reset.\n\n## Notes\n- The strategy does not open positions in both directions simultaneously.\n- Proper risk management is required because martingale can quickly increase position size.\n- Works with any instrument supported by StockSharp as long as the chosen candle type is available.\n",
+    "details": "",
+    "parameters": "- **Start Offset** – initial distance from the current price for the first pair of limit orders.\n- **Take Profit** – distance from the average entry price where all positions are closed for profit.\n- **Grid Distance** – base step between grid levels.\n- **Step Distance** – additional distance added for each subsequent grid level.\n- **Use Martingale** – when enabled, each new grid order increases its volume using the multiplier.\n- **Martingale Multiplier** – factor for volume increase when martingale is active.\n- **Volume** – base order volume for the first level.\n- **Candle Type** – timeframe used to synchronize strategy operations."
+   },
+   "1619": {
+    "id": 1619,
+    "name": "FT CCI",
+    "family": "volume",
+    "overview": "- **Core indicator**: Commodity Channel Index with a configurable averaging period (default 14).\n- **Bias**: Symmetric long/short. The strategy always holds at most one net position and reverses on opposite signals.\n- **Execution**: Market orders on the close of finished candles from the selected timeframe.\n- **Risk management**: Optional stop-loss and take-profit distances expressed in pips. If either value is zero the corresponding protection is disabled.\n- **Default timeframe**: 30-minute candles (mirrors the \"Period()\" selection in the original expert).",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| **Candle Type** | Timeframe used for calculations and signal generation. |\n| **Trade Volume** | Lot size for new positions. Used together with the current position value to size reversal trades. |\n| **CCI Period** | Averaging length of the Commodity Channel Index. |\n| **CCI Upper Threshold** | CCI level that triggers short entries. |\n| **CCI Lower Threshold** | CCI level that triggers long entries. |\n| **Stop Loss (pips)** | Distance to the protective stop in pips. Set to 0 to disable. |\n| **Take Profit (pips)** | Distance to the profit target in pips. Set to 0 to disable. |\n\nAll parameters support optimization through StockSharp's parameter manager."
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 251,
+      "name": "MACD Breakout",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > sma(macd(close,12,26), 20) + 2 * std(macd(close,12,26), 20)",
+      "exit_long": "macd(close,12,26) < sma(macd(close,12,26), 20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented band is rebuilt as the MACD line (FastEmaPeriod 12, SlowEmaPeriod 26, SignalPeriod 9 as in the default) versus its SmaPeriod 20 average plus the DeviationMultiplier 2.0 standard deviations, and the exit is the documented reversion to that average. StopLossPercent 2.0 is documented and the short leg and 5-minute timeframe are dropped."
+    },
+    {
+      "id": 170,
+      "name": "Adx Cci",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and zscore(close,20) < -1",
+      "exit_long": "adx(high,low,close,14) < 20 or zscore(close,20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented AdxPeriod 14 / ADX > 25 trend filter is exact while CCI(20) at +/-100 is approximated by a 20-period z-score scaled by 100, so CCI < -100 becomes zscore < -1. The exit follows 'trend weakens or CCI crosses zero', StopLossPercent 2.0 is documented, and ATR-based risk plus the short leg and 5-minute timeframe are dropped."
+    },
+    {
+      "id": 844,
+      "name": "Gold Breakout RR4",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 96) and volume_ratio(volume, 30) > 1 and ema(close, 5) > ema(close, 25)",
+      "exit_long": "close < ema(close, 25)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented DonchianLength 96 breakout, MaVolumeLength 30 average-volume filter and the LwtiLength 25 / LwtiSmooth 5 rising-trend confirmation (approximated by the fast EMA above the slow one) are all kept. The 20:00-08:00 session gate, one-trade-per-day rule and the fixed 4:1 RiskReward exit cannot be expressed, so a trend loss exits and no percent protection is set."
+    },
+    {
+      "id": 3258,
+      "name": "Standard Deviation Channel",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) + 2 * std(close, 20) and ema(close,9) > ema(close,21) and (roc(close,14) >= 2 or roc(close,14) <= -2) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < sma(close,20) - 2 * std(close, 20) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The LWMA channel is rebuilt as a 20-period average plus/minus two standard deviations and every length (TrendLength 20, DeviationMultiplier 2, Fast/SlowMa 9/21, MomentumPeriod 14, MACD 12/26/9) is an explicit fallback because the table documents no values; the MomentumThreshold deviation from 100 is read as a 2% ROC move. Pips exits, break-even, trailing and MaxPositionUnits are unsupported."
+    },
+    {
+      "id": 2783,
+      "name": "Blau TStoch Indicator",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(ema(roc(close,1),5),8),3), 0)",
+      "exit_long": "crossbelow(ema(ema(ema(roc(close,1),5),8),3), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Blau Triple Stochastic Index is approximated by the documented triple smoothing (5, 8, 3) of price momentum, and the default Twist mode is kept as a slope reversal through zero rather than a Breakdown zero-line break. MomentumLength 20, PriceType Close, SignalBar 1, Phase and the 4-hour timeframe are not reproduced, and TakeProfitPoints 2000 / StopLossPoints 1000 are step distances, not percentages."
+    },
+    {
+      "id": 1089,
+      "name": "Multi Timeframe RSI Buy Sell",
+      "family": "momentum",
+      "entry_long": "rsi(close,14) < 30 and rsi(close,21) < 30 and rsi(close,42) < 30",
+      "exit_long": "rsi(close,14) > 70 or rsi(close,21) > 70 or rsi(close,42) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented BuyThreshold 30 / SellThreshold 70 are applied to all three enabled RSI readings, but the 5/15/30-minute streams cannot exist on a single series, so lengths 14, 21 and 42 approximate the multi-timeframe consensus. The documented CooldownPeriod 5, the short leg and the no-stop rule are not expressible."
+    },
+    {
+      "id": 3437,
+      "name": "Alerting System",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a notification tool: it subscribes to Level1 bid/ask, logs a message when a user-set UpperPrice or LowerPrice level is crossed and explicitly does no trading, so no market-derived long signal exists and the never-true close<0 guard is used. The re-arming flags, the 0-value level disable and journal output are outside the DSL."
+    },
+    {
+      "id": 1874,
+      "name": "Color BB Candles",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, bb_upper(close,100,1))",
+      "exit_long": "close < bb_upper(close,100,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented BollingerPeriod 100 with BollingerDeviation 1.0 and the 'crosses above the upper band from outside' entry is reproduced literally, and the exit is the documented return between the bands. The short branch, the 4-hour timeframe and the no-stop rule are not translated."
+    },
+    {
+      "id": 2653,
+      "name": "Martin Martingale",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system is a hedged basket that alternates long and short averaging orders with doubling volume until a currency ProfitTarget is hit; the trade direction comes from the current basket state and candles are only a decision driver, so there is no single-direction market-derived long signal and the never-true close<0 guard is used. StepPoints, EntryOffsetPoints and volume normalisation need multiple simultaneous positions."
+    },
+    {
+      "id": 3029,
+      "name": "Control Panel",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe a manual trading panel whose volume presets, market buy/sell, close, reverse and break-even actions are invoked by UI code or scripts, so no market-derived entry exists and the never-true close<0 guard avoids fabricating one. BreakEvenSteps, StopLossSteps and TakeProfitSteps are operator-set price steps, not percent fields."
+    }
+  ]
+}

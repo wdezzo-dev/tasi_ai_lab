@@ -1,0 +1,98 @@
+{
+ "batch_082": {
+  "strategy_ids": [
+   2810,
+   2531,
+   1576,
+   2525,
+   4025,
+   2298,
+   2895,
+   567,
+   3507,
+   155
+  ],
+  "docs": {
+   "2810": {
+    "id": 2810,
+    "name": "Crossing of Two iMA v2",
+    "family": "trend",
+    "overview": "This strategy recreates the MetaTrader \"Crossing of two iMA v2\" expert advisor using StockSharp's high-level API. Two shifted moving averages generate crossover signals, optionally filtered by a third moving average. Protective stops, fixed or percentage-based position sizing, and a bar-by-bar trailing stop emulate the behaviour of the original robot while keeping the implementation compliant with StockSharp best practices.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `FirstPeriod` | Period of the first moving average. | 5 |\n| `FirstShift` | Shift (bars) applied to the first moving average output. | 3 |\n| `FirstMethod` | Smoothing method of the first moving average (`Simple`, `Exponential`, `Smoothed`, `Weighted`). | `Smoothed` |\n| `FirstAppliedPrice` | Applied price for the first moving average (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). | `Close` |\n| `SecondPeriod` | Period of the second moving average. | 8 |\n| `SecondShift` | Shift (bars) applied to the second moving average output. | 5 |\n| `SecondMethod` | Smoothing method for the second moving average. | `Smoothed` |\n| `SecondAppliedPrice` | Applied price for the second moving average. | `Close` |\n| `UseFilter` | Enables the third moving average directional filter. | `true` |\n| `ThirdPeriod` | Period of the third moving average filter. | 13 |\n| `ThirdShift` | Shift (bars) applied to the third moving average output. | 8 |\n| `ThirdMethod` | Smoothing method for the third moving average filter. | `Smoothed` |\n| `ThirdAppliedPrice` | Applied price for the third moving average filter. | `Close` |\n| `UseRiskPercent` | Toggle between fixed volume and percentage-based position sizing. | `true` |\n| `FixedVolume` | Trade size when fixed sizing is active. | 0.1 |\n| `RiskPercent` | Fraction of account equity risked per trade. | 5 |\n| `PipValue` | Monetary value of one pip per lot/contract. | 1 |\n| `StopLossPips` | Stop-loss distance in pips. | 50 |\n| `TakeProfitPips` | Take-profit distance in pips. | 50 |\n| `TrailingStopPips` | Trailing stop distance in pips. | 10 |\n| `TrailingStepPips` | Minimum pip increment required to advance the trailing stop. | 4 |\n| `CandleType` | Candle data type / timeframe used by the strategy. | 1-minute candles |"
+   },
+   "2531": {
+    "id": 2531,
+    "name": "E-Skoch-Open Strategy (StockSharp Port)",
+    "family": "trend",
+    "overview": "The **E-Skoch-Open** strategy replicates the original MetaTrader 5 expert advisor that trades a simple three-candle pattern. The StockSharp implementation processes completed candles, evaluates momentum reversals in the recent closes and opens a new position when the required configuration appears. Risk is controlled by stop-loss/take-profit offsets measured in adjusted points (pips) and an equity growth target that can flatten every open position. Position sizing follows a martingale scheme: after a losing trade the next order size is multiplied by 1.6 while profitable trades reset the volume to the initial value.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `CandleType` | Timeframe used for pattern detection. Works with any candles supported by StockSharp. |\n| `InitialOrderVolume` | Base lot size for the first trade in a sequence (default: 0.01). |\n| `StopLossPoints` | Stop-loss distance expressed in adjusted points. For 5-digit or 3-digit instruments the point value is `PriceStep * 10`, otherwise `PriceStep`. |\n| `TakeProfitPoints` | Take-profit distance using the same adjusted point convention. |\n| `EnableBuySignals` / `EnableSellSignals` | Toggle long or short entries. |\n| `MaxBuyTrades` / `MaxSellTrades` | Maximum number of consecutive trades allowed per direction (`-1` removes the limit). The port keeps at most one position per direction by default. |\n| `TargetProfitPercent` | Equity percentage gain that triggers closing all positions (default: 1.2%). |\n| `CloseOnOppositeSignal` | If enabled, a signal in the opposite direction forces a flat position before new trades are considered. |"
+   },
+   "1576": {
+    "id": 1576,
+    "name": "Zero-Lag MA Trend Following",
+    "family": "trend",
+    "overview": "Trend following system that waits for a zero-lag MA to cross an EMA and then enters when price breaks out of an ATR-sized box. Positions include risk-reward based targets.\n\n## Details\n\n- **Entry Criteria**: Zero-lag MA cross and box breakout.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Length` = 34\n  - `AtrPeriod` = 14\n  - `RiskReward` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ZLEMA, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Zero-lag MA cross and box breakout.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based stop or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Length` = 34\n  - `AtrPeriod` = 14\n  - `RiskReward` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ZLEMA, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2525": {
+    "id": 2525,
+    "name": "SilverTrend V3 Strategy (C#)",
+    "family": "trend",
+    "overview": "The SilverTrend V3 strategy is a momentum-following system that originates from the MetaTrader 5 expert advisor \"SilverTrend v3\". The StockSharp port reproduces the original logic while adapting it to the high-level strategy API. The core idea is to detect bullish or bearish momentum using a SilverTrend channel calculation, confirm it with the J_TPO market profile oscillator, and manage the resulting positions with protective stops, trailing logic, and a Friday session filter.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TrailingStopPoints` | 50 | Trailing stop distance measured in price steps. Set to zero to disable trailing. |\n| `TakeProfitPoints` | 50 | Take profit distance in price steps. Zero disables the target. |\n| `InitialStopLossPoints` | 0 | Initial protective stop in price steps. Zero leaves the position without an initial stop. |\n| `FridayCutoffHour` | 16 | Exchange hour after which no new entries are permitted on Friday. Use `0` to allow trading all day. |\n| `CandleType` | 1-hour candles | Data series that feeds the indicators. Any supported timeframe can be used. |\n| `Volume` | 1 lot | Trading size for each position (StockSharp `Volume` property). |\n\nAll distances are multiplied by `PriceStep` during runtime, which automatically adapts the strategy to the security's tick size (including 3/5 digit forex symbols)."
+   },
+   "4025": {
+    "id": 4025,
+    "name": "Day Trading Impulse",
+    "family": "trend",
+    "overview": "The **DayTrading Strategy** is a faithful C# conversion of the classic MetaTrader 4 expert advisor \"DayTrading\" released by NazFunds in 2005. The original robot was designed for 5-minute Forex charts and combines multiple momentum and trend-following indicators to capture short-term directional moves with a modest fixed target and optional trailing stop. This StockSharp implementation reproduces the core decision logic while exposing every important threshold as a strategy parameter so that it can be optimized or adapted to different instruments.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `LotSize` | 1 | Volume of each market order. The `Strategy.Volume` property is synchronized to this value during start-up. |\n| `TrailingStopPoints` | 15 | Trailing distance in points. Set to zero to disable trailing. |\n| `TakeProfitPoints` | 20 | Fixed take-profit distance in points. Set to zero to remove the target. |\n| `StopLossPoints` | 0 | Protective stop distance in points. Zero reproduces the original \"no stop\" behaviour. |\n| `SlippagePoints` | 3 | Maximum execution slippage placeholder (for compatibility with the MT4 input). Not enforced automatically but kept for completeness. |\n| `CandleType` | 5-minute time frame | Candle series used by all indicators. Keep at M5 to match the EA's original recommendation. |\n| `MacdFastPeriod` | 12 | Fast EMA length in the MACD calculation. |\n| `MacdSlowPeriod` | 26 | Slow EMA length in the MACD calculation. |\n| `MacdSignalPeriod` | 9 | Signal EMA length in the MACD calculation. |\n| `StochasticLength` | 5 | %K look-back length for the Stochastic Oscillator. |\n| `StochasticSignal` | 3 | %D smoothing length. |\n| `StochasticSlow` | 3 | Additional slowing applied to the %K line. |\n| `MomentumPeriod` | 14 | Momentum look-back length. |\n| `SarAcceleration` | 0.02 | Initial acceleration factor for Parabolic SAR. |\n| `SarStep` | 0.02 | Increment applied to the acceleration factor after each new extreme. |\n| `SarMaximum` | 0.2 | Maximum acceleration factor for Parabolic SAR. |\n\nAll numeric parameters can be optimized through StockSharp's optimization workflow thanks to the `SetCanOptimize(true)` hints."
+   },
+   "2298": {
+    "id": 2298,
+    "name": "Donchian Channels System",
+    "family": "breakout",
+    "overview": "The **Donchian Channels System** strategy trades breakouts of the Donchian Channel with an optional shift to avoid look-ahead bias.\n\n## How It Works\n- **Long entry**: when the close price crosses above the upper Donchian band calculated `Shift` bars ago.\n- **Short entry**: when the close price crosses below the lower Donchian band calculated `Shift` bars ago.\n- Positions are reversed on opposite breakout.\n\n## Parameters\n- `DonchianPeriod` = 20\n- `Shift` = 2\n- `CandleType` = 4h\n\n## Indicators\n- Donchian Channel\n",
+    "details": "",
+    "parameters": "- `DonchianPeriod` = 20\n- `Shift` = 2\n- `CandleType` = 4h"
+   },
+   "2895": {
+    "id": 2895,
+    "name": "ExFractals",
+    "family": "breakout",
+    "overview": "The ExFractals strategy is a breakout system that combines Williams-style fractal levels with the ExVol average body momentum filter. The algorithm continuously monitors the most recent confirmed fractal highs and lows, averages them in pairs, and opens trades when price closes beyond those averaged levels while the ExVol reading confirms the direction of the move.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Candle Type` | Candle data type/time-frame used by the strategy. | 1 hour time-frame |\n| `ExVol Period` | Number of closed candles used to average the candle body (ExVol). | 15 |\n| `Stop Loss` | Stop-loss distance in pips from the entry price. Set to `0` to disable. | 40 |\n| `Take Profit` | Take-profit distance in pips from the entry price. Set to `0` to disable. | 100 |\n| `Trailing Stop` | Trailing stop distance in pips. Set to `0` to disable trailing. | 30 |\n| `Trailing Step` | Additional price movement (in pips) required before moving the trailing stop. Must be positive when trailing is enabled. | 5 |\n| `Volume` | Default order volume inherited from the base `Strategy` class. | 1 |"
+   },
+   "567": {
+    "id": 567,
+    "name": "BTC Future Gamma-Weighted Momentum Model",
+    "family": "momentum",
+    "overview": "The strategy computes a gamma-weighted average price (GWAP) to capture momentum in BTC futures. Long trades are opened when price stays above the GWAP and the last three closes rise consecutively. Short positions are taken when price is below the GWAP and the last three closes fall consecutively.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close above GWAP and last three closes rising.\n  - **Short**: Close below GWAP and last three closes falling.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 60\n  - `GammaFactor` = 0.75\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: GWAP\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 1m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close above GWAP and last three closes rising.\n  - **Short**: Close below GWAP and last three closes falling.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 60\n  - `GammaFactor` = 0.75\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: GWAP\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: 1m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3507": {
+    "id": 3507,
+    "name": "Sample Detect Economic Calendar",
+    "family": "volatility",
+    "overview": "The **Sample Detect Economic Calendar Strategy** replicates the behaviour of the original MetaTrader expert advisor `SampleDetectEconomicCalendar.mq5`. The strategy watches a manually provided list of economic calendar events, and—when a high impact event is approaching for the configured currency—places a symmetric pair of stop orders around the current bid/ask prices. Protective stops, optional take profit levels, and a trailing exit replicate the money-management logic from the source code.\n\nUnlike the MQL version, the StockSharp port does not have access to the MetaTrader calendar service. Instead, events are supplied by the user through the `CalendarDefinition` parameter.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeNews` | Enables placing pending orders around scheduled news events. |\n| `OrderVolume` | Fixed order volume used when money management is disabled. |\n| `StopLossPoints` | Stop-loss distance in instrument points. Set to 0 to disable. |\n| `TakeProfitPoints` | Take-profit distance in points. Set to 0 to disable. |\n| `TrailingStopPoints` | Trailing stop distance in points. Set to 0 to disable trailing. |\n| `ExpiryMinutes` | Maximum lifetime of pending orders after the release. |\n| `UseMoneyManagement` | If enabled, the volume is calculated from balance risk. |\n| `RiskPercent` | Percentage of portfolio capital risked per trade (used only when money management is active). |\n| `BuyDistancePoints` | Offset above the ask for the buy stop entry. |\n| `SellDistancePoints` | Offset below the bid for the sell stop entry. |\n| `LeadMinutes` | Minutes before release when pending orders are submitted. |\n| `PostMinutes` | Minutes after release before unattended orders are cancelled. |\n| `BaseCurrency` | Currency code that must appear in the calendar entry (default `USD`). |\n| `CalendarDefinition` | Multiline string containing calendar events. |"
+   },
+   "155": {
+    "id": 155,
+    "name": "Vwap Volume",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 52%. It performs best in the crypto market.\n\nThis strategy references VWAP to gauge value and requires volume confirmation before trades. The idea is to join moves backed by strong participation.\n\nIntraday traders focused on volume metrics can employ this method. Losses are trimmed via an ATR-based stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < VWAP && Volume > AvgVolume * VolumeThreshold`\n  - Short: `Close > VWAP && Volume > AvgVolume * VolumeThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price crosses back through VWAP\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `VolumePeriod` = 20\n  - `VolumeThreshold` = 1.5m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < VWAP && Volume > AvgVolume * VolumeThreshold`\n  - Short: `Close > VWAP && Volume > AvgVolume * VolumeThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price crosses back through VWAP\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `VolumePeriod` = 20\n  - `VolumeThreshold` = 1.5m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: VWAP, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

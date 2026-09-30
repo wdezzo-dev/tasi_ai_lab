@@ -1,0 +1,98 @@
+{
+ "batch_127": {
+  "strategy_ids": [
+   1991,
+   979,
+   2854,
+   2652,
+   2350,
+   879,
+   3545,
+   1011,
+   3127,
+   298
+  ],
+  "docs": {
+   "1991": {
+    "id": 1991,
+    "name": "Binario 31",
+    "family": "trend",
+    "overview": "Breakout strategy converted from MetaTrader script **binario_31**. The algorithm builds two 144-period exponential moving averages calculated over the candle high and low prices, creating a dynamic channel. While the current price stays inside the channel the strategy prepares stop entries:\n\n- a buy stop placed above the EMA-high plus a configurable offset;\n- a sell stop placed below the EMA-low minus the same offset.\n\nWhen price breaks through one of these levels a position is opened in the direction of the breakout. A protective stop is placed on the opposite side of the channel and a take profit target is calculated relative to the entry. An optional trailing stop can be enabled to protect profits.\n\n## Parameters\n\n- **EMA Length** – period for both high and low EMAs.\n- **Pip Difference** – distance from the EMA level to the breakout entry in price steps.\n- **Take Profit** – distance from entry to take profit in price steps.\n- **Trailing Stop** – trailing stop distance in price steps. Set to zero to disable.\n- **Volume** – order volume.\n- **Candle Type** – type of candles the strategy subscribes to.\n",
+    "details": "",
+    "parameters": "- **EMA Length** – period for both high and low EMAs.\n- **Pip Difference** – distance from the EMA level to the breakout entry in price steps.\n- **Take Profit** – distance from entry to take profit in price steps.\n- **Trailing Stop** – trailing stop distance in price steps. Set to zero to disable.\n- **Volume** – order volume.\n- **Candle Type** – type of candles the strategy subscribes to."
+   },
+   "979": {
+    "id": 979,
+    "name": "Linear Regression Channel",
+    "family": "trend",
+    "overview": "Trades pullbacks when price moves outside a linear regression channel and reverts toward the mean.\n\n## Details\n\n- **Data**: Price candles.\n- **Entry**: Buy when close drops below lower band in an uptrend; sell when close rises above upper band in a downtrend.\n- **Exit**: Close when price returns to the regression line.\n- **Instruments**: Any instruments.\n- **Risk**: Channel boundaries act as dynamic limits.\n",
+    "details": "- **Data**: Price candles.\n- **Entry**: Buy when close drops below lower band in an uptrend; sell when close rises above upper band in a downtrend.\n- **Exit**: Close when price returns to the regression line.\n- **Instruments**: Any instruments.\n- **Risk**: Channel boundaries act as dynamic limits.",
+    "parameters": ""
+   },
+   "2854": {
+    "id": 2854,
+    "name": "RSI Bollinger Bands EA (StockSharp Conversion)",
+    "family": "trend",
+    "overview": "This strategy is a high-level StockSharp port of the MetaTrader 5 expert advisor \"RSI Bollinger Bands EA\". It trades on 15-minute candles and combines two independent RSI-based triggers:\n\n* **Trigger One** – fixed overbought/oversold thresholds for RSI on M15, H1 and H4 together with a stochastic confirmation and slope filter.\n* **Trigger Two** – adaptive RSI bands calculated from asymmetric standard deviations (separate positive/negative sigma) over configurable sample sizes on all three timeframes. The RSI must pierce the dynamic bands while the stochastic confirms momentum.\n\nBoth triggers require volatility contraction on the lower timeframe (M15 Bollinger spread), volatility expansion on the higher timeframe (H4 Bollinger spread) and a calm environment according to the H4 ATR. Only one trigger can be enabled at a time, mirroring the original EA restrictions.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Volume` | Trade volume in lots. | `0.1` |\n| `TriggerOne` | Enable the fixed RSI trigger. | `true` |\n| `TriggerTwo` | Enable the adaptive RSI trigger (mutually exclusive with trigger one). | `false` |\n| `BbSpreadH4Min1` | Minimum H4 Bollinger spread (pips) for trigger one. | `84` |\n| `BbSpreadM15Max1` | Maximum M15 Bollinger spread (pips) for trigger one. | `64` |\n| `RsiPeriod1` | RSI length used by trigger one on all timeframes. | `10` |\n| `RsiLoM15_1`, `RsiHiM15_1` | RSI thresholds for M15. | `24`, `66` |\n| `RsiLoH1_1`, `RsiHiH1_1` | RSI thresholds for H1. | `34`, `54` |\n| `RsiLoH4_1`, `RsiHiH4_1` | RSI thresholds for H4. | `48`, `56` |\n| `RsiLoLim*`, `RsiHiLim*` | Safety limits to block extreme RSI readings. | `20–92` |\n| `RDeltaM15Lim1` | Minimum RSI slope on M15 for trigger one. | `-3.5` |\n| `StocLoM15_1`, `StocHiM15_1` | Stochastic bounds for trigger one. | `26`, `64` |\n| `BbSpreadH4Min2` | Minimum H4 Bollinger spread (pips) for trigger two. | `65` |\n| `BbSpreadM15Max2` | Maximum M15 Bollinger spread (pips) for trigger two. | `75` |\n| `RsiPeriod2` | RSI length used by trigger two. | `20` |\n| `NumRsi` | Sample size for RSI statistics. | `60` |\n| `Rsi*M*Sigma2` | Multipliers for main adaptive bands (M15/H1/H4). | `1.20 / 0.95 / 0.9` |\n| `Rsi*M*SigmaLim2` | Multipliers for outer limits (M15/H1/H4). | `1.85 / 2.55 / 2.7` |\n| `RDeltaM15Lim2` | Minimum RSI slope on M15 for trigger two. | `-5.5` |\n| `StocLoM15_2`, `StocHiM15_2` | Stochastic bounds for trigger two. | `24`, `68` |\n| `TakeProfitBuy1`, `StopLossBuy1` | Protective distances in pips for trigger-one longs. | `150`, `70` |\n| `TakeProfitSell1`, `StopLossSell1` | Protective distances in pips for trigger-one shorts. | `70`, `35` |\n| `TakeProfitBuy2`, `StopLossBuy2` | Protective distances in pips for trigger-two longs. | `140`, `35` |\n| `TakeProfitSell2`, `StopLossSell2` | Protective distances in pips for trigger-two shorts. | `60`, `30` |\n| `AtrPeriod` | H4 ATR calculation period. | `60` |\n| `BollingerPeriod` | Bollinger Bands length on M15 and H4. | `20` |\n| `AtrLimit` | Maximum ATR in pips to allow entries. | `90` |\n| `EntryHour` | Session start hour (0–23). | `0` |\n| `OpenHours` | Session length in hours (0 = one hour). | `14` |\n| `NumPositions` | Maximum simultaneous net positions (strategy opens only when flat). | `1` |\n| `FridayEndHour` | Hour of Friday after which trading stops. | `4` |\n| `StochasticK`, `StochasticD`, `StochasticSlowing` | Parameters for the stochastic oscillator. | `12 / 5 / 5` |\n| `M15CandleType`, `H1CandleType`, `H4CandleType` | Candle data types for each timeframe. | `15m / 1h / 4h` |"
+   },
+   "2652": {
+    "id": 2652,
+    "name": "Color Fisher M11",
+    "family": "trend",
+    "overview": "Color Fisher M11 is a trend-following strategy that replicates the Exp_ColorFisher_m11 expert advisor from MetaTrader 5. It uses a custom Fisher Transform variant that paints candles with five color states to highlight extreme bullish and bearish momentum. Signals are delayed by a configurable number of closed candles to avoid trading on incomplete data, while optional toggles allow disabling entries or exits for each side independently.",
+    "details": "",
+    "parameters": "- **Range Periods** – lookback length for the high/low range used by the Fisher Transform (default 10).\n- **Price Smoothing** – pre-transform smoothing factor, 0…0.99 (default 0.3).\n- **Index Smoothing** – post-transform smoothing factor, 0…0.99 (default 0.3).\n- **High Level / Low Level** – thresholds that define bullish and bearish extremes (defaults +1.01 and –1.01).\n- **Signal Bar** – number of closed candles to delay signal evaluation (default 1).\n- **Enable Buy Entry / Enable Sell Entry** – toggles for opening new long or short trades.\n- **Enable Buy Exit / Enable Sell Exit** – toggles for allowing indicator-driven exits.\n- **Stop Loss (pts) / Take Profit (pts)** – protective distances expressed in price steps.\n- **Candle Type** – timeframe for the candle subscription; defaults to 4-hour candles."
+   },
+   "2350": {
+    "id": 2350,
+    "name": "Color JSatl Digit",
+    "family": "trend",
+    "overview": "This strategy converts the MQL5 expert \"Exp_ColorJSatl_Digit\" into StockSharp. It digitizes the slope of the Jurik Moving Average (JMA) to classify each bar as up or down. A shift from state 0 to 1 marks an emerging uptrend, while a change from 1 to 0 signals a downtrend.\n\nThe algorithm subscribes to candles of a chosen timeframe and binds a JMA indicator. When the JMA turns upward the strategy opens a long position and closes any short. When the JMA turns downward it opens a short and closes any long. The optional `DirectMode` parameter inverts the signals to trade counter-trend.\n\nPositions are protected by percentage-based stop loss and take profit levels. All parameters are defined through `StrategyParam` and can be optimized.\n\n## Details\n\n- **Entry Criteria**\n  - **Long**: JMA turns upward (`prev > prevPrev` && `current >= prev`) and `DirectMode` is true. In reverse mode a downward turn opens the long.\n  - **Short**: JMA turns downward (`prev < prevPrev` && `current <= prev`) and `DirectMode` is true. In reverse mode an upward turn opens the short.\n- **Exit Criteria**: Opposite signal triggers an immediate market order in the other direction. Protective orders may also exit positions.\n- **Stops**: Percentage stop loss and take profit via `StartProtection`.\n- **Default Values**\n  - `JMA Length` = 30\n  - `Candle Type` = 4-hour candles\n  - `Stop Loss %` = 1\n  - `Take Profit %` = 2\n  - `Direct Mode` = true\n- **Filters**\n  - Category: Trend following\n  - Direction: Both (reversible)\n  - Indicators: Jurik Moving Average\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n\n",
+    "details": "- **Entry Criteria**\n  - **Long**: JMA turns upward (`prev > prevPrev` && `current >= prev`) and `DirectMode` is true. In reverse mode a downward turn opens the long.\n  - **Short**: JMA turns downward (`prev < prevPrev` && `current <= prev`) and `DirectMode` is true. In reverse mode an upward turn opens the short.\n- **Exit Criteria**: Opposite signal triggers an immediate market order in the other direction. Protective orders may also exit positions.\n- **Stops**: Percentage stop loss and take profit via `StartProtection`.\n- **Default Values**\n  - `JMA Length` = 30\n  - `Candle Type` = 4-hour candles\n  - `Stop Loss %` = 1\n  - `Take Profit %` = 2\n  - `Direct Mode` = true\n- **Filters**\n  - Category: Trend following\n  - Direction: Both (reversible)\n  - Indicators: Jurik Moving Average\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "879": {
+    "id": 879,
+    "name": "High Low Breakout Statistical Analysis",
+    "family": "breakout",
+    "overview": "Trades breakouts of selected timeframe high or low levels. The strategy can enter long or short based on configured option and closes position after a fixed number of bars.\n\n## Details\n\n- **Entry Criteria**: Close crosses selected high or low level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or after HoldingPeriod bars.\n- **Stops**: No.\n- **Default Values**:\n  - `EntryOption` = LongAtHigh\n  - `TimeframeOption` = Daily\n  - `HoldingPeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: High, Low\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close crosses selected high or low level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or after HoldingPeriod bars.\n- **Stops**: No.\n- **Default Values**:\n  - `EntryOption` = LongAtHigh\n  - `TimeframeOption` = Daily\n  - `HoldingPeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: High, Low\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3545": {
+    "id": 3545,
+    "name": "Adaptive Grid MT4 (StockSharp Port)",
+    "family": "breakout",
+    "overview": "The strategy recreates the \"Adaptive Grid Mt4\" expert advisor for StockSharp's high level API. It drops a symmetric grid of\nbuy stop and sell stop orders around the current candle close. Grid distances are derived from the Average True Range (ATR) and\nare therefore adaptive to market volatility. Each pending order expires after a configurable number of candles, keeping the\norder book tidy in sideways markets.\n\nWhen an entry order is filled the strategy immediately registers the matching take-profit and stop-loss orders at prices computed\nfrom the ATR snapshot that produced the grid. Protective orders are one-to-one with the filled entry and persist until executed\nor manually cancelled.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `GridLevels` | Number of stop orders above and below the market. Equivalent to the `nGrid` input of the EA. |\n| `TimerBars` | Number of finished candles after which any pending entry is cancelled (MT4 `nBars`). |\n| `PriceOffsetMultiplier` | ATR multiplier applied to the initial offset from the current price (`Poffset`). |\n| `GridStepMultiplier` | ATR multiplier used for the spacing between consecutive grid levels (`Pstep`). |\n| `StopLossMultiplier` | ATR multiplier defining the distance of the stop-loss attached to each order (`StopLoss`). |\n| `TakeProfitMultiplier` | ATR multiplier defining the distance of the take-profit (`TakeProfit`). |\n| `AtrPeriod` | ATR averaging period. Mirrors the hard-coded value of 14 from the script. |\n| `OrderVolume` | Volume used for all pending orders (MT4 `Lot`). |\n| `CandleType` | Time frame that drives grid recalculation (`Wtf`). |"
+   },
+   "1011": {
+    "id": 1011,
+    "name": "MACD of Relative Strenght",
+    "family": "momentum",
+    "overview": "This strategy calculates relative strength by dividing the close price by the highest high over a specified period and applies the MACD indicator to that ratio. A long position is opened when the MACD histogram is positive and closed when it turns negative. A percentage stop-loss protects the trade.\n\n## Details\n- **Entry**: Histogram > 0.\n- **Exit**: Histogram < 0 or stop-loss.\n- **Type**: Long only.\n- **Indicators**: Highest, MACD.\n",
+    "details": "- **Entry**: Histogram > 0.\n- **Exit**: Histogram < 0 or stop-loss.\n- **Type**: Long only.\n- **Indicators**: Highest, MACD.",
+    "parameters": ""
+   },
+   "3127": {
+    "id": 3127,
+    "name": "Breakeven v3 Manager",
+    "family": "volatility",
+    "overview": "Breakeven v3 Manager is a conversion of the MetaTrader 5 expert advisor `Breakeven v3 (barabashkakvn's edition)`.\nThe original script does not open trades. Instead it continuously computes the portfolio break-even level for the\nselected symbol and moves protective orders (stop-loss or take-profit) for every open long and short position\nso that the whole book is closed around that break-even price with an optional buffer.",
+    "details": "",
+    "parameters": "* **Delta (points)** – offset applied to the calculated break-even price. The value is expressed in MetaTrader points,\n  i.e. one-tenth of a pip on five-digit FX symbols. Default: `100`.\n* **Enable Logging** – toggles detailed log output describing the current break-even level, distance to target and\n  floating PnL. Default: `true`."
+   },
+   "298": {
+    "id": 298,
+    "name": "Correlation Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the Correlation returns toward balance. Starting parameter `CorrelationPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CorrelationPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationThreshold` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Correlation\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CorrelationPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationThreshold` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Correlation\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

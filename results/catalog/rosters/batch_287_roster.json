@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3590,
+      "name": "Divergence + EMA + RSI Close Buy Only",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,26),macd_signal(close,6,26,9))",
+      "exit_long": "crossbelow(macd(close,6,26),macd_signal(close,6,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 537,
+      "name": "AutoFib Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,10)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 10-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 2904,
+      "name": "BrainTrend2 + AbsolutelyNoLagLWMA",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3132,
+      "name": "Bronze Warrioir",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 2419,
+      "name": "Expert NEWS",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 3310,
+      "name": "Broadening Top",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,85),macd_signal(close,6,85,9))",
+      "exit_long": "crossbelow(macd(close,6,85),macd_signal(close,6,85,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2849,
+      "name": "Spasm",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,24)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,24))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 24-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 325,
+      "name": "Hull MA Volatility Contraction",
+      "family": "trend",
+      "entry_long": "crossabove((2 * ema(close,9) - ema(ema(close,9),9)),ema(close,9))",
+      "exit_long": "crossbelow((2 * ema(close,9) - ema(ema(close,9),9)),ema(close,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull MA is approximated by the DEMA form 2*EMA-EMA(EMA), with documented/default period."
+    },
+    {
+      "id": 121,
+      "name": "Santa Claus Rally",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1953,
+      "name": "UltraFATL Threshold",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    }
+  ]
+}

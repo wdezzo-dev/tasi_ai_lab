@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 326,
+      "name": "VWAP Stochastic Divergence",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,14) and roc(rsi(close,14),1) > 0 and adx(high,low,close,14) > 25",
+      "exit_long": "adx(high,low,close,14) < 20 or roc(rsi(close,14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic and VWAP are outside the DSL, so bullish divergence is proxied by a 14-bar prior low with a rising one-bar RSI, gated by the documented ADX(14) > 25 entry and < 20 exit thresholds. ATR-multiple stops and the 5-minute timeframe have no field equivalent."
+    },
+    {
+      "id": 1495,
+      "name": "Turn Around Tuesday on Steroids",
+      "family": "trend",
+      "entry_long": "roc(close,2) < 0 and roc(close,1) < 0 and close > sma(close,200)",
+      "exit_long": "close > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two consecutive down days are approximated by negative 2-bar and 1-bar returns, confirmed by the documented SMA(200) trend filter; the exit is a close above the prior 20-bar high. The Sunday-start day-of-week gate is not expressible without a time field and is dropped."
+    },
+    {
+      "id": 675,
+      "name": "Demo GPT - Day Trading Scalping",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) > 0 and volume_ratio(volume,20) > 1",
+      "exit_long": "close < open and roc(close,1) < 0 and volume_ratio(volume,20) > 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two green bars with volume above the 20-bar average become a positive bar plus positive 1-bar return and volume_ratio > 1, with the mirrored red-bar exit. The open-versus-prior-close condition needs shifted opens; EMA(20), VWAP and Camarilla levels are reference-only and unused."
+    },
+    {
+      "id": 310,
+      "name": "Donchian Volatility Contraction",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and (donchian_high_prev(high,20) - donchian_low_prev(low,20)) < 2 * atr(high,low,close,14)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Donchian(20) breakout is only taken when the channel is contracted versus 2.0x the ATR(14), which stands in for the volatility-contraction pattern; the mirror prior-bar low is the exit. ATR-multiple stops and the 5-minute candle type are unsupported."
+    },
+    {
+      "id": 523,
+      "name": "Anomaly Counter-Trend",
+      "family": "trend",
+      "entry_long": "roc(close,30) < -1",
+      "exit_long": "roc(close,30) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long branch buys sharp drops using the documented 1% threshold over a 30-bar (30 x 1-minute) window, and exits once the window return turns positive. The documented 100/200-tick stop and target are price units, not percentages, so the reversion exit stands in."
+    },
+    {
+      "id": 1158,
+      "name": "Parent Session Sweeps Alert",
+      "family": "other",
+      "entry_long": "low < donchian_low_prev(low,4) and close > donchian_low_prev(low,4)",
+      "exit_long": "close > donchian_high_prev(high,4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A sweep below the previous session low that closes back inside the prior range is expressed with 4 prior 15-minute bars (roughly one session); the long exit is a return to the prior range top. The MinRiskReward = 1 target and session-extreme stop are not fixed percentages."
+    },
+    {
+      "id": 398,
+      "name": "Skewness Commodity",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented signal is a cross-sectional ranking of futures by return skewness with periodic rebalancing, which requires a multi-symbol universe rather than a single-symbol price series. No honest long entry can be derived, so the never-true guard is used instead of inventing one."
+    },
+    {
+      "id": 1647,
+      "name": "Stop Loss Mover",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a position-management utility that only slides an existing stop to break-even once high exceeds MoveSlPrice; it documents no market-derived entry signal (its single demo long is opened unconditionally at start). The never-true guard prevents fabricating one."
+    },
+    {
+      "id": 1347,
+      "name": "Strategy Connectable",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "The template trades purely on externally supplied signals, so there is no market-derived long condition to translate and the never-true guard is used. The documented percent protection is kept verbatim as 2% stop and 4% target."
+    },
+    {
+      "id": 1906,
+      "name": "Auto Trailing Stop",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented as attaching and trailing protective orders on positions that already exist, with no trade-opening logic at all. StopLoss 114, TakeProfit 35 and TrailingStop 6 are absolute price units, so no percentage fields can be filled."
+    }
+  ]
+}

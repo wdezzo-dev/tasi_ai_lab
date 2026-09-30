@@ -1,0 +1,98 @@
+{
+ "batch_073": {
+  "strategy_ids": [
+   887,
+   82,
+   2761,
+   4038,
+   1603,
+   2812,
+   2785,
+   1121,
+   1221,
+   3958
+  ],
+  "docs": {
+   "887": {
+    "id": 887,
+    "name": "HOD/LOD/PMH/PML/PDH/PDL",
+    "family": "trend",
+    "overview": "This strategy trades breakouts of premarket and previous day levels.\nLong entries occur when price crosses above the premarket or previous day high.\nShort entries occur when price crosses below the premarket or previous day low.\nPositions close when price reaches the current day's high or low.\n\n## Details\n\n- **Entry Criteria**: price crossing premarket or previous day levels\n- **Long/Short**: Both\n- **Exit Criteria**: reach current day's high or low\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Levels\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price crossing premarket or previous day levels\n- **Long/Short**: Both\n- **Exit Criteria**: reach current day's high or low\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Levels\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "82": {
+    "id": 82,
+    "name": "Volume Exhaustion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 133%. It performs best in the crypto market.\n\nEach candle updates the average volume. If the new bar's volume exceeds this average by a set multiplier and the candle closes in the direction opposite the prevailing trend, the system enters a trade. A stop based on ATR protects the position.\n\nThe trade is typically exited via the stop-loss as the strategy anticipates a swift reversal following the volume burst.\n\n## Details\n\n- **Entry Criteria**: Volume spike above average with candle opposite the trend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss.\n- **Stops**: Yes, ATR based.\n- **Default Values**:\n  - `VolumePeriod` = 20\n  - `VolumeMultiplier` = 2.0\n  - `MAPeriod` = 20\n  - `AtrMultiplier` = 2 ATR\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Volume, MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Volume spike above average with candle opposite the trend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss.\n- **Stops**: Yes, ATR based.\n- **Default Values**:\n  - `VolumePeriod` = 20\n  - `VolumeMultiplier` = 2.0\n  - `MAPeriod` = 20\n  - `AtrMultiplier` = 2 ATR\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Volume, MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2761": {
+    "id": 2761,
+    "name": "Diff TF MA",
+    "family": "trend",
+    "overview": "- This strategy is a StockSharp port of the MetaTrader \"Diff_TF_MA_EA\" expert advisor.\n- Trading signals come from comparing a simple moving average calculated on a higher timeframe with another moving average that is rescaled to the trading timeframe.\n- The code keeps only finished candles, mirrors the original crossover rules, and closes any opposite exposure before opening a new position.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `MaPeriod` | Length of the simple moving average calculated on the higher timeframe. |\n| `CandleType` | Trading timeframe used for order generation. |\n| `HigherCandleType` | Higher timeframe that supplies the reference moving average. |\n| `ReverseSignals` | Inverts the crossover rules (buy on bearish cross and sell on bullish cross). |\n| `Volume` | Strategy volume used by `BuyMarket`/`SellMarket` calls (set through the base `Strategy.Volume` property). |"
+   },
+   "4038": {
+    "id": 4038,
+    "name": "MA Reverse",
+    "family": "trend",
+    "overview": "The MA Reverse Strategy is a StockSharp conversion of the simple MetaTrader 4 expert advisor \"MA_Reverse\". The original robot\nmonitors how long the bid price stays above or below a 14-period simple moving average (SMA). After a long enough streak in one\ndirection, it opens a position betting on a short-term reversion. The StockSharp port keeps the same idea by counting the number\nof consecutive finished candles closing above or below the SMA and executing a market order as soon as the configured threshold is\nreached.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Lot size used for every market entry. The value is also used to size reversals when switching direction. |\n| `SmaPeriod` | Number of candles used by the simple moving average. The default matches the 14-period moving average of the EA. |\n| `StreakThreshold` | Number of consecutive closes that must stay on one side of the SMA before a reversal order is allowed. |\n| `MinimumDeviation` | Minimum absolute distance between the close and the SMA that confirms the breakout condition. |\n| `TakeProfitPoints` | Take-profit distance expressed in price steps. It is multiplied by the instrument's `PriceStep` to obtain the absolute price offset. |\n| `CandleType` | Candle type (timeframe) used to calculate the SMA and evaluate the streak counters. |"
+   },
+   "1603": {
+    "id": 1603,
+    "name": "Fibonacci Auto Trend Scouter",
+    "family": "trend",
+    "overview": "This strategy uses two rolling extremes based on Fibonacci numbers to scout emerging trends. The short window (8) tracks recent highs and lows while the long window (21) provides context. A long position is opened when the short-term high exceeds the long-term high. A short position opens when the short-term low falls below the long-term low.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: short-term high > long-term high.\n  - **Short**: short-term low < long-term low.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is reversed on opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Short period` = 8\n  - `Long period` = 21\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: short-term high > long-term high.\n  - **Short**: short-term low < long-term low.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is reversed on opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Short period` = 8\n  - `Long period` = 21\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "2812": {
+    "id": 2812,
+    "name": "Donchain Counter",
+    "family": "breakout",
+    "overview": "The Donchain Counter strategy is a StockSharp port of the MQL5 expert advisor \"Donchain counter\" by Michal Rutka. The system watches how the Donchian Channel expands to detect breakouts and then defends the position by trailing the stop along the opposite band once price has moved a fixed distance away. Only one position can be opened every 24 hours, mirroring the original constraint.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Order size for entries. | `1` |\n| `ChannelPeriod` | Lookback period for the Donchian Channel calculation. | `20` |\n| `BufferSteps` | Number of price steps price must exceed beyond the opposite band before trailing activates (MQL used 50 points). | `50` |\n| `TradeCooldown` | Minimum time between new entries. | `1 day` |\n| `CandleType` | Candle series used for the indicator (default 1-hour candles). | `1h candles` |"
+   },
+   "2785": {
+    "id": 2785,
+    "name": "Fractured Fractals",
+    "family": "breakout",
+    "overview": "Port of the classic MetaTrader \"Fractured Fractals\" expert advisor. The strategy tracks confirmed Williams fractals, places stop orders on fresh breakout levels, and trails a protective stop on the opposite fractal.\n\n## Details\n\n- **Source**: Converted from `MQL/20127/Fractured Fractals.mq5`.\n- **Market Regime**: Breakout continuation on any instrument supported by StockSharp.\n- **Order Types**: Uses stop orders for entries and protective stop orders for exits.\n- **Position Sizing**: Risk-based, controlled by `MaximumRiskPercent` and the adaptive `DecreaseFactor` streak logic.\n- **Default Parameters**:\n  - `MaximumRiskPercent` = 2%\n  - `DecreaseFactor` = 10\n  - `ExpirationHours` = 1 hour\n  - `CandleType` = 1-hour time frame\n- **Core Indicators**: Native five-bar Williams fractals calculated on the fly.\n- **Strategy Type**: Long/short breakout with dynamic stop management.\n\n## Strategy Logic\n\n### Fractal sequence tracking\n\n- Maintains queues of the last five candle highs and lows to mimic the `iFractals` buffer in MT5.\n- Each confirmed fractal shifts three rolling slots: youngest, middle, and old. Duplicate values are ignored using the instrument price step for tolerance.\n- Long signals require the newest up fractal to exceed the middle fractal; short signals require the newest down fractal to be lower than the previous one.\n\n### Entry orders and expiration\n\n- When no long position or pending buy stop exists, the strategy places a buy stop at the most recent up fractal with a stop loss at the latest down fractal.\n- Symmetrically, short entries place a sell stop at the most recent down fractal with a protective stop at the latest up fractal.\n- Pending orders inherit an expiration defined by `ExpirationHours`. If the candle time surpasses the expiry or the fractal hierarchy invalidates the setup (new lower up fractal for longs or higher down fractal for shorts), the order is cancelled.\n- The bot keeps the book clean by cancelling opposite orders once a position opens.\n",
+    "details": "- **Source**: Converted from `MQL/20127/Fractured Fractals.mq5`.\n- **Market Regime**: Breakout continuation on any instrument supported by StockSharp.\n- **Order Types**: Uses stop orders for entries and protective stop orders for exits.\n- **Position Sizing**: Risk-based, controlled by `MaximumRiskPercent` and the adaptive `DecreaseFactor` streak logic.\n- **Default Parameters**:\n  - `MaximumRiskPercent` = 2%\n  - `DecreaseFactor` = 10\n  - `ExpirationHours` = 1 hour\n  - `CandleType` = 1-hour time frame\n- **Core Indicators**: Native five-bar Williams fractals calculated on the fly.\n- **Strategy Type**: Long/short breakout with dynamic stop management.",
+    "parameters": ""
+   },
+   "1121": {
+    "id": 1121,
+    "name": "Normalized Oscillators Spider Chart",
+    "family": "momentum",
+    "overview": "This strategy calculates multiple oscillators (RSI, Stochastic, Correlation, Money Flow Index, Williams %R, Percent Up, Chande Momentum Oscillator, and Aroon Oscillator). All values are normalized into the 0-1 range and averaged to generate trading signals. The strategy buys when the average exceeds 0.6 and sells short when it drops below 0.4.\n\n## Inputs\n- **Length** — lookback period for all oscillators\n- **Candle type** — time frame of candles used\n\n## Notes\nThis is a simplified port of the TradingView script \"Normalized Oscillators Spider Chart [LuxAlgo]\" demonstrating indicator usage in StockSharp.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1221": {
+    "id": 1221,
+    "name": "Range Filter + ATR (Low Drawdown)",
+    "family": "volatility",
+    "overview": "This strategy combines a range filter with ATR-based risk management. Trades are opened when price crosses the adaptive filter and closed using stop loss and take profit levels derived from ATR multiples.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3958": {
+    "id": 3958,
+    "name": "The Puncher",
+    "family": "mean_reversion",
+    "overview": "The Puncher Strategy is a momentum-reversal system converted from the original MetaTrader 4 expert advisor \"The Puncher by L. Bigger\". It combines a slow Stochastic oscillator with a classic RSI filter to trade extreme overbought and oversold conditions. When both oscillators agree that the market is extended, the strategy looks for a reversal at the close of the candle and enters a market order in the opposite direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Trade volume for new entries. | `1` |\n| `StochasticLength` | Lookback length of the Stochastic oscillator (%K). | `100` |\n| `StochasticSignalPeriod` | Smoothing period of %K before applying the signal line. | `3` |\n| `StochasticSmoothingPeriod` | Smoothing period for the %D signal line. | `3` |\n| `RsiPeriod` | Calculation period of the RSI filter. | `14` |\n| `OversoldLevel` | Threshold shared by the oscillators to detect oversold conditions. | `30` |\n| `OverboughtLevel` | Threshold shared by the oscillators to detect overbought conditions. | `70` |\n| `StopLossPips` | Distance of the protective stop (0 disables it). | `2000` |\n| `TakeProfitPips` | Distance of the profit target (0 disables it). | `0` |\n| `TrailingStopPips` | Trailing stop distance (0 disables it). | `0` |\n| `TrailingStepPips` | Minimum favorable movement before tightening the trailing stop. | `1` |\n| `BreakEvenPips` | Profit needed before moving the stop to break-even. | `0` |\n| `CandleType` | Data type used to build candles. | `M15` |"
+   }
+  }
+ }
+}

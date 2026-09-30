@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1009,
+      "name": "MACD Enhanced Strategy MTF with Stop Loss",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and roc(macd(close,12,26),1) > 0",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish 12/26/9 MACD score with a rising MACD line approximates the cross, indicator, and histogram score components; the bearish cross exits. The 1.2-ATR(10) trailing line and multi-timeframe scoring are not expressible."
+    },
+    {
+      "id": 3406,
+      "name": "Range Follower",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) + 0.6 * atr(high,low,close,14)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar session high plus 60% of ATR(14) retains the documented trigger-distance construction. Session boundaries and the residual-ATR virtual target are omitted."
+    },
+    {
+      "id": 3003,
+      "name": "eInTradePanel",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long market-order branch is represented by a bullish completed candle and its inverse exit. User-selected stop, limit, stop-limit, and panel modes plus spread/ATR offsets, expiration, and virtual protection are outside the DSL."
+    },
+    {
+      "id": 2168,
+      "name": "AfterEffects",
+      "family": "trend",
+      "entry_long": "roc(close,3) - roc(close,6) > 0",
+      "exit_long": "roc(close,3) - roc(close,6) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The difference between 3- and 6-bar percentage changes is a sign-preserving proxy for Close-2*Open[p]+Open[2p] with p=3 because historical opens cannot be addressed directly. The 500-point trailing stop and random inversion are omitted."
+    },
+    {
+      "id": 807,
+      "name": "Forex Fire EMA MA RSI",
+      "family": "trend",
+      "entry_long": "ema(close,13) > ema(close,62) and close > sma(close,200) and rsi(close,7) > rsi(close,28) and rsi(close,7) > 50 and volume_ratio(volume,20) > 1",
+      "exit_long": "crossbelow(ema(close,13),ema(close,62)) or rsi(close,7) < 30",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "EMA(13/62), SMA(200), RSI(7/28), and rising volume retain the documented long confluence on one series; 4-hour confirmation is approximated by rolling volume. The explicit 2% stop and 4% target are retained; trailing and ATR exits are omitted."
+    },
+    {
+      "id": 4065,
+      "name": "Pipso Night Breakout",
+      "family": "breakout",
+      "entry_long": "close < donchian_low_prev(low,36)",
+      "exit_long": "close > donchian_high_prev(high,36)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented counterintuitive long branch enters below the prior 36-candle low and exits above its high. The 21:00 session window and three-range-width dynamic stop are omitted."
+    },
+    {
+      "id": 1623,
+      "name": "Fxscalper",
+      "family": "breakout",
+      "entry_long": "crossabove(close,bb_upper(close,20,2))",
+      "exit_long": "crossbelow(close,bb_lower(close,20,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A cross above the 20-period, 2-standard-deviation upper band and the opposite lower-band cross follow the Bollinger breakout. The 200/150 pip or point protections are not percentage exits."
+    },
+    {
+      "id": 1152,
+      "name": "P-Square Nth Percentile",
+      "family": "momentum",
+      "entry_long": "close > bb_upper(close,30,1.645)",
+      "exit_long": "close < bb_lower(close,30,1.645)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger 30-period bounds at the normal 90th/10th percentiles approximate upper and lower P-Square estimates on prices. Percentile, lookback, and UseReturns are unspecified, so these are explicit fallbacks and returns mode is omitted."
+    },
+    {
+      "id": 3317,
+      "name": "Virtual Robot",
+      "family": "volatility",
+      "entry_long": "donchian_high(high,20) - close > 2 * atr(high,low,close,14)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-ATR decline from the 20-bar high is a price-normalized proxy for filling lower virtual grid levels, with midpoint recovery as exit. Grid queues, pip spacing, volume escalation, and basket targets are unsupported."
+    },
+    {
+      "id": 1148,
+      "name": "Outlier Detector with N-Sigma Confidence Intervals",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(zscore(roc(close,1),30),-3)",
+      "exit_long": "zscore(roc(close,1),30) > -2 and zscore(roc(close,1),30) < 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 30-sample z-score of one-bar price changes crossing below -3 enters the long extreme, and returning inside plus or minus 2 exits. All documented periods and limits are retained and no stop is specified."
+    }
+  ]
+}

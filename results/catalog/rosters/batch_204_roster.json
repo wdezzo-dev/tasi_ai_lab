@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 793,
+      "name": "Financial Ratios Fundamental",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries depend on quarterly currentRatio, interestCoverage, payableTurnover and grossMargin versus their previous periods, and the docs list no indicators at all. The DSL has no fundamental or financial-statement fields, so the never-true guard is used instead of fabricating a price proxy."
+    },
+    {
+      "id": 2487,
+      "name": "Example of MACD Automated",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and macd(close,12,26) > 0",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or macd(close,12,26) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MacdFastLength 12, MacdSlowLength 26 and MacdSignalLength 9 are documented, with the above-zero requirement standing in for the second, higher-timeframe trend filter agreeing. StopLossPoints=50 and TakeProfitPoints=30 are price-step offsets and the AdvancedMM volume accumulator is not a DSL feature, so both stops are null."
+    },
+    {
+      "id": 2291,
+      "name": "Fisher Org v1",
+      "family": "trend",
+      "entry_long": "roc(zscore(close,7),1) >= 0 and roc(zscore(close,7),2) < 0",
+      "exit_long": "roc(zscore(close,7),1) <= 0 and roc(zscore(close,7),2) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Fisher Transform is approximated by a bounded 7-bar price z-score, and the documented trough rule is written with 1-bar and 2-bar ROC so that a local minimum at t-1 triggers the long and the mirrored peak exits. Fisher Length default 7 is used; money management is not documented."
+    },
+    {
+      "id": 3840,
+      "name": "Franks 4 Hour Limit Orders",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,1) and crossabove(ema(close,5),ema(close,13))",
+      "exit_long": "crossbelow(ema(close,5),ema(close,13)) or close >= donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The contrarian buy limit at the previous candle low is retained and the OsMA momentum filter is approximated by a 5/13 EMA cross, since the Force Index is not whitelisted. StopLossPips=35, TakeProfitPips=150, TrailingStopPips=30 and EntryBufferPips=16 are pip values, so both stop fields are null."
+    },
+    {
+      "id": 220,
+      "name": "Volatility Breakout",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) + 2 * atr(high,low,close,14)",
+      "exit_long": "close < sma(close,20) - 2 * atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule Close > SMA + Multiplier*ATR is written literally with Period=20, Multiplier=2.0 and ATR(14), and the opposite breakout supplies the exit. The stop at Multiplier*ATR from entry is a dynamic ATR distance, not a fixed percentage."
+    },
+    {
+      "id": 2644,
+      "name": "Multi Arbitration",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "It opens a long on the first candle, adds trades toward the weaker side and force-flattens on ProfitForClose=300 or MaxOpenPositions=15, i.e. a multi-position arbitration and liquidation engine with no market-derived entry. The never-true guard prevents inventing one."
+    },
+    {
+      "id": 4089,
+      "name": "TST Pullback Reversal",
+      "family": "mean_reversion",
+      "entry_long": "close > open and close - low > 2 * atr(high,low,close,14)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented sharp intrabar pullback is expressed volatility-relatively: a bullish candle closing more than 2*ATR(14) above its low fades the move, and the exit waits for the 20-bar mean. GapPoints=500, StopLossPoints=500 and TakeProfitPoints=100 are instrument price steps, so both stops are null."
+    },
+    {
+      "id": 2680,
+      "name": "Multi Time Frame Trader",
+      "family": "other",
+      "entry_long": "low <= bb_lower(close,250,2) and roc(sma(close,250),1) > 0",
+      "exit_long": "close >= bb_mid(close,250)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented Bars=250 and StdMultiplier=2.0 are kept, but the M1/M5/H1 polynomial channels are collapsed to one series where SMA(250) plus/minus 2 standard deviations approximates the bands and the rising centre line the positive hourly slope. Degree, Shift and the channel-width stop are not representable."
+    },
+    {
+      "id": 993,
+      "name": "Long Short Exit Risk Management",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry is a price equality against user-configured long/short values, so this template generates no market-derived signal and the never-true guard is used. StopLossPercent=2 and TakeProfitPercent=3 plus the 10-bar time exit and 3-trades-per-day cap are left unset because no position is ever taken."
+    },
+    {
+      "id": 816,
+      "name": "Function Logistic Equation",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,14),50) and roc(close,14) > 0",
+      "exit_long": "crossbelow(rsi(close,14),50) or roc(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The logistic equation of price changes is approximated by a bounded RSI(14) oscillator, so the documented 'crosses above half of the recent range' becomes a cross of 50 with the price change in the same direction. No parameters or period are documented, so RSI(14) and 14 are fallbacks."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1228,
+  "ticker": "2050",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1228,
+    "name": "RCI",
+    "family": "trend",
+    "entry_long": "crossabove(20 * (close - donchian_low(low,20)) / (donchian_high(high,105.0) - donchian_low(low,1)), sma(105.0 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)),14))",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)),14))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Rank Correlation Index has no DSL function, so it is approximated by the bounded 10-bar range position (RciLength 10) crossed against the documented SMA(14) of itself, which preserves the rising-above-average long rule and the opposite-cross exit. The Direction restriction, the no-stop configuration and the 1-minute CandleType are not signals."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8415,
+      "engine_win_ret": 8.442063445060523,
+      "alpha": 2.5121286782086267,
+      "benchmark_ret": 5.929934766851896,
+      "trades": 125,
+      "win_rate": 0.576,
+      "sharpe": 0.8249298393247823,
+      "max_drawdown": -0.1728285954631601,
+      "profit_factor": 2.7609134052372255
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 357,
+      "engine_win_ret": 0.0942134576207756,
+      "alpha": 0.32172519139640465,
+      "benchmark_ret": -0.22751173377562905,
+      "trades": 3,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.7064361033870726,
+      "max_drawdown": -0.05640095157998948,
+      "profit_factor": 3.1076079778442938
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.03694440607968996,
+      "alpha": -0.09315532193481602,
+      "benchmark_ret": 0.13009972801450598,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 0.5599271925112743,
+      "max_drawdown": -0.03877790734262487,
+      "profit_factor": 14.280086632587178
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8415,
+      "engine_win_ret": 4.062626393864912,
+      "alpha": -1.867308372986984,
+      "benchmark_ret": 5.929934766851896,
+      "trades": 125,
+      "win_rate": 0.52,
+      "sharpe": 0.6025585002638111,
+      "max_drawdown": -0.2011413324108129,
+      "profit_factor": 2.032388376947495
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 357,
+      "engine_win_ret": 0.07803485194959947,
+      "alpha": 0.3055465857252285,
+      "benchmark_ret": -0.22751173377562905,
+      "trades": 3,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.5942743770549923,
+      "max_drawdown": -0.06358490796772964,
+      "profit_factor": 2.4071553723562387
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.02151836412662944,
+      "alpha": -0.10858136388787654,
+      "benchmark_ret": 0.13009972801450598,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 0.3435919691635497,
+      "max_drawdown": -0.04518389065454431,
+      "profit_factor": 3.7654659579754597
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

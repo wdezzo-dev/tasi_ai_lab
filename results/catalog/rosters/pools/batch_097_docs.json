@@ -1,0 +1,98 @@
+{
+ "batch_097": {
+  "strategy_ids": [
+   209,
+   3982,
+   4184,
+   2560,
+   870,
+   1806,
+   1295,
+   3698,
+   1222,
+   872
+  ],
+  "docs": {
+   "209": {
+    "id": 209,
+    "name": "Volume Supertrend",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 64%. It performs best in the forex market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Volume > Avg(Volume) && Price > Supertrend (volume surge with uptrend)\n  - **Short**: Volume > Avg(Volume) && Price < Supertrend (volume surge with downtrend)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when Supertrend turns down\n  - **Short**: Exit short position when Supertrend turns up\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeAvgPeriod` = 20\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Volume Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Volume > Avg(Volume) && Price > Supertrend (volume surge with uptrend)\n  - **Short**: Volume > Avg(Volume) && Price < Supertrend (volume surge with downtrend)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when Supertrend turns down\n  - **Short**: Exit short position when Supertrend turns up\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeAvgPeriod` = 20\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Volume Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3982": {
+    "id": 3982,
+    "name": "RAVIiAO Strategy (StockSharp)",
+    "family": "trend",
+    "overview": "The **RAVIiAO Strategy** reproduces the MetaTrader 4 expert advisor \"RAVIiAO\" inside the StockSharp high level API. The system\nwaits for a new candle to close, evaluates the RAVI oscillator slope together with Bill Williams' Acceleration/Deceleration (AC)\noscillator, and opens a position immediately at market when both indicators agree on the trend direction. The port keeps the\noriginal parameter set – moving average periods, threshold, stop-loss/take-profit distances, and order volume – allowing traders\nto replicate the legacy behaviour without manual tweaks.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Time-frame used for candle subscription (default 30 minutes). |\n| `FastLength` | Fast moving average length used in the RAVI oscillator. |\n| `SlowLength` | Slow moving average length used in the RAVI oscillator. |\n| `Threshold` | Minimum absolute RAVI percentage to validate a trend continuation. |\n| `StopLossPoints` | Stop-loss distance in instrument points (multiplied by `PriceStep`). |\n| `TakeProfitPoints` | Take-profit distance in instrument points. |\n| `TradeVolume` | Market order volume for every entry. |"
+   },
+   "4184": {
+    "id": 4184,
+    "name": "JK BullP AutoTrader",
+    "family": "trend",
+    "overview": "JK BullP AutoTrader is a momentum-following expert advisor originally written for MetaTrader 4. It monitors the Elder Bulls Power\nindicator and reacts when bullish pressure weakens or turns negative. The StockSharp port keeps the straightforward logic of the\noriginal while providing explicit parameters, detailed trailing management, and platform-friendly risk controls.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Market order size used for entries. | 8.5 |\n| `TakeProfitPips` | Take-profit distance in pips (converted to price units). | 500 |\n| `StopLossPips` | Stop-loss distance in pips. | 20 |\n| `TrailingStopPips` | Profit distance in pips that activates and maintains the trailing stop. | 10 |\n| `EmaPeriod` | Length of the EMA used by the Bulls Power calculation. | 13 |\n| `CandleType` | Data type of candles driving the strategy (default 1-hour timeframe). | 1-hour candles |"
+   },
+   "2560": {
+    "id": 2560,
+    "name": "IBS RSI CCI v4 X2",
+    "family": "trend",
+    "overview": "The **IBS RSI CCI v4 X2 Strategy** is a multi-timeframe momentum system that blends the Internal Bar Strength (IBS), Relative Strength Index (RSI), and Commodity Channel Index (CCI). The original algorithm from the MetaTrader 5 ecosystem has been ported to StockSharp and redesigned to use high level candle subscriptions with indicator bindings. Two independent indicator pipelines are evaluated: a slow \"trend\" timeframe that defines the directional bias and a fast \"signal\" timeframe that generates entry and exit decisions.\n\nOn each timeframe the strategy computes a composite oscillator. The oscillator value is derived from the weighted contributions of IBS, RSI and CCI. Rapid changes in the composite value are smoothed, clamped by a configurable momentum threshold and wrapped with a volatility envelope that mimics the original indicator buffering logic. Crossovers between the composite value and its smoothed envelope are the core triggers used for decisions.\n\n### Trading logic\n\n1. **Trend detection** – The slow timeframe monitors the composite oscillator. If the composite stays above the envelope the strategy marks an uptrend, otherwise it flags a downtrend.\n2. **Signal generation** – The fast timeframe evaluates two consecutive values of the composite and envelope. Crossovers on the newest bar confirm an actionable signal only when the previous bar supports the transition.\n3. **Entry rules** –\n   * Enter long only when long trades are allowed, the current trend is bullish and the composite crosses below the envelope on the fast timeframe (bearish-to-bullish reversal in the original indicator orientation).\n   * Enter short only when short trades are allowed, the current trend is bearish and the composite crosses above the envelope on the fast timeframe.\n4. **Exit rules** –\n   * Optional immediate exits on composite crossovers when the `_CloseLongOnSignalCross` or `_CloseShortOnSignalCross` toggles are enabled.\n   * Forced trend-based exits when `_CloseLongOnTrendFlip` or `_CloseShortOnTrendFlip` request closing as soon as the slow timeframe bias reverses.\n   * Risk management is handled through StockSharp `StartProtection`, translating the configured point-based stop loss and take profit distances into absolute price offsets using the instrument price step.\n\n### Indicators and calculations\n\n* **Internal Bar Strength (IBS):** `(close - low) / max(high - low, price step)` smoothed by a selectable moving average.\n* **RSI:** Standard RSI applied to a configurable applied price (close, open, high, low, median, typical or weighted).\n* **CCI:** Custom CCI implementation with a simple moving average and mean deviation estimator derived from the selected applied price.\n* **Composite oscillator:** Weighted sum of the transformed IBS, RSI and CCI values divided by three, clamped by the `Threshold` setting to replicate the original \"momentum limiter\".\n* **Envelope:** Highest and lowest composite readings over the configured range are smoothed twice and averaged to produce the signal baseline used for crossovers.\n\nThe implementation avoids direct indicator value polling (`GetValue`) by keeping all state inside the calculator classes and by feeding candles sequentially through the high level API.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `OrderVolume` | Base order size used when opening a new position. |\n| `TrendCandleType` | Candle type for the slow timeframe subscription. |\n| `TrendIbsPeriod`, `TrendIbsMaType` | IBS smoothing period and moving average type for the slow timeframe. |\n| `TrendRsiPeriod`, `TrendRsiPrice` | RSI period and applied price for the slow timeframe. |\n| `TrendCciPeriod`, `TrendCciPrice` | CCI period and applied price for the slow timeframe. |\n| `TrendThreshold` | Momentum clamp threshold used in the slow timeframe composite. |\n| `TrendRangePeriod`, `TrendSmoothPeriod` | Look-back range and smoothing window for the slow timeframe envelope. |\n| `TrendSignalBar` | Offset (number of closed candles back) used when reading slow timeframe values. |\n| `AllowLongEntries`, `AllowShortEntries` | Enable or disable new long/short trades. |\n| `CloseLongOnTrendFlip`, `CloseShortOnTrendFlip` | Force position exits when the slow timeframe bias turns opposite. |\n| `SignalCandleType` | Candle type for the fast timeframe subscription. |\n| `SignalIbsPeriod`, `SignalIbsMaType` | IBS smoothing configuration for the fast timeframe. |\n| `SignalRsiPeriod`, `SignalRsiPrice` | RSI settings for the fast timeframe. |\n| `SignalCciPeriod`, `SignalCciPrice` | CCI settings for the fast timeframe. |\n| `SignalThreshold` | Momentum clamp threshold used in the fast timeframe composite. |\n| `SignalRangePeriod`, `SignalSmoothPeriod` | Envelope range and smoothing on the fast timeframe. |\n| `SignalSignalBar` | Offset applied when evaluating fast timeframe signals. |\n| `CloseLongOnSignalCross`, `CloseShortOnSignalCross` | Optional exit triggers on fast timeframe crossovers. |\n| `StopLossPoints`, `TakeProfitPoints` | Stop loss and take profit distances measured in price step points. |"
+   },
+   "870": {
+    "id": 870,
+    "name": "Hancock RSI Volume",
+    "family": "trend",
+    "overview": "This strategy calculates a volume-weighted Relative Strength Index (RSI) inspired by the Hancock script from TradingView. The RSI uses bullish and bearish volume to gauge trend strength. A long position is opened when the RSI trend turns up, and a short position is opened when it turns down.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: RSI trend switches to up.\n  - **Short**: RSI trend switches to down.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite trend signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Threshold` = 0.1.\n  - `Use Wicks` = true.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Volume\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI trend switches to up.\n  - **Short**: RSI trend switches to down.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite trend signal.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Threshold` = 0.1.\n  - `Use Wicks` = true.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, Volume\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1806": {
+    "id": 1806,
+    "name": "Hardcore FX Breakout",
+    "family": "breakout",
+    "overview": "Adaptation of the MetaTrader \"HardcoreFX\" expert. The strategy tracks ZigZag pivot highs and lows and opens positions when price breaks beyond them. It applies fixed stop loss and take profit levels and also trails the position to protect accrued gains.\n\n## Details\n- **Entry Criteria**: Close above last ZigZag high to go long; close below last ZigZag low to go short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss, take profit or trailing stop hit.\n- **Stops**: Fixed stop loss, take profit and trailing stop.\n- **Default Values**:\n  - `ZigzagLength` = 17\n  - `StopLoss` = 1400\n  - `TakeProfit` = 5400\n  - `TrailingStop` = 500\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Stop loss, Take profit, Trailing stop\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close above last ZigZag high to go long; close below last ZigZag low to go short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss, take profit or trailing stop hit.\n- **Stops**: Fixed stop loss, take profit and trailing stop.\n- **Default Values**:\n  - `ZigzagLength` = 17\n  - `StopLoss` = 1400\n  - `TakeProfit` = 5400\n  - `TrailingStop` = 500\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: Stop loss, Take profit, Trailing stop\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1295": {
+    "id": 1295,
+    "name": "Session Breakout Scalper Trading Bot",
+    "family": "breakout",
+    "overview": "Session Breakout Scalper trades breakouts of the price range formed during a predefined session.\n\n## Details\n\n- **Entry Criteria**: price breaks above session high or below session low\n- **Long/Short**: Both\n- **Exit Criteria**: take profit or stop loss\n- **Stops**: ATR or fixed\n- **Default Values**:\n  - `SessionStart` = 01:00\n  - `SessionEnd` = 02:00\n  - `TakeProfit` = 100\n  - `StopLoss` = 50\n  - `UseAtrStop` = true\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n  - `CandleType` = time frame 1 minute\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: ATR\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price breaks above session high or below session low\n- **Long/Short**: Both\n- **Exit Criteria**: take profit or stop loss\n- **Stops**: ATR or fixed\n- **Default Values**:\n  - `SessionStart` = 01:00\n  - `SessionEnd` = 02:00\n  - `TakeProfit` = 100\n  - `StopLoss` = 50\n  - `UseAtrStop` = true\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n  - `CandleType` = time frame 1 minute\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: ATR\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3698": {
+    "id": 3698,
+    "name": "Symbol Swap Panel",
+    "family": "momentum",
+    "overview": "The **Symbol Swap Panel Strategy** is a StockSharp conversion of the MQL panel *\"Symbol Swap Panel\"*. The original expert acted as a chart widget that allowed traders to type a symbol, switch the active chart to that symbol, and monitor real-time market information such as OHLC values, tick volume, and spread. The converted strategy recreates the same workflow in the StockSharp environment. It can be launched on any security and provides a manual toggle to jump to another instrument while continuously logging the most relevant market metrics.",
+    "details": "",
+    "parameters": "| Name | Type | Description |\n| --- | --- | --- |\n| `TargetSecurityId` | `string` | Security identifier that should be activated when the swap request is triggered. Empty strings are ignored with a warning. |\n| `CandleType` | `DataType` | Candle aggregation for periodic updates (defaults to 1-hour candles, replicating the MQL panel timeframe). |\n| `SwapRequested` | `bool` | Manual flag that requests an immediate switch to `TargetSecurityId`. It resets to `false` after the swap attempt is processed. |"
+   },
+   "1222": {
+    "id": 1222,
+    "name": "Range Filter Strategy with ATR TP/SL",
+    "family": "volatility",
+    "overview": "Strategy that enters when price crosses the range filter bands and exits using ATR-based take-profit and stop-loss levels.\n\n## Details\n\n- **Entry Criteria**: Price crosses above upper band for long, below lower band for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based take profit or stop loss.\n- **Stops**: ATR-based, fixed when trade opens.\n- **Default Values**:\n  - `RangeFilterLength` = 20\n  - `RangeFilterMultiplier` = 1.5\n  - `AtrLength` = 14\n  - `TakeProfitMultiplier` = 1.5\n  - `StopLossMultiplier` = 1.5\n- **Filters**: none.\n- **Complexity**: medium.\n- **Timeframe**: configurable.\n",
+    "details": "- **Entry Criteria**: Price crosses above upper band for long, below lower band for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based take profit or stop loss.\n- **Stops**: ATR-based, fixed when trade opens.\n- **Default Values**:\n  - `RangeFilterLength` = 20\n  - `RangeFilterMultiplier` = 1.5\n  - `AtrLength` = 14\n  - `TakeProfitMultiplier` = 1.5\n  - `StopLossMultiplier` = 1.5\n- **Filters**: none.\n- **Complexity**: medium.\n- **Timeframe**: configurable.",
+    "parameters": ""
+   },
+   "872": {
+    "id": 872,
+    "name": "Harmony Signal Flow By Arun",
+    "family": "mean_reversion",
+    "overview": "Harmony Signal Flow By Arun uses a short-period RSI to capture reversals with fixed stop-loss and target levels. The strategy goes long when RSI crosses above a lower threshold and short when it crosses below an upper threshold. Positions are closed by stop, target, or at 15:25 each day.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: RSI crosses above `LowerThreshold`.\n  - **Short**: RSI crosses below `UpperThreshold`.\n- **Exit Criteria**: Stop-loss or target hit, or 15:25 close.\n- **Stops**: Fixed stop-loss and target.\n- **Default Values**:\n  - `RsiPeriod` = 5\n  - `LowerThreshold` = 30\n  - `UpperThreshold` = 70\n  - `BuyStopLoss` = 100\n  - `BuyTarget` = 150\n  - `SellStopLoss` = 100\n  - `SellTarget` = 150\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: RSI crosses above `LowerThreshold`.\n  - **Short**: RSI crosses below `UpperThreshold`.\n- **Exit Criteria**: Stop-loss or target hit, or 15:25 close.\n- **Stops**: Fixed stop-loss and target.\n- **Default Values**:\n  - `RsiPeriod` = 5\n  - `LowerThreshold` = 30\n  - `UpperThreshold` = 70\n  - `BuyStopLoss` = 100\n  - `BuyTarget` = 150\n  - `SellStopLoss` = 100\n  - `SellTarget` = 150\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

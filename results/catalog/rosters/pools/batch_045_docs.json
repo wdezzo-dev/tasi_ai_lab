@@ -1,0 +1,98 @@
+{
+ "batch_045": {
+  "strategy_ids": [
+   321,
+   1022,
+   593,
+   1790,
+   308,
+   790,
+   2659,
+   3133,
+   1217,
+   2707
+  ],
+  "docs": {
+   "321": {
+    "id": 321,
+    "name": "Ichimoku Hurst Exponent",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 64%. It performs best in the forex market.\n\nSignals trigger when Hurst confirms trend changes on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like TenkanPeriod, KijunPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `HurstPeriod = 100`\n  - `HurstThreshold = 0.5m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Hurst, Exponent\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `HurstPeriod = 100`\n  - `HurstThreshold = 0.5m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Hurst, Exponent\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1022": {
+    "id": 1022,
+    "name": "Market Trend Levels Non-Repainting",
+    "family": "trend",
+    "overview": "EMA crossover strategy that optionally filters trades using RSI. Long positions open when the fast EMA crosses above the slow EMA, while short trades trigger on the opposite cross. When `ApplyExitFilters` is enabled and the RSI filter is active, positions close if the RSI leaves the allowed zone.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: `Fast EMA` crosses above `Slow EMA` and `RSI > RsiLongThreshold` when enabled\n  - **Short**: `Fast EMA` crosses below `Slow EMA` and `RSI < RsiShortThreshold` when enabled\n- **Exit Conditions**: Opposite crossover or RSI filter failing when `ApplyExitFilters` is true\n- **Type**: Trend-following\n- **Indicators**: EMA, RSI\n- **Timeframe**: 5 minutes (default)\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: `Fast EMA` crosses above `Slow EMA` and `RSI > RsiLongThreshold` when enabled\n  - **Short**: `Fast EMA` crosses below `Slow EMA` and `RSI < RsiShortThreshold` when enabled\n- **Exit Conditions**: Opposite crossover or RSI filter failing when `ApplyExitFilters` is true\n- **Type**: Trend-following\n- **Indicators**: EMA, RSI\n- **Timeframe**: 5 minutes (default)",
+    "parameters": ""
+   },
+   "593": {
+    "id": 593,
+    "name": "Bollinger Bands Modified",
+    "family": "trend",
+    "overview": "Strategy that trades Bollinger Bands breakouts with an optional EMA trend filter. Enters long when price crosses above the upper band and short when it crosses below the lower band.\n\nStop-loss is placed at the recent high or low and take-profit is a multiple of the risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price crosses above upper Bollinger Band\n  - Short: price crosses below lower Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: stop at recent low, target at risk * factor\n  - Short: stop at recent high, target at risk * factor\n- **Stops**: Highest/lowest of last N candles\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerDeviation` = 0.38m\n  - `EmaLength` = 80\n  - `HighestLength` = 7\n  - `LowestLength` = 7\n  - `TargetFactor` = 1.6m\n  - `EmaTrend` = true\n  - `CrossoverCheck` = false\n  - `CrossunderCheck` = false\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price crosses above upper Bollinger Band\n  - Short: price crosses below lower Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: stop at recent low, target at risk * factor\n  - Short: stop at recent high, target at risk * factor\n- **Stops**: Highest/lowest of last N candles\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerDeviation` = 0.38m\n  - `EmaLength` = 80\n  - `HighestLength` = 7\n  - `LowestLength` = 7\n  - `TargetFactor` = 1.6m\n  - `EmaTrend` = true\n  - `CrossoverCheck` = false\n  - `CrossunderCheck` = false\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1790": {
+    "id": 1790,
+    "name": "BrakeExp Channel",
+    "family": "trend",
+    "overview": "This strategy trades based on the **BrakeExp** indicator, which builds an exponential channel around price movements. The indicator switches between long and short regimes and generates buy or sell signals when price crosses the dynamic channel borders.\n\n## How It Works\n\n- The indicator maintains an exponential curve that follows price.\n- When the curve is below price (uptrend), the strategy looks for buy signals.\n- When the curve is above price (downtrend), the strategy looks for sell signals.\n- A crossing from one side to the other produces an entry signal in the new direction and closes the opposite position.\n\n## Parameters\n\n- `Candle Type` – timeframe of processed candles.\n- `Volume` – order volume used for market entries.\n- `A`, `B` – parameters defining the shape of the BrakeExp curve.\n- `Buy Open` / `Sell Open` – permission to open long or short positions.\n- `Buy Close` / `Sell Close` – permission to close short or long positions.\n\n## Notes\n\nThis implementation focuses on the core logic of the BrakeExp indicator and does not include stop-loss or take-profit management. Additional risk controls can be added if required.\n",
+    "details": "",
+    "parameters": "- `Candle Type` – timeframe of processed candles.\n- `Volume` – order volume used for market entries.\n- `A`, `B` – parameters defining the shape of the BrakeExp curve.\n- `Buy Open` / `Sell Open` – permission to open long or short positions.\n- `Buy Close` / `Sell Close` – permission to close short or long positions."
+   },
+   "308": {
+    "id": 308,
+    "name": "Ichimoku Volume Cluster",
+    "family": "trend",
+    "overview": "Signals trigger when its indicators confirms trend changes on intraday (1h) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like TenkanPeriod, KijunPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `VolumeAvgPeriod = 20`\n  - `VolumeStdDevMultiplier = 2.0m`\n  - `CandleType = TimeSpan.FromHours(1).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `VolumeAvgPeriod = 20`\n  - `VolumeStdDevMultiplier = 2.0m`\n  - `CandleType = TimeSpan.FromHours(1).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "790": {
+    "id": 790,
+    "name": "Fibonacci-Only Strategy V2",
+    "family": "breakout",
+    "overview": "Trades around 19% and 82.56% Fibonacci retracements calculated over 93 candles. Entries occur when price touches or breaks these levels with candle confirmation. Risk is managed via optional ATR-based stop loss and trailing stop.\n\n## Details\n\n- **Entry Criteria**: touch or breakout of 19% / 82.56% Fibonacci levels with candle confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss or trailing stop\n- **Stops**: Yes\n- **Default Values**:\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Fibonacci breakout\n  - Direction: Both\n  - Indicators: ATR, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: touch or breakout of 19% / 82.56% Fibonacci levels with candle confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss or trailing stop\n- **Stops**: Yes\n- **Default Values**:\n  - `CandleType` = 15 minutes\n- **Filters**:\n  - Category: Fibonacci breakout\n  - Direction: Both\n  - Indicators: ATR, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2659": {
+    "id": 2659,
+    "name": "Last ZZ50",
+    "family": "breakout",
+    "overview": "The Last ZZ50 strategy reproduces Vladimir Karputov's \"Last ZZ50\" expert advisor for MetaTrader.\nIt uses the ZigZag indicator to track the three most recent turning points and places pending orders at the midpoint of the last two ZigZag legs.\nThe approach attempts to join breakouts away from the latest swing while cancelling or repositioning orders whenever the ZigZag structure changes.",
+    "details": "",
+    "parameters": "- `LotMultiplier` – Multiplier applied to the minimal tradable volume when sending orders.\n- `ZigZagDepth`, `ZigZagDeviation`, `ZigZagBackstep` – Configuration values for the ZigZag indicator.\n- `TrailingStopPips`, `TrailingStepPips` – Distance and activation threshold for the trailing stop measured in pips.\n- `StartDay`, `EndDay`, `StartTime`, `EndTime` – Trading session boundaries.\n- `CloseOutsideSession` – Whether to flatten positions when the time filter is inactive.\n- `CandleType` – Candle series used for ZigZag calculations (default 1 hour)."
+   },
+   "3133": {
+    "id": 3133,
+    "name": "Executer AC",
+    "family": "momentum",
+    "overview": "The **Executer AC Strategy** is a faithful StockSharp port of the MetaTrader 5 \"Executer AC\" expert advisor. The original EA trades on the **Accelerator Oscillator (AC)** developed by Bill Williams and combines its momentum swings with a fixed stop/limit framework and a trailing stop module. This conversion keeps the behaviour of the MQL5 version while exposing user-friendly parameters that integrate with the high-level StockSharp API.\n\n## Trading logic\n\nThe strategy operates on finished candles of the selected timeframe and relies on the last four Accelerator Oscillator values:\n\n- `AC[0]` – most recent completed bar (called `ac[1]` in the original code).\n- `AC[1]`, `AC[2]`, `AC[3]` – progressively older values used for pattern detection.\n\nThe decision tree is identical to the EA:\n\n1. **Position management**\n   - Long positions are closed when `AC[0] < AC[1]` (momentum decreasing).\n   - Short positions are closed when `AC[0] > AC[1]` (momentum increasing).\n   - A trailing stop routine dynamically tightens the protective stop once price moves beyond the configured distance plus the trailing step.\n2. **Entry rules when flat**\n   - **Bullish acceleration above zero:** if `AC[0] > 0` and `AC[1] > 0` and `AC[0] > AC[1] > AC[2]`, a market buy is issued.\n   - **Bearish acceleration above zero:** if `AC[0] > 0` and `AC[1] > 0` and `AC[0] < AC[1] < AC[2] < AC[3]`, a market sell is issued.\n   - **Bullish acceleration below zero:** if `AC[0] < 0` and `AC[1] < 0` and `AC[0] > AC[1] > AC[2] > AC[3]`, a market buy is issued.\n   - **Bearish acceleration below zero:** if `AC[0] < 0` and `AC[1] < 0` and `AC[0] < AC[1] < AC[2]`, a market sell is issued.\n   - **Zero-line crossings:** a downwards cross (`AC[0] > 0` and `AC[1] < 0`) triggers a buy, while an upwards cross (`AC[0] < 0` and `AC[1] > 0`) triggers a sell.\n\nSignals are evaluated only after confirming that candles are finished, indicator values are formed and trading is enabled.\n\n## Risk management\n\n- **Stop-loss and take-prof",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Order volume used for all market entries. It is normalised according to the security volume step and limits. |\n| `StopLossPips` | Stop-loss distance in pips. A value of zero disables the stop-loss. |\n| `TakeProfitPips` | Take-profit distance in pips. A value of zero disables the take-profit. |\n| `TrailingStopPips` | Trailing stop distance in pips. Set to zero to disable trailing. |\n| `TrailingStepPips` | Minimum extra profit (in pips) required before moving the trailing stop again. |\n| `CandleType` | Timeframe of the candles used to compute the Accelerator Oscillator. |"
+   },
+   "1217": {
+    "id": 1217,
+    "name": "Random Coin Toss",
+    "family": "volatility",
+    "overview": "This experimental strategy flips a coin every N bars and enters long or short based on the result. Risk is managed through ATR-based stop-loss and take-profit levels.\n\nTesting indicates an average annual return of about 8%. It performs best in the crypto market.\n\nThe idea is to provide a baseline for random entries while maintaining disciplined exits.\n\n## Details\n\n- **Entry Criteria**: Every `EntryFrequency` bars a coin is tossed; heads go long, tails go short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit hit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `SlMultiplier` = 1m\n  - `TpMultiplier` = 2m\n  - `EntryFrequency` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Experimental\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n\n",
+    "details": "- **Entry Criteria**: Every `EntryFrequency` bars a coin is tossed; heads go long, tails go short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit hit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `SlMultiplier` = 1m\n  - `TpMultiplier` = 2m\n  - `EntryFrequency` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Experimental\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   },
+   "2707": {
+    "id": 2707,
+    "name": "RSI Eraser",
+    "family": "mean_reversion",
+    "overview": "The RSI Eraser strategy is a direct port of the MetaTrader 5 expert advisor created by Vladimir Karputov.\nIt uses hourly candles to evaluate the relative strength index (RSI) and looks for mean-reversion style entries when momentum shifts around the neutral 50 level.\nTrades are filtered by the previous daily high/low range and the strategy sizes each position according to a fixed percentage of account equity.\n\n## Core Logic\n\n- **Primary timeframe** – 1 hour candles drive the indicator calculations and trade signals.\n- **Filter timeframe** – Completed daily candles provide yesterday's high and low that gate entries.\n- **Indicator** – Classic RSI with configurable lookback length.\n- **Direction** – Long when RSI > neutral level, short when RSI < neutral level.\n- **Risk sizing** – Position volume is derived from the distance between entry and stop multiplied by the chosen risk percentage.\n\n## Entry Rules\n\n1. Wait for the hourly candle to close and compute RSI.\n2. Check that at least one completed daily candle is available.\n3. **Long setup**\n   - RSI value strictly above the neutral threshold (default 50).\n   - Proposed stop level (entry − stop loss distance) must not be below yesterday's low minus the daily buffer.\n   - Entry is rejected if a long trade has already been opened on the same calendar day.\n4. **Short setup**\n   - RSI value strictly below the neutral threshold.\n   - Proposed stop level (entry + stop loss distance) must not be above yesterday's high plus the daily buffer.\n   - Entry is rejected if a short trade has already been opened on the same calendar day.\n5. When conditions are satisfied the strategy sends a market order with risk-based volume.\n   If there is an opposite position, the new order closes it and flips direction in a single operation.\n\n## Exit Rules\n\n- Initial stop-loss and take-profit are computed from the configured pip distance and multiplier.\n- The strategy continually monitors completed candles:\n  - A long trade exits when price trades ",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

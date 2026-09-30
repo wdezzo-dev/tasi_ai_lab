@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1605,
+      "name": "VWAP Mean Magnet v2 (Volume Filter)",
+      "family": "trend",
+      "entry_long": "close < sma((high + low + close) / 3, 60) and rsi(close, 14) < 25 and volume_ratio(volume, 20) > 3",
+      "exit_long": "close > sma((high + low + close) / 3, 60)",
+      "stop_loss_pct": 0.5,
+      "take_profit_pct": null,
+      "notes": "VWAP is approximated by the 60-bar typical-price average and the documented volume filter by volume_ratio(20) above the documented multiplier 3, with RSI oversold 25. The documented Stop loss 0.5% is applied; exit is the documented return to VWAP."
+    },
+    {
+      "id": 2937,
+      "name": "CCI and Martin",
+      "family": "trend",
+      "entry_long": "roc(close, 3) < 0 and rsi(close, 14) < 30",
+      "exit_long": "rsi(close, 14) > 55 or roc(close, 3) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so the documented short bearish sequence confirmed by the oscillator is approximated by a three-bar decline with RSI(14) oversold. CciPeriod has no documented value, and martingale scaling, pip stops and the trailing stop are not expressible."
+    },
+    {
+      "id": 2002,
+      "name": "Well Martin",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close, 20) and adx(high, low, close, 14) < 25",
+      "exit_long": "close >= bb_mid(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule (break below the lower Bollinger band while trend strength is low) is kept, with a Bollinger period of 20, ADX period 14 and ADX level 25 as explicit defaults. BollingerWidth, AdxLevel values and the price-unit stop and target are not documented as percentages."
+    },
+    {
+      "id": 3904,
+      "name": "OzFx Simple",
+      "family": "trend",
+      "entry_long": "rsi(close, 5) > 50 and close > ema((high + low) / 2, 5) - ema((high + low) / 2, 34)",
+      "exit_long": "rsi(close, 5) < 50 or close < ema((high + low) / 2, 5) - ema((high + low) / 2, 34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Accelerator/Decelerator oscillator is approximated by the 5/34 median-price EMA difference and the stochastic %K by RSI with the documented StochasticLevel 50 and StochasticLength 5. Stacking five market orders with staggered take-profits and break-even, plus pip distances, cannot be represented."
+    },
+    {
+      "id": 1519,
+      "name": "Vector3",
+      "family": "trend",
+      "entry_long": "sma(close, 10) > sma(close, 50) and sma(close, 50) > sma(close, 100)",
+      "exit_long": "sma(close, 10) < sma(close, 50) or sma(close, 50) < sma(close, 100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Direct translation of the documented three-MA alignment with the documented lengths 10/50/100 and the opposite signal as exit. Docs state there are no stops."
+    },
+    {
+      "id": 3294,
+      "name": "HistoryInfoEaStrategy",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a trade-history statistics reporter that never registers its own orders, so there is no market-derived entry to translate. A never-true guard is used; the magic number, comment and security filters are reporting options."
+    },
+    {
+      "id": 616,
+      "name": "Chart Oscillator",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close, 14), sma(rsi(close, 14), 3)) and rsi(close, 14) < 20",
+      "exit_long": "crossbelow(rsi(close, 14), sma(rsi(close, 14), 3)) or rsi(close, 14) > 80",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The default Stochastic choice is approximated by RSI(14) with a 3-period signal line and the documented Oversold 20 / Overbought 80 zones, keeping the bullish crossover near oversold as the long entry. The documented StopLossPercent 2.0 is applied; MFI/RSI selector modes are not modelled."
+    },
+    {
+      "id": 1285,
+      "name": "S&P 100 Option Expiration Week",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry and exit depend purely on calendar events (Monday of the option-expiry week and the third Friday), with no market-derived signal and no indicators. A never-true guard is used because the DSL has no date or session fields."
+    },
+    {
+      "id": 2338,
+      "name": "Limits Bot",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bot brackets each candle open with symmetric limit orders at fixed price-step distances, so the entry is an order-placement offset rather than a market signal. A never-true guard is used; the documented point offsets and session window are not DSL fields."
+    },
+    {
+      "id": 663,
+      "name": "DCA Strategy 2",
+      "family": "other",
+      "entry_long": "crossabove(close, open)",
+      "exit_long": "crossbelow(rsi(close, 14), 40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "crossabove(close, open) is the closest proxy for a green Heikin Ashi candle following a red one. Exit RSI has no documented value (40 used) and the Start Year / End Year window plus partial-close percentage cannot be expressed."
+    }
+  ]
+}

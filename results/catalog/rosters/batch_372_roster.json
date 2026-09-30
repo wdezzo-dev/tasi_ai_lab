@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 334,
+      "name": "Hull MA K-Means Cluster",
+      "family": "trend",
+      "entry_long": "crossabove((2 * ema(close,9) - ema(ema(close,9),9)),ema(close,9))",
+      "exit_long": "crossbelow((2 * ema(close,9) - ema(ema(close,9),9)),ema(close,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull MA is approximated by the DEMA form 2*EMA-EMA(EMA), with documented/default period."
+    },
+    {
+      "id": 1964,
+      "name": "XMA Ichimoku Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 950,
+      "name": "Kaufman Adaptive Moving Average",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 3047,
+      "name": "Little EA",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 436,
+      "name": "Multi-timeframe EMA + BB + RSI",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 4005,
+      "name": "FT Bill Williams AO",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 145,
+      "name": "Adx Stochastic",
+      "family": "trend",
+      "entry_long": "(donchian_high(high,3) - donchian_low(low,3) > 0) and (100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) < 20",
+      "exit_long": "(donchian_high(high,3) - donchian_low(low,3) > 0) and (100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic/KD is approximated from the close position in the rolling high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 1789,
+      "name": "BreakThrough",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 2579,
+      "name": "20PRExp-3 Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1816,
+      "name": "BuySell",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,60) > sma(atr(high,low,close,60),60)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,60) < sma(atr(high,low,close,60),60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    }
+  ]
+}

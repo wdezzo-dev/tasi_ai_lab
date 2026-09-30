@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2,
+      "name": "NDay Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Donchian 20-bar breakout with 20-bar MA trend filter (LookbackPeriod=20, MaPeriod=20). StopLoss=2% documented."
+    },
+    {
+      "id": 8,
+      "name": "Hull MA Trend",
+      "family": "trend",
+      "entry_long": "close > ema(close,9) and ema(close,9) > ema(close,18)",
+      "exit_long": "close < ema(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull MA(9) trend: fast EMA(9) above slow EMA(18) approximates rising Hull slope (HmaPeriod=9). ATR trailing stop not representable as fixed pct; left null."
+    },
+    {
+      "id": 10,
+      "name": "Super Trend",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) + 3 * atr(high,low,close,10)",
+      "exit_long": "close < ema(close,10) - 3 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Super Trend (Period=10, Multiplier=3.0): long above upper band, exit below lower band. Corpus has no fixed stop; uses ATR-based dynamic stop."
+    },
+    {
+      "id": 56,
+      "name": "Double Bottom Pattern",
+      "family": "pattern",
+      "entry_long": "low <= donchian_low_prev(low,5) and close > open and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "Double bottom: price makes a low within prior 5 bars then closes bullish above MA(20). Distance=5, SimilarityPercent=2.0. StopLoss=1% documented."
+    },
+    {
+      "id": 60,
+      "name": "Shooting Star Reversal",
+      "family": "pattern",
+      "entry_long": "close > open and (high - close) >= 2 * (close - open) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "After shooting star (upper shadow >= 2x body), wait for bullish confirmation close above MA(20). ShadowToBodyRatio=2.0. StopLoss=1%."
+    },
+    {
+      "id": 86,
+      "name": "Heikin-Ashi Reversal",
+      "family": "pattern",
+      "entry_long": "close > open and close > donchian_high_prev(high,1)",
+      "exit_long": "close < open and close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Heikin-Ashi color change: bullish HA candle (close>open) breaking prior high. HA values approximated from raw candles. StopLoss=2% documented."
+    },
+    {
+      "id": 99,
+      "name": "Tweezer Bottom",
+      "family": "pattern",
+      "entry_long": "low <= donchian_low_prev(low,2) and close > open and close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Tweezer bottom: two candles share a low within 2 bars, then close bullish above prior high. StopLoss=2% documented."
+    },
+    {
+      "id": 752,
+      "name": "Engulfing Candlestick",
+      "family": "pattern",
+      "entry_long": "close > open and close >= donchian_high_prev(high,1) and open <= donchian_low_prev(low,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish engulfing: current candle fully engulfs prior candle range. HoldPeriods=17 bars exit approximated by channel break. No fixed stop documented."
+    },
+    {
+      "id": 867,
+      "name": "Hammer & Shooting Star",
+      "family": "pattern",
+      "entry_long": "close > open and (open - low) >= 2 * (close - open) and (high - close) <= (close - open)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hammer candle: lower shadow >= 2x body, upper shadow <= body. Long WickFactor=0.9, MaxOppositeWickFactor=0.45, MinBodyRangePct=0.2. No fixed stop; exit on prior low break."
+    },
+    {
+      "id": 9,
+      "name": "MACD Trend",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) above signal and zero line. StopLoss=2% documented. Note: similar to batch_002 ID=91 but uses state-based entry vs cross."
+    }
+  ]
+}

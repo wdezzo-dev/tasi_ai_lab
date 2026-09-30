@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 696,
+      "name": "Double Vegas SuperTrend Enhanced",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,10) + 3 * atr(high,low,close,10)) and crossabove(close, ema(close,20) + 3 * atr(high,low,close,20))",
+      "exit_long": "close < ema(close,10) + 3 * atr(high,low,close,10) or close < ema(close,20) + 3 * atr(high,low,close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Each SuperTrend is approximated by its trend line (EMA basis + multiplier x ATR) and the long signal requires both lines bullish, with either bearish flip exiting. ATR periods 10/20, multiplier 3 and the EMA basis are explicit fallbacks; Vegas-channel volatility adaptation, hold-days and the parameterless take-profit/stop-loss inputs are not representable."
+    },
+    {
+      "id": 778,
+      "name": "Falcon Liquidity Grab",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,10) and close > sma(close,50)",
+      "exit_long": "high > donchian_high_prev(high,10) and close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule is a low below the swing-period extreme with a close back above the SMA, so a 10-bar prior-bar low plus SMA(50) is an explicit fallback for the unnamed swing period and SMA length. The mirrored bearish grab supplies the long exit; the session filter, 15-minute timeframe and tick-based stop/target have no documented numbers."
+    },
+    {
+      "id": 1565,
+      "name": "XAUUSD Trend",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9), ema(close,21)) and rsi(close,14) < 30 and close > bb_upper(close,20,2)",
+      "exit_long": "crossbelow(ema(close,9), ema(close,21)) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long combines a fast-EMA up-cross, oversold RSI and a close above the upper band; EMA 9/21, RSI 14/30 and Bollinger 20/2 are explicit fallbacks because no values are given. A down-cross or overbought RSI is the long exit proxy since the risk-percentage stop and take-profit:stop ratio produce no fixed percentages."
+    },
+    {
+      "id": 4209,
+      "name": "Slope RSI MTF",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,60), ema(close,200)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,60), ema(close,200)) or rsi(close,14) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull slopes across 5m/1h/4h/1d cannot be resampled in this single-series DSL, so the documented SlopeTriggerLength 60 and SlopeTrendLength 200 become EMA(60)/EMA(200) alignment and the entry is the up-cross; the long RSI tier is relaxed to the documented 50 mid level because the strict 90 tier never co-occurs with a cross. ATR(21) stop/target offsets, MaxOrders scaling and compounding sizing are not percentage/DSL fields."
+    },
+    {
+      "id": 1418,
+      "name": "Flash Strategy Minervini Qualifier",
+      "family": "trend",
+      "entry_long": "ema(close,12) > close * 1.01 and close > ema(close,10) + 3 * atr(high,low,close,10) and rsi(close,10) > 60",
+      "exit_long": "ema(close,12) < close * 0.99 or close < ema(close,10) - 3 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used: EMA(12) with EmaPercent 0.01 read as a trailing line 1% from price, SuperTrend approximated by EMA(10)+3xATR(10), momentum RSI(10)>60. Exits are the opposite trailing line or SuperTrend flip; the Minervini stage filter, intraday timeframe and neural/divergence options are unavailable and no stops are documented."
+    },
+    {
+      "id": 2235,
+      "name": "WPRSI Signal",
+      "family": "momentum",
+      "entry_long": "close > donchian_low(low,14) + 0.8 * (donchian_high(high,14) - donchian_low(low,14)) and rsi(close,14) > 50",
+      "exit_long": "close < donchian_low(low,14) + 0.2 * (donchian_high(high,14) - donchian_low(low,14)) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is rewritten as range position, so WPR above -20 (top 20% of the 14-bar range) plus RSI(14) above the mid level gives the long signal and the -80 mirror gives the exit. Period 14, the -20/-80 bands and FilterUp/FilterDown bar counts are explicit fallbacks; the confirmation-window counting and CandleType selection are not expressible."
+    },
+    {
+      "id": 2658,
+      "name": "Nevalyashka Flip",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The expert always alternates sell/buy with no market-derived signal, so the impossible negative-price guard blocks fabricating an entry. The 50/50 pip protective orders, lot multiplier and order-book quote handling are pip/volume concepts, not fixed percentages."
+    },
+    {
+      "id": 2931,
+      "name": "Return",
+      "family": "mean_reversion",
+      "entry_long": "low < sma(close,20) and close > sma(close,20)",
+      "exit_long": "close >= ema(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The paired buy-limit grid around the StartHour price is replaced by the buy-limit half: price dipping under a 20-bar mean and closing back above it, with the exit at a 9-bar mean as the net-profit flush proxy. DistancePips/StepPips grid spacing, trailing-stop ratchets, EndHour and Friday flattening are schedule and pip features the DSL cannot express."
+    },
+    {
+      "id": 1721,
+      "name": "Volume EA",
+      "family": "volume",
+      "entry_long": "roc(volume,1) > 50 and zscore(close,20) > 0",
+      "exit_long": "roc(volume,1) < 0 or zscore(close,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The new-hour volume spike is expressed as one-bar volume growth above a Factor of 1.5 (roc>50%), and CCI confirmation is approximated by a 20-bar z-score above zero; both are explicit fallbacks since no values are documented. The hourly open timing, short-side CCI bands and trailing stop in price steps are unsupported."
+    },
+    {
+      "id": 1537,
+      "name": "Volume per Point",
+      "family": "volume",
+      "entry_long": "roc(volume,1) > 0 and atr(high,low,close,14) < sma(atr(high,low,close,14),20) and rsi(close,14) > 50",
+      "exit_long": "roc(volume,1) < 0 or atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bar-to-bar range change is not available, so a contracting ATR(14) versus its SMA(20) proxies the shrinking-range premise while rising volume and RSI(14)>50 supply the long filter; exit is expanding range or contracting volume. RSI length 14 and the 50 threshold are explicit fallbacks and CandleType selection is unsupported."
+    }
+  ]
+}

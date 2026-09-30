@@ -1,0 +1,98 @@
+{
+ "batch_264": {
+  "strategy_ids": [
+   1502,
+   961,
+   2223,
+   4109,
+   2924,
+   2988,
+   3249,
+   1871,
+   1567,
+   3175
+  ],
+  "docs": {
+   "1502": {
+    "id": 1502,
+    "name": "Uhl MA Crossover System",
+    "family": "trend",
+    "overview": "The Uhl MA Crossover System builds two adaptive lines (CTS and CMA) using variance to adjust smoothing. A long position is opened when CTS crosses above CMA and a short when it crosses below.\n\n## Details\n\n- **Entry Criteria**: CTS crosses above CMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: CTS crosses below CMA.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 100\n  - `Multiplier` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, Variance\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: CTS crosses above CMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: CTS crosses below CMA.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 100\n  - `Multiplier` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, Variance\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "961": {
+    "id": 961,
+    "name": "LANZ Strategy 2.0 [Backtest]",
+    "family": "trend",
+    "overview": "Swing-based strategy that records market structure and trend using recent swing highs and lows.\nPositions are opened at 02:00 New York time after a break of structure in the direction of the trend.\nStop-loss is set from swing points or full coverage and take-profit is calculated via risk reward multiplier.\nAny open position is closed manually at 11:45 New York time.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2223": {
+    "id": 2223,
+    "name": "Karacatica",
+    "family": "trend",
+    "overview": "The Karacatica strategy is a trend-following approach that combines price action with the Average Directional Index (ADX). It looks for situations where the current close price is higher or lower than the close price a specified number of candles ago and confirms the move with the dominance of the +DI or -DI line.",
+    "details": "",
+    "parameters": "- `Period` – number of candles used for both the ADX calculation and the lookback for the price comparison. Default is 70.\n- `TakeProfitPercent` – take-profit expressed as a percentage of the entry price. Default is 2%.\n- `StopLossPercent` – stop-loss expressed as a percentage of the entry price. Default is 1%.\n- `CandleType` – timeframe of candles to subscribe to. Default is 1 hour."
+   },
+   "4109": {
+    "id": 4109,
+    "name": "Auto RXD v1.67",
+    "family": "trend",
+    "overview": "Auto RXD v1.67 is a rule-based strategy that emulates the MetaTrader expert advisor of the same name. The approach uses three linear perceptrons: a supervisor that decides whether to look for bullish or bearish signals, plus a dedicated perceptron for each direction. Every perceptron operates on linear weighted moving averages (LWMAs) calculated from candle close and Robbie Ruan's \"weighted price\" (high + low + 2 × close) inputs. The StockSharp port executes on completed candles only and uses the high-level `BindEx` data flow to keep the indicator calculations synchronized with the trading loop.",
+    "details": "",
+    "parameters": "The StockSharp implementation exposes the full MQL parameter set grouped for optimization and UI clarity. Key parameters include:\n\n### Trading\n- `OrderVolume` – Lot size for new positions.\n- `CandleType` – Candle data type used for binding.\n\n### Risk\n- `UseAtrTargets` – Toggle between ATR-based and fixed-point protective distances.\n- `AtrPeriod`, `AtrTakeProfitFactor`, `AtrStopLossFactor` – ATR configuration for adaptive targets.\n- `LongTakeProfitPoints`, `LongStopLossPoints`, `ShortTakeProfitPoints`, `ShortStopLossPoints` – Point-based TP/SL references reused by both ATR and fixed modes.\n\n### Indicator Filters\n- `UseIndicatorFilters` – Master switch for all filters.\n- `UseAdxFilter`, `AdxPeriod`, `AdxThreshold` – ADX confirmation settings.\n- `UseMacdFilter`, `MacdFast`, `MacdSlow`, `MacdSignal` – MACD confirmation settings.\n- `UseRsiFilter`, `RsiPeriod` – RSI confirmation settings.\n- `UseCciFilter`, `CciPeriod` – CCI confirmation settings.\n\n### Perceptron Specialists\n- `ShortMaPeriod`, `ShortStep`, `ShortX1…ShortX4`, `ShortThreshold` – Short perceptron configuration.\n- `LongMaPeriod`, `LongStep`, `LongX1…LongX4`, `LongThreshold` – Long perceptron configuration.\n- `SupervisorMaPeriod`, `SupervisorStep`, `SupervisorX1…SupervisorX4`, `SupervisorThreshold` – Supervisor perceptron configuration.\n\nAll numeric parameters mirror the MQL defaults, enabling a like-for-like behavior between the original expert advisor and this StockSharp port while exposing the configuration through the `StrategyParam` system for optimization campaigns."
+   },
+   "2924": {
+    "id": 2924,
+    "name": "MostasHaR15 Pivot",
+    "family": "trend",
+    "overview": "The strategy replicates the behaviour of the original **MostasHaR15 Pivot** MQL5 Expert Advisor using StockSharp's high level API. It combines classic daily floor-pivot calculations with momentum filters from ADX, EMA differentials and the MACD histogram (OsMA). The strategy operates on an intraday candle stream (1 hour by default) and consumes the previous completed daily candle to rebuild the pivot map on every bar.",
+    "details": "",
+    "parameters": ""
+   },
+   "2988": {
+    "id": 2988,
+    "name": "Flat Trend EA",
+    "family": "trend",
+    "overview": "Flat Trend EA Strategy is a StockSharp port of the MQL5 expert advisor \"Flat Trend EA\". The algorithm combines the Parabolic SAR indicator with the Average Directional Index (ADX) to detect four market states: trending up, trending down, end of buy, and end of sell. The strategy reacts only to completed candles from the configured timeframe and mirrors the original logic of closing opposite positions before opening a new one.",
+    "details": "",
+    "parameters": "- `StopLossPips` – distance to the protective stop in pips.\n- `TakeProfitPips` – distance to the target in pips.\n- `TrailingStopPips` – trailing stop distance in pips (set to 0 to disable trailing).\n- `TrailingStepPips` – extra progress required before the trailing stop moves; must be positive when trailing is enabled.\n- `UseTradingHours` – enables the trading window filter.\n- `StartHour` / `EndHour` – inclusive start hour and exclusive end hour for entries (exchange time).\n- `AdxPeriod` – smoothing period for ADX, which controls +DI and -DI sensitivity.\n- `SarStart`, `SarIncrement`, `SarMaximum` – Parabolic SAR acceleration settings matching the original indicator (0.02 / 0.02 / 0.2 by default).\n- `CandleType` – timeframe used for candle subscriptions and indicator calculations.\n- `Volume` – inherited from `Strategy`, represents the order size used when entering new positions."
+   },
+   "3249": {
+    "id": 3249,
+    "name": "800BB",
+    "family": "trend",
+    "overview": "- Works on any instrument and timeframe supplied through the `CandleType` parameter.\n- Uses an 800-period Bollinger Band with a two standard deviation envelope to detect extreme excursions.\n- Confirms entries on the bar that opens back inside the band right after an outside close.\n- Sizes orders by estimating the ATR-derived stop distance in pips and applying the selected `RiskPercent` to the current portfolio value.\n- Replicates MetaTrader's pip calculation by multiplying the price step by 10 when the symbol has 3 or 5 decimal places.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `RiskPercent` | `2` | Percentage of portfolio value risked per trade. |\n| `TakeProfitAtrMultiplier` | `1.5` | ATR multiple used to calculate the take-profit distance. |\n| `StopLossAtrMultiplier` | `1` | ATR multiple used to calculate the stop-loss distance. |\n| `AtrPeriod` | `14` | Lookback period for the ATR indicator. |\n| `BollingerPeriod` | `800` | Period of the Bollinger Band moving average. |\n| `BollingerDeviation` | `2` | Standard deviation multiplier for the Bollinger Band. |\n| `CandleType` | `1 hour` | Timeframe (or any other candle type) used for signal generation. |"
+   },
+   "1871": {
+    "id": 1871,
+    "name": "Tiger EMA ADX RSI",
+    "family": "trend",
+    "overview": "This strategy follows the trend using a crossover of two exponential moving averages (EMAs) and filters trades with Average Directional Index (ADX) and Relative Strength Index (RSI). The fast EMA is compared with the slow EMA to determine trend direction. Trades are allowed only when ADX exceeds a configurable threshold and RSI stays within upper and lower bounds.\n\nIf no position is open and all conditions are satisfied, the strategy enters in the direction of the trend. Each entry sets fixed take-profit and stop-loss distances from the entry price. The position is closed when either level is reached. The order volume is defined by the strategy `Volume` property.\n\n## Parameters\n\n- **Fast EMA** – period of the fast exponential moving average.\n- **Slow EMA** – period of the slow exponential moving average.\n- **ADX Period** – period of ADX calculation.\n- **ADX Threshold** – minimum ADX value required to trade.\n- **RSI Period** – period of RSI calculation.\n- **RSI Upper** – maximum RSI value for long entries.\n- **RSI Lower** – minimum RSI value for short entries.\n- **Take Profit** – distance from entry price to take profit in price points.\n- **Stop Loss** – distance from entry price to stop loss in price points.\n- **Candle Type** – timeframe or other candle type used for indicator calculations.\n",
+    "details": "",
+    "parameters": "- **Fast EMA** – period of the fast exponential moving average.\n- **Slow EMA** – period of the slow exponential moving average.\n- **ADX Period** – period of ADX calculation.\n- **ADX Threshold** – minimum ADX value required to trade.\n- **RSI Period** – period of RSI calculation.\n- **RSI Upper** – maximum RSI value for long entries.\n- **RSI Lower** – minimum RSI value for short entries.\n- **Take Profit** – distance from entry price to take profit in price points.\n- **Stop Loss** – distance from entry price to stop loss in price points.\n- **Candle Type** – timeframe or other candle type used for indicator calculations."
+   },
+   "1567": {
+    "id": 1567,
+    "name": "Yeong RRG",
+    "family": "trend",
+    "overview": "Strategy based on normalized relative strength and momentum ratio (RRG).\n\nThe strategy enters long when both JDK RS and JDK RoC are above 100 and exits when both fall below 100.\n\n## Details\n\n- **Entry Criteria**: JDK RS and JDK RoC above 100.\n- **Long/Short**: Long only.\n- **Exit Criteria**: JDK RS and JDK RoC below 100.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Relative Strength\n  - Direction: Long\n  - Indicators: SMA, ROC, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: JDK RS and JDK RoC above 100.\n- **Long/Short**: Long only.\n- **Exit Criteria**: JDK RS and JDK RoC below 100.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Relative Strength\n  - Direction: Long\n  - Indicators: SMA, ROC, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3175": {
+    "id": 3175,
+    "name": "Exp Adaptive Renko MMRec Duplex",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader 5 expert advisor **Exp_AdaptiveRenko_MMRec_Duplex.mq5** to the StockSharp high level API. Two independent Adaptive Renko streams – one configured for long opportunities and one for shorts – watch how the custom brick channels flip between support and resistance. When the long channel reports fresh support while the short channel drops resistance (or vice versa), the strategy opens the corresponding market position. The C# version keeps the original \"MM Recounter\" money-management block that cuts the trade size after a configurable series of losses and restores it once the streak ends.\n\n## Core workflow\n\n1. **Data subscriptions** – each side subscribes to its own candle type (time frame) and binds a volatility indicator (ATR or Standard Deviation) through `SubscribeCandles().BindEx(...)`. The indicator drives the adaptive brick height.\n2. **Adaptive Renko processing** – the helper `AdaptiveRenkoProcessor` rebuilds the MQL indicator logic, returning a snapshot with the latest trend, support and resistance levels. Signals are evaluated on finished candles only.\n3. **Entry logic** – when the long Renko snapshot indicates an upswing (support prints on the signal bar), the strategy opens a long position. Short entries require a downswing from the short stream.\n4. **Exit logic** – opposite Renko events close an active position. Additional checks enforce stop-loss and take-profit distances expressed in price steps.\n5. **MMRec money management** – each direction keeps a queue of recent realised PnL values. If the number of losses inside the configured window reaches the loss trigger, the next order uses the reduced money-management value (`LongSmallMoneyManagement` / `ShortSmallMoneyManagement`). Otherwise the normal value (`LongMoneyManagement` / `ShortMoneyManagement`) is used. The `MarginModeOption` enum reproduces the MQL sizing modes (lot, balance share, loss-based share, etc.).\n6. **Trade registration** – every exit calls `RegisterTra",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

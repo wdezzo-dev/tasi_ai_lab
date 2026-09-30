@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1315,
+      "name": "Smart Grid Scalping Pullback",
+      "family": "trend",
+      "entry_long": "close < close / (1 + roc(close, 20) / 100) - 6 * 0.35 * atr(high, low, close, 10) and atr(high, low, close, 10) / low > 0.003 and rsi(close, 14) < 30 and close > open",
+      "exit_long": "close > ema(close, 5) or rsi(close, 14) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": 0.4,
+      "notes": "The base price is reconstructed as close/(1+roc(close,20)/100) and the documented (LongLevel 5 + 1) x GridFactor 0.35 x ATR(10) grid step, NoTradeZone 0.003 range filter and MaxRsiLong 30 are kept. The documented ProfitTarget 0.004 is carried as the 0.4% target field; the incremental ATR trailing stop, 1-minute timeframe, and short leg are not expressible."
+    },
+    {
+      "id": 800,
+      "name": "Flexible Moving Average",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close, 200))",
+      "exit_long": "crossbelow(close, sma(close, 200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaLength 200 SMA is used and its upward cross restores a full long while the downward cross reduces it, which in a single-position roster is the exit. The optional initial first-bar buy, partial SellPercentage 100 sizing, and the alternative MA methods are not representable."
+    },
+    {
+      "id": 3815,
+      "name": "Simple FX Crossover",
+      "family": "trend",
+      "entry_long": "sma(close, 50) > sma(close, 200) and sma(close, 50) / (1 + roc(sma(close, 50), 1) / 100) > sma(close, 200)",
+      "exit_long": "sma(close, 50) < sma(close, 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ShortPeriod 50 / LongPeriod 200 SMAs are kept and the two-bar confirmation is expressed by reconstructing each average one bar back and requiring the fast-over-slow alignment on both bars, which also captures the trend-state flip. The stored-state flag, StopLossPoints/TakeProfitPoints (default 0, disabled), and the 1-hour timeframe are dropped."
+    },
+    {
+      "id": 1743,
+      "name": "Universal Investor",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close, 14), sma(close, 14)) and roc(ema(close, 14), 1) > 0 and roc(sma(close, 14), 1) > 0",
+      "exit_long": "crossbelow(ema(close, 14), sma(close, 14)) or roc(ema(close, 14), 1) < 0 or roc(sma(close, 14), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "LWMA has no DSL function, so the crossover is EMA(14) against SMA(14) with the documented requirement that both averages rise, and MovingPeriod 14 is an explicit fallback because the table gives no value. The DecreaseFactor lot reduction after losses and the short side are not representable."
+    },
+    {
+      "id": 2982,
+      "name": "Russian20 Momentum MA",
+      "family": "trend",
+      "entry_long": "close > sma(close, 20) and roc(close, 5) > 0",
+      "exit_long": "close < sma(close, 20) or roc(close, 5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MovingAverageLength 20 SMA and MomentumPeriod 5 confirm short-term continuation, and loss of either closes the long. The 50 pip stop/target are price distances rather than percentages, and the 2-hour timeframe plus the sell-side parameters are dropped."
+    },
+    {
+      "id": 1702,
+      "name": "Renko Scalper",
+      "family": "momentum",
+      "entry_long": "close > close / (1 + roc(close, 1) / 100)",
+      "exit_long": "close < close / (1 + roc(close, 1) / 100)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Renko bricks are reduced to the documented one-bar close comparison, reconstructed as close/(1+roc(close,1)/100), with the opposite bar closing the position. The documented StopLossPercent 1 and TakeProfitPercent 2 are retained while the trailing flag, 1-minute timeframe, and short side are omitted."
+    },
+    {
+      "id": 2472,
+      "name": "Angry Bird Scalping",
+      "family": "volatility",
+      "entry_long": "close < close / (1 + roc(close, 1) / 100) and rsi(close, 14) < 30",
+      "exit_long": "close > close / (1 + roc(close, 1) / 100) or rsi(close, 14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The previous close is reconstructed from ROC(1) and paired with the hourly RSI gate, using 30/70 as fallbacks for the undocumented RsiMax/RsiMin; the source wording is internally inconsistent, so the RSI thresholds decide the long side. The Depth grid step, LotExponent averaging, MaxTrades cap, CCI force-close, and point stop/target are not expressible."
+    },
+    {
+      "id": 1251,
+      "name": "Reversal Trap Sniper",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close, 14) > 50 and rsi(close, 14) < 70 and roc(close, 1) > 0",
+      "exit_long": "crossbelow(rsi(close, 14), 50) or roc(close, 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The trap is expressed as the documented RsiOverbought 70 having been reset while RSI stays above its 50 midpoint and price keeps closing higher; a fall back through 50 or a down close invalidates it. The strict 'overbought three bars ago' conjunction has no bar-shift function, and the ATR(14) stop, RiskReward 2, MaxBars 30, and short side are not representable."
+    },
+    {
+      "id": 1770,
+      "name": "Collector v1.0",
+      "family": "volume",
+      "entry_long": "close < donchian_high_prev(high, 10) * 0.99",
+      "exit_long": "close > donchian_high_prev(high, 10) * 0.99",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The dynamic buy level is proxied by one Distance-sized step (10 price points mapped to 1%) below the prior ten-bar high, and reclaiming that level exits. VolumeStep/IncreaseTrade 3/MaxTrades 200 pyramiding, the sell-side levels, and the ProfitClose 500000 portfolio close are not expressible in a single long-only position."
+    },
+    {
+      "id": 2613,
+      "name": "Cheduecoglioni Alternating",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The expert simply keeps a position open by alternating long and short after each pip-based stop, with no market-derived trigger, so the impossible negative-price guard prevents inventing a signal. Pip take-profit/stop conversion, alternating timers, and the short leg are not roster fields."
+    }
+  ]
+}

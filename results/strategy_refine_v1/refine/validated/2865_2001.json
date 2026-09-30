@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2865,
+  "ticker": "2001",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2865,
+    "name": "Night Flat Trade",
+    "family": "trend",
+    "entry_long": "high - low >= 1 * atr(high,low,close,1) and high - low <= 7 * atr(high,low,close,7) and close <= (donchian_high_prev(high,4) + donchian_low_prev(low,3)) / 2 and roc(close,1) > 0",
+    "exit_long": "roc(close,1) < 0 or close < ema(close,5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented three-candle range filter (DiffMinPips 18 / DiffMaxPips 28) is restated as 0.5x-1.5x ATR(14) because pips are instrument-specific, and the long bias is the latest close in the lower half of the qualifying range with a rising close. The OpenHour session window, TakeProfitPips 50 and the 15-pip trailing stop need clock and pip fields, so they are dropped."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2008-09-16",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3949,
+      "engine_win_ret": 5.871939838381298,
+      "alpha": 6.2686340532573315,
+      "benchmark_ret": -0.39669421487603307,
+      "trades": 414,
+      "win_rate": 0.4613526570048309,
+      "sharpe": 0.8730175772114223,
+      "max_drawdown": -0.288327082644662,
+      "profit_factor": 1.5077005886138315
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.23881347696097976,
+      "alpha": 0.7513428196839844,
+      "benchmark_ret": -0.5125293427230047,
+      "trades": 53,
+      "win_rate": 0.49056603773584906,
+      "sharpe": 0.9967225735681119,
+      "max_drawdown": -0.17966267455565033,
+      "profit_factor": 1.3597531994100573
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 115,
+      "engine_win_ret": 0.2543035417913331,
+      "alpha": 0.45097030837506846,
+      "benchmark_ret": -0.1966667665837354,
+      "trades": 14,
+      "win_rate": 0.5,
+      "sharpe": 1.577196869050415,
+      "max_drawdown": -0.07751818262280052,
+      "profit_factor": 2.145502473238303
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2008-09-16",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3949,
+      "engine_win_ret": -0.13717687310204263,
+      "alpha": 0.25951734177399044,
+      "benchmark_ret": -0.39669421487603307,
+      "trades": 414,
+      "win_rate": 0.3743961352657005,
+      "sharpe": 0.01905439676780754,
+      "max_drawdown": -0.6090006076690987,
+      "profit_factor": 0.9713126817835451
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.050229373923238896,
+      "alpha": 0.46229996879976576,
+      "benchmark_ret": -0.5125293427230047,
+      "trades": 53,
+      "win_rate": 0.41509433962264153,
+      "sharpe": -0.12630321968338748,
+      "max_drawdown": -0.2508463597164948,
+      "profit_factor": 0.9304449981140486
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 115,
+      "engine_win_ret": 0.17254249822990708,
+      "alpha": 0.36920926481364247,
+      "benchmark_ret": -0.1966667665837354,
+      "trades": 14,
+      "win_rate": 0.5,
+      "sharpe": 1.1243294787269809,
+      "max_drawdown": -0.10718935180250688,
+      "profit_factor": 1.6718519896873822
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

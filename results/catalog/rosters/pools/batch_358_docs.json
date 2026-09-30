@@ -1,0 +1,98 @@
+{
+ "batch_358": {
+  "strategy_ids": [
+   2500,
+   2038,
+   3909,
+   1731,
+   3561,
+   2357,
+   2501,
+   836,
+   1270,
+   2711
+  ],
+  "docs": {
+   "2500": {
+    "id": 2500,
+    "name": "Yen Trader 05.1 Strategy (C#)",
+    "family": "trend",
+    "overview": "The Yen Trader 05.1 strategy replicates the original MetaTrader expert advisor that arbitrages the relationship between three currency pairs:\n\n- **Trading cross** – the instrument that hosts the strategy instance (for example GBPJPY).\n- **Major pair** – typically the base currency of the cross against USD (for example GBPUSD).\n- **USDJPY** – used to confirm the yen leg of the triangle.\n\nA breakout on the major pair combined with confirmation from USDJPY generates the trading signals. Optional RSI, CCI, RVI and moving-average filters refine the entries. Position management supports both averaging and pyramiding, while risk management reproduces the pip/ATR based stop handling from the EA.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n|-------|------|-------------|\n| Instruments | `MajorSecurity` | Major pair used for breakout confirmation. |\n| | `UsdJpySecurity` | USDJPY security for the yen leg confirmation. |\n| Data | `CandleType` | Signal timeframe for all three pairs. |\n| Filters | `MajorDirection` | Alignment between the major pair and the traded cross (Left = major/yen, Right = yen/major). |\n| | `PriceReference` | Either high/low breakout or delayed close comparison. |\n| | `LoopBackBars` | Number of historical bars to evaluate the breakout. |\n| | `EntryMode` | Averaging, pyramiding or both. |\n| Indicators | `UseRsiFilter`, `UseCciFilter`, `UseRviFilter`, `UseMovingAverageFilter` | Enable/disable additional confirmation filters. |\n| | `MaPeriod`, `MaMode` | Moving average configuration. |\n| Risk | `FixedLotSize`, `BalancePercentLotSize` | Volume controls. |\n| | `MaxOpenPositions` | Maximum number of additive entries. |\n| | `StopLossPips`, `TakeProfitPips`, `BreakEvenPips`, `ProfitLockPips`, `TrailingStopPips`, `TrailingStepPips` | Pip-based risk distances. |\n| | `EnableAtrLevels`, `AtrCandleType`, `AtrPeriod`, `AtrStopLossMultiplier`, `AtrTakeProfitMultiplier`, `AtrTrailingMultiplier`, `AtrBreakEvenMultiplier`, `AtrProfitLockMultiplier` | ATR-based risk configuration. |\n| Behaviour | `CloseOnOpposite` | Close or flip positions on opposite signals. |\n| | `AllowHedging` | Allow entries when an opposite net position exists. |"
+   },
+   "2038": {
+    "id": 2038,
+    "name": "MovingUp",
+    "family": "trend",
+    "overview": "This strategy implements a moving average crossover system with optional risk management.\nIt opens a long position when the fast moving average crosses above the slow moving average and opens a short position on the opposite crossover.\n\n## Parameters\n- **Fast MA** (`FastLength`): Period of the fast simple moving average.\n- **Slow MA** (`SlowLength`): Period of the slow simple moving average.\n- **Use TP** (`UseTakeProfit`): Enables the take-profit rule.\n- **TP** (`TakeProfit`): Distance in price for taking profit.\n- **Use SL** (`UseStopLoss`): Enables the stop-loss rule.\n- **SL** (`StopLoss`): Distance in price for stop loss.\n- **Use TS** (`UseTrailingStop`): Enables trailing stop logic.\n- **TS** (`TrailingStop`): Trailing stop distance in price.\n- **Candle** (`CandleType`): Candle type used for calculations.\n\n## Trading Logic\n1. Subscribe to candle data and calculate two SMA indicators.\n2. Detect crossovers of fast and slow MAs.\n3. Enter long when the fast MA crosses above the slow MA if no long position exists.\n4. Enter short when the fast MA crosses below the slow MA if no short position exists.\n5. Apply risk management on each new candle:\n   - Take profit when price advances by the specified distance.\n   - Stop loss when price moves against the position by the specified distance.\n   - Trailing stop protects profit once price moves favorably.\n\n## Original MQL Strategy\nThe original MQL4 script `ma_v_1_3_3.mq4` contains numerous additional features such as step up/down logic and complex position sizing. This C# version focuses on the core moving average crossover and essential risk controls.\n",
+    "details": "",
+    "parameters": "- **Fast MA** (`FastLength`): Period of the fast simple moving average.\n- **Slow MA** (`SlowLength`): Period of the slow simple moving average.\n- **Use TP** (`UseTakeProfit`): Enables the take-profit rule.\n- **TP** (`TakeProfit`): Distance in price for taking profit.\n- **Use SL** (`UseStopLoss`): Enables the stop-loss rule.\n- **SL** (`StopLoss`): Distance in price for stop loss.\n- **Use TS** (`UseTrailingStop`): Enables trailing stop logic.\n- **TS** (`TrailingStop`): Trailing stop distance in price.\n- **Candle** (`CandleType`): Candle type used for calculations."
+   },
+   "3909": {
+    "id": 3909,
+    "name": "VLT Trader Straddle",
+    "family": "trend",
+    "overview": "The VLT Trader strategy is a StockSharp conversion of the MetaTrader 4 expert advisor \"VLT_TRADER\". The original idea searches for a period of extremely low volatility and then prepares a breakout straddle around the most recent candle. When the latest completed candle has the smallest range compared with a configurable number of earlier candles, the strategy positions stop orders above and below that candle in anticipation of a volatility expansion.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Lot size used when creating the pending orders. |\n| `EntryOffsetPoints` | Additional points added to the previous high/low when placing stop entries. |\n| `TakeProfitPoints` | Take profit distance attached to each order. |\n| `StopLossPoints` | Stop loss distance attached to each order. |\n| `LookbackCandles` | Number of prior candles used to measure the minimum historical range. |\n| `CandleType` | Timeframe of the candle series that feeds the strategy. |"
+   },
+   "1731": {
+    "id": 1731,
+    "name": "EMA MACD Signal Trend",
+    "family": "trend",
+    "overview": "This strategy enters long when a fast EMA is above a slow EMA and the MACD signal line is rising. It enters short when the fast EMA is below the slow EMA and the signal line is falling. Stop-loss, take-profit and trailing stop are optional.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA > Slow EMA and MACD signal increasing → Buy.\n  - Fast EMA < Slow EMA and MACD signal decreasing → Sell.\n- **Exit Criteria**:\n  - Opposite entry signal closes position.\n- **Indicators**: EMA, MACD signal.\n- **Type**: Trend following.\n- **Timeframe**: 5 minutes (default).\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA > Slow EMA and MACD signal increasing → Buy.\n  - Fast EMA < Slow EMA and MACD signal decreasing → Sell.\n- **Exit Criteria**:\n  - Opposite entry signal closes position.\n- **Indicators**: EMA, MACD signal.\n- **Type**: Trend following.\n- **Timeframe**: 5 minutes (default).",
+    "parameters": ""
+   },
+   "3561": {
+    "id": 3561,
+    "name": "MACD Fixed PSAR",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader expert advisor **EA_MACD_FixedPSAR**. It trades trend reversals by combining a MACD crossover filter with an EMA trend check. Risk management mirrors the original implementation and supports both a fixed-distance trailing stop and a Parabolic SAR style trailing mode. All distances are configured in pips and internally converted to price units based on the instrument tick size.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `Volume` | Trading volume used for market orders. |\n| `TakeProfitPips` | Take-profit distance in pips. |\n| `StopLossPips` | Stop-loss distance in pips. |\n| `TrailMode` | Trailing stop logic (`None`, `Fixed`, `FixedPsar`). |\n| `TrailingStopPips` | Distance for the fixed trailing mode. |\n| `PsarStep` | Initial acceleration factor for the PSAR trailing mode. |\n| `PsarMaximum` | Maximum acceleration factor for the PSAR trailing mode. |\n| `MacdOpenLevelPips` | Minimum MACD magnitude (in pips) required to open a position. |\n| `MacdCloseLevelPips` | Minimum MACD magnitude (in pips) required to close a position. |\n| `TrendPeriod` | EMA period used for trend confirmation. |\n| `CandleType` | Candle series type for indicator calculations. |"
+   },
+   "2357": {
+    "id": 2357,
+    "name": "I4 DRF",
+    "family": "trend",
+    "overview": "Strategy based on the custom I4 DRF indicator. It compares the direction of recent candle highs and lows and generates a value between -100 and +100. Trading actions depend on color transitions of this indicator and the selected mode.\n\n## Details\n\n- **Entry Criteria**:\n  - Modes `Direct`: open long when the indicator changes from positive to negative, open short when it changes from negative to positive.\n  - Modes `NotDirect`: open long on a change from negative to positive, open short on a change from positive to negative.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Positions are closed when the opposite signal appears.\n- **Stops**: None\n- **Default Values**:\n  - `Period` = 11\n  - `SignalBar` = 1\n  - `TrendMode` = Direct\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: I4 DRF\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Modes `Direct`: open long when the indicator changes from positive to negative, open short when it changes from negative to positive.\n  - Modes `NotDirect`: open long on a change from negative to positive, open short on a change from positive to negative.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Positions are closed when the opposite signal appears.\n- **Stops**: None\n- **Default Values**:\n  - `Period` = 11\n  - `SignalBar` = 1\n  - `TrendMode` = Direct\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: I4 DRF\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2501": {
+    "id": 2501,
+    "name": "Lucky",
+    "family": "trend",
+    "overview": "The Lucky strategy is a breakout scalper that monitors rapid changes between the best bid and ask prices. It buys when the ask price jumps upward by a configurable number of pips and sells when the bid falls by the same amount. Positions are closed immediately once they become profitable or if price moves adversely beyond a protective threshold.\n\n## Data and execution\n\n- **Market data**: requires Level 1 quotes to access the best bid and ask stream.\n- **Order types**: uses market orders for all entries and exits to react quickly to quote shocks.\n- **Position mode**: designed for hedging-style accounts but works with netting accounts by accumulating net exposure.\n\n## Parameters\n\n- **Shift points** – minimum pip distance between consecutive quotes that triggers a new trade. A higher value filters out noise, while a lower value reacts to even tiny jumps.\n- **Limit points** – maximum adverse move (in pips) tolerated before force-closing an open position. It also scales with the instrument tick size.\n- **Reverse mode** – flips the trading direction. When enabled, upward ask shocks open shorts and downward bid shocks open longs.\n\n## Trade logic\n\n1. **Initialization**\n   - Converts the point-based parameters into actual price distances using the instrument tick size.\n   - Subscribes to Level 1 data and resets internal buffers for previous bid and ask prices.\n2. **Entry**\n   - When the ask increases by at least the configured shift relative to the previous ask, the strategy opens a long (or short in reverse mode).\n   - When the bid decreases by at least the shift relative to the previous bid, the strategy opens a short (or long in reverse mode).\n3. **Volume sizing**\n   - Default order quantity comes from the strategy `Volume` property.\n   - If portfolio equity is available, it emulates the MetaTrader logic by allocating roughly `FreeMargin / 10,000`, rounded to one decimal lot, ensuring larger accounts trade larger sizes.\n4. **Exit**\n   - Long positions close as soon as the",
+    "details": "",
+    "parameters": "- **Shift points** – minimum pip distance between consecutive quotes that triggers a new trade. A higher value filters out noise, while a lower value reacts to even tiny jumps.\n- **Limit points** – maximum adverse move (in pips) tolerated before force-closing an open position. It also scales with the instrument tick size.\n- **Reverse mode** – flips the trading direction. When enabled, upward ask shocks open shorts and downward bid shocks open longs."
+   },
+   "836": {
+    "id": 836,
+    "name": "GC Strategy with Trend Filter and Sudden Move Profit Taking",
+    "family": "trend",
+    "overview": "This strategy uses a 5/25 SMA crossover with a 75-period trend filter and an ADX confirmation. Positions are closed when the price moves more than a specified percentage from the previous close, capturing sudden moves.\n\n## Details\n- **Entry**: Long when 5 SMA crosses above 25 SMA, price above 75 SMA, and ADX > threshold. Short when opposite.\n- **Exit**: Opposite signal or sudden move exceeding configured percentage.\n- **Indicators**: SMA, Average Directional Index.\n- **Markets**: Any.\n",
+    "details": "- **Entry**: Long when 5 SMA crosses above 25 SMA, price above 75 SMA, and ADX > threshold. Short when opposite.\n- **Exit**: Opposite signal or sudden move exceeding configured percentage.\n- **Indicators**: SMA, Average Directional Index.\n- **Markets**: Any.",
+    "parameters": ""
+   },
+   "1270": {
+    "id": 1270,
+    "name": "RSI Long-Term Strategy 15min",
+    "family": "trend",
+    "overview": "This strategy uses RSI oversold signals combined with long-term moving averages and volume confirmation to enter long positions. It buys when RSI is below 30 while the 250-period SMA is above the 500-period SMA and volume is significantly higher than average.\n\n## Details\n\n- **Entry Criteria**: RSI below 30, SMA(250) above SMA(500), and volume greater than 2.5 times its 20-period SMA\n- **Long/Short**: Long only\n- **Exit Criteria**: SMA(250) crossing below SMA(500) or stop-loss\n- **Stops**: Yes, fixed percentage\n- **Default Values**:\n  - `RsiLength` = 10\n  - `VolumeSmaLength` = 20\n  - `Sma1Length` = 250\n  - `Sma2Length` = 500\n  - `VolumeMultiplier` = 2.5\n  - `StopLossPercent` = 5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI below 30, SMA(250) above SMA(500), and volume greater than 2.5 times its 20-period SMA\n- **Long/Short**: Long only\n- **Exit Criteria**: SMA(250) crossing below SMA(500) or stop-loss\n- **Stops**: Yes, fixed percentage\n- **Default Values**:\n  - `RsiLength` = 10\n  - `VolumeSmaLength` = 20\n  - `Sma1Length` = 250\n  - `Sma2Length` = 500\n  - `VolumeMultiplier` = 2.5\n  - `StopLossPercent` = 5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2711": {
+    "id": 2711,
+    "name": "Bollinger Bands RSI Zones",
+    "family": "trend",
+    "overview": "A multi-band Bollinger breakout system converted from the \"Bollinger Bands RSI\" MetaTrader expert advisor. The strategy derives three Bollinger envelopes with identical periods but different deviations to create \"yellow\", \"blue\", and \"red\" bands. Orders are triggered when price revisits configurable zones around these bands, optionally confirmed by RSI and Stochastic filters.\n\n## Strategy Logic\n- The primary (yellow) band uses the configured deviation multiplier.\n- The blue band halves the deviation, creating a narrower envelope.\n- The red band doubles the deviation, producing a wide outer envelope.\n- RSI and Stochastic values are evaluated on the previous finished candle (`Bar Shift`) to match the original EA behaviour.\n- `Only One Position` controls whether fresh orders are allowed only when the net position is flat or if additional scaling trades are permitted once price returns to the Bollinger middle line.\n\n## Entry Rules\n### Long entries\n1. Price on the current candle falls to or below the selected long entry zone (`Entry Mode`):\n   - Midpoint between yellow & blue, blue & red, or one of the individual bands.\n2. Optional confirmations:\n   - RSI filter: RSI ≤ `100 - RSI Lower`.\n   - Stochastic filter: %K < `100 - Stochastic Lower`.\n3. Position prerequisites:\n   - If `Only One Position` is enabled, the net position must be flat.\n   - Otherwise, additional long orders are blocked until the candle closes above the middle (yellow) band, emulating the EA locking logic.\n\n### Short entries\n1. Price on the current candle rallies to or above the selected short entry zone (mirrors the long options).\n2. Optional confirmations:\n   - RSI filter: RSI ≥ `RSI Lower`.\n   - Stochastic filter: %K > `Stochastic Lower`.\n3. Position prerequisites mirror the long logic (flat position for single-trade mode or unlocked state once the candle closes back below the middle band).\n\n## Exit Rules\n- Closing mode is determined by `Closure Mode`:\n  - `Middle Line`: exit longs when price reaches",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Entry Mode` | Chooses the Bollinger zone that triggers entries. | Between yellow & blue |\n| `Closure Mode` | Defines the profit-taking band or midpoint. | Between blue & red |\n| `Bands Period` | Period length shared by all Bollinger bands. | 140 |\n| `Deviation` | Standard deviation multiplier for the yellow band (blue is half, red is double). | 2.0 |\n| `Use RSI Filter` | Enables RSI confirmation logic. | false |\n| `RSI Period` | RSI averaging period. | 8 |\n| `RSI Lower` | Overbought threshold; oversold uses `100 - value`. | 70 |\n| `Use Stochastic Filter` | Enables %K confirmation logic. | true |\n| `Stochastic Period` | Main %K lookback period (smoothing is fixed at 3/3 SMA). | 20 |\n| `Stochastic Lower` | Overbought threshold; oversold uses `100 - value`. | 95 |\n| `Bar Shift` | Number of finished bars to look back for indicator values. | 1 |\n| `Only One Position` | If enabled, opens new trades only when no position is active. | true |\n| `Order Volume` | Volume submitted with each market order. | 1 |\n| `Pip Value` | Absolute price value of one pip for stop/target conversion. | 0.0001 |\n| `Stop Loss` | Protective stop distance in pips (0 disables). | 200 |\n| `Take Profit` | Protective target distance in pips (0 disables). | 200 |\n| `Candle Type` | Data type used for calculations (default 1-minute candles). | 1m time-frame |"
+   }
+  }
+ }
+}

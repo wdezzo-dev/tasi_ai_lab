@@ -1,0 +1,98 @@
+{
+ "batch_192": {
+  "strategy_ids": [
+   3723,
+   3771,
+   3199,
+   3423,
+   995,
+   2088,
+   2965,
+   1025,
+   535,
+   390
+  ],
+  "docs": {
+   "3723": {
+    "id": 3723,
+    "name": "RRS Impulse",
+    "family": "trend",
+    "overview": "The **RRS Impulse Strategy** is a high level StockSharp port of the MetaTrader expert advisor \"RRS Impulse\". The original robot\ncombined RSI, Stochastic and Bollinger Bands filters, rotated between several signal-strength modes and used protective stops and\nvirtual trailing exits. This C# version keeps the same behaviour but relies purely on the StockSharp high level API: candle\nsubscriptions feed the indicators, while `BuyMarket`, `SellMarket` and `ClosePosition` execute the orders.\n\n## Trading Logic\n\n1. **Indicator Modes** – Choose between four options:\n   - `Rsi`: trade the oscillator when it leaves the overbought/oversold zone.\n   - `Stochastic`: require both %K and %D to be above/below the configured levels.\n   - `BollingerBands`: react to closes above the upper band or below the lower band.\n   - `RsiStochasticBollinger`: fire only when all three filters confirm the same direction.\n2. **Trade Direction** – `Trend` follows the indicator (overbought leads to shorts, oversold to longs). `CounterTrend` fades the\n   move (overbought triggers longs, oversold triggers shorts).\n3. **Signal Strength** – Controls how many timeframes must agree before entering a trade:\n   - `SingleTimeFrame`: use only the base timeframe provided by `CandleType`.\n   - `MultiTimeFrame`: require alignment across M1, M5, M15, M30, H1 and H4 candles.\n   - `Strong`: focus on intraday momentum by checking M1, M5, M15 and M30.\n   - `VeryStrong`: demand confirmation from the full M1 … H4 ladder. When the combined indicator mode is enabled every timeframe\n     must satisfy *all* three filters.\n4. **Risk Management** – Each position tracks the average fill price and monitors three exit conditions:\n   - fixed stop-loss distance in pips;\n   - fixed take-profit distance in pips;\n   - trailing stop activated once profit exceeds `TrailingStartPips` and maintained by `TrailingGapPips`.\n   Whenever the direction flips the strategy calls `ClosePosition()` first to flatten and only opens the opposite trade a",
+    "details": "",
+    "parameters": "| Group       | Name | Description |\n|-------------|------|-------------|\n| Data        | `CandleType` | Base candle series processed for trading decisions. |\n| Orders      | `TradeVolume` | Volume used when sending market orders. |\n| Risk        | `StopLossPips`, `TakeProfitPips`, `TrailingStartPips`, `TrailingGapPips` | Virtual protective exits expressed in pips. |\n| Signals     | `IndicatorMode`, `TradeDirection`, `SignalStrength` | Behaviour switches copied from the MQL input block. |\n| RSI         | `RsiPeriod`, `RsiUpperLevel`, `RsiLowerLevel` | RSI configuration for overbought/oversold detection. |\n| Stochastic  | `StochasticKPeriod`, `StochasticDPeriod`, `StochasticSlowing`, `StochasticUpperLevel`, `StochasticLowerLevel` | Slow stochastic oscillator settings. |\n| Bollinger   | `BollingerPeriod`, `BollingerDeviation` | Bollinger Bands look-back and deviation multiplier. |\n\nAll parameters support optimisation ranges identical to the MetaTrader version where it made sense (e.g. stop and take distances\nor oscillator thresholds)."
+   },
+   "3771": {
+    "id": 3771,
+    "name": "VarMovAvg",
+    "family": "trend",
+    "overview": "The VarMovAvg strategy is a stop-and-reverse system converted from the MetaTrader 4 expert advisor `VarMovAvg_v0011`. It uses an adaptive Variable Moving Average (VMA) to measure trend direction and waits for a two-step pullback pattern (called Bar A and Bar B in the original EA) before reversing the position. While a position is active, a moving-average-based trailing stop protects profits and flips the trade when the opposite Bar A/Bar B sequence completes.",
+    "details": "",
+    "parameters": "| Parameter | Description | MT4 Source |\n|-----------|-------------|------------|\n| `AmaPeriod` | Lookback window used by the VMA. | `prm.vma.periodAMA` |\n| `FastPeriod` | Fast smoothing factor inside the VMA. | `prm.vma.nfast` |\n| `SlowPeriod` | Slow smoothing factor inside the VMA. | `prm.vma.nslow` |\n| `SmoothingPower` | Exponent `G` applied to the adaptive coefficient. | `prm.vma.G` |\n| `SignalPipsBarA` | Distance from the VMA required to accept Bar A. | `prm.sig.pipsBarA` |\n| `SignalPipsBarB` | Additional distance required to accept Bar B. | `prm.sig.pipsBarB` |\n| `SignalPipsTrade` | Offset from the Bar B extreme to the entry line. | `prm.sig.pipsTrade` |\n| `EntryPipsDiff` | Accepted tolerance around the entry line. | `prm.entry.diff` |\n| `StopPipsDiff` | Offset applied to the trailing stop moving average. | `prm.stop.diff` |\n| `StopMaPeriod` | Period of the stop moving average. | `prm.mastop.period` |\n| `StopMaShift` | Shift (bars) of the stop moving average. | `prm.mastop.shift` |\n| `StopMaMethod` | Moving average method (`MODE_SMA`, `EMA`, `SMMA`, `LWMA`). | `prm.mastop.method` |\n| `CandleType` | Working timeframe. | Chart timeframe |\n\n> **Pip conversion** – All pip distances are multiplied by `Security.PriceStep` when it is available. If the instrument does not have a configured step, the raw values are interpreted in price units, replicating the EA fallback."
+   },
+   "3199": {
+    "id": 3199,
+    "name": "BladeRunner",
+    "family": "trend",
+    "overview": "The BladeRunner strategy is a translation of the MetaTrader expert advisor that combines fractal breakouts with trend and momentum confirmation. The StockSharp port keeps the multi-timeframe structure of the original script by analysing three different candle feeds: a primary series for trade execution, a higher timeframe series for the momentum filter, and a slow series for the MACD trend filter. Orders are opened with configurable scaling, stop-loss and take-profit distances expressed in price steps.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Primary candle series used for signal generation. | 15-minute candles |\n| `MomentumCandleType` | Higher timeframe series for the momentum filter. | 1-hour candles |\n| `MacdCandleType` | Candle series used by the MACD trend filter. | Daily candles |\n| `FastMaPeriod` | Length of the fast LWMA. | 6 |\n| `SlowMaPeriod` | Length of the slow LWMA. | 85 |\n| `FilterMaPeriod` | LWMA used to validate fractal breakouts. | 20 |\n| `MomentumPeriod` | Momentum indicator averaging period. | 14 |\n| `MomentumThreshold` | Minimum absolute deviation of momentum from 100. | 0.3 |\n| `FractalLookback` | Number of candles retained for fractal analysis. | 200 |\n| `MaxTrades` | Maximum number of scale-in orders per direction. | 3 |\n| `OrderVolume` | Base volume for each market order. | 1 contract |\n| `TakeProfitSteps` | Take-profit distance expressed in price steps. | 50 |\n| `StopLossSteps` | Stop-loss distance expressed in price steps. | 20 |"
+   },
+   "3423": {
+    "id": 3423,
+    "name": "Harami CCI Confirmation",
+    "family": "trend",
+    "overview": "Harami CCI Confirmation is a high-level StockSharp port of the MetaTrader 5 expert advisor `Expert_ABH_BH_CCI`. The original EA trades the two-candle Bullish Harami and Bearish Harami reversal patterns. Before entering a trade, it demands confirmation from a Commodity Channel Index (CCI) oscillator and measures candle body size against a moving average to ensure that the larger candle truly dominates the range. The StockSharp conversion keeps the same confirmation logic, processes only completed candles, and uses the platform's built-in protection module for order safety.",
+    "details": "",
+    "parameters": "* **Order Volume** – base volume sent with every market entry. Extra volume is automatically added to close the opposite position when a reversal occurs.\n* **CCI Period** – length of the Commodity Channel Index oscillator.\n* **Body Average** – number of historical candles used when averaging body sizes and close prices.\n* **CCI Entry** – minimum absolute CCI value needed to accept a Harami signal.\n* **CCI Exit Band** – band magnitude that defines the CCI crossover exit rules.\n* **Candle Type** – timeframe used for candles (default: 1-hour time frame)."
+   },
+   "995": {
+    "id": 995,
+    "name": "Long-Leg Doji Breakout",
+    "family": "trend",
+    "overview": "The Long-Leg Doji Breakout strategy identifies long-legged doji candles and trades breakouts above or below the doji range. An optional ATR filter ensures wicks are sufficiently long.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Waiting for breakout && close > doji high && previous close <= doji high.\n  - **Short**: Waiting for breakout && close < doji low && previous close >= doji low.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Close crosses SMA(20) opposite the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Doji body threshold %` = 0.1\n  - `Minimum wick ratio` = 2\n  - `Use ATR filter` = true\n  - `ATR period` = 14\n  - `ATR multiplier` = 0.5\n- **Filters**:\n  - Category: Pattern breakout\n  - Direction: Both\n  - Indicators: ATR, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Waiting for breakout && close > doji high && previous close <= doji high.\n  - **Short**: Waiting for breakout && close < doji low && previous close >= doji low.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Close crosses SMA(20) opposite the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Doji body threshold %` = 0.1\n  - `Minimum wick ratio` = 2\n  - `Use ATR filter` = true\n  - `ATR period` = 14\n  - `ATR multiplier` = 0.5\n- **Filters**:\n  - Category: Pattern breakout\n  - Direction: Both\n  - Indicators: ATR, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2088": {
+    "id": 2088,
+    "name": "KPrmSt Cross",
+    "family": "volatility",
+    "overview": "The KPrmSt Cross strategy is a port of the MetaTrader 5 expert `exp_kprmst.mq5`. It uses a stochastic-like oscillator known as KPrmSt to capture reversals when the oscillator's main line crosses the signal line.\n\nThe strategy subscribes to candles of configurable timeframe and calculates the `Stochastic` indicator (used as a KPrmSt approximation). When the %K line crosses below the %D line, it opens a long position; when %K crosses above %D, it opens a short position. Existing positions are reversed accordingly.",
+    "details": "",
+    "parameters": "- `Candle Type` – timeframe of candles used for calculations.\n- `K Period` – number of bars for calculating the main line.\n- `D Period` – period for smoothing the signal line.\n- `Slowing` – additional smoothing applied to %K.\n- `Stop Loss` – protective loss in price units. Set to 0 to disable.\n- `Take Profit` – target profit in price units. Set to 0 to disable."
+   },
+   "2965": {
+    "id": 2965,
+    "name": "Forex Fraus M1",
+    "family": "mean_reversion",
+    "overview": "The Forex Fraus M1 strategy replicates the MetaTrader 5 expert advisor \"Forex Fraus M1\" in the StockSharp framework. It is a contrarian system that monitors a long-lookback Williams %R oscillator (period 360) on one-minute candles. Whenever the oscillator touches extreme values, the strategy attempts to fade the move, aiming for a quick reversion toward the recent range mid-point. The implementation keeps the original expert's money management, including optional trading hours, static stop-loss and take-profit levels measured in pips, and a pip-based trailing stop.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `OrderVolume` | `0.1` | Trade volume used for new positions. |\n| `StopLossPips` | `50` | Stop-loss distance in pips from the entry price. Set to zero to disable. |\n| `TakeProfitPips` | `150` | Take-profit distance in pips from the entry price. Set to zero to disable. |\n| `TrailingStopPips` | `1` | Base trailing stop distance in pips. Set to zero to disable trailing. |\n| `TrailingStepPips` | `1` | Minimum additional pip gain before the trailing stop moves. |\n| `UseTimeControl` | `true` | Enables the intraday session filter. |\n| `StartHour` | `7` | Start hour for the trading session (0-23). |\n| `EndHour` | `17` | End hour for the trading session (1-24, exclusive). |\n| `CloseOppositePositions` | `true` | If enabled, reverses existing positions in a single order. |\n| `WilliamsPeriod` | `360` | Lookback period for the Williams %R indicator. |\n| `CandleType` | `1 minute` | Candle type used to evaluate Williams %R and trading rules. |\n| `PipSize` | `0.0001` | Value of a single pip in price units. |"
+   },
+   "1025": {
+    "id": 1025,
+    "name": "Martingale with MACD and KDJ",
+    "family": "other",
+    "overview": "This strategy enters trades when both the MACD line and the KDJ %K line cross their signal lines in the same direction. It pyramids positions using a martingale approach, adding when price moves against the trade by a configured percent and then rebounds.\n\nPositions are closed when a take profit, stop loss, or trailing stop condition is met.\n\n## Details\n\n- **Entry**: MACD line and KDJ %K line cross their signal lines in the same direction.\n- **Additions**: Up to `Max Additions` times when price moves by `Add Position Percent` and rebounds by `Rebound Percent`. Each addition size is multiplied by `Add Multiplier`.\n- **Exit**: Close on `Take Profit Trigger`, `Stop Loss Percent` or trailing stop hit.\n- **Direction**: Long and short.\n\n",
+    "details": "- **Entry**: MACD line and KDJ %K line cross their signal lines in the same direction.\n- **Additions**: Up to `Max Additions` times when price moves by `Add Position Percent` and rebounds by `Rebound Percent`. Each addition size is multiplied by `Add Multiplier`.\n- **Exit**: Close on `Take Profit Trigger`, `Stop Loss Percent` or trailing stop hit.\n- **Direction**: Long and short.",
+    "parameters": ""
+   },
+   "535": {
+    "id": 535,
+    "name": "Auto Fibonacci and Gann Fan Retracements Combo",
+    "family": "other",
+    "overview": "This strategy automatically detects new swing highs and lows. When an extremum is found it calculates Fibonacci and Gann retracement levels between the last swing points. The levels are written to the log and no trading logic is executed.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "390": {
+    "id": 390,
+    "name": "R&D Expenditures",
+    "family": "other",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis cross-sectional strategy ranks stocks by their ratio of research-and-development (R&D) expenses to market value. At the start of each month the top quintile of firms with the highest R&D intensity is bought while the bottom quintile is sold short, betting that heavy R&D spending predicts future outperformance.\n\nWeights are assigned equally within each side and rebalanced monthly using daily price data.\n\n## Details\n\n- **Universe**: list of stocks with R&D data.\n- **Signal**: R&D expenditures divided by market capitalization.\n- **Portfolio**: long highest quintile, short lowest quintile.\n- **Rebalance**: monthly.\n- **Risk control**: trades skipped when order value below `MinTradeUsd`.\n",
+    "details": "- **Universe**: list of stocks with R&D data.\n- **Signal**: R&D expenditures divided by market capitalization.\n- **Portfolio**: long highest quintile, short lowest quintile.\n- **Rebalance**: monthly.\n- **Risk control**: trades skipped when order value below `MinTradeUsd`.",
+    "parameters": ""
+   }
+  }
+ }
+}

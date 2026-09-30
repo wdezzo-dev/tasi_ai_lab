@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2061,
+      "name": "I Trend",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(close,20),ema(zscore(close,20),9))",
+      "exit_long": "crossbelow(zscore(close,20),ema(zscore(close,20),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom iTrend oscillator is approximated by a Bollinger-equivalent z-score of price over 20 bars (deviation 2) with an EMA(9) signal line, keeping the documented crossover behaviour. MaPeriod, BbPeriod, BbDeviation, PriceType and the BbMode band selection have no documented values, so these are stated defaults."
+    },
+    {
+      "id": 2524,
+      "name": "New Martin",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A symmetric martingale hedge that requires a hedging portfolio with simultaneous long and short legs, exposure multiplication on the losing side and grid purging; a single long-only position engine cannot represent it. The never-true guard avoids fabricating a signal from the SMMA cross alone."
+    },
+    {
+      "id": 1462,
+      "name": "Trend Following MAs 3D",
+      "family": "trend",
+      "entry_long": "sma(close,5) > sma(close,10)",
+      "exit_long": "sma(close,5) < sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(5) versus SMA(10) state is a direct translation, with the reversed state as the documented reverse-signal exit. The short branch is omitted for the long-only engine and the configurable timeframe is not encoded in the DSL."
+    },
+    {
+      "id": 656,
+      "name": "Daily Performance Analysis",
+      "family": "trend",
+      "entry_long": "crossbelow(close,donchian_low_prev(low,10))",
+      "exit_long": "crossabove(close,donchian_high_prev(high,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is unavailable, so its direction flip is approximated by a close crossing the 10-bar prior channel (10 is a stated default since the SuperTrend period is not documented): a downward flip buys as documented and the upward flip exits. The day-of-week and day-of-month performance statistics are reporting only."
+    },
+    {
+      "id": 1754,
+      "name": "Up3x1 Krohabor D",
+      "family": "trend",
+      "entry_long": "bars_since(crossabove(sma(close,5),sma(close,10))) < 2 and sma(close,5) > sma(close,20) and sma(close,10) > sma(close,20)",
+      "exit_long": "bars_since(crossbelow(sma(close,5),sma(close,10))) < 2 and sma(close,5) < sma(close,20) and sma(close,10) < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast/middle/slow SMAs are set to 5/10/20 as stated defaults, and the documented requirement that the cross plus the ordering hold on the current and previous bar becomes bars_since(cross) < 2 with the slow-MA filter. Take profit, stop loss and trailing distances are price units, so SL/TP stay null."
+    },
+    {
+      "id": 1303,
+      "name": "Simple DCA",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an averaging/pyramiding engine: it adds multiplied safety orders as price deviates and targets a take-profit measured from the average entry price, which needs multiple simultaneous entries and average-price accounting. The single-position long engine cannot express it, so the never-true guard is used."
+    },
+    {
+      "id": 402,
+      "name": "Synthetic Lending Rates",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is the spread between perpetual-swap funding rates and on-chain DeFi lending yields across separate venues, borrowed and lent simultaneously. No single OHLCV series carries that cross-venue rate, so the never-true guard is used."
+    },
+    {
+      "id": 647,
+      "name": "Custom Signal Oscillator",
+      "family": "other",
+      "entry_long": "crossabove(ema(close,10) - ema(close,20),0)",
+      "exit_long": "crossbelow(ema(close,10) - ema(close,20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two price signals that form the oscillator are never defined, so a fast-minus-slow EMA(10)/EMA(20) difference is a stated stand-in for the documented zero-line crossover and its inverse. LongOnly mode, the 5-minute candle type and the lack of stops are noted but not encoded."
+    },
+    {
+      "id": 1387,
+      "name": "Support Resistance MTF",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented as an indicator-only utility that logs higher-timeframe highest and lowest levels with no entries, targets, stops or direction. The never-true guard records that there is no market signal to translate."
+    },
+    {
+      "id": 368,
+      "name": "Earnings Announcement Reversal",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The trigger is an external earnings-announcement calendar (long recent losers, short recent winners with LookbackDays 5 and HoldingDays 3), and no earnings data exists in this engine. The never-true guard is used rather than replacing the event with a price proxy."
+    }
+  ]
+}

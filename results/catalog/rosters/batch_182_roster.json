@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 352,
+      "name": "Asset Class Trend Following",
+      "family": "trend",
+      "entry_long": "close > sma(close,210)",
+      "exit_long": "close <= sma(close,210)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is literally Close > SMA with the default SmaLength=210 and Close <= SMA as the exit. First-trading-day-of-month rebalancing and the MinTradeUsd capital filter have no DSL equivalent, so the position is held whenever the filter passes."
+    },
+    {
+      "id": 986,
+      "name": "Litecoin Trailing Stop",
+      "family": "trend",
+      "entry_long": "roc(ema(close,50),1) > 0",
+      "exit_long": "roc(ema(close,50),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "KAMA is unavailable, so the documented KamaLength=50 trend filter is approximated by EMA(50) and its slope decides the long side. BarsBetweenEntries=30, DelayBars=50 and the 12% trailing stop are cooldown or trailing logic, so both percentage fields stay null and the trend flip is the exit."
+    },
+    {
+      "id": 416,
+      "name": "Bollinger Breakout",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20) and rsi(close,14) > 50 and sma(close,20) > sma(close,50)",
+      "exit_long": "close < bb_lower(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Close beyond the upper band with the enabled default filters UseRSI and UseMA applied; the band period/deviation (20, 2) and the MA pair (20, 50) are fallbacks and UseAroon is disabled by default. Exit is the documented touch of the opposite band, and UseSL is optional with no documented distance so the stop field is null."
+    },
+    {
+      "id": 4213,
+      "name": "VmMatrix Double Zero",
+      "family": "trend",
+      "entry_long": "crossabove(close, open) and sma(close,10) > sma(close,50) and volume_ratio(volume,20) > 1",
+      "exit_long": "crossbelow(close, open) or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The double-zero level is the previous close, which equals the current open, so the trigger is a close crossing back above the prior close, with the matrix bias read as a 10/50 SMA stack and the optional volume check as volume_ratio(volume,20) > 1; all lengths are fallbacks. The terminal-time window, ATR acceleration gate, daily CCI, adaptive take-profit and pip stops are not expressible."
+    },
+    {
+      "id": 547,
+      "name": "Bar Balance",
+      "family": "trend",
+      "entry_long": "close > open and sma(close - open, 10) > 0",
+      "exit_long": "close < open or sma(close - open, 10) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bar balance is the signed candle body close-open, and the documented long rule (balance above zero and its moving average above zero) becomes a positive body with a positive 10-bar average body; the smoothing length is a fallback. The documented opposite-signal reversal is the exit and no stop-loss exists."
+    },
+    {
+      "id": 100,
+      "name": "Tweezer Top",
+      "family": "momentum",
+      "entry_long": "low <= donchian_low_prev(low,3) and close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented pattern confirms a ceiling and shorts it, so the long entry mirrors it as a floor confirmation: a new 3-bar low that closes back above its open. Exit is the mirror 'price back through support' down close, StopLoss=2% is the documented percent stop, and equal highs/lows of two consecutive candles need shifted highs that the DSL lacks, hence the 3-bar low proxy."
+    },
+    {
+      "id": 4110,
+      "name": "Rubber Bands Grid",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A symmetric MT4 grid built from best bid/ask quotes with separate long and short ledgers, session profit/loss controls and manual quiesce/stop toggles, so there is no single-symbol market-derived entry signal to translate. Order counts, pip-step grid layers and lot normalisation are order-management logic."
+    },
+    {
+      "id": 473,
+      "name": "RSI 30-70",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Exactly the documented long rules with the default RSI Length=14 and Oversold/Overbought levels of 30/70. The source is long only with no stops, and the timeframe parameter is a subscription setting rather than a signal."
+    },
+    {
+      "id": 354,
+      "name": "Betting Against Beta Stocks",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long leg requires ranking a stock universe by 252-day beta against a benchmark security and buying the lowest decile monthly, so no single-symbol market-derived entry exists. The benchmark, decile ranking, monthly rebalance and MinTradeUsd sizing are cross-sectional portfolio logic."
+    },
+    {
+      "id": 1989,
+      "name": "Trailing Stop Activation",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states explicitly that the strategy generates no entry signals and only moves stops on positions opened elsewhere, so no signal is invented. TrailingStop and StopLoss are price-unit distances applied to an existing position, not percentage entry/exit rules."
+    }
+  ]
+}

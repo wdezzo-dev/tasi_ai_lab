@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 19,
+      "name": "CCI Breakout",
+      "family": "trend",
+      "entry_long": "zscore(close,20) > 1.64",
+      "exit_long": "crossbelow(zscore(close,20),0)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI and Momentum are unavailable, so a 20-bar z-score above 1.64 is the positive extreme breakout proxy and a return below zero exits. The documented 2% stop is retained; the short side and intraday timing are omitted."
+    },
+    {
+      "id": 558,
+      "name": "Bearish Wick Reversal",
+      "family": "trend",
+      "entry_long": "close < open and low < close * 0.99",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bearish candle with a lower wick at least 1% below its close captures the documented threshold; the prior candle high is the close-based exit. The optional EMA(200) filter is disabled and the time window is unsupported."
+    },
+    {
+      "id": 1441,
+      "name": "Time Candles",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document explicitly describes visualization-only RSI/SMA candles with no entry, exit, or direction logic. An impossible negative-price guard avoids fabricating a trade signal."
+    },
+    {
+      "id": 4084,
+      "name": "ADX System DI Cross",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 20 and roc(close,1) > 0",
+      "exit_long": "adx(high,low,close,14) < 20 or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The permitted ADX(14) aggregate and positive one-bar ROC proxy the +DI-above-ADX long condition; weakening ADX or momentum exits. DI components, point stops, trailing, and the short side are unavailable."
+    },
+    {
+      "id": 3077,
+      "name": "RNN Probability",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(open,9),50)",
+      "exit_long": "crossbelow(rsi(open,9),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented default Open price and RSI(9) are retained, but the weighted RNN lattice is unavailable; an RSI midpoint cross is a transparent probability proxy. Pip protection, short entries, and the hand-crafted weights are omitted."
+    },
+    {
+      "id": 3529,
+      "name": "Bull Row Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and close > open and roc(close,1) > 0",
+      "exit_long": "low < donchian_low_prev(low,20) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish break above the prior 20-bar high with positive one-bar momentum proxies the bearish-row, bullish-momentum breakout. Stochastic filters, row sizing, dynamic price-step risk, and short behavior are unsupported."
+    },
+    {
+      "id": 156,
+      "name": "Donchian Rsi",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and rsi(close,14) < 30",
+      "exit_long": "close < donchian_low_prev(low,20) or rsi(close,14) > 70",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Prior 20-bar Donchian levels and the documented RSI(14) 30/70 thresholds are retained, including the unusual oversold long breakout rule. The opposite range/RSI condition exits; the short side and intraday context are omitted."
+    },
+    {
+      "id": 4056,
+      "name": "Billy Expert",
+      "family": "momentum",
+      "entry_long": "roc(close,4) > 0 and close > sma(close,20)",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive four-bar momentum above SMA(20) is a current-timeframe proxy for the four-descending-high pattern and stochastic confirmation. The two stochastic timeframes, candle-row logic, and point stops are unavailable."
+    },
+    {
+      "id": 2586,
+      "name": "Pending Order Grid",
+      "family": "volatility",
+      "entry_long": "high > donchian_high_prev(high,10)",
+      "exit_long": "low < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior ten-bar high break is a state-free proxy for a pending stop grid; the mirrored low break exits. Order-book offsets, volume scaling, martingale layers, and tick-based protection are not expressible."
+    },
+    {
+      "id": 1263,
+      "name": "RSI Box (Pseudo Grid Bot)",
+      "family": "mean_reversion",
+      "entry_long": "bars_since(crossbelow(rsi(close,14),30)) < 5 and crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An RSI(14) oversold event followed within five bars by a close above SMA(20) proxies the recalculated long grid. Dynamic highest/lowest grid levels, optional shorts, and the time window are unavailable."
+    }
+  ]
+}

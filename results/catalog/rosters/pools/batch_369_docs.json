@@ -1,0 +1,98 @@
+{
+ "batch_369": {
+  "strategy_ids": [
+   2622,
+   714,
+   2112,
+   2217,
+   380,
+   487,
+   4202,
+   1762,
+   1961,
+   3016
+  ],
+  "docs": {
+   "2622": {
+    "id": 2622,
+    "name": "Crossing of Two iMA",
+    "family": "trend",
+    "overview": "This strategy ports the classic **“Crossing of two iMA”** MetaTrader 5 expert advisor into the StockSharp high-level API. It trades when two configurable moving averages cross and can optionally require confirmation from a third moving average that acts as a directional filter. The implementation keeps the original flexibility by supporting manual or risk-based position sizing, pending-entry style offsets and a trailing stop with user-defined step.\n\nThe conversion processes signals on the close of each finished candle, replicating how the MQL5 expert waits for a new bar. Pending order behavior (`PriceLevelPips`) is simulated internally by monitoring candle highs and lows, so no actual stop/limit orders are submitted. A long pending trigger activates when the bar reaches the chosen price for buy stop entries or dips to the price for buy limit entries, and the same symmetric logic is applied for short setups.\n\n## Trading rules\n\n- **Indicators**\n  - `First` moving average (period, shift and method are configurable).\n  - `Second` moving average (also fully configurable).\n  - Optional `Third` moving average used as a filter (`UseThirdMovingAverage = true`).\n- **Entry conditions**\n  - **Primary cross (bars 0 and 1)**\n    - **Long**: first MA crosses above the second MA on the current bar while it was below on the previous bar. If the filter is active, the third MA must stay below the first MA to validate the long breakout.\n    - **Short**: first MA crosses below the second MA and, if the filter is enabled, the third MA must stay above the first MA.\n  - **Fallback cross (bars 0 and 2)**\n    - Performs an additional lookback to catch quick crosses that occurred between the previous two bars. The strategy ignores this signal if another trade was already opened within the last three bars (same as the MQL5 history lookup).\n- **Direction**: both long and short.\n- **Stops and targets**\n  - Stop loss and take profit are expressed in pips. They are converted to price offsets based",
+    "details": "",
+    "parameters": ""
+   },
+   "714": {
+    "id": 714,
+    "name": "Dubic EMA",
+    "family": "trend",
+    "overview": "This strategy trades based on the position of the close relative to exponential moving averages calculated over highs and lows. Trading is avoided during narrow ranges and low volatility periods. Positions are protected with ATR-based stops, take-profit levels and optional Parabolic SAR trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close > EMA(High) and Close > EMA(Low), range filter inactive, volatility sufficient.\n  - **Short**: Close < EMA(High) and Close < EMA(Low), range filter inactive, volatility sufficient.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Parabolic SAR, ATR/fixed stop-loss or take-profit.\n- **Stops**: Yes.\n- **Filters**: Range and volatility filter.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close > EMA(High) and Close > EMA(Low), range filter inactive, volatility sufficient.\n  - **Short**: Close < EMA(High) and Close < EMA(Low), range filter inactive, volatility sufficient.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Parabolic SAR, ATR/fixed stop-loss or take-profit.\n- **Stops**: Yes.\n- **Filters**: Range and volatility filter.",
+    "parameters": ""
+   },
+   "2112": {
+    "id": 2112,
+    "name": "Trix Candle",
+    "family": "trend",
+    "overview": "This strategy trades reversals based on the Trix Candle indicator, which applies a triple exponential moving average to candle open and close prices and colors each candle depending on whether the smoothed close is above or below the smoothed open.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: previous candle bullish (color 2) and current candle color < 2\n  - **Short**: previous candle bearish (color 0) and current candle color > 0\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Long: previous candle bearish (color 0)\n  - Short: previous candle bullish (color 2)\n- **Stops**: No\n- **Default Values**:\n  - `TRIX Period` = 14\n  - `Candle Type` = 4h\n  - `Allow Buy Open` = true\n  - `Allow Sell Open` = true\n  - `Allow Buy Close` = true\n  - `Allow Sell Close` = true\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Triple Exponential Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: previous candle bullish (color 2) and current candle color < 2\n  - **Short**: previous candle bearish (color 0) and current candle color > 0\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Long: previous candle bearish (color 0)\n  - Short: previous candle bullish (color 2)\n- **Stops**: No\n- **Default Values**:\n  - `TRIX Period` = 14\n  - `Candle Type` = 4h\n  - `Allow Buy Open` = true\n  - `Allow Sell Open` = true\n  - `Allow Buy Close` = true\n  - `Allow Sell Close` = true\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Triple Exponential Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2217": {
+    "id": 2217,
+    "name": "Bykov Trend",
+    "family": "trend",
+    "overview": "This strategy reproduces the classic MetaTrader system \"Bykov Trend\" using the StockSharp high-level API. The original indicator combines the Williams %R oscillator with a simple trend detection mechanism. When the trend flips from bearish to bullish, a long position is opened. When the trend turns from bullish to bearish, a short position is opened.\n\nThe system trades a single instrument on a selected timeframe. Only one position is held at a time; opposite signals reverse the position.\n\n## Details\n\n- **Entry Criteria**  \n  - **Long**: Williams %R rises above `-K` after being below `-100 + K` (`K = 33 - Risk`).  \n  - **Short**: Williams %R falls below `-100 + K` after being above `-K`.\n- **Long/Short**: Both directions.  \n- **Exit Criteria**  \n  - Opposite signal closes the current position and opens a new one in the other direction.  \n- **Stops**: None.  \n- **Default Values**  \n  - `Risk` = 3 (`K = 30`).  \n  - `SSP` = 9 (Williams %R look-back).  \n  - `CandleType` = 1 hour candles.  \n- **Filters**  \n  - Category: Trend following  \n  - Direction: Both  \n  - Indicators: Single (Williams %R)  \n  - Stops: No  \n  - Complexity: Simple  \n  - Timeframe: Flexible  \n  - Seasonality: No  \n  - Neural networks: No  \n  - Divergence: No  \n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**  \n  - **Long**: Williams %R rises above `-K` after being below `-100 + K` (`K = 33 - Risk`).  \n  - **Short**: Williams %R falls below `-100 + K` after being above `-K`.\n- **Long/Short**: Both directions.  \n- **Exit Criteria**  \n  - Opposite signal closes the current position and opens a new one in the other direction.  \n- **Stops**: None.  \n- **Default Values**  \n  - `Risk` = 3 (`K = 30`).  \n  - `SSP` = 9 (Williams %R look-back).  \n  - `CandleType` = 1 hour candles.  \n- **Filters**  \n  - Category: Trend following  \n  - Direction: Both  \n  - Indicators: Single (Williams %R)  \n  - Stops: No  \n  - Complexity: Simple  \n  - Timeframe: Flexible  \n  - Seasonality: No  \n  - Neural networks: No  \n  - Divergence: No  \n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "380": {
+    "id": 380,
+    "name": "Momentum Rev Vol",
+    "family": "trend",
+    "overview": "This composite factor strategy blends three signals: long-term momentum,\nshort-term reversal and low volatility. Each month a score is calculated for\nevery security using 12‑month momentum, the inverse of one‑month returns and the\ntrailing 60‑day volatility. Adjustable weights `WM`, `WR` and `WV` control the\ncontribution of each component.\n\nOn the first trading day of every month securities are ranked by the composite\nscore. The highest decile is bought and the lowest decile is shorted with equal\ndollar weights. Positions are held until the next rebalance and no explicit\nstop-loss rules are employed.\n\nBy combining trend following, mean reversion and risk aversion, the strategy\nseeks diversified returns across different market regimes.\n\n## Details\n\n- **Entry Criteria**: Monthly ranking by weighted combination of momentum,\n  reversal and volatility; long top decile, short bottom decile\n- **Long/Short**: Both\n- **Exit Criteria**: Next monthly rebalance\n- **Stops**: No\n- **Default Values**:\n  - `Lookback12` = 252\n  - `Lookback1` = 21\n  - `VolWindow` = 60\n  - `WM` = 1.0\n  - `WR` = 1.0\n  - `WV` = 1.0\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Multi-factor\n  - Direction: Both\n  - Indicators: Momentum, reversal, volatility\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly ranking by weighted combination of momentum,\n  reversal and volatility; long top decile, short bottom decile\n- **Long/Short**: Both\n- **Exit Criteria**: Next monthly rebalance\n- **Stops**: No\n- **Default Values**:\n  - `Lookback12` = 252\n  - `Lookback1` = 21\n  - `VolWindow` = 60\n  - `WM` = 1.0\n  - `WR` = 1.0\n  - `WV` = 1.0\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Multi-factor\n  - Direction: Both\n  - Indicators: Momentum, reversal, volatility\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "487": {
+    "id": 487,
+    "name": "SMA Pullback + ATR Exits",
+    "family": "trend",
+    "overview": "This strategy enters on pullbacks when a short-term moving average is above or below\na longer-term trend average. Long positions are opened when price dips below the fast SMA while it remains above the slow SMA. Short positions are opened when price rallies above the fast SMA while it stays below the slow SMA. Exits use Average True Range multiples from the entry price.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close < fast SMA and fast SMA > slow SMA.\n  - Short: close > fast SMA and fast SMA < slow SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Price reaches ATR-based stop loss or take profit.\n- **Stops**: ATR multiples for stop loss and take profit.\n- **Default Values**:\n  - `FastSmaLength` = 8\n  - `SlowSmaLength` = 30\n  - `AtrLength` = 14\n  - `AtrMultiplierSl` = 1.2\n  - `AtrMultiplierTp` = 2.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: close < fast SMA and fast SMA > slow SMA.\n  - Short: close > fast SMA and fast SMA < slow SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Price reaches ATR-based stop loss or take profit.\n- **Stops**: ATR multiples for stop loss and take profit.\n- **Default Values**:\n  - `FastSmaLength` = 8\n  - `SlowSmaLength` = 30\n  - `AtrLength` = 14\n  - `AtrMultiplierSl` = 1.2\n  - `AtrMultiplierTp` = 2.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4202": {
+    "id": 4202,
+    "name": "Robot ADX + 2 MA",
+    "family": "trend",
+    "overview": "The Robot ADX + 2 MA strategy is a StockSharp port of the MetaTrader expert `Robot_ADX+2MA`. The system combines a fast and a slow\nexponential moving average with the +DI/-DI components of the Average Directional Index (ADX). Orders are only opened when the\nprevious candle shows a wide enough EMA separation and the current candle confirms momentum through the directional index. The\nconversion keeps the original behaviour of opening at most one market position at a time and delegating exits to stop-loss and\ntake-profit protections.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute timeframe | Primary candle series processed by the strategy. |\n| `TakeProfitPoints` | `int` | `4700` | Distance of the take-profit target expressed in price steps. Set to zero to disable. |\n| `StopLossPoints` | `int` | `2400` | Distance of the stop-loss target in price steps. Set to zero to disable. |\n| `TradeVolume` | `decimal` | `0.1` | Net volume used for every market order. |\n| `DifferenceThreshold` | `int` | `10` | Minimum EMA distance (in price steps) required before a signal is accepted. |"
+   },
+   "1762": {
+    "id": 1762,
+    "name": "RSI Trend",
+    "family": "trend",
+    "overview": "The **RSI Trend Strategy** uses the Relative Strength Index (RSI) to detect trend reversals and manages positions with an ATR-based trailing stop. The system opens a long position when the RSI crosses above an overbought threshold and enters a short position when the RSI falls below an oversold threshold. Risk is controlled using a trailing stop derived from the Average True Range (ATR), allowing the stop level to adapt to current volatility.\n\nThis implementation is designed for educational purposes and demonstrates how to build a high-level StockSharp strategy using indicator bindings. The strategy trades on completed candles only and does not reference previous indicator values directly, aligning with StockSharp best practices.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `RSI(t) > BuyLevel` and `RSI(t-1) <= BuyLevel`.\n  - **Short**: `RSI(t) < SellLevel` and `RSI(t-1) >= SellLevel`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Trailing stop based on ATR multiple.\n- **Stops**: Yes, dynamic trailing stop.\n- **Default Values**:\n  - `RSI Period` = 14.\n  - `BuyLevel` = 73.\n  - `SellLevel` = 27.\n  - `ATR Period` = 100.\n  - `ATR Multiple` = 3.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: RSI, ATR.\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Any (default 1 minute candles).\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Moderate.\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `RSI(t) > BuyLevel` and `RSI(t-1) <= BuyLevel`.\n  - **Short**: `RSI(t) < SellLevel` and `RSI(t-1) >= SellLevel`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Trailing stop based on ATR multiple.\n- **Stops**: Yes, dynamic trailing stop.\n- **Default Values**:\n  - `RSI Period` = 14.\n  - `BuyLevel` = 73.\n  - `SellLevel` = 27.\n  - `ATR Period` = 100.\n  - `ATR Multiple` = 3.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: RSI, ATR.\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Any (default 1 minute candles).\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Moderate.",
+    "parameters": ""
+   },
+   "1961": {
+    "id": 1961,
+    "name": "Auto KD Crossover",
+    "family": "trend",
+    "overview": "The Auto KD Crossover strategy replicates the original MQL5 `autoKD_EA` example.  \nIt uses the `StochasticOscillator` indicator to generate buy and sell signals based on crossovers of the %K and %D lines.\n\nThe base calculation uses the RSV formula:\n`RSV = (Close - LowestLow) / (HighestHigh - LowestLow) * 100`\nwhere the highest high and lowest low are computed over `KDPeriod` bars.  \nThe %K line is a moving average of RSV with length `KPeriod`; %D is a moving average of %K with length `DPeriod`.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `KDPeriod` | Number of bars for the RSV base period. | 30 |\n| `KPeriod` | Smoothing period for the %K line. | 3 |\n| `DPeriod` | Smoothing period for the %D line. | 6 |\n| `CandleType` | Type and timeframe of candles used for calculations. | 5 minute time frame |\n| `Volume` | Order volume inherited from `Strategy`. | `Strategy.Volume` |\n\nAll parameters are available for optimization."
+   },
+   "3016": {
+    "id": 3016,
+    "name": "Proffessor v3",
+    "family": "trend",
+    "overview": "This strategy is a full conversion of the MetaTrader expert *Proffessor v3* into the\nStockSharp high level API. It keeps the original concept of combining ADX regime\nfiltering with a grid of protective and averaging orders.\n\n- **Indicator**: 14-period Average Directional Index (ADX) with +DI/-DI values.\n- **Modes**: flat regime (ADX below threshold) and trending regime (ADX above\n  threshold).\n- **Orders**: opens one market position and surrounds price with pending orders\n  to hedge, pyramid or mean-revert.\n- **Exit**: closes every position and pending order when the configured profit or\n  loss level is reached.\n- **Schedule**: trades only inside the selected hour range.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Base market order volume. |\n| `LotMultiplier` | Multiplier applied to every pending order volume. |\n| `LotAddition` | Extra volume added to pending orders after the multiplier. |\n| `MaxLevels` | Maximum number of grid levels per side. |\n| `GridDeltaIncrement` | Increment added to grid spacing as levels deepen (points). |\n| `GridInitialOffset` | Distance to the first protective order (points). |\n| `GridStep` | Base distance between consecutive levels (points). |\n| `ProfitTarget` | Unrealized profit level that triggers closing everything. |\n| `LossLimit` | Unrealized loss level that triggers closing everything (0 disables). |\n| `AdxFlatLevel` | ADX threshold separating flat and trending regimes. |\n| `BarOffset` | Number of closed candles used to delay ADX values. |\n| `StartHour` | Hour when the trading window opens (UTC). |\n| `EndHour` | Hour when the trading window closes (UTC). |\n| `CandleType` | Candle series used for calculations. |"
+   }
+  }
+ }
+}

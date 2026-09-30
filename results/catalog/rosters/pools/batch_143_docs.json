@@ -1,0 +1,98 @@
+{
+ "batch_143": {
+  "strategy_ids": [
+   1951,
+   497,
+   1424,
+   3163,
+   4201,
+   1916,
+   4083,
+   2367,
+   2385,
+   3293
+  ],
+  "docs": {
+   "1951": {
+    "id": 1951,
+    "name": "Modified Optimum Elliptic Filter",
+    "family": "trend",
+    "overview": "This strategy applies the *Modified Optimum Elliptic Filter* indicator described by John F. Ehlers to detect directional turns. The indicator is a two–pole digital filter that smooths the average of high and low prices using the following recursive formula:\n\n```\nF(t) = 0.13785*(2*HL2(t) - HL2(t-1))\n     + 0.0007 *(2*HL2(t-1) - HL2(t-2))\n     + 0.13785*(2*HL2(t-2) - HL2(t-3))\n     + 1.2103 * F(t-1) - 0.4867 * F(t-2)\n```\n\nWhere `HL2` is the midpoint `(High + Low)/2` of each candle.\n\nThe strategy reads the last three filter values to determine momentum. If the indicator is rising and the most recent value exceeds the previous one, a long position is opened. If the indicator is falling and the current value is below the previous one, a short position is opened. Positions are reversed when the opposite condition occurs.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `F(t-1) < F(t-2)` and `F(t) > F(t-1)`.\n  - **Short**: `F(t-1) > F(t-2)` and `F(t) < F(t-1)`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is reversed on opposite signal.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `Candle Type` = 4-hour time frame.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `F(t-1) < F(t-2)` and `F(t) > F(t-1)`.\n  - **Short**: `F(t-1) > F(t-2)` and `F(t) < F(t-1)`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is reversed on opposite signal.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `Candle Type` = 4-hour time frame.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "497": {
+    "id": 497,
+    "name": "Adjustable MA & Alternating Extremities",
+    "family": "trend",
+    "overview": "The strategy uses Bollinger Bands to emulate the Adjustable Moving Average with alternating extremities. A long position is opened when price breaks above the upper band, while a short position is opened when price drops below the lower band. The overshoot state alternates, preventing consecutive trades in the same direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Go long when candle high crosses above the upper band.\n  - Go short when candle low crosses below the lower band.\n- **Exit Criteria**:\n  - Opposite band breakout.\n- **Indicators**: Bollinger Bands (SMA + standard deviation).\n- **Default Values**:\n  - Length = 50\n  - Multiplier = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Timeframe: Short/medium\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Go long when candle high crosses above the upper band.\n  - Go short when candle low crosses below the lower band.\n- **Exit Criteria**:\n  - Opposite band breakout.\n- **Indicators**: Bollinger Bands (SMA + standard deviation).\n- **Default Values**:\n  - Length = 50\n  - Multiplier = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Timeframe: Short/medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1424": {
+    "id": 1424,
+    "name": "Three Candle Bullish Engulfing",
+    "family": "trend",
+    "overview": "This strategy looks for a three-candle bullish or bearish engulfing pattern. It supports optional RSI breakout entries and a trailing stop with time-based exits.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Bullish candle, small doji, and bullish engulfing candle.\n  - **Short**: Bearish candle, small doji, and bearish engulfing candle.\n- **Long/Short**: Both (long only mode available).\n- **Exit Criteria**:\n  - Trailing stop, opposite candle break or session end.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TrailPerc` = 1.5\n  - `ExitHour` = 15\n  - `ExitMinute` = 15\n  - `RsiLength` = 14\n  - `RsiLevel` = 80\n  - `StopLossPerc` = 5\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Bullish candle, small doji, and bullish engulfing candle.\n  - **Short**: Bearish candle, small doji, and bearish engulfing candle.\n- **Long/Short**: Both (long only mode available).\n- **Exit Criteria**:\n  - Trailing stop, opposite candle break or session end.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TrailPerc` = 1.5\n  - `ExitHour` = 15\n  - `ExitMinute` = 15\n  - `RsiLength` = 14\n  - `RsiLevel` = 80\n  - `StopLossPerc` = 5",
+    "parameters": ""
+   },
+   "3163": {
+    "id": 3163,
+    "name": "Four Hour Swing",
+    "family": "trend",
+    "overview": "The **Four Hour Swing Strategy** ports the MetaTrader \"4H swing\" expert advisor to the StockSharp high level API. The original system mixes trend following and oscillator confirmations taken from higher time frames. This C# version subscribes to three time frames (entry, confirmation, and macro filter) and recreates the indicator stack with StockSharp components.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Default market order volume. | `0.01` |\n| `CandleType` | Entry candle type (e.g., 4-hour candles). | `4H` |\n| `SignalCandleType` | Confirmation candle type for stochastic and momentum. | `7D` (weekly) |\n| `MacdCandleType` | Macro filter candle type. | `30D` |\n| `FastEmaPeriod`, `MediumEmaPeriod`, `SlowEmaPeriod` | EMA lengths computed on typical price. | `4`, `14`, `50` |\n| `StochasticKPeriod`, `StochasticDPeriod`, `StochasticSmoothPeriod` | Stochastic oscillator settings. | `13`, `5`, `5` |\n| `MomentumPeriod` | Lookback used by the momentum indicator. | `14` |\n| `MomentumThreshold` | Minimum distance from 100 required to validate momentum. | `0.3` |\n| `StopLossPips`, `TakeProfitPips` | Protective orders in pips. | `20`, `50` |\n| `TrailingStopPips` | Trailing stop distance in pips. Set to zero to disable. | `40` |\n| `UseBreakEven` | Enables break-even protection. | `true` |\n| `BreakEvenTriggerPips`, `BreakEvenOffsetPips` | Trigger and offset for the break-even move. | `30`, `30` |\n| `UseMacdExit` | Close positions when the macro MACD flips. | `false` |"
+   },
+   "4201": {
+    "id": 4201,
+    "name": "Hard Profit",
+    "family": "trend",
+    "overview": "Hard Profit is a StockSharp port of the MetaTrader 4 expert advisor `hardprofit.mq4`. The strategy attempts to capture breakouts\nafter an exhaustion move when the close finishes at the extreme of the candle and a smoothed trend filter confirms the direction.\nThe port rebuilds the original money management modes, staged profit taking, and stop management by using StockSharp's\nhigh-level API.",
+    "details": "",
+    "parameters": "* **Breakout Period** – number of finished candles used to compute the breakout highs and lows.\n* **Trend Period** – length of the smoothed moving average applied to median price.\n* **Only Short / Only Long** – directional toggles that disable the opposite side.\n* **Max Trades Per Bar** – trade-per-bar guard (0 disables the limit).\n* **Stop Loss (pips)** – initial stop-loss distance; set to 0 to disable.\n* **Break-even (pips)** – profit threshold that moves the stop to the entry level.\n* **Trailing Activation (pips)** – profit threshold that moves the stop ahead by the original stop size.\n* **Partial TP1 (pips)** / **Partial Ratio 1 (%)** – distance and percentage for the first partial exit.\n* **Partial TP2 (pips)** / **Partial Ratio 2 (%)** – distance and percentage for the second partial exit.\n* **Take Profit (pips)** – final profit target; 0 disables the hard target.\n* **Max Spread (pips)** – maximum allowed spread at the time of entry.\n* **Money Management** – selects the sizing mode (Fixed, Geometrical, Proportional, Smart, TSSF).\n* **Fixed Volume** – base volume when the money management mode is Fixed.\n* **Geometrical Factor** – multiplier used by the geometrical sizing formula.\n* **Risk Percent** – percentage of free equity used by proportional, smart, and TSSF sizing.\n* **Last Trades** – number of recent realized trades stored for adaptive sizing.\n* **Decrease Factor** – divider applied to the smart mode when consecutive losses occur.\n* **TSSF Trigger 1/2/3 & TSSF Ratio 1/2/3** – thresholds and divisors for the TSSF metric transitions.\n* **Candle Type** – primary timeframe that drives indicator updates and signal evaluation."
+   },
+   "1916": {
+    "id": 1916,
+    "name": "Order Expert Strategy (1916)",
+    "family": "momentum",
+    "overview": "This strategy opens a market position when the instrument price reaches predefined levels. It mimics behaviour of the original MQL expert that managed orders via chart lines.\n\n## How it works\n- Subscribes to candles of a configurable timeframe.\n- When the closing price crosses the `BuyLevel` or `SellLevel` thresholds it opens a long or short market position.\n- Stop-loss and take-profit values are calculated from the entry price using `StopLossPip` and `TakeProfitPip`.\n- Optional trailing stop moves the stop-loss towards the current price as it moves in a favorable direction.\n\n## Parameters\n- **TakeProfitPip** – distance from entry price to take profit in pips.\n- **StopLossPip** – distance from entry price to stop loss in pips.\n- **EnableTrailingStop** – enable or disable trailing stop logic.\n- **CandleType** – candle type used for calculations.\n- **BuyLevel** – price level that triggers long entry (0 disables).\n- **SellLevel** – price level that triggers short entry (0 disables).\n\n## Notes\n- Strategy uses high-level API and processes only finished candles.\n- Protection subsystem is activated on start to avoid accidental large positions.\n",
+    "details": "",
+    "parameters": "- **TakeProfitPip** – distance from entry price to take profit in pips.\n- **StopLossPip** – distance from entry price to stop loss in pips.\n- **EnableTrailingStop** – enable or disable trailing stop logic.\n- **CandleType** – candle type used for calculations.\n- **BuyLevel** – price level that triggers long entry (0 disables).\n- **SellLevel** – price level that triggers short entry (0 disables)."
+   },
+   "4083": {
+    "id": 4083,
+    "name": "AIS4 Trade Machine",
+    "family": "volatility",
+    "overview": "The **AIS4 Trade Machine Strategy** is a manual trading assistant that ports the original MetaTrader \"AIS4 Trade Machine\" expert advisor to StockSharp. It keeps the one-position workflow from the script: the operator supplies absolute stop-loss and take-profit levels, issues a command, and the strategy calculates the trade size based on the current account equity and instrument specifications. After the market order is filled the strategy immediately submits paired protective orders (stop + limit) so the requested risk and reward levels are enforced on the exchange side.\n\nThe strategy does **not** generate automatic signals. It is designed for discretionary execution where the user decides when and where to enter or modify a position.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Command` | `Wait` | Manual command to execute (`Buy`, `Sell`, `Modify`, `Close`). Automatically returns to `Wait` after handling. |\n| `StopPrice` | `0` | Absolute stop-loss level. Must be below the entry price for longs and above for shorts. |\n| `TakePrice` | `0` | Absolute take-profit level. Must be above the entry price for longs and below for shorts. |\n| `AccountReserve` | `0.20` | Fraction of equity kept as reserve. Higher values require a larger cushion before new trades are accepted. |\n| `OrderReserve` | `0.04` | Fraction of equity risked per trade. Used to calculate the contract size from the stop distance. |\n| `CandleType` | `1 minute` time-frame | Candle series used to observe the latest prices for validation and logging. |"
+   },
+   "2367": {
+    "id": 2367,
+    "name": "RSI Slowdown",
+    "family": "mean_reversion",
+    "overview": "The RSI Slowdown strategy reacts to extreme readings of the Relative Strength Index that show signs of weakening momentum. When RSI approaches overbought or oversold zones and its change between bars drops below one point, the strategy assumes the market is ready for a reversal.\n\nA long position opens when RSI meets or exceeds the upper level and the indicator's growth slows. A short position opens when RSI falls to the lower level with a similar slowdown. Any existing opposite position is closed before entering a new trade.\n\nThe default configuration uses 6-hour candles and a 2-period RSI with thresholds of 90 and 10. These values mimic the original MetaTrader implementation.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: RSI >= `LevelMax` and `|RSI - prev RSI| < 1` (when slowdown is enabled)\n  - **Short**: RSI <= `LevelMin` and `|RSI - prev RSI| < 1` (when slowdown is enabled)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Opposite signal or short entry.\n  - **Short**: Opposite signal or long entry.\n- **Stops**: No automatic stops.\n- **Default Values**:\n  - `RsiPeriod` = 2\n  - `LevelMax` = 90\n  - `LevelMin` = 10\n  - `SeekSlowdown` = true\n  - `CandleType` = `TimeSpan.FromHours(6)`\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday to swing\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (slowdown)\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI >= `LevelMax` and `|RSI - prev RSI| < 1` (when slowdown is enabled)\n  - **Short**: RSI <= `LevelMin` and `|RSI - prev RSI| < 1` (when slowdown is enabled)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Opposite signal or short entry.\n  - **Short**: Opposite signal or long entry.\n- **Stops**: No automatic stops.\n- **Default Values**:\n  - `RsiPeriod` = 2\n  - `LevelMax` = 90\n  - `LevelMin` = 10\n  - `SeekSlowdown` = true\n  - `CandleType` = `TimeSpan.FromHours(6)`\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday to swing\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (slowdown)\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2385": {
+    "id": 2385,
+    "name": "Opening and Closing on Time",
+    "family": "volume",
+    "overview": "A simple time-based strategy that opens a market position at a specified time of day and closes it at another predefined time. The direction (buy or sell) and order volume are configurable. This example demonstrates scheduled trade execution without using indicators or additional filters.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: At `Open Time` when `Is Buy` is enabled.\n  - **Short**: At `Open Time` when `Is Buy` is disabled.\n- **Long/Short**: Both, depending on `Is Buy`.\n- **Exit Criteria**:\n  - Position is closed at `Close Time` regardless of profit or loss.\n- **Stops**: None.\n- **Default Values**:\n  - `Open Time` = 13:00.\n  - `Close Time` = 13:01.\n  - `Volume` = 1.\n  - `Is Buy` = true.\n  - `Candle Type` = 1 minute.\n- **Filters**:\n  - Category: Time\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: At `Open Time` when `Is Buy` is enabled.\n  - **Short**: At `Open Time` when `Is Buy` is disabled.\n- **Long/Short**: Both, depending on `Is Buy`.\n- **Exit Criteria**:\n  - Position is closed at `Close Time` regardless of profit or loss.\n- **Stops**: None.\n- **Default Values**:\n  - `Open Time` = 13:00.\n  - `Close Time` = 13:01.\n  - `Volume` = 1.\n  - `Is Buy` = true.\n  - `Candle Type` = 1 minute.\n- **Filters**:\n  - Category: Time\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3293": {
+    "id": 3293,
+    "name": "Check Execution",
+    "family": "volume",
+    "overview": "The Check Execution strategy reproduces the behaviour of the original MQL expert that repeatedly modifies a broker order to measure execution quality. The algorithm can test either a pending buy stop or a protective sell stop that guards a long position opened with a market order. Every modification records both the observed spread and the time required for the trading venue to accept the change, making it straightforward to evaluate latency-sensitive conditions offered by a broker.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Trading volume used for every order. | `0.01` |\n| `Iterations` | Number of modify attempts for averaging. Limited to 1–500. | `30` |\n| `Order Mode` | Selects the workflow: `Pending` or `Market`. | `Pending` |\n| `Pending Offset` | Distance in price steps above the ask for the test buy stop. | `100` |\n| `Stop Offset` | Distance in price steps below the ask for the protective sell stop. | `100` |"
+   }
+  }
+ }
+}

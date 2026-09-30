@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 316,
+      "name": "ADX Volume Breakout",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX reference translated to an OHLCV-compatible trend filter; unsupported directional/state logic is simplified."
+    },
+    {
+      "id": 2067,
+      "name": "Puria",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 212,
+      "name": "Williams R Ichimoku",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 584,
+      "name": "Blood In The Streets",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1835,
+      "name": "SMA Multi Hedge2",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1095,
+      "name": "Multi Indicator Trend Following",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1312,
+      "name": "SMA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 4074,
+      "name": "Wave Power EA",
+      "family": "trend",
+      "entry_long": "crossabove((macd(close,12,26) - macd_signal(close,12,26,9)), atr(high,low,close,14))",
+      "exit_long": "crossbelow((macd(close,12,26) - macd_signal(close,12,26,9)), -atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 876,
+      "name": "Heiken Ashi Supertrend ATR-SL",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,10) > sma(atr(high,low,close,10),10)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,10) < sma(atr(high,low,close,10),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 377,
+      "name": "Low Volatility Stocks",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    }
+  ]
+}

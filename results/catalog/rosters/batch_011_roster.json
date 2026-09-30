@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 23,
+      "name": "Elder Impulse",
+      "family": "trend",
+      "entry_long": "close > ema(close,13) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < ema(close,13) or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "MACD histogram is represented by MACD minus its signal; long entries require price above EMA(13). The short side is omitted because this roster schema is long-only, and the documented stop is 2%."
+    },
+    {
+      "id": 104,
+      "name": "Rejection Candle",
+      "family": "momentum",
+      "entry_long": "close > open and (open - low) >= 2 * (close - open)",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Long translation uses a bullish rejection candle with a lower wick at least twice the body; the bearish rejection is not encoded in the long-only schema. The documented stop is 2%."
+    },
+    {
+      "id": 265,
+      "name": "Volatility Adjusted Momentum",
+      "family": "breakout",
+      "entry_long": "roc(close,14) > sma(roc(close,14),20) + 2 * std(roc(close,14),20) and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "roc(close,14) < sma(roc(close,14),20) or atr(high,low,close,14) < sma(atr(high,low,close,14),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Momentum is approximated with 14-bar ROC versus its 20-bar mean plus a 2-standard-deviation threshold, with ATR(14) expansion as the volatility filter. The malformed Unit(2...) stop is interpreted as 2%; no take-profit is documented."
+    },
+    {
+      "id": 415,
+      "name": "Bollinger Winner Pro",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "close > bb_mid(close,20) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented mean-reversion band/RSI concept with standard Bollinger(20,2) and RSI(14) defaults. Aroon and the unspecified MA filter are not available in the DSL; the optional stop is enabled but has no documented percentage."
+    },
+    {
+      "id": 524,
+      "name": "AO AC Trading Zones",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and roc(close,5) > 0 and close > open",
+      "exit_long": "close < ema(close,20) or roc(close,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The unsupported SMMA teeth, Awesome/Acceleration oscillators, fractals, and five-level pyramiding are approximated by EMA(20) trend, positive ROC, and a bullish candle. The documented dynamic fifth-green-bar low stop is not expressible as a percentage."
+    },
+    {
+      "id": 693,
+      "name": "Double Bottom and Top Hunter",
+      "family": "breakout",
+      "entry_long": "low <= 1.05 * donchian_low_prev(low,100) and close > open and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The repeated-low pattern is approximated by a bullish reversal within 5% of the prior 100-bar low and above SMA(20); the long exit uses a break of the prior 20-bar low. Short/top logic and the source's more specific new-high/new-low condition are not represented by the long-only schema."
+    },
+    {
+      "id": 1433,
+      "name": "Time of day / day of week Sigma Spike",
+      "family": "mean_reversion",
+      "entry_long": "zscore(roc(close,1),20) >= 2.5 or zscore(roc(close,1),20) <= -2.5",
+      "exit_long": "zscore(roc(close,1),20) > -2.5 and zscore(roc(close,1),20) < 2.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Absolute return z-score is expressed as the two-sided threshold; ROC is percent and the rolling standard-deviation length is 20. Hour/day-of-week filters are not available in the DSL."
+    },
+    {
+      "id": 2414,
+      "name": "Bezier ReOpen",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,8)) and roc(close,1) > 0",
+      "exit_long": "crossbelow(close,ema(close,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bezier slope/re-entry is proxied by a close crossing the EMA(8) with positive one-bar momentum. Re-entry scaling and the absolute-price stop/take-profit parameters are not representable in the roster DSL."
+    },
+    {
+      "id": 2490,
+      "name": "Forex Profit",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,50)) and ema(close,10) > ema(close,25) and close > ema(close,10)",
+      "exit_long": "crossbelow(ema(close,10),ema(close,50)) or crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EMA(10/25/50) alignment and prior-bar crossover are retained; close above EMA(10) is a documented Parabolic-SAR-direction proxy. Profit-threshold, trailing, and absolute-price-point stop/target logic are not expressible as percentage exits."
+    },
+    {
+      "id": 3421,
+      "name": "Peter Panel",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a manual order panel with no automatic signals; a bullish completed-candle close is a minimal long market-toggle proxy. Entry-level, pending-order, modification, liquidation, and user-set protection controls are not representable in the DSL."
+    }
+  ]
+}

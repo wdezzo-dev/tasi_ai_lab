@@ -1,0 +1,98 @@
+{
+ "batch_117": {
+  "strategy_ids": [
+   47,
+   2521,
+   4073,
+   4182,
+   2739,
+   3167,
+   989,
+   2766,
+   3071,
+   3601
+  ],
+  "docs": {
+   "47": {
+    "id": 47,
+    "name": "OBV Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 178%. It performs best in the stocks market.\n\nA breakout in OBV suggests strong interest. The system goes long if OBV exceeds its previous maximum, or short if it breaks the minimum. Crossing the OBV moving average signals an exit.\n\nThis combines volume momentum with price action.\n\n## Details\n\n- **Entry Criteria**: OBV surpasses highest or lowest value in lookback period.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: OBV crosses its MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `OBVMAPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: OBV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: OBV surpasses highest or lowest value in lookback period.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: OBV crosses its MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `OBVMAPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: OBV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2521": {
+    "id": 2521,
+    "name": "Simple MACD",
+    "family": "trend",
+    "overview": "- **Market**: any instrument with candle data and continuous trading hours.\n- **Core indicator**: Moving Average Convergence Divergence (MACD) using exponential moving averages 12/26 and signal 9.\n- **Approach**: momentum-following. The strategy compares two most recent completed MACD readings and goes long when the line rises, or short when the line falls.\n- **Order type**: market orders only. Every signal aggregates the amount required to close the opposite position and adds the configured trade volume on top, mirroring the original expert advisor.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `FastPeriod` | 12 | Fast EMA length for the MACD calculation. |\n| `SlowPeriod` | 26 | Slow EMA length for the MACD calculation. |\n| `SignalPeriod` | 9 | Signal EMA period retained for compatibility with the original settings. |\n| `TradeVolume` | 0.1 | Volume added on each signal before accounting for position reversal. |\n| `CandleType` | 1 minute time frame | Candle type used to feed the indicator. Adjustable to any desired timeframe. |\n\nAll parameters are exposed as strategy parameters and marked as optimizable where meaningful."
+   },
+   "4073": {
+    "id": 4073,
+    "name": "TrueSort 1001",
+    "family": "trend",
+    "overview": "TrueSort 1001 is a strict trend-following system that mirrors the original MQL expert advisor. The strategy watches five simple moving averages and only acts when they stay perfectly ordered for three consecutive completed candles. A rising Average Directional Index (ADX) confirms momentum before any trade is opened. Once in the market the position is protected by an adaptive trailing stop measured in price steps and the trade is closed as soon as the moving averages lose their alignment.\n\n## Logic\n\n### Trend and momentum filter\n- Five SMAs (10, 20, 50, 100 and 200 periods by default) are calculated on the selected timeframe.\n- For long setups the fast SMAs must be strictly above the slower ones on each of the last three finished candles: `SMA10 > SMA20 > SMA50 > SMA100 > SMA200`.\n- For short setups the opposite ordering is required on the same three candles.\n- ADX with period `AdxPeriod` must stay above `AdxThreshold` and the current value has to be higher than the previous candle, ensuring that trend strength is increasing.\n\n### Entry conditions\n1. No position is open.\n2. Three historical candles satisfy the ordering rule described above.\n3. The ADX filter passes.\n4. A market order of `Volume` lots is sent immediately on the close of the current candle.\n\n### Exit conditions\n- **Moving average de-synchronization:** when the current candle closes and the MA stack is no longer strictly ordered in the direction of the trade the position is liquidated.\n- **Trailing protection:** `StopLossPoints` are converted into absolute price distance by multiplying with the instrument `PriceStep`. For long trades the stop is initialized at the maximum between `SMA100` and `Close - distance`. For shorts it is the minimum between `SMA100` and `Close + distance`. After every candle the stop is tightened towards the price but never loosened. If price crosses the stop the position is closed at market.\n\n### Additional notes\n- All decisions are made on finished candles only; unfinished ca",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `0.1` | Order size in lots for every market entry. |\n| `StopLossPoints` | `100` | Trailing-stop distance expressed in instrument price steps. `0` disables trailing. |\n| `Sma10Length` | `10` | Period of the fastest SMA. |\n| `Sma20Length` | `20` | Period of the second SMA. |\n| `Sma50Length` | `50` | Period of the medium SMA. |\n| `Sma100Length` | `100` | Period used both for alignment and the initial stop reference. |\n| `Sma200Length` | `200` | Slowest SMA confirming long-term trend. |\n| `AdxPeriod` | `14` | Period of the ADX indicator. |\n| `AdxThreshold` | `25` | Minimum ADX level and rising condition needed before entries. |\n| `CandleType` | `TimeSpan.FromHours(1).TimeFrame()` | Candle series used for all indicator calculations. |"
+   },
+   "4182": {
+    "id": 4182,
+    "name": "MACD Signal ATR",
+    "family": "trend",
+    "overview": "The **MACD Signal Strategy** ports the MetaTrader expert `MACD_signal.mq4` to StockSharp. The original robot measured the\nMACD histogram against an ATR-based volatility band and opened a single market order whenever the histogram crossed that\nband. This C# version recreates the same momentum breakout logic using StockSharp's high-level API, stores the previous\nhistogram and ATR readings explicitly, and documents every money-management rule with named parameters and English\ncomments in the source code.\n\nUnlike the MetaTrader implementation that directly modified tickets, the StockSharp port works with net positions. It\ntherefore closes the current exposure before flipping direction and updates trailing stops internally instead of relying on\nbroker-side `OrderModify` calls.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `TradeVolume` | `decimal` | `10` | Order size (lots) used for every market entry and copied to `Strategy.Volume`. |\n| `TakeProfitPoints` | `int` | `10` | Distance to the fixed take-profit target expressed in price steps. Values below 10\n disable trading. |\n| `TrailingStopPoints` | `int` | `25` | Distance in price steps for the trailing stop. Set to `0` to disable trailing. |\n| `FastPeriod` | `int` | `9` | Length of the fast EMA inside the MACD indicator. |\n| `SlowPeriod` | `int` | `15` | Length of the slow EMA inside the MACD indicator. |\n| `SignalPeriod` | `int` | `8` | Length of the EMA used to smooth the MACD signal line. |\n| `ThresholdMultiplier` | `decimal` | `0.004` | Multiplier applied to the previous-bar ATR to build the breakout band. |\n| `AtrPeriod` | `int` | `200` | Number of candles used to compute the ATR volatility filter. |\n| `CandleType` | `DataType` | 30-minute timeframe | Primary timeframe processed by the strategy. |"
+   },
+   "2739": {
+    "id": 2739,
+    "name": "Dealers Trade ZeroLag MACD",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader expert advisor \"Dealers Trade v 7.91 ZeroLag MACD\" to the StockSharp high level API. It tracks the slope of a zero lag MACD to decide whether the market is in an accumulation phase for longs or shorts and builds a grid of positions with adaptive spacing and risk management. The default timeframe is four-hour candles as recommended by the original author, but any candle type supported by StockSharp can be selected.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `BaseVolume` | Initial order size. Set to zero to enable risk-based sizing via `RiskPercent`. |\n| `RiskPercent` | Percentage of portfolio equity to risk when position size is derived from the stop distance. |\n| `MaxPositions` | Maximum number of simultaneously open entries. |\n| `IntervalPips` | Initial spacing between grid entries in pips. |\n| `IntervalCoefficient` | Multiplier applied to the spacing after each additional entry. |\n| `StopLossPips` | Stop loss distance in pips. Set to zero to disable. |\n| `TakeProfitPips` | Base take profit distance in pips. Multiplied by `TakeProfitCoefficient` per entry. |\n| `TrailingStopPips` / `TrailingStepPips` | Trailing stop distance and required advance before the trail is adjusted. |\n| `TakeProfitCoefficient` | Multiplier for widening take profit distances on later entries. |\n| `SecureProfit` | Profit threshold that triggers account protection once enough positions are open. |\n| `AccountProtection` | Enables automatic profit locking by closing the best trade. |\n| `PositionsForProtection` | Minimum number of open positions required before account protection becomes active. |\n| `ReverseCondition` | Inverts the MACD slope interpretation. |\n| `FastLength`, `SlowLength`, `SignalLength` | Periods of the zero lag exponential moving averages. |\n| `MaxVolume` | Cap for the volume of a single entry. |\n| `LotMultiplier` | Multiplicative factor for scaling position size with each grid entry. |\n| `MinimumBalance` | Minimal account balance required to continue trading. |\n| `CandleType` | Candle data type used for calculations. |"
+   },
+   "3167": {
+    "id": 3167,
+    "name": "Daily Range",
+    "family": "breakout",
+    "overview": "This strategy is a StockSharp conversion of the MetaTrader 5 expert advisor `MQL/23334/Daily range.mq5`. The original EA tracks the highest and lowest prices reached over the last few days, offsets these levels by a configurable percentage of the daily range, and trades breakouts. The C# port preserves the behaviour while adopting StockSharp's high-level strategy API.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `RangeMode` | Determines how the daily range is calculated (`HighestLowest` or `CloseToClose`). | `HighestLowest` |\n| `SlidingWindowDays` | Number of calendar days included in the sliding window used for the range calculation. | `3` |\n| `StopLossCoefficient` | Multiplier applied to the current range to define the stop-loss distance. | `0.03` |\n| `TakeProfitCoefficient` | Multiplier applied to the current range to define the take-profit distance. | `0.05` |\n| `OffsetCoefficient` | Additional offset applied to the breakout levels above the high and below the low. | `0.01` |\n| `MaxPositionsPerDay` | Maximum number of entries allowed per direction during a single trading day. | `3` |\n| `StartTime` | Time of day when a fresh range is calculated for the current session. | `10:05` |\n| `CandleType` | Candle subscription used for both range calculation and signal evaluation. | `15-minute time frame` |"
+   },
+   "989": {
+    "id": 989,
+    "name": "London BreakOut Classic",
+    "family": "breakout",
+    "overview": "This strategy trades breakouts of the London session using the Asian range. The high and low between 00:00 and 06:55 UTC form a box. After 07:00 UTC a breakout above the high opens a long position and a breakout below the low opens a short position. Stop loss is placed at the midpoint of the box and take profit uses a configurable risk-reward factor.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price crosses above the Asian session high.\n  - Short: price crosses below the Asian session low.\n- **Exit Criteria**:\n  - Stop loss or take profit.\n  - End of trading window.\n- **Stops**: Yes.\n- **Default Values**:\n  - Asian session: 00:00–06:55 UTC.\n  - Trading session: 07:00–16:00 UTC.\n  - CRV = 1.\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price crosses above the Asian session high.\n  - Short: price crosses below the Asian session low.\n- **Exit Criteria**:\n  - Stop loss or take profit.\n  - End of trading window.\n- **Stops**: Yes.\n- **Default Values**:\n  - Asian session: 00:00–06:55 UTC.\n  - Trading session: 07:00–16:00 UTC.\n  - CRV = 1.\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2766": {
+    "id": 2766,
+    "name": "Rnd Trade",
+    "family": "momentum",
+    "overview": "- Conversion of the MetaTrader 5 expert advisor `RndTrade.mq5` to the StockSharp high-level strategy API.\n- Closes any existing position on a fixed time interval and immediately opens a new market position in a randomly selected direction.\n- Uses time-based candle subscriptions as a deterministic replacement for the original timer callbacks.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `IntervalMinutes` | `int` | `60` | Number of minutes between the close of the current position and the opening of a new random position. Must be greater than zero. |\n| `Volume` | `decimal` | `1` | Position size used for market entries. Derived from the base `Strategy` class. |"
+   },
+   "3071": {
+    "id": 3071,
+    "name": "Vortex Indicator Duplex",
+    "family": "volatility",
+    "overview": "This strategy converts the MetaTrader expert **Exp_VortexIndicator_Duplex** to the StockSharp high level API. Two independent Vortex indicator streams are maintained: one governs long trades and the other governs short trades. Each stream can use its own timeframe, indicator length and bar shift, allowing asymmetric behaviour between bullish and bearish setups.\n\n## How it works\n\n1. Two candle subscriptions are opened according to `LongCandleType` and `ShortCandleType`. Each feed updates its own `VortexIndicator` instance.\n2. On every finished candle the strategy records the latest VI+ and VI- values. The `LongSignalBar`/`ShortSignalBar` parameters define how many closed candles back should be used for signal evaluation, matching the MetaTrader `SignalBar` input.\n3. **Long entry** – allowed when `AllowLongEntries = true`. A buy order is sent if the current long-stream VI+ value is above VI- while the previous sampled value had VI+ less than or equal to VI-. Any existing short exposure is flattened before the new long position is established.\n4. **Long exit** – enabled through `AllowLongExits`. The long position is closed when the long-stream VI- value rises above VI+. In addition, protective stop-loss and take-profit levels expressed in price steps (`LongStopLossSteps`, `LongTakeProfitSteps`) are monitored on every candle; hitting either threshold also closes the trade.\n5. **Short entry** – governed by `AllowShortEntries`. A sell order is placed when the short-stream VI+ drops below VI- after previously being above it. Existing long exposure is flattened during the reversal.\n6. **Short exit** – controlled by `AllowShortExits`. The short position is covered when VI+ climbs back above VI-. Protective distances (`ShortStopLossSteps`, `ShortTakeProfitSteps`) close the trade if reached.\n7. Position sizing uses the `TradeVolume` parameter. The strategy relies on the instrument `PriceStep` to convert step counts into absolute price distances; setting a step parameter to zer",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `LongCandleType` | H4 | Timeframe used for the long-side Vortex indicator. |\n| `ShortCandleType` | H4 | Timeframe used for the short-side indicator. |\n| `LongLength` | 14 | VI period applied to the long stream. |\n| `ShortLength` | 14 | VI period applied to the short stream. |\n| `LongSignalBar` | 1 | Closed-candle offset for the long evaluation (0 = current finished bar). |\n| `ShortSignalBar` | 1 | Closed-candle offset for the short evaluation. |\n| `AllowLongEntries` | true | Enables opening long positions. |\n| `AllowLongExits` | true | Enables closing long positions. |\n| `AllowShortEntries` | true | Enables opening short positions. |\n| `AllowShortExits` | true | Enables closing short positions. |\n| `LongStopLossSteps` | 1000 | Stop-loss distance for long trades, expressed in price steps. |\n| `LongTakeProfitSteps` | 2000 | Take-profit distance for long trades, expressed in price steps. |\n| `ShortStopLossSteps` | 1000 | Stop-loss distance for short trades, expressed in price steps. |\n| `ShortTakeProfitSteps` | 2000 | Take-profit distance for short trades, expressed in price steps. |\n| `TradeVolume` | 1 | Base market order size used when entering a position. |"
+   },
+   "3601": {
+    "id": 3601,
+    "name": "SwingTrader",
+    "family": "mean_reversion",
+    "overview": "The **SwingTrader Strategy** is a StockSharp port of the MetaTrader 4 expert advisor `SwingTrader.mq4`. The original EA looks for\nBollinger Band reversals: when price bounces from the outer band and the next bar crosses the middle line, the advisor opens a\nposition and starts building a martingale-style averaging grid. The translated strategy reproduces the same high-level behaviour\nusing StockSharp candles, Bollinger Bands from `StockSharp.Algo.Indicators`, and the framework's order helpers (`BuyMarket`,\n`SellMarket`). Volume scaling, the width of the grid and the liquidation rules mirror the MT4 code while respecting the exchange\nlimits provided by the `Security` metadata.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `TakeProfitFactor` | `decimal` | `0.05` | Multiplier applied to invested capital to define the profit target. |\n| `Multiplier` | `decimal` | `1.5` | Volume multiplier for every additional averaging order. |\n| `BollingerPeriod` | `int` | `20` | Number of candles used by the Bollinger Bands indicator. |\n| `InitialVolume` | `decimal` | `1` | Base volume of the first trade in a new basket (rounded to venue limits). |\n| `CandleType` | `DataType` | 15-minute timeframe | Timeframe used for signal generation. |"
+   }
+  }
+ }
+}

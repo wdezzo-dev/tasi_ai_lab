@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2647,
+      "name": "Omni Trend",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,13) + 1.3 * atr(high, low, close, 11))",
+      "exit_long": "crossbelow(close, ema(close,13) - 1.3 * atr(high, low, close, 11))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaLength=13 exponential average and AtrLength=11 with VolatilityFactor=1.3 build the channel, and a close crossing the previous envelope boundary is what flips the trend, so the long entry is the upside break and the exit the downside break. The MoneyRisk=0.15 channel offset, SignalBar=1 execution delay and the buy/sell enable flags are dropped, and StopLossPoints=1000 / TakeProfitPoints=2000 are price steps, so stops are null."
+    },
+    {
+      "id": 3212,
+      "name": "MaRobot",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), sma(close,50)) and adx(high, low, close,14) < 30",
+      "exit_long": "crossbelow(sma(close,10), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast/slow SMA cross is kept with the documented entry filter that rejects trades when the ADX is too high, using 10/50 and an ADX(14) cap of 30 as explicit defaults because FastPeriod, SlowPeriod and AdxThreshold are not given. The separate daily RSI gate, Lowest/Highest swing stop, TakeProfitRatio, break-even arming and point-based StopLossPoints are not expressible here, so stops are null."
+    },
+    {
+      "id": 783,
+      "name": "Fibonacci ATR Fusion",
+      "family": "trend",
+      "entry_long": "crossabove(close, low + 0.58 * (high - low))",
+      "exit_long": "crossbelow(close, low + 0.42 * (high - low))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The multi-period Fibonacci buying-pressure ratio normalised by ATR is not available, so the in-bar close location within the range stands in and the documented LongEntryThreshold=58 / LongExitThreshold=42 crossings are applied to it. Tp1Atr/Tp2Atr/Tp3Atr with 12 percent partials would be layered ATR targets, but the docs state no stops, so both stop fields are null."
+    },
+    {
+      "id": 414,
+      "name": "Bollinger Winner Lite",
+      "family": "trend",
+      "entry_long": "close < sma(close,20) - 2 * std(close,20) and high - low > 0.3 * atr(high, low, close, 20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented BBLength=20 and BBMultiplier=2.0 bands are written out explicitly and CandlePercent=30 becomes a bar range of at least 0.3 ATR(20) so only large breakout candles qualify. The exit is the documented snap back to the middle line (the opposite-band touch is implied by it), ShowShort and the short leg are dropped, and the docs state no hard stop."
+    },
+    {
+      "id": 2043,
+      "name": "Fine Tuning MA",
+      "family": "trend",
+      "entry_long": "roc(sma(close,10),1) > 0 and roc(sma(close,10),3) < 0",
+      "exit_long": "roc(sma(close,10),1) < 0",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 1.0,
+      "notes": "The documented MaLength=10 is used and the reversal-after-two-bars rule becomes a one-bar upturn of SMA(10) that is still below its level three bars ago; the short branch is dropped and the exit is the opposite turn. The documented StopLossPercent=1 and TakeProfitPercent=1 are the only percent-based stops in the file and are used directly."
+    },
+    {
+      "id": 3516,
+      "name": "HPCS Inter5",
+      "family": "momentum",
+      "entry_long": "roc(close,5) < 0",
+      "exit_long": "roc(close,5) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented comparison of the close five bars back against the latest close is exactly a negative five-bar rate of change, but the original evaluates it once at start-up, so here it becomes a recurring signal and trades repeat, which is a deliberate deviation. The 10/10 pip protective distances are not percentages, so both stop fields are null."
+    },
+    {
+      "id": 3783,
+      "name": "Simple Pivot Flip",
+      "family": "volatility",
+      "entry_long": "open < (donchian_high_prev(high,1) + donchian_low_prev(low,1)) / 2",
+      "exit_long": "open > (donchian_high_prev(high,1) + donchian_low_prev(low,1)) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The simple pivot is the midpoint of the previous candle range, built here from donchian_high_prev/donchian_low_prev, and the documented long rule is an opening price in the lower half of that range with the flip back above it as the exit. The gap-above-previous-high long case and the short branch are dropped for long-only, and the original implements no stop-loss or take-profit."
+    },
+    {
+      "id": 2188,
+      "name": "RSI Automated",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),25)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RsiPeriod=14, Oversold=25 entry cross and ExitLevel=50 exit cross are used verbatim; the overbought short branch is dropped for long-only. StopLossPoints=50, TakeProfitPoints=150 and TrailingStopPoints=25 are instrument points, not percentages, so both stop fields are null."
+    },
+    {
+      "id": 2118,
+      "name": "Nevalyashka",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the strategy does not rely on market data: it opens a short at start and then only alternates direction with a martingale LotMultiplier after each position closes, so there is no market-derived entry signal to translate. Marked non-trading; the TakeProfit/StopLoss price-point distances and volume resets are state-dependent."
+    },
+    {
+      "id": 2365,
+      "name": "Delta MFI",
+      "family": "volume",
+      "entry_long": "rsi(close,50) > 50 and rsi(close,14) > rsi(close,50)",
+      "exit_long": "rsi(close,14) < rsi(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Money Flow Index is not in the DSL, so RSI stands in for it with the documented FastPeriod=14, SlowPeriod=50 and Level=50 rule: buy while the slow reading is above 50 and the fast one leads it. The short branch (slow MFI under 100 - Level) is dropped and the docs state no stops."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_129": {
+  "strategy_ids": [
+   3837,
+   2858,
+   1336,
+   1467,
+   852,
+   3342,
+   1788,
+   2567,
+   2570,
+   3992
+  ],
+  "docs": {
+   "3837": {
+    "id": 3837,
+    "name": "Farhad Hill Version 2 Strategy (C#)",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor “Farhad Hill Version 2”.\nIt combines multiple indicator filters to trade trend reversals on forex symbols. The\nconverted logic retains the original indicator stack (MACD, Stochastic, Parabolic SAR,\nMomentum, and optional moving-average cross) and its money-management plus trailing\nbehaviour.\n\nThe strategy works on a single timeframe (default 30-minute candles) and opens only one\nposition at a time. Protective stop-loss, take-profit, and three trailing-stop styles are\nsupported to mirror the MQL version. All comments in the code are provided in English as\nrequested.",
+    "details": "",
+    "parameters": "All parameters are exposed through `StrategyParam<T>` objects and can be optimised or\nchanged from the UI. Key groups:\n\n| Group | Parameter | Description |\n| --- | --- | --- |\n| General | `CandleType` | Timeframe of candles used for signals |\n| Money Management | `AccountIsMini`, `UseMoneyManagement`, `TradeSizePercent`, `FixedVolume`, `MaxLots` |\n| Risk | `StopLossPips`, `TakeProfitPips`, `UseTrailingStop`, `TrailingStopType`, `TrailingStopPips`, `FirstMovePips`, `TrailingStop1`, `SecondMovePips`, `TrailingStop2`, `ThirdMovePips`, `TrailingStop3` |\n| Indicators | `UseMacd`, `UseStochasticLevel`, `UseStochasticCross`, `UseParabolicSar`, `UseMomentum`, `UseMovingAverageCross`, `MacdFast`, `MacdSlow`, `MacdSignal`, `StochasticK`, `StochasticD`, `StochasticSlowing`, `StochasticHigh`, `StochasticLow`, `MomentumPeriod`, `MomentumHigh`, `MomentumLow`, `SlowMaPeriod`, `FastMaPeriod`, `MaMode`, `MaPrice` |"
+   },
+   "2858": {
+    "id": 2858,
+    "name": "XRSI DeMarker Histogram",
+    "family": "trend",
+    "overview": "## Summary\nThis strategy replicates the **Exp_XRSIDeMarker_Histogram** expert advisor. It trades reversals detected by a custom oscillator that blends a Relative Strength Index (RSI) with the DeMarker indicator and then smooths the result. The system can open or close long and short trades independently, and optional protective stops expressed in price steps are supported.\n\n## Indicator construction\n1. **Applied price** – the RSI is calculated on the selected input (close, open, high, low, median, typical or weighted price) using the configured period.\n2. **DeMarker component** – for each finished candle, the strategy measures the upward (`deMax`) and downward (`deMin`) pressure:\n   - `deMax = max(High_t - High_{t-1}, 0)`\n   - `deMin = max(Low_{t-1} - Low_t, 0)`\n   Both series are smoothed with a simple moving average whose length matches the RSI period.\n   - `DeMarker = deMaxAvg / (deMaxAvg + deMinAvg)` (scaled to the 0–100 range).\n3. **Composite oscillator** – the final value is `(RSI + 100 * DeMarker) / 2`.\n4. **Smoothing** – the composite oscillator is passed through one of the supported moving averages (SMA, EMA, SMMA, LWMA or Jurik). If an unsupported smoothing mode from the original MQL version is selected, the indicator falls back to an EMA with the requested length. The Jurik option also honours the phase parameter.\n5. **Signal history** – the strategy stores historical values and evaluates signals on the bar defined by `SignalBar`, mimicking the original EA which waited for the next candle before taking trades.\n\n## Trading logic\n- **Bullish reversal**\n  - Condition: value at `SignalBar+1` is below `SignalBar+2` (down-slope) and the value at `SignalBar` turns back up (`>=`).\n  - Actions:\n    - Close existing short trades when `CloseShortOnLongSignal` is true.\n    - Open a new long trade with `TradeVolume` (plus any quantity required to flip from a short) when `AllowBuyEntries` is enabled.\n- **Bearish reversal**\n  - Condition: value at `SignalBar+1` is above",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `TradeVolume` | Volume used when opening new positions. | `0.1` |\n| `StopLossTicks` | Protective stop in price steps. | `1000` |\n| `TakeProfitTicks` | Profit target in price steps. | `2000` |\n| `AllowBuyEntries` | Enable/disable entering long trades. | `true` |\n| `AllowSellEntries` | Enable/disable entering short trades. | `true` |\n| `CloseLongOnShortSignal` | Close longs when a short signal appears. | `true` |\n| `CloseShortOnLongSignal` | Close shorts when a long signal appears. | `true` |\n| `CandleType` | Timeframe used for analysis (default 4-hour candles). | `H4` |\n| `IndicatorPeriod` | Look-back for both RSI and DeMarker components. | `14` |\n| `AppliedPriceSelection` | Applied price used by the RSI calculation. | `Close` |\n| `SmoothingMethodSelection` | Moving average used for smoothing (SMA/EMA/SMMA/LWMA/Jurik/Adaptive). | `Sma` |\n| `SmoothingLength` | Period of the smoothing average. | `5` |\n| `SmoothingPhase` | Phase argument passed to Jurik smoothing. | `15` |\n| `SignalBar` | Number of closed bars back used for signal evaluation. | `1` |"
+   },
+   "1336": {
+    "id": 1336,
+    "name": "Statistical Arbitrage Pairs Trading - Long-Side Only",
+    "family": "trend",
+    "overview": "This strategy executes a simple pairs trading approach based on the z-score spread between two instruments. It opens a long position when the spread falls below a user-defined threshold and closes the position when the spread crosses above zero.\n\n## Details\n\n- **Entry Criteria**: Spread z-score below threshold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Spread z-score crosses above zero.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreLength` = 20\n  - `ExtremeLevel` = -1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Spread z-score below threshold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Spread z-score crosses above zero.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreLength` = 20\n  - `ExtremeLevel` = -1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1467": {
+    "id": 1467,
+    "name": "Trend Impulse Tester",
+    "family": "trend",
+    "overview": "Trend Impulse Tester enters trades when a strong trend is confirmed by EMAs and ADX and an RSI impulse appears.\nIt buys on bullish impulses during uptrends and sells on bearish impulses during downtrends.\n\n## Details\n\n- **Entry Criteria**: EMA trend + ADX confirmation with RSI crossing threshold\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `FastEmaLength` = 50\n  - `SlowEmaLength` = 200\n  - `AdxLength` = 14\n  - `AdxMin` = 18\n  - `RsiLength` = 14\n  - `RsiUp` = 55\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ADX, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: EMA trend + ADX confirmation with RSI crossing threshold\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `FastEmaLength` = 50\n  - `SlowEmaLength` = 200\n  - `AdxLength` = 14\n  - `AdxMin` = 18\n  - `RsiLength` = 14\n  - `RsiUp` = 55\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ADX, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "852": {
+    "id": 852,
+    "name": "Gold Volume-Based Entry",
+    "family": "trend",
+    "overview": "This strategy buys when two consecutive bullish volume bars exceed the volume moving average. The second bar must also have higher volume than the first. A fixed profit target closes the position once price moves a predefined amount in favor.\n\n## Details\n\n- **Entry Criteria**:\n  - Two bullish volume bars above the volume moving average with rising volume.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fixed profit target at `entry price + Target Move`.\n- **Stops**: None.\n- **Default Values**:\n  - `Volume MA Period` = 20.\n  - `Target Move` = 5.\n- **Filters**:\n  - Category: Volume\n  - Direction: Long\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Two bullish volume bars above the volume moving average with rising volume.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Fixed profit target at `entry price + Target Move`.\n- **Stops**: None.\n- **Default Values**:\n  - `Volume MA Period` = 20.\n  - `Target Move` = 5.\n- **Filters**:\n  - Category: Volume\n  - Direction: Long\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3342": {
+    "id": 3342,
+    "name": "Grid Template",
+    "family": "breakout",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor **Grid_Template**. It builds a symmetric grid of pending sto\np orders around the current bid/ask, allowing the trader to plug custom entry filters or run it as a pure breakout template. Onc\ne all grid orders have either executed or expired, the engine immediately prepares the next grid. The implementation preserves t\nhe optional money-management formula and the ability to automatically remove stale pending orders after a configurable number of\n hours.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderComment` | Text assigned to every order generated by the grid, matching the original EA comment. |\n| `StaticVolume` | Fixed lot size used when money management is turned off. |\n| `UseMoneyManagement` | Enables the balance-based sizing routine. |\n| `RiskPercent` | Percentage used by the money-management formula; ignored when `UseMoneyManagement` is false. |\n| `TakeProfitPips` | Take-profit distance applied to every grid entry. |\n| `StopLossPips` | Stop-loss distance applied to every grid entry. |\n| `PriceDistancePips` | Initial gap (in pips) between the market price and the first grid order. |\n| `GridStepPips` | Additional distance (in pips) added between consecutive grid levels. |\n| `GridOrders` | Number of pending orders created on each side of the price. |\n| `PendingExpirationHours` | Lifetime of the pending grid before cancellation. |"
+   },
+   "1788": {
+    "id": 1788,
+    "name": "Timer",
+    "family": "breakout",
+    "overview": "The Timer strategy recalculates breakout levels at fixed time intervals and trades when price crosses these dynamic thresholds. The levels are positioned using Average True Range (ATR) and an optional additional pip distance. The approach seeks to capture short-term breakouts in either direction.\n\nEvery `WaitSeconds`, the strategy sets:\n- **Buy level** at `close + pipDistance + ATR`.\n- **Sell level** at `close - pipDistance - ATR`.\n\nWhen the next finished candle closes beyond one of these levels, a market order is placed in the corresponding direction. The position is protected by configurable stop-loss, take-profit, and trailing stop distances.\n\nTrading can be limited to a specific time window using the trading hours settings.\n\n## Parameters\n- `WaitSeconds` – seconds between level recalculations.\n- `PipDistance` – additional distance from the current price, in points.\n- `AtrPeriod` – ATR indicator period.\n- `TakeProfit` – take-profit distance in points.\n- `StopLoss` – stop-loss distance in points.\n- `TrailingStop` – trailing stop distance in points.\n- `TradeVolume` – order volume.\n- `CandleType` – candle type for calculations.\n- `UseTradingHours` – enable time-of-day filter.\n- `StartTime` – trading start time.\n- `StopTime` – trading stop time.\n\n## How It Works\n1. Subscribes to candles and calculates ATR.\n2. On each finished candle:\n   - If the configured time interval passed, new buy and sell levels are calculated.\n   - If trading hours are enabled, checks that current time is within the allowed window.\n   - Places buy or sell market order if price crosses the corresponding level.\n3. Stop-loss, take-profit, and trailing stop are managed automatically by the strategy infrastructure.\n\n## Notes\n- The strategy trades both long and short.\n- Works on any instrument and timeframe.\n- ATR-based levels adapt to market volatility, allowing flexible breakout detection.\n",
+    "details": "",
+    "parameters": "- `WaitSeconds` – seconds between level recalculations.\n- `PipDistance` – additional distance from the current price, in points.\n- `AtrPeriod` – ATR indicator period.\n- `TakeProfit` – take-profit distance in points.\n- `StopLoss` – stop-loss distance in points.\n- `TrailingStop` – trailing stop distance in points.\n- `TradeVolume` – order volume.\n- `CandleType` – candle type for calculations.\n- `UseTradingHours` – enable time-of-day filter.\n- `StartTime` – trading start time.\n- `StopTime` – trading stop time."
+   },
+   "2567": {
+    "id": 2567,
+    "name": "Pinball Machine",
+    "family": "momentum",
+    "overview": "The **Pinball Machine Strategy** is a playful conversion of the MetaTrader 5 expert advisor \"Pinball machine (barabashkakvn's edition)\". Instead of analyzing market structure, the strategy emulates a lottery machine: every finished candle triggers several random draws that may result in a trade if two numbers match. The StockSharp port keeps the spirit of the original expert while adapting money management and execution to the high-level API.",
+    "details": "",
+    "parameters": "- **Risk Percent** – percentage of the portfolio value that can be lost if the stop-loss is hit. Values above zero enable risk-based position sizing.\n- **Min Offset Points / Max Offset Points** – inclusive bounds (expressed in price steps) for randomly selecting stop and target distances. Both parameters must stay positive; the implementation automatically swaps them if the minimum exceeds the maximum.\n- **Candle Type** – the data series that drives the random engine. Any `DataType` compatible with `SubscribeCandles` can be used (minute candles by default)."
+   },
+   "2570": {
+    "id": 2570,
+    "name": "Multi Hedging Scheduler",
+    "family": "volatility",
+    "overview": "The **Multi Hedging Scheduler Strategy** is a direct StockSharp conversion of the original MetaTrader 5 expert advisor `MultiHedg_1.mq5`. The strategy is designed for accounts that allow hedging and can manage up to ten different instruments simultaneously. It opens positions of the same direction during a configurable trading window and provides portfolio-level exit logic based on time or equity percentage thresholds.\n\nInstead of relying on indicators, the strategy uses a one-minute candle stream (configurable) purely as a timing source. Each finished candle triggers checks to open trades, close everything when the trading window expires, and enforce equity-based risk rules. The strategy is therefore suitable for portfolios where execution is driven by schedule rather than price patterns.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `TradeDirection` | Direction of all orders (`Buy` or `Sell`). | Buy |\n| `TradeStartTime` | Local time when the entry window opens. | 19:51 |\n| `TradeDuration` | Length of both entry and closing windows. | 00:05:00 |\n| `UseTimeClose` | Enables the time-based close window. | true |\n| `CloseTime` | Local time when the closing window opens. | 20:50 |\n| `CloseByEquityPercent` | Enables closing all positions on equity thresholds. | true |\n| `PercentProfit` | Percentage gain on equity that triggers a global close. | 1.0 |\n| `PercentLoss` | Percentage drawdown on equity that triggers a global close. | 55.0 |\n| `CandleType` | Candle type used as a scheduling driver. | 1-minute time frame |\n| `UseSymbol0..9` | Toggles trading for the corresponding symbol. | true for symbols 0–5, false for 6–9 |\n| `Symbol0..9` | Ticker for each slot, resolved via `SecurityProvider.LookupById`. | See defaults below |\n| `Volume0..9` | Order volume for each slot (lots in original EA). | 0.1–1.0 |\n\n**Default symbol configuration**\n\n| Slot | Enabled | Symbol | Volume |\n|------|---------|--------|--------|\n| 0 | ✔ | EURUSD | 0.1 |\n| 1 | ✔ | GBPUSD | 0.2 |\n| 2 | ✔ | GBPJPY | 0.3 |\n| 3 | ✔ | EURCAD | 0.4 |\n| 4 | ✔ | USDCHF | 0.5 |\n| 5 | ✔ | USDJPY | 0.6 |\n| 6 | ✖ | USDCHF | 0.7 |\n| 7 | ✖ | GBPUSD | 0.8 |\n| 8 | ✖ | EURUSD | 0.9 |\n| 9 | ✖ | USDJPY | 1.0 |"
+   },
+   "3992": {
+    "id": 3992,
+    "name": "E Regression Channel",
+    "family": "mean_reversion",
+    "overview": "The **E Regression Channel Strategy** reproduces the MetaTrader \"e-Regr\" expert advisor using StockSharp's high-level strategy API. It fits a polynomial regression curve to recent closing prices, builds equidistant bands from the residual standard deviation and reacts when price pierces those envelopes. The strategy is designed for mean-reversion trading with optional protective stops, a daily volatility filter and an intraday trading window.",
+    "details": "",
+    "parameters": "- `Volume` – order size used for every market entry (net positions are flattened before reversing).\n- `Trade Start` / `Trade End` – daily trading window, supports overnight ranges (e.g. 21:00–02:00).\n- `Regression Length` – number of candles used for the polynomial regression fit.\n- `Degree` – polynomial degree (1–6) applied to the regression model.\n- `Std Dev Multiplier` – multiplier applied to the regression residual standard deviation to form the bands.\n- `Enable Trailing` – toggles trailing stop management.\n- `Trailing Activation` – number of points of favourable movement required before trailing starts.\n- `Trailing Distance` – trailing buffer maintained once trailing is active (in points).\n- `Stop Loss` – protective stop distance in points (0 disables automatic stop).\n- `Take Profit` – protective profit target distance in points (0 disables automatic target).\n- `Daily Range Filter` – maximum allowed range of the previous daily candle, expressed in points.\n- `Candle Type` – timeframe for the primary price series (default 30-minute time frame)."
+   }
+  }
+ }
+}

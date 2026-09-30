@@ -1,0 +1,98 @@
+{
+ "batch_074": {
+  "strategy_ids": [
+   2362,
+   585,
+   2650,
+   3956,
+   742,
+   2457,
+   172,
+   493,
+   3508,
+   1447
+  ],
+  "docs": {
+   "2362": {
+    "id": 2362,
+    "name": "Delta RSI",
+    "family": "trend",
+    "overview": "This strategy trades based on the **Delta RSI** indicator. Two RSI indicators with different periods are compared:\n\n- **Fast RSI** reacts quickly to price changes.\n- **Slow RSI** acts as a trend filter.\n\nA long position is opened on the bar following an **Up** signal when:\n\n1. Slow RSI is above the `Level` threshold.\n2. Fast RSI is higher than the slow RSI.\n3. Previous bar showed the Up state and current bar is no longer Up.\n\nA short position is opened on the bar following a **Down** signal when:\n\n1. Slow RSI is below `100 - Level`.\n2. Fast RSI is below the slow RSI.\n3. Previous bar showed the Down state and current bar is no longer Down.\n\nOptional flags allow enabling or disabling opening and closing of long and short positions separately.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `FastPeriod` | Fast RSI period. |\n| `SlowPeriod` | Slow RSI period. |\n| `Level` | Threshold level for the slow RSI. |\n| `BuyPosOpen` / `SellPosOpen` | Allow opening long/short positions. |\n| `BuyPosClose` / `SellPosClose` | Allow closing long/short positions. |\n| `CandleType` | Timeframe of input candles. |\n\nThe strategy subscribes to candles of the selected timeframe, calculates both RSI values, and processes signals on each finished candle. When a signal appears, the strategy optionally closes the opposite position and opens a new one in the signal direction.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `FastPeriod` | Fast RSI period. |\n| `SlowPeriod` | Slow RSI period. |\n| `Level` | Threshold level for the slow RSI. |\n| `BuyPosOpen` / `SellPosOpen` | Allow opening long/short positions. |\n| `BuyPosClose` / `SellPosClose` | Allow closing long/short positions. |\n| `CandleType` | Timeframe of input candles. |\n\nThe strategy subscribes to candles of the selected timeframe, calculates both RSI values, and processes signals on each finished candle. When a signal appears, the strategy optionally closes the opposite position and opens a new one in the signal direction."
+   },
+   "585": {
+    "id": 585,
+    "name": "Bollinger EMA Stats",
+    "family": "trend",
+    "overview": "This strategy uses two Bollinger Band sets to define entry and stop zones and an EMA as the exit target.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Close < lower Bollinger Band (entry multiplier).\n  - **Short**: Close > upper Bollinger Band (entry multiplier).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Profit target at EMA.\n  - Stop loss at the wider Bollinger Band.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BB Length` = 20\n  - `Entry StdDev Mult` = 2.0\n  - `Stop StdDev Mult` = 3.0\n  - `EMA Exit Period` = 20\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close < lower Bollinger Band (entry multiplier).\n  - **Short**: Close > upper Bollinger Band (entry multiplier).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Profit target at EMA.\n  - Stop loss at the wider Bollinger Band.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BB Length` = 20\n  - `Entry StdDev Mult` = 2.0\n  - `Stop StdDev Mult` = 3.0\n  - `EMA Exit Period` = 20\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "2650": {
+    "id": 2650,
+    "name": "iCCI iMA",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader \"iCCI iMA\" expert advisor. It trades Commodity Channel Index (CCI) crossovers against an exponential moving average (EMA) that is applied directly to the CCI stream. A secondary CCI, calculated with its own period, supervises overbought/oversold reversals around the ±100 bands. Orders are sized in lots, optionally scaled by account balance, and each trade is protected by configurable stop-loss and take-profit levels expressed in pips.\n\n## How it works\n* **Data source** – A configurable candle series (1-minute candles by default) feeds all indicator calculations using the candle's typical price `(high + low + close) / 3`.\n* **Core indicators** – The primary CCI measures momentum with the `CciPeriod` length. An EMA of that CCI (length `MaPeriod`) smooths the oscillator and acts as the signal line. The secondary `CciClosePeriod` CCI monitors threshold crossovers.\n* **Entry logic** – A long position opens when the current CCI is above its EMA while the value from two completed candles ago was below the EMA, indicating an upward crossover. A short position mirrors this logic when the CCI crosses downward. The algorithm only trades after all indicators are fully formed and two historical bars are available to reproduce the original look-back of the MQL implementation.\n* **Exit logic** – Existing longs close when the secondary CCI falls back below +100 or when the primary CCI drops under the EMA after having been above it two bars earlier. Shorts exit when the secondary CCI rises above −100 or when the CCI rises back above the EMA under the same two-bar confirmation. Protective stops monitor each finished candle: long positions close if price trades down to `entry − stopLossPips * pipSize` and take profit at `entry + takeProfitPips * pipSize`; shorts use the symmetric levels with `entry + stopLoss` and `entry − takeProfit`. Pip size is derived from the security's price step and adapts to 3- or 5-digit quotes by multiplying the tick s",
+    "details": "",
+    "parameters": "- **Candle Type** – Data series used for indicator calculations.\n- **CCI Period** – Length of the primary CCI that drives the crossover signals.\n- **CCI Close Period** – Length of the secondary CCI used to watch ±100 reversals.\n- **CCI EMA Period** – Period of the EMA that smooths the primary CCI values.\n- **Lot Size** – Base trading volume in lots before any scaling.\n- **Enable Money Management** – Toggles balance-based scaling of the lot size.\n- **Deposit Per Lot** – Balance increment required to increase the lot multiplier by one (active only when money management is on).\n- **Stop Loss (pips)** – Protective stop distance in pips; set to zero to disable.\n- **Take Profit (pips)** – Profit target distance in pips; set to zero to disable.\n\nThe algorithm requires two fully completed candles before it begins trading so that the two-bar crossover comparisons match the source MQL logic. Stop-loss and take-profit checks are evaluated on closed candles using their high/low extremes, which approximates MetaTrader's server-side protective orders within the high-level StockSharp API."
+   },
+   "3956": {
+    "id": 3956,
+    "name": "Polish Layer Expert Advisor System Efficient",
+    "family": "trend",
+    "overview": "This strategy is a direct port of the MQL4 expert advisor \"Polish Layer Expert Advisor System Efficient\". It is designed for intraday charts (the original author recommended 5 or 15 minute candles) and restricts trading to a single position at a time. Trend direction is defined by the alignment between a fast and a slow price moving average together with two smoothed RSI filters. Actual entries require a triple confirmation from the Stochastic Oscillator, DeMarker, and Williams %R indicators in order to capture reversals from extreme conditions that occur within the prevailing trend.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Volume` | `0.1` | Order volume in lots. Adjust according to the broker contract size. |\n| `CandleType` | `TimeSpan.FromMinutes(15).TimeFrame()` | Candle type used for indicator calculations. Set to a 5 or 15 minute timeframe to mirror the original EA. |\n| `RsiPeriod` | `14` | Lookback length for the base RSI calculation. |\n| `ShortPricePeriod` | `9` | Period of the fast price SMA used in the trend filter. |\n| `LongPricePeriod` | `45` | Period of the slow price LWMA used in the trend filter. |\n| `ShortRsiPeriod` | `9` | Length of the fast SMA applied to RSI values. |\n| `LongRsiPeriod` | `45` | Length of the slow SMA applied to RSI values. |\n| `StochasticKPeriod` | `5` | Base %K period for the Stochastic Oscillator. |\n| `StochasticDPeriod` | `3` | Smoothing period for the %D line. |\n| `StochasticSlowing` | `3` | Additional smoothing factor applied to %K. |\n| `DemarkerPeriod` | `14` | Averaging period for the DeMarker indicator. |\n| `WilliamsPeriod` | `14` | Lookback period for Williams %R. |\n| `StochasticOversoldLevel` | `19` | Oversold threshold that %K must cross upward to enable long entries. |\n| `StochasticOverboughtLevel` | `81` | Overbought threshold that %K must cross downward to enable short entries. |\n| `DemarkerBuyLevel` | `0.35` | Minimum DeMarker value required for long entries (crossing from below). |\n| `DemarkerSellLevel` | `0.63` | Maximum DeMarker value permitted for short entries (crossing from above). |\n| `WilliamsBuyLevel` | `-81` | Williams %R crossing level confirming long entries. |\n| `WilliamsSellLevel` | `-19` | Williams %R crossing level confirming short entries. |\n| `StopLossPips` | `7777` | Stop-loss distance in pips. The very large default effectively disables the stop unless configured. |\n| `TakeProfitPips` | `17` | Take-profit distance in pips. Set to `0` to disable the fixed target. |"
+   },
+   "742": {
+    "id": 742,
+    "name": "EMA Crossover with Volume + Stacked TP & Trailing SL",
+    "family": "trend",
+    "overview": "This strategy trades EMA crossovers filtered by volume. It sets two ATR-based profit targets and trails the remaining position once price moves favorably.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA crosses above/below slow EMA.\n  - Volume > average volume * `VolumeMultiplier`.\n- **Long/Short**: Long and Short.\n- **Exit Criteria**:\n  - First take profit at `TP1Multiplier * ATR` (33% of position).\n  - Second take profit at `TP2Multiplier * ATR` (another 33%).\n  - Trailing stop activates after price moves `TrailTriggerMultiplier * ATR` and trails at `TrailOffsetMultiplier * ATR`.\n- **Stops**: Trailing stop only.\n- **Default Values**:\n  - `FastLength` = 21\n  - `SlowLength` = 55\n  - `VolumeMultiplier` = 1.2\n  - `AtrLength` = 14\n  - `Tp1Multiplier` = 1.5\n  - `Tp2Multiplier` = 2.5\n  - `TrailOffsetMultiplier` = 1.5\n  - `TrailTriggerMultiplier` = 1.5\n  - `CandleType` = 5m\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long/Short\n  - Indicators: EMA, ATR, Volume\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA crosses above/below slow EMA.\n  - Volume > average volume * `VolumeMultiplier`.\n- **Long/Short**: Long and Short.\n- **Exit Criteria**:\n  - First take profit at `TP1Multiplier * ATR` (33% of position).\n  - Second take profit at `TP2Multiplier * ATR` (another 33%).\n  - Trailing stop activates after price moves `TrailTriggerMultiplier * ATR` and trails at `TrailOffsetMultiplier * ATR`.\n- **Stops**: Trailing stop only.\n- **Default Values**:\n  - `FastLength` = 21\n  - `SlowLength` = 55\n  - `VolumeMultiplier` = 1.2\n  - `AtrLength` = 14\n  - `Tp1Multiplier` = 1.5\n  - `Tp2Multiplier` = 2.5\n  - `TrailOffsetMultiplier` = 1.5\n  - `TrailTriggerMultiplier` = 1.5\n  - `CandleType` = 5m\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long/Short\n  - Indicators: EMA, ATR, Volume\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2457": {
+    "id": 2457,
+    "name": "Breakdown Level Intraday",
+    "family": "breakout",
+    "overview": "Places breakout orders around the previous day's high and low at a specified time. Enters long when price crosses above the high plus a delta and short when price drops below the low minus the delta. Position management includes optional stop loss, take profit, break-even and trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price crosses above previous day's high + `Delta`\n  - Short: price crosses below previous day's low − `Delta`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit reached\n  - Trailing stop or break-even adjustment triggers\n- **Stops**: Points from entry price\n- **Default Values**:\n  - `OrderTime` = TimeSpan.Zero\n  - `Delta` = 6\n  - `StopLoss` = 120\n  - `TakeProfit` = 90\n  - `NoLoss` = 0\n  - `Trailing` = 0\n  - `Volume` = 1m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price crosses above previous day's high + `Delta`\n  - Short: price crosses below previous day's low − `Delta`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit reached\n  - Trailing stop or break-even adjustment triggers\n- **Stops**: Points from entry price\n- **Default Values**:\n  - `OrderTime` = TimeSpan.Zero\n  - `Delta` = 6\n  - `StopLoss` = 120\n  - `TakeProfit` = 90\n  - `NoLoss` = 0\n  - `Trailing` = 0\n  - `Volume` = 1m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "172": {
+    "id": 172,
+    "name": "Bollinger Williams R",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 103%. It performs best in the stocks market.\n\nBollinger bands expose volatility breakouts and Williams %R ensures momentum is extreme. Positions open when price closes outside a band with a matching Williams %R reading.\n\nBest for volatility expansion traders. ATR stops handle adverse turns.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < LowerBand && WilliamsR < -80`\n  - Short: `Close > UpperBand && WilliamsR > -20`\n- **Long/Short**: Both\n- **Exit Criteria**: Price returns to middle band\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `WilliamsRPeriod` = 14\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, Williams %R, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < LowerBand && WilliamsR < -80`\n  - Short: `Close > UpperBand && WilliamsR > -20`\n- **Long/Short**: Both\n- **Exit Criteria**: Price returns to middle band\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `WilliamsRPeriod` = 14\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, Williams %R, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "493": {
+    "id": 493,
+    "name": "Adaptive RSI",
+    "family": "momentum",
+    "overview": "The Adaptive RSI strategy derives a smoothing coefficient from the Relative Strength Index. When RSI deviates from the neutral 50 level, the coefficient increases, making the adaptive RSI follow price more closely. Near 50, the coefficient shrinks and the curve smooths. A long position is opened when the adaptive RSI turns up, while a short position is opened when it turns down.\n\n## Details\n\n- **Entry Criteria**:\n  - Adaptive RSI crosses above its previous value.\n  - Adaptive RSI crosses below its previous value.\n- **Long/Short**: Both long and short trades.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 14\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Adaptive RSI crosses above its previous value.\n  - Adaptive RSI crosses below its previous value.\n- **Long/Short**: Both long and short trades.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 14\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3508": {
+    "id": 3508,
+    "name": "Close Profit End Of Week",
+    "family": "volatility",
+    "overview": "The **Close Profit End Of Week Strategy** automates the MetaTrader script *Closeprofitendofweek.mq5*. The strategy supervises the assigned instrument and, on Fridays after a configurable cut-off time, exits every profitable position. The goal is to secure floating gains before the weekend gap risk appears.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `StartTradeTime` | Beginning of the monitoring window (kept for parity with the MQL inputs). | `00:00` |\n| `EndTradeTime` | Time of day on Friday after which profitable positions must be closed. | `20:00` |\n| `CloseTradesAtEndTime` | Enables or disables the automatic closing routine. | `true` |\n| `CandleType` | Data series used to track time (defaults to 1-minute candles). | `TimeFrameCandle(1m)` |"
+   },
+   "1447": {
+    "id": 1447,
+    "name": "Trade Entry Detector, Wick to Body Ratio",
+    "family": "mean_reversion",
+    "overview": "This strategy uses Bollinger Bands and the wick-to-body ratio of daily candles to detect entries. A long position is opened when a candle's lower wick is large enough and pierces the lower band. A short position is opened on the opposite condition. Positions are closed at the opposite band or when the swing level is broken.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

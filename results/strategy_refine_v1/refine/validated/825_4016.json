@@ -1,0 +1,112 @@
+{
+  "strategy_id": 825,
+  "ticker": "4016",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 825,
+    "name": "FVG Breakout Lite",
+    "family": "breakout",
+    "entry_long": "low > donchian_low_prev(low,1) and close > donchian_high_prev(high,1)",
+    "exit_long": "close < donchian_low_prev(low,2)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The exact 3-candle imbalance (low[t-2] above high[t-1]) cannot be isolated with windowed Donchians, so the pattern is approximated by a candle trading wholly above the prior two-bar range and closing beyond its high, with a fall back into that range as the gap-fill exit. The percentage stop-loss is mentioned without a value."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2024-02-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 102,
+      "engine_win_ret": 0.12949202803419957,
+      "alpha": -0.04123967928287353,
+      "benchmark_ret": 0.1707317073170731,
+      "trades": 8,
+      "win_rate": 0.5,
+      "sharpe": 1.0033975725694884,
+      "max_drawdown": -0.12610611949888906,
+      "profit_factor": 1.92914277457469
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.18741813926609674,
+      "alpha": 0.2891951990399254,
+      "benchmark_ret": -0.10177705977382867,
+      "trades": 22,
+      "win_rate": 0.4090909090909091,
+      "sharpe": 0.8742586146480846,
+      "max_drawdown": -0.12988914791733985,
+      "profit_factor": 1.7193203108321735
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.33616643358332543,
+      "alpha": 0.09834684075295774,
+      "benchmark_ret": -0.4345132743362832,
+      "trades": 15,
+      "win_rate": 0.5333333333333333,
+      "sharpe": -0.6920443290929383,
+      "max_drawdown": -0.4822682489222515,
+      "profit_factor": 0.4154645302896497
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2024-02-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 102,
+      "engine_win_ret": 0.08524172555853693,
+      "alpha": -0.08548998175853617,
+      "benchmark_ret": 0.1707317073170731,
+      "trades": 8,
+      "win_rate": 0.375,
+      "sharpe": 0.7283527513123143,
+      "max_drawdown": -0.15650699172140026,
+      "profit_factor": 1.5196324940320913
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0635875744526544,
+      "alpha": 0.16536463422648306,
+      "benchmark_ret": -0.10177705977382867,
+      "trades": 22,
+      "win_rate": 0.36363636363636365,
+      "sharpe": 0.3577541260956146,
+      "max_drawdown": -0.1632544830602416,
+      "profit_factor": 1.2016547195502028
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.3851079053024318,
+      "alpha": 0.0494053690338514,
+      "benchmark_ret": -0.4345132743362832,
+      "trades": 15,
+      "win_rate": 0.5333333333333333,
+      "sharpe": -0.880778817684446,
+      "max_drawdown": -0.4934550977050244,
+      "profit_factor": 0.3393512771627489
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4093,
+      "name": "Neuro Nirvaman MQ4",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,7) and adx(high,low,close,14) > 25",
+      "exit_long": "close < donchian_low_prev(low,7) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Laguerre-filtered +DI streams, perceptrons and supervisor have no DSL equivalent, so the SilverTrend(7) breakout is combined with the documented ADX period 14 as the strength gate (25/20 are stated defaults). The 100/50-point take-profit and stop and the perceptron weights cannot be expressed."
+    },
+    {
+      "id": 3006,
+      "name": "Bread and Butter 2 (ADX + AMA)",
+      "family": "trend",
+      "entry_long": "roc(adx(high,low,close,14),1) < 0 and roc(ema(close,9),1) > 0",
+      "exit_long": "roc(adx(high,low,close,14),1) > 0 and roc(ema(close,9),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Kaufman AMA(9) is approximated by EMA(9) (the 2/30 adaptive constants are dropped), and the documented long rule of weakening ADX with improving momentum plus its inverse becomes the exit using the ADX(14) change. The 50/50-pip stop and target are price units, so SL/TP stay null."
+    },
+    {
+      "id": 2782,
+      "name": "Serial MA Swing Strategy (API/2782)",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom SerialMA average that rebuilds from each crossover is not computable, so a 20-bar SMA (stated default) supplies the crossover flag and the long signal fires on the documented upward cross. ReverseSignals, swing stacking modes and point-based stop/target are engine features, not DSL ones."
+    },
+    {
+      "id": 788,
+      "name": "Fibonacci Trend",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high(high,20) - 0.5 * (donchian_high(high,20) - donchian_low(low,20)))",
+      "exit_long": "crossbelow(close,donchian_high(high,20) - 0.5 * (donchian_high(high,20) - donchian_low(low,20)))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 50% retracement of the swing range is built from a 20-bar Donchian high/low (the docs name no lookback value) and traded on the cross in each direction. Fib levels 1-5 beyond the 50% and the swing-confirmation filter are dropped."
+    },
+    {
+      "id": 2708,
+      "name": "Stopreversal Tm",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20) * 1.004)",
+      "exit_long": "crossbelow(close,ema(close,20) * 0.996)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The dynamic trailing boundary is approximated by an EMA(20) offset with the documented sensitivity nPips = 0.004 (0.4%), so a cross above it is the long reversal entry and the mirror cross the exit. The session time filter, SignalBar delay and applied-price modes are not available in the DSL."
+    },
+    {
+      "id": 1712,
+      "name": "Close At Profit",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented as a protective overlay that watches realized PnL (20 currency units profit, 100 loss) and cancels orders, explicitly without analysing indicators or price. The never-true guard is used since no market-derived entry exists."
+    },
+    {
+      "id": 965,
+      "name": "LANZ Strategy 6.0 [Backtest]",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A schedule-driven backtest that trades the fixed 09:00 New York one-hour candle and flattens at 15:00 New York, with no documented price or indicator condition and no parameter values. The never-true guard is used instead of inventing a signal."
+    },
+    {
+      "id": 1489,
+      "name": "Tripple MACD",
+      "family": "other",
+      "entry_long": "crossabove(macd(close,12,26),0) and close > open and rsi(close,14) < 55",
+      "exit_long": "crossbelow(macd(close,12,26),0) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The average of four MACD sets is approximated by a single MACD(12,26) histogram since no lengths are documented, keeping the bullish-candle requirement and the RSI cap of 55. The opposite condition (bearish histogram turn on a down candle) supplies the exit."
+    },
+    {
+      "id": 1188,
+      "name": "Price Convergence",
+      "family": "other",
+      "entry_long": "sma(close > open,200) > 0.5",
+      "exit_long": "sma(close > open,200) < 0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The OHLC4-weighted rise/fall probability is approximated by the fraction of bullish candles over the documented Range = 200 window, entered above 50% and exited below. The OHLC4 weighting and the full-history option are not representable, so the rolling window is used."
+    },
+    {
+      "id": 579,
+      "name": "Bj Candle Patterns",
+      "family": "pattern",
+      "entry_long": "close > open and (close - open) < 0.1 * (high - low) and (open - low) > 2 * (close - open)",
+      "exit_long": "close < open and (open - close) < 0.1 * (high - low) and (high - close) > 2 * (open - close)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A Dragonfly Doji is a small bullish body (documented DojiThreshold 0.1 of the range) with a lower shadow more than twice the body, and the mirrored Gravestone Doji is the documented opposite-signal exit. The 15-minute candle type and discretionary exit are dropped."
+    }
+  ]
+}

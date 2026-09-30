@@ -1,0 +1,84 @@
+{
+  "strategy_id": 1571,
+  "ticker": "2286",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1571,
+    "name": "Z-Score RSI",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(zscore(close,20),7),ema(rsi(zscore(close,30),9),15))",
+    "exit_long": "crossbelow(rsi(zscore(close,20),9),ema(rsi(zscore(close,20),9),15))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "All three documented lengths are used literally: the price z-score over ZScoreLength=20, its RSI(9) and the EMA(15) smoothing, with the long on the RSI-over-EMA cross and the opposite cross as exit. The docs list no stops, so both percentage fields are null."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 297,
+      "engine_win_ret": 0.12189275144058853,
+      "alpha": 0.45585501559153196,
+      "benchmark_ret": -0.33396226415094343,
+      "trades": 15,
+      "win_rate": 0.4,
+      "sharpe": 0.9099895052317577,
+      "max_drawdown": -0.09973998914178328,
+      "profit_factor": 2.190788165278861
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.1281104230301653,
+      "alpha": 0.03515267655129195,
+      "benchmark_ret": 0.09295774647887334,
+      "trades": 12,
+      "win_rate": 0.5833333333333334,
+      "sharpe": 1.0885590470011555,
+      "max_drawdown": -0.0663038433260088,
+      "profit_factor": 1.9504101160055027
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 297,
+      "engine_win_ret": 0.040729438905552806,
+      "alpha": 0.37469170305649624,
+      "benchmark_ret": -0.33396226415094343,
+      "trades": 15,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.3451571525969805,
+      "max_drawdown": -0.12663670047771325,
+      "profit_factor": 1.2839075813448846
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.06505824673144311,
+      "alpha": -0.027899499747430223,
+      "benchmark_ret": 0.09295774647887334,
+      "trades": 12,
+      "win_rate": 0.5,
+      "sharpe": 0.5919360109684204,
+      "max_drawdown": -0.07772391245559929,
+      "profit_factor": 1.4075200245658055
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

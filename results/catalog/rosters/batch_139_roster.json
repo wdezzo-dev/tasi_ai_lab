@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 319,
+      "name": "Bollinger K-Means Cluster",
+      "family": "trend",
+      "entry_long": "crossabove(close, bb_mid(close, 20)) and volume_ratio(volume, 20) > 0.8",
+      "exit_long": "crossbelow(close, bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state only that Bollinger confirms trend changes and give no condition ('see implementation'), so the documented BollingerLength 20 / BollingerDeviation 2.0 midline recapture stands in for the cluster flip with a participation filter. K-means clustering over KMeansHistoryLength 50 band states cannot be reproduced, ATR-multiple stops are not percent fields, and the 5-minute timeframe is dropped."
+    },
+    {
+      "id": 3781,
+      "name": "SMC Trader Camel CCI MACD",
+      "family": "trend",
+      "entry_long": "close > ema(close, 34) and macd(close,12,26) > macd_signal(close,12,26,9) and zscore(close, 20) > 1",
+      "exit_long": "close < ema(close, 34) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented CamelLength 34 channel is approximated by its EMA basis, MACD 12/26/9 is used as the trend filter, and CciPeriod 20 with CciThreshold 100 is written as a one-sigma z-score because CCI is unavailable. The source's exact camel channel construction and entry direction are not documented, and the 1-hour timeframe and short leg are dropped."
+    },
+    {
+      "id": 153,
+      "name": "Bollinger Adx",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2) and adx(high,low,close,14) > 25",
+      "exit_long": "close > bb_mid(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule is reproduced literally: a close below the BollingerPeriod 20 / BollingerDeviation 2.0 lower band while AdxPeriod 14 ADX exceeds the documented 25 threshold, with the exit on Bollinger mean reversion to the midline. AtrMultiplier 2.0 is an ATR distance from entry rather than a percent field, and the short leg and 5-minute timeframe are dropped."
+    },
+    {
+      "id": 2133,
+      "name": "Dots",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,10))",
+      "exit_long": "crossbelow(close, ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Dots indicator is a non-lag moving average, so its documented Length 10 is approximated by an EMA(10) and the blue-to-red (bullish) colour switch becomes a cross of price above it, with the opposite switch as the documented exit. Filter 0m means no extra filtering, and the 4-hour timeframe is not reproducible on the daily engine."
+    },
+    {
+      "id": 330,
+      "name": "Ichimoku Volatility Contraction",
+      "family": "trend",
+      "entry_long": "(donchian_high(high,9) + donchian_low(low,9)) / 2 > (donchian_high(high,26) + donchian_low(low,26)) / 2 and (donchian_high(high,26) + donchian_low(low,26)) / 2 > (donchian_high(high,52) + donchian_low(low,52)) / 2 and roc(std(close, 20), 1) > 0",
+      "exit_long": "crossbelow((donchian_high(high,9) + donchian_low(low,9)) / 2, (donchian_high(high,26) + donchian_low(low,26)) / 2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tenkan 9, Kijun 26 and Senkou Span B 52 are rebuilt as Donchian mid-points with the documented bullish alignment, and the volatility-contraction pattern is approximated by volatility expanding off a squeeze (rising band standard deviation). The docs list no explicit condition ('see implementation'); AtrPeriod 14, DeviationFactor 2.0 and the 5-minute timeframe are not used."
+    },
+    {
+      "id": 3156,
+      "name": "SR Rate Indicator",
+      "family": "momentum",
+      "entry_long": "close > 0.3 * donchian_high(high, 20) + 0.7 * donchian_low(low, 20) and roc(close, 1) > 0",
+      "exit_long": "close < 0.7 * donchian_high(high, 20) + 0.3 * donchian_low(low, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom SR Rate oscillator is approximated by the position of price inside a smoothed support/resistance channel, with the documented HighLevel +20 and LowLevel -20 mapped to the 70/30 and 30/70 channel positions; WindowSize 20 is a fallback and SignalBar 1 is dropped. StopLossPoints, TakeProfitPoints and SlippagePoints are instrument-point distances, not percentages."
+    },
+    {
+      "id": 3466,
+      "name": "Ronz Auto SLTP",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a position-management utility: it only attaches stop-loss/take-profit, profit locking and three trailing variants to positions that already exist, so there is no market-derived entry signal and the never-true close<0 guard is used. ManageAllSecurities, UseServerStops, the pip distances and EnableAlerts are portfolio and execution settings."
+    },
+    {
+      "id": 3222,
+      "name": "OneHrStocTrader",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5)), 36) and (bb_upper(close, 20, 2) - bb_lower(close, 20, 2)) / sma(bb_upper(close, 20, 2) - bb_lower(close, 20, 2), 50) > 0.5 and (bb_upper(close, 20, 2) - bb_lower(close, 20, 2)) / sma(bb_upper(close, 20, 2) - bb_lower(close, 20, 2), 50) < 2.0",
+      "exit_long": "100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5)) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic is rebuilt from the documented StochasticKPeriod 5 range position against the documented StochasticLower 36 / StochasticUpper 70 levels, and the Bollinger width filter uses BollingerPeriod 20 / BollingerSigma 2.0 with the 56-158 pip spread converted to a self-normalised width because pip values are instrument-specific. BuyHourStart 4 / SellHourStart 0, StochasticSlowing 5, the pip exits and MaxOrdersPerDirection are unsupported."
+    },
+    {
+      "id": 3178,
+      "name": "FitFul 13",
+      "family": "volume",
+      "entry_long": "close > donchian_high_prev(high, 5) and roc(close,1) > 0 and roc(close,2) > 0",
+      "exit_long": "close < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Weekly pivot levels are approximated by the prior 5-bar high/low on daily bars, and the two-bar lower-timeframe confirmation becomes two consecutive positive returns. The pivot-relative Stop Loss / Take Profit levels, IndentPips 3, TrailingStopPips 150, TrailingStepPips 5 and MaxPositions 3 need intraday, pip and multi-position logic."
+    },
+    {
+      "id": 3387,
+      "name": "Manual Trading Lightweight Utility Panel",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Orders are triggered manually by toggling the 'Send Buy Order' / 'Send Sell Order' parameters in a UI, so no market-derived entry exists and the never-true close<0 guard avoids fabricating one. Automatic price suggestions, volume management and risk-level helpers are order-panel utilities outside the DSL."
+    }
+  ]
+}

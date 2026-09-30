@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3778,
+      "name": "Suffic369",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,3),sma(high,5)) and close <= bb_lower(close,156,1)",
+      "exit_long": "crossbelow(sma(close,3),sma(high,5)) or close >= bb_mid(close,156)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(3) versus SMA of highs(5) cross and Bollinger(156,1) lower-band location are retained. The mirrored low-SMA branch, trailing, and point-based stop/target are omitted; no percentage values are supplied."
+    },
+    {
+      "id": 4080,
+      "name": "Gandalf PRO Projection",
+      "family": "trend",
+      "entry_long": "ema(close,24) > sma(close,24) and roc(close,1) > 0",
+      "exit_long": "ema(close,24) < sma(close,24) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(24) versus SMA(24) with positive one-bar momentum is a transparent proxy for the recursive projection direction. The 15-pip projection threshold, adaptive weights, short projection, and pip stop are unavailable."
+    },
+    {
+      "id": 3908,
+      "name": "Five MA Multi-Timeframe",
+      "family": "trend",
+      "entry_long": "sma(close,5) > sma(close,8) and sma(close,8) > sma(close,13) and sma(close,13) > sma(close,21) and sma(close,21) > sma(close,34) and roc(close,1) > 0",
+      "exit_long": "sma(close,5) < sma(close,8) or sma(close,8) < sma(close,13) or sma(close,13) < sma(close,21) or sma(close,21) < sma(close,34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The five documented SMA lengths 5/8/13/21/34 are aligned as a current-timeframe bullish stack with positive ROC. The three timeframe resamplings, Accelerator Oscillator grading, and exact signal levels are omitted."
+    },
+    {
+      "id": 3843,
+      "name": "GBP 9 AM Pending Orders",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break with average volume is a rolling proxy for the London snapshot stop orders; the opposite low break exits. Clock scheduling, pending offsets, pip protection, and one-order state are unsupported."
+    },
+    {
+      "id": 828,
+      "name": "Game Theory Trading",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30 and volume_ratio(volume,20) > 2 and close < sma(close,100) - 0.02 * sma(close,100)",
+      "exit_long": "rsi(close,14) > 70 or close > sma(close,100)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 5.0,
+      "notes": "RSI(14), normalized volume, and a 2% SMA(100) Nash-deviation band are explicit proxies for the mixed contrarian/momentum rules. Accumulation/distribution, smart-money, liquidity-trap, and institutional-flow logic is unavailable; documented 2%/5% protection is retained."
+    },
+    {
+      "id": 92,
+      "name": "RSI Hook Reversal",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,20) and crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70) or high > donchian_high_prev(high,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A new prior 20-bar low followed by an RSI(14) recross above 30 captures the documented oversold hook, with the opposite RSI hook or range break exiting. The 2% stop is retained; exact hook levels, time window, and short side are omitted."
+    },
+    {
+      "id": 4129,
+      "name": "FT TIME BIGDOG Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rolling prior ten-bar high break is a stateless proxy for the London accumulation-range stop orders; the opposite low break exits. Start/stop hours, range-width limit, order buffer, and point targets are unsupported."
+    },
+    {
+      "id": 1882,
+      "name": "20/200 Expert",
+      "family": "momentum",
+      "entry_long": "roc(open,4) > 0",
+      "exit_long": "roc(open,4) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(open,4) is a permitted proxy for the difference between opens two and six bars back; the inverse is the long exit. The 6/21-point thresholds, 14:00 clock, 504-hour timer, and point stop/target are unavailable."
+    },
+    {
+      "id": 3492,
+      "name": "Simple Engulfing",
+      "family": "volatility",
+      "entry_long": "close > open and close > donchian_high_prev(high,1) and open < donchian_low_prev(low,1)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish candle closing above the prior high while opening below the prior low approximates the documented engulfing pattern. Body filters, direction modes, pip stops/targets, and the sell pattern are unsupported."
+    },
+    {
+      "id": 2183,
+      "name": "Night Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is unavailable, so RSI(14) below 30/above 70 is the oversold/overbought proxy; the 21:00–06:00 session cannot be represented. Point stops/targets and the short branch are omitted."
+    }
+  ]
+}

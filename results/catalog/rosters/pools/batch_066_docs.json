@@ -1,0 +1,98 @@
+{
+ "batch_066": {
+  "strategy_ids": [
+   2717,
+   700,
+   160,
+   437,
+   2454,
+   1437,
+   751,
+   3482,
+   1632,
+   148
+  ],
+  "docs": {
+   "2717": {
+    "id": 2717,
+    "name": "Daily BreakPoint",
+    "family": "trend",
+    "overview": "The **Daily BreakPoint Strategy** is a StockSharp port of the MetaTrader 5 expert advisor \"Daily BreakPoint\" (build 19498). The algorithm monitors the distance between the current price and the daily open. When the move from the daily open exceeds a configurable threshold and the previous candle meets strict body-size requirements, the strategy either enters in the direction of the breakout or reverses the existing exposure depending on the `CloseBySignal` flag.\n\nThe strategy works with two data streams at the same time:\n\n1. Intraday candles defined by the `CandleType` parameter for signal generation.\n2. Daily candles used to track the most recent session open price.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `OrderVolume` | Base volume used for every market order. |\n| `CloseBySignal` | If `true`, the strategy closes existing positions and opens the opposite direction when a breakout signal appears. |\n| `BreakPointPips` | Distance from the daily open required to confirm a breakout. |\n| `LastBarSizeMinPips` / `LastBarSizeMaxPips` | Minimum and maximum body size of the trigger candle. |\n| `TrailingStopPips` | Trailing stop distance. Set to `0` to disable trailing. |\n| `TrailingStepPips` | Additional move required before each trailing adjustment. |\n| `StopLossPips` | Optional fixed stop loss. `0` disables it. |\n| `TakeProfitPips` | Optional fixed take profit. `0` disables it. |\n| `CandleType` | Intraday candle series used for signal generation. |"
+   },
+   "700": {
+    "id": 700,
+    "name": "Aurora Divergence",
+    "family": "trend",
+    "overview": "This strategy trades divergences between price and On-Balance Volume (OBV). It compares linear regression slopes of price and OBV to detect potential reversals.\n\n## Key Features\n\n- Linear regression slope comparison for divergence signals.\n- Optional z-score filter to avoid overextended prices.\n- Higher timeframe moving average filter for trend confirmation.\n- ATR-based volatility threshold and risk management with dynamic stop and target.\n- Cooldown after each trade and maximum bars in position.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `CandleType` | Candle timeframe for main calculations. |\n| `Lookback` | Period for slope calculations. |\n| `ZLength` | Lookback for mean and standard deviation in z-score filter. |\n| `ZThreshold` | Maximum absolute z-score to allow entries. |\n| `UseZFilter` | Enable or disable z-score filter. |\n| `HtfCandleType` | Higher timeframe for trend moving average. |\n| `HtfMaLength` | Moving average length on higher timeframe. |\n| `AtrLength` | ATR period for volatility and risk. |\n| `AtrThreshold` | Minimum ATR value to allow trading. |\n| `StopAtrMultiplier` | ATR multiplier for stop-loss distance. |\n| `ProfitAtrMultiplier` | ATR multiplier for take-profit distance. |\n| `MaxBarsInTrade` | Maximum bars to hold a position. |\n| `CooldownBars` | Bars to wait after a trade before signaling again. |\n\n## Complexity\n\nIntermediate\n\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Candle timeframe for main calculations. |\n| `Lookback` | Period for slope calculations. |\n| `ZLength` | Lookback for mean and standard deviation in z-score filter. |\n| `ZThreshold` | Maximum absolute z-score to allow entries. |\n| `UseZFilter` | Enable or disable z-score filter. |\n| `HtfCandleType` | Higher timeframe for trend moving average. |\n| `HtfMaLength` | Moving average length on higher timeframe. |\n| `AtrLength` | ATR period for volatility and risk. |\n| `AtrThreshold` | Minimum ATR value to allow trading. |\n| `StopAtrMultiplier` | ATR multiplier for stop-loss distance. |\n| `ProfitAtrMultiplier` | ATR multiplier for take-profit distance. |\n| `MaxBarsInTrade` | Maximum bars to hold a position. |\n| `CooldownBars` | Bars to wait after a trade before signaling again. |"
+   },
+   "160": {
+    "id": 160,
+    "name": "Adx Volume",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 67%. It performs best in the stocks market.\n\nHigh ADX denotes a strong trend and volume spikes confirm commitment. Entries are made when both indicators show strength together.\n\nGreat for catching energetic breakouts. A stop based on ATR keeps exposure in check.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `ADX > AdxThreshold && Volume > AvgVolume`\n  - Short: `ADX > AdxThreshold && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**: Trend weakens below threshold\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ADX, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `ADX > AdxThreshold && Volume > AvgVolume`\n  - Short: `ADX > AdxThreshold && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**: Trend weakens below threshold\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ADX, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "437": {
+    "id": 437,
+    "name": "Multi-Timeframe Bollinger Bands",
+    "family": "trend",
+    "overview": "Applies Bollinger Bands on both a primary and a higher timeframe. Trades when price pierces the higher timeframe bands and optionally filters entries with a long-term moving average. The goal is to fade extremes against the broader trend.\n\nThe strategy supports both long and short positions. A stop-loss percentage can be enabled for risk management. Using multiple timeframes helps to avoid trades against dominant market structure.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close below the higher timeframe lower band and above the MA filter (if enabled).\n  - **Short**: Close above the higher timeframe upper band and below the MA filter (if enabled).\n- **Exit Criteria**:\n  - Long: Price closes above the current timeframe upper band.\n  - Short: Price closes below the current timeframe lower band.\n- **Indicators**:\n  - Bollinger Bands on two timeframes (length 20, multiplier 2)\n  - Optional EMA filter (period 200)\n- **Stops**: Optional stop-loss via StartProtection (% based).\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `UseMaFilter` = False\n  - `MaLength` = 200\n  - `SLPercent` = 2\n- **Filters**:\n  - Counter-trend with MTF context\n  - Timeframe: main 5m, MTF 60m by default\n  - Indicators: Bollinger Bands, EMA\n  - Stops: optional\n  - Complexity: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close below the higher timeframe lower band and above the MA filter (if enabled).\n  - **Short**: Close above the higher timeframe upper band and below the MA filter (if enabled).\n- **Exit Criteria**:\n  - Long: Price closes above the current timeframe upper band.\n  - Short: Price closes below the current timeframe lower band.\n- **Indicators**:\n  - Bollinger Bands on two timeframes (length 20, multiplier 2)\n  - Optional EMA filter (period 200)\n- **Stops**: Optional stop-loss via StartProtection (% based).\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `UseMaFilter` = False\n  - `MaLength` = 200\n  - `SLPercent` = 2\n- **Filters**:\n  - Counter-trend with MTF context\n  - Timeframe: main 5m, MTF 60m by default\n  - Indicators: Bollinger Bands, EMA\n  - Stops: optional\n  - Complexity: Moderate",
+    "parameters": ""
+   },
+   "2454": {
+    "id": 2454,
+    "name": "Exp RSIOMA",
+    "family": "trend",
+    "overview": "The Exp RSIOMA strategy uses the RSI of moving average (RSIOMA) indicator to trade trend reversals and breakouts. RSI values are smoothed by an additional moving average to form a signal line and histogram. The strategy supports four modes:\n\n1. **Breakdown** – trades when RSI crosses configured high/low levels.\n2. **HistTwist** – trades when histogram changes direction.\n3. **SignalTwist** – trades when the signal line changes direction.\n4. **HistDisposition** – trades when histogram crosses the signal line.\n\nPositions can be opened or closed independently for long and short sides.\n\n## Details\n\n- **Entry Criteria**: depends on `Mode`\n- **Long/Short**: both\n- **Exit Criteria**: opposite signal\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 4 hour\n  - `RsiPeriod` = 14\n  - `SignalPeriod` = 21\n  - `HighLevel` = 20\n  - `LowLevel` = -20\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: depends on `Mode`\n- **Long/Short**: both\n- **Exit Criteria**: opposite signal\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 4 hour\n  - `RsiPeriod` = 14\n  - `SignalPeriod` = 21\n  - `HighLevel` = 20\n  - `LowLevel` = -20\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1437": {
+    "id": 1437,
+    "name": "Time",
+    "family": "breakout",
+    "overview": "Strategy illustrates timing utilities. It buys when the high exceeds the open by a number of ticks for a specified duration.\n\n## Details\n\n- **Entry Criteria**: High minus open stays above threshold for given seconds.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Condition fails.\n- **Stops**: No.\n- **Default Values**:\n  - `TicksFromOpen` = 0\n  - `SecondsCondition` = 20\n  - `ResetOnNewBar` = true\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Price\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: High minus open stays above threshold for given seconds.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Condition fails.\n- **Stops**: No.\n- **Default Values**:\n  - `TicksFromOpen` = 0\n  - `SecondsCondition` = 20\n  - `ResetOnNewBar` = true\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: Price\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "751": {
+    "id": 751,
+    "name": "Engulfing & Pin Bar Breakout",
+    "family": "breakout",
+    "overview": "The strategy waits for a hammer or bullish engulfing candle and enters long on a breakout above the signal high. For bearish setups, it uses shooting star or bearish engulfing and sells on a break below the signal low. Stop loss is placed at the opposite side of the signal candle and take profit uses a risk/reward ratio.\n\n## Details\n\n- **Entry Criteria:** hammer or bullish engulfing followed by breakout above high; shooting star or bearish engulfing followed by breakout below low.\n- **Long/Short:** Both.\n- **Exit Criteria:** stop at opposite side of signal candle; take profit at multiple of risk.\n- **Stops:** Yes.\n- **Default Values:**\n  - Long profit ratio = 5\n  - Short profit ratio = 4\n  - Risk percent = 0.02\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:** hammer or bullish engulfing followed by breakout above high; shooting star or bearish engulfing followed by breakout below low.\n- **Long/Short:** Both.\n- **Exit Criteria:** stop at opposite side of signal candle; take profit at multiple of risk.\n- **Stops:** Yes.\n- **Default Values:**\n  - Long profit ratio = 5\n  - Short profit ratio = 4\n  - Risk percent = 0.02\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3482": {
+    "id": 3482,
+    "name": "SpaceX Delete StopLoss TakeProfit Button",
+    "family": "momentum",
+    "overview": "This strategy reproduces the **\"DELETE SL_TP\"** button from the original MetaTrader panel *SpaceX_Delete_StopLoss_TakeProfit_button.mq5*. It is designed as a utility helper that scans the current portfolio and cancels all active protective stop-loss or take-profit orders that belong to open positions. The conversion targets the StockSharp high-level API and provides a convenient way to remove protective brackets without manually opening each ticket.\n\nThe strategy does not open or close positions on its own. It simply inspects the already open trades and removes their protective orders when instructed to do so. This makes it suitable for traders who manage positions manually or via other automated systems but want a quick panic button that clears all stop and take-profit orders.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| **Run On Start** (`ApplyOnStart`) | When `true` the strategy removes protective orders immediately after the strategy starts. | `true` |\n| **All Securities** (`AffectAllSecurities`) | Processes all portfolio positions. When `false` only the strategy security is considered. | `true` |\n| **Delete Request** (`DeleteRequest`) | Manual trigger that emulates the MetaTrader button. Flip it to `true` to perform a one-off removal; it resets automatically. | `false` |\n| **Polling Interval (s)** (`PollingIntervalSeconds`) | Timer interval in seconds used to poll the manual trigger. The timer also executes the delete request when `Run On Start` is disabled. | `1` |"
+   },
+   "1632": {
+    "id": 1632,
+    "name": "Visual Trader Simulator Edition",
+    "family": "volatility",
+    "overview": "This strategy is a simplified port of the VisualTrader scripts from MetaTrader.\n\nIt opens a single market position in the chosen direction and attaches protective stop-loss and take-profit orders. Parameters allow configuring direction, take profit, and stop loss in absolute price values. The strategy demonstrates how manual trade management scripts can be recreated using StockSharp high-level API.\n\n## Parameters\n\n- **Trade Direction** – choose Buy or Sell for the initial order.\n- **Take Profit** – optional take profit value in absolute price. Set to 0 to disable.\n- **Stop Loss** – optional stop loss value in absolute price. Set to 0 to disable.\n- **Volume** – base strategy volume used for the market order.\n\n## Trading Logic\n\nOn start the strategy:\n\n1. Creates protective orders using `StartProtection`.\n2. Sends a market order based on the selected trade direction.\n\nThe example does not rely on indicators or market data and is intended for demonstration purposes.\n",
+    "details": "",
+    "parameters": "- **Trade Direction** – choose Buy or Sell for the initial order.\n- **Take Profit** – optional take profit value in absolute price. Set to 0 to disable.\n- **Stop Loss** – optional stop loss value in absolute price. Set to 0 to disable.\n- **Volume** – base strategy volume used for the market order."
+   },
+   "148": {
+    "id": 148,
+    "name": "Rsi Stochastic",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 181%. It performs best in the crypto market.\n\nRSI provides a broader momentum view, while Stochastic gives faster signals near extremes. Trades flip as the oscillator crosses levels within the RSI context.\n\nIdeal for nimble traders who favor oscillator setups. The strategy relies on an ATR stop to contain risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `RSI < RsiOversold && StochK < StochOversold`\n  - Short: `RSI > RsiOverbought && StochK > StochOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `RSI > 50`\n  - Short: `RSI < 50`\n- **Stops**: Percent-based at `StopLossPercent`\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `StochOversold` = 20m\n  - `StochOverbought` = 80m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `RSI < RsiOversold && StochK < StochOversold`\n  - Short: `RSI > RsiOverbought && StochK > StochOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `RSI > 50`\n  - Short: `RSI < 50`\n- **Stops**: Percent-based at `StopLossPercent`\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `StochOversold` = 20m\n  - `StochOverbought` = 80m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

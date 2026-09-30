@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 611,
+      "name": "Chande Kroll Trend",
+      "family": "trend",
+      "entry_long": "close > donchian_low_prev(low,21) - 3 * atr(high,low,close,10) and close > sma(close,21)",
+      "exit_long": "close < donchian_high_prev(high,21) + 3 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior 21-bar Donchian bounds offset by 3-ATR(10) approximate the documented lower/upper Chande Kroll stops, with SMA(21) trend filtering. Exponential calculation mode, risk-based sizing, and 1560-bar sizing lookback are unavailable."
+    },
+    {
+      "id": 483,
+      "name": "5 EMA No-Touch Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1) and low < ema(close,5)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break above the prior candle high with price still touching or crossing below EMA(5) proxies the no-touch setup and breakout. Stateful setup-candle extremes, the 3R target, and opposite-extreme stop are not percentage/DSL fields."
+    },
+    {
+      "id": 1740,
+      "name": "Snowieso",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30)) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30)) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10)/EMA(30) and MACD(12,26,9) are explicit fallbacks for the unnamed LWMA and KAMA trend confirmations. LWMA, KAMA, adaptive periods, and absolute point protection are unavailable."
+    },
+    {
+      "id": 1948,
+      "name": "GG-RSI-CCI",
+      "family": "trend",
+      "entry_long": "sma(rsi(close,14),3) > sma(rsi(close,14),9) and ema(close,5) > ema(close,10)",
+      "exit_long": "sma(rsi(close,14),3) < sma(rsi(close,14),9) or ema(close,5) < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) smoothing with SMA(3)/SMA(9) and EMA(5)/EMA(10) price alignment are explicit fallbacks for the missing CCI and parameter values. CCI, flat-mode neutral exits, platform protection, and short entries are unsupported."
+    },
+    {
+      "id": 2879,
+      "name": "SilverTrend CrazyChart",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,20),ema(close,40))",
+      "exit_long": "crossabove(ema(close,20),ema(close,40))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20)/EMA(40) is a rolling current/delayed-band proxy for the custom SilverTrend crossover. The indicator buffers, SignalBar state, point stops/targets, and short branch are not representable."
+    },
+    {
+      "id": 1192,
+      "name": "Professional ORB",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break is a rolling opening-range breakout proxy, with the opposite low break as exit. The 09:15 session range, ATR stop, fixed target, daily trade limit, and session close are unavailable."
+    },
+    {
+      "id": 1229,
+      "name": "Realtime Delta Volume Action",
+      "family": "breakout",
+      "entry_long": "volume_ratio(volume,20) > 2",
+      "exit_long": "volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Volume delta is unavailable, so normalized volume_ratio(20) above 2 is the explicit activity breakout proxy and a return below average exits. The documented 100-unit delta threshold, stop, and opposite signal are unavailable."
+    },
+    {
+      "id": 2947,
+      "name": "Market Capture",
+      "family": "momentum",
+      "entry_long": "close < sma(close,20) and crossabove(roc(close,1),0)",
+      "exit_long": "close > sma(close,20) or crossbelow(roc(close,1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rising one-bar ROC while price is below SMA(20) is a state-free proxy for a long swing around the moving grid center. Hedge layering, grid spacing, equity milestones, and step-based targets are unsupported."
+    },
+    {
+      "id": 4159,
+      "name": "Lilith Goes To Hollywood",
+      "family": "volatility",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR and pending-order modes are unavailable; EMA(10)/EMA(30) is an explicit direction-cross proxy with the inverse exit. Hedged recovery sizing, manual reference prices, and step-based risk are omitted."
+    },
+    {
+      "id": 207,
+      "name": "RSI Hull MA",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and crossabove(roc(ema(close,9),1),0)",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull MA is approximated by EMA(9), with positive EMA ROC representing a rising HMA while RSI(14)<30 enters; RSI returning to the neutral zone exits. ATR(14) with a 2x multiplier is a point/volatility stop, not a percentage field, and the short side is omitted."
+    }
+  ]
+}

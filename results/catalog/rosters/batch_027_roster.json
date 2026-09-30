@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 13,
+      "name": "DMI Power Move",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 30 and roc(close,1) > 0",
+      "exit_long": "adx(high,low,close,14) < 25 or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DMI/+DI/-DI are unavailable; positive one-bar ROC proxies directional spread with the documented ADX 30 entry and 25 exit levels. The ATR-based stop and both-direction handling are not percentage or long-only DSL fields."
+    },
+    {
+      "id": 128,
+      "name": "Midday Reversal",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,1),0) and roc(close,5) < 0",
+      "exit_long": "crossbelow(roc(close,1),0) or roc(close,5) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The midday clock is unavailable, so a one-bar momentum cross against the five-bar move proxies the morning reversal. The documented 2% stop is retained; the afternoon failure and short side are not expressible in this long-only DSL."
+    },
+    {
+      "id": 323,
+      "name": "Donchian Seasonal Filter",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,20) and roc(close,20) > 0",
+      "exit_long": "low < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented DonchianPeriod 20 breakout is retained; positive 20-bar ROC is an explicit proxy for the unavailable seasonal filter. The opposite range break exits, while ATR-based stops and intraday seasonality are unsupported."
+    },
+    {
+      "id": 1208,
+      "name": "QQQ Strategy v2 ESL easy-peasy-x",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,200)) and close > sma(close,100) and sma(close,200) > sma(close,100)",
+      "exit_long": "crossbelow(close,sma(close,200)) or close < sma(close,100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA 200 is the documented main MA and SMA 100 the long trend filter; alignment of the two is the explicit rising-slope proxy. The 50-bar short filter and opposite short side are omitted because this roster records long rules."
+    },
+    {
+      "id": 1968,
+      "name": "Smoothing Average",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,20) - 0.02 * sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The corpus supplies no MA period or smoothing value, so SMA(20) and a 2% offset are explicit research fallbacks. The offset-band cross is the long interpretation of the described smoothed-average setup; no stops are documented."
+    },
+    {
+      "id": 2121,
+      "name": "Levels With Trail",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close cross above/below SMA(20) is the dynamic-level proxy because no Level Price is supplied. The documented trailing stop and price-unit stop/target cannot be represented as percentage fields; only the long breakout side is encoded."
+    },
+    {
+      "id": 2684,
+      "name": "Flat Channel Strategy (2684)",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,20) and std((high + low) / 2,20) < sma(std((high + low) / 2,20),20)",
+      "exit_long": "low < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Median-price standard deviation below its 20-bar average proxies the flat-volatility filter, and prior 20-bar Donchian boundaries proxy the channel orders. Channel-width limits, order lifetime, and channel-relative stop/target are unsupported and have no percentage defaults."
+    },
+    {
+      "id": 3288,
+      "name": "Williams AO + AC",
+      "family": "mean_reversion",
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) > 0 and rsi(close,20) > 46 and crossabove(roc(close,1),0) and roc(close,1) > roc(close,3)",
+      "exit_long": "rsi(close,20) < 40 or crossbelow(roc(close,1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) and RSI 20 thresholds are retained; the positive-width test is a scale-free proxy for the unavailable point band range, while ROC turns and acceleration proxy AO/AC. Session filters and point-based protection are unsupported."
+    },
+    {
+      "id": 3426,
+      "name": "Market Master",
+      "family": "volatility",
+      "entry_long": "close > open and roc(close,1) > 0 and volume_ratio(volume,20) > 1",
+      "exit_long": "close < open and roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source gives indicator and risk parameters but no complete long entry formula; bullish candle momentum plus normalized volume expansion is an explicit proxy. Stochastic, MFI, SAR, ATR, pyramiding, and news controls are unavailable in the DSL."
+    },
+    {
+      "id": 4095,
+      "name": "Nirvaman Imax",
+      "family": "trend",
+      "entry_long": "close > open and ema(close,10) > ema(close,21) and close > ema(close,13)",
+      "exit_long": "close < ema(close,13) or crossbelow(ema(close,10),ema(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA 10/21/13 trend stack is translated with regular bullish candles as a Heikin-Ashi proxy. The iMAX phase detector, holding timer, no-trade hours, and price-step stop/target are not representable in the stateless long-only DSL."
+    }
+  ]
+}

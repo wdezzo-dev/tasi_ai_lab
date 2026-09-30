@@ -1,0 +1,98 @@
+{
+ "batch_202": {
+  "strategy_ids": [
+   2809,
+   1781,
+   329,
+   2062,
+   698,
+   3751,
+   2441,
+   722,
+   501,
+   1728
+  ],
+  "docs": {
+   "2809": {
+    "id": 2809,
+    "name": "Hans123 Trader v2",
+    "family": "trend",
+    "overview": "Hans123 Trader v2 is a breakout strategy that places pending stop orders around the recent trading range. It mirrors the MetaTrader implementation by Vladimir Karputov and is adapted to the StockSharp high-level API. The system focuses on capturing momentum when price escapes the most recent 80-bar range while managing protective exits and a trailing stop.\n\n## Core Idea\n\n- Monitor a configurable candle series (default 1-hour bars).\n- During the active session window, compute the highest high and lowest low over the last *N* candles (default 80).\n- Place a buy stop order at the highest high and a sell stop order at the lowest low when the market is far enough from the current bid/ask.\n- Limit the total number of working pending orders to avoid over-exposure.\n- Once a position is opened, cancel the remaining pending orders, apply stop-loss and take-profit offsets (measured in pips), and activate a trailing stop.\n\n## Trade Management\n\n- **Entries**: Stop orders are placed only while the time of the processed candle falls between the configured start and end hours. Orders are ignored outside that window.\n- **Position Protection**: When a new position is created, the strategy immediately registers protective stop-loss and take-profit orders using the configured pip distances.\n- **Trailing Stop**: If enabled, the stop-loss order is re-issued closer to price once it moves in the position's favour by more than the trailing threshold plus step.\n- **Order Cleanup**: Exiting a position cancels the protective orders, and any fresh entry cancels the opposite pending orders, matching the behaviour of the original MQL logic.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order size used when submitting breakout and protective orders. |\n| `StopLossPips` | Distance in pips between the entry price and the protective stop-loss. Set to `0` to disable. |\n| `TakeProfitPips` | Distance in pips between the entry price and the take-profit order. Set to ",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order size used when submitting breakout and protective orders. |\n| `StopLossPips` | Distance in pips between the entry price and the protective stop-loss. Set to `0` to disable. |\n| `TakeProfitPips` | Distance in pips between the entry price and the take-profit order. Set to `0` to disable. |\n| `TrailingStopPips` | Initial trailing stop distance in pips. `0` disables trailing. |\n| `TrailingStepPips` | Minimum additional profit in pips required before moving the trailing stop again. Must be non-zero when trailing is enabled. |\n| `StartHour` | Session opening hour (inclusive) for placing new pending orders. |\n| `EndHour` | Session closing hour (exclusive) for placing new pending orders. Must be greater than `StartHour`. |\n| `MaxPendingOrders` | Maximum number of simultaneous breakout orders (buy + sell) allowed. |\n| `BreakoutPeriod` | Lookback length (in candles) for the highest high and lowest low calculations. |\n| `CandleType` | Candle series processed by the strategy (timeframe or other candle data type). |"
+   },
+   "1781": {
+    "id": 1781,
+    "name": "XMACD Modes",
+    "family": "trend",
+    "overview": "Strategy based on the MACD indicator that supports four different entry modes:\n\n- **Breakdown**: open trades when MACD crosses the zero line.\n- **MacdTwist**: react to a change in MACD direction from falling to rising or vice versa.\n- **SignalTwist**: use turning points of the signal line as triggers.\n- **MacdDisposition**: trade on crossovers between MACD and its signal line.\n\nThe strategy subscribes to 4-hour candles and calculates a classic MACD (EMA 12/26 with a 9-period signal). It can both open and close positions on opposite signals. Risk is managed through optional stop loss and take profit expressed as percentages of the entry price.\n\n## Details\n\n- **Entry Criteria**: MACD-based signals depending on selected mode.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastEmaPeriod` = 12\n  - `SlowEmaPeriod` = 26\n  - `SignalPeriod` = 9\n  - `CandleType` = TimeSpan.FromHours(4)\n  - `Mode` = MacdDisposition\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD-based signals depending on selected mode.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastEmaPeriod` = 12\n  - `SlowEmaPeriod` = 26\n  - `SignalPeriod` = 9\n  - `CandleType` = TimeSpan.FromHours(4)\n  - `Mode` = MacdDisposition\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Swing (4h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "329": {
+    "id": 329,
+    "name": "MACD Volume Cluster",
+    "family": "trend",
+    "overview": "Signals trigger when its indicators confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like FastMacdPeriod, SlowMacdPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `FastMacdPeriod = 12`\n  - `SlowMacdPeriod = 26`\n  - `MacdSignalPeriod = 9`\n  - `VolumePeriod = 20`\n  - `VolumeDeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `FastMacdPeriod = 12`\n  - `SlowMacdPeriod = 26`\n  - `MacdSignalPeriod = 9`\n  - `VolumePeriod = 20`\n  - `VolumeDeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2062": {
+    "id": 2062,
+    "name": "Anchored Momentum Breakout",
+    "family": "trend",
+    "overview": "The Anchored Momentum Breakout Strategy uses the ratio of an exponential moving average (EMA) to a simple moving average (SMA) to measure momentum. When the short-term EMA begins to rise faster than the long-term SMA, it indicates increasing bullish momentum. Conversely, a falling ratio signals strengthening bearish momentum.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `SmaPeriod` | Period for the SMA indicator. |\n| `EmaPeriod` | Period for the EMA indicator. |\n| `StopLossPercent` | Percentage for stop-loss. |\n| `TakeProfitPercent` | Percentage for take-profit. |\n| `CandleType` | Timeframe of candles used for calculations. |"
+   },
+   "698": {
+    "id": 698,
+    "name": "Dskyz (DAFE) Adaptive Regime - Quant Machine Pro",
+    "family": "trend",
+    "overview": "Strategy that classifies market regimes using ATR, moving averages, Bollinger Bands and ADX.\nGenerates long and short signals from candlestick patterns near support and resistance.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3751": {
+    "id": 3751,
+    "name": "Swaper Strategy (API 3751)",
+    "family": "volatility",
+    "overview": "The **Swaper Strategy** replicates the MetaTrader expert advisor \"Swaper 1.1\" using StockSharp's high-level strategy API. The\noriginal system accumulates swap gains by constantly rebalancing a synthetic portfolio between long and short exposure. This\nconversion preserves the money-flow logic by reconstructing the expert's virtual balance, computing a fair value for the\nunderlying instrument, and aligning the open position with that target value.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Experts` | `1` | Weight applied to the synthetic fair value adjustment. |\n| `BeginPrice` | `1.8014` | Starting price used to rebuild the virtual balance. |\n| `MagicNumber` | `777` | Preserved identifier for compatibility with the MetaTrader version (logged in orders if needed). |\n| `BaseUnits` | `1000` | Initial capital units used by the denominator of the fair value equation. |\n| `ContractMultiplier` | `10` | Multiplier that converts price differences into account currency. |\n| `MarginPerLot` | `1000` | Approximate capital required to support one lot; governs the lot reduction logic. |\n| `FallbackSpreadSteps` | `1` | Spread in price steps when level-one quotes are missing. |\n| `CandleType` | `1 Hour` | Primary timeframe feeding the rebalancing loop. |"
+   },
+   "2441": {
+    "id": 2441,
+    "name": "MasterMind 3",
+    "family": "mean_reversion",
+    "overview": "This strategy trades extreme reversals using four **Williams %R** indicators with different periods. When all indicators drop to deep oversold values, the strategy enters a long position. When all indicators rise to strong overbought values, it enters a short position.\n\n## Trading Logic\n\n1. Subscribe to candles of the selected timeframe.\n2. Calculate four Williams %R indicators with periods 26, 27, 29 and 30.\n3. **Buy** when all indicators are below `-99.99`.\n4. **Sell** when all indicators are above `-0.01`.\n5. Signals are processed only on finished candles.\n\nThe volume of the order is taken from the strategy `Volume` property. Existing opposite positions are closed automatically by sending a market order with the required size.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `WprPeriod1` | Length of the first Williams %R indicator | 26 |\n| `WprPeriod2` | Length of the second Williams %R indicator | 27 |\n| `WprPeriod3` | Length of the third Williams %R indicator | 29 |\n| `WprPeriod4` | Length of the fourth Williams %R indicator | 30 |\n| `CandleType` | Type and timeframe of candles | 1 minute candles |\n\n## Notes\n\n* The strategy uses high-level API with `Bind` for indicator processing.\n* No stop-loss or take-profit levels are included; position is reversed on opposite signals.\n\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `WprPeriod1` | Length of the first Williams %R indicator | 26 |\n| `WprPeriod2` | Length of the second Williams %R indicator | 27 |\n| `WprPeriod3` | Length of the third Williams %R indicator | 29 |\n| `WprPeriod4` | Length of the fourth Williams %R indicator | 30 |\n| `CandleType` | Type and timeframe of candles | 1 minute candles |"
+   },
+   "722": {
+    "id": 722,
+    "name": "Earnings, Splits, Dividends",
+    "family": "other",
+    "overview": "Demonstrates how to receive earnings, split and dividend information from the news feed.\n\nThe strategy subscribes to market news and writes a log entry when a headline related to earnings, stock splits or dividends appears.\nIt does not perform trading operations but serves as an example of handling corporate action data.\n\n## Details\n\n- **Entry Criteria**: None.\n- **Long/Short**: No trading.\n- **Exit Criteria**: Not applicable.\n- **Stops**: No.\n- **Filters**:\n  - Category: Data\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n\n",
+    "details": "- **Entry Criteria**: None.\n- **Long/Short**: No trading.\n- **Exit Criteria**: Not applicable.\n- **Stops**: No.\n- **Filters**:\n  - Category: Data\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "501": {
+    "id": 501,
+    "name": "Advanced Multi-Seasonality",
+    "family": "other",
+    "overview": "Trades based on predefined seasonal periods. Up to four periods can be configured with individual entry date, holding days and direction.\n\n## Details\n\n- **Entry Criteria**: calendar date matches configured period\n- **Long/Short**: Both\n- **Exit Criteria**: holding days reached\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar date matches configured period\n- **Long/Short**: Both\n- **Exit Criteria**: holding days reached\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1728": {
+    "id": 1728,
+    "name": "Autostop",
+    "family": "other",
+    "overview": "Utility strategy that automatically sets take-profit and stop-loss for open positions.\nIt does not generate trade signals. Any positions opened externally are protected using fixed distances.\n\n## Details\n\n- **Entry Criteria**: None, orders managed outside the strategy.\n- **Long/Short**: Both.\n- **Exit Criteria**: Protective orders only.\n- **Stops**: Uses StartProtection to place fixed take-profit and stop-loss.\n- **Default Values**:\n  - `MonitorTakeProfit` = true\n  - `MonitorStopLoss` = true\n  - `TakeProfitTicks` = 30\n  - `StopLossTicks` = 30\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: None, orders managed outside the strategy.\n- **Long/Short**: Both.\n- **Exit Criteria**: Protective orders only.\n- **Stops**: Uses StartProtection to place fixed take-profit and stop-loss.\n- **Default Values**:\n  - `MonitorTakeProfit` = true\n  - `MonitorStopLoss` = true\n  - `TakeProfitTicks` = 30\n  - `StopLossTicks` = 30\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

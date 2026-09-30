@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1831,
+      "name": "Smart Ass Trade",
+      "family": "trend",
+      "entry_long": "macd(close,12,26)-macd_signal(close,12,26,9) > 0 and roc(sma(close,20),1) > 0",
+      "exit_long": "macd(close,12,26)-macd_signal(close,12,26,9) < 0 or roc(sma(close,20),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) histogram direction and SMA(20) slope are a current-timeframe proxy for the required 5m/15m/30m alignment. Williams %R, daily filtering, multi-timeframe state, and point-based protection are unsupported."
+    },
+    {
+      "id": 1939,
+      "name": "Ultra WPR Cross",
+      "family": "trend",
+      "entry_long": "crossabove(sma(rsi(close,13),3),sma(rsi(close,13),53))",
+      "exit_long": "crossbelow(sma(rsi(close,13),3),sma(rsi(close,13),53))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is unavailable, so smoothed RSI(13) with SMA(3)/SMA(53) preserves the documented fast/slow crossing periods. Price-based point stops, short handling, and H4 resampling are omitted."
+    },
+    {
+      "id": 2817,
+      "name": "EMA WMA Contrarian",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(open,28),ema(open,8))",
+      "exit_long": "crossabove(ema(open,28),ema(open,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "WMA is unavailable, so EMA(28)/EMA(8) on candle opens proxy the documented contrarian crossover and opposite exit. Point stops, targets, trailing, risk sizing, and the short branch are not representable here."
+    },
+    {
+      "id": 2559,
+      "name": "XOSignal Re-Open",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) + 1.5 * atr(high,low,close,13)",
+      "exit_long": "close < ema(close,20) - 1.5 * atr(high,low,close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An EMA(20) plus/minus 1.5-ATR(13) channel is a state-free proxy for the XO range and arrow signals. XO box resets, pyramiding, tick stops/targets, delayed signal bars, and short re-entry are unsupported."
+    },
+    {
+      "id": 4185,
+      "name": "TenPointThree MACD Grid",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and macd(close,12,26) < 0",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or macd(close,12,26) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) crossover with a negative main line is a current-bar proxy for the documented shifted crossover. Grid layering, money management, per-leg exits, trading-range threshold, and session controls are unsupported."
+    },
+    {
+      "id": 3438,
+      "name": "Alerting System Threshold",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is a one-shot bid/ask threshold alert utility with no entries or exits. An impossible negative-price guard preserves that behavior; configurable price levels and notifications are unavailable."
+    },
+    {
+      "id": 3822,
+      "name": "BreakOut15",
+      "family": "breakout",
+      "entry_long": "crossabove(sma(close,20),sma(close,50)) and close > donchian_high_prev(high,20)",
+      "exit_long": "crossbelow(sma(close,20),sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20)/SMA(50) crossover plus a prior 20-bar high break is a transparent proxy for the moving-average-filtered breakout. Exact parameters, staged trailing protection, and the short branch are omitted."
+    },
+    {
+      "id": 3900,
+      "name": "Combo Right Perceptron",
+      "family": "momentum",
+      "entry_long": "open > sma(open,10) and close > sma(close,10)",
+      "exit_long": "open < sma(open,10) and close < sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI and the perceptron lattice are unavailable; open and close above/below their SMA(10) baselines proxy the positive/negative CCI supervisor signal. Perceptron strides, weights, point protection, and short handling are omitted."
+    },
+    {
+      "id": 3436,
+      "name": "Master Exit Plan",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Master Exit Plan is explicitly a supervisor for existing exposure and does not open trades. An impossible negative-price guard avoids fabricating an entry; timers, pending trails, and point stops are unavailable."
+    },
+    {
+      "id": 3266,
+      "name": "Killer Sell 2.0 (C#)",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented strategy is short-only, while this roster is long-direction; no long rule can be translated without fabricating one. An impossible negative-price guard records that limitation rather than inverting the sell logic."
+    }
+  ]
+}

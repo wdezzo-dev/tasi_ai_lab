@@ -1,0 +1,98 @@
+{
+ "batch_370": {
+  "strategy_ids": [
+   1127,
+   284,
+   1832,
+   946,
+   1349,
+   224,
+   2874,
+   758,
+   1600,
+   1291
+  ],
+  "docs": {
+   "1127": {
+    "id": 1127,
+    "name": "NY Opening Range Breakout - MA Stop",
+    "family": "trend",
+    "overview": "Trades breakouts of the New York 9:30-9:45 opening range with optional moving-average based exits. Entries occur on the bar after a breakout if within the cutoff time and the price aligns with the moving average filter.\n\n## Details\n\n- **Entry Criteria**:\n  - Previous candle closes beyond the opening range high (long) or low (short) before the cutoff time.\n  - Current candle is the first after the breakout and satisfies the MA filter when enabled.\n- **Long/Short**: Configurable via `TradeDirection`.\n- **Exit Criteria**:\n  - Stop at the opposite side of the opening range.\n  - Take profit according to `TakeProfitType`: fixed risk-reward, moving average cross, or both.\n- **Stops**: Yes, at range boundaries.\n- **Default Values**:\n  - `CutoffHour` = 12\n  - `CutoffMinute` = 0\n  - `TradeDirection` = LongOnly\n  - `TakeProfitType` = FixedRiskReward\n  - `TpRatio` = 2.5\n  - `MaType` = SMA\n  - `MaLength` = 100\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Configurable\n  - Indicators: Moving Average\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Previous candle closes beyond the opening range high (long) or low (short) before the cutoff time.\n  - Current candle is the first after the breakout and satisfies the MA filter when enabled.\n- **Long/Short**: Configurable via `TradeDirection`.\n- **Exit Criteria**:\n  - Stop at the opposite side of the opening range.\n  - Take profit according to `TakeProfitType`: fixed risk-reward, moving average cross, or both.\n- **Stops**: Yes, at range boundaries.\n- **Default Values**:\n  - `CutoffHour` = 12\n  - `CutoffMinute` = 0\n  - `TradeDirection` = LongOnly\n  - `TakeProfitType` = FixedRiskReward\n  - `TpRatio` = 2.5\n  - `MaType` = SMA\n  - `MaLength` = 100\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Configurable\n  - Indicators: Moving Average\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "284": {
+    "id": 284,
+    "name": "EMA Slope Mean Reversion",
+    "family": "trend",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the EMA returns toward balance. Starting parameter `EmaPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1832": {
+    "id": 1832,
+    "name": "EMA 2-35 Crossover",
+    "family": "trend",
+    "overview": "This strategy follows a simple crossover between two Exponential Moving Averages. The fast EMA with length 2 reacts quickly to price changes, while the slow EMA with length 35 represents the longer-term trend. A position is opened when the fast EMA crosses the slow EMA; positions are reversed when the opposite crossover occurs.\n\nRisk management is handled with fixed stop-loss and take-profit levels expressed in price steps. A trailing stop is also applied to lock in profits as the trade moves in a favorable direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: EMA(2) crosses above EMA(35).\n  - **Short**: EMA(2) crosses below EMA(35).\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite crossover.\n  - Stop-loss or take-profit hit.\n  - Trailing stop triggered.\n- **Stops**: Fixed stop-loss, take-profit, and trailing stop (all in price steps).\n- **Default Values**:\n  - `FastLength` = 2\n  - `SlowLength` = 35\n  - `StopLoss` = 50\n  - `TakeProfit` = 150\n  - `TrailingStop` = 50\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving averages\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: EMA(2) crosses above EMA(35).\n  - **Short**: EMA(2) crosses below EMA(35).\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite crossover.\n  - Stop-loss or take-profit hit.\n  - Trailing stop triggered.\n- **Stops**: Fixed stop-loss, take-profit, and trailing stop (all in price steps).\n- **Default Values**:\n  - `FastLength` = 2\n  - `SlowLength` = 35\n  - `StopLoss` = 50\n  - `TakeProfit` = 150\n  - `TrailingStop` = 50\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving averages\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term",
+    "parameters": ""
+   },
+   "946": {
+    "id": 946,
+    "name": "JMA Quantum Edge",
+    "family": "trend",
+    "overview": "This strategy uses the Jurik Moving Average (JMA) to detect turning points.\nA long position is opened when the JMA turns up and is above the higher timeframe JMA.\nA short position is opened when the JMA turns down and is below the higher timeframe JMA.\nOptional stop loss and take profit are applied as percentages from the entry price.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1349": {
+    "id": 1349,
+    "name": "Strategy Chameleon",
+    "family": "trend",
+    "overview": "- **Type**: Trend following with risk management\n- **Entry**: Fast moving average crossing above or below slow moving average\n- **Exits**: Stop loss, trailing stop, take profit\n- **Filters**: Optional trading session filter\n\nThis strategy demonstrates how to combine moving average signals with several risk management tools.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "224": {
+    "id": 224,
+    "name": "ATR Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 109%. It performs best in the crypto market.\n\nA long setup occurs when price closes below the moving average by more than `Multiplier` times the ATR. A short setup appears when price closes above the moving average by the same distance. Positions are exited once price returns to the moving average.\n\nThis technique is intended for short-term traders expecting prices to revert after excessive moves. The ATR-based stop keeps risk proportional to current market conditions.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Close < MA - Multiplier * ATR\n  - **Short**: Close > MA + Multiplier * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when close >= MA\n  - **Short**: Exit when close <= MA\n- **Stops**: Yes, stop-loss around `2*ATR` by default.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close < MA - Multiplier * ATR\n  - **Short**: Close > MA + Multiplier * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when close >= MA\n  - **Short**: Exit when close <= MA\n- **Stops**: Yes, stop-loss around `2*ATR` by default.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2874": {
+    "id": 2874,
+    "name": "Deep Drawdown MA",
+    "family": "trend",
+    "overview": "The Deep Drawdown MA Strategy is a direct conversion of the MetaTrader 5 expert advisor “Deep Drawdown MA (barabashkakvn's edition)” into the StockSharp high-level API. The strategy trades moving-average crossovers while applying a break-even mechanism designed to protect trades that have slipped into drawdown. The StockSharp version retains the configurable moving-average parameters, the ability to limit the number of aggregated entries, and the option to immediately liquidate losing trades on a signal reversal.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Order size for each market operation. | 0.1 |\n| `MaxPositions` | Maximum number of aggregated lots per direction (net exposure). | 5 |\n| `CloseLosses` | Close losing trades immediately on a reversal instead of waiting for break-even. | false |\n| `FastMaPeriod` / `SlowMaPeriod` | Length of the fast and slow moving averages. | 10 / 30 |\n| `FastMaShift` / `SlowMaShift` | Historical shift applied to each moving average (emulates the MT5 shift argument). | 3 / 0 |\n| `FastPriceType` / `SlowPriceType` | Price source used by each moving average (Close, Open, High, Low, Median, Typical, Weighted). | Close |\n| `MaMethod` | Smoothing method shared by both moving averages (SMA, EMA, SMMA, LWMA). | SMA |\n| `CandleType` | Candle series used for calculations. | 15-minute candles |"
+   },
+   "758": {
+    "id": 758,
+    "name": "Enhanced Market Structure",
+    "family": "trend",
+    "overview": "Enhanced Market Structure combines swing high/low analysis with ATR, RSI, volume, MACD and EMA filters. The strategy enters on breakouts or sweep reversals when multiple filters confirm momentum.\n\n## Details\n\n- **Entry Criteria**: breakout or sweep of recent swing with filters\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR, RSI, MACD, EMA, Volume\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: breakout or sweep of recent swing with filters\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR, RSI, MACD, EMA, Volume\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1600": {
+    "id": 1600,
+    "name": "Consecutive Bars Above MA",
+    "family": "trend",
+    "overview": "Short-only strategy that counts consecutive closes above a moving average and shorts on breakouts above the previous high. Exits when price falls below the prior low. Optional 200 EMA filter enforces downtrend.\n\n## Details\n\n- **Entry Criteria**: threshold of consecutive closes above MA and close > previous high\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `Threshold` = 3\n  - `MaType` = SMA\n  - `MaLength` = 5\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: MA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: threshold of consecutive closes above MA and close > previous high\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `Threshold` = 3\n  - `MaType` = SMA\n  - `MaLength` = 5\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: MA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1291": {
+    "id": 1291,
+    "name": "Scalping With Williams R MACD and SMA",
+    "family": "trend",
+    "overview": "Scalping strategy using Williams %R, MACD histogram and a simple moving average on one-minute candles.\n\n## Details\n\n- **Entry Criteria**: Williams %R crosses activation levels and MACD histogram changes sign in trend direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Histogram reverses direction.\n- **Stops**: No.\n- **Default Values**:\n  - `WilliamsLength` = 140\n  - `MacdFast` = 24\n  - `MacdSlow` = 52\n  - `MacdSignal` = 9\n  - `SmaLength` = 7\n",
+    "details": "- **Entry Criteria**: Williams %R crosses activation levels and MACD histogram changes sign in trend direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Histogram reverses direction.\n- **Stops**: No.\n- **Default Values**:\n  - `WilliamsLength` = 140\n  - `MacdFast` = 24\n  - `MacdSlow` = 52\n  - `MacdSignal` = 9\n  - `SmaLength` = 7",
+    "parameters": ""
+   }
+  }
+ }
+}

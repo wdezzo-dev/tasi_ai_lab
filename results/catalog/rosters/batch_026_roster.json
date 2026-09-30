@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 874,
+      "name": "Heatmap MACD",
+      "family": "momentum",
+      "entry_long": "crossabove(macd(close,20,50) - macd_signal(close,20,50,50),0)",
+      "exit_long": "crossbelow(macd(close,20,50) - macd_signal(close,20,50,50),0)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 2.0,
+      "notes": "The MACD histogram is MACD(20,50) minus its EMA(50) signal and is traded through a zero cross. The five-timeframe heatmap cannot be represented on one OHLCV series, so this is the current-timeframe alignment proxy; the documented 2% stop and target are retained."
+    },
+    {
+      "id": 1852,
+      "name": "Eugene Candle Pattern",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,2) and low > donchian_low_prev(low,2) and close > open",
+      "exit_long": "low < donchian_low_prev(low,2) and high < donchian_high_prev(high,2) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior two-bar extremes approximate the current-versus-previous candle breakout and the insider/bird structure; a bullish body classifies the long pattern and the mirrored bearish pattern exits. Zig confirmation, the four-candle state, time filter, and optional price-step protection are unavailable."
+    },
+    {
+      "id": 2019,
+      "name": "Color Schaff TRIX Trend Cycle",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(macd(close,12,26),14),1)",
+      "exit_long": "crossbelow(zscore(macd(close,12,26),14),-1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A z-scored MACD(12,26) line crossing normalized high and low levels is an explicit STC/TRIX proxy; the corpus supplies no TRIX, cycle, or level defaults. The short side, double stochastic transform, and unsupplied percentage protection are omitted."
+    },
+    {
+      "id": 2284,
+      "name": "Jupiter M",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,1) < 0 and zscore(close,50) < -1",
+      "exit_long": "crossabove(close,sma(close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Negative one-bar ROC represents a price step down and z-score(50) below -1 is a scale-free proxy for optional CCI below -100. A cross back above SMA(14) proxies basket mean reversion; grid levels, volume scaling, dynamic target, and breakeven are stateful and unsupported."
+    },
+    {
+      "id": 3190,
+      "name": "Ichimoku Momentum MACD",
+      "family": "trend",
+      "entry_long": "sma(close,9) > sma(close,26) and ema(close,12) > ema(close,26) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "sma(close,9) < sma(close,26) or ema(close,12) < ema(close,26) or roc(close,14) < 0 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(9,26) proxies Tenkan/Kijun alignment, EMA(12,26) proxies the fast/slow LWMA filter, ROC(14) is positive momentum, and MACD(12,26,9) supplies confirmation. Ichimoku cloud, exact momentum threshold, multi-timeframe context, and point-based protection are not representable."
+    },
+    {
+      "id": 3248,
+      "name": "Linear Regression Channel (Fibo)",
+      "family": "trend",
+      "entry_long": "ema(close,12) > ema(close,26) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,12) < ema(close,26) or roc(close,14) < 0 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12,26), ROC(14), and MACD(12,26,9) are explicit current-timeframe proxies for the weighted trend, momentum, and monthly filter because the corpus gives no numeric defaults. Linear regression, higher-timeframe alignment, Fibonacci targets, trailing, and equity controls are unsupported."
+    },
+    {
+      "id": 3250,
+      "name": "Gann Fan",
+      "family": "trend",
+      "entry_long": "ema(close,12) > ema(close,26) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9) and roc(close,3) > 0",
+      "exit_long": "ema(close,12) < ema(close,26) or roc(close,14) < 0 or macd(close,12,26) < macd_signal(close,12,26,9) or roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12,26) proxies the weighted trend, ROC(14) and MACD(12,26,9) retain momentum and direction, and positive ROC(3) is a scale-free positive fan-slope proxy. Fractal fan reconstruction, exact thresholds, stacking, trailing, and price-step risk are unsupported."
+    },
+    {
+      "id": 4031,
+      "name": "OpenTiks",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,3) and close > open and roc(close,1) > 0",
+      "exit_long": "low < donchian_low_prev(low,3) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break above the prior three-bar high with a bullish candle and positive one-bar ROC approximates the monotonic staircase. The opposite range break or momentum loss is a state-free exit proxy; partial halving, trailing, and disabled/point stop settings are not representable."
+    },
+    {
+      "id": 4104,
+      "name": "Pinball Machine Random Draw",
+      "family": "volatility",
+      "entry_long": "close < 0 and close > 0",
+      "exit_long": "close < 0 and close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is explicitly random and has no deterministic OHLCV condition that can be translated without fabricating a signal; the impossible guard preserves its random nature. Random point stops, targets, draw bounds, and seed logic are unsupported."
+    },
+    {
+      "id": 4149,
+      "name": "Escape Mean Reversion",
+      "family": "trend",
+      "entry_long": "crossbelow(close,sma(close,20))",
+      "exit_long": "crossabove(close,sma(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The corpus does not supply the two moving-average periods, so SMA(20) and SMA(5) are explicit fallbacks for the short/fast mean-reversion rules. The 10-point target and 1000-point stop are absolute price distances, not percentage fields, and the short side is omitted."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 614,
+      "name": "Chandelier Exit with 200 EMA Filter",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high(high,22) - 3 * atr(high,low,close,22)) and close > ema(close,200)",
+      "exit_long": "close < donchian_high(high,22) - 3 * atr(high,low,close,22)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Chandelier long level is the 22-bar high minus three ATR(22) and the documented 200 EMA filter is kept; the same level acts as the trailing exit. Only the EMA length is documented (200 in the name), so the 22/3 ATR settings are standard Chandelier fallbacks, and the close-versus-extremum option is not expressible."
+    },
+    {
+      "id": 2994,
+      "name": "RAVI + Awesome Oscillator",
+      "family": "trend",
+      "entry_long": "ema(close,7) > ema(close,30) and sma(high,5) - sma(low,5) > 0",
+      "exit_long": "ema(close,7) < ema(close,30) or sma(high,5) - sma(low,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RAVI is approximated by a fast versus slow EMA spread and the Awesome Oscillator by the documented 5/34 median-price spread, so both must be bullish. FastLength/SlowLength have no documented values, so 7/30 are fallbacks, and the pip stop, target and trailing distances are not percentage fields."
+    },
+    {
+      "id": 4218,
+      "name": "4218 RSI MA",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 50 and roc(ema((high + low + 2 * close) / 4,14),1) > 0",
+      "exit_long": "rsi(close,14) < 50 or roc(ema((high + low + 2 * close) / 4,14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The RSI_MA oscillator is approximated by RSI(14) as the activation test plus the slope of EMA(14) on the documented weighted price (High+Low+2*Close)/4. The oversold/overbought extreme and activation levels, pip stops and risk-percent sizing are name-only parameters and are not encoded."
+    },
+    {
+      "id": 2105,
+      "name": "Ha MaZi",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,13) and close > open and close > ema(close,40)",
+      "exit_long": "close < ema(close,40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigzagLength=13 new pivots are approximated by the prior 13-bar extreme, the bullish Heikin Ashi candle by a positive candle with close above its open, and MaPeriod=40 is kept as the EMA filter. StopLoss 70 and TakeProfit 200 are fixed point distances, not percentages, and ZigZag/Heikin Ashi internals are not available."
+    },
+    {
+      "id": 3898,
+      "name": "T3MA(MTC)",
+      "family": "trend",
+      "entry_long": "crossabove(roc(ema(ema(close,4),4),1),0)",
+      "exit_long": "crossbelow(roc(ema(ema(close,4),4),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented double-smoothed EMA with MaPeriod=4 is written literally and the signal is a flip of its slope, which matches the T3MA-ALARM rising/falling change. MaShift, the CalculationBarOffset signal queue and StartProtection in price steps (40/11) are not expressible."
+    },
+    {
+      "id": 4045,
+      "name": "Backbone Basket Strategy (StockSharp)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "It seeds a direction from bid/ask extremes and then keeps adding one market order per candle until MaxTrades=10, alternating long and short baskets with fractional risk sizing, so it is a multi-order accumulation engine. The never-true guard is used rather than inventing a single-bar signal; point stops are not percentages."
+    },
+    {
+      "id": 894,
+      "name": "HSV and HSL Gradient Tools",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs list RGB/HSV/HSL conversion, gradient and easing helpers and state trade logic: none. With no market-derived signal the never-true guard is used."
+    },
+    {
+      "id": 678,
+      "name": "Divergence For Many Indicators",
+      "family": "other",
+      "entry_long": "low < donchian_low_prev(low,10) and roc(rsi(close,14),5) > 0 and roc(macd(close,12,26),5) > 0",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish divergence is written as a new 10-bar low while both documented oscillators (RSI 14, MACD 12/26) have rising 5-bar momentum, i.e. at least MinDivergence=2 confirmations. The docs give no values for the periods, MinDivergence or the divergence lookback, so 14/12/26/10 are fallbacks, and the exit is an explicit reversal proxy."
+    },
+    {
+      "id": 813,
+      "name": "Friday Bond Short",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A time-based, short-only schedule that sells Friday 13:00 ET and buys back Monday 13:00 ET using no indicators. The DSL has no day-of-week or hour field, so the never-true guard is used rather than faking a market signal."
+    },
+    {
+      "id": 1266,
+      "name": "RSI Cyclic Smoothed",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,20),bb_lower(rsi(close,20),40,2))",
+      "exit_long": "crossbelow(rsi(close,20),bb_upper(rsi(close,20),40,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DominantCycleLength=20 is used for the oscillator and its dynamic percentile bands are approximated by Bollinger bands of the RSI series, entering on the documented lower-band cross and exiting on the upper-band cross. Vibration=10 and Leveling=10 have no documented mapping and the stops have no values, so both are null."
+    }
+  ]
+}

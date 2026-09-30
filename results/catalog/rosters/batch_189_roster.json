@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2539,
+      "name": "Ma2Cci Ema",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 3045,
+      "name": "Pull Back",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 280,
+      "name": "Supertrend Distance Mean Reversion",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,10) > sma(atr(high,low,close,10),10)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,10) < sma(atr(high,low,close,10),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 602,
+      "name": "CBC Strategy with Trend Confirmation & Separate Stop Loss",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 4094,
+      "name": "Fractal ZigZag",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 3123,
+      "name": "Secwenta Multi-Bar Signals",
+      "family": "momentum",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3876,
+      "name": "Omzdwwi Pending Manager",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 2187,
+      "name": "Hawaiian Tsunami Surfer",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,1) < 30",
+      "exit_long": "rsi(close,1) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 1 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1288,
+      "name": "Scale In Scale Out",
+      "family": "other",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fallback OHLCV translation used because the source strategy relies on unsupported proprietary/stateful features; no unsupported indicator or external data was fabricated."
+    },
+    {
+      "id": 638,
+      "name": "Covid Statistics Tracker",
+      "family": "other",
+      "entry_long": "roc(close,1) > 0",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Momentum/ROC reference translated as positive versus negative percent change over 1 bars."
+    }
+  ]
+}

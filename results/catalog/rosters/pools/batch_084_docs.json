@@ -1,0 +1,98 @@
+{
+ "batch_084": {
+  "strategy_ids": [
+   1398,
+   2625,
+   2882,
+   1517,
+   221,
+   456,
+   1515,
+   2086,
+   3644,
+   771
+  ],
+  "docs": {
+   "1398": {
+    "id": 1398,
+    "name": "Table to Filter Trades Per Day",
+    "family": "trend",
+    "overview": "Simple moving-average crossover strategy using SMA50 and SMA200 with fixed profit and loss targets.\n\n## Details\n\n- **Entry**\n  - Long: SMA50 crosses above SMA200.\n  - Short: SMA50 crosses below SMA200.\n- **Exit**: close position when target or stop is hit.\n",
+    "details": "- **Entry**\n  - Long: SMA50 crosses above SMA200.\n  - Short: SMA50 crosses below SMA200.\n- **Exit**: close position when target or stop is hit.",
+    "parameters": ""
+   },
+   "2625": {
+    "id": 2625,
+    "name": "VLT Trader Filter",
+    "family": "trend",
+    "overview": "The **VLT Trader Filter Strategy** is a volatility contraction breakout system converted from the original MQL implementation. It monitors\nrecent candle ranges and prepares stop orders whenever the most recent completed candle becomes the smallest range within a\nconfigurable historical window. The goal is to capture explosive moves after a tight consolidation period.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order volume sent with every stop order. |\n| `TakeProfitPips` | Distance in pips used for the take-profit order after entry. |\n| `StopLossPips` | Distance in pips used for the protective stop after entry. |\n| `MaxCandleSizePips` | Upper bound for the historical candle ranges considered in the volatility filter. |\n| `CandleCount` | Number of historical candles used to find the minimum acceptable range. |\n| `CandleType` | Candle time frame used for the analysis. |"
+   },
+   "2882": {
+    "id": 2882,
+    "name": "Exp CandlesticksBW Tm",
+    "family": "trend",
+    "overview": "This strategy reproduces the MetaTrader expert **Exp_CandlesticksBW_Tm** on top of the StockSharp high-level API. It relies on Bill Williams' Candlesticks BW indicator, which paints candle colors by combining the Awesome Oscillator (AO) and the Accelerator Oscillator (AC). Momentum acceleration and deceleration are detected via candle color transitions, while an optional trading-session filter restricts entries to specific intraday hours.\n\n## How it works\n\n1. Subscribes to the configured time-frame (default **H4**) and feeds every finished candle into an Awesome Oscillator (5/34). The AO series is smoothed with a 5-period simple moving average to produce the Accelerator component.\n2. Each candle is classified into one of six color states: two bullish momentum colors (AO and AC rising), two bearish momentum colors (AO and AC falling), and two neutral colors (mixed AO/AC direction). The candle body direction decides between the darker or lighter shade in each pair.\n3. A circular buffer stores the recent color indices alongside their open times. The **SignalBar** parameter selects which historical bar to evaluate (default = previous candle, i.e., offset 1). One bar further back is used as context.\n4. Long entries are enabled when the older bar belonged to a bullish momentum zone and the signal bar leaves that zone. Short entries mirror the logic with bearish zones. Exit signals use the same momentum filters to close the opposite direction.\n5. Optional session filtering (**UseTimeFilter**) keeps a trade log between **StartHour:StartMinute** and **EndHour:EndMinute**. Leaving the window immediately liquidates open positions, preventing overnight exposure.\n6. Stop-loss and take-profit protections are registered through `StartProtection`, translating point-based distances into instrument price steps.\n\n## Trading rules\n\n- **Open long**: previous color index `< 2` (AO and AC accelerating upwards) and the signal bar color index `> 1`. Long entries are skipped if already long ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Time-frame used for AO/AC calculations. | `TimeSpan.FromHours(4).TimeFrame()` |\n| `Volume` | Order size for new entries. | `1m` |\n| `SignalBar` | Number of finished candles to skip before evaluating signals (1 = previous candle). | `1` |\n| `StopLossPoints` | Protective stop distance in instrument points. Set `0` to disable. | `1000m` |\n| `TakeProfitPoints` | Profit target distance in instrument points. Set `0` to disable. | `2000m` |\n| `EnableLongEntries`, `EnableShortEntries` | Allow opening trades in the respective direction. | `true` |\n| `EnableLongExits`, `EnableShortExits` | Allow closing trades in the respective direction. | `true` |\n| `UseTimeFilter` | Enable trading-session restrictions. | `true` |\n| `StartHour`, `StartMinute`, `EndHour`, `EndMinute` | Session boundaries (inclusive start, exclusive end for identical hours). | `0/0/23/59` |"
+   },
+   "1517": {
+    "id": 1517,
+    "name": "Varanormal Mac N Cheez",
+    "family": "trend",
+    "overview": "SMA crossover strategy with trailing stop and daily profit target.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA.\n  - **Short**: Fast SMA crosses below slow SMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Trailing stop or fixed stop loss.\n  - Daily profit target closes all positions.\n- **Stops**: Yes, fixed and trailing.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `DailyTarget` = 200\n  - `StopLossAmount` = 100\n  - `TrailOffset` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA.\n  - **Short**: Fast SMA crosses below slow SMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Trailing stop or fixed stop loss.\n  - Daily profit target closes all positions.\n- **Stops**: Yes, fixed and trailing.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `DailyTarget` = 200\n  - `StopLossAmount` = 100\n  - `TrailOffset` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "221": {
+    "id": 221,
+    "name": "Bollinger Band Squeeze",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 100%. It performs best in the forex market.\n\nOnce a squeeze is identified, the strategy waits for price to break outside the bands. A close above the upper band initiates a long, while a close below the lower band opens a short. The trade is closed if price returns toward the middle of the bands or if a stop-loss is triggered.\n\nThe method targets traders who like to trade volatility breakouts rather than trend continuation. Using the band width as a filter helps avoid false signals during choppy conditions.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Band width < average width && Close > upper band\n  - **Short**: Band width < average width && Close < lower band\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price drops back inside the bands\n  - **Short**: Exit when price rises back inside the bands\n- **Stops**: Yes, typically at 2*ATR.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerMultiplier` = 2.0m\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Band width < average width && Close > upper band\n  - **Short**: Band width < average width && Close < lower band\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price drops back inside the bands\n  - **Short**: Exit when price rises back inside the bands\n- **Stops**: Yes, typically at 2*ATR.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerMultiplier` = 2.0m\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "456": {
+    "id": 456,
+    "name": "Squeeze Pro Overlays",
+    "family": "breakout",
+    "overview": "The Squeeze Pro Overlays strategy detects volatility contraction when Bollinger Bands are completely inside multiple Keltner Channels. Once the squeeze releases, the slope of a linear regression on closing prices determines trade direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Squeeze ends (Bollinger Bands move outside the widest Keltner Channel).\n  - **Long**: Momentum slope > 0.\n  - **Short**: Momentum slope < 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `SqueezeLength` = 20\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, Linear Regression\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Squeeze ends (Bollinger Bands move outside the widest Keltner Channel).\n  - **Long**: Momentum slope > 0.\n  - **Short**: Momentum slope < 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `SqueezeLength` = 20\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, Linear Regression\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1515": {
+    "id": 1515,
+    "name": "US Index First 30m Candle",
+    "family": "breakout",
+    "overview": "Captures breakout of the first 30-minute range in the US session with one trade per day.\n\n## Details\n\n- **Entry Criteria**: After first 30m range is locked, price breaks above high or below low\n- **Long/Short**: Both\n- **Exit Criteria**: Stop at opposite range level, target at range size * risk reward\n- **Stops**: Yes\n- **Default Values**:\n  - `RiskReward` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: After first 30m range is locked, price breaks above high or below low\n- **Long/Short**: Both\n- **Exit Criteria**: Stop at opposite range level, target at range size * risk reward\n- **Stops**: Yes\n- **Default Values**:\n  - `RiskReward` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2086": {
+    "id": 2086,
+    "name": "Derivative Zero Cross",
+    "family": "momentum",
+    "overview": "This strategy trades based on the sign change of the price derivative. The derivative is calculated as the price momentum divided by the period and multiplied by 100. When the derivative crosses the zero line the current position is closed and the opposite position is opened.\n\n## Parameters\n\n- `DerivativePeriod` - smoothing period for the derivative calculation.\n- `PriceType` - source price used for the derivative.\n- `BuyEntry` - allow opening long positions.\n- `SellEntry` - allow opening short positions.\n- `BuyExit` - allow closing long positions.\n- `SellExit` - allow closing short positions.\n- `StopLoss` - stop loss in points.\n- `TakeProfit` - take profit in points.\n- `CandleType` - candle time frame.\n\n## Logic\n\n1. Subscribe to candles and calculate momentum of the selected price.\n2. Derivative is obtained by dividing momentum by the period and scaling by 100.\n3. When the derivative turns from positive to non-positive, a long position is opened and short one is closed.\n4. When the derivative turns from negative to non-negative, a short position is opened and long one is closed.\n5. Stop loss and take profit protection is applied to manage risk.\n",
+    "details": "",
+    "parameters": "- `DerivativePeriod` - smoothing period for the derivative calculation.\n- `PriceType` - source price used for the derivative.\n- `BuyEntry` - allow opening long positions.\n- `SellEntry` - allow opening short positions.\n- `BuyExit` - allow closing long positions.\n- `SellExit` - allow closing short positions.\n- `StopLoss` - stop loss in points.\n- `TakeProfit` - take profit in points.\n- `CandleType` - candle time frame."
+   },
+   "3644": {
+    "id": 3644,
+    "name": "Symbol Sync",
+    "family": "volatility",
+    "overview": "The **Symbol Sync Strategy** replicates the MetaTrader utility `SymbolSyncEA` inside the StockSharp environment. The strategy keeps the main strategy symbol and all registered linked strategies synchronized. Whenever the primary symbol changes, the strategy automatically propagates the new security to every linked strategy, ensuring that the entire workspace follows the same instrument without manual intervention.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `ChartLimit` | Maximum number of linked strategies that can be synchronized. Prevents accidental mass-updates. | `10` |\n| `SyncSecurityId` | Identifier of the security propagated to linked strategies. An empty value falls back to the strategy security. | `\"\"` |"
+   },
+   "771": {
+    "id": 771,
+    "name": "Graph Style 4th Dimension RSI",
+    "family": "mean_reversion",
+    "overview": "Strategy combining price change with RSI levels.\n\nTesting indicates an average annual return of about 80%. It performs well in volatile markets.\n\nThe strategy checks the direction of the last price change together with RSI extremes. It opens a position when RSI exits the overbought/oversold zones and the recent price change confirms the move. Positions are closed when RSI returns to the middle area or an opposite signal appears.\n\n## Details\n\n- **Entry Criteria**: Price change direction with RSI extreme.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or RSI back to mid.\n- **Stops**: Percent stop loss.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `OverboughtLevel` = 70m\n  - `OversoldLevel` = 30m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Percent\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price change direction with RSI extreme.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or RSI back to mid.\n- **Stops**: Percent stop loss.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `OverboughtLevel` = 70m\n  - `OversoldLevel` = 30m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Percent\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

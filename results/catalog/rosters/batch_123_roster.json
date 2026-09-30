@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2724,
+      "name": "Precipice Martin Strategy (C#)",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented grid opens an alternating long/short market order on every finished candle with pip-based SL/TP and martingale sizing, so it contains no market-derived directional entry signal to translate. Marked with a never-true guard."
+    },
+    {
+      "id": 1426,
+      "name": "Three Supertrend EMA",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and close > ema(close,20) and close > ema(close,50)",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is not in the DSL, so each of the three lines is proxied by its own EMA and the documented EMA filter by the slowest line; periods 10/20/50 are explicit fallbacks. Exit is the documented flip of the fastest line, and no stops are documented."
+    },
+    {
+      "id": 1002,
+      "name": "MA Crossover with TP/SL and 5 EMA Filter",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(close,50)) and close > ema(close,5)",
+      "exit_long": "crossbelow(sma(close,20),sma(close,50)) or close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keeps the documented long rule: fast SMA crossing above the slow SMA while close is above the 5-period EMA, with the opposite cross or EMA loss as exit. Fast 20 and slow 50 are explicit fallbacks, and Target%/Stop% carry no documented values, so both stop fields are null."
+    },
+    {
+      "id": 2807,
+      "name": "Bollinger Bands N Positions v2",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_upper(close,20))",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Envelope breakouts are expressed with Bollinger 20/2 (period and deviation have no documented defaults, so they are explicit fallbacks); the mean reversion back to bb_mid is used as the long exit. Pyramiding, netting, and the pip-based stop/target/trailing pair are not expressible, so the stop fields are null."
+    },
+    {
+      "id": 1627,
+      "name": "ZeroLag MACD Cross",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,2,34),macd_signal(close,2,34,2))",
+      "exit_long": "crossbelow(macd(close,2,34),macd_signal(close,2,34,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastEmaLength 2, SlowEmaLength 34 and SignalEmaLength 2 are used directly, and crossabove/crossbelow already enforce the documented UseFreshSignal requirement. Session hours 9-15, the KillDay/KillHour forced exit and Volume are not expressible, and the docs state there are no stops."
+    },
+    {
+      "id": 2691,
+      "name": "Nova",
+      "family": "breakout",
+      "entry_long": "close > open and roc(close,1) > 1.0 and roc(close,1) > roc(close,2)",
+      "exit_long": "roc(close,1) < 0 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Level1 ask-versus-stored-ask test is approximated on bars as a bullish candle that has gained more than 1% and is accelerating, with the reverse as exit. StepPips 1% is an explicit fallback; the seconds-based snapshot, StopLossPips/TakeProfitPips and LossCoefficient sizing are not expressible."
+    },
+    {
+      "id": 1490,
+      "name": "TSI Long Short for BTC 2H",
+      "family": "breakout",
+      "entry_long": "crossabove(roc(close,25),donchian_high_prev(roc(close,25),100))",
+      "exit_long": "crossbelow(roc(close,25),donchian_low_prev(roc(close,25),100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "True Strength Index is not in the DSL, so it is proxied by ROC(25) (explicit fallback) and the documented Highest/Lowest extremes become 100-bar Donchian levels on that proxy, with prior-bar levels used since the current bar cannot exceed its own window. The 2-hour timeframe and short side are dropped."
+    },
+    {
+      "id": 2714,
+      "name": "Billy Expert Pullback Buyer",
+      "family": "momentum",
+      "entry_long": "close < donchian_high_prev(high,10) and rsi(close,14) > 50 and roc(rsi(close,14),1) > 0",
+      "exit_long": "rsi(close,14) < 45 or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The sequence of falling highs becomes a pullback below the 10-bar high and the two higher-timeframe bullish stochastics are approximated by RSI(14) above 50 and rising (periods are fallbacks). Stacking up to MaxPositions 6 is not supported, and StopLossPips 0 / TakeProfitPips 32 are pip distances, so the stop fields are null."
+    },
+    {
+      "id": 3473,
+      "name": "AutoTrading Scheduler",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented module is an explicitly signal-agnostic weekly schedule supervisor that only toggles auto trading and flattens positions, so it defines no market-derived entry. Marked with a never-true guard."
+    },
+    {
+      "id": 1146,
+      "name": "Oscillator Evaluator",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and 100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)) < 20",
+      "exit_long": "rsi(close,14) > 50 and 100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic oscillator is expressed as a %K-style position inside the 14-bar Donchian range; a flat range makes the ratio infinite rather than an error, and such bars simply fail the comparison. Both oscillators must be oversold to enter and neutral to exit, with 30/20/50 levels as explicit fallbacks since no thresholds are documented."
+    }
+  ]
+}

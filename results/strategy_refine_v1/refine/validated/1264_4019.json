@@ -1,0 +1,84 @@
+{
+  "strategy_id": 1264,
+  "ticker": "4019",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1264,
+    "name": "RSI Buy Sell Force",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,7),ema(rsi(close,14),9))",
+    "exit_long": "crossbelow(rsi(close,14),ema(rsi(close,14),9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(14) versus its EMA(9) is an explicit fallback for the smoothed cc/bb pressure lines. The source supplies no periods or signal exit, so the inverse cross is used."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 135,
+      "engine_win_ret": 0.10849207031291463,
+      "alpha": 0.36180332859106035,
+      "benchmark_ret": -0.2533112582781457,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": 1.2678094499552,
+      "max_drawdown": -0.10925404093685842,
+      "profit_factor": 4.0572864752852755
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.20519753090695914,
+      "alpha": 0.316740261206626,
+      "benchmark_ret": -0.11154273029966688,
+      "trades": 9,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 1.401848801408752,
+      "max_drawdown": -0.1305508976525387,
+      "profit_factor": 2.846249552299181
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 135,
+      "engine_win_ret": 0.08392917753639972,
+      "alpha": 0.33724043581454544,
+      "benchmark_ret": -0.2533112582781457,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": 1.0095827278438405,
+      "max_drawdown": -0.11392402239418176,
+      "profit_factor": 3.517849386363234
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.15527773724087135,
+      "alpha": 0.26682046754053823,
+      "benchmark_ret": -0.11154273029966688,
+      "trades": 9,
+      "win_rate": 0.4444444444444444,
+      "sharpe": 1.0915151194307335,
+      "max_drawdown": -0.14808265757714312,
+      "profit_factor": 1.7594260605684022
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 733,
+      "name": "EMA 34 Crossover with Break Even Stop Loss",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields."
+    },
+    {
+      "id": 604,
+      "name": "CCI Support Resistance",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,50)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 175,
+      "name": "Rsi Supertrend",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1085,
+      "name": "MTF Seconds Values JD",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2116,
+      "name": "Simple Levels",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 3246,
+      "name": "EA Vishal EURGBP H4",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,6)) / (donchian_high(high,6) - donchian_low(low,6))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,6)) / (donchian_high(high,6) - donchian_low(low,6))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 6-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 2657,
+      "name": "OzFx Accelerator Stochastic",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 315,
+      "name": "Stochastic Dynamic Zones",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 3-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 1766,
+      "name": "Laguerre CCI MA",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 810,
+      "name": "Four WMA Strategy with TP and SL",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    }
+  ]
+}

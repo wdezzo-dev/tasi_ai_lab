@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4130,
+      "name": "ADX Simple Trend",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,25) > 20 and roc(close,1) > 0 and roc(adx(high,low,close,25),1) > 0",
+      "exit_long": "adx(high,low,close,25) < 15 or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX(25) strength and its one-bar rise retain the documented trend requirement; positive price ROC is a proxy for +DI above -DI. The separate +DI/-DI lines and original risk controls are unavailable in the DSL."
+    },
+    {
+      "id": 3817,
+      "name": "ASCV Pivot Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and sma(close,10) > sma(close,40) and std(close,10) > 0.0005 and volume_ratio(volume,10) > 1",
+      "exit_long": "crossbelow(close,ema(close,20)) or rsi(close,14) < 40",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(10/40), standard deviation(10)>0.0005, and volume_ratio(10)>1 retain the documented filter values; RSI(14)<40 is a stochastic-exit proxy. Proprietary ASCTrend/BrainTrend, daily pivots, hours, point targets, and trailing are not expressible."
+    },
+    {
+      "id": 2285,
+      "name": "Volume Weighted MA Slope",
+      "family": "trend",
+      "entry_long": "roc(sma(close * volume_ratio(volume,12),12),1) > 0 and roc(sma(close * volume_ratio(volume,12),12),2) > 0",
+      "exit_long": "roc(sma(close * volume_ratio(volume,12),12),1) < 0",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "SMA(12) of price multiplied by volume_ratio(12) is an explicit normalized VWMA proxy; positive one- and two-bar slopes represent two rising bars. The documented 1% stop and 2% target are retained."
+    },
+    {
+      "id": 2208,
+      "name": "Hedge Average",
+      "family": "trend",
+      "entry_long": "sma(open,20) > sma(close,20) and sma(open,10) < sma(close,10)",
+      "exit_long": "sma(open,20) < sma(close,20) or sma(open,10) > sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(10/20) open-versus-close averages are explicit fallbacks for the unnamed Period1/Period2 values and preserve the hedge-average long condition. Trading hours, absolute-price protection, trailing, and money-target controls are omitted."
+    },
+    {
+      "id": 3858,
+      "name": "Trend Scalper Strategy (API/3858)",
+      "family": "trend",
+      "entry_long": "ema(close,6) > sma(close,12) and close > donchian_high_prev(high,6)",
+      "exit_long": "ema(close,6) < sma(close,12) or close < donchian_low_prev(low,6)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(6)/SMA(12) filter and six-bar breakout window are retained directly. Money-management modes and the 50-point stop are not percentage/DSL fields; the opposite range break is the long exit proxy."
+    },
+    {
+      "id": 1739,
+      "name": "Channel Scalper",
+      "family": "breakout",
+      "entry_long": "crossabove(close,(high + low) / 2 + 2 * atr(high,low,close,14))",
+      "exit_long": "crossbelow(close,(high + low) / 2 - 2 * atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The midpoint plus/minus 2*ATR(14) channel is an explicit fallback for the unspecified ATR period and multiplier. Channel bands act as dynamic stops, while timeframe and reverse-order state are not modeled."
+    },
+    {
+      "id": 720,
+      "name": "E9 Shark-32 Pattern",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,3) and close > open",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish close above a prior three-bar high is a deterministic proxy for the three-candle pattern breakout, with the prior-low break as exit. Shark-32 geometry, mirrored targets, and unspecified percentage stop parameters are omitted."
+    },
+    {
+      "id": 3409,
+      "name": "Potential Entries",
+      "family": "momentum",
+      "entry_long": "close > open and roc(close,1) > 0",
+      "exit_long": "close < open and roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish completed candle with positive one-bar momentum is a state-free proxy for the documented two-candle momentum/reversal family. Exact pattern side, candle-pair offsets, and pair-extreme stops are not expressible."
+    },
+    {
+      "id": 3937,
+      "name": "VQ EA",
+      "family": "volatility",
+      "entry_long": "crossabove(sma((high + low) / 2,5),sma((high + low) / 2,20))",
+      "exit_long": "crossbelow(sma((high + low) / 2,5),sma((high + low) / 2,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Smoothed median price uses SMA(5) versus SMA(20) as a direction-change proxy for the unavailable VQ line; the 20-bar comparison is an explicit fallback. FilterPoints, 60-point stop, take-profit, trailing, and 1-hour timeframe are omitted."
+    },
+    {
+      "id": 3500,
+      "name": "Zone Recovery Hedge",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<30 is the long-side oversold trigger when the source's RSI multi-timeframe mode is selected; RSI>70 exits. The anchor/recovery grid, alternating volume ladder, money targets, manual mode, timers, and risk guard are stateful and omitted."
+    }
+  ]
+}

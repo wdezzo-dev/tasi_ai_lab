@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3989,
+      "name": "Cyberia Trader Adaptive",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and low <= donchian_low_prev(low,23) + 0.5 * atr(high,low,close,14) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or adx(high,low,close,14) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The adaptive reversal-probability core is approximated by a bullish turn at the 23-bar swing low (documented MaxPeriod) with MACD and a weakening-ADX exit. MACD 12/26/9, ADX 14 and the 0.5-ATR tolerance are explicit fallbacks; the probability statistics, fractal/reversal detectors, CCI filter and TakeProfitPoints/StopLossPoints are not expressible."
+    },
+    {
+      "id": 1036,
+      "name": "Max Profit Min Loss Options",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,21) and crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,14) > 50 and roc(rsi(close,14),1) > 0 and volume_ratio(volume,20) > 1",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or ema(close,9) < ema(close,21)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 4.0,
+      "notes": "Retains the documented alignment: MA 9/21, RSI(14) above 50 and rising, and volume above its SMA(20) with a MACD signal cross. The documented 1% stop is used directly; the documented 4% trailing profit is applied as a fixed target because trailing stops are not expressible. MACD 12/26/9 is a fallback since no values are given."
+    },
+    {
+      "id": 75,
+      "name": "OBV Divergence",
+      "family": "trend",
+      "entry_long": "close < donchian_low_prev(close,5) and roc(sma((close - open) * volume,5),1) > 0",
+      "exit_long": "crossabove(close,sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "OBV is not in the DSL, so it is proxied by a 5-bar average of signed close-open volume; the bullish divergence is a new 5-bar closing low (DivergencePeriod) with that proxy making a higher reading. Exit is the documented price/MA(20) recross, and the documented StopLossPercent of 2 is used as-is."
+    },
+    {
+      "id": 2443,
+      "name": "Escape",
+      "family": "trend",
+      "entry_long": "close < sma(open,5)",
+      "exit_long": "close > sma(open,4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long entry is the documented case of close below the slow SMA(5) of candle opens, and the exit is the mirror of the short rule using the fast SMA(4) since only fixed price-unit targets close positions. StopLossLong 25 and TakeProfitLong 25 are absolute price distances, so both stop fields are null."
+    },
+    {
+      "id": 2425,
+      "name": "Adaptive CG Oscillator X2",
+      "family": "trend",
+      "entry_long": "close > ema(close,50) and crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Center of Gravity oscillator is approximated by MACD(12,26,9) and the 6-hour global trend by an EMA(50) on the daily series. The documented contrarian long rule (oscillator crossing below its signal while the trend is up) is kept with the opposite cross as exit; the CG alpha settings and the 6H/30M split are not expressible."
+    },
+    {
+      "id": 943,
+      "name": "IU Opening Range Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The session opening range collapses to the prior bar on the daily engine, so the long entry is a close above the previous bar's high with the previous bar's low as the mirror exit. RiskReward 2.0, MaxTrades 2 and the 15:00 EndTime close are neither percentage stops nor expressible, so the stop fields are null."
+    },
+    {
+      "id": 3501,
+      "name": "EA OBJPROP Chart ID",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented system is a chart/visualizer utility that only draws Donchian Channel (ChannelLength 22) envelopes on three synchronized panels for visual analysis and documents no market-derived entry signal. Marked with a never-true guard."
+    },
+    {
+      "id": 3112,
+      "name": "Exp Fine Tuning MA Candle",
+      "family": "momentum",
+      "entry_long": "crossabove(close,ema(close,14))",
+      "exit_long": "crossbelow(close,ema(close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented colour-based permission is reduced to its bullish/bearish equivalent, a close crossing the smoothed trend line, with EMA(14) an explicit fallback for the weighted Length window. The Rank/Shift blending stages, synthetic-candle GapPoints suppression, SignalBar offset and point-based StopLossPoints/TakeProfitPoints are not expressible."
+    },
+    {
+      "id": 3462,
+      "name": "Spread Data Collector",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented utility counts ticks per spread bucket from the bid/ask stream and places no orders, and OHLCV bars carry no spread series, so no entry signal can be derived. Marked with a never-true guard."
+    },
+    {
+      "id": 1888,
+      "name": "Genie Stoch RSI",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and crossabove(rsi(close,14),sma(rsi(close,14),3))",
+      "exit_long": "rsi(close,14) > 70 or crossbelow(rsi(close,14),sma(rsi(close,14),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic main/signal cross is approximated by RSI(14) against its own SMA(3) while RSI is below the oversold level; the mirror overbought condition is used for the exit. RsiPeriod 14 and DPeriod 3 are explicit fallbacks, and the point-based TakeProfit/TrailingStop have no percentage equivalent so the stop fields are null."
+    }
+  ]
+}

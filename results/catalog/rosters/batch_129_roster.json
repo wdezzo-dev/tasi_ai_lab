@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3837,
+      "name": "Farhad Hill Version 2 Strategy (C#)",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or ema(close,20) < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A representative slice of the documented filter stack is kept: the MA cross, a MACD signal cross and a mid-range RSI confirmation, with the opposite MACD cross or MA break as exit. No indicator lengths are documented so MACD 12/26/9, EMA 20/50 and RSI 14 are explicit fallbacks; Parabolic SAR, the three trailing styles and the money-management block are not expressible."
+    },
+    {
+      "id": 2858,
+      "name": "XRSI DeMarker Histogram",
+      "family": "trend",
+      "entry_long": "roc(ema((rsi(close,14) + 100 * sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) / (sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) + sma((low * -roc(low,1) / 100) * (roc(low,1) < 0),14))) / 2,9),2) < 0 and roc(ema((rsi(close,14) + 100 * sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) / (sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) + sma((low * -roc(low,1) / 100) * (roc(low,1) < 0),14))) / 2,9),1) > 0",
+      "exit_long": "roc(ema((rsi(close,14) + 100 * sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) / (sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) + sma((low * -roc(low,1) / 100) * (roc(low,1) < 0),14))) / 2,9),2) > 0 and roc(ema((rsi(close,14) + 100 * sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) / (sma((high * roc(high,1) / 100) * (roc(high,1) > 0),14) + sma((low * -roc(low,1) / 100) * (roc(low,1) < 0),14))) / 2,9),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented composite is rebuilt as (RSI(14) + 100 x DeMarker) / 2, where deMax/deMin are the positive high and low differences recovered through one-bar ROC, smoothed with the documented IndicatorPeriod 14 and then EMA(9) (smoothing length is a fallback). The bullish reversal is the documented turn back up after a decline, and a flat bar makes the DeMarker ratio infinite, which simply fails the comparison. SignalBar, the Jurik smoothing and the price-step stops are dropped."
+    },
+    {
+      "id": 1336,
+      "name": "Statistical Arbitrage Pairs Trading - Long-Side Only",
+      "family": "trend",
+      "entry_long": "zscore(close,20) < -1.0",
+      "exit_long": "crossabove(zscore(close,20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The engine is single-series, so the two-instrument spread is proxied by the z-score of price against its own mean over the documented ZScoreLength 20, entering below the documented ExtremeLevel -1 and exiting on the documented cross back above zero. A true cross-asset spread and the intraday timeframe are not expressible, and the docs state there are no stops."
+    },
+    {
+      "id": 1467,
+      "name": "Trend Impulse Tester",
+      "family": "trend",
+      "entry_long": "ema(close,50) > ema(close,200) and adx(high,low,close,14) > 18 and crossabove(rsi(close,14),55)",
+      "exit_long": "ema(close,50) < ema(close,200) and adx(high,low,close,14) > 18 and crossbelow(rsi(close,14),45)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented levels are used as given: FastEma 50 above SlowEma 200, ADX(14) above AdxMin 18 and an RSI(14) impulse crossing RsiUp 55, with the mirrored short setup as the long exit. The combination of a 200-bar trend filter and an ADX gate makes this deliberately selective on daily data, and the docs list no stops."
+    },
+    {
+      "id": 852,
+      "name": "Gold Volume-Based Entry",
+      "family": "trend",
+      "entry_long": "sma(close > open,2) >= 1.0 and sma(volume_ratio(volume,20) > 1,2) >= 1.0 and roc(volume,1) > 0",
+      "exit_long": "sma(close < open,2) >= 1.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented setup is kept: two consecutive bullish candles whose volume clears the Volume MA Period 20 with the second bar heavier than the first, expressed as averages of the two conditions plus a one-bar volume ROC. The fixed Target Move 5 exit is a price distance, so a two-bearish-bar reversal is used as the signal exit and both stop fields are null."
+    },
+    {
+      "id": 3342,
+      "name": "Grid Template",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented template only builds a symmetric lattice of pending stop orders at pip offsets and explicitly leaves the directional filter to the user, so no market-derived entry rule exists to translate. Marked with a never-true guard."
+    },
+    {
+      "id": 1788,
+      "name": "Timer",
+      "family": "breakout",
+      "entry_long": "roc(close,1) > 100 * atr(high,low,close,14) / close",
+      "exit_long": "roc(close,1) < -100 * atr(high,low,close,14) / close",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The buy level (previous close plus ATR) is expressed as a one-bar ROC exceeding the ATR distance, and the symmetric sell level as the mirror. WaitSeconds recalculation, the extra PipDistance, the trading-hours window and the point-based stop/target/trailing are not expressible, so the stop fields are null."
+    },
+    {
+      "id": 2567,
+      "name": "Pinball Machine",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documentation describes a lottery-style random draw engine that triggers orders when two random numbers match, with no dependence on price or volume, so there is no market-derived entry signal. Marked with a never-true guard."
+    },
+    {
+      "id": 2570,
+      "name": "Multi Hedging Scheduler",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the docs state the strategy uses the candle stream purely as a timing source, opening a fixed direction inside a clock window and closing on time or equity thresholds, with no indicator or price-pattern entry. Marked with a never-true guard."
+    },
+    {
+      "id": 3992,
+      "name": "E Regression Channel",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close,20) < -2.0",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Polynomial regression and its residual bands are not in the DSL, so the channel is approximated by a standardized deviation of price from its mean (length 20 and a 2 sigma band as explicit fallbacks) with the long entry on a lower-envelope pierce and the exit back at the mean. The daily range filter, intraday window, trailing block and point-based stops are not expressible."
+    }
+  ]
+}

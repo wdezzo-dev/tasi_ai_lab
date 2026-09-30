@@ -1,0 +1,98 @@
+{
+ "batch_195": {
+  "strategy_ids": [
+   1605,
+   2937,
+   2002,
+   3904,
+   1519,
+   3294,
+   616,
+   1285,
+   2338,
+   663
+  ],
+  "docs": {
+   "1605": {
+    "id": 1605,
+    "name": "VWAP Mean Magnet v2 (Volume Filter)",
+    "family": "trend",
+    "overview": "The strategy combines a VWAP mean-reversion concept with RSI and a volume filter. Trades are taken when price deviates from VWAP and RSI reaches extreme levels, provided the current volume is above a moving average multiplied by a factor.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price < VWAP, RSI < oversold, volume filter passes.\n  - **Short**: price > VWAP, RSI > overbought, volume filter passes.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Close position when price returns to VWAP.\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `VWAP length` = 60\n  - `RSI length` = 14\n  - `RSI overbought` = 65\n  - `RSI oversold` = 25\n  - `Volume lookback` = 20\n  - `Volume multiplier` = 3\n  - `Stop loss %` = 0.5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price < VWAP, RSI < oversold, volume filter passes.\n  - **Short**: price > VWAP, RSI > overbought, volume filter passes.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Close position when price returns to VWAP.\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `VWAP length` = 60\n  - `RSI length` = 14\n  - `RSI overbought` = 65\n  - `RSI oversold` = 25\n  - `Volume lookback` = 20\n  - `Volume multiplier` = 3\n  - `Stop loss %` = 0.5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday",
+    "parameters": ""
+   },
+   "2937": {
+    "id": 2937,
+    "name": "CCI and Martin",
+    "family": "trend",
+    "overview": "The CCI and Martin strategy searches for sharp reversals after a short bearish or bullish sequence and confirms the move with the Commodity Channel Index. The logic replicates the original MetaTrader 5 expert advisor while using StockSharp's high-level API. The strategy works on finished candles only and can operate on any instrument for which CCI values and price steps are available.",
+    "details": "",
+    "parameters": "- `CandleType` – candle series used for analysis.\n- `CciPeriod` – averaging length for the Commodity Channel Index.\n- `InitialVolume` – base order size before any scaling.\n- `StopLossPips` – stop-loss distance expressed in pips.\n- `TakeProfitPips` – take-profit distance expressed in pips.\n- `TrailingStopPips` – trailing stop distance in pips (0 disables trailing).\n- `TrailingStepPips` – minimum price improvement required before the trailing stop moves.\n- `EnableMartingale` – activates martingale-style scaling after losses.\n- `MartingaleCoefficient` – multiplier applied to the current volume for martingale trades.\n- `MartingaleTriggerLosses` – number of consecutive losing trades needed before scaling.\n- `MartingaleMaxSteps` – maximum number of martingale multiplications.\n- `EnableStepAdjustments` – enables step-based volume increments.\n- `StepVolumeIncrement` – absolute increment applied when the step rule triggers.\n- `StepVolumeMax` – upper bound for the step-based volume.\n- `StepAdjustmentMode` – selects whether the step increment fires after a loss or after a profit."
+   },
+   "2002": {
+    "id": 2002,
+    "name": "Well Martin",
+    "family": "trend",
+    "overview": "The **Well Martin** strategy is a mean reversion system that combines Bollinger Bands and the Average Directional Index (ADX). It enters long positions when price breaks below the lower Bollinger Band during low trend strength, and enters short positions when price breaks above the upper Bollinger Band under the same conditions. Positions are closed when price reaches the opposite band or hits the configured take profit or stop loss levels.",
+    "details": "",
+    "parameters": "- **CandleType** – candle series used for calculations.\n- **BollingerPeriod** – period for Bollinger Bands.\n- **BollingerWidth** – standard deviation multiplier for Bollinger Bands.\n- **AdxPeriod** – period for the ADX indicator.\n- **AdxLevel** – ADX threshold; trades are taken only when the ADX value is below this level.\n- **Volume** – trade volume for each entry.\n- **TakeProfit** – profit target in price units.\n- **StopLoss** – loss limit in price units."
+   },
+   "3904": {
+    "id": 3904,
+    "name": "OzFx Simple",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 4 expert advisor **OzFx** (folder `MQL/7994`) to the StockSharp high-level API.\n- Uses the Accelerator/Decelerator oscillator (AC) together with the %K line of the stochastic oscillator to detect momentum reversals around the zero line.\n- Replicates the expert's behaviour of stacking five market orders with staggered take-profits and breakeven protection after the first target is hit.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Lot size for each of the five market orders. | `0.1` |\n| `StopLossPips` | Distance between entry and stop loss, expressed in pips. | `100` |\n| `TakeProfitPips` | Increment between consecutive take-profit levels (layers 1-4). | `50` |\n| `StochasticLevel` | Threshold applied to the stochastic %K value. | `50` |\n| `StochasticLength` | Lookback period of the stochastic %K calculation. | `5` |\n| `CandleType` | Source candle series used by the strategy (defaults to 4-hour candles). | `4h time-frame` |"
+   },
+   "1519": {
+    "id": 1519,
+    "name": "Vector3",
+    "family": "trend",
+    "overview": "Trades based on alignment of three moving averages.\nGoes long when fast > middle > slow and short when fast < middle < slow.\n\n## Details\n\n- **Entry Criteria**: fast MA above middle and middle above slow (long); inverse for short\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `FastLength` = 10\n  - `MiddleLength` = 50\n  - `SlowLength` = 100\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: fast MA above middle and middle above slow (long); inverse for short\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `FastLength` = 10\n  - `MiddleLength` = 50\n  - `SlowLength` = 100\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3294": {
+    "id": 3294,
+    "name": "HistoryInfoEaStrategy",
+    "family": "volatility",
+    "overview": "The **HistoryInfoEaStrategy** replicates the MT4 \"HistoryInfo\" utility on top of StockSharp. Instead of drawing text on the MetaTrader chart, the strategy listens to the `OnNewMyTrade` stream and aggregates statistics for trades that match a chosen filter. The aggregated values are exposed through the `LastSnapshot` property and mirrored in the strategy log so that a GUI or automation script can display the summary in any preferred form.\n\nThe strategy never registers its own orders. It is designed to run alongside other automated or manual strategies while they submit orders to the broker. Every filled trade that satisfies the filter contributes to the totals.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `FilterType` | Selection mode that determines how trades are matched. Supported values: `CountByUserOrderId`, `CountByComment`, `CountBySecurity`. |\n| `MagicNumber` | Expected `Order.UserOrderId`. Used only when `FilterType` equals `CountByUserOrderId`. Leave empty to disable this filter. |\n| `OrderComment` | Prefix that must match `Order.Comment`. Only relevant for the `CountByComment` mode. The default value (`\"OrdersComment\"`) mimics the MT4 script placeholder and usually does not match any order until replaced. |\n| `SecurityId` | Identifier of the instrument (`Security.Id`) that must match when `FilterType` equals `CountBySecurity`. The default (`\"OrdersSymbol\"`) is a placeholder. |"
+   },
+   "616": {
+    "id": 616,
+    "name": "Chart Oscillator",
+    "family": "mean_reversion",
+    "overview": "This strategy trades using a selectable oscillator. Choose between Stochastic, RSI, or MFI. It buys when the oscillator signals oversold conditions and sells when overbought. For the Stochastic option, signals use %K and %D crossovers.\n\nTesting shows good performance on volatile markets like cryptocurrencies.\n\nPositions reverse when opposite conditions appear or the stop-loss triggers.\n\n## Details\n\n- **Entry Criteria**: Oscillator oversold/overbought levels and %K/%D crossovers.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Choice` = OscillatorChoice.Stochastic\n  - `Length` = 14\n  - `KPeriod` = 14\n  - `DPeriod` = 3\n  - `SmoothK` = 3\n  - `Overbought` = 80\n  - `Oversold` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic/RSI/MFI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Oscillator oversold/overbought levels and %K/%D crossovers.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Choice` = OscillatorChoice.Stochastic\n  - `Length` = 14\n  - `KPeriod` = 14\n  - `DPeriod` = 3\n  - `SmoothK` = 3\n  - `Overbought` = 80\n  - `Oversold` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLossPercent` = 2.0m\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic/RSI/MFI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1285": {
+    "id": 1285,
+    "name": "S&P 100 Option Expiration Week",
+    "family": "other",
+    "overview": "This strategy buys at the beginning of the option expiration week (the week containing the third Friday of the month) and closes the position on that third Friday.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: open a long position on Monday of the option expiration week.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - close the long position on the third Friday of the month.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: open a long position on Monday of the option expiration week.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - close the long position on the third Friday of the month.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2338": {
+    "id": 2338,
+    "name": "Limits Bot",
+    "family": "other",
+    "overview": "Places symmetric limit orders around each candle's open price and protects positions with stop-loss, take-profit and optional trailing.\n\n## Details\n\n- **Entry**:\n  - Buy limit at `Open - StopOrderDistance * PriceStep` if long trading enabled.\n  - Sell limit at `Open + StopOrderDistance * PriceStep` if short trading enabled.\n- **Exit**: Market close on stop-loss, take-profit or trailing stop trigger.\n- **Long/Short**: Both.\n- **Stops**: Fixed stop-loss with trailing option.\n- **Default values**:\n  - `StopOrderDistance` = 5\n  - `TakeProfit` = 35\n  - `StopLoss` = 8\n  - `TrailingStart` = 40\n  - `TrailingDistance` = 30\n  - `TrailingStep` = 1\n  - `CandleType` = 1 minute\n- **Session**: Trades only between `StartTime` and `EndTime`.\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry**:\n  - Buy limit at `Open - StopOrderDistance * PriceStep` if long trading enabled.\n  - Sell limit at `Open + StopOrderDistance * PriceStep` if short trading enabled.\n- **Exit**: Market close on stop-loss, take-profit or trailing stop trigger.\n- **Long/Short**: Both.\n- **Stops**: Fixed stop-loss with trailing option.\n- **Default values**:\n  - `StopOrderDistance` = 5\n  - `TakeProfit` = 35\n  - `StopLoss` = 8\n  - `TrailingStart` = 40\n  - `TrailingDistance` = 30\n  - `TrailingStep` = 1\n  - `CandleType` = 1 minute\n- **Session**: Trades only between `StartTime` and `EndTime`.\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "663": {
+    "id": 663,
+    "name": "DCA Strategy 2",
+    "family": "other",
+    "overview": "This strategy buys when a green Heikin Ashi candle follows a red one within the specified year range. Positions are partially closed when RSI crosses below a threshold or the end date is reached.\n\n## Parameters\n- Candle Type\n- Start Year\n- End Year\n- Exit Percent\n- Exit RSI\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Start Year\n- End Year\n- Exit Percent\n- Exit RSI"
+   }
+  }
+ }
+}

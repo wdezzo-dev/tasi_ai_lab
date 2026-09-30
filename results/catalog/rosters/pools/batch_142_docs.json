@@ -1,0 +1,98 @@
+{
+ "batch_142": {
+  "strategy_ids": [
+   3733,
+   1585,
+   3081,
+   1231,
+   3806,
+   3514,
+   3484,
+   665,
+   1429,
+   1820
+  ],
+  "docs": {
+   "3733": {
+    "id": 3733,
+    "name": "Extreme Strength Reversal",
+    "family": "trend",
+    "overview": "## Summary\n- Counter-trend system converted from the MetaTrader EXSR expert advisor.\n- Combines Bollinger Bands and RSI extremes to locate exhaustion moves.\n- Uses percent-based position sizing with fixed stop-loss and take-profit in pips.\n\n## Trading Logic\n1. Subscribe to the configured candle series (defaults to 1-hour candles).\n2. Calculate a Bollinger Bands envelope (period, deviation) and an RSI oscillator.\n3. When a candle closes:\n   - A long setup requires: RSI below the oversold level yet above zero, the candle low below the lower band, and a bullish body (close above open).\n   - A short setup requires: RSI above the overbought level, the candle high above the upper band, and a bearish body (close below open).\n4. Only one position may be open at a time. Opposite exposure is closed before reversing.\n5. Stops and targets are projected from the fill price using MetaTrader-style pips. The engine monitors subsequent candles and exits when either level is touched.\n\n## Money Management\n- Order size defaults to the strategy's `Volume` property. When it is zero the strategy derives the volume from `RiskPercent` and the stop distance.\n- Risk is computed from current portfolio equity (fallback to balance/begin value). Stop distance is translated into price or monetary units using the instrument's step and step price.\n- Volume is normalized to the instrument's volume step, minimum and maximum constraints.\n\n## Parameters\n| Name | Description | Default |\n| ---- | ----------- | ------- |\n| Risk Percent | Percentage of equity risked per trade. | 1% |\n| Stop Loss (pips) | Stop distance in MetaTrader pips. | 150 |\n| Take Profit (pips) | Take-profit distance in pips. | 300 |\n| Bollinger Period | Candles used for Bollinger Bands. | 20 |\n| Bollinger Deviation | Standard deviation multiplier. | 2.0 |\n| RSI Period | Candles used for RSI. | 14 |\n| RSI Overbought | RSI level considered extremely overbought. | 80 |\n| RSI Oversold | RSI level considered extremely oversold. | 20 |\n| Ca",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| Risk Percent | Percentage of equity risked per trade. | 1% |\n| Stop Loss (pips) | Stop distance in MetaTrader pips. | 150 |\n| Take Profit (pips) | Take-profit distance in pips. | 300 |\n| Bollinger Period | Candles used for Bollinger Bands. | 20 |\n| Bollinger Deviation | Standard deviation multiplier. | 2.0 |\n| RSI Period | Candles used for RSI. | 14 |\n| RSI Overbought | RSI level considered extremely overbought. | 80 |\n| RSI Oversold | RSI level considered extremely oversold. | 20 |\n| Candle Type | Candle timeframe for the analysis. | 1 hour |"
+   },
+   "1585": {
+    "id": 1585,
+    "name": "Fibonacci Bands",
+    "family": "trend",
+    "overview": "Expands a Keltner Channel by Fibonacci ratios and trades when price breaks the outer band with RSI confirmation.\n\n## Details\n\n- **Entry Criteria**: Price crosses `fbUpper3` with RSI above 60 for long; crosses `fbLower3` with RSI below 40 for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing back over the moving average.\n- **Stops**: No.\n- **Default Values**:\n  - `MaType` = WMA\n  - `MaLength` = 233\n  - `Fib1` = 1.618\n  - `Fib2` = 2.618\n  - `Fib3` = 4.236\n  - `KcMultiplier` = 2\n  - `KcLength` = 89\n  - `RsiLength` = 14\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: MA, ATR, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses `fbUpper3` with RSI above 60 for long; crosses `fbLower3` with RSI below 40 for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing back over the moving average.\n- **Stops**: No.\n- **Default Values**:\n  - `MaType` = WMA\n  - `MaLength` = 233\n  - `Fib1` = 1.618\n  - `Fib2` = 2.618\n  - `Fib3` = 4.236\n  - `KcMultiplier` = 2\n  - `KcLength` = 89\n  - `RsiLength` = 14\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: MA, ATR, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3081": {
+    "id": 3081,
+    "name": "Exp XBullsBearsEyes Vol Direct",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert **Exp_XBullsBearsEyes_Vol_Direct**. It recreates the custom oscillator\nbuilt from Bulls Power and Bears Power, multiplies it by a configurable volume source and applies adaptive smoothing identical to\nthe original indicator. Trading decisions are driven exclusively by the direction buffer of the indicator: the algorithm reacts\nto momentum swings rather than level crossings, opening or closing positions when the smoothed histogram changes slope.\n\nUnlike many conversions, the StockSharp version keeps the volume weighting stage and the four-level gamma filter used by the\nMQL code. The oscillator is smoothed twice with the same moving average method—one pass for the histogram itself and one for the\nvolume stream—so signals appear only when both components are fully formed. The strategy processes finished candles only and\nsupports tick volume or real traded volume, making it portable across different markets.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Candle type/timeframe subscribed by the strategy (default: 2-hour candles). |\n| `Period` | Lookback period used for Bulls/Bears Power. |\n| `Gamma` | Smoothing factor (0…1) of the adaptive gamma filter. |\n| `VolumeMode` | Volume source: tick count or traded volume. |\n| `Method` | Moving average family used to smooth histogram and volume (SMA, EMA, SMMA, LWMA, Jurik; unsupported legacy types fall back to SMA). |\n| `SmoothingLength` | Length of both smoothing stages. |\n| `SmoothingPhase` | Jurik phase parameter (kept for compatibility). |\n| `SignalBar` | Number of bars back to read when evaluating the direction buffer. |\n| `AllowBuyOpen` / `AllowSellOpen` | Enable or disable opening long/short positions. |\n| `AllowBuyClose` / `AllowSellClose` | Enable or disable forced exits on opposite signals. |\n| `OrderVolume` | Market order size used for new entries. |\n| `StopLossPoints` | Optional protective stop in price steps (0 disables the stop). |\n| `TakeProfitPoints` | Optional protective target in price steps (0 disables the target). |"
+   },
+   "1231": {
+    "id": 1231,
+    "name": "RedK Slow Smooth WMA",
+    "family": "trend",
+    "overview": "Uses a triple-pass weighted moving average to filter noise. A position is opened when the smoothed average changes direction: long when it turns up, short when it turns down.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: triple WMA slope turns upward.\n  - **Short**: triple WMA slope turns downward.\n- **Long/Short**: Both.\n- **Exit Criteria**: opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `CombinedSmoothness` = 15\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: WeightedMovingAverage\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: triple WMA slope turns upward.\n  - **Short**: triple WMA slope turns downward.\n- **Long/Short**: Both.\n- **Exit Criteria**: opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `CombinedSmoothness` = 15\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: WeightedMovingAverage\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3806": {
+    "id": 3806,
+    "name": "5min RSI Qualified",
+    "family": "trend",
+    "overview": "The **5min RSI Qualified Strategy** is a direct conversion of the MetaTrader expert advisor \"5min_rsi_qual_01a\". The original robot looked for exhaustion in five-minute candles using a 28-period Relative Strength Index (RSI). Once the oscillator stayed in an extreme zone for a predefined number of bars, the EA opened a contrarian position and attached a trailing stop that followed the close of the previous candle. The StockSharp port keeps the exact confirmation logic, price offsets, and single-position restriction while relying on the high-level candle subscription API.\n\nBy default the strategy operates on five-minute candles, but the `CandleType` parameter accepts any other time frame supported by the instrument. All indicator thresholds and stop distances remain expressed in MetaTrader \"points\" so users can reapply their tested configurations without further adjustments.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `RsiPeriod` | RSI lookback length. | `28` |\n| `QualificationLength` | Number of consecutive candles the RSI must stay in the extreme zone before a signal is confirmed. | `12` |\n| `UpperThreshold` | RSI level that qualifies a bearish setup. | `55` |\n| `LowerThreshold` | RSI level that qualifies a bullish setup. | `45` |\n| `StopLossPoints` | Trailing stop distance in MetaTrader points. Converted to absolute price on every candle. Set to `0` to disable trailing. | `21` |\n| `InitialStopPoints` | Initial protective stop distance in MetaTrader points applied immediately after entry. Set to `0` to skip the initial stop. | `11` |\n| `CandleType` | Candle type used for signal evaluation (5-minute by default). | `5-minute time frame` |"
+   },
+   "3514": {
+    "id": 3514,
+    "name": "Hpcs Inter6 RSI",
+    "family": "momentum",
+    "overview": "Hpcs Inter6 RSI Strategy ports the MetaTrader expert `_HPCS_Inter6_MT4_EA_V01_WE` to the StockSharp high-level API. The algorithm watches the Relative Strength Index (RSI) on a configurable candle series and reacts to fast reversals around the classical 70/30 thresholds. Whenever RSI crosses above 70 the strategy flips into a short position, while a cross below 30 flips into a long position. Each trade immediately attaches symmetric take-profit and stop-loss levels measured in pips.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 1-hour time frame | Time frame that feeds the RSI indicator. |\n| `RsiLength` | 14 | Lookback period of the RSI. |\n| `UpperLevel` | 70 | RSI level that triggers short entries when crossed from below. |\n| `LowerLevel` | 30 | RSI level that triggers long entries when crossed from above. |\n| `TradeVolume` | 1 | Order size for market entries. Existing exposure is closed before reversing. |\n| `OffsetInPips` | 10 | Distance of both take-profit and stop-loss from the entry price, expressed in pips. |\n\nAll parameters are exposed through `StrategyParam` objects so they can be optimized inside StockSharp."
+   },
+   "3484": {
+    "id": 3484,
+    "name": "IsConnected",
+    "family": "volatility",
+    "overview": "## Summary\n* **Source**: Converted from the MetaTrader 5 script `IsConnected.mq5` (folder `MQL/35056`).\n* **Purpose**: Continuously monitors the connector status and reports online/offline transitions with timestamps and uptime/downtime durations.\n* **Type**: Utility strategy focused on infrastructure monitoring rather than order execution.\n\n## Behaviour\n1. When the strategy starts it immediately logs that the monitoring module has been initialised and captures the current connector state.\n2. A background timer checks the `Connector.IsConnected` flag every `CheckIntervalSeconds` (default: 1 second).\n3. When the state changes, the strategy:\n   * Stores the moment of transition using the strategy `CurrentTime`.\n   * Logs the new state (`Online` or `Offline`).\n   * Reports how long the previous state lasted (time online before a disconnect, or time offline before reconnection).\n4. When the strategy stops, it cancels the timer and logs the last known state so the operator knows whether the connection was up or down at shutdown.\n\n## Parameters\n| Name | Type | Default | Description |\n|------|------|---------|-------------|\n| `CheckIntervalSeconds` | `int` | `1` | Interval (in seconds) between successive connection checks. Must be greater than zero. |\n\n## Logging details\n* All messages are written with `LogInfo` in English to match the MetaTrader implementation that relied on `Print` statements.\n* Time intervals are formatted using invariant culture and include both start timestamps and the time spent in the previous state.\n\n## Differences vs original script\n* The busy waiting loop from MQL5 is replaced with a managed timer that does not block the strategy thread.\n* Instead of printing duplicate status lines, the StockSharp version reports structured status changes along with uptime/downtime metrics.\n* The conversion handles graceful disposal by stopping the timer in both `OnStopped` and `OnReseted`.\n",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n|------|------|---------|-------------|\n| `CheckIntervalSeconds` | `int` | `1` | Interval (in seconds) between successive connection checks. Must be greater than zero. |"
+   },
+   "665": {
+    "id": 665,
+    "name": "DCA Mean Reversion Bollinger Band",
+    "family": "mean_reversion",
+    "overview": "Buys a fixed dollar amount when price crosses below the lower Bollinger Band or on the first day of each month. All positions are closed on a specified date.\n\n## Parameters\n- `InvestmentAmount` - amount invested each time\n- `OpenDate` - start date for buying\n- `CloseDate` - date to close all positions\n- `StrategyMode` - BB mean reversion, monthly DCA or combined\n- `BollingerPeriod` - Bollinger Bands period\n- `BollingerMultiplier` - standard deviation multiplier\n- `CandleType` - timeframe for Bollinger calculation\n\n## Indicators\n- Bollinger Bands\n",
+    "details": "",
+    "parameters": "- `InvestmentAmount` - amount invested each time\n- `OpenDate` - start date for buying\n- `CloseDate` - date to close all positions\n- `StrategyMode` - BB mean reversion, monthly DCA or combined\n- `BollingerPeriod` - Bollinger Bands period\n- `BollingerMultiplier` - standard deviation multiplier\n- `CandleType` - timeframe for Bollinger calculation"
+   },
+   "1429": {
+    "id": 1429,
+    "name": "Tick Data Detailed",
+    "family": "volume",
+    "overview": "Collects and aggregates tick volumes into multiple predefined ranges for both buy and sell directions. Useful for detailed tape reading without generating trading signals.\n\n## Details\n\n- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `VolumeLessThan` = 10000\n  - `Volume2From` = 10000\n  - `Volume2To` = 20000\n  - `Volume3From` = 20000\n  - `Volume3To` = 50000\n  - `Volume4From` = 50000\n  - `Volume4To` = 100000\n  - `Volume5From` = 100000\n  - `Volume5To` = 200000\n  - `Volume6From` = 200000\n  - `Volume6To` = 400000\n  - `VolumeGreaterThan` = 400000\n- **Filters**:\n  - Category: Volume\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `VolumeLessThan` = 10000\n  - `Volume2From` = 10000\n  - `Volume2To` = 20000\n  - `Volume3From` = 20000\n  - `Volume3To` = 50000\n  - `Volume4From` = 50000\n  - `Volume4To` = 100000\n  - `Volume5From` = 100000\n  - `Volume5To` = 200000\n  - `Volume6From` = 200000\n  - `Volume6To` = 400000\n  - `VolumeGreaterThan` = 400000\n- **Filters**:\n  - Category: Volume\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1820": {
+    "id": 1820,
+    "name": "Price Action",
+    "family": "volume",
+    "overview": "The **Price Action Strategy** alternates between long and short market orders whenever the previous position closes.\nIt applies a fixed stop-loss distance, a leverage-based take-profit target, and an optional trailing stop that follows the market with a configurable step.\n\n## Details\n- **Entry Criteria:** No open position. Direction toggles between buy and sell after each trade.\n- **Long/Short:** Both.\n- **Exit Criteria:** Price hits the trailing stop, initial stop, or take-profit level.\n- **Stops:** Fixed stop distance with optional trailing (step defines minimum price move for update).\n- **Default Values:** `Volume = 1`, `TP = 100`, `Leverage = 5`, `TrailingStop = 0`, `TrailingStep = 0`, `InitialDirection = Buy`, `CandleType = TimeSpan.FromMinutes(1).TimeFrame()`.\n",
+    "details": "- **Entry Criteria:** No open position. Direction toggles between buy and sell after each trade.\n- **Long/Short:** Both.\n- **Exit Criteria:** Price hits the trailing stop, initial stop, or take-profit level.\n- **Stops:** Fixed stop distance with optional trailing (step defines minimum price move for update).\n- **Default Values:** `Volume = 1`, `TP = 100`, `Leverage = 5`, `TrailingStop = 0`, `TrailingStep = 0`, `InitialDirection = Buy`, `CandleType = TimeSpan.FromMinutes(1).TimeFrame()`.",
+    "parameters": ""
+   }
+  }
+ }
+}

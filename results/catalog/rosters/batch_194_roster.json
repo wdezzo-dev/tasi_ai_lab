@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4167,
+      "name": "Six Indicators Momentum",
+      "family": "trend",
+      "entry_long": "sma((high + low) / 2, 5) > sma((high + low) / 2, 34) and roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 20) > 0.0002 and roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 10) < 0 and roc(sma(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 5), 10) < 0.0001 and rsi(close, 5) > 50",
+      "exit_long": "close < sma((high + low) / 2, 5) or roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 5) > 0.0002",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "AO and AC are built from the documented 5/34 SMA of median price and its 5-period SMA; the six slot checks use the documented 0.0001/0.0002 sensitivity thresholds with ROC standing in for the shifted buffer reads, and the slow stochastic filter becomes RSI(5). The default index mapping (1,2,3,4,3,4) makes slot 3 simultaneously positive and negative, so slots are read in order 0-5 for a coherent buy; martingale, trailing and pip exits are dropped."
+    },
+    {
+      "id": 266,
+      "name": "VWAP Slope Breakout",
+      "family": "trend",
+      "entry_long": "zscore(sma((high + low + close) / 3, 20), 20) > 2",
+      "exit_long": "zscore(sma((high + low + close) / 3, 20), 20) < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP is approximated by the typical-price average over the documented LookbackPeriod 20 and the documented DeviationMultiplier 2 becomes a 2-standard-deviation z-score break. The documented StopLossPercent 2 is applied; the exit is the documented reversion toward the average."
+    },
+    {
+      "id": 2101,
+      "name": "Linear Regression Slope V1",
+      "family": "trend",
+      "entry_long": "crossbelow(roc(close, 10), roc(close, 30))",
+      "exit_long": "crossabove(roc(close, 10), roc(close, 30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The regression slope is approximated by two ROC horizons (10 and 30 bars), so the documented buy on a downward slope cross versus its shifted copy and the mirrored sell are translated literally. No lookback is documented (10/30 used) and the docs state there is no built-in stop or target."
+    },
+    {
+      "id": 3034,
+      "name": "Freeman ATR MA RSI Grid",
+      "family": "trend",
+      "entry_long": "roc(ema(close, 20), 5) > 0 and rsi(close, 14) > 55",
+      "exit_long": "roc(ema(close, 20), 5) < 0 or rsi(close, 14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The moving-average slope trend filter plus RSI confirmation is kept with MaPeriod 20 and RsiPeriod 14 as explicit defaults. Layered multi-position entries, pip distances, ATR-multiplier stops and the trailing stop are order-book features the DSL cannot express."
+    },
+    {
+      "id": 1438,
+      "name": "Timeframe",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close, 9), ema(close, 20)) and ema(close, 50) > ema(close, 200)",
+      "exit_long": "crossbelow(ema(close, 9), ema(close, 20))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 1.5,
+      "notes": "The documented long entry (EMA9 crossing EMA20 with EMA50 above EMA200) is used verbatim, with the opposite cross as the signal exit alongside the documented StopLossPercent 1.0 and TakeProfitPercent 1.5. Trading hours, CooldownBars 5 and the 0.5% trailing stop are not expressible."
+    },
+    {
+      "id": 3371,
+      "name": "PricerEA",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA places up to four pending orders at manually defined absolute prices, so no market-derived entry signal exists to translate. A never-true guard is used rather than converting manual levels into a fabricated rule; trailing and break-even are order-management features."
+    },
+    {
+      "id": 287,
+      "name": "Stochastic Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(rsi(close, 14), 20), -2) and zscore(rsi(close, 14), 20) < 0",
+      "exit_long": "zscore(rsi(close, 14), 20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The stochastic is approximated by RSI(14) and its slope deviation by a z-score over the documented SlopeLookback 20 with ThresholdMultiplier 2; the long entry is the documented swing far below the mean that then crosses back toward it. The documented StopLossPercent 2 is applied and the exit is the documented reversion to the average."
+    },
+    {
+      "id": 1102,
+      "name": "Multi-Timeframe Parabolic SAR",
+      "family": "other",
+      "entry_long": "close > ema(close, 10)",
+      "exit_long": "crossbelow(close, ema(close, 10))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Parabolic SAR is not in the DSL, so price holding above a smoothed trend line (EMA 10, chosen as a default for Acceleration 0.02) proxies the bullish SAR state, with the opposite cross as the documented reversal exit. The documented StopLossPercent 1 and TakeProfitPercent 2 are applied; extra timeframes and the 0.5% trailing are dropped."
+    },
+    {
+      "id": 566,
+      "name": "Bias Ratio",
+      "family": "trend",
+      "entry_long": "close >= ema(close, 200) * 1.025",
+      "exit_long": "close <= ema(close, 200) * 0.975",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule close/EMA >= 1 + BiasThreshold is written with the documented MaPeriod 200 and BiasThreshold 0.025, and the opposite signal is the documented close-and-reverse exit. Docs state there are no stops."
+    },
+    {
+      "id": 1024,
+      "name": "Martin Strategy - No Loss Exit V3",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries depend on being flat plus an averaging ladder keyed to order count (Max Orders 20, Price Step 1.5%), which is martingale state rather than a market signal. A never-true guard is used; the no-loss exit on average price plus Take Profit 1% cannot be expressed without the order book."
+    }
+  ]
+}

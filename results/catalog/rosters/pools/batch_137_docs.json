@@ -1,0 +1,98 @@
+{
+ "batch_137": {
+  "strategy_ids": [
+   2036,
+   2953,
+   2315,
+   293,
+   3488,
+   2148,
+   2683,
+   3575,
+   1850,
+   2136
+  ],
+  "docs": {
+   "2036": {
+    "id": 2036,
+    "name": "Ergodic Ticks Volume Indicator",
+    "family": "trend",
+    "overview": "This strategy applies the True Strength Index (TSI) to candle data and compares it with an exponential moving average signal line. A long position is opened when the TSI crosses above the signal line, while a short position is opened when it crosses below.\n\n## Parameters\n\n- **Candle Type** – timeframe of candles used for calculations.\n- **Short Length** – fast smoothing period of TSI.\n- **Long Length** – slow smoothing period of TSI.\n- **Signal Length** – period of the EMA used as the signal line.\n\n## Logic\n\n1. Subscribe to candles of the selected timeframe.\n2. Calculate the TSI for each finished candle.\n3. Process the TSI through an EMA to obtain a signal line.\n4. When the TSI crosses above the signal line, enter long (closing any short position).\n5. When the TSI crosses below the signal line, enter short (closing any long position).\n\nThe strategy is an adaptation of the MQL example \"exp_ergodic_ticks_volume_indicator.mq5\" and uses only built-in StockSharp indicators.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe of candles used for calculations.\n- **Short Length** – fast smoothing period of TSI.\n- **Long Length** – slow smoothing period of TSI.\n- **Signal Length** – period of the EMA used as the signal line."
+   },
+   "2953": {
+    "id": 2953,
+    "name": "Freeman",
+    "family": "trend",
+    "overview": "Freeman is an intraday strategy that layers several momentum filters to scale into trends. It uses two RSI \"teachers\" driven by moving averages on the trading timeframe together with a higher timeframe moving-average filter. Risk is controlled with ATR-based stop-loss and take-profit targets plus a pip-based trailing stop.\n\n## Strategy Overview\n\n- Works on any timeframe candles selected by the `CandleType` parameter (15 minutes by default).\n- Uses an hourly filter (`FilterCandleType`) to qualify trends before signals are accepted.\n- Builds long and short signals from two RSI blocks that compare current and prior values in combination with moving-average slopes.\n- Allows pyramiding when the market keeps moving, with the option to enlarge the next order after a losing exit.\n\n## Trading Logic\n\n### Long Conditions\n\n1. Higher timeframe filter is optional. When enabled, the hourly moving average must slope upward.\n2. RSI Teacher #1 is active when:\n   - RSI #1 was below `RsiSellLevel` on the previous bar and turns higher on the current bar.\n   - The fast moving average rises.\n   - The hourly RSI (period 14) stays below `RsiBuyLevel` to confirm that the higher timeframe is not overbought.\n3. RSI Teacher #2 is active when:\n   - RSI #2 was below `RsiSellLevel2` and turns upward.\n   - The slow moving average rises.\n   - The hourly RSI stays below `RsiBuyLevel2`.\n4. A long entry is taken when at least one teacher is active and the trend filter (if enabled) agrees.\n5. Additional long entries require the closing price to move more than `DistancePips` (converted by the instrument's price step) away from the last long fill. When the last long exit was a loss, the volume is multiplied by `LockCoefficient` to imitate the MT5 locking behaviour.\n\n### Short Conditions\n\nMirrors the long logic with inverted comparisons:\n\n- The higher timeframe moving average must decline when the filter is enabled.\n- RSI Teacher #1 needs RSI #1 above `RsiBuyLevel` turning lower, the fast MA falling, and t",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Trading timeframe used for the main signal logic. |\n| `FilterCandleType` | Higher timeframe for the moving-average and RSI filter (default 1 hour). |\n| `FirstMaPeriod` / `SecondMaPeriod` | Periods for the fast and slow moving averages feeding the RSI teachers. |\n| `FilterMaPeriod` | Length of the higher timeframe moving average. |\n| `MaType` | Moving-average type (SMA, EMA, SMMA, or WMA). |\n| `RsiFirstPeriod` / `RsiSecondPeriod` | Periods of the two RSI teachers. |\n| `RsiSellLevel`, `RsiBuyLevel`, `RsiSellLevel2`, `RsiBuyLevel2` | RSI thresholds controlling the teacher blocks. |\n| `UseRsiTeacher1`, `UseRsiTeacher2`, `UseTrendFilter` | Toggles for each component. |\n| `StopLossAtrFactor`, `TakeProfitAtrFactor` | ATR multipliers for stop-loss and take-profit distances. |\n| `TrailingStopPips`, `TrailingStepPips` | Pip offsets for the trailing stop engine. |\n| `PositionsMaximum` | Maximum number of combined entries; zero = unlimited. |\n| `DistancePips` | Minimum pip distance before adding to a position. |\n| `TradeOnFriday` | Enable or disable signals on Fridays. |\n| `StartHour`, `EndHour` | Optional trading session limits. |\n| `LockCoefficient` | Volume multiplier used after a losing exit when stacking in the same direction. |\n| `SignalShift` | Offset applied when reading indicator values (0 = current finished bar). |"
+   },
+   "2315": {
+    "id": 2315,
+    "name": "Limits Martin",
+    "family": "trend",
+    "overview": "This strategy places paired limit orders above and below the current market price. Each trade uses a configurable step distance and optional martingale position sizing to recover previous losses.\n\n## Parameters\n- **Step** – distance in pips between the market price and pending limit orders.\n- **Stop Loss** – protective stop size in pips for open positions.\n- **Take Profit** – target profit size in pips for open positions.\n- **Use Martingale** – enables volume increase after a losing trade.\n- **Loss Limit** – maximum number of consecutive losing trades before resetting volume.\n- **Volume** – initial order volume.\n- **Use MegaLot** – doubles the volume instead of adding the base volume when martingale is active.\n- **Candle Type** – candle data type used for processing.\n\n## Trading Logic\n1. When there is no open position or active order, the strategy places a buy limit order below the last close and a sell limit order above it, both at the specified `Step` distance.\n2. Upon execution of a position, the opposite pending order remains, allowing only one active position at a time.\n3. The position is closed when either the stop loss or take profit level is reached.\n4. After a losing trade, the position volume can be increased according to the martingale settings.\n\n## Notes\n- The strategy uses the high-level StockSharp API with the `Bind` approach for handling candle data.\n- All comments within the code are written in English to meet repository conventions.\n",
+    "details": "",
+    "parameters": "- **Step** – distance in pips between the market price and pending limit orders.\n- **Stop Loss** – protective stop size in pips for open positions.\n- **Take Profit** – target profit size in pips for open positions.\n- **Use Martingale** – enables volume increase after a losing trade.\n- **Loss Limit** – maximum number of consecutive losing trades before resetting volume.\n- **Volume** – initial order volume.\n- **Use MegaLot** – doubles the volume instead of adding the base volume when martingale is active.\n- **Candle Type** – candle data type used for processing."
+   },
+   "293": {
+    "id": 293,
+    "name": "Volume Slope Mean Reversion",
+    "family": "trend",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the Volume returns toward balance. Starting parameter `VolumeMaPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeMaPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeMaPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3488": {
+    "id": 3488,
+    "name": "MACD Divergence RSI",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader expert advisor **\"Macd diver rsi mt4\"** to the StockSharp high-level API.\n- Trades a single symbol using RSI filters combined with MACD divergence recognition to time reversals.\n- Only one market position can be open at a time; the strategy waits for the flat state before issuing a new signal.",
+    "details": "",
+    "parameters": "- `LowerRsiPeriod`, `LowerRsiThreshold` – map to `inp1_Lo_RSIperiod` / `inp1_Ro_Value`.\n- `BullishFastEma`, `BullishSlowEma`, `BullishSignalSma` – map to `inp2_fastEMA` / `inp2_slowEMA` / `inp2_signalSMA`.\n- `BullishVolume`, `BullishStopLossPips`, `BullishTakeProfitPips` – map to `inp3_VolumeSize`, `inp3_StopLossPips`, `inp3_TakeProfitPips`.\n- `UpperRsiPeriod`, `UpperRsiThreshold` – map to `inp4_Lo_RSIperiod` / `inp4_Ro_Value`.\n- `BearishFastEma`, `BearishSlowEma`, `BearishSignalSma` – map to `inp5_fastEMA` / `inp5_slowEMA` / `inp5_signalSMA`.\n- `BearishVolume`, `BearishStopLossPips`, `BearishTakeProfitPips` – map to `inp6_VolumeSize`, `inp6_StopLossPips`, `inp6_TakeProfitPips`.\n- `CandleType` – timeframe source for all calculations."
+   },
+   "2148": {
+    "id": 2148,
+    "name": "Buy Sell Grid",
+    "family": "momentum",
+    "overview": "This strategy implements a simple grid approach that always keeps one long and one short position open. When the market moves enough to hit the take profit of one side, the opposite side is closed as well and the next grid level is opened with a larger volume. The volume grows geometrically according to the `VolumeMultiplier` parameter.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitPoints` | Take profit distance measured in price steps. |\n| `InitialVolume` | Volume used for the first pair of orders. |\n| `VolumeMultiplier` | Multiplier applied to the volume for each new grid level. |\n| `MaxTrades` | Maximum number of grid levels allowed. |\n| `CandleType` | Candle data type used to trigger the strategy logic. |"
+   },
+   "2683": {
+    "id": 2683,
+    "name": "Trade EA Template for News",
+    "family": "volatility",
+    "overview": "Trade EA Template for News Strategy is a C# conversion of the MetaTrader 4 expert advisor \"Trade EA Template for News\". The original system paused trading around scheduled economic events downloaded from external websites. This StockSharp port keeps the core ideas while adapting them to the high-level API:\n\n- Uses completed candles from the configured timeframe (H1 by default).\n- Trades only when the account is flat, exactly like the MQL template that required zero open orders.\n- Applies a manual economic news blackout that blocks entries before and after events depending on their importance.\n- Automatically creates protective stop-loss and take-profit brackets 100 points away from the fill price (converted through the security step).",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle data type to subscribe to. Defaults to 1 hour. | `1h` |\n| `UseLowNews` | Enable low importance events. | `true` |\n| `LowMinutesBefore` / `LowMinutesAfter` | Minutes before/after low impact news to block entries. | `15 / 15` |\n| `UseMediumNews` | Enable medium importance events. | `true` |\n| `MediumMinutesBefore` / `MediumMinutesAfter` | Minutes before/after medium impact news. | `30 / 30` |\n| `UseHighNews` | Enable high importance events. | `true` |\n| `HighMinutesBefore` / `HighMinutesAfter` | Minutes before/after high impact news. | `60 / 60` |\n| `UseNfpNews` | Enable the Non-farm Payrolls flag. | `true` |\n| `NfpMinutesBefore` / `NfpMinutesAfter` | Minutes before/after NFP events. | `180 / 180` |\n| `OnlySymbolNews` | Filter the calendar by the current security's currency codes. | `true` |\n| `NewsEventsDefinition` | Manual economic calendar description string. | empty |\n| `TimeZoneOffsetHours` | Offset applied to every parsed event (UTC by default). | `0` |\n| `TakeProfitPoints` | Distance in points for the protective take-profit order. | `100` |\n| `StopLossPoints` | Distance in points for the protective stop-loss order. | `100` |\n\n`Volume` is inherited from `Strategy` and should be set according to the desired position size."
+   },
+   "3575": {
+    "id": 3575,
+    "name": "RSI Alert",
+    "family": "mean_reversion",
+    "overview": "The **RSI Alert Strategy** reproduces the behaviour of the MetaTrader 5 \"RSI Alert\" expert advisor inside the StockSharp framework. The original bot watched for Relative Strength Index (RSI) readings that crossed deeply oversold (≤20) or overbought (≥80) levels and immediately sent alert notifications while opening market positions. The converted version keeps this event-driven philosophy: it listens for completed candles, evaluates the RSI, and automatically flips the position by sending market orders when the configured thresholds are hit.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | 0.01 | Trade size for market orders. When reversing, the strategy adds the required amount to cover the existing position before re-entering. |\n| `RsiPeriod` | 30 | RSI averaging period. Must be a positive integer. |\n| `OverboughtLevel` | 80 | RSI threshold that issues a sell signal. Can be optimised to tune the aggressiveness. |\n| `OversoldLevel` | 20 | RSI threshold that issues a buy signal. |\n| `CandleType` | 1-minute `TimeFrameCandle` | Candle data source used for RSI calculation. Change it to analyse higher time frames. |\n\nAll parameters are exposed through `StrategyParam<T>` so they appear in the StockSharp designer, can be saved to XML presets, and support optimisation scenarios."
+   },
+   "1850": {
+    "id": 1850,
+    "name": "Combo Right",
+    "family": "volume",
+    "overview": "Implementation of strategy converted from MQL script `combo_right.mq5`.\nThe system combines a basic CCI signal with three simple perceptrons working on price differences.\n\n## Logic\n\n1. **Basic Signal** – Commodity Channel Index (CCI) value. Positive values favour long trades, negative values favour short trades.\n2. **Perceptrons** – Each perceptron looks at a set of shifted closing prices and applies linear weights. The mode parameter `Pass` selects which perceptrons are active:\n   - `1`: only basic CCI signal.\n   - `2`: sale perceptron can override CCI and open short positions.\n   - `3`: buy perceptron can override CCI and open long positions.\n   - `4`: general perceptron supervises both buy and sale perceptrons.\n\nIf an active perceptron issues a signal, it replaces the basic CCI output. Otherwise the CCI value is used.\n\n## Parameters\n\n- `TakeProfit1`, `StopLoss1` – profit and loss targets for the basic CCI signal (in ticks).\n- `CciPeriod` – lookback period of the CCI indicator.\n- Weights and periods for each perceptron (`x12`, `x22`, …, `p4`).\n- `Pass` – operation mode.\n- `Shift` – bar index used for price data (0 current, 1 previous).\n- `Volume` – trade volume.\n- `CandleType` – candle type for calculations.\n\n## Indicators\n\n- CCI.\n\n",
+    "details": "",
+    "parameters": "- `TakeProfit1`, `StopLoss1` – profit and loss targets for the basic CCI signal (in ticks).\n- `CciPeriod` – lookback period of the CCI indicator.\n- Weights and periods for each perceptron (`x12`, `x22`, …, `p4`).\n- `Pass` – operation mode.\n- `Shift` – bar index used for price data (0 current, 1 previous).\n- `Volume` – trade volume.\n- `CandleType` – candle type for calculations."
+   },
+   "2136": {
+    "id": 2136,
+    "name": "Coin Flip",
+    "family": "volume",
+    "overview": "The **Coin Flip Strategy** randomly chooses to go long or short on each new candle when no position is open. After closing a position, if the trade ended in loss, the next trade size is increased using a martingale multiplier. The strategy closes positions using fixed take‑profit and stop‑loss levels defined in price steps and can optionally trail profits after a specified distance.",
+    "details": "",
+    "parameters": "- `Volume` – base order size used for the first attempt.\n- `Martingale` – multiplier applied to the volume after a losing trade.\n- `MaxVolume` – upper limit for the position size after martingale increases.\n- `TakeProfit` – profit target in price steps.\n- `StopLoss` – loss limit in price steps.\n- `TrailingStart` – distance in price steps where trailing becomes active.\n- `TrailingStop` – trailing stop distance in price steps.\n- `CandleType` – time frame of candles used for decision making."
+   }
+  }
+ }
+}

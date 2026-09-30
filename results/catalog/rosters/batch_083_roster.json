@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1354,
+      "name": "Strategy Stats [presentTrading]",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and close > bb_upper(close,20,2)",
+      "exit_long": "ema(close,20) < ema(close,50) or close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA trend agreement plus a Bollinger(20,2) expansion is a fallback for the two SuperTrend/Vegas filters because no indicator parameters are supplied. Multi-step profit logic, holding period, and ATR protection are not representable in the long-only DSL."
+    },
+    {
+      "id": 213,
+      "name": "MA Parabolic SAR",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and close > ema(close,20) + 0.5 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,20) - 0.5 * atr(high,low,close,14)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "SMA(20) and an EMA/ATR channel approximate the documented moving-average and Parabolic SAR alignment. The explicit 2% stop is retained; the dynamic SAR exit, optional fixed target, and short side are omitted."
+    },
+    {
+      "id": 1338,
+      "name": "Stepped Trailing Strategy Example",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,14),sma(close,28))",
+      "exit_long": "crossbelow(sma(close,14),sma(close,28))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(14)/SMA(28) bullish crossover and bearish exit are direct. The three staged profit levels, break-even moves, and optional trailing stop have no numeric values or state support in the roster."
+    },
+    {
+      "id": 767,
+      "name": "ETH Signal 15m",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12),ema(close,50)) and rsi(close,12) < 70",
+      "exit_long": "crossbelow(ema(close,12),ema(close,50)) or rsi(close,12) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12)/EMA(50) direction is used as a SuperTrend proxy and retains the documented RSI(12)<70 filter. The 4x/2x ATR protection and asymmetric targets are dynamic, so they are not fixed percentage fields."
+    },
+    {
+      "id": 1452,
+      "name": "Trailing Monster",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 70 and close > sma(close,200) and roc(ema(close,40),3) > 0",
+      "exit_long": "rsi(close,14) < 50 or close < sma(close,200)",
+      "stop_loss_pct": 12.0,
+      "take_profit_pct": null,
+      "notes": "EMA(40) slope substitutes for KAMA rising while RSI(14)>70 and SMA(200) retain the documented filters. The numeric 12% trailing-stop parameter is represented by the static stop field; the delay and bar-spacing state are omitted."
+    },
+    {
+      "id": 1955,
+      "name": "Exp HLRSign",
+      "family": "breakout",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,20)) / (donchian_high(high,20) - donchian_low(low,20)),70)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,20)) / (donchian_high(high,20) - donchian_low(low,20)),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 20-bar Donchian range is converted to the documented HLR percentage proxy, with 70/30 used as defaults because the source supplies no numeric levels. ModeIn selection and separate buy/sell permissions are not modeled in a long-only roster."
+    },
+    {
+      "id": 655,
+      "name": "Daily Breakout Daily Shadow",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2) and open < donchian_high_prev(high,2)",
+      "exit_long": "close < donchian_low_prev(low,2) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-bar prior high break with an open below that level approximates the documented two-daily-candle shadow pattern. Exact body references and the start-of-day forced close are not available; no stops are documented."
+    },
+    {
+      "id": 2623,
+      "name": "Amstell Grid Manager",
+      "family": "momentum",
+      "entry_long": "close < donchian_low_prev(low,10) and adx(high,low,close,14) > 15",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A drop below the prior 10-bar low with ADX(14)>15 is a stateless proxy for adding to a falling long grid. Fill tracking, pip spacing, netted-grid management, and the 30-pip stop/target cannot be expressed."
+    },
+    {
+      "id": 2771,
+      "name": "Trailing Stop And Take",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish completed candle body supplies the documented flat-state long direction, with a bearish body as the opposite-signal exit. Point-based initial/trailing stops, break-even movement, and order state are not DSL fields."
+    },
+    {
+      "id": 927,
+      "name": "Internal Bar Strength IBS",
+      "family": "mean_reversion",
+      "entry_long": "(close - low) / (high - low) < 0.2",
+      "exit_long": "(close - low) / (high - low) >= 0.8",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The arithmetic IBS proxy uses the documented 0.2 lower entry and 0.8 upper exit thresholds. The StartTime/EndTime window and any missing window defaults are unavailable, and the source has no stops."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2234,
+      "name": "JMA Slope",
+      "family": "trend",
+      "entry_long": "crossabove(roc(ema(close,14),1), 0)",
+      "exit_long": "crossbelow(roc(ema(close,14),1), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Jurik Moving Average is approximated by an EMA with the documented JMA Length 14 and its slope by the one-bar ROC of that average, so a slope turn upward enters long and the opposite turn exits as documented. JMA Phase 0, the mode-dependent Breakdown branch and the 4-hour timeframe are dropped; no stops are documented."
+    },
+    {
+      "id": 4223,
+      "name": "X Bug",
+      "family": "trend",
+      "entry_long": "crossabove((high + low) / 2, sma((high + low) / 2, 14))",
+      "exit_long": "crossbelow((high + low) / 2, sma((high + low) / 2, 14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Median applied price (high+low)/2 and SlowPeriod 14 are used, with FastPeriod 1 collapsing to the raw median price. FastShift 0 and SlowShift 10 cannot be reproduced without a series shift, and StopLossPips 70, TakeProfitPips 5000 and the 90-pip trailing stop are pip distances, so protection stays null."
+    },
+    {
+      "id": 244,
+      "name": "OBV Mean Reversion",
+      "family": "trend",
+      "entry_long": "close < sma(close,20) and zscore(volume_ratio(volume,20) * roc(close,1), 20) < -2",
+      "exit_long": "zscore(volume_ratio(volume,20) * roc(close,1), 20) > 0 or close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "OBV has no DSL equivalent, so the signed volume flow volume_ratio*roc stands in for it and the documented band (AveragePeriod 20, Multiplier 2.0) is applied to its 20-period z-score together with the documented Close < MA filter; the documented 'OBV above its average' exit becomes flow back above its mean. The percent stop exists but has no documented value and the 5-minute timeframe is dropped."
+    },
+    {
+      "id": 2628,
+      "name": "Evening Star Reversal",
+      "family": "trend",
+      "entry_long": "close > open and close > low + 0.6 * (high - low) and roc(atr(high,low,close,14), 1) > 0 and close > sma(close, 5)",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A three-bar star pattern cannot be referenced bar by bar, so the long Direction branch is approximated by a strong bullish candle closing in the top 40% of its range with expanding volatility (a shrinking middle bar via rising ATR) above the short average. TakeProfitPips 150, StopLossPips 50, RiskPercent 5, the gap filter and Shift 1 are pip, sizing or shift settings outside the DSL."
+    },
+    {
+      "id": 438,
+      "name": "Omar MMR",
+      "family": "trend",
+      "entry_long": "close > ema(close,200) and ema(close,20) > ema(close,50) and crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and rsi(close,14) > 29 and rsi(close,14) < 70",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 1.5,
+      "notes": "All documented inputs are used verbatim: EMA 20/50/200, MACD 12/26/9 and the RSI 29-70 neutral band. The docs give no indicator exit (protection module only), so a bearish MACD cross is the exit proxy, and the documented StopLossPercent 2.0 / TakeProfitPercent 1.5 populate the percent fields."
+    },
+    {
+      "id": 3062,
+      "name": "Time Zone Pivots Open System",
+      "family": "breakout",
+      "entry_long": "close > open + 0.5 * atr(high,low,close,14) and roc(close,1) <= 0",
+      "exit_long": "close < open - 0.5 * atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On daily bars the StartHour 0 anchor is the session open, so the band is open plus/minus a 0.5x ATR(14) width standing in for the 100-price-step OffsetPoints, and the required preceding neutral bar is approximated by a non-positive one-bar return. SignalBar 1, StopLossPoints 1000, TakeProfitPoints 2000 and the duplicate-entry postponement are not long-signal or percent fields."
+    },
+    {
+      "id": 1644,
+      "name": "Artificial Intelligence Perceptron",
+      "family": "momentum",
+      "entry_long": "close > sma(close,5) and roc(close,7) > 0",
+      "exit_long": "close < sma(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Accelerator Oscillator is approximated by close minus its SMA(5), but the perceptron's lagged AC readings at 7, 14 and 21 bars (weights X1 135, X2 127, X3 16, X4 93) cannot be shifted, so only the dominant current reading plus a 7-bar ROC stands in for the weighted sum. All weights are positive, so a sign flip to negative is the documented reversal exit; StopLoss 85 is a point distance, not a percent."
+    },
+    {
+      "id": 2585,
+      "name": "Candle Shadow Percent",
+      "family": "volatility",
+      "entry_long": "close > open and low <= open - 0.5 * (close - open)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The lower wick to body ratio is written division-free for bullish bars as low <= open - 0.5*(close-open), i.e. a 50% wick, since TopShadowPercent/LowerShadowPercent and MinBodyPips are documented by name only and 0.5 is an explicit fallback. The short top-shadow branch, StopLossPips, TakeProfitPips and RiskPercent are not long signals or percent fields."
+    },
+    {
+      "id": 2688,
+      "name": "Super Simple RSI Engulfing",
+      "family": "mean_reversion",
+      "entry_long": "rsi(high,7) > 88 and close > open and close > low + 0.7 * (high - low)",
+      "exit_long": "rsi(high,7) < 37 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RSI(7) on the candle high with OverboughtLevel 88 is exact, and the two-bar engulfing confirmation is approximated by a bullish candle closing in the top 30% of its range because the older bar cannot be referenced. Account-level ProfitGoal 190 and MaxLoss 10 are currency PnL overlays, and Offsetting previous exposure is order-book logic outside the DSL."
+    },
+    {
+      "id": 3110,
+      "name": "Bitex One Market Maker",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The robot is an asynchronous quoting engine that places symmetric limit pairs around a reference price taken from the order book or mark price, so it has no market-derived directional long signal and the never-true close<0 guard is used. LevelCount, ShiftCoefficient, MaxVolumePerLevel, volume/price-step normalisation and position caps are market-making and risk-management logic."
+    }
+  ]
+}

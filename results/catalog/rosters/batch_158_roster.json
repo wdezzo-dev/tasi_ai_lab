@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1353,
+      "name": "Strategy Sema Sdi Webhook",
+      "family": "trend",
+      "entry_long": "ema(close,58) > ema(close,70) and roc(close,14) > 0",
+      "exit_long": "ema(close,58) < ema(close,70) or roc(close,14) < 0",
+      "stop_loss_pct": 4.8,
+      "take_profit_pct": 25.0,
+      "notes": "The documented FastEmaLength=58 and SlowEmaLength=70 are used directly; +DI > -DI has no DSL equivalent so positive 14-bar directional movement stands in, and the SmoothLength=3 and DiLength=1 smoothing steps are dropped. The documented StopLossPercent=4.8 and TakeProfitPercent=25 are applied as percentages, while TrailingPercent=1.9 has no fixed-field equivalent."
+    },
+    {
+      "id": 1878,
+      "name": "Two-Pole Ideal MA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10), 3 * ema(close,30) - 3 * ema(ema(close,30),30) + ema(ema(ema(close,30),30),30))",
+      "exit_long": "crossbelow(ema(close,10), 3 * ema(close,30) - 3 * ema(ema(close,30),30) + ema(ema(ema(close,30),30),30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "TEMA is rebuilt exactly from nested EMAs as 3*e1 - 3*e2 + e3 with the documented SlowPeriod=30, and the crossover with the documented FastPeriod=10 EMA gives entry and reverse exit. The short branch is dropped for long-only and the docs state no stops."
+    },
+    {
+      "id": 3275,
+      "name": "Triangle",
+      "family": "trend",
+      "entry_long": "sma(close,10) > sma(close,30) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "sma(close,10) < sma(close,30) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three documented timeframes (execution, trend and monthly MACD) are collapsed onto one series, weighted averages become simple ones, and the 14-period momentum above the neutral 100 becomes a positive 14-bar rate of change with MomentumThreshold dropped. FastMaPeriod/SlowMaPeriod=10/30 and the 12/26/9 MACD are explicit defaults, and StopLossSteps/TakeProfitSteps are tick distances, so stops are null."
+    },
+    {
+      "id": 3779,
+      "name": "MACD + Stochastic Trend Filter",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and macd(close,12,26) < 0 and roc(ema(close,26),1) > 0 and rsi(close,2) > rsi(close,14)",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9)) or rsi(close,2) < rsi(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD 12/26/9 bullish crossover while the line is still below zero and the rising EMA(26) filter are kept literally; Stochastic is unavailable, so the %K-above-%D condition becomes fast RSI above slow RSI with the documented 15/3/3 lengths approximated by RSI(2) and RSI(14). MacdOpenLevel/MacdCloseLevel in price steps and the point-based stop, target and trailing stop are unsupported, so stops are null."
+    },
+    {
+      "id": 2801,
+      "name": "Martingale Bone Crusher",
+      "family": "trend",
+      "entry_long": "sma(close,10) > sma(close,20)",
+      "exit_long": "sma(close,10) < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented fast/slow SMA direction is a market signal, and both lengths are undocumented so 10/20 are explicit defaults; the Martingale1/Martingale2 sizing, money and percentage targets, breakeven trigger and money/step trailing are all dropped. StopLossSteps/TakeProfitSteps are instrument price steps rather than percentages, so both stop fields are null."
+    },
+    {
+      "id": 1735,
+      "name": "Line Order Single Entry",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The trigger is a user-supplied absolute Entry Price level rather than any derived market condition, so there is no signal to translate into price-relative DSL. Marked non-trading; the pip stop, target and optional trailing are distances from that manual level."
+    },
+    {
+      "id": 2076,
+      "name": "Color Zerolag JJRSX",
+      "family": "volatility",
+      "entry_long": "crossbelow(rsi(close,5), ema(rsi(close,14),9))",
+      "exit_long": "crossabove(rsi(close,5), ema(rsi(close,14),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom JJRSX colour indicator is replaced by a fast RSI line against a smoothed slow RSI line, with 5 and 14/9 as explicit defaults because FastPeriod and SlowPeriod are not documented; the documented fast-below-slow cross opens the long and the opposite cross closes it. The short branch, the Buy/Sell permission flags and StopLoss/TakeProfit in price units are dropped, so stops are null."
+    },
+    {
+      "id": 403,
+      "name": "Term Structure Commodities",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Carry is the spread between front and deferred futures for a cross-section of commodity contracts, ranked monthly with contract rolls, which needs two price series per instrument plus cross-sectional ranking; none of that exists in a single-ticker DSL. Marked non-trading instead of substituting a price-only proxy that would change the strategy."
+    },
+    {
+      "id": 1634,
+      "name": "MTrainer",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a manual practice utility (Category: Utility, designed for the visual tester) driven by absolute price levels - EntryPrice, TakeProfitPrice, StopLossPrice, PartialClosePrice - all defaulting to 0, so it produces no market-derived signal. Marked non-trading; partial closes and absolute price levels are not expressible as percentage stops."
+    },
+    {
+      "id": 1697,
+      "name": "Time Trader",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries happen exactly at TradeHour:TradeMinute:TradeSecond (default 00:00:00) regardless of price, with Indicators listed as None, so this is a schedule-only EA with no market-derived entry signal. Marked non-trading; the documented TakeProfit=0.2 and StopLoss=0.2 have no stated unit and are not used as percentages."
+    }
+  ]
+}

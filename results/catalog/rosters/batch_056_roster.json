@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3092,
+      "name": "FxNode Safe Tunnel",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,20) * 1.005",
+      "exit_long": "high >= donchian_high_prev(high,20) * 0.995",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ZigZag tunnel is approximated by 20-bar Donchian boundaries (20 is an explicit default since the swing lookback is undocumented) and the 20-pip touch buffer by a 0.5% tolerance around the prior low. Touching the upper boundary exits; the ATR stop anchor, 800/200-pip profit and stop limits, the 50-pip trail and the spread guard are position and quote state."
+    },
+    {
+      "id": 776,
+      "name": "Extrapolated Pivot Connector",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,100))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The resistance line built from the documented PivotLength 100 pivot highs is taken as the prior 100-bar high and the support line as the prior 100-bar low, so crossing them gives the long and the exit. Linear-regression shift parameters (HighStart/HighEnd 1/0) and true pivot interpolation are not expressible, and the docs state no stops."
+    },
+    {
+      "id": 273,
+      "name": "ATR Slope Breakout",
+      "family": "trend",
+      "entry_long": "roc(close,20) > sma(roc(close,20),20) + 2 * std(roc(close,20),20)",
+      "exit_long": "roc(close,20) < sma(roc(close,20),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The slope indicator is proxied by the documented SlopePeriod 20 rate of change, and the documented BreakoutMultiplier 2.0 standard-deviation threshold is applied to its own 20-bar mean and deviation; exit is reversion to that mean. StopLossAtrMultiplier 2.0 and AtrPeriod 14 are ATR-relative position distances, not percentages."
+    },
+    {
+      "id": 2626,
+      "name": "Bullish & Bearish Engulfing",
+      "family": "trend",
+      "entry_long": "close > open and open < donchian_low_prev(low,1) and close > donchian_high_prev(high,1)",
+      "exit_long": "close < open and open > donchian_high_prev(high,1) and close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Because only the current bar is visible, the engulfing pattern is expressed as a body that opens below the prior bar's low and closes above its high (and the mirror image for the exit), which is the documented pattern at Shift 1. DistanceInPips 0, CloseOppositePositions and Volume are order-handling features, and the 1-hour timeframe is fixed here."
+    },
+    {
+      "id": 1202,
+      "name": "PulseWave",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,14) < 70",
+      "exit_long": "close < sma(close,20) and crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,14) > 30",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented values are used: MACD 12/26/9, RSI(14) with 70/30 thresholds, and VWAP proxied by SMA(20) on daily bars. The long-only scope is respected and the docs state no stops, so both fields stay null."
+    },
+    {
+      "id": 3374,
+      "name": "MelBar EuroSwiss",
+      "family": "breakout",
+      "entry_long": "open < bb_lower(close,20,2) and close > bb_lower(close,20,2)",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The gap-style long breakout (open beyond the envelope while the prior open was inside) is approximated by a candle opening below the lower Bollinger band and closing back inside it, with period 20 and deviation 2 as explicit defaults since none are documented. The delayed Relative Vigor Index is proxied by an RSI(14) overbought reading for the momentum-exhaustion exit, and pip stops are not percentages."
+    },
+    {
+      "id": 459,
+      "name": "One-Two-Three Reversal",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,1) and close > sma(close,20)",
+      "exit_long": "close > sma(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented first condition (today's low below yesterday's) is exact, while the three older-bar comparisons of the 1-2-3 structure are collapsed into an uptrend requirement of close above SMA(20) because shifted bars are unavailable. The exit uses the documented MaLength 200 crossing and DaysToHold 7 is handled by holding until that signal; no stops are documented."
+    },
+    {
+      "id": 3396,
+      "name": "CCI Expert",
+      "family": "momentum",
+      "entry_long": "crossabove(zscore(close,14),0)",
+      "exit_long": "crossbelow(zscore(close,14),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI has no DSL function, so it is proxied by zscore(close,14) using the documented CciPeriod 14, and a zero-line momentum cross gives the sequential open/close logic; the original threshold is not documented so 0 is an explicit default. TakeProfitPoints 150, StopLossPoints 600 and MaxSpreadPoints 30 are price-point distances requiring position and quote state."
+    },
+    {
+      "id": 3296,
+      "name": "ProfitLossTrailStrategy",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the strategy generates no entries and only supervises existing exposure with stops, targets, trailing and break-even, so the impossible negative-price guard avoids fabricating a signal. Basket-level recalculation of protective levels needs position state the DSL cannot reference."
+    },
+    {
+      "id": 422,
+      "name": "Exceeded Candle",
+      "family": "mean_reversion",
+      "entry_long": "close > open and close > donchian_high_prev(high,1) and close < bb_mid(close,20)",
+      "exit_long": "close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A green candle that exceeds the prior bar while closing below the middle Bollinger band is the documented long; bands use the documented BBLength 20 and multiplier 2.0 and the exit tags the upper band. The \"previous candle red\" and no-three-consecutive-bears cancellations need shifted bars, and the docs state no stops."
+    }
+  ]
+}

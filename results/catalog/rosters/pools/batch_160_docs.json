@@ -1,0 +1,98 @@
+{
+ "batch_160": {
+  "strategy_ids": [
+   2150,
+   2749,
+   257,
+   1488,
+   1038,
+   3019,
+   3238,
+   2703,
+   2024,
+   1705
+  ],
+  "docs": {
+   "2150": {
+    "id": 2150,
+    "name": "Laguerre ROC",
+    "family": "trend",
+    "overview": "This strategy uses the Laguerre rate-of-change oscillator to capture trend reversals.\n\nThe Laguerre ROC oscillator smooths rate of change through a four-stage Laguerre filter.\nValues are normalized between 0 and 1. Two thresholds define overbought and oversold zones:\n\n- **Up Level** – values above this level indicate strong upward momentum.\n- **Down Level** – values below this level indicate strong downward momentum.\n\nTrading logic:\n\n1. When the oscillator falls from the overbought zone (previous value above Up Level\n   and current value below) the strategy enters a long position.\n2. When the oscillator rises from the oversold zone (previous value below Down Level\n   and current value above) the strategy enters a short position.\n3. If a long position is open and the oscillator turns bearish (previous value below the neutral\n   level of 0.5) the position is closed.\n4. If a short position is open and the oscillator turns bullish (previous value above 0.5)\n   the position is closed.\n\nParameters:\n\n- **Period** – lookback length for the rate-of-change calculation.\n- **Gamma** – smoothing factor for the Laguerre filter.\n- **Up Level** – overbought threshold.\n- **Down Level** – oversold threshold.\n- **Candle Type** – timeframe used for candle data.\n\nThe example demonstrates how custom indicator logic can be recreated within a high-level\nStockSharp strategy using built-in rate-of-change and manual Laguerre filtering.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2749": {
+    "id": 2749,
+    "name": "Galactic Explosion",
+    "family": "trend",
+    "overview": "The Galactic Explosion strategy rebuilds the original MetaTrader 5 grid expert in StockSharp. It operates on finished candles, uses a long-term moving average to define the directional bias, and deploys an expanding grid of orders. The system accumulates trades when price stays on one side of the moving average and closes the entire basket once a predefined profit target is achieved.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Order Volume** | Volume used for each new entry. This value is also used to estimate how many grid steps are currently open. |\n| **Start Hour** | Start of the trading session in exchange time. Signals before this hour are ignored. |\n| **End Hour** | End of the trading session (exclusive). Signals after this hour are ignored. |\n| **Minimal Profit** | Combined realised plus unrealised profit that triggers closing all open positions. |\n| **Indent After 8th** | Minimum distance (in price steps) from the most recent entry after eight trades before another position can be opened. |\n| **Skip 3 Min** | Lower bound (in price steps) for activating the “skip three candles” rule. |\n| **Skip 3 Max** | Upper bound (in price steps) that keeps the “skip three candles” rule active. |\n| **Skip 6 Max** | Upper bound (in price steps) that keeps the “skip six candles” rule active. |\n| **MA Length** | Length of the simple moving average that defines the directional bias. |\n| **Candle Type** | Candle series subscribed by the strategy. The moving average and grid logic run on this data stream. |"
+   },
+   "257": {
+    "id": 257,
+    "name": "Keltner Channel Width Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 112%. It performs best in the forex market.\n\nA position opens once the indicator pierces a band derived from recent data and a deviation multiplier. Long and short trades are possible with a stop attached.\n\nThis system fits momentum traders seeking early breakouts. Trades close as the Keltner falls back toward the mean. Defaults start with `EMAPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EMAPeriod` = 20\n  - `ATRPeriod` = 14\n  - `ATRMultiplier` = 2.0m\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopMultiplier` = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EMAPeriod` = 20\n  - `ATRPeriod` = 14\n  - `ATRMultiplier` = 2.0m\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopMultiplier` = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1488": {
+    "id": 1488,
+    "name": "Triple MA HTF Strategy - Dynamic Smoothing",
+    "family": "trend",
+    "overview": "Strategy that compares three moving averages calculated on higher timeframes.\nEach higher timeframe MA is smoothed proportionally to the ratio between its timeframe and the working timeframe.\nSignals are generated when the first MA crosses the second while the third confirms the direction.\n\n## Details\n\n- **Entry Criteria**: Cross of MA1 and MA2 with MA3 trend confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `HigherTimeFrame1` = TimeSpan.FromMinutes(15)\n  - `HigherTimeFrame2` = TimeSpan.FromMinutes(60)\n  - `HigherTimeFrame3` = TimeSpan.FromMinutes(240)\n  - `Length1` = 21\n  - `Length2` = 21\n  - `Length3` = 50\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: None\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m base)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Cross of MA1 and MA2 with MA3 trend confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `HigherTimeFrame1` = TimeSpan.FromMinutes(15)\n  - `HigherTimeFrame2` = TimeSpan.FromMinutes(60)\n  - `HigherTimeFrame3` = TimeSpan.FromMinutes(240)\n  - `Length1` = 21\n  - `Length2` = 21\n  - `Length3` = 50\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: None\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m base)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1038": {
+    "id": 1038,
+    "name": "McGinley Dynamic (Improved)",
+    "family": "trend",
+    "overview": "Implements the \"McGinley Dynamic (Improved)\" indicator by John R. McGinley, Jr. and trades when the close price crosses the dynamic line. The strategy supports modern, original, and custom coefficient formulas and can optionally display the unconstrained variant for comparison.\n\n## Details\n\n- **Entry Long**: close crosses above McGinley Dynamic.\n- **Entry Short**: close crosses below McGinley Dynamic.\n- **Indicators**: McGinley Dynamic, optional Unconstrained McGinley Dynamic, EMA for reference.\n- **Default Values**: Period = 14, Formula = Modern, Custom k = 0.5, Exponent = 4.\n- **Direction**: Both.\n",
+    "details": "- **Entry Long**: close crosses above McGinley Dynamic.\n- **Entry Short**: close crosses below McGinley Dynamic.\n- **Indicators**: McGinley Dynamic, optional Unconstrained McGinley Dynamic, EMA for reference.\n- **Default Values**: Period = 14, Formula = Modern, Custom k = 0.5, Exponent = 4.\n- **Direction**: Both.",
+    "parameters": ""
+   },
+   "3019": {
+    "id": 3019,
+    "name": "TradeXpert Manual Trading Panel",
+    "family": "momentum",
+    "overview": "The original TradeXpert MQL5 expert advisor is a manually operated trading panel that exposes a collection of buttons for opening positions, placing pending orders, applying protective stops, and quickly reversing or closing an existing trade. This C# port reproduces the same toolkit inside StockSharp by turning every panel action into a strategy parameter. The strategy itself does not generate trading signals; instead it listens to your manual instructions, executes the requested orders, and supervises protective exits on the incoming candle flow.",
+    "details": "",
+    "parameters": "- **`CandleType`** – candle series used to monitor prices for offsets and risk checks.\n- **`TradeVolume`** – volume applied to every market and pending order (must be positive).\n- **`EntryAction`** – momentary selector with values `None`, `BuyMarket`, or `SellMarket`. Setting a value different from `None` triggers the corresponding market order exactly once and then resets back to `None`.\n- **`PendingAction`** – pending order selector (`None`, `BuyLimit`, `BuyStop`, `SellLimit`, `SellStop`). The action is consumed after a valid order is registered.\n- **`PendingPrice`** – absolute price for the pending order. Leave at `0` to rely on `PendingOffset`.\n- **`PendingOffset`** – offset applied to the most recent candle close when `PendingPrice` is zero. Positive offsets automatically adjust the price above/below the close depending on the selected action.\n- **`UseStopLoss`** / **`StopLossPrice`** / **`StopLossOffset`** – enable and configure stop-loss protection. Offsets are measured from the stored entry price when the absolute price is not provided.\n- **`UseTakeProfit`** / **`TakeProfitPrice`** / **`TakeProfitOffset`** – analogous settings for take-profit management.\n- **`ClosePositionRequest`** – set to `true` to issue an immediate market exit for the entire position. The flag resets to `false` after the request is processed.\n- **`ReversePositionRequest`** – set to `true` to flip the current exposure. The strategy closes the existing position and opens an opposite one using `ReverseVolume`, then resets the flag.\n- **`ReverseVolume`** – volume of the new position established after a reversal. If you need the reverse size to match the existing position, set it equal to the current absolute position."
+   },
+   "3238": {
+    "id": 3238,
+    "name": "JK Synchro",
+    "family": "volatility",
+    "overview": "The **JK Synchro Strategy** is a StockSharp port of the MetaTrader 5 expert advisor \"JK synchro\" (MQL ID 2415). The original robot counts how many of the most recent candles closed lower or higher than they opened and then opens a position in the direction that dominates. This port replicates the behaviour while adding strongly typed parameters, built-in risk management hooks, and rich logging through StockSharp.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | 0.1 | Volume placed with every market order. |\n| `MaxPositions` | 10 | Maximum number of lots allowed per direction. |\n| `AnalysisPeriod` | 18 | Number of finished candles considered when counting bullish versus bearish moves. |\n| `PauseBetweenTradesSeconds` | 540 | Cooldown in seconds after any entry before a new one can be opened. |\n| `StartHour` | 3 | Start hour (inclusive) of the trading window, server time. |\n| `EndHour` | 6 | End hour (inclusive) of the trading window, server time. |\n| `StopLossPips` | 50 | Stop-loss distance expressed in pips. Set to 0 to disable. |\n| `TakeProfitPips` | 150 | Take-profit distance in pips. Set to 0 to disable. |\n| `TrailingStopPips` | 15 | Trailing stop distance in pips. Set to 0 to disable trailing. |\n| `TrailingStepPips` | 5 | Extra distance in pips before the trailing stop is updated. Must be positive when trailing is enabled. |\n| `CandleType` | 15-minute time frame | Candle source used for all calculations. |"
+   },
+   "2703": {
+    "id": 2703,
+    "name": "Self-Optimizing RSI or MFI Trader v3",
+    "family": "mean_reversion",
+    "overview": "This strategy ports the MetaTrader \"Self Optimizing RSI or MFI Trader\" expert advisor to StockSharp's high level API. On every finished candle the algorithm backtests a sliding window of historical bars and finds the most profitable overbought and oversold thresholds for the selected oscillator. Live trades are only taken when the current oscillator value crosses the best performing threshold in the same direction as the historical edge, optionally without requiring a cross in \"aggressive\" mode. Position exits rely on ATR-based or fixed-distance stops and targets with an optional breakeven step.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OptimizingPeriods` | Number of bars used for the rolling in-sample optimisation (default 144). |\n| `IndicatorChoice` | Chooses RSI or MFI as the driving oscillator. |\n| `IndicatorPeriod` | Averaging period for the oscillator and ATR. |\n| `IndicatorTopValue` / `IndicatorBottomValue` | Search bounds for threshold levels (typically 0–100). |\n| `UseAggressiveEntries` | If true, allows entries without a confirmed cross. |\n| `TradeReverse` | Swaps profitability scores to trade the historically losing side. |\n| `OneOrderAtATime` | Prevents opening a new position while another is active. |\n| `UseDynamicTargets` | Switch between ATR-based and fixed-point stops/targets. |\n| `StopLossAtrMultiplier`, `TakeProfitAtrMultiplier` | ATR multipliers for dynamic exits. |\n| `StaticStopLossPoints`, `StaticTakeProfitPoints` | Point distances for fixed exits. |\n| `UseBreakEven`, `BreakEvenTriggerPoints`, `BreakEvenPaddingPoints` | Configure the breakeven stop behaviour. |\n| `UseDynamicVolume`, `RiskPercent`, `BaseVolume` | Control the position sizing logic. |\n| `CandleType` | Timeframe for optimisation and trading. |"
+   },
+   "2024": {
+    "id": 2024,
+    "name": "Exp Martin V2",
+    "family": "volume",
+    "overview": "The Exp Martin V2 strategy implements an exponential martingale approach. It always keeps a single open position and after each trade decides the next direction and volume based on the profit of the last deal.\n\nThe strategy starts with a predefined order type (buy or sell) and a starting volume. A fixed take-profit and stop-loss are applied to every position. When a trade closes with profit, a new position of the same type and starting volume is opened. If the trade ends with a loss, the direction is reversed and the volume is multiplied by a specified factor. The multiplication continues after each loss until a maximum number of multiplications is reached; then the volume resets to the starting value.\n\nThis creates an escalating sequence of opposite trades that aims to recover previous losses once a profitable move occurs.\n\n## Details\n\n- **Entry Logic**:\n  - Open the initial position according to *Start Type* (0 - buy, 1 - sell) with the *Start Volume*.\n  - After a profitable trade, repeat the same direction with the starting volume.\n  - After a losing trade, reverse direction and multiply the volume by *Factor* until *Limit* multiplications are reached.\n- **Long/Short**: Both, depending on current sequence.\n- **Exit Logic**:\n  - Positions are closed when price hits the configured *Take Profit* or *Stop Loss* levels.\n- **Stops**: Fixed stop-loss and take-profit in points.\n- **Filters**: None.\n- **Position Management**: Only one position is open at a time.\n\nUse this strategy to experiment with martingale money management in StockSharp without any additional indicators.\n",
+    "details": "- **Entry Logic**:\n  - Open the initial position according to *Start Type* (0 - buy, 1 - sell) with the *Start Volume*.\n  - After a profitable trade, repeat the same direction with the starting volume.\n  - After a losing trade, reverse direction and multiply the volume by *Factor* until *Limit* multiplications are reached.\n- **Long/Short**: Both, depending on current sequence.\n- **Exit Logic**:\n  - Positions are closed when price hits the configured *Take Profit* or *Stop Loss* levels.\n- **Stops**: Fixed stop-loss and take-profit in points.\n- **Filters**: None.\n- **Position Management**: Only one position is open at a time.\n\nUse this strategy to experiment with martingale money management in StockSharp without any additional indicators.",
+    "parameters": ""
+   },
+   "1705": {
+    "id": 1705,
+    "name": "Sophia 1_1",
+    "family": "volume",
+    "overview": "Sophia 1_1 is a grid-based martingale trading strategy.\nThe strategy opens a position after four consecutive candles move in the same direction:\n- Four rising candles trigger a short entry.\n- Four falling candles trigger a long entry.\n\nOnce in the market, the algorithm adds positions every time the price moves against the current position by a fixed number of price steps (`Pip Step`).\nThe volume of each additional trade is multiplied by `Lot Exponent`, forming a classic martingale grid.\n\nRisk management is handled through `Take Profit`, `Stop Loss` and an optional trailing stop.\nThe trailing mechanism starts after the profit reaches `Trail Start` and trails the stop level by `Trail Stop` price steps.\n\n## Parameters\n- **Volume** – base volume for the first trade.\n- **Pip Step** – distance in price steps before adding a new position.\n- **Lot Exponent** – multiplier for the volume of each additional trade.\n- **Max Trades** – maximum number of positions in the grid.\n- **Take Profit** – profit target in price steps from the average entry price.\n- **Stop Loss** – loss threshold in price steps from the average entry price.\n- **Use Trailing** – enable or disable the trailing stop.\n- **Trail Start** – profit required before the trailing stop becomes active.\n- **Trail Stop** – distance of the trailing stop in price steps.\n- **Candle Type** – timeframe of the candles used for calculations.\n",
+    "details": "",
+    "parameters": "- **Volume** – base volume for the first trade.\n- **Pip Step** – distance in price steps before adding a new position.\n- **Lot Exponent** – multiplier for the volume of each additional trade.\n- **Max Trades** – maximum number of positions in the grid.\n- **Take Profit** – profit target in price steps from the average entry price.\n- **Stop Loss** – loss threshold in price steps from the average entry price.\n- **Use Trailing** – enable or disable the trailing stop.\n- **Trail Start** – profit required before the trailing stop becomes active.\n- **Trail Stop** – distance of the trailing stop in price steps.\n- **Candle Type** – timeframe of the candles used for calculations."
+   }
+  }
+ }
+}

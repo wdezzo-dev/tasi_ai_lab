@@ -1,0 +1,98 @@
+{
+ "batch_252": {
+  "strategy_ids": [
+   1234,
+   1673,
+   2293,
+   2453,
+   2409,
+   429,
+   78,
+   479,
+   503,
+   2760
+  ],
+  "docs": {
+   "1234": {
+    "id": 1234,
+    "name": "Reflected EMA Difference RED",
+    "family": "trend",
+    "overview": "This strategy reflects the distance between two Hull Moving Averages and tracks a smoothed value. When the smoothed reflection reverses by a specified percentage, it enters long or short positions accordingly.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: smoothed reflection rises above its pullback limit.\n  - Short: smoothed reflection falls below its pullback limit.\n- **Long/Short**: Both\n- **Default Values**:\n  - `Smoothing Period` = 2\n  - `Change Percent` = 0.04\n",
+    "details": "- **Entry Criteria**:\n  - Long: smoothed reflection rises above its pullback limit.\n  - Short: smoothed reflection falls below its pullback limit.\n- **Long/Short**: Both\n- **Default Values**:\n  - `Smoothing Period` = 2\n  - `Change Percent` = 0.04",
+    "parameters": ""
+   },
+   "1673": {
+    "id": 1673,
+    "name": "Ride Alligator",
+    "family": "trend",
+    "overview": "Implementation of the Ride Alligator strategy. The method uses three moving averages known as the Alligator indicator. A long position is opened when the Lips line crosses above the Jaws line while the Teeth line is below the Jaws. A short position is opened when the Lips cross below the Jaws and the Teeth line is above the Jaws. The open position is protected by a stop at the Jaws line which trails as the line moves.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Lips > Jaws && Teeth < Jaws && previous Lips < previous Jaws`\n  - Short: `Lips < Jaws && Teeth > Jaws && previous Lips > previous Jaws`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `price <= Jaws`\n  - Short: `price >= Jaws`\n- **Stops**: Trailing stop at Alligator Jaws\n- **Default Values**:\n  - `AlligatorPeriod` = 5\n  - `MaType` = MovingAverageTypeEnum.Weighted\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Alligator\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Lips > Jaws && Teeth < Jaws && previous Lips < previous Jaws`\n  - Short: `Lips < Jaws && Teeth > Jaws && previous Lips > previous Jaws`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `price <= Jaws`\n  - Short: `price >= Jaws`\n- **Stops**: Trailing stop at Alligator Jaws\n- **Default Values**:\n  - `AlligatorPeriod` = 5\n  - `MaType` = MovingAverageTypeEnum.Weighted\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Alligator\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2293": {
+    "id": 2293,
+    "name": "JFATL Digit System",
+    "family": "trend",
+    "overview": "Strategy built around the Jurik moving average (JFATL) slope. It opens long positions when the moving average turns upward and short positions when it turns downward. The idea imitates the color-coded digital system from the original MQL version.\n\n## Details\n- **Entry Criteria**: Slope of Jurik moving average changes sign. Upward slope opens a long position, downward slope opens a short position.\n- **Long/Short**: Both directions are traded.\n- **Exit Criteria**: Position is reversed on opposite slope or closed by risk management.\n- **Stops**: Percentage-based take profit and optional stop loss configured through `StartProtection`.\n- **Default Values**: Length = 5, Phase = -100, Timeframe = 4 hours.\n- **Filters**: None. The strategy relies solely on JMA slope.\n",
+    "details": "- **Entry Criteria**: Slope of Jurik moving average changes sign. Upward slope opens a long position, downward slope opens a short position.\n- **Long/Short**: Both directions are traded.\n- **Exit Criteria**: Position is reversed on opposite slope or closed by risk management.\n- **Stops**: Percentage-based take profit and optional stop loss configured through `StartProtection`.\n- **Default Values**: Length = 5, Phase = -100, Timeframe = 4 hours.\n- **Filters**: None. The strategy relies solely on JMA slope.",
+    "parameters": ""
+   },
+   "2453": {
+    "id": 2453,
+    "name": "Exp Price Position",
+    "family": "trend",
+    "overview": "The **Exp Price Position** strategy adapts the original MetaTrader expert advisor that combines price location and a step trend filter.\nIt evaluates the relationship between two median moving averages to locate the most recent swing level and then checks a fast and slow smoothed moving average pair to determine trend direction.\nOrders are opened only when both the price position and step trend agree with the current candle structure.\n\nThe strategy is designed for markets where trend shifts occur after price pulls back to a dynamic median level. A trailing stop and take-profit ratio are applied to manage risk.\n\n## Details\n\n- **Entry Criteria**: Price above last swing level with bullish step trend for long trades; below with bearish step trend for short trades.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protective stop.\n- **Stops**: Yes, via trailing stop with take-profit ratio.\n- **Default Values**:\n  - `FastPeriod` = 2\n  - `SlowPeriod` = 30\n  - `MedianFastPeriod` = 26\n  - `MedianSlowPeriod` = 20\n  - `TpSlRatio` = 3m\n  - `TrailingStopPips` = 10m\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Smoothed Moving Average, Simple Moving Average\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price above last swing level with bullish step trend for long trades; below with bearish step trend for short trades.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protective stop.\n- **Stops**: Yes, via trailing stop with take-profit ratio.\n- **Default Values**:\n  - `FastPeriod` = 2\n  - `SlowPeriod` = 30\n  - `MedianFastPeriod` = 26\n  - `MedianSlowPeriod` = 20\n  - `TpSlRatio` = 3m\n  - `TrailingStopPips` = 10m\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Smoothed Moving Average, Simple Moving Average\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2409": {
+    "id": 2409,
+    "name": "Turtle Trader SAR",
+    "family": "trend",
+    "overview": "Turtle Trader SAR converts the original MQL5 Turtle system with an optional Parabolic SAR trail into StockSharp C#.\nThe strategy trades breakouts of Donchian channels, sizes positions by ATR based risk and can pyramid winning trades.\n\n## How It Works\n\n1. **Indicator Calculation**\n   - 20 period ATR for volatility.\n   - Donchian channels for `ShortPeriod` and `ExitPeriod`.\n   - Optional Parabolic SAR for trailing stops.\n2. **Position Sizing**\n   - Each entry risks `RiskFraction` of current equity.\n   - Unit size is limited by `MaxUnits`.\n3. **Entry Rules**\n   - Close above `ShortPeriod` high -> buy.\n   - Close below `ShortPeriod` low -> sell.\n4. **Pyramiding**\n   - Adds new unit every `AddInterval` ATR move in favor until `MaxUnits`.\n5. **Exit Rules**\n   - Opposite `ExitPeriod` breakout.\n   - ATR stop using `StopAtr` and optional take profit `TakeAtr`.\n   - If `UseSar` is true, Parabolic SAR stop also applies.\n\n## Parameters\n\n- `ExitPeriod` = 10\n- `ShortPeriod` = 20\n- `LongPeriod` = 55\n- `RiskFraction` = 0.01\n- `MaxUnits` = 4\n- `AddInterval` = 1\n- `StopAtr` = 1\n- `TakeAtr` = 1\n- `UseSar` = false\n- `SarStep` = 0.02\n- `SarMax` = 0.2\n- `CandleType` = 1 day\n\n## Tags\n\n- **Category**: Trend Following\n- **Direction**: Both\n- **Indicators**: ATR, Highest, Lowest, Parabolic SAR\n- **Stops**: ATR / SAR\n- **Complexity**: Intermediate\n- **Timeframe**: Daily\n- **Seasonality**: No\n- **Neural networks**: No\n- **Divergence**: No\n- **Risk level**: Medium\n",
+    "details": "",
+    "parameters": "- `ExitPeriod` = 10\n- `ShortPeriod` = 20\n- `LongPeriod` = 55\n- `RiskFraction` = 0.01\n- `MaxUnits` = 4\n- `AddInterval` = 1\n- `StopAtr` = 1\n- `TakeAtr` = 1\n- `UseSar` = false\n- `SarStep` = 0.02\n- `SarMax` = 0.2\n- `CandleType` = 1 day"
+   },
+   "429": {
+    "id": 429,
+    "name": "Javo v1",
+    "family": "trend",
+    "overview": "Javo v1 combines Heikin Ashi candles with a pair of exponential moving averages. A position is opened when the HA direction and the fast/slow EMA crossover align. The approach attempts to catch emerging trends while smoothing noise.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: HA bullish and `EMA_fast > EMA_slow`\n  - **Short**: HA bearish and `EMA_fast < EMA_slow`\n- **Long/Short**: Both sides\n- **Exit Criteria**: Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `FastEmaPeriod` = 1\n  - `SlowEmaPeriod` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Heikin Ashi, EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Hourly\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: HA bullish and `EMA_fast > EMA_slow`\n  - **Short**: HA bearish and `EMA_fast < EMA_slow`\n- **Long/Short**: Both sides\n- **Exit Criteria**: Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `FastEmaPeriod` = 1\n  - `SlowEmaPeriod` = 30\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Heikin Ashi, EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Hourly\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "78": {
+    "id": 78,
+    "name": "Outside Bar Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 121%. It performs best in the crypto market.\n\nWhen an outside bar forms, the algorithm determines whether the candle is bullish or bearish. A bullish outside bar after a decline opens a long position with a stop below the bar's low. A bearish outside bar after a rally triggers a short with a stop above its high. Trades exit if price subsequently breaks through that extreme.\n\nThe setup seeks quick reversals following an exhaustive thrust and is best used when markets are choppy rather than trending strongly.\n\n## Details\n\n- **Entry Criteria**: Outside bar closing opposite the previous move.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price breaking outside bar high/low or stop-loss.\n- **Stops**: Yes, placed beyond the pattern.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Outside bar closing opposite the previous move.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price breaking outside bar high/low or stop-loss.\n- **Stops**: Yes, placed beyond the pattern.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "479": {
+    "id": 479,
+    "name": "3x Supertrend",
+    "family": "trend",
+    "overview": "The **3x Supertrend** strategy uses three ATR-based bands with different periods and multipliers.\nA long position is opened when price rises above all three bands and the fast band switches to\nuptrend. The trade is closed when price falls below every band, signaling loss of bullish momentum.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**: Price above all bands and fast band turning up.\n- **Exit Criteria**: Price below all bands.\n- **Stops**: None.\n- **Default Values**:\n  - `AtrPeriod1` = 11\n  - `Factor1` = 1\n  - `AtrPeriod2` = 12\n  - `Factor2` = 2\n  - `AtrPeriod3` = 13\n  - `Factor3` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: ATR-based Supertrend\n  - Complexity: Medium\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**: Price above all bands and fast band turning up.\n- **Exit Criteria**: Price below all bands.\n- **Stops**: None.\n- **Default Values**:\n  - `AtrPeriod1` = 11\n  - `Factor1` = 1\n  - `AtrPeriod2` = 12\n  - `Factor2` = 2\n  - `AtrPeriod3` = 13\n  - `Factor3` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: ATR-based Supertrend\n  - Complexity: Medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "503": {
+    "id": 503,
+    "name": "Advanced Position Management",
+    "family": "trend",
+    "overview": "The strategy enters on EMA crossover and manages positions using three take-profit levels and an optional trailing stop.\n\n## Details\n\n- **Entry Criteria**: Fast EMA crossing slow EMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss, take-profit levels, or trailing stop.\n- **Stops**: Initial and trailing.\n",
+    "details": "- **Entry Criteria**: Fast EMA crossing slow EMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop-loss, take-profit levels, or trailing stop.\n- **Stops**: Initial and trailing.",
+    "parameters": ""
+   },
+   "2760": {
+    "id": 2760,
+    "name": "Blau Ergodic MDI",
+    "family": "trend",
+    "overview": "The Blau Ergodic Market Directional Indicator (MDI) strategy reproduces the behaviour of the MetaTrader expert advisor `Exp_BlauErgodicMDI`. The algorithm operates on a higher timeframe candle stream (default 4H) and applies a triple smoothing pipeline to the selected price input in order to build a momentum histogram and a signal line. Trading decisions are derived from that histogram using one of three configurable entry modes:\n\n1. **Breakdown** – trades when the histogram crosses the zero line.\n2. **Twist** – reacts to reversals in the histogram slope (momentum changing direction).\n3. **CloudTwist** – acts on histogram / signal-line crossovers.\n\nEvery signal can optionally close opposing positions and/or open new trades depending on the permission flags provided by the user.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `Volume` | Order size used when opening positions. |\n| `StopLossPoints` | Stop loss distance in instrument points (0 disables). |\n| `TakeProfitPoints` | Take profit distance in instrument points (0 disables). |\n| `SlippagePoints` | Maximum price slippage in points applied to market orders. |\n| `AllowLongEntries` / `AllowShortEntries` | Allow opening positions in the respective direction. |\n| `AllowLongExits` / `AllowShortExits` | Allow closing existing positions on opposite signals. |\n| `Mode` | Entry mode (Breakdown / Twist / CloudTwist). |\n| `CandleType` | Timeframe of candles used for calculations (default 4H). |\n| `SmoothingMethods` | Moving average family used in all smoothing steps. |\n| `PrimaryLength` | Baseline smoothing length for the applied price. |\n| `FirstSmoothingLength` | First smoothing length applied to momentum. |\n| `SecondSmoothingLength` | Second smoothing length forming the histogram. |\n| `SignalLength` | Smoothing length of the histogram to create the signal line. |\n| `AppliedPrices` | Price source used in indicator calculations. |\n| `SignalBarShift` | Number of closed bars to look back when evaluating signals. |\n| `Phase` | Reserved parameter kept for compatibility (not used in the current implementation). |"
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_101": {
+  "strategy_ids": [
+   2550,
+   2239,
+   3627,
+   1169,
+   574,
+   3018,
+   1400,
+   1636,
+   582,
+   3859
+  ],
+  "docs": {
+   "2550": {
+    "id": 2550,
+    "name": "Support Resist Trade",
+    "family": "trend",
+    "overview": "Breakout strategy ported from MetaTrader that combines a long-term EMA trend filter with dynamic support and resistance levels. It looks back over the recent swing range, waits for price to break the prior ceiling or floor in the direction of the trend, and manages positions with staged pip-based trailing stops.\n\n## Details\n\n- **Entry Criteria**: price closes beyond the previous `Lookback`-period high (long) or low (short) and the bar opens above/below the EMA `MaPeriod`\n- **Long/Short**: Both\n- **Exit Criteria**: trailing stop hits or a profitable position crosses back through the refreshed support/resistance band\n- **Stops**: initial stop at the opposite band, trail after +20/+40/+60 pip moves (locking 10/20/30 pips respectively)\n- **Default Values**:\n  - `Lookback` = 55\n  - `MaPeriod` = 500\n  - `CandleType` = 1 minute\n  - `OrderVolume` = 0.1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, Highest, Lowest\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price closes beyond the previous `Lookback`-period high (long) or low (short) and the bar opens above/below the EMA `MaPeriod`\n- **Long/Short**: Both\n- **Exit Criteria**: trailing stop hits or a profitable position crosses back through the refreshed support/resistance band\n- **Stops**: initial stop at the opposite band, trail after +20/+40/+60 pip moves (locking 10/20/30 pips respectively)\n- **Default Values**:\n  - `Lookback` = 55\n  - `MaPeriod` = 500\n  - `CandleType` = 1 minute\n  - `OrderVolume` = 0.1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, Highest, Lowest\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2239": {
+    "id": 2239,
+    "name": "Elliott Wave Oscillator",
+    "family": "trend",
+    "overview": "This strategy applies the Elliott Wave Oscillator (EWO) on candle closes. The EWO is calculated as the difference between a fast and a slow Simple Moving Average (default 5 and 35 periods). Trading logic looks for turning points in the oscillator to capture potential trend reversals.\n\nA long position is opened when the oscillator forms a local trough and starts rising. A short position is opened when the oscillator forms a local peak and starts falling. Existing positions are reversed accordingly. Optional percentage based take‑profit and stop‑loss are supported through `StartProtection`.\n\n## Details\n\n- **Indicator**: Elliott Wave Oscillator = SMA(fast) − SMA(slow).\n- **Entry Criteria**:\n  - **Long**: oscillator value was falling then turns upward.\n  - **Short**: oscillator value was rising then turns downward.\n- **Long/Short**: Both.\n- **Exit Criteria**: Position reverses on opposite signal or exits via stop or take‑profit.\n- **Stops**: Percentage stop‑loss and take‑profit.\n- **Filters**: None.\n",
+    "details": "- **Indicator**: Elliott Wave Oscillator = SMA(fast) − SMA(slow).\n- **Entry Criteria**:\n  - **Long**: oscillator value was falling then turns upward.\n  - **Short**: oscillator value was rising then turns downward.\n- **Long/Short**: Both.\n- **Exit Criteria**: Position reverses on opposite signal or exits via stop or take‑profit.\n- **Stops**: Percentage stop‑loss and take‑profit.\n- **Filters**: None.",
+    "parameters": ""
+   },
+   "3627": {
+    "id": 3627,
+    "name": "Rectangle Test",
+    "family": "trend",
+    "overview": "The Rectangle Test strategy reproduces the MetaTrader \"RectangleTest\" expert using StockSharp's high-level API. It detects sideways ranges on an intraday time frame, checks whether two moving averages and the current price stay inside the detected range, and then trades breakouts away from the rectangle in the direction of the faster EMA. All logic is executed on completed candles received from a configurable candle source.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `EmaPeriod` | 45 | Period of the fast EMA. |\n| `SmaPeriod` | 200 | Period of the slow SMA. |\n| `RangeCandles` | 10 | Number of candles forming the rectangle. |\n| `RectangleSizePercent` | 0.5 | Maximum rectangle height allowed for trading. |\n| `StopLossPoints` | 250 | Stop-loss distance in price steps. |\n| `TakeProfitPoints` | 750 | Take-profit distance in price steps. |\n| `UseRiskMoneyManagement` | true | Toggle between risk-based and fixed volume. |\n| `RiskPercent` | 1 | Percentage of account equity risked per trade. |\n| `FixedVolume` | 1 | Fixed volume when risk-based sizing is disabled. |\n| `MaxLosingTradesPerDay` | 1 | Daily cap on losing trades. |\n| `TradeStartTime` | 03:00 | Time of day when entries are allowed. |\n| `TradeEndTime` | 22:50 | Time of day after which no new entries are generated. |\n| `EnableTimeClose` | false | Enables end-of-day liquidation. |\n| `TimeClose` | 23:00 | Time of day to close all positions. |\n| `CandleType` | 1-hour candles | Primary candle data source. |"
+   },
+   "1169": {
+    "id": 1169,
+    "name": "Pivot Point SuperTrend TrendFilter",
+    "family": "trend",
+    "overview": "Combines a pivot-based SuperTrend line with a SuperTrend trend filter and a moving average confirmation. Trades when the trend flips or when a pivot SuperTrend signal appears within a date window.\n\n## Details\n\n- **Entry Criteria**:\n  - Trend filter flips up and price is above the moving average.\n  - Pivot SuperTrend emits a buy signal within the configured date range.\n- **Exit Criteria**:\n  - Trend filter flips down or pivot SuperTrend emits a sell signal.\n- **Stops**: None\n- **Default Values**:\n  - `PivotPeriod` = 2\n  - `Factor` = 3\n  - `AtrPeriod` = 10\n  - `TrendAtrPeriod` = 10\n  - `TrendMultiplier` = 3\n  - `MaPeriod` = 20\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Pivot, SuperTrend, SMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: Optional\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Trend filter flips up and price is above the moving average.\n  - Pivot SuperTrend emits a buy signal within the configured date range.\n- **Exit Criteria**:\n  - Trend filter flips down or pivot SuperTrend emits a sell signal.\n- **Stops**: None\n- **Default Values**:\n  - `PivotPeriod` = 2\n  - `Factor` = 3\n  - `AtrPeriod` = 10\n  - `TrendAtrPeriod` = 10\n  - `TrendMultiplier` = 3\n  - `MaPeriod` = 20\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Pivot, SuperTrend, SMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: Optional\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "574": {
+    "id": 574,
+    "name": "Bitcoin Exponential Profit",
+    "family": "trend",
+    "overview": "The strategy enters long when the fast EMA crosses above the slow EMA. Position size is calculated from a risk percentage of account equity. Exits occur on EMA crossunder, stop loss, take profit, or trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA → long.\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Fast EMA crosses below slow EMA.\n  - Stop loss at risk percent.\n  - Take profit at risk × reward multiplier.\n  - Trailing stop offset from highest price.\n- **Stops**: SL, TP, trailing stop\n- **Default Values**:\n  - Fast EMA length = 9\n  - Slow EMA length = 21\n  - Risk percent = 1\n  - Reward multiplier = 2\n  - Trailing stop offset percent = 0.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: SL & TP & Trailing\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA → long.\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Fast EMA crosses below slow EMA.\n  - Stop loss at risk percent.\n  - Take profit at risk × reward multiplier.\n  - Trailing stop offset from highest price.\n- **Stops**: SL, TP, trailing stop\n- **Default Values**:\n  - Fast EMA length = 9\n  - Slow EMA length = 21\n  - Risk percent = 1\n  - Reward multiplier = 2\n  - Trailing stop offset percent = 0.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: SL & TP & Trailing\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3018": {
+    "id": 3018,
+    "name": "Ketty Channel Breakout",
+    "family": "breakout",
+    "overview": "The Ketty Channel Breakout Strategy is a direct C# conversion of the original Ketty.mq5 expert advisor. It builds a short-term price channel during a configurable pre-market window and waits for the market to spike outside of that range. When a spike happens, the strategy places a stop order on the opposite side of the channel with optional stop-loss and take-profit protection, mirroring the pending order workflow implemented in the MQL5 script.",
+    "details": "",
+    "parameters": "- `EntryVolume` – default volume for new orders.\n- `StopLossPips` – distance between the entry price and the protective stop order; set to zero to disable.\n- `TakeProfitPips` – distance between the entry price and the take-profit order; set to zero to disable.\n- `ChannelStartHour` / `ChannelStartMinute` – time of day when the channel calculation begins.\n- `ChannelEndHour` / `ChannelEndMinute` – time of day when the channel calculation ends. The channel may span past midnight because the implementation normalises the time window.\n- `PlacingStartHour` – hour of day when pending orders can start to appear.\n- `PlacingEndHour` – hour of day after which all pending orders are cancelled.\n- `ChannelBreakthroughPips` – breakout buffer that must be pierced by the latest candle before a stop order is armed.\n- `OrderPriceShiftPips` – additional offset added to the channel border when placing the pending stop order.\n- `VisualizeChannel` – when enabled the strategy draws two horizontal lines that represent the current channel on the chart.\n- `CandleType` – timeframe used to build and monitor the channel."
+   },
+   "1400": {
+    "id": 1400,
+    "name": "The Weekly Factor",
+    "family": "breakout",
+    "overview": "Implements the Weekly Factor pattern described by Andrea Unger. The strategy trades breakouts of the session high or low when the five-day range shows compression.\n\n## Details\n- **Entry Criteria**: After session start, if Weekly Factor condition true and price breaks session high -> long, breaks session low -> short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close at new session or after two days of profitable position.\n- **Stops**: None.\n- **Default Values**:\n  - `RangeFilter` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Weekly factor\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: After session start, if Weekly Factor condition true and price breaks session high -> long, breaks session low -> short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close at new session or after two days of profitable position.\n- **Stops**: None.\n- **Default Values**:\n  - `RangeFilter` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Weekly factor\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 15m\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1636": {
+    "id": 1636,
+    "name": "Good Gbbi",
+    "family": "momentum",
+    "overview": "This strategy opens a single position at a specific hour of the day based on the difference between historical open prices.\n\n## Logic\n\n* Works on hourly candles by default.\n* At `TradeTime` hour the strategy compares the open price from `T1` bars ago with the open price from `T2` bars ago.\n* If the older open is higher than the recent one by `DeltaShort` points a short position is opened.\n* If the recent open is higher than the older one by `DeltaLong` points a long position is opened.\n* Only one trade per day is allowed. Trading is enabled again after the hour is greater than `TradeTime`.\n* Each position is protected by individual take-profit and stop-loss levels and can be forcibly closed after `MaxOpenTime` hours.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitLong` | Take profit distance in points for long positions. |\n| `StopLossLong` | Stop loss distance in points for long positions. |\n| `TakeProfitShort` | Take profit distance in points for short positions. |\n| `StopLossShort` | Stop loss distance in points for short positions. |\n| `TradeTime` | Hour of day when the entry conditions are checked. |\n| `T1` | Number of bars back for the first open price. |\n| `T2` | Number of bars back for the second open price. |\n| `DeltaLong` | Required difference in points to open a long position. |\n| `DeltaShort` | Required difference in points to open a short position. |\n| `MaxOpenTime` | Maximum position holding time in hours, 0 disables the check. |\n| `CandleType` | Candle type to process. |\n\n## Notes\n\nThe original idea comes from the MetaTrader expert advisor *GoodG@bi*. This port uses StockSharp high-level API and processes only finished candles. Ensure that the security's `PriceStep` is configured correctly to interpret point values.\n",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitLong` | Take profit distance in points for long positions. |\n| `StopLossLong` | Stop loss distance in points for long positions. |\n| `TakeProfitShort` | Take profit distance in points for short positions. |\n| `StopLossShort` | Stop loss distance in points for short positions. |\n| `TradeTime` | Hour of day when the entry conditions are checked. |\n| `T1` | Number of bars back for the first open price. |\n| `T2` | Number of bars back for the second open price. |\n| `DeltaLong` | Required difference in points to open a long position. |\n| `DeltaShort` | Required difference in points to open a short position. |\n| `MaxOpenTime` | Maximum position holding time in hours, 0 disables the check. |\n| `CandleType` | Candle type to process. |"
+   },
+   "582": {
+    "id": 582,
+    "name": "Black-Scholes Option Pricing",
+    "family": "volatility",
+    "overview": "Calculates theoretical option prices using the Black-Scholes model.\nProvides call or put price depending on the selected type.\n\n## Details\n\n- **Spot**: Uses the close price as the underlying.\n- **Strike**: User-defined option strike.\n- **Volatility**: Implied volatility parameter.\n- **Rate**: Risk-free interest rate.\n- **Expiry**: Days until option expiration.\n- **Type**: Call or Put (European).\n",
+    "details": "- **Spot**: Uses the close price as the underlying.\n- **Strike**: User-defined option strike.\n- **Volatility**: Implied volatility parameter.\n- **Rate**: Risk-free interest rate.\n- **Expiry**: Days until option expiration.\n- **Type**: Call or Put (European).",
+    "parameters": ""
+   },
+   "3859": {
+    "id": 3859,
+    "name": "Bronze Pan",
+    "family": "mean_reversion",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor \"Bronzew_pan\". It trades a single instrument on finished candles and combines the proprietary DayImpuls oscillator with Williams %R and the Commodity Channel Index (CCI) to detect momentum reversals.\n\n## How it works\n\n1. Subscribes to the configured candle type and runs DayImpuls, Williams %R and CCI with the same period.\n2. Keeps independent accounting of long and short exposures to emulate the original hedging behaviour.\n3. Closes all positions once the floating profit reaches `ProfitTarget` or drops below `LossTarget`.\n4. Opens a short when DayImpuls stays above `DayImpulsShortLevel` and declines, while Williams %R is above `WilliamsLevelUp` and CCI exceeds `CciLevel`.\n5. Opens a long when DayImpuls stays below `DayImpulsLongLevel` and rises, while Williams %R is below `WilliamsLevelDown` and CCI is less than `-CciLevel`.\n6. If the floating PnL moves beyond the `PredBand` bounds, the strategy sends a large averaging order multiplied by `LotMultiplier` to flip direction, mirroring the emergency recovery logic from MetaTrader.\n7. Individual stop-loss and take-profit values are monitored for long and short baskets using pip distances converted to prices.\n8. No new trades are opened when the account balance falls below `MinimumBalance` or when both long and short baskets are active.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Base volume for entries. | `0.1` |\n| `LongStopLossPips` | Stop-loss distance for long baskets in pips. | `0` |\n| `ShortStopLossPips` | Stop-loss distance for short baskets in pips. | `0` |\n| `LongTakeProfitPips` | Take-profit distance for long baskets in pips. | `0` |\n| `ShortTakeProfitPips` | Take-profit distance for short baskets in pips. | `0` |\n| `IndicatorPeriod` | Length used by DayImpuls, Williams %R and CCI. | `14` |\n| `CciLevel` | Absolute CCI threshold confirming overbought/oversold. | `150` |\n| `WilliamsLevelUp` | Williams ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Base volume for entries. | `0.1` |\n| `LongStopLossPips` | Stop-loss distance for long baskets in pips. | `0` |\n| `ShortStopLossPips` | Stop-loss distance for short baskets in pips. | `0` |\n| `LongTakeProfitPips` | Take-profit distance for long baskets in pips. | `0` |\n| `ShortTakeProfitPips` | Take-profit distance for short baskets in pips. | `0` |\n| `IndicatorPeriod` | Length used by DayImpuls, Williams %R and CCI. | `14` |\n| `CciLevel` | Absolute CCI threshold confirming overbought/oversold. | `150` |\n| `WilliamsLevelUp` | Williams %R level required for shorts. | `-15` |\n| `WilliamsLevelDown` | Williams %R level required for longs. | `-85` |\n| `DayImpulsShortLevel` | DayImpuls level that enables short entries. | `50` |\n| `DayImpulsLongLevel` | DayImpuls level that enables long entries. | `-50` |\n| `ProfitTarget` | Floating profit that closes every position. | `500` |\n| `LossTarget` | Floating loss that closes every position. | `-2000` |\n| `PredBand` | Profit band used to trigger averaging reversals. | `100` |\n| `LotMultiplier` | Multiplier applied to the base volume during reversals. | `30` |\n| `MinimumBalance` | Minimal account balance required to keep trading. | `3000` |\n| `CandleType` | Time-frame used for candle subscriptions. | `15m` |"
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_223": {
+  "strategy_ids": [
+   2405,
+   1279,
+   690,
+   2878,
+   1658,
+   1791,
+   1913,
+   839,
+   366,
+   982
+  ],
+  "docs": {
+   "2405": {
+    "id": 2405,
+    "name": "Fibo iSAR",
+    "family": "trend",
+    "overview": "This strategy combines fast and slow Parabolic SAR indicators with Fibonacci retracement levels. When the fast SAR lies above the slow SAR and below the price, the strategy expects an uptrend and places a buy limit order at the 50% Fibonacci retracement of the recent range. The stop loss is placed below the swing low and the take profit at the 161% extension. For a downtrend the logic is mirrored with sell limit orders.\n\n## Details\n\n- **Entry Criteria**: Trend direction from fast/slow SAR; entry on 50% Fibonacci retracement.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit levels.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StepFast` = 0.02\n  - `MaximumFast` = 0.2\n  - `StepSlow` = 0.01\n  - `MaximumSlow` = 0.1\n  - `CountBarSearch` = 3\n  - `IndentStopLoss` = 30\n  - `FiboEntranceLevel` = 50\n  - `FiboProfitLevel` = 161\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, Fibonacci\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Trend direction from fast/slow SAR; entry on 50% Fibonacci retracement.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit levels.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StepFast` = 0.02\n  - `MaximumFast` = 0.2\n  - `StepSlow` = 0.01\n  - `MaximumSlow` = 0.1\n  - `CountBarSearch` = 3\n  - `IndentStopLoss` = 30\n  - `FiboEntranceLevel` = 50\n  - `FiboProfitLevel` = 161\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, Fibonacci\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1279": {
+    "id": 1279,
+    "name": "RSI, Volume, MACD, EMA Combo",
+    "family": "trend",
+    "overview": "Combines MACD and RSI signals with EMA trend and volume confirmation. Long entries require MACD above its signal, RSI above the overbought level, price above EMA and volume greater than its SMA. Shorts use the opposite logic. Positions close when RSI crosses the 50 line.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "690": {
+    "id": 690,
+    "name": "Dont Make Me Cross",
+    "family": "trend",
+    "overview": "EMA crossover strategy with vertical shift.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Shifted short EMA crosses above shifted long EMA.\n  - **Short**: Shifted short EMA crosses below shifted long EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortEmaLength` = 9\n  - `LongEmaLength` = 21\n  - `ShiftAmount` = -50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Shifted short EMA crosses above shifted long EMA.\n  - **Short**: Shifted short EMA crosses below shifted long EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortEmaLength` = 9\n  - `LongEmaLength` = 21\n  - `ShiftAmount` = -50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2878": {
+    "id": 2878,
+    "name": "Martingale VI Hybrid Strategy (C#)",
+    "family": "trend",
+    "overview": "The Martingale VI Hybrid strategy is a conversion of the original MetaTrader expert advisor into the StockSharp high-level API. It combines a fast/slow moving average filter with a MACD confirmation and scales into positions using a martingale multiplier. The strategy accumulates positions when price moves against the last entry by a fixed pip distance and unifies the take profit of the entire cluster at the level defined by the most recent order. Additional global exits include fixed profit in money, profit as a percentage of starting equity, and a trailing stop in money.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Candle Type` | Primary candle series used for indicator updates.\n| `Fast MA`, `Slow MA` | Periods of the simple moving averages that define the trend filter.\n| `MACD Fast`, `MACD Slow`, `MACD Signal` | Parameters of the MACD indicator used for confirmation.\n| `Initial Volume` | Volume of the first order in a martingale cycle.\n| `Volume Multiplier` | Multiplier applied to the previous order volume for every addition.\n| `Max Trades` | Maximum number of simultaneous orders in the martingale sequence.\n| `Take Profit (pips)` | Take profit distance for each order; the latest order defines the shared take profit price.\n| `Pip Step` | Price move against the current cycle that triggers the next addition.\n| `Use Money TP`, `Money TP` | Enables and sets the profit target in account currency.\n| `Use Percent TP`, `Percent TP` | Enables and sets the profit target as a percentage of initial portfolio value.\n| `Enable Trailing`, `Trailing Activation`, `Trailing Drawdown` | Parameters of the cash-based trailing stop that protects accumulated profit.\n| `Close Max Orders` | When enabled, the whole position is closed as soon as the martingale order limit is reached."
+   },
+   "1658": {
+    "id": 1658,
+    "name": "MTF RSI SAR",
+    "family": "trend",
+    "overview": "This strategy combines **Relative Strength Index (RSI)** readings across four timeframes, **Parabolic SAR**, and **Bollinger Bands** to capture trend continuation after short pullbacks. Signals are generated on 5‑minute candles while higher timeframes act as confirmation filters.\n\n## Concept\n\n1. **RSI filter** – 5, 15, 30 and 60 minute RSI values must all be above 50 for long entries or below 50 for short entries. This multi‑timeframe confirmation aims to align trades with the broader trend.\n2. **Parabolic SAR filter** – Parabolic SAR values on 5, 15 and 30 minute charts must be below the current candle for longs or above for shorts. This ensures that price is trending in the desired direction.\n3. **Bollinger Band trigger** – On the 5‑minute chart the candle close must break the upper band for longs or the lower band for shorts. Bollinger Bands provide an overbought/oversold trigger.\n4. **Entry and exit** – A long position is opened when all active filters point up. A short position is opened when all active filters point down. The opposite signal closes an open position.\n\nAny of the three filters can be individually disabled via parameters, allowing the strategy to operate with RSI only, Bollinger Bands only, SAR only, or any combination of the above.\n\n## Parameters\n\n- `UseRsi` – enable RSI filter (default: true).\n- `UseBollinger` – enable Bollinger Band trigger (default: true).\n- `UseSar` – enable Parabolic SAR filter (default: true).\n- `RsiPeriod` – RSI calculation period (default: 14).\n- `BollingerPeriod` – number of bars for Bollinger Bands (default: 20).\n- `BollingerWidth` – width (standard deviation multiplier) for Bollinger Bands (default: 2).\n- `SarStep` – acceleration factor for Parabolic SAR (default: 0.02).\n- `SarMax` – maximum acceleration factor for Parabolic SAR (default: 0.2).\n- `CandleType` – base candle timeframe, 5 minutes by default.\n\n## Trading Rules\n\n- **Long**: all enabled filters provide bullish signals.\n- **Short**: all enabled filters provi",
+    "details": "",
+    "parameters": "- `UseRsi` – enable RSI filter (default: true).\n- `UseBollinger` – enable Bollinger Band trigger (default: true).\n- `UseSar` – enable Parabolic SAR filter (default: true).\n- `RsiPeriod` – RSI calculation period (default: 14).\n- `BollingerPeriod` – number of bars for Bollinger Bands (default: 20).\n- `BollingerWidth` – width (standard deviation multiplier) for Bollinger Bands (default: 2).\n- `SarStep` – acceleration factor for Parabolic SAR (default: 0.02).\n- `SarMax` – maximum acceleration factor for Parabolic SAR (default: 0.2).\n- `CandleType` – base candle timeframe, 5 minutes by default."
+   },
+   "1791": {
+    "id": 1791,
+    "name": "Stoch TP TS V3103",
+    "family": "other",
+    "overview": "Trades stochastic oscillator crossovers at a specific minute each hour. When %K crosses %D within the 20-80 range, the strategy opens a position. It applies an initial stop loss and a take profit at three times the activation distance, then switches to a trailing stop once price moves by the configured offset.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1913": {
+    "id": 1913,
+    "name": "Fibo Stop",
+    "family": "other",
+    "overview": "The Fibo Stop strategy trails the protective stop along Fibonacci retracement levels defined by two prices: start and end. The strategy opens a position in the direction from the start level to the end level and moves the stop to each new Fibonacci level once price crosses it.",
+    "details": "",
+    "parameters": "- `FiboStart` – base price where Fibonacci calculation begins.\n- `FiboEnd` – final price defining the Fibonacci range.\n- `OffsetPoints` – number of price steps added behind each Fibonacci level to place the stop.\n- `CandleType` – candle series used for monitoring price."
+   },
+   "839": {
+    "id": 839,
+    "name": "Get Value From N Years Ago",
+    "family": "other",
+    "overview": "Shows how to retrieve the time components of a candle from N years in the past. No trades are executed.\n\n## Details\n\n- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `YearsBack` = 1\n  - `Candle Type` = 1-day\n- **Filters**:\n  - Category: Time utility\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `YearsBack` = 1\n  - `Candle Type` = 1-day\n- **Filters**:\n  - Category: Time utility\n  - Direction: None\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "366": {
+    "id": 366,
+    "name": "Dollar Carry Trade",
+    "family": "other",
+    "overview": "The **Dollar Carry Trade** strategy ranks USD currency pairs by interest-rate differential and goes long USD against low-carry currencies and short against high-carry currencies. Rebalances monthly on the first trading day.\n\n## Details\n- **Entry Criteria**: Rank by carry; long low-carry, short high-carry.\n- **Long/Short**: Both.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `K = 3`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Rates\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Rank by carry; long low-carry, short high-carry.\n- **Long/Short**: Both.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `K = 3`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Rates\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "982": {
+    "id": 982,
+    "name": "Liquidity Internal Market Shift",
+    "family": "other",
+    "overview": "This strategy detects internal market structure shifts that coincide with liquidity sweeps at recent highs or lows. A trade is opened when price touches a liquidity line and then shifts structure in the opposite direction. Trading can be limited to bullish or bearish setups only, or both.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price closes above prior bearish structure and has touched the recent low liquidity line.\n  - **Short**: Price closes below prior bullish structure and has touched the recent high liquidity line.\n- **Long/Short**: Both directions or selectable Bullish Only / Bearish Only.\n- **Exit Criteria**:\n  - Opposite signal after entry.\n  - Stop-loss at `StopLossPips` pips.\n  - Optional take-profit at `TakeProfitPips` pips.\n- **Stops**: Yes, configurable stop-loss and optional take-profit.\n- **Filters**:\n  - Trades only within the specified time range.\n  - Signal lock prevents repeated entries for several bars.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price closes above prior bearish structure and has touched the recent low liquidity line.\n  - **Short**: Price closes below prior bullish structure and has touched the recent high liquidity line.\n- **Long/Short**: Both directions or selectable Bullish Only / Bearish Only.\n- **Exit Criteria**:\n  - Opposite signal after entry.\n  - Stop-loss at `StopLossPips` pips.\n  - Optional take-profit at `TakeProfitPips` pips.\n- **Stops**: Yes, configurable stop-loss and optional take-profit.\n- **Filters**:\n  - Trades only within the specified time range.\n  - Signal lock prevents repeated entries for several bars.",
+    "parameters": ""
+   }
+  }
+ }
+}

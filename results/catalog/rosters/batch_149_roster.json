@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2784,
+      "name": "MA Crossover Multi Timeframe",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(close,50))",
+      "exit_long": "crossbelow(sma(close,20), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish crossover opens a long and the bearish crossover closes it, exactly as documented. The engine has a single candle series, so the two timeframe streams collapse into one series with CurrentMaPeriod 20 and PreviousMaPeriod 50 (20 plus the PreviousPeriodAddition 30) as explicit fallbacks, and both averages are SMAs because MaType has no value. CurrentShift/PreviousShift, the day and time window, the equity guard and ClosePositionsOnCross are engine-side, and StopLossPercent, TrailingStopPercent and TakeProfitPercent are named without values, so the percentage fields stay null."
+    },
+    {
+      "id": 126,
+      "name": "Quarterly Expiry",
+      "family": "trend",
+      "entry_long": "sma(close,20) > sma(close,50)",
+      "exit_long": "sma(close,20) < sma(close,50)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The entry timing is a calendar/seasonality effect (start of the week) and the exit happens before settlement day, neither of which the DSL can express, so the market-derived leg the doc does describe, trading in the direction of the prevailing trend, is used with SMA(20)/SMA(50) as explicit fallbacks. The documented StopLoss 2% is applied as a percentage and the opposite-signal exit stands in for the pre-settlement flatten; the 15-minute CandleType and the Both direction are roster-level attributes."
+    },
+    {
+      "id": 607,
+      "name": "CCI MACD",
+      "family": "trend",
+      "entry_long": "crossabove(zscore((high+low+close)/3,20), 0) and macd(close,12,26) > 0 and close > ema(close,125) and close > ema(close,750) and close < ema(close,125) + 2 * atr(high,low,close,14)",
+      "exit_long": "crossbelow(zscore((high+low+close)/3,20), 0) or macd(close,12,26) < 0 or close < ema(close,750)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All five documented long conditions are kept: a CCI-style z-score of the typical price crossing above zero, MACD(12,26) above zero, price above EMA125 and EMA750, and price still below the upper ATR band, where the undocumented band multiplier and ATR length fall back to 2.0 and 14. The opposite-signal exit drops the trend legs and the short branch is ignored, and the documented absence of stops and targets is respected with null percentages."
+    },
+    {
+      "id": 3487,
+      "name": "MACD Diver and RSI",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30 and crossabove(macd(close,12,26), macd_signal(close,12,26,9))",
+      "exit_long": "rsi(close,14) > 70 or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two-stage idea is preserved: RSI sits in the oversold extreme while the MACD line crosses back above its signal, which is the bullish form of the documented divergence. Every length and threshold is undocumented, so RSI(14) with 30/70 and MACD 12/26/9 are explicit fallbacks. Independent long and short configuration is a roster-level choice, and the pip-based Long/ShortStopLossPips and TakeProfitPips cannot be converted, so both percentage fields are null."
+    },
+    {
+      "id": 3413,
+      "name": "5Mins Envelopes",
+      "family": "trend",
+      "entry_long": "low < sma((high+low)/2,3) * 0.9995 and close < sma((high+low)/2,3) * 0.9995",
+      "exit_long": "close >= sma((high+low)/2,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EnvelopePeriod 3 and EnvelopeDeviationPercent 0.05 are used on the median price, with SMA standing in for the unavailable linear weighted average. DistancePoints 140 is a price-point distance with no portable equivalent, so the second leg of the documented AND, the current price itself beyond the lower band, carries the spike condition together with the prior candle's low, and the mean-reversion exit is the close back at the envelope. The 250/120 point stop and trailing, MaxSpreadPoints 25, TradeVolume and the 5-minute CandleType are not expressible, so the percentage fields stay null."
+    },
+    {
+      "id": 3646,
+      "name": "Neural Network Template",
+      "family": "momentum",
+      "entry_long": "rsi(close,14) > 50 and macd(close,12,26) > macd_signal(close,12,26,9) and roc(close,14) > 1",
+      "exit_long": "rsi(close,14) < 50 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doc states the network is replaced by a deterministic score that trades when RSI and MACD agree and the projected move is large enough, so that agreement is written out directly with RSI(14) and MACD 12/26/9 as explicit fallbacks, and the point-based MinTargetPoints leg becomes a 1% projected change. Disagreement on either feature closes the position. BarsToPattern, TradeLevel, ProfitMultiply, MaxTakeProfitPoints, StopLossPoints, TradeVolume and the CandleType are window, point and size settings, so no percentage stop is set."
+    },
+    {
+      "id": 2820,
+      "name": "N-Candles Sequence",
+      "family": "volatility",
+      "entry_long": "close > open and bars_since(close <= open) >= 4",
+      "exit_long": "close < open and bars_since(close >= open) >= 4",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The streak of identical candle bodies is a long position in the streak's direction, and since bars_since counts the bars elapsed since the last opposite test it expresses exactly three consecutive bullish bodies, an explicit fallback for the undocumented ConsecutiveCandles. The mirror test is the bearish sequence and therefore the long exit. TakeProfitPips, StopLossPips, TrailingStopPips and TrailingStepPips, the trading-hours filter, MinProfit lock, MaxPositions, MaxPositionVolume and the black-sheep ClosingBehavior are pip, clock and position-management features that leave both percentage fields null."
+    },
+    {
+      "id": 205,
+      "name": "Hull MA CCI",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,2) > 0 and 2 * ema(close,4) - ema(close,9) > sma(2 * ema(close,4) - ema(close,9),5) and zscore((high+low+close)/3,20) < -1",
+      "exit_long": "2 * ema(close,4) - ema(close,9) < sma(2 * ema(close,4) - ema(close,9),5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented HullPeriod 9 is rebuilt as the Hull construction 2*ema(close,4) - ema(close,9) because no weighted average exists, and its rising or falling state is judged against its own 5-bar mean; CciPeriod 20 maps to zscore of the typical price with the +/-100 levels read as +/-1. A two-bar positive return carries the documented trend-turn leg because a cross of the Hull line can never coincide with an oversold reading, and the short branch is ignored. The ATR(14) with the 2.0 multiplier is a volatility-scaled distance rather than a fixed percentage, so both percentage fields are null."
+    },
+    {
+      "id": 1649,
+      "name": "Line Order",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doc is explicit that this is manual line trading: a market order fires when price crosses an operator-supplied horizontal LinePrice, and no value for that level is given, so there is no market-derived reference price to encode and the never-true guard records the limitation. IsBuy, StopLoss, TakeProfit, TrailingStop and Volume are direction and price-unit settings, not market signals."
+    },
+    {
+      "id": 3468,
+      "name": "Trading Panel",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a manual order-entry helper whose PlaceBuyOrders and PlaceSellOrders methods are called by an external UI or script, so the strategy itself produces no market-derived signal and the never-true guard is used. TradeCount, the 2-pip and 10-pip protective distances, VolumePerTrade and TargetSecurity are order-management and routing settings."
+    }
+  ]
+}

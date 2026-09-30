@@ -1,0 +1,98 @@
+{
+ "batch_180": {
+  "strategy_ids": [
+   595,
+   1184,
+   600,
+   2654,
+   1482,
+   3503,
+   3174,
+   2681,
+   859,
+   2249
+  ],
+  "docs": {
+   "595": {
+    "id": 595,
+    "name": "Bollinger Bands",
+    "family": "trend",
+    "overview": "Strategy trading Bollinger Bands breakouts. Buys when the price closes above the upper band and sells when it closes below the lower band. Exits on a simple moving average cross or when a stop loss is hit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close above upper Bollinger Band\n  - Short: close below lower Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: close below SMA or price hits stop loss\n  - Short: close above SMA or price hits stop loss\n- **Stops**: Percent from entry price\n- **Default Values**:\n  - `BbLength` = 120\n  - `BbDeviation` = 2m\n  - `SmaLength` = 110\n  - `StopLossPercent` = 6m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: close above upper Bollinger Band\n  - Short: close below lower Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: close below SMA or price hits stop loss\n  - Short: close above SMA or price hits stop loss\n- **Stops**: Percent from entry price\n- **Default Values**:\n  - `BbLength` = 120\n  - `BbDeviation` = 2m\n  - `SmaLength` = 110\n  - `StopLossPercent` = 6m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1184": {
+    "id": 1184,
+    "name": "Previous Day High Low Long",
+    "family": "trend",
+    "overview": "This strategy goes long when price breaks above the previous day's high or low during a specified session and ADX indicates strengthening upward momentum.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: close crosses above previous day's high or low with rising ADX during the session.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - dynamic stop and profit targets or at session end.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `MaxProfit` = 150.\n  - `MaxStopLoss` = 15.\n  - `AdxLength` = 11.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: close crosses above previous day's high or low with rising ADX during the session.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - dynamic stop and profit targets or at session end.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `MaxProfit` = 150.\n  - `MaxStopLoss` = 15.\n  - `AdxLength` = 11.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "600": {
+    "id": 600,
+    "name": "CANX MA Crossover",
+    "family": "trend",
+    "overview": "This strategy trades EMA crossovers of the median price (HL2). A long position is opened when the fast EMA crosses above the slow EMA. If long-only mode is disabled, a short position is opened when the fast EMA crosses below the slow EMA. A start year filter prevents trading before the specified year.\n\n## Parameters\n- Candle Type\n- Fast EMA length\n- Multiplier (slow EMA = fast length * multiplier)\n- Long only\n- Start year\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Fast EMA length\n- Multiplier (slow EMA = fast length * multiplier)\n- Long only\n- Start year"
+   },
+   "2654": {
+    "id": 2654,
+    "name": "Tipu EA Multi-Timeframe",
+    "family": "trend",
+    "overview": "This strategy recreates the core logic of the Tipu Expert Advisor in StockSharp. It replaces the proprietary Tipu Trend and Tipu Stops indicators with a combination of exponential moving averages (EMA), Average Directional Index (ADX) filtering and Average True Range (ATR) risk controls. The system looks for trend alignment between a higher timeframe (default 1 hour) and a signal timeframe (default 15 minutes), then manages the position with a break-even pyramiding module, trailing stop logic and optional fixed take profit.\n\nThe implementation focuses on liquid, trending instruments where multi-timeframe momentum signals are reliable. The higher timeframe defines context and filters out ranging phases, while the signal timeframe supplies actual entries.",
+    "details": "",
+    "parameters": "- `AllowHedging` – Allow adding positions without first closing the opposite side.\n- `CloseOnReverseSignal` – Flatten the current position when an opposite signal arrives.\n- `EnableTakeProfit`, `TakeProfitPips` – Enable and configure the fixed take profit distance in pips.\n- `MaxRiskPips` – Maximum stop distance allowed in pips. Prevents entries with excessive initial risk.\n- `TradeVolume` – Base order size for the first position.\n- `EnableRiskFreePyramiding`, `RiskFreeStepPips`, `PyramidIncrementVolume`, `PyramidMaxVolume` – Control the risk-free pyramiding logic.\n- `EnableTrailingStop`, `TrailingStartPips`, `TrailingCushionPips` – Configure trailing stop behaviour.\n- `HigherFastLength`, `HigherSlowLength`, `LowerFastLength`, `LowerSlowLength` – EMA lengths for trend detection on both timeframes.\n- `AdxLength`, `AdxThreshold` – ADX parameters used to filter range-bound markets on the higher timeframe.\n- `AtrLength`, `AtrMultiplier` – ATR parameters for initial stop calculation.\n- `HigherSignalWindowMinutes` – Validity period for the higher timeframe signal.\n- `HigherCandleType`, `LowerCandleType` – Candle types/timeframes for context and signal processing."
+   },
+   "1482": {
+    "id": 1482,
+    "name": "Triangle Breakout Strategy with TP SL and EMA Filter",
+    "family": "trend",
+    "overview": "Detects triangle patterns from pivot highs and lows. Enters long on breakout above the triangle, optionally requiring price above EMA20 and EMA50, and uses percentage-based take-profit and stop-loss.\n\n## Details\n\n- **Entry Criteria**: close above triangle upper line with optional EMA20/EMA50 filter\n- **Long/Short**: Long\n- **Exit Criteria**: percentage take-profit or stop-loss\n- **Stops**: Yes\n- **Default Values**:\n  - `PivotLength` = 5\n  - `TakeProfitPercent` = 3\n  - `StopLossPercent` = 1.5\n  - `UseEmaFilter` = true\n  - `EmaFast` = 20\n  - `EmaSlow` = 50\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Pivot\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: close above triangle upper line with optional EMA20/EMA50 filter\n- **Long/Short**: Long\n- **Exit Criteria**: percentage take-profit or stop-loss\n- **Stops**: Yes\n- **Default Values**:\n  - `PivotLength` = 5\n  - `TakeProfitPercent` = 3\n  - `StopLossPercent` = 1.5\n  - `UseEmaFilter` = true\n  - `EmaFast` = 20\n  - `EmaSlow` = 50\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: EMA, Pivot\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3503": {
+    "id": 3503,
+    "name": "Manual Position Tracking Panel",
+    "family": "momentum",
+    "overview": "The original MQL5 expert advisor provided a visual control panel that allowed a trader to manage up to five long and five short positions manually. Buttons inside the panel deleted existing take-profit levels, recalculated new take-profit prices from the entry, or moved them to break-even for the selected tickets. The StockSharp port automates these protective actions without the visual interface. The strategy monitors the aggregated position for the configured symbol and dynamically maintains a protective take-profit order that mirrors the panel workflow.\n\nKey automation steps:\n\n- Place a take-profit at the entry price plus/minus a configurable MetaTrader pip distance when a position appears.\n- Optionally push the take-profit to the average entry price once the market moves in the favourable direction by the requested number of pips, effectively locking a break-even exit.\n- Respect broker freeze/stop distances when they are published via Level1 data, or approximate them using the current spread and a user-controlled multiplier.\n- Cancel the protective order whenever management is disabled or the position is closed, keeping the behaviour consistent with the \"Delete TP\" button from the panel.\n\nThe class relies exclusively on high-level StockSharp API methods (`SubscribeLevel1`, `SellLimit`, `BuyLimit`, `ReRegisterOrder`, etc.) and uses automatic volume/price normalisation so it can be attached to any instrument supported by the connector.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Take profit distance (pips)** | MetaTrader pip distance added to the entry price when creating the protective take-profit. |\n| **Enable entry-based take profit** | Enables automatic placement of the take-profit derived from the entry price. When disabled the strategy only reacts to break-even requests. |\n| **Enable break-even** | Moves the take-profit back to the average entry price once the break-even trigger is satisfied. |\n| **Break-even trigger (pips)** | Minimal favourable movement (in MetaTrader pips) required before break-even is applied. A value of `0` applies it immediately. |\n| **Manage long positions** | When `true` the long side of the aggregated position is processed. |\n| **Manage short positions** | When `true` the short side of the aggregated position is processed. |\n| **Remove take profit when disabled** | Cancels the protective order if management conditions are not satisfied (similar to the original Delete TP button). |\n| **Log management actions** | Enables informational logging for every create, modify, or cancel action performed by the algorithm. |\n| **Freeze distance multiplier** | Multiplier used to approximate freeze/stop distances from the current spread when the exchange does not publish explicit levels. |"
+   },
+   "3174": {
+    "id": 3174,
+    "name": "Three Typical Candles",
+    "family": "volatility",
+    "overview": "The **Three Typical Candles Strategy** recreates the MetaTrader Expert Advisor \"Three Typical Candles\" inside the StockSharp high-level API. The system observes the typical price of the last three completed candles and trades when it detects a strictly monotonic sequence. Typical price is defined as the arithmetic mean of the high, low, and close of a candle. When the three most recent finished candles form a rising sequence of typical prices, the strategy enters long. Conversely, a falling sequence triggers a short entry.\n\nThe port closely follows the original MQL5 logic:\n- Signals are evaluated only once per finished candle to avoid intrabar noise.\n- A configurable trading window can disable trading outside selected hours and forces the strategy flat when the filter is active.\n- Opposite positions are closed before a new one is opened so the strategy never holds both directions at the same time.\n- Order volume mirrors the source EA by using a fixed lot size while respecting the exchange volume step, as well as minimum and maximum volume constraints reported by the security.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n|------|------|---------|-------------|\n| `Volume` | decimal | `1` | Fixed order volume (lots or contracts). The strategy automatically rounds the value to the nearest valid volume step and enforces minimum/maximum limits of the instrument. |\n| `UseTimeControl` | bool | `true` | Enables the intraday trading window filter. When disabled, signals are evaluated around the clock. |\n| `StartHour` | int | `11` | Inclusive start hour (0-23) of the trading window when `UseTimeControl` is true. |\n| `EndHour` | int | `17` | Exclusive end hour (0-23) of the trading window when `UseTimeControl` is true. If the end hour is less than the start hour, the window spans midnight. |\n| `CandleType` | `DataType` | `TimeFrame(1h)` | Candle type used for analysis. Select a timeframe compatible with your data feed. |"
+   },
+   "2681": {
+    "id": 2681,
+    "name": "Multi Stochastic",
+    "family": "mean_reversion",
+    "overview": "The Multi Stochastic strategy is a high-level StockSharp implementation of the \"Multi Stochastic (barabashkakvn's edition)\" MetaTrader 5 expert advisor. It monitors up to four currency pairs simultaneously and relies on synchronized signals from Stochastic Oscillator readings (5, 3, 3). The strategy opens a single market position per symbol when an oversold or overbought crossover occurs and closes trades via fixed pip-based stop-loss and take-profit targets.",
+    "details": "",
+    "parameters": "- `CandleType` – time frame used for all subscribed candles (default: 1 hour).\n- `StochasticLength` – base length of the Stochastic Oscillator (default: 5).\n- `StochasticKPeriod` – smoothing period for %K (default: 3).\n- `StochasticDPeriod` – smoothing period for %D (default: 3).\n- `OversoldLevel` – threshold used to detect oversold conditions (default: 20).\n- `OverboughtLevel` – threshold used to detect overbought conditions (default: 80).\n- `StopLossPips` – distance to the protective stop in pips (default: 50).\n- `TakeProfitPips` – distance to the profit target in pips (default: 10).\n- `UseSymbol1` … `UseSymbol4` – enable trading for the respective symbol slot (default: true).\n- `Symbol1` … `Symbol4` – securities traded by each slot. Symbol 1 falls back to the main strategy security when not specified."
+   },
+   "859": {
+    "id": 859,
+    "name": "Grid Bot Backtesting",
+    "family": "other",
+    "overview": "Implements a grid trading bot that accumulates long positions when price falls to grid levels and closes them when price moves to the next line. Bounds may be set manually or calculated from recent data.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price crosses below a grid line with no active order\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - price crosses above the next grid line\n- **Stops**: None\n- **Default Values**:\n  - `AutoBounds` = true\n  - `BoundSource` = \"Hi & Low\"\n  - `BoundLookback` = 250\n  - `BoundDeviation` = 0.10\n  - `UpperBound` = 0.285\n  - `LowerBound` = 0.225\n  - `GridLines` = 30\n- **Filters**:\n  - Category: Range trading\n  - Direction: Long\n  - Indicators: Highest, Lowest, SimpleMovingAverage\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price crosses below a grid line with no active order\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - price crosses above the next grid line\n- **Stops**: None\n- **Default Values**:\n  - `AutoBounds` = true\n  - `BoundSource` = \"Hi & Low\"\n  - `BoundLookback` = 250\n  - `BoundDeviation` = 0.10\n  - `UpperBound` = 0.285\n  - `LowerBound` = 0.225\n  - `GridLines` = 30\n- **Filters**:\n  - Category: Range trading\n  - Direction: Long\n  - Indicators: Highest, Lowest, SimpleMovingAverage\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2249": {
+    "id": 2249,
+    "name": "Multicurrency Trading Panel",
+    "family": "other",
+    "overview": "This strategy emulates the behavior of the original MQL \"Multicurrency trading panel\" expert advisor. It monitors three currency pairs (EURUSD, USDJPY, GBPUSD) and compares the latest candle with the previous one using seven simple metrics (open, high, low, (high+low)/2, close, (high+low+close)/3, (high+low+close+close)/4).\nFor each comparison, a BUY or SELL score is increased. When automatic trading is enabled, the strategy opens or reverses positions on a pair if BUY score exceeds SELL score or vice versa.\n\n## Parameters\n- **EURUSD** – first security.\n- **USDJPY** – second security.\n- **GBPUSD** – third security.\n- **Candle Type** – timeframe of candles.\n- **Auto Trade** – toggle to allow automatic order placement.\n\nThe strategy is a simplified demo and is not intended for real trading.\n",
+    "details": "",
+    "parameters": "- **EURUSD** – first security.\n- **USDJPY** – second security.\n- **GBPUSD** – third security.\n- **Candle Type** – timeframe of candles.\n- **Auto Trade** – toggle to allow automatic order placement.\n\nThe strategy is a simplified demo and is not intended for real trading."
+   }
+  }
+ }
+}

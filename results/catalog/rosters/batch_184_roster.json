@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4081,
+      "name": "Two MA Four Level Bands",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,14), sma(close,180))",
+      "exit_long": "crossbelow(sma(close,14), sma(close,180))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastPeriod/SlowPeriod of 14/180 moving averages are used with the direct cross for the long, with CalculationBar=1 shift approximated by current-bar values. The four pip-offset tolerance bands (500/250) cannot be expressed as a price-independent rule and the 130/1000 pip take-profit and stop are not percentages, so both fields are null."
+    },
+    {
+      "id": 2479,
+      "name": "Pipsover",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,3,10), sma(macd(close,3,10),20)) and close <= sma(close,20)",
+      "exit_long": "crossbelow(macd(close,3,10), sma(macd(close,3,10),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No Chaikin or accumulation/distribution input exists, so the oscillator is rebuilt from the documented ChaikinFastLength=3 and ChaikinSlowLength=10 as a fast-minus-slow EMA spread, and the spike is its cross above its own average while price has retraced to the MaLength=20 SMA. The absolute OpenLevel/CloseLevel Chaikin thresholds and the 65/100 point stop and target are not expressible."
+    },
+    {
+      "id": 932,
+      "name": "inwCoin Martingale",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,20) + 2 * atr(high,low,close,14)) or crossabove(macd(close,12,26), 0)",
+      "exit_long": "crossbelow(macd(close,12,26), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two of the three documented entry signals are expressible and combined: the close breaking an EMA(20) plus a two-times ATR(14) channel (multiplier is a fallback) and the MACD histogram crossing zero. The Stochastic RSI signal, the martingale doubling on dips and the average-price take-profit percent are not available, so both percentage fields are null and momentum loss is the exit."
+    },
+    {
+      "id": 413,
+      "name": "Bollinger Divergence",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20) and std(close,20) < sma(std(close,20),20)",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": 5.0,
+      "notes": "The documented BBLength=20 and BBMultiplier=2.0 bands are exact, and the opposing-band contraction required by CandlePercent=30 is read as current band width below its own 20-bar average since prior-bar width is not referenceable. TakeProfit=5 is a documented percent target, and the source has no hard stop."
+    },
+    {
+      "id": 2172,
+      "name": "ColorMETRO XRSX",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(close,50))",
+      "exit_long": "crossbelow(sma(close,20), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two SMAs on the close with the fast one crossing above the slow one opens the long and the opposite cross closes it, exactly as documented; Fast Period and Slow Period have no values in the source so 20 and 50 are fallbacks. The proprietary XRSX colour indicator and StartProtection distances are not expressible."
+    },
+    {
+      "id": 2634,
+      "name": "ProMart MACD Martingale",
+      "family": "momentum",
+      "entry_long": "macd(close,5,20) < sma(macd(close,5,20),3) and roc(macd(close,5,20),2) > 0 and roc(macd(close,10,15),1) > 0",
+      "exit_long": "macd(close,5,20) > sma(macd(close,5,20),3) and roc(macd(close,5,20),2) < 0 and roc(macd(close,10,15),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD1 5/20/3 valley is expressed as MACD1 below its 3-period average while rising over two bars, and MACD2 10/15/3 supplies the rising-slope confirmation, with the mirrored peak the exit. Shifted value indexing is replaced by ROC, and the post-loss reversal, doubling size, and 500/1500 point protections are not expressible."
+    },
+    {
+      "id": 4155,
+      "name": "Psar Bug",
+      "family": "volatility",
+      "entry_long": "crossabove(close, sma(close,20))",
+      "exit_long": "crossbelow(close, sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not in the DSL, so reacting to the first SAR dot on the opposite side of price is approximated by the close crossing a 20-bar SMA, the length being a fallback. SarAccelerationStep/Max, the immediate reversal of the existing position and the point-based stop-loss and take-profit are dropped."
+    },
+    {
+      "id": 388,
+      "name": "Pairs Trading Stocks",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented signal is the z-score of the price ratio of an explicitly paired pair of stocks over a 60-day lookback, so it cannot be expressed on a single security without inventing a substitute leg. EntryZ/ExitZ and the simultaneous multi-pair operation are cross-sectional, not single-symbol market conditions."
+    },
+    {
+      "id": 634,
+      "name": "Correlation Cycle",
+      "family": "other",
+      "entry_long": "macd(close,12,26) > 0 and adx(high,low,close,14) > 25",
+      "exit_long": "macd(close,12,26) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ehlers' correlation angle and market-state filter have no DSL form, so the angle sign is approximated by the MACD main line and the documented stable-market requirement by ADX(14) above 25; Period and Market State Threshold are unnamed in the source, so 12/26 and 25 are fallbacks."
+    },
+    {
+      "id": 119,
+      "name": "End of Month Strength",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry is a pure calendar effect, buying in the last days of a month and selling on the first session of the next one, and the engine exposes no date, session or month fields, so no market-derived long signal can be written. The 2% stop depends on that schedule, so both fields are left null rather than fabricating a trigger."
+    }
+  ]
+}

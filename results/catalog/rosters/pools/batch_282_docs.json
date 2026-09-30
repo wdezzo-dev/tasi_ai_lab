@@ -1,0 +1,98 @@
+{
+ "batch_282": {
+  "strategy_ids": [
+   4156,
+   3997,
+   1056,
+   1080,
+   1561,
+   16,
+   3205,
+   1646,
+   2027,
+   4028
+  ],
+  "docs": {
+   "4156": {
+    "id": 4156,
+    "name": "Parabolic SAR Alert",
+    "family": "trend",
+    "overview": "This strategy is the StockSharp port of the MetaTrader 4 expert advisor `pSAR_alert.mq4`. The original script only played an alert sound whenever the Parabolic SAR indicator flipped from one side of price to the other. The conversion keeps the same decision logic but turns the alerts into actual market orders, allowing the signal to be traded automatically inside StockSharp.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `AccelerationFactor` | 0.02 | Initial acceleration step that controls how quickly the Parabolic SAR follows price movements. |\n| `MaxAccelerationFactor` | 0.2 | Upper bound for the acceleration step, limiting how aggressively the SAR accelerates during strong trends. |\n| `CandleType` | 5 minute time frame | Market data type used for indicator updates; change it to switch between time frames or other candle representations. |\n\nAll parameters are exposed through `StrategyParam<T>` so they can be optimized directly in the StockSharp Designer."
+   },
+   "3997": {
+    "id": 3997,
+    "name": "MACD Zero Filtered Cross",
+    "family": "trend",
+    "overview": "MACD Zero Filtered Cross is a C# port of the MetaTrader 4 expert advisor `Robot_MACD_12.26.9`. The original robot watches for\ncrossovers between the MACD line and its signal line, but filters new trades so that long entries only occur while both lines\nremain below the zero axis and short entries only occur while both lines remain above the axis. The StockSharp version keeps the\nsame crossover logic, adds risk controls that integrate with the framework (portfolio balance filtering and unified take-profit\nmanagement), and exposes every configurable value through strategy parameters that support optimization.\n\nThe strategy relies on finished candles from a configurable timeframe. Indicator values are supplied by the built-in\n`MovingAverageConvergenceDivergenceSignal` indicator, ensuring that the strategy stays compatible with the high-level API and\nrespects the `BindEx` usage guidelines.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `FastPeriod` | EMA length of the fast MACD component. |\n| `SlowPeriod` | EMA length of the slow MACD component. |\n| `SignalPeriod` | EMA length of the MACD signal line. |\n| `TakeProfitPoints` | Distance to the protective take-profit in price points. Set to `0` to disable. |\n| `LotVolume` | Base order volume, equivalent to the “Lots” input of the MT4 version. |\n| `MinimumBalancePerVolume` | Minimum portfolio value required per traded volume unit before opening a position. Set to `0` to skip the filter. |\n| `CandleType` | Timeframe used to build candles and feed the indicator chain. |"
+   },
+   "1056": {
+    "id": 1056,
+    "name": "MNQ EMA",
+    "family": "trend",
+    "overview": "Strategy based on multiple exponential moving averages for NASDAQ micro futures. It enters long when price is above fast and slow EMAs with bullish candle and exits using dynamic EMA levels, trailing profits and stop loss.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1080": {
+    "id": 1080,
+    "name": "Moving Average Rainbow (Stormer)",
+    "family": "trend",
+    "overview": "This strategy plots a rainbow of twelve moving averages. Trades are opened when the trend is confirmed and price touches one of the averages.\n\nA long position opens when price makes a new high, all middle averages slope upward and the candle closes above the mean of all averages. A short position opens when the opposite conditions occur.\n\nThe stop loss is set to the previously touched moving average. The take profit is calculated as a multiple of the distance between entry price and the stop loss.\n\n## Details\n\n- **Indicators**: 12 moving averages of configurable type.\n- **Long**: Uptrend, new high and previous touch price.\n- **Short**: Downtrend, new low and previous touch price.\n- **Exits**: Stop loss at touched average, target = entry ± distance * factor. Optional turnover exit when the trend shows reversal signals.\n- **Parameters**: moving average type, lengths, target factor, turnover options.\n- **Timeframe**: Any.\n",
+    "details": "- **Indicators**: 12 moving averages of configurable type.\n- **Long**: Uptrend, new high and previous touch price.\n- **Short**: Downtrend, new low and previous touch price.\n- **Exits**: Stop loss at touched average, target = entry ± distance * factor. Optional turnover exit when the trend shows reversal signals.\n- **Parameters**: moving average type, lengths, target factor, turnover options.\n- **Timeframe**: Any.",
+    "parameters": ""
+   },
+   "1561": {
+    "id": 1561,
+    "name": "WODIsMA Triple MA Crossover",
+    "family": "trend",
+    "overview": "Strategy based on three moving averages for trend confirmation. It enters long when the fast average is above the middle and slow ones, and enters short on the opposite alignment.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "16": {
+    "id": 16,
+    "name": "RSI Divergence",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 85%. It performs best in the crypto market.\n\nRSI Divergence searches for price extremes unconfirmed by the RSI oscillator. A bullish divergence leads to a buy and a bearish divergence prompts a sell. The trade lasts until RSI reverses or a stop fires.\n\nDivergence setups often emerge near the end of long trends. By comparing the oscillator's behavior with price action, the strategy attempts to catch early reversals with controlled risk.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on RSI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on RSI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3205": {
+    "id": 3205,
+    "name": "Fractals Martingale",
+    "family": "trend",
+    "overview": "This folder contains the StockSharp port of the MetaTrader expert advisor \"Fractals Martingale\". The strategy mixes Bill Williams\nfractals, an Ichimoku-based trend filter and a monthly MACD confirmation. Position sizing follows a classic martingale sequence\nthat multiplies the trade volume after every losing cycle while an optional cool-down prevents runaway exposure.\n\n## Trading logic\n\n1. **Fractal detection on the working timeframe** – finished candles are buffered to detect local highs and lows separated by\n   `FractalDepth` neighbours. A bullish setup is registered when the next candle opens above the fractal high, while a bearish\n   setup requires the next open below the fractal low. Detected levels stay valid for `FractalLookback` processed candles.\n2. **Ichimoku trend filter** – the fractal must align with the Ichimoku trend calculated on the higher timeframe defined by\n   `IchimokuCandleType`. Long trades demand Tenkan-sen above Kijun-sen, short trades require Tenkan-sen below Kijun-sen.\n3. **Monthly MACD confirmation** – the original EA used a monthly MACD to decide whether buyers or sellers dominate. The port\n   subscribes to the `MacdCandleType` series (30-day candles by default) and only accepts long signals when the MACD line is above\n   the signal line; short signals need the opposite condition.\n4. **Session filter** – orders are placed only between `StartHour` (inclusive) and `EndHour` (exclusive). A wrap-around window is\n   supported for overnight trading sessions.\n5. **Martingale volume scaling** – the base order size comes from `TradeVolume`. After every losing round the next order volume is\n   multiplied by `Multiplier` and aligned to the instrument volume step. Winning trades reset the sequence. When\n   `MaxConsecutiveLosses` is exceeded the algorithm pauses for `PauseMinutes` before resuming with the base volume.\n6. **Direction switching** – whenever a new trade is sent the strategy automatically offsets any opposite position before opening\n   e",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `TradeVolume` | Base order size used for the first entry of a sequence. |\n| `Multiplier` | Factor applied to the next trade volume after a loss. |\n| `StopLossPips`, `TakeProfitPips` | Protective stop and target distances measured in pips. |\n| `FractalDepth` | Number of candles on each side required to confirm a fractal high/low. |\n| `FractalLookback` | Maximum number of processed candles for which a detected fractal remains valid. |\n| `StartHour`, `EndHour` | Trading window expressed in exchange hours. When both values match the filter is disabled. |\n| `MaxConsecutiveLosses` | Number of losing trades before the strategy pauses. |\n| `PauseMinutes` | Duration of the cool-down period activated after exceeding the loss cap. |\n| `TenkanPeriod`, `KijunPeriod`, `SenkouPeriod` | Ichimoku Kinko Hyo lengths used on the higher timeframe. |\n| `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` | EMA lengths for the higher-timeframe MACD confirmation. |\n| `CandleType` | Primary candle series where fractals and executions are evaluated. |\n| `IchimokuCandleType` | Higher timeframe used to calculate Tenkan and Kijun lines. |\n| `MacdCandleType` | Timeframe used to calculate the MACD filter (monthly by default). |"
+   },
+   "1646": {
+    "id": 1646,
+    "name": "EMA SAR Power",
+    "family": "trend",
+    "overview": "This intraday strategy combines fast and slow exponential moving averages with Parabolic SAR and Bulls/Bears Power indicators. It trades only during active market hours and requires sufficient free margin before entering any position.\n\nThe system goes short when the fast EMA is below the slow EMA, Parabolic SAR sits above the candle high, and Bears Power is rising while remaining negative. It goes long when the fast EMA is above the slow EMA, Parabolic SAR is below the candle low, and Bulls Power is falling but still positive. Each trade places a wide stop-loss and a closer take-profit.\n\n**Dynamic Margin Filter**\n\nBefore trading, the strategy checks the portfolio's free margin. Depending on its value, the required minimum margin increases stepwise: 600 → 1000 → 1300 → 1500 → 1800 → 2000 → 2500. Trading is skipped whenever the free margin falls below the current threshold.\n\n## Details\n\n- **Entry Criteria**:\n  - **Short**: `EMA3 < EMA34` && `SAR > High` && `BearsPower < 0` && `BearsPower > BearsPower[1]`.\n  - **Long**: `EMA3 > EMA34` && `SAR < Low` && `BullsPower > 0` && `BullsPower < BullsPower[1]`.\n- **Long/Short**: Both sides.\n- **Stop/Target**: Stop-loss at 2000 points, take-profit at 400 points.\n- **Time Filter**: Trades only between 09:00 and 16:59 broker time.\n- **Indicators**:\n  - Exponential Moving Averages (3, 34) on median price.\n  - Parabolic SAR (0.02 step, 0.2 maximum).\n  - Bulls Power (13) and Bears Power (13).\n- **Default Volume**: 30 contracts.\n- **Timeframe**: 15-minute candles.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Short**: `EMA3 < EMA34` && `SAR > High` && `BearsPower < 0` && `BearsPower > BearsPower[1]`.\n  - **Long**: `EMA3 > EMA34` && `SAR < Low` && `BullsPower > 0` && `BullsPower < BullsPower[1]`.\n- **Long/Short**: Both sides.\n- **Stop/Target**: Stop-loss at 2000 points, take-profit at 400 points.\n- **Time Filter**: Trades only between 09:00 and 16:59 broker time.\n- **Indicators**:\n  - Exponential Moving Averages (3, 34) on median price.\n  - Parabolic SAR (0.02 step, 0.2 maximum).\n  - Bulls Power (13) and Bears Power (13).\n- **Default Volume**: 30 contracts.\n- **Timeframe**: 15-minute candles.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Moderate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "2027": {
+    "id": 2027,
+    "name": "Exp CyclePeriod",
+    "family": "trend",
+    "overview": "This strategy uses the CyclePeriod indicator to detect market cycle turns. It opens long positions when the indicator rises and short positions when it falls, closing opposite positions accordingly.\n\n## Details\n\n- **Entry Criteria:**\n  - **Long**: CyclePeriod is rising and the current value is above the previous one.\n  - **Short**: CyclePeriod is falling and the current value is below the previous one.\n- **Long/Short**: Long and Short.\n- **Exit Criteria:**\n  - Close short when CyclePeriod turns upward.\n  - Close long when CyclePeriod turns downward.\n- **Stops**: Uses take profit and stop loss in price units.\n- **Default Values:**\n  - `CandleType` = TimeSpan.FromHours(6).TimeFrame().\n  - `Alpha` = 0.07.\n  - `SignalBar` = 1.\n  - `TakeProfit` = 2000.\n  - `StopLoss` = 1000.\n  - `BuyPosOpen` = true.\n  - `SellPosOpen` = true.\n  - `BuyPosClose` = true.\n  - `SellPosClose` = true.\n- **Filters:**\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: CyclePeriod\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 6-hour\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:**\n  - **Long**: CyclePeriod is rising and the current value is above the previous one.\n  - **Short**: CyclePeriod is falling and the current value is below the previous one.\n- **Long/Short**: Long and Short.\n- **Exit Criteria:**\n  - Close short when CyclePeriod turns upward.\n  - Close long when CyclePeriod turns downward.\n- **Stops**: Uses take profit and stop loss in price units.\n- **Default Values:**\n  - `CandleType` = TimeSpan.FromHours(6).TimeFrame().\n  - `Alpha` = 0.07.\n  - `SignalBar` = 1.\n  - `TakeProfit` = 2000.\n  - `StopLoss` = 1000.\n  - `BuyPosOpen` = true.\n  - `SellPosOpen` = true.\n  - `BuyPosClose` = true.\n  - `SellPosClose` = true.\n- **Filters:**\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: CyclePeriod\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 6-hour\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4028": {
+    "id": 4028,
+    "name": "Expert Master EURUSD",
+    "family": "trend",
+    "overview": "The Expert Master EURUSD strategy replicates the MetaTrader 4 Expert Advisor *Expert Master*.\nIt evaluates a four-candle pattern on the MACD main and signal lines (fast EMA = 5, slow EMA = 15, signal EMA = 3).\nThe algorithm expects the indicator to build momentum in one direction before triggering a breakout entry in the opposite direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TrailingPoints` | Trailing stop distance in price points. | 25 |\n| `FixedVolume` | Fallback trade volume when risk sizing is unavailable. | 1 |\n| `RiskPercent` | Percentage of portfolio value used to size positions. | 0.01 |\n| `MacdFastPeriod` | Fast EMA length for the MACD main line. | 5 |\n| `MacdSlowPeriod` | Slow EMA length for the MACD main line. | 15 |\n| `MacdSignalPeriod` | Signal EMA length for the MACD indicator. | 3 |\n| `UpperMacdThreshold` | Positive MACD threshold required for entries. | 0.00020 |\n| `LowerMacdThreshold` | Negative MACD threshold used in long signals. | −0.00020 |\n| `ShortCurrentThreshold` | Negative MACD threshold applied to the current value for shorts. | −0.00035 |\n| `CandleType` | Candle type used for indicator calculations. | 1-minute time frame |"
+   }
+  }
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3140,
+  "ticker": "4300",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3140,
+    "name": "Exp Slow Stoch Duplex",
+    "family": "volatility",
+    "entry_long": "crossabove(2 * (close - donchian_low(low,2)) / (donchian_high(high,105.0) - donchian_low(low,1)), ema(105.0 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), ema(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The long module is translated with the documented LongKPeriod 5, LongDPeriod 3 and a smoothed secondary filter as the %D EMA, so the documented %K above %D cross enters and the reverse cross closes. The 8-hour long timeframe, LongSlowing 3, LongSignalBar 1, the short module and the 2000/1000-point protection are approximated or unsupported."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2007-12-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4139,
+      "engine_win_ret": 0.0,
+      "alpha": 0.6422248645792046,
+      "benchmark_ret": -0.6422248645792046,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": -0.18249258160237392,
+      "benchmark_ret": 0.18249258160237392,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.17405063291139244,
+      "benchmark_ret": 0.17405063291139244,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2007-12-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4139,
+      "engine_win_ret": 0.0,
+      "alpha": 0.6422248645792046,
+      "benchmark_ret": -0.6422248645792046,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": -0.18249258160237392,
+      "benchmark_ret": 0.18249258160237392,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.17405063291139244,
+      "benchmark_ret": 0.17405063291139244,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

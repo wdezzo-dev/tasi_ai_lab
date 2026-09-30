@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 887,
+      "name": "HOD/LOD/PMH/PML/PDH/PDL",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar prior channel approximates previous-day high and low because premarket and calendar levels are unavailable. The mirrored channel serves as current-day high/low exit; 5-minute session timing is omitted."
+    },
+    {
+      "id": 82,
+      "name": "Volume Exhaustion",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 2 and close < open and close < sma(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "For a long-only roster, a bearish bar below SMA(20) with volume above twice its 20-bar average selects the documented volume-exhaustion reversal. The 2*ATR protection is ATR-based rather than a percentage field, and return to the MA supplies a signal exit."
+    },
+    {
+      "id": 2761,
+      "name": "Diff TF MA",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(close,50))",
+      "exit_long": "crossbelow(sma(close,20),sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20) versus SMA(50) approximates a rescaled higher-timeframe SMA against the trading series because multiple candle streams are unavailable. Both lengths and the reverse flag have no documented values; 20/50 is an explicit fallback."
+    },
+    {
+      "id": 4038,
+      "name": "MA Reverse",
+      "family": "trend",
+      "entry_long": "bars_since(close < sma(close,14)) >= 3 and close < sma(close,14) * 1.001",
+      "exit_long": "close > sma(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Three consecutive closes below SMA(14) and at least 0.1% below it trigger the long reversal; thresholds 3 and 0.1% are fallbacks. Recovery above the SMA exits, while the point target is not a percentage."
+    },
+    {
+      "id": 1603,
+      "name": "Fibonacci Auto Trend Scouter",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,8) and close > sma(close,21)",
+      "exit_long": "close < donchian_low_prev(low,8)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A break of the prior eight-bar high with the 21-bar trend filter approximates the nested Fibonacci-extreme scout; a literal current-inclusive high comparison would be impossible. The mirrored eight-bar low supplies exit, and no stops are documented."
+    },
+    {
+      "id": 2812,
+      "name": "Donchain Counter",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 20-candle channel is entered on an upper breakout and exited at the opposite trailing band. The 50-step activation distance, 24-hour cooldown, and stateful trailing logic are omitted."
+    },
+    {
+      "id": 2785,
+      "name": "Fractured Fractals",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,5)",
+      "exit_long": "low < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A five-bar high breakout approximates the five-bar Williams up-fractal because fractal queues are not available; the low breakout supplies exit. Pending-order expiry, fractal hierarchy, opposite-fractal trailing, and 2% risk sizing are omitted, so 2% is not used as a stop."
+    },
+    {
+      "id": 1121,
+      "name": "Normalized Oscillators Spider Chart",
+      "family": "momentum",
+      "entry_long": "crossabove((rsi(close,14) / 100 + (roc(close,14) + 100) / 200) / 2,0.6)",
+      "exit_long": "crossbelow((rsi(close,14) / 100 + (roc(close,14) + 100) / 200) / 2,0.4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Normalized RSI and return momentum retain the documented 0.6/0.4 decision levels, with length 14 as a fallback. Stochastic, correlation, MFI, Williams, Aroon, and other unsupported oscillator memberships are omitted."
+    },
+    {
+      "id": 1221,
+      "name": "Range Filter + ATR (Low Drawdown)",
+      "family": "volatility",
+      "entry_long": "crossabove(close,bb_mid(close,20))",
+      "exit_long": "crossbelow(close,bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar midpoint is an explicit fallback for the parameterless adaptive range filter, with an opposite filter cross as exit. ATR-derived stops and targets cannot be encoded as percentage fields."
+    },
+    {
+      "id": 3958,
+      "name": "The Puncher",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(roc(close,100),-20) and crossabove(rsi(close,14),30)",
+      "exit_long": "rsi(close,14) > 50 or roc(close,100) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) is oversold below 30 and 100-bar return momentum approximates slow stochastic %K below 30; simultaneous upward crosses enter. Exact stochastic smoothing and the 2000-pip stop are unavailable or not percentage-based."
+    }
+  ]
+}

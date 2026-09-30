@@ -1,0 +1,98 @@
+{
+ "batch_118": {
+  "strategy_ids": [
+   2974,
+   3366,
+   378,
+   442,
+   1984,
+   962,
+   2299,
+   892,
+   719,
+   1084
+  ],
+  "docs": {
+   "2974": {
+    "id": 2974,
+    "name": "DLMv FX Fish Grid",
+    "family": "trend",
+    "overview": "The **DLMv FX Fish Grid Strategy** replicates the behaviour of the original MetaTrader expert advisor built around the \"FX Fish 2MA\" oscillator. The strategy evaluates the Fisher Transform of price, smooths it with a moving average and opens positions when the oscillator crosses its smoothed baseline on the appropriate side of zero. Position management mimics the grid-like behaviour of the source EA: additional entries are spaced by a configurable distance, pending limit orders can be layered, and protective automation handles risk controls.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Order size for each entry (lots). |\n| `StopLossPips` | Distance of the protective stop-loss from the entry. Set to 0 to disable. |\n| `TakeProfitPips` | Distance of the take-profit level. Set to 0 to disable. |\n| `TrailingStopPips` | Trailing stop distance (0 disables trailing). |\n| `TrailingStepPips` | Step by which the trailing stop is tightened. |\n| `MaxTrades` | Maximum number of simultaneous trades per direction. `0` removes the limit. |\n| `DistancePips` | Minimum distance between consecutive entries and for the optional grid orders. |\n| `TradeOnFriday` | When `false`, the strategy stops trading on Fridays and liquidates exposure. |\n| `TimeLiveSeconds` | Maximum time (seconds) that positions may remain open before being force-closed. |\n| `ReverseSignals` | Invert long/short conditions. |\n| `SetLimitOrders` | Enable additional resting limit orders at `DistancePips`. |\n| `CloseOpposite` | Close opposite exposure before entering a new trade. |\n| `CalculatePeriod` | Lookback for the Fisher Transform range. |\n| `MaPeriod` | Period of the moving average applied to the Fisher value. |\n| `AppliedPrice` | Price source used in the Fisher Transform (close, open, high, low, median, typical, weighted). |\n| `CandleType` | Data type / timeframe of the candles processed by the strategy. |"
+   },
+   "3366": {
+    "id": 3366,
+    "name": "Cross Strategy (MQL 27596 Conversion)",
+    "family": "trend",
+    "overview": "The **Cross Strategy** is a direct conversion of the MetaTrader expert advisor `Cross.mq4` (repository entry `MQL/27596`). The original EA traded a single exponential moving average (EMA) cross measured on bar open prices and applied fixed-distance take profit and stop loss levels. This StockSharp port keeps the trading logic intact while using high-level API features such as candle subscriptions, indicator binding, and managed position tracking.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `EMA Length` | 200 | Period of the EMA used for cross detection. Must be greater than zero. |\n| `Take Profit (steps)` | 200 | Distance to the take profit level measured in price steps. Set to zero to disable the profit target. |\n| `Stop Loss (steps)` | 100 | Distance to the protective stop measured in price steps. Set to zero to disable the stop. |\n| `Candle Type` | 1-minute time frame | Candle data source processed by the strategy. You can switch to other time frames or custom candle types supported by StockSharp. |\n\nThe traded volume is controlled by the strategy's `Volume` property. When a reversal signal arrives, the strategy sends `Volume + |Position|` to ensure the existing exposure is closed before opening the new position."
+   },
+   "378": {
+    "id": 378,
+    "name": "Momentum Asset Growth",
+    "family": "trend",
+    "overview": "This hybrid factor strategy marries price momentum with the asset-growth effect.\nFirms that rapidly expand their balance sheets and simultaneously show strong\ntrending prices are often rewarded by the market. The approach first filters the\nuniverse for companies in the highest decile of asset growth.\n\nEligible stocks are then ranked on twelve-month momentum, excluding the most\nrecent month to avoid short-term reversals. The top momentum quintile is bought\nwhile the bottom quintile is sold short. Rebalancing takes place on the first\ntrading day of each month except January when the strategy stays idle. No\nstop-losses are applied between reviews.\n\nBacktests across developed equities indicate the blend of asset expansion and\nmomentum delivers robust returns with moderate turnover.\n\n## Details\n\n- **Entry Criteria**: Monthly; select top asset-growth decile then rank by\n  momentum; long top quintile, short bottom quintile\n- **Long/Short**: Both\n- **Exit Criteria**: Next monthly rebalance (January skipped)\n- **Stops**: No\n- **Default Values**:\n  - `MomLook` = 252\n  - `SkipMonths` = 1\n  - `AssetDecile` = 10\n  - `Quintile` = 5\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Momentum, Fundamentals\n  - Direction: Both\n  - Indicators: Price momentum, asset growth\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly; select top asset-growth decile then rank by\n  momentum; long top quintile, short bottom quintile\n- **Long/Short**: Both\n- **Exit Criteria**: Next monthly rebalance (January skipped)\n- **Stops**: No\n- **Default Values**:\n  - `MomLook` = 252\n  - `SkipMonths` = 1\n  - `AssetDecile` = 10\n  - `Quintile` = 5\n  - `MinTradeUsd` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Momentum, Fundamentals\n  - Direction: Both\n  - Indicators: Price momentum, asset growth\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "442": {
+    "id": 442,
+    "name": "RSI + EMA Trend",
+    "family": "trend",
+    "overview": "This system pairs a classic Relative Strength Index (RSI) oscillator with a dual moving-average trend filter. The RSI provides short-term overbought and oversold readings while the two exponential moving averages (EMAs) define the broader trend. The strategy only takes trades in the direction of the fast EMA relative to the slow EMA, helping avoid counter‑trend setups during strong directional moves.\n\nWhen price momentum pushes RSI below the oversold threshold and the fast EMA is above the slow EMA, the market is assumed to be in an uptrend and a long position is opened. Conversely, if RSI rises above the overbought level while the fast EMA still exceeds the slow EMA, the strategy initiates a short trade, expecting a short‑term pullback inside the larger trend channel.\n\nPositions are exited when RSI leaves the extreme zone on the opposite side, signalling that the mean reversion move has likely exhausted. The method is simple yet effective for capturing brief momentum swings in trending environments. It works well on liquid instruments where RSI extremes occur frequently but trend direction remains intact.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `RSI < oversold` and `EMA1 > EMA2`.\n  - **Short**: `RSI > overbought` and `EMA1 > EMA2`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `RSI > overbought`.\n  - **Short**: `RSI < oversold`.\n- **Stops**: None built-in.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Overbought/Oversold` = 70 / 30.\n  - `EMA Lengths` = 150 / 600.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `RSI < oversold` and `EMA1 > EMA2`.\n  - **Short**: `RSI > overbought` and `EMA1 > EMA2`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `RSI > overbought`.\n  - **Short**: `RSI < oversold`.\n- **Stops**: None built-in.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Overbought/Oversold` = 70 / 30.\n  - `EMA Lengths` = 150 / 600.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1984": {
+    "id": 1984,
+    "name": "Blau TVI",
+    "family": "trend",
+    "overview": "This strategy converts the MQL5 expert `Exp_BlauTVI` into a StockSharp high level strategy. It uses the **Blau True Volume Index (TVI)** to detect reversals in the tick volume flow.\n\n## Idea\n\nThe True Volume Index separates up‑ticks and down‑ticks and smooths them with three exponential moving averages. The final value oscillates between -100 and +100 and represents the dominance of buyers or sellers. The strategy opens a long position when the indicator turns upward after a decline and opens a short position when the indicator turns downward after a rise. Existing positions in the opposite direction are closed.\n\n## Parameters\n\n- `Length1` – first smoothing period for up and down ticks.\n- `Length2` – second smoothing period.\n- `Length3` – final smoothing period applied to the TVI.\n- `CandleType` – type of candles used for calculations (default: 4‑hour time frame).\n- `Allow Buy Open` – enable opening long positions.\n- `Allow Sell Open` – enable opening short positions.\n- `Allow Buy Close` – enable closing long positions when a sell signal appears.\n- `Allow Sell Close` – enable closing short positions when a buy signal appears.\n- `Enable Stop Loss` – use stop‑loss protection in points.\n- `Stop Loss` – stop‑loss value in points.\n- `Enable Take Profit` – use take‑profit protection in points.\n- `Take Profit` – take‑profit value in points.\n- `Volume` – order volume in lots.\n\n## Signals\n\n1. **Buy** – when the previous TVI value is lower than the one before it and the current TVI value is greater than the previous value. If enabled, existing short positions are closed.\n2. **Sell** – when the previous TVI value is higher than the one before it and the current TVI value is less than the previous value. If enabled, existing long positions are closed.\n\nOnly finished candles are processed and all calculations use tick volume of the candle. Stop‑loss and take‑profit are optional and expressed in price points.\n\n## Notes\n\nThe strategy uses the high level API: it subscribes to candl",
+    "details": "",
+    "parameters": "- `Length1` – first smoothing period for up and down ticks.\n- `Length2` – second smoothing period.\n- `Length3` – final smoothing period applied to the TVI.\n- `CandleType` – type of candles used for calculations (default: 4‑hour time frame).\n- `Allow Buy Open` – enable opening long positions.\n- `Allow Sell Open` – enable opening short positions.\n- `Allow Buy Close` – enable closing long positions when a sell signal appears.\n- `Allow Sell Close` – enable closing short positions when a buy signal appears.\n- `Enable Stop Loss` – use stop‑loss protection in points.\n- `Stop Loss` – stop‑loss value in points.\n- `Enable Take Profit` – use take‑profit protection in points.\n- `Take Profit` – take‑profit value in points.\n- `Volume` – order volume in lots."
+   },
+   "962": {
+    "id": 962,
+    "name": "LANZ Strategy 3.0",
+    "family": "breakout",
+    "overview": "LANZ Strategy 3.0 trades breakouts of the Asian range. The direction is chosen after the 01:15–02:15 NY decision window and a limit order is placed at the range high or low with Fibonacci-based targets and stops. If the order is not filled by 02:15 it may flip direction. Unfilled orders are cancelled at 08:00 and open positions are closed at 15:45.\n\n## Details\n\n- **Entry Criteria**:\n  - Breakout of the Asian range high or low after the decision window.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Fibonacci-based take profit or stop loss.\n  - All positions closed at 15:45 NY.\n- **Stops**: Fibonacci multipliers.\n- **Default Values**:\n  - `UseOptimizedFibo` = true\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Breakout of the Asian range high or low after the decision window.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Fibonacci-based take profit or stop loss.\n  - All positions closed at 15:45 NY.\n- **Stops**: Fibonacci multipliers.\n- **Default Values**:\n  - `UseOptimizedFibo` = true\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2299": {
+    "id": 2299,
+    "name": "PChannel System",
+    "family": "breakout",
+    "overview": "The **PChannel System** uses a price channel breakout with delayed confirmation. It tracks the highest high and lowest low over a configurable period. When price breaks through the channel and then closes back inside, the strategy enters in the direction of the breakout while closing any opposite positions. Optional stop-loss and take-profit levels manage risk.\n\n## Parameters\n- `Period` – lookback length for the channel.\n- `Shift` – number of bars to delay channel values.\n- `StopLoss` – absolute price distance for the protective stop.\n- `TakeProfit` – absolute price distance for the profit target.\n- `CandleType` – candle series used for calculations.\n\n## Trading logic\n1. Compute channel bounds from the last `Period` candles with an optional `Shift`.\n2. If the previous candle closed outside the channel and the current candle returns inside, open a position in the breakout direction.\n3. Close the opposite position, if any, before opening a new one.\n4. Monitor active trades and exit when `StopLoss` or `TakeProfit` is reached.\n\nImplementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "- `Period` – lookback length for the channel.\n- `Shift` – number of bars to delay channel values.\n- `StopLoss` – absolute price distance for the protective stop.\n- `TakeProfit` – absolute price distance for the profit target.\n- `CandleType` – candle series used for calculations."
+   },
+   "892": {
+    "id": 892,
+    "name": "How to Use Leverage and Margin",
+    "family": "momentum",
+    "overview": "A Stochastic oscillator crossover system. The strategy buys when the %K line crosses above %D below the 80 level and sells short when %K crosses below %D above 20. Positions are protected by a take‑profit measured in ticks.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: %K crosses above %D and %K < 80.\n  - **Short**: %K crosses below %D and %K > 20.\n- **Long/Short**: Both\n- **Exit Criteria**: Take‑profit or opposite crossover\n- **Stops**: Yes, take‑profit in ticks\n- **Default Values**:\n  - `Stochastic Period` = 13\n  - `%K Period` = 4\n  - `%D Period` = 3\n  - `Take Profit Ticks` = 100\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %K crosses above %D and %K < 80.\n  - **Short**: %K crosses below %D and %K > 20.\n- **Long/Short**: Both\n- **Exit Criteria**: Take‑profit or opposite crossover\n- **Stops**: Yes, take‑profit in ticks\n- **Default Values**:\n  - `Stochastic Period` = 13\n  - `%K Period` = 4\n  - `%D Period` = 3\n  - `Take Profit Ticks` = 100\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "719": {
+    "id": 719,
+    "name": "Dynamic Volatility Differential Model",
+    "family": "volatility",
+    "overview": "The **Dynamic Volatility Differential Model (DVDM)** strategy compares implied volatility with historical volatility. It opens long when implied volatility exceeds realized volatility by a dynamic standard deviation threshold and enters short when the spread falls below the negative threshold.\n\nSignals use daily data and do not rely on stops.\n\n## Details\n- **Entry Criteria**: Volatility spread above/below dynamic standard deviation thresholds.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Volatility spread crossing the zero line.\n- **Stops**: No.\n- **Default Values**:\n  - `Length = 5`\n  - `StdevMultiplier = 7.1m`\n  - `VolatilitySecurity = \"TVC:VIX\"`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: StandardDeviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Volatility spread above/below dynamic standard deviation thresholds.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Volatility spread crossing the zero line.\n- **Stops**: No.\n- **Default Values**:\n  - `Length = 5`\n  - `StdevMultiplier = 7.1m`\n  - `VolatilitySecurity = \"TVC:VIX\"`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: StandardDeviation\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1084": {
+    "id": 1084,
+    "name": "MTF Oscillator Framework",
+    "family": "mean_reversion",
+    "overview": "This strategy uses the RSI indicator on two timeframes. A buy occurs when both RSI values are below the oversold level, and a sell occurs when both are above the overbought level.\n\n## Parameters\n- Candle Type\n- Higher Candle Type\n- RSI Length\n- Overbought\n- Oversold\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Higher Candle Type\n- RSI Length\n- Overbought\n- Oversold"
+   }
+  }
+ }
+}

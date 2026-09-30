@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 131,
+      "name": "MACD RSI",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) crossing its signal while RSI(14) rises back above 30 implements the long entry. A bearish MACD cross is the state-free exit proxy for the opposite signal; the documented percentage stop is 2%."
+    },
+    {
+      "id": 1128,
+      "name": "NY Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,30)",
+      "exit_long": "close < donchian_low_prev(low,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Thirty prior bars proxy the 13:00-13:30 UTC range because DSL has no clock filter. A close above its prior high enters long and a close below the opposite prior boundary proxies the range stop; the 2R target and boundary stop are session-relative, not percentage fields."
+    },
+    {
+      "id": 1506,
+      "name": "Ultimate Stochastics",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and rsi(close,14) < 40",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing up from oversold while remaining below 40 is the explicit proxy for %K crossing %D below oversold; crossing down from 70 proxies the opposite signal. Stochastic %K/%D and unsupplied optional percent stop/target values are unavailable."
+    },
+    {
+      "id": 2206,
+      "name": "Adam and Eve",
+      "family": "trend",
+      "entry_long": "close > open and roc(sma(close,5),1) > 0 and roc(sma(close,7),1) > 0 and roc(sma(close,9),1) > 0 and roc(sma(close,10),1) > 0 and roc(sma(close,12),1) > 0 and roc(sma(close,14),1) > 0 and roc(sma(close,20),1) > 0",
+      "exit_long": "roc(close,1) >= (atr(high,low,close,14) / close) * 100",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish candle proxies the Heikin-Ashi no-lower-wick condition, and positive ROC of every documented SMA in the 5/7/9/10/12/14/20 stack preserves their rising slopes. A one-bar move of at least ATR(14), expressed in percent, proxies the entry-relative ATR target; no stop is documented."
+    },
+    {
+      "id": 2806,
+      "name": "Blau TS Stochastic",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,14),50)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Breakdown-mode long condition is a histogram break from above to below zero, so a downward RSI(14) zero-line break is the explicit bounded-oscillator proxy; the upward break exits. Blau smoothing, Twist/CloudTwist modes, applied-price shifts, and point-based protection cannot be represented."
+    },
+    {
+      "id": 3157,
+      "name": "BB Swing",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and low <= bb_lower(close,20,2) and close - open > sma(close - open,3) and roc(close,10) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20,50) proxies the fast/slow LWMA trend, a current lower-Bollinger(20,2) touch proxies the last-three-bar check, expanding body versus its 3-bar average proxies body strengthening, ROC(10)>0 proxies positive higher-timeframe momentum deviation, and MACD(12,26,9)>signal preserves confirmation. A bearish MACD cross is the exit proxy; scaling and money/point risk settings are unsupported."
+    },
+    {
+      "id": 3356,
+      "name": "FXF Fast in Fast out",
+      "family": "breakout",
+      "entry_long": "(high + low) / 2 > open and high - low > atr(high,low,close,14)",
+      "exit_long": "(high + low) / 2 < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A candle range above ATR(14) is the scale-free proxy for the volatility threshold, and midpoint above open supplies the bullish pending-stop direction. A midpoint reversal is the state-free trailing/exit proxy; quote spread, order offset, pending-order state, and point-based protection are unavailable."
+    },
+    {
+      "id": 3643,
+      "name": "Connect Disconnect Sound Alert",
+      "family": "volatility",
+      "entry_long": "close < 0 and close > 0",
+      "exit_long": "close < 0 and close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a connectivity watchdog that explicitly places no orders and documents no entry, exit, stop, or target. The unreachable condition preserves its non-trading behavior."
+    },
+    {
+      "id": 3964,
+      "name": "Gazonkos Expert",
+      "family": "momentum",
+      "entry_long": "roc(close,3) > 0 and roc(close,1) < 0",
+      "exit_long": "roc(close,3) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive three-bar momentum followed by a one-bar pullback is the state-free proxy for the documented impulse and retracement. Loss of the three-bar impulse is the exit proxy; exact shifted closes, pip thresholds, and fixed pip stop/target distances are not available in the DSL."
+    },
+    {
+      "id": 4116,
+      "name": "Rubberbands 3",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) and roc(close,1) > 0",
+      "exit_long": "close < donchian_low_prev(low,1) and roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A positive one-bar break above the prior high proxies expansion above a running maximum; a negative one-bar break below the prior low proxies the BackStep counter-move and sequence exit. Running extremes, pyramiding, reversal sequencing, order limits, and account-currency session targets require state unavailable in the DSL."
+    }
+  ]
+}

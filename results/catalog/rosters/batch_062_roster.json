@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1375,
+      "name": "SuperTrend Enhanced Pivot Reversal",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,10) and ema(close,20) < ema(close,50)",
+      "exit_long": "ema(close,20) > ema(close,50)",
+      "stop_loss_pct": 20.0,
+      "take_profit_pct": null,
+      "notes": "A prior ten-bar high break stands in for a formed pivot, while bearish EMA(20/50) alignment approximates bearish SuperTrend; their inverse exits. ATR SuperTrend, exact left/right pivot bars, and factor 2.618 are unavailable; 20% is the documented pivot stop."
+    },
+    {
+      "id": 2068,
+      "name": "Traffic Light",
+      "family": "trend",
+      "entry_long": "close >= sma(close,120) and close <= sma(close,55) and ema(close,5) > ema(close,24) > sma(close,55) > sma(close,120) and close > ema(close,5)",
+      "exit_long": "crossbelow(ema(close,5),sma(close,55))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented red SMA(120), yellow SMA(55), green EMA(5), and blue EMA(24) ordering and default entry zone are retained for the long side. The optional blue-range filter is disabled by default; 60/120-tick protection and the intraday timeframe are not percentage/DSL fields."
+    },
+    {
+      "id": 1008,
+      "name": "MACD Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and macd(close,12,26) >= -0.5",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) crossovers and the documented -0.5 to 0.5 entry zone are translated directly. No stops are documented, and the intraday timeframe is supplied by the roster consumer rather than an indicator expression."
+    },
+    {
+      "id": 3440,
+      "name": "AML CCI Meeting Lines",
+      "family": "trend",
+      "entry_long": "close > open and close - open >= 0.5 * atr(high,low,close,14) and rsi(close,18) <= 40",
+      "exit_long": "close < open or rsi(close,18) >= 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A large bullish candle plus RSI(18)<=40 proxies the documented Meeting Lines and CCI<=-50 vote; RSI>=80 proxies the extreme exit. The two-candle equal-close test and body-average period 3 cannot be recovered without shifted OHLC, and no percentage protection is supplied."
+    },
+    {
+      "id": 2253,
+      "name": "Color XTRIX Histogram",
+      "family": "trend",
+      "entry_long": "crossabove(macd_signal(close,5,20,5),0)",
+      "exit_long": "crossbelow(macd_signal(close,5,20,5),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A smoothed MACD line using the documented TRIX length 5 approximates its zero-crossing histogram turns; 5/20/5 are explicit fallbacks because the underlying smoothing formula is unavailable. No stops are documented, and the 4-hour timeframe is not encoded in the DSL."
+    },
+    {
+      "id": 2916,
+      "name": "Clouds Trade 2",
+      "family": "breakout",
+      "entry_long": "crossbelow(rsi(close,14),20)",
+      "exit_long": "crossabove(rsi(close,14),80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) downward and upward crosses through 20/80 are an explicit Stochastic %K/%D proxy for the long-side branch. Williams fractals, one-trade-per-day timing, and absolute-price stop/target/trailing settings are unavailable."
+    },
+    {
+      "id": 1129,
+      "name": "OBV ATR",
+      "family": "breakout",
+      "entry_long": "crossabove(volume_ratio(volume,30),donchian_high_prev(volume_ratio(volume,30),30))",
+      "exit_long": "crossbelow(volume_ratio(volume,30),donchian_low_prev(volume_ratio(volume,30),30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "volume_ratio(30) and its prior 30-value Donchian boundaries are a stateless proxy for OBV channel breaks using the documented lookback. Exact cumulative OBV/ATR state and the unspecified protective-order distances cannot be represented."
+    },
+    {
+      "id": 3116,
+      "name": "FineTuning MA Candle Duplex",
+      "family": "momentum",
+      "entry_long": "roc(close,10) > 0 and close > open",
+      "exit_long": "roc(close,10) < 0 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive ten-bar momentum plus a bullish candle is a fallback proxy for the synthetic FineTuningMA bullish stream; EMA(10) is used because no length is supplied. Rank/shift weights, gap handling, bar offsets, and point-based protection are not expressible."
+    },
+    {
+      "id": 4222,
+      "name": "Parabolic SAR First Dot",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,2) and ema(close,5) > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A fresh two-bar high with bullish EMA(5/20) alignment proxies the first Parabolic SAR dot below price; EMA(20) loss is the opposite flip. SAR acceleration settings and 900/200-point protection are not percentage/DSL fields."
+    },
+    {
+      "id": 1671,
+      "name": "Aver4 Stoch Post ZigZag",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 5 and low < donchian_low_prev(low,14) and close > open",
+      "exit_long": "rsi(close,14) > 95 or close < ema(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 2.0,
+      "notes": "RSI(14) below the documented 5 level and a new 14-bar low that closes bullish proxy oversold Stochastic plus a ZigZag low. Four timeframe averages, depth 14 pivot confirmation, and intraday timing are approximated; StartProtection is explicitly 2%/2%."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "batch": "batch_009",
+  "strategy_roster": [
+    {
+      "id": 589,
+      "name": "Candle Body Shapes",
+      "family": "pattern",
+      "entry_long": "close > open and close >= donchian_high_prev(high,1) and open <= donchian_low_prev(low,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Candle body shapes: close in upper portion of range (close > open) with body above prior high. Long on bullish body confirmation. StopLoss=2% documented."
+    },
+    {
+      "id": 617,
+      "name": "Chart Patterns",
+      "family": "pattern",
+      "entry_long": "close > donchian_high_prev(high,3) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Chart patterns: ascending channel break (higher high and higher low over 3 bars). Long on breakout above MA(20). StopLoss=2% documented."
+    },
+    {
+      "id": 808,
+      "name": "Forex Hammer and Hanging Man",
+      "family": "pattern",
+      "entry_long": "close > open and (open - low) >= 2 * (close - open) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Hammer pattern: lower shadow >= 2x body, close above MA(20). Hanging man short not implemented (long only). StopLoss=2% documented."
+    },
+    {
+      "id": 831,
+      "name": "Gap Down Reversal",
+      "family": "pattern",
+      "entry_long": "open < donchian_low_prev(low,1) and close > open and close > sma(close,20)",
+      "exit_long": "close < open or close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Gap down reversal: open below prior low then close bullish above MA(20). Fade gap down. StopLoss=2% documented."
+    },
+    {
+      "id": 832,
+      "name": "Gap Filling",
+      "family": "pattern",
+      "entry_long": "open > donchian_high_prev(high,1) and close < open",
+      "exit_long": "close > open or close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Gap filling: open above prior high then close bearish (gap fade). Short bias. StopLoss=2% documented."
+    },
+    {
+      "id": 586,
+      "name": "Bollinger and Stochastic Trailing Stop",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 20",
+      "exit_long": "close > bb_mid(close,20) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger + Stochastic: close below lower BB(20,2) with RSI < 20. ATR trailing stop not representable; exit on mid band or RSI > 50."
+    },
+    {
+      "id": 940,
+      "name": "IU Gap Fill",
+      "family": "volatility",
+      "entry_long": "open > donchian_high_prev(high,1) and close < donchian_high_prev(high,1) and close > open",
+      "exit_long": "close < open or close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "IU gap fill: open above prior high then close back inside (gap fill). Long if closes bullish. StopLoss=2% documented."
+    },
+    {
+      "id": 1068,
+      "name": "Monte Carlo Range Forecast",
+      "family": "volatility",
+      "entry_long": "close > sma(close,20) + 2 * std(close,20) and rsi(close,14) > 60",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Monte Carlo proxy: price >2 std above MA(20) with RSI > 60. Long on momentum continuation. No fixed stop documented."
+    },
+    {
+      "id": 1150,
+      "name": "Overnight Effect High Volatility",
+      "family": "volatility",
+      "entry_long": "std(roc(close,1),14) > 1.5 * sma(std(roc(close,1),14),50) and close > open",
+      "exit_long": "std(roc(close,1),14) < sma(std(roc(close,1),14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Overnight effect: realized vol (std of 1-bar returns, 14) exceeds 1.5x its 50-bar mean. Long on vol expansion. No fixed stop documented."
+    },
+    {
+      "id": 1551,
+      "name": "VWAP",
+      "family": "volume",
+      "entry_long": "close > sma(close,20) + 2 * std(close,20) and volume_ratio(volume,20) > 1.5",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP proxy: price >2 std above MA(20) with volume >1.5x average. Long on volume-confirmed momentum. StopLoss=2% documented."
+    }
+  ]
+}

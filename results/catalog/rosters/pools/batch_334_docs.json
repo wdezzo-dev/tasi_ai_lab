@@ -1,0 +1,98 @@
+{
+ "batch_334": {
+  "strategy_ids": [
+   2791,
+   3210,
+   1468,
+   2448,
+   985,
+   827,
+   1469,
+   2533,
+   2232,
+   2481
+  ],
+  "docs": {
+   "2791": {
+    "id": 2791,
+    "name": "Cross Line Trader",
+    "family": "trend",
+    "overview": "The strategy emulates the original MetaTrader \"Cross Line Trader\" expert by reacting to price interactions with user-defined synthetic lines. Instead of listening to manual chart objects, the StockSharp version receives all line descriptions through a single parameter, parses them at start and continuously monitors finished candles. When a candle open moves through an active line, the strategy places a market order in the corresponding direction and deactivates that line so it cannot trigger again.",
+    "details": "",
+    "parameters": "- **Candle Type** – market data type used for calculations. Defaults to 1-minute time frame.\n- **Trade Volume** – order size for new entries. Must be positive.\n- **Direction Mode** – determines how the entry side is selected (`FromLabel`, `ForceBuy`, `ForceSell`).\n- **Buy Label** / **Sell Label** – label values for identifying lines when `Direction Mode` is `FromLabel`.\n- **Line Definitions** – raw string that describes every synthetic line (see format above).\n- **Stop Loss Offset** – distance in price units for protective exits on long and short positions (0 disables the check).\n- **Take Profit Offset** – price distance for profit targets (0 disables the check)."
+   },
+   "3210": {
+    "id": 3210,
+    "name": "Back Kick",
+    "family": "trend",
+    "overview": "The **Back Kick** strategy is a hedged breakout system converted from the MetaTrader 5 expert advisor `Back kick.mq5`. It continuously maintains a two-sided exposure by opening both a long and a short market position at the close of every bar. Each leg is protected with symmetrical stop-loss and take-profit distances expressed in pips. The StockSharp port keeps the paired positions independent by tracking their state manually instead of relying on the aggregated net position.\n\n## Trading Logic\n\n1. Subscribe to the configured time-frame candles. When a candle closes and there are no active hedged legs, request a new pair of entries.\n2. Immediately submit a market buy and a market sell order using the same volume. Each leg keeps its own stop-loss and take-profit offsets converted from pip distances.\n3. Monitor best bid/ask prices from Level 1 data. If a leg reaches its protective price it is closed with a market order, while the opposite leg remains active until its own exit is triggered.\n4. After both legs are flat, the strategy waits for the next completed candle before recreating the hedge.\n\nThis behaviour mirrors the original expert, which constantly re-enters in both directions to capture abrupt price \"kicks\".\n\n## Parameters\n\n| Name | Description | Default | Notes |\n| ---- | ----------- | ------- | ----- |\n| `OrderVolume` | Volume used for each hedge leg. | `0.1` | Normalised to the instrument `VolumeStep`, must respect `MinVolume`/`MaxVolume`. |\n| `StopLossPips` | Stop-loss distance in pips. | `50` | Set to `0` to disable the protective stop for both legs. |\n| `TakeProfitPips` | Take-profit distance in pips. | `140` | Set to `0` to disable the protective take-profit. |\n| `CandleType` | Time-frame that triggers new hedged pairs. | `15m` | Accepts any `TimeFrame` supported by the selected security. |\n| `LogDiagnostics` | Enables verbose logging about entries and exits. | `false` | Useful for debugging fill sequences. |\n\n## Implementation Notes\n\n- **Pip conversion*",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| ---- | ----------- | ------- | ----- |\n| `OrderVolume` | Volume used for each hedge leg. | `0.1` | Normalised to the instrument `VolumeStep`, must respect `MinVolume`/`MaxVolume`. |\n| `StopLossPips` | Stop-loss distance in pips. | `50` | Set to `0` to disable the protective stop for both legs. |\n| `TakeProfitPips` | Take-profit distance in pips. | `140` | Set to `0` to disable the protective take-profit. |\n| `CandleType` | Time-frame that triggers new hedged pairs. | `15m` | Accepts any `TimeFrame` supported by the selected security. |\n| `LogDiagnostics` | Enables verbose logging about entries and exits. | `false` | Useful for debugging fill sequences. |"
+   },
+   "1468": {
+    "id": 1468,
+    "name": "Trend Magic with EMA, SMA, and Auto-Trading",
+    "family": "trend",
+    "overview": "This strategy uses a CCI-based Trend Magic line together with EMA(45), SMA(90), and SMA(180) filters. A long trade opens when Trend Magic switches to blue during a bullish moving average alignment. Short trades occur when the line turns red and moving averages align bearishly. Each position has a stop at SMA90 and a take profit based on a fixed risk/reward ratio.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `EMA45 > SMA90 > SMA180` and Trend Magic turns blue.\n  - **Short**: `EMA45 < SMA90 < SMA180` and Trend Magic turns red.\n- **Exits**: Stop-loss at SMA90 captured on entry and take-profit at `entry ± risk * ratio`.\n- **Stops**: Both stop-loss and take-profit.\n- **Default Values**:\n  - `CCI Period` = 21\n  - `ATR Period` = 7\n  - `ATR Multiplier` = 1.0\n  - `Risk Reward` = 1.5\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `EMA45 > SMA90 > SMA180` and Trend Magic turns blue.\n  - **Short**: `EMA45 < SMA90 < SMA180` and Trend Magic turns red.\n- **Exits**: Stop-loss at SMA90 captured on entry and take-profit at `entry ± risk * ratio`.\n- **Stops**: Both stop-loss and take-profit.\n- **Default Values**:\n  - `CCI Period` = 21\n  - `ATR Period` = 7\n  - `ATR Multiplier` = 1.0\n  - `Risk Reward` = 1.5",
+    "parameters": ""
+   },
+   "2448": {
+    "id": 2448,
+    "name": "Fractal ADX Cloud",
+    "family": "trend",
+    "overview": "This strategy approximates the original MQL `Fractal_ADX_Cloud` expert by using the Average Directional Index indicator in StockSharp. It works on four‑hour candles and analyses the cross of the +DI and -DI components. When the bullish component (+DI) rises above the bearish one (-DI), the strategy closes any short position and may open a new long. If -DI rises above +DI the logic is mirrored for short trades.\n\nStop-loss and take-profit protections are applied in absolute price units. Additional parameters allow enabling or disabling opening and closing of positions in each direction.\n\n## Details\n\n- **Entry Criteria**: Cross of +DI and -DI lines from ADX.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes, using absolute price distances.\n- **Default Values**:\n  - `AdxPeriod` = 30\n  - `StopLoss` = 1000m\n  - `TakeProfit` = 2000m\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Cross of +DI and -DI lines from ADX.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes, using absolute price distances.\n- **Default Values**:\n  - `AdxPeriod` = 30\n  - `StopLoss` = 1000m\n  - `TakeProfit` = 2000m\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "985": {
+    "id": 985,
+    "name": "Liquidity Sweep Filter",
+    "family": "trend",
+    "overview": "This trend-following strategy uses Bollinger bands to detect market direction and monitors volume for potential liquidity sweeps. A position is opened when the trend flips bullish or bearish depending on the selected trade mode.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Trend turns bullish and mode allows long trades.\n  - **Short**: Trend turns bearish and mode allows short trades.\n- **Long/Short**: Configurable via trade mode.\n- **Exit Criteria**:\n  - **Long**: Trend turns bearish or mode forbids long.\n  - **Short**: Trend turns bullish or mode forbids short.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 12.\n  - `Multiplier` = 2.0.\n  - `Major Sweep Threshold` = 50.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Trend turns bullish and mode allows long trades.\n  - **Short**: Trend turns bearish and mode allows short trades.\n- **Long/Short**: Configurable via trade mode.\n- **Exit Criteria**:\n  - **Long**: Trend turns bearish or mode forbids long.\n  - **Short**: Trend turns bullish or mode forbids short.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 12.\n  - `Multiplier` = 2.0.\n  - `Major Sweep Threshold` = 50.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "827": {
+    "id": 827,
+    "name": "G-Channel with EMA",
+    "family": "trend",
+    "overview": "Strategy combining G-Channel channel logic with EMA trend filter.\n\nIt buys when the last cross is downward and price is below the EMA. It sells when the last cross is upward and price is above the EMA.\n\n## Details\n\n- **Entry Criteria**: G-Channel state with EMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `ChannelLength` = 100\n  - `EmaLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: G-Channel, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: G-Channel state with EMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `ChannelLength` = 100\n  - `EmaLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: G-Channel, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1469": {
+    "id": 1469,
+    "name": "Trend Signals with TP & SL",
+    "family": "trend",
+    "overview": "The strategy uses an ATR-based channel to determine trend direction. A new uptrend starts when price breaks above the upper band, triggering a long entry. A downtrend starts when price falls below the lower band, triggering a short entry. Each trade places stop-loss and take-profit orders using ATR multipliers.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Trend flips upward.\n  - **Short**: Trend flips downward.\n- **Exits**: Stop-loss at `entry ∓ ATR * SL` and take-profit at `entry ± ATR * TP`.\n- **Stops**: Yes, both stop-loss and take-profit.\n- **Default Values**:\n  - `Sensitivity` = 2\n  - `ATR Length` = 14\n  - `ATR TP Multiplier` = 2\n  - `ATR SL Multiplier` = 1\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Trend flips upward.\n  - **Short**: Trend flips downward.\n- **Exits**: Stop-loss at `entry ∓ ATR * SL` and take-profit at `entry ± ATR * TP`.\n- **Stops**: Yes, both stop-loss and take-profit.\n- **Default Values**:\n  - `Sensitivity` = 2\n  - `ATR Length` = 14\n  - `ATR TP Multiplier` = 2\n  - `ATR SL Multiplier` = 1",
+    "parameters": ""
+   },
+   "2533": {
+    "id": 2533,
+    "name": "Polish Layer",
+    "family": "trend",
+    "overview": "The **Polish Layer Strategy** is a conversion of the MetaTrader expert advisor from `MQL/17484` into the StockSharp high-level API. It targets short-term trend continuation on forex pairs using 5-minute or 15-minute candles. Trend direction is defined by the relationship between fast and slow exponential moving averages and the recent momentum of the Relative Strength Index (RSI). Entry confirmation requires synchronized signals from Stochastic Oscillator, DeMarker, and Williams %R oscillators.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `ShortEmaPeriod` | 9 | Length of the fast EMA trend filter. |\n| `LongEmaPeriod` | 45 | Length of the slow EMA trend filter. |\n| `RsiPeriod` | 14 | RSI lookback used for momentum slope comparison. |\n| `StochasticKPeriod` | 5 | Lookback of the %K line. |\n| `StochasticDPeriod` | 3 | Smoothing period for %D. |\n| `StochasticSlowing` | 3 | Final slowing factor applied to %K. |\n| `WilliamsRPeriod` | 14 | Williams %R lookback window. |\n| `DeMarkerPeriod` | 14 | DeMarker lookback window. |\n| `TakeProfitPoints` | 17 | Distance to the profit target in price points (uses `Security.PriceStep`). |\n| `StopLossPoints` | 77 | Distance to the protective stop in price points. |\n| `CandleType` | 5-minute | Candle data type processed by the strategy. |\n| `Volume` | 1 | Trade size used for market entries. |"
+   },
+   "2232": {
+    "id": 2232,
+    "name": "StepMA NRTR",
+    "family": "trend",
+    "overview": "Trend-following strategy based on the StepMA NRTR indicator. The indicator combines a step moving average with a Nick Rar Trend reversal mechanism and generates buy or sell signals when the trend changes.\n\n## Details\n\n- **Entry Criteria**: StepMA NRTR buy/sell signal\n- **Long/Short**: both\n- **Exit Criteria**: opposite StepMA NRTR signal\n- **Stops**: none\n- **Default Values**:\n  - `Length` = 10\n  - `Kv` = 1\n  - `StepSize` = 0\n  - `UseHighLow` = true\n  - `CandleType` = TimeFrame 1 hour\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: StepMA NRTR\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: StepMA NRTR buy/sell signal\n- **Long/Short**: both\n- **Exit Criteria**: opposite StepMA NRTR signal\n- **Stops**: none\n- **Default Values**:\n  - `Length` = 10\n  - `Kv` = 1\n  - `StepSize` = 0\n  - `UseHighLow` = true\n  - `CandleType` = TimeFrame 1 hour\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: StepMA NRTR\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2481": {
+    "id": 2481,
+    "name": "Cash Machine 5min",
+    "family": "trend",
+    "overview": "This strategy is a direct conversion of the **CashMachine 5min** expert advisor from MQL to the StockSharp high level API. It is designed for five-minute candles and combines the DeMarker indicator with a Stochastic oscillator crossover filter. Trade management uses hidden stop-loss / take-profit levels together with staged trailing rules that attempt to lock in gains once price momentum appears.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `HiddenTakeProfit` | Hidden take-profit distance in pips. | 60 |\n| `HiddenStopLoss` | Hidden stop-loss distance in pips. | 30 |\n| `TargetTp1` | First trailing activation level (pips). | 20 |\n| `TargetTp2` | Second trailing activation level (pips). | 35 |\n| `TargetTp3` | Third trailing activation level (pips). | 50 |\n| `DeMarkerLength` | DeMarker averaging period. | 14 |\n| `StochasticLength` | Stochastic %K lookback period. | 5 |\n| `StochasticK` | %K smoothing length. | 3 |\n| `StochasticD` | %D smoothing length. | 3 |\n| `CandleType` | Candle series used for calculations (default 5-minute). | 5-minute timeframe |"
+   }
+  }
+ }
+}

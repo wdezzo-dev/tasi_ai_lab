@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3268,
+      "name": "RsiBoosterStrategy",
+      "family": "trend",
+      "entry_long": "roc(rsi(close,14),1) > 5",
+      "exit_long": "roc(rsi(close,14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fast-versus-delayed RSI comparison becomes a one-bar RSI ROC, and the long entry fires when that boost exceeds the Ratio threshold, taken as 5 points as an explicit fallback because no value is documented. FirstRsiPeriod/SecondRsiPeriod 14 are also fallbacks, and the pip stops, trailing step and loss-recovery reverse chain are not expressible."
+    },
+    {
+      "id": 1342,
+      "name": "Stochastic Z-Score Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove((zscore(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),80) + zscore(close,80)) / 2,2.8)",
+      "exit_long": "crossabove(zscore(close,80),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The rescaled Stochastic %K (14-bar range position) is z-scored over the documented RollingWindow 80 so it can be averaged with the price Z-Score, and the entry is that average crossing the documented ZThreshold 2.8. The exit is the documented Z-Score crossing zero; CoolDown 5 and StochSmooth 7 are not expressible, so this extreme threshold trades rarely."
+    },
+    {
+      "id": 1383,
+      "name": "Supertrend TP SL PRO",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20) + 2.0 * atr(high,low,close,14))",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is not in the DSL, so its dynamic line is approximated by EMA(20) plus 2.0x ATR(14) with the entry taken on the flip above that band and the exit when price falls back under the midline. The docs list no numeric parameter defaults, so the periods and multiplier are explicit fallbacks, and the optional fixed stop/target have no documented values."
+    },
+    {
+      "id": 2415,
+      "name": "Opening and Closing on Time v2",
+      "family": "trend",
+      "entry_long": "ema(close,50) > ema(close,200)",
+      "exit_long": "ema(close,50) < ema(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented direction filter survives translation: the long side is the documented FastPeriod 50 EMA above SlowPeriod 200, exited on the opposite relation. The OpenTime 05:00 / CloseTime 21:01 intraday schedule is not expressible on daily bars, and StopLossTicks 30 / TakeProfitTicks 50 are tick distances, so the stop fields are null."
+    },
+    {
+      "id": 2132,
+      "name": "Exp Super Trend",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) + 3.0 * atr(high,low,close,10)",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The SuperTrend line is approximated by an EMA(10) centre plus the documented Multiplier 3 on AtrPeriod 10, keeping the documented bullish regime and the indicator-as-trailing-stop exit. The recursive SuperTrend state (it remembers the running extreme) cannot be reproduced in the DSL, and there is no explicit stop."
+    },
+    {
+      "id": 1854,
+      "name": "Heiken Ashi Simplified EA",
+      "family": "breakout",
+      "entry_long": "sma(close > open,3) >= 1.0 and close > donchian_high_prev(high,3)",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Heikin Ashi is recursive and not available, so raw candles stand in for it: three consecutive bullish candles approximate the three HA closes above their opens, and the trigger is price moving above the last three-bar high. The decelerating-open series, the DistancePoints 300 filter and the MaxPositions 3 scaling are dropped, and the docs list no stops."
+    },
+    {
+      "id": 639,
+      "name": "CP Strat ORB",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1) and low <= donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 09:30-09:45 New York range collapses to the prior bar on daily data; the long entry requires a close above that high while the bar's low still retests it, capturing the documented breakout-plus-retest. StopPoints 20 / TakePoints 60 and MaxTradesPerSession 3 are point and count controls, not percentage stops."
+    },
+    {
+      "id": 1986,
+      "name": "Four Screens",
+      "family": "momentum",
+      "entry_long": "close > open and close > sma(close,5)",
+      "exit_long": "close < open or close < sma(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Four Heikin-Ashi timeframes cannot be reproduced on a single daily series, so the all-bullish screens are approximated by a bullish candle closing above its 5-bar average, with the mirror as exit. The 5/15/30/60-minute streams, the Heikin-Ashi recursion and the point-based stop/target with optional trailing are not expressible."
+    },
+    {
+      "id": 3921,
+      "name": "GTerminal",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented tool is a manual line-drawing terminal whose entry and exit triggers are user-supplied absolute price levels (Buy/Sell Stop and Limit lines) with no documented values, so no market-derived entry rule can be derived without inventing levels. Marked with a never-true guard."
+    },
+    {
+      "id": 1737,
+      "name": "RGT RSI Bollinger",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,8) < 10 and close < bb_lower(close,20)",
+      "exit_long": "close > bb_mid(close,20) or rsi(close,8) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long setup is kept: RSI(8) under RsiLow 10 while close pierces the lower Bollinger band, with Bollinger 20/2 as an explicit fallback since no band period is given. Because the documented exit is a trailing stop, the exit falls back to a return to the band middle or RSI recovery; StopLossPips 70 / TrailingStopPips 35 are pips, so the stop fields are null."
+    }
+  ]
+}

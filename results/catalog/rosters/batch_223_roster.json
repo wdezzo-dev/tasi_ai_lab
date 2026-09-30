@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2405,
+      "name": "Fibo iSAR",
+      "family": "trend",
+      "entry_long": "ema(close,5) > ema(close,13) and ema(close,5) < close and low <= (donchian_high_prev(high,3) + donchian_low_prev(low,3)) / 2 and close > (donchian_high_prev(high,3) + donchian_low_prev(low,3)) / 2",
+      "exit_long": "close >= donchian_low_prev(low,3) + 1.61 * (donchian_high_prev(high,3) - donchian_low_prev(low,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both Parabolic SARs are approximated by EMA(5) versus EMA(13) giving the fast-above-slow-below-price uptrend, and the recent range uses the documented CountBarSearch 3. FiboEntranceLevel 50 becomes the range midpoint and FiboProfitLevel 161 the documented exit level; IndentStopLoss 30 is a point offset, not a percentage."
+    },
+    {
+      "id": 1279,
+      "name": "RSI, Volume, MACD, EMA Combo",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) > 70 and close > ema(close,50) and volume_ratio(volume,20) > 1",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD 12/26/9, RSI overbought level 70, price-above-EMA and volume-above-its-SMA conditions are all retained, with the volume test written as a ratio above the 1.0 baseline. The EMA period is undocumented so 50 is a fallback, and the short branch is dropped for the long-only roster."
+    },
+    {
+      "id": 690,
+      "name": "Dont Make Me Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9), ema(close,21))",
+      "exit_long": "crossbelow(ema(close,9), ema(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented ShortEmaLength 9 and LongEmaLength 21 are used verbatim with the opposite crossover as exit. The ShiftAmount -50 vertical displacement needs shifted indicator buffers and is not expressible, so the cross is taken unshifted."
+    },
+    {
+      "id": 2878,
+      "name": "Martingale VI Hybrid Strategy (C#)",
+      "family": "trend",
+      "entry_long": "sma(close,10) > sma(close,20) and macd(close,12,26) < macd_signal(close,12,26,9)",
+      "exit_long": "sma(close,10) < sma(close,20) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented signal filter is translated, where fast SMA above slow SMA with MACD below its signal starts a long cycle. Fast and Slow MA have no documented values so 10 and 20 are fallbacks, while martingale volume scaling, the shared pip take-profit, Max Trades and the money-based global exits are dropped."
+    },
+    {
+      "id": 1658,
+      "name": "MTF RSI SAR",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 50 and close > ema(close,20) and close > bb_upper(close,20,2)",
+      "exit_long": "rsi(close,14) < 50 and close < ema(close,20) and close < bb_lower(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The four-timeframe RSI stack collapses to the documented RsiPeriod 14 above 50 and the Bollinger trigger uses the documented BollingerPeriod 20 and BollingerWidth 2. Parabolic SAR is proxied by EMA(20) because it is not in the DSL, and the higher timeframes are not available on a single series."
+    },
+    {
+      "id": 1791,
+      "name": "Stoch TP TS V3103",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,5), sma(rsi(close,5),3)) and rsi(close,5) > 20 and rsi(close,5) < 80",
+      "exit_long": "crossbelow(rsi(close,5), sma(rsi(close,5),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic is approximated by RSI(5) with an SMA(3) percent-D line, and the documented 20 to 80 range is kept as the band the cross must occur inside. The fixed minute of each hour, the initial stop, the three-times take-profit and the trailing switch are not expressible in the DSL."
+    },
+    {
+      "id": 1913,
+      "name": "Fibo Stop",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Direction is set by the relative order of the fixed FiboStart and FiboEnd parameters and the rest of the logic only trails a protective stop along retracement levels, so there is no market-derived entry. OffsetPoints and the level-by-level stop migration are not representable."
+    },
+    {
+      "id": 839,
+      "name": "Get Value From N Years Ago",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state no trades are executed; it only reads the time components of a candle from YearsBack 1 to demonstrate a time utility. No entry signal exists to translate."
+    },
+    {
+      "id": 366,
+      "name": "Dollar Carry Trade",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented signal ranks currency pairs by interest-rate differential with TopK 3 and rebalances monthly, which is fundamental data outside the DSL. No price-derived proxy is invented for a carry ranking."
+    },
+    {
+      "id": 982,
+      "name": "Liquidity Internal Market Shift",
+      "family": "other",
+      "entry_long": "low <= donchian_low_prev(low,10) and close > donchian_high_prev(high,3)",
+      "exit_long": "high >= donchian_high_prev(high,10) and close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The liquidity sweep is a new 10-bar low followed by a close above the prior 3-bar extreme as the structure shift; 10 and 3 are fallbacks because no channel length is documented. StopLossPips and TakeProfitPips have no values, the time range and the signal lock are not expressible."
+    }
+  ]
+}

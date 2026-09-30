@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2630,
+      "name": "XROC2 VG X2",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,5),roc(close,20)) and roc(close,50) > 0",
+      "exit_long": "crossbelow(roc(close,5),roc(close,20)) or roc(close,50) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two-timeframe system is collapsed to one series: a fast ROC(5) crossing a slow ROC(20) gives the lower-timeframe signal and a 50-bar ROC acts as the directional filter. No fast/slow periods are documented, so 5/20/50 are fallbacks, and the Jurik smoothing, signal-bar shifts and money management are dropped."
+    },
+    {
+      "id": 1530,
+      "name": "Volatility Bias Model",
+      "family": "trend",
+      "entry_long": "close > sma(close,10) and roc(close,10) > 0 and (high - low) / close > 0.05",
+      "exit_long": "close < sma(close,10) or roc(close,10) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish-close count over BiasWindow=10 is approximated by price above its 10-bar average with positive 10-bar change, and RangeMin=0.05 is used literally as a price-fraction range gate. RiskReward=2 ATR targets, the ATR(14) stop and the MaxBars=20 timer are not expressible exits."
+    },
+    {
+      "id": 1894,
+      "name": "Liquidex Keltner",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,7) + atr(high,low,close,6)) and close > sma(close,7) and close > open",
+      "exit_long": "crossbelow(close,sma(close,7))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "MaPeriod=7 and KeltnerPeriod=6 with KeltnerMultiplier=1 are documented, so the band is SMA(7) plus one ATR(6) and the long requires a close above both the band and the average with a bullish body. RangeFilter=10 points, the EntryHour window and the Friday cutoff are not expressible; StopLoss=1m and TakeProfit=2m are percentage-based."
+    },
+    {
+      "id": 2161,
+      "name": "Forex Fraus Slogger",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,1),0.1)",
+      "exit_long": "crossbelow(roc(close,1),-0.1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "With a 1-period SMA the envelopes are the previous close plus/minus EnvelopePercent=0.1, so the documented re-entry above the lower band is written as a one-bar ROC crossing 0.1 and the mirror exit at -0.1. The trailing stop (0.001/0.0001) and the StartHour/StopHour filter are not expressible."
+    },
+    {
+      "id": 896,
+      "name": "Hulk Grid Algorithm V2",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy places ten layered limit buys around a user-supplied MidPrice (default 0, i.e. unanchored) and exits the whole basket on percentage stop or target, so it is a multi-order grid engine with no market-derived entry. The never-true guard is used even though StopLossPercent=2.0 and TakeProfitPercent=2.0 are documented."
+    },
+    {
+      "id": 4226,
+      "name": "Viva Las Vegas",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Direction comes from a pseudo-random coin toss (Seed, even time-seeded) and sizing from one of five staking progressions, so no deterministic single-symbol signal exists. The never-true guard prevents fabricating one; StopTakePips=50 is a pip offset, not a percentage."
+    },
+    {
+      "id": 2343,
+      "name": "Night Scalper",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,40,1) and bb_upper(close,40,1) - bb_lower(close,40,1) < sma(bb_upper(close,40,1) - bb_lower(close,40,1),20)",
+      "exit_long": "close >= bb_mid(close,40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented BB Period=40 with Deviation=1 is used, and the Range Threshold=450 point width test is restated relative to the band's own 20-bar average because absolute points are not portable. Start Hour=19 gating and the Stop Loss 370 / Take Profit 20 point offsets are not expressible."
+    },
+    {
+      "id": 1299,
+      "name": "Signal Tester",
+      "family": "other",
+      "entry_long": "close > 0",
+      "exit_long": "close > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented behaviour is to buy whenever flat and sell on the very next candle, which is a deliberately indicator-free one-bar round trip, so both sides use an always-true price test. The engine's next-bar-open execution reproduces the alternating long/flat pattern and only costs are incurred."
+    },
+    {
+      "id": 117,
+      "name": "Month of Year Effect",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries and month-end exits come from a calendar effect on 15-minute bars with no indicators, which the DSL cannot express without date fields. The documented 2% stop is left null because the never-true guard opens no positions."
+    },
+    {
+      "id": 1331,
+      "name": "Speedometer Toolbox",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe a visualisation-only gauge that draws an RSI speedometer (RsiLength=14, Radius=20) and explicitly list entry criteria none. There is no trading logic to translate, so the never-true guard is used."
+    }
+  ]
+}

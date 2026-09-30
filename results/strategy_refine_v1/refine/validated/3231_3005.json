@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3231,
+  "ticker": "3005",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3231,
+    "name": "Exp Cronex Chaikin",
+    "family": "trend",
+    "entry_long": "crossabove(ema(ema((1 * close - high - low) * volume,1) - ema((1 * close - high - low) * volume,1),1),ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),10))",
+    "exit_long": "crossbelow(ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),3),ema(ema((2 * close - high - low) * volume,3) - ema((2 * close - high - low) * volume,10),10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Price-times-money-flow and two-stage EMA smoothing approximate accumulation/distribution, Chaikin, and Cronex lines because exact tick-volume AD and Cronex filters are unavailable. The 3/10/3/10 lengths are fallbacks; point stops and the signal-bar shift are omitted."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2014-06-12",
+        "2024-07-31"
+      ],
+      "bars_in_window": 2523,
+      "engine_win_ret": 0.7000408651790571,
+      "alpha": 0.19276813790632996,
+      "benchmark_ret": 0.5072727272727271,
+      "trades": 154,
+      "win_rate": 0.5324675324675324,
+      "sharpe": 0.3480756885731785,
+      "max_drawdown": -0.5713293372154815,
+      "profit_factor": 1.182319438361674
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.017204907021214577,
+      "alpha": 0.261136945856166,
+      "benchmark_ret": -0.2439320388349514,
+      "trades": 20,
+      "win_rate": 0.55,
+      "sharpe": 0.1633194530668755,
+      "max_drawdown": -0.1303048394970876,
+      "profit_factor": 1.1478512050427683
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.05234216611879905,
+      "alpha": 0.05671958207687067,
+      "benchmark_ret": -0.10906174819566972,
+      "trades": 13,
+      "win_rate": 0.46153846153846156,
+      "sharpe": -0.3506873899225714,
+      "max_drawdown": -0.18348033694871846,
+      "profit_factor": 0.7646958253537782
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2014-06-12",
+        "2024-07-31"
+      ],
+      "bars_in_window": 2523,
+      "engine_win_ret": -0.21694977353436817,
+      "alpha": -0.7242225008070953,
+      "benchmark_ret": 0.5072727272727271,
+      "trades": 154,
+      "win_rate": 0.4675324675324675,
+      "sharpe": -0.0008007705552691997,
+      "max_drawdown": -0.6685938228573604,
+      "profit_factor": 0.9265959309944739
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.07994801513509087,
+      "alpha": 0.16398402369986054,
+      "benchmark_ret": -0.2439320388349514,
+      "trades": 20,
+      "win_rate": 0.45,
+      "sharpe": -0.44842795367785865,
+      "max_drawdown": -0.16057444728631964,
+      "profit_factor": 0.7536820661387454
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.11010428666118677,
+      "alpha": -0.001042538465517051,
+      "benchmark_ret": -0.10906174819566972,
+      "trades": 13,
+      "win_rate": 0.38461538461538464,
+      "sharpe": -0.8445099757690824,
+      "max_drawdown": -0.20189526835208582,
+      "profit_factor": 0.5904528634287209
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

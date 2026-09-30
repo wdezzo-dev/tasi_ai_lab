@@ -1,0 +1,84 @@
+{
+  "strategy_id": 1145,
+  "ticker": "1323",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1145,
+    "name": "Order Block Finder",
+    "family": "other",
+    "entry_long": "crossabove(close, sma(close,3)) and roc(close,1) > 1",
+    "exit_long": "crossbelow(close, sma(close,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A bullish order block becomes a close reclaiming the short average after a run of down candles, with the confirming impulse scaled by 1 percent; Relevant Periods, Min Percent Move and Use Whole Range carry no values, so 3 bars and 1 percent are fallbacks. Open-based block boundaries and higher-timeframe confirmation are not represented."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 152,
+      "engine_win_ret": 0.06772201694538915,
+      "alpha": 0.5450824230367597,
+      "benchmark_ret": -0.47736040609137054,
+      "trades": 10,
+      "win_rate": 0.4,
+      "sharpe": 0.852465723999985,
+      "max_drawdown": -0.06977380540498967,
+      "profit_factor": 2.096182728233788
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.17541802406188012,
+      "alpha": 0.21315387311848388,
+      "benchmark_ret": -0.037735849056603765,
+      "trades": 16,
+      "win_rate": 0.5625,
+      "sharpe": 1.514445678988979,
+      "max_drawdown": -0.06253259156321123,
+      "profit_factor": 3.6606015602683093
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 152,
+      "engine_win_ret": 0.015571713413500055,
+      "alpha": 0.4929321195048706,
+      "benchmark_ret": -0.47736040609137054,
+      "trades": 10,
+      "win_rate": 0.3,
+      "sharpe": 0.2507937495431125,
+      "max_drawdown": -0.09217739624636911,
+      "profit_factor": 1.1677693132311013
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.08775956014597397,
+      "alpha": 0.12549540920257773,
+      "benchmark_ret": -0.037735849056603765,
+      "trades": 16,
+      "win_rate": 0.5625,
+      "sharpe": 0.811304258697451,
+      "max_drawdown": -0.07392122016168934,
+      "profit_factor": 2.0247402804974612
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

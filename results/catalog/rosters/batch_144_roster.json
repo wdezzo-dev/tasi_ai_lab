@@ -1,0 +1,100 @@
+{
+  "strategy_roster": [
+    {
+      "id": 176,
+      "name": "Adx Bollinger",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2) and adx(high,low,close,14) > 25",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used verbatim: a close under the lower Bollinger band (period 20, deviation 2.0) with ADX(14) above 25, exiting when price returns to the middle band. The protective stop is ATR(14)-based at a 2.0 multiplier, which is a volatility-scaled distance rather than a fixed percentage, so the percentage fields stay null."
+    },
+    {
+      "id": 2990,
+      "name": "SSB5_123 Multi-Indicator",
+      "family": "trend",
+      "entry_long": "roc(open,1) > 0 and close > sma(close,45) and macd(close,47,95) > macd_signal(close,47,95,74) and sma((high+low+close)/3,5) > sma((high+low+close)/3,34) and roc(close,25) > 0",
+      "exit_long": "roc(open,1) < 0 or close < sma(close,45) or macd(close,47,95) < macd_signal(close,47,95,74)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented periods are used: SMMA 45 becomes sma(close,45), MACD 47/95/74 is explicit, OsMA is the MACD minus its signal line and the Awesome Oscillator is approximated by 5/34 SMAs of typical price, while the stochastic %K/%D above 50 confirmation becomes roc(close,25)>0. The current-versus-previous open comparison is expressed as roc(open,1) because bars cannot be shifted, no exit rule is documented so mirrored conditions are used, and the 1-hour CandleType is not selectable."
+    },
+    {
+      "id": 3181,
+      "name": "Three Timeframes",
+      "family": "trend",
+      "entry_long": "macd(close,13,26) > macd_signal(close,13,26,10) and ema(close,13) > ema(close,8) and ema(close,8) > ema(close,5) and rsi(close,14) > 50",
+      "exit_long": "macd(close,13,26) < macd_signal(close,13,26,10) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The M5/H4/H1 stack is collapsed onto one series: MACD(13,26,10) momentum, the Alligator structure as jaw/teeth/lips EMA(13)>EMA(8)>EMA(5) with the 8/5/3 forward shifts dropped, and RSI(14) above the neutral 50 for the intermediate-timeframe confirmation. The 50/140 pip stop and target, 5/5 pip trailing and the 10:00-15:00 session filter are not expressible as DSL conditions or percentages."
+    },
+    {
+      "id": 929,
+      "name": "Intraday Combo Strategy HH",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and close > bb_upper(close,20,2) and adx(high,low,close,14) > 25 and rsi(close,14) > 50",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe a vote counter over Stoch RSI, MACD, SuperTrend, Bollinger Bands and ADX with no weights or thresholds, so four components must agree with explicit fallbacks: MACD 12/26/9, a close above the upper band (20, 2), ADX(14) > 25 and Stoch RSI read as RSI(14) above 50; SuperTrend is dropped. Cooldown and the optional stop/target have no documented values, so the percentage fields are null."
+    },
+    {
+      "id": 3155,
+      "name": "TenPips Momentum",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma((high+low+close)/3,8)) and sma((high+low+close)/3,8) > sma((high+low+close)/3,50) and roc(close,14) > 0.3 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(close, sma((high+low+close)/3,8)) or sma((high+low+close)/3,8) < sma((high+low+close)/3,50) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented values are kept: the fast/slow averages are 8/50 (SMAs standing in for the unavailable linear weighted averages on typical price), the higher-timeframe momentum test becomes roc(close,14) beyond the documented 0.3 threshold and the macro MACD maps to 12/26/9 on the traded series. The 20/50 pip stop and target, 40 pip trailing, break-even and equity money target are pip or account-currency features, not percentages."
+    },
+    {
+      "id": 2381,
+      "name": "20/200 Expert AutoLot",
+      "family": "momentum",
+      "entry_long": "roc(open,1) > 0",
+      "exit_long": "roc(open,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only market-derived rule is that the later of the two compared bars has the higher open, expressed as roc(open,1)>0 with the opposite case exiting; T1/T2 shifts, DeltaLong and DeltaShort are not documented and are assumed to be adjacent bars with a zero threshold. TradeHour scheduling, AutoLot/BigLotSize sizing, the per-side pip protection and MaxOpenTime are unavailable in the DSL."
+    },
+    {
+      "id": 2661,
+      "name": "New Random",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default entry mode is a random generator firing on top-of-book bid/ask updates, so the direction is not deterministic and the never-true negative-price guard is used instead of inventing a signal. MinimalLotCount and the pip-based stop/target are sizing and offset settings."
+    },
+    {
+      "id": 2609,
+      "name": "HTH Trader Hedge",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a four-leg forex hedge basket (EURUSD plus USDCHF, GBPUSD, AUDUSD) opened inside a 00:05-00:12 window with emergency doubling and basket pip targets, so it is a multi-security scheduled portfolio overlay rather than a single-instrument signal; the never-true guard is used. The undocumented mapping from the two prior daily closes to a basket direction and the 23:00 flush cannot be represented."
+    },
+    {
+      "id": 2508,
+      "name": "Waddah Attar Win",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "notes": "The expert maintains a hedged grid that holds buy limits below and sell limits above the quote at the same time and closes everything when account equity exceeds stored balance by Min Profit, so there is no directional market signal and the never-true guard is used. Step Points 20, volume increments and the currency profit target are order-book and account features."
+    },
+    {
+      "id": 2119,
+      "name": "Simple News",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "notes": "The docs state the strategy uses no indicators: it places buy/sell stop pairs at fixed pip offsets around a configured NewsTime and cancels them ten minutes after the release, so it is a schedule-and-level demo with no market-derived entry and the never-true guard is used. Deals, Delta, Distance, StopLoss, Trail and TakeProfit are pip offsets on pending orders."
+    }
+  ]
+}

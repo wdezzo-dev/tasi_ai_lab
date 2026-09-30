@@ -1,0 +1,98 @@
+{
+ "batch_277": {
+  "strategy_ids": [
+   1290,
+   185,
+   4021,
+   3126,
+   2759,
+   2355,
+   630,
+   1822,
+   694,
+   2241
+  ],
+  "docs": {
+   "1290": {
+    "id": 1290,
+    "name": "Scalping Strategy By TradingConToto",
+    "family": "trend",
+    "overview": "Scalping Strategy by TradingConToto draws lines between consecutive pivot highs or lows depending on EMA trend. When price crosses above a descending pivot-high line during an uptrend, the strategy enters long. When price falls below an ascending pivot-low line during a downtrend, it enters short. Trading is allowed only during a specified session.\n\n## Details\n\n- **Entry Criteria**: Uptrend with price breaking a descending pivot-high line for long; downtrend with price breaking an ascending pivot-low line for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take profit and stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Pivot` = 16\n  - `Pips` = 64\n  - `Spread` = 0\n  - `Session` = \"0830-0930\"\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, pivot\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Uptrend with price breaking a descending pivot-high line for long; downtrend with price breaking an ascending pivot-low line for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Take profit and stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Pivot` = 16\n  - `Pips` = 64\n  - `Spread` = 0\n  - `Session` = \"0830-0930\"\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, pivot\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "185": {
+    "id": 185,
+    "name": "Supertrend Stochastic",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 142%. It performs best in the stocks market.\n\nSupertrend marks the trend, and Stochastic points out temporary counter moves. Entries happen once Stochastic exits oversold or overbought against the trend.\n\nBest for momentum traders needing clear trend cues. ATR values define the stop distance.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > Supertrend && StochK < 20`\n  - Short: `Close < Supertrend && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**: Supertrend reversal\n- **Stops**: Uses Supertrend as trailing stop\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Supertrend, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > Supertrend && StochK < 20`\n  - Short: `Close < Supertrend && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**: Supertrend reversal\n- **Stops**: Uses Supertrend as trailing stop\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Supertrend, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4021": {
+    "id": 4021,
+    "name": "Rabbit M2 Regime Swing",
+    "family": "trend",
+    "overview": "Rabbit M2 is a discretionary expert advisor originally coded by Peter Byrom for MetaTrader 4. The algorithm alternates between\nbullish and bearish regimes determined by hourly exponential moving averages. Within the active regime it listens for Williams %R\nmomentum swings that are confirmed by the Commodity Channel Index before submitting market orders. Protective logic mirrors the\nsource EA by attaching fixed-distance stop loss and take profit levels and by closing positions whenever price violates the\nopposite Donchian channel boundary. A simple money-management module increases the base lot size after each highly profitable\ntrade and doubles the profit target required for the next scale-up.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CciSellLevel` | 101 | Minimum CCI value that confirms a short signal. |\n| `CciBuyLevel` | 99 | Maximum CCI value that confirms a long signal. |\n| `CciPeriod` | 14 | Commodity Channel Index lookback length. |\n| `DonchianPeriod` | 100 | Donchian channel period used for breakout exits. |\n| `MaxTrades` | 1 | Maximum number of base-volume units allowed in the net position. |\n| `BigWinTarget` | 15 | Realized profit required before increasing the base volume. |\n| `VolumeIncrement` | 0.01 | Additional volume added after a qualifying win. |\n| `WprPeriod` | 50 | Williams %R calculation period. |\n| `FastEmaPeriod` | 40 | Fast EMA period on the hourly trend feed. |\n| `SlowEmaPeriod` | 80 | Slow EMA period on the hourly trend feed. |\n| `TakeProfitPoints` | 50 | Take profit distance in price points. |\n| `StopLossPoints` | 50 | Stop loss distance in price points. |\n| `InitialVolume` | 0.01 | Starting base order size. |\n| `CandleType` | 1-minute candles | Primary timeframe used for momentum and exit calculations. |"
+   },
+   "3126": {
+    "id": 3126,
+    "name": "BADX ADX Bollinger",
+    "family": "trend",
+    "overview": "This strategy reproduces the MetaTrader BADX expert advisor using the StockSharp high-level API. It combines the **Average Directional Index (ADX)** with **Bollinger Bands** to trade range-bound conditions: when ADX falls below a configurable threshold and price touches the outer band, the strategy fades the move expecting a mean reversion. All protective orders, including stop-loss, take-profit, and optional trailing stop, are managed automatically by `StartProtection`.",
+    "details": "",
+    "parameters": "- **CandleType** (`DataType`): Timeframe used for the indicator calculations. Default is 15-minute candles.\n- **AdxPeriod** (`int`): Averaging period for the ADX indicator. Default is 30.\n- **AdxLevel** (`decimal`): Maximum ADX value that still qualifies as a ranging market. Default is 20.\n- **BollingerPeriod** (`int`): Period for the Bollinger Bands moving average. Default is 10.\n- **BollingerDeviation** (`decimal`): Standard deviation multiplier for the Bollinger Bands. Default is 1.5.\n- **StopLossPips** (`decimal`): Stop-loss distance measured in pips. Default is 50.\n- **TakeProfitPips** (`decimal`): Take-profit distance measured in pips. Default is 50.\n- **TrailingStopPips** (`decimal`): Trailing stop distance in pips. Default is 5.\n- **TrailingStepPips** (`decimal`): Minimal price improvement in pips before the trailing stop is adjusted. Default is 5."
+   },
+   "2759": {
+    "id": 2759,
+    "name": "Coin Flipping",
+    "family": "trend",
+    "overview": "The Coin Flipping Strategy is a literal port of the classic MetaTrader expert advisor that decides whether to buy or sell by simulating a coin toss. Every completed candle triggers a new decision when the strategy is flat, so the system alternates through a continuous series of independent trades. The StockSharp conversion keeps the behaviour intentionally simple: only one position is held at a time and each trade is paired with a symmetric take-profit and stop-loss expressed in pips.\n\nAlthough the core idea is intentionally naive, the example demonstrates how to translate even very small Expert Advisors into the StockSharp high-level API. The strategy is useful as a teaching aid for wiring up subscriptions, money management helpers and protective orders.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `RiskPercent` | Percentage of the portfolio risked on every trade. | `2` | Increasing this number amplifies the volume; reductions make the orders smaller. |\n| `TakeProfitPips` | Distance between entry and the take-profit level in pips. | `20` | Converted to absolute price using the instrument price step and passed to `StartProtection`. |\n| `StopLossPips` | Distance between entry and the stop-loss level in pips. | `10` | Also converted into price units; the same value is used for position sizing. |\n| `CandleType` | Candle subscription that schedules the decision loop. | `1 minute time frame` | Any StockSharp candle type can be supplied; higher intervals slow the trading tempo. |"
+   },
+   "2355": {
+    "id": 2355,
+    "name": "JSatl Candle",
+    "family": "trend",
+    "overview": "This strategy uses the Jurik Moving Average (JMA) to build a smoothed trend.\nA long position is opened when the JMA turns upward after being flat or downward.\nA short position is opened when the JMA turns downward after being flat or upward.\nOptional stop loss and take profit are applied as percentages from the entry price.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "630": {
+    "id": 630,
+    "name": "Connors VIX Reversal III",
+    "family": "trend",
+    "overview": "Contrarian strategy using VIX spikes relative to its moving average. It buys when VIX jumps above the average by a set percentage and shorts when VIX drops below it.\n\nPositions close when VIX crosses the previous day's moving average.\n\n## Details\n\n- **Entry Criteria**: VIX low above MA and close above MA by threshold for buys; VIX high below MA and close below threshold for sells.\n- **Long/Short**: Both.\n- **Exit Criteria**: VIX crossing yesterday's MA.\n- **Stops**: No.\n- **Default Values**:\n  - `LengthMA` = 10\n  - `PercentThreshold` = 10m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Contrarian\n  - Direction: Both\n  - Indicators: VIX, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: VIX low above MA and close above MA by threshold for buys; VIX high below MA and close below threshold for sells.\n- **Long/Short**: Both.\n- **Exit Criteria**: VIX crossing yesterday's MA.\n- **Stops**: No.\n- **Default Values**:\n  - `LengthMA` = 10\n  - `PercentThreshold` = 10m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Contrarian\n  - Direction: Both\n  - Indicators: VIX, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1822": {
+    "id": 1822,
+    "name": "Elliott Trader",
+    "family": "trend",
+    "overview": "A strategy that opens layered positions when the Stochastic oscillator reaches extreme values on four-hour candles. It places an initial market order followed by a grid of limit orders. Positions are closed once a profit target is reached and the trend is confirmed by moving averages and Bollinger Bands.\n\n## Entry Rules\n- Use Stochastic oscillator (%K length 21, smoothing 3) on H4 candles.\n- When %K ≥ **Overbought** level:\n  - Sell at market.\n  - Place up to eight additional `SellLimit` orders above the current price at configured pip distances.\n- When %K ≤ **Oversold** level:\n  - Buy at market.\n  - Place up to eight additional `BuyLimit` orders below the current price at configured pip distances.\n\n## Exit Rules\n- Realized profit reaches **ProfitTarget** and price confirms trend:\n  - Long positions exit when price is above the lower Bollinger Band and the 200‑period SMA is above the 55‑period SMA.\n  - Short positions exit when price is below the upper Bollinger Band and the 200‑period SMA is below the 55‑period SMA.\n- Pending buy limits are cancelled when %K ≥ 90 and the 200‑period SMA ≤ 55‑period SMA.\n- Pending sell limits are cancelled when %K ≤ 10 and the 200‑period SMA ≥ 55‑period SMA.\n\n## Parameters\n- `StochLength` – %K period for Stochastic.\n- `OverboughtLevel` – level to start selling.\n- `OversoldLevel` – level to start buying.\n- `ProfitTarget` – realized profit required to close open positions.\n- `Order2Offset` … `Order9Offset` – pip distances for additional limit orders.\n- `CandleType` – timeframe of candles, default 4 hours.\n\n## Indicators\n- StochasticOscillator\n- BollingerBands\n- SMA (200 and 55)\n",
+    "details": "",
+    "parameters": "- `StochLength` – %K period for Stochastic.\n- `OverboughtLevel` – level to start selling.\n- `OversoldLevel` – level to start buying.\n- `ProfitTarget` – realized profit required to close open positions.\n- `Order2Offset` … `Order9Offset` – pip distances for additional limit orders.\n- `CandleType` – timeframe of candles, default 4 hours."
+   },
+   "694": {
+    "id": 694,
+    "name": "Double CCI Confirmed Hull MA Reversal",
+    "family": "trend",
+    "overview": "This strategy goes long when price crosses above the Hull Moving Average with confirmation from fast and slow CCI indicators. A trailing EMA manages profit after an ATR based activation.\n\nTesting shows moderate annual return. It performs best in mixed markets.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price crosses above HMA, close above HMA, fast CCI > 0, slow CCI > 0\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: Close below trailing EMA after activation or low hits ATR stop\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLossAtrMultiplier` = 1.75\n  - `TrailingActivationMultiplier` = 2.25\n  - `FastCciPeriod` = 25\n  - `SlowCciPeriod` = 50\n  - `HullMaLength` = 34\n  - `TrailingEmaLength` = 20\n  - `AtrPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: CCI, HMA, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price crosses above HMA, close above HMA, fast CCI > 0, slow CCI > 0\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: Close below trailing EMA after activation or low hits ATR stop\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLossAtrMultiplier` = 1.75\n  - `TrailingActivationMultiplier` = 2.25\n  - `FastCciPeriod` = 25\n  - `SlowCciPeriod` = 50\n  - `HullMaLength` = 34\n  - `TrailingEmaLength` = 20\n  - `AtrPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: CCI, HMA, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2241": {
+    "id": 2241,
+    "name": "Color XdinMA with Standard Deviation",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MQL5 expert **Exp_ColorXdinMA_StDev**.\nIt combines two moving averages into a single line named `XdinMA` and tracks its\nchange over time. The difference between the current and the previous `XdinMA`\nvalue is compared against a multiple of its recent standard deviation. When the\nchange exceeds the positive threshold a long position is opened, while a move\nbelow the negative threshold opens a short position.\n\n## How it works\n\n1. Two simple moving averages are calculated:\n   - **Main MA** – period defined by `MainLength`.\n   - **Plus MA** – period defined by `PlusLength`.\n2. The custom line `XdinMA = 2 * MainMA - PlusMA` is built.\n3. The change of `XdinMA` between consecutive candles is passed to a standard\n   deviation indicator with length `StdPeriod`.\n4. If the change is greater than `K1 * StdDev`, a buy order is placed. If it is\n   smaller than `-K1 * StdDev`, a sell order is placed. Existing opposite\n   positions are closed before opening a new one.\n\n## Parameters\n\n| Parameter   | Description                                        |\n|-------------|----------------------------------------------------|\n| `MainLength`| Period for the primary moving average.             |\n| `PlusLength`| Period for the secondary moving average.           |\n| `StdPeriod` | Number of bars used for standard deviation.        |\n| `K1`        | Multiplier for the deviation threshold.            |\n| `K2`        | Reserved for future extension of the second filter.|\n\nAll parameters are exposed through `StrategyParam` so they can be optimized or\nchanged from the user interface.\n\n## Notes\n\n- Only completed candles are processed.\n- The strategy uses market orders and does not implement stop-loss or\n  take-profit logic.\n- Chart drawing includes both moving averages and executed trades for visual\n  analysis.\n",
+    "details": "",
+    "parameters": "| Parameter   | Description                                        |\n|-------------|----------------------------------------------------|\n| `MainLength`| Period for the primary moving average.             |\n| `PlusLength`| Period for the secondary moving average.           |\n| `StdPeriod` | Number of bars used for standard deviation.        |\n| `K1`        | Multiplier for the deviation threshold.            |\n| `K2`        | Reserved for future extension of the second filter.|\n\nAll parameters are exposed through `StrategyParam` so they can be optimized or\nchanged from the user interface."
+   }
+  }
+ }
+}

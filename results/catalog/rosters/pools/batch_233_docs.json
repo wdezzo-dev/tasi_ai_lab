@@ -1,0 +1,98 @@
+{
+ "batch_233": {
+  "strategy_ids": [
+   3172,
+   2449,
+   1492,
+   1004,
+   1648,
+   406,
+   2780,
+   833,
+   942,
+   1120
+  ],
+  "docs": {
+   "3172": {
+    "id": 3172,
+    "name": "Hoop Master Breakout",
+    "family": "trend",
+    "overview": "- Converted from the MetaTrader 5 expert advisor **\"Hoop master 2\"** by Vladimir Karputov.\n- Builds a breakout box around the current price and arms both buy and sell stop orders every time a new candle closes.\n- Automatically mirrors the MT5 behaviour of doubling the lot size after a losing trade and resetting it after a profitable cycle.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `Volume` | Base order size used when arming new pending orders. | Strategy `Volume` property | Doubles after a losing cycle according to `LossMultiplier`. |\n| `StopLossPips` | Stop-loss distance in MetaTrader pips. | `25` | Converted to price using the pip size helper. `0` disables the stop. |\n| `TakeProfitPips` | Take-profit distance in MetaTrader pips. | `70` | Converted to price. `0` disables the target. |\n| `TrailingStopPips` | Distance between price and the trailing stop. | `0` | Set to `0` to disable trailing behaviour. |\n| `TrailingStepPips` | Minimal improvement before the trailing stop is moved. | `5` | Only used when `TrailingStopPips` is greater than zero. |\n| `IndentPips` | Offset added to the latest close when arming pending orders. | `15` | Ensures the stop orders sit outside the immediate price noise. |\n| `LossMultiplier` | Multiplier applied to the next cycle after a loss. | `2` | Implements the martingale-style position sizing from the MT5 EA. |\n| `CandleType` | Candle type/timeframe that triggers re-arming. | `1 hour time frame` | Change to match the chart used in testing. |"
+   },
+   "2449": {
+    "id": 2449,
+    "name": "ADX System",
+    "family": "trend",
+    "overview": "The **ADX System** strategy trades using the Average Directional Index and its DI components. It opens a position when the ADX rises and one of the directional lines crosses above the ADX. Positions include fixed take-profit and stop-loss levels with a trailing stop to protect profit.\n\n## Details\n\n- **Entry Criteria**\n  - ADX is rising (previous ADX below current).\n  - For **long** trades: previous +DI below previous ADX and current +DI above current ADX.\n  - For **short** trades: previous -DI below previous ADX and current -DI above current ADX.\n- **Exit Criteria**\n  - Opposite signal on ADX and DI lines.\n  - Price reaches the trailing stop level.\n  - Price hits the fixed take-profit or stop-loss.\n- **Long/Short**: Both directions.\n- **Stops**: Fixed stop-loss, take-profit, and trailing stop in absolute price units.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `TakeProfit` = 15\n  - `StopLoss` = 100\n  - `TrailingStop` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: ADX, +DI, -DI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**\n  - ADX is rising (previous ADX below current).\n  - For **long** trades: previous +DI below previous ADX and current +DI above current ADX.\n  - For **short** trades: previous -DI below previous ADX and current -DI above current ADX.\n- **Exit Criteria**\n  - Opposite signal on ADX and DI lines.\n  - Price reaches the trailing stop level.\n  - Price hits the fixed take-profit or stop-loss.\n- **Long/Short**: Both directions.\n- **Stops**: Fixed stop-loss, take-profit, and trailing stop in absolute price units.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `TakeProfit` = 15\n  - `StopLoss` = 100\n  - `TrailingStop` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: ADX, +DI, -DI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1492": {
+    "id": 1492,
+    "name": "TTM Grid",
+    "family": "trend",
+    "overview": "TTM Grid Strategy builds buy and sell grids based on a simple TTM state derived from EMA of highs and lows. The grid resets when the state changes, and orders are placed whenever price touches a grid level.\n\n## Details\n\n- **Entry Criteria**: Price reaches grid level according to TTM state.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: None (positions accumulate).\n- **Stops**: No.\n- **Default Values**:\n  - `TtmPeriod` = 6\n  - `GridLevels` = 5\n  - `GridSpacing` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price reaches grid level according to TTM state.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: None (positions accumulate).\n- **Stops**: No.\n- **Default Values**:\n  - `TtmPeriod` = 6\n  - `GridLevels` = 5\n  - `GridSpacing` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1004": {
+    "id": 1004,
+    "name": "MA MACD BB BackTester",
+    "family": "trend",
+    "overview": "Strategy combining three selectable indicators: simple moving average crossover, MACD crossover, or Bollinger Bands breakout. Only one indicator mode is active at a time, and the trade direction can be long or short.\n\n## Parameters\n- `CandleType` — candle timeframe.\n- `Indicator` — indicator to use (MA, MACD, BB).\n- `Direction` — trade direction (Long or Short).\n- `MaLength` — moving average period.\n- `FastLength` — MACD fast EMA length.\n- `SlowLength` — MACD slow EMA length.\n- `SignalLength` — MACD signal length.\n- `BbLength` — Bollinger Bands period.\n- `BbMultiplier` — Bollinger Bands multiplier.\n- `StartDate` — start date.\n- `EndDate` — end date.\n",
+    "details": "",
+    "parameters": "- `CandleType` — candle timeframe.\n- `Indicator` — indicator to use (MA, MACD, BB).\n- `Direction` — trade direction (Long or Short).\n- `MaLength` — moving average period.\n- `FastLength` — MACD fast EMA length.\n- `SlowLength` — MACD slow EMA length.\n- `SignalLength` — MACD signal length.\n- `BbLength` — Bollinger Bands period.\n- `BbMultiplier` — Bollinger Bands multiplier.\n- `StartDate` — start date.\n- `EndDate` — end date."
+   },
+   "1648": {
+    "id": 1648,
+    "name": "EMA SAR Bulls Bears",
+    "family": "trend",
+    "overview": "This strategy combines a fast and slow Exponential Moving Average (EMA), Parabolic SAR, and Bulls/Bears Power indicators. It trades only during a configured intraday window and uses simple profit and loss protections.\n\nA short position opens when EMA3 is below EMA34, the Parabolic SAR is above the candle high, and Bears Power is negative but rising. A long position opens when EMA3 is above EMA34, SAR is below the candle low, and Bulls Power is positive but falling.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: EMA3 above EMA34, SAR below the candle low, Bulls Power > 0 and decreasing.\n  - **Short**: EMA3 below EMA34, SAR above the candle high, Bears Power < 0 and increasing.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or triggered stop/take.\n- **Stops**: Yes, absolute take-profit (400 points) and stop-loss (2000 points).\n- **Filters**:\n  - Trades only between 09:00 and 17:00.\n  - Operates on 15-minute candles.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: EMA3 above EMA34, SAR below the candle low, Bulls Power > 0 and decreasing.\n  - **Short**: EMA3 below EMA34, SAR above the candle high, Bears Power < 0 and increasing.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or triggered stop/take.\n- **Stops**: Yes, absolute take-profit (400 points) and stop-loss (2000 points).\n- **Filters**:\n  - Trades only between 09:00 and 17:00.\n  - Operates on 15-minute candles.",
+    "parameters": ""
+   },
+   "406": {
+    "id": 406,
+    "name": "Turn Of Month",
+    "family": "pattern",
+    "overview": "This seasonal pattern buys equity indices a few days before month‑end and exits shortly after the new month begins, aiming to capture the \"turn‑of‑the‑month\" effect.\n\nThe system stays in cash outside of this window to reduce exposure.\n\n## Details\n\n- **Data**: Daily index levels.\n- **Entry**: Buy N days before month end.\n- **Exit**: Sell M days after month start.\n- **Instruments**: Equity index futures or ETFs.\n- **Risk**: Flat outside scheduled window.\n\n",
+    "details": "- **Data**: Daily index levels.\n- **Entry**: Buy N days before month end.\n- **Exit**: Sell M days after month start.\n- **Instruments**: Equity index futures or ETFs.\n- **Risk**: Flat outside scheduled window.",
+    "parameters": ""
+   },
+   "2780": {
+    "id": 2780,
+    "name": "Patterns EA",
+    "family": "pattern",
+    "overview": "Patterns EA Strategy is a price action system that scans the most recent three finished candles for a wide range of single, double, and triple-bar formations. The logic is a StockSharp port of the original MQL5 \"Patterns_EA\" expert advisor and preserves its configurable catalogue of 30 candlestick setups. Each pattern can be enabled or disabled independently and can be assigned to either long or short execution, allowing the strategy to mimic the discretionary rules from the source script.",
+    "details": "",
+    "parameters": "- **Candle Type** – Time frame used for pattern detection.\n- **Opened Mode** – Position management logic (Any, Swing, Buy One, Buy Many, Sell One, Sell Many) replicated from the MQL version.\n- **Equality Pips** – Pip distance that defines price equality; adjusted by the instrument's price step.\n- **Enable One-Bar Patterns / Enable Two-Bar Patterns / Enable Three-Bar Patterns** – Toggles for each pattern group.\n- **Enable {Pattern}** – Individual switches for all 30 formations.\n- **{Pattern} Order** – Trade direction (buy or sell) assigned to the corresponding pattern.\n\nAll parameters are exposed through `StrategyParam` objects, enabling optimisation or UI binding when used within StockSharp applications."
+   },
+   "833": {
+    "id": 833,
+    "name": "Gartley 222",
+    "family": "pattern",
+    "overview": "This strategy trades long when a bullish Gartley 222 harmonic pattern forms.\nThe pattern is detected using pivot highs and lows validated by Fibonacci ratios.\n\nA long position is opened `PivotLength` bars after confirmation when price closes above point C.\nProtection closes the position at a Fibonacci extension target or at a fixed percent stop loss.\n\n## Details\n\n- **Entry Criteria**:\n  - Bullish Gartley 222 pattern confirmed\n  - Entry delayed by `PivotLength` bars\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**:\n  - `Stop Loss %` below entry\n  - `TP Fib Extension` above entry\n- **Default Values**:\n  - `Pivot Length` = 5\n  - `Fib Tolerance` = 0.05\n  - `TP Fib Extension` = 1.27\n  - `Stop Loss %` = 2\n\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: Pivot points, Fibonacci\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Bullish Gartley 222 pattern confirmed\n  - Entry delayed by `PivotLength` bars\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**:\n  - `Stop Loss %` below entry\n  - `TP Fib Extension` above entry\n- **Default Values**:\n  - `Pivot Length` = 5\n  - `Fib Tolerance` = 0.05\n  - `TP Fib Extension` = 1.27\n  - `Stop Loss %` = 2\n\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long\n  - Indicators: Pivot points, Fibonacci\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "942": {
+    "id": 942,
+    "name": "IU Open Equal to High Low",
+    "family": "pattern",
+    "overview": "Enters long on the first candle of the day when its open equals its low and enters short when the open equals the high. Stop loss uses the prior candle and take profit is based on the `RiskReward` ratio.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: first candle's open equals its low.\n  - **Short**: first candle's open equals its high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at the previous candle low for long, previous candle high for short.\n  - Take profit calculated from entry price using `RiskReward`.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RiskReward` = 2.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: first candle's open equals its low.\n  - **Short**: first candle's open equals its high.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Stop loss at the previous candle low for long, previous candle high for short.\n  - Take profit calculated from entry price using `RiskReward`.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RiskReward` = 2.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1120": {
+    "id": 1120,
+    "name": "Non-Repainting Renko Emulation",
+    "family": "pattern",
+    "overview": "Emulates Renko bricks using closing prices and trades on pattern transitions without repainting.\n\n## Details\n\n- **Entry Criteria**:\n  - After a new brick forms, go long when previous brick direction and price sequence show upward continuation.\n  - Go short on the inverse sequence.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close positions when brick direction reverses.\n- **Stops**: No.\n- **Default Values**:\n  - `BrickSize` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - After a new brick forms, go long when previous brick direction and price sequence show upward continuation.\n  - Go short on the inverse sequence.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close positions when brick direction reverses.\n- **Stops**: No.\n- **Default Values**:\n  - `BrickSize` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

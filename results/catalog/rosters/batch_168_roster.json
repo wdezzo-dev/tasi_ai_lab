@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 229,
+      "name": "Autocorrelation Reversal",
+      "family": "trend",
+      "entry_long": "roc(close, 1) * roc(close, 2) < 0 and roc(close, 5) * roc(close, 10) < 0 and close < sma(close, 20)",
+      "exit_long": "close > sma(close, 20) or roc(close, 5) * roc(close, 10) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The AutoCorrPeriod 20 statistic is proxied by sign-opposed short and medium ROC pairs, standing in for autocorrelation below the documented -0.3 threshold, and the MA period is a 20-bar fallback. The documented StopLossPercent 2 is retained; the 5-minute timeframe and the short branch are omitted."
+    },
+    {
+      "id": 2226,
+      "name": "Price Channel Stop",
+      "family": "trend",
+      "entry_long": "close > donchian_high(high, 5) - 0.1 * (donchian_high(high, 5) - donchian_low(low, 5))",
+      "exit_long": "close < donchian_low(low, 5) + 0.1 * (donchian_high(high, 5) - donchian_low(low, 5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ChannelPeriod 5 Donchian range is shrunk inward by Risk 0.10 on each side to form the stop levels, and closing above the upper one marks the bullish switch while closing below the lower one is the bearish exit. The line-persistence rule, the 1-hour timeframe, and closing opposite exposure are approximated; no stops are documented."
+    },
+    {
+      "id": 959,
+      "name": "Kyrie Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close, 10), ema(close, 20))",
+      "exit_long": "crossbelow(ema(close, 10), ema(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The short/long EMA pair is EMA(10)/EMA(20) with an upward cross buying and a downward cross closing; both lengths are explicit fallbacks because the parameter list carries no values. The Risk percentage has no documented size, the candle type is not representable, and the short side is omitted."
+    },
+    {
+      "id": 1934,
+      "name": "Linear Regression Slope Trigger",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close, 20) - ema(close, 60), ema(close, 5) - ema(close, 20))",
+      "exit_long": "crossbelow(ema(close, 20) - ema(close, 60), ema(close, 5) - ema(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The regression slope and its derived trigger line are approximated by nested EMA spreads, with the documented bullish cross opening and the bearish cross closing. The 5/20/60 lengths are explicit fallbacks because the document gives no values, and stops plus the short side are not representable."
+    },
+    {
+      "id": 805,
+      "name": "FON60DK",
+      "family": "trend",
+      "entry_long": "3 * ema(close, 5) - 3 * ema(close, 10) + ema(close, 20) > sma(close, 20) + std(close, 20) and 100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) > -20",
+      "exit_long": "3 * ema(close, 5) - 3 * ema(close, 10) + ema(close, 20) < sma(close, 20) - std(close, 20) and 100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) < -70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tillson T3 is rebuilt as the 3/10/20 EMA combination, the OTT channel as SMA(20) plus/minus std(20), and Williams %R as the 14-bar Donchian stochastic keeping the -20 and -70 levels. Every length is a fallback because the document supplies none, the stochastic denominator can be zero, and the 1-minute timeframe is not representable."
+    },
+    {
+      "id": 4096,
+      "name": "STO M5xM15xM30",
+      "family": "momentum",
+      "entry_long": "100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5)) > 50 and 100 * (close - donchian_low(low, 15)) / (donchian_high(high, 15) - donchian_low(low, 15)) > 50 and 100 * (close - donchian_low(low, 30)) / (donchian_high(high, 30) - donchian_low(low, 30)) > 50",
+      "exit_long": "100 * (close - donchian_low(low, 5)) / (donchian_high(high, 5) - donchian_low(low, 5)) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three M5/M15/M30 stochastic oscillators are emulated as 5/15/30-bar Donchian stochastics that must all sit above their midpoint for a synchronized bullish shift, with the documented ExitKPeriod 5 stochastic closing. ShiftBars 3, the 30/10 point protection, and volume are not percentage/DSL fields, and each denominator can be zero."
+    },
+    {
+      "id": 3645,
+      "name": "Bounce Number",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The tool is a visual bounce counter that tallies channel touches into a BounceDistribution table and log lines, with no documented entry or exit rule, so the impossible negative-price guard prevents fabricating a signal. ChannelPoints 300, MaxHistoryCandles, and the cycle-reset reporting are not roster fields."
+    },
+    {
+      "id": 1919,
+      "name": "Murrey Math Bollinger & Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "close > donchian_high_prev(high, 14) and close <= donchian_high_prev(high, 14) + 0.125 * (donchian_high_prev(high, 14) - donchian_low_prev(low, 14)) and 100 * (close - donchian_low(low, 250)) / (donchian_high(high, 250) - donchian_low(low, 250)) <= 21 and bb_upper(close, 14) - bb_lower(close, 14) > 0.5 * sma(bb_upper(close, 14) - bb_lower(close, 14), 50)",
+      "exit_long": "close <= donchian_low_prev(low, 14) + 0.125 * (donchian_high_prev(high, 14) - donchian_low_prev(low, 14)) or close < donchian_low_prev(low, 14) - 0.25 * (donchian_high_prev(high, 14) - donchian_low_prev(low, 14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Murrey 0/8, 1/8, -2/8 levels are built from the 14-bar range with an undocumented Entry Margin mapped to 1/8, and the Bollinger width filter is kept as at least half its own 50-bar average. The oversold Stochastic <= 21 is evaluated on a deliberately much longer 250-bar window because a 0/8 breakout on the same window can never be oversold, and the short side and Murrey stops are omitted."
+    },
+    {
+      "id": 2835,
+      "name": "Exp Sar Tm Plus",
+      "family": "volume",
+      "entry_long": "crossabove(close, ema(close, 20))",
+      "exit_long": "crossbelow(close, ema(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so an EMA(20) direction line is an explicit fallback for the SAR flip: crossing above it opens the long and crossing below closes. SarStep/SarMaximum, the MoneyManagement modes, the per-entry point stop/target recalculation, and the holding-time exit are not representable."
+    },
+    {
+      "id": 1695,
+      "name": "Close vs Previous Open",
+      "family": "volume",
+      "entry_long": "close > open / (1 + roc(open, 1) / 100)",
+      "exit_long": "close < open / (1 + roc(open, 1) / 100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The previous candle's open is reconstructed as open/(1+roc(open,1)/100) and compared with the latest close exactly as documented, with the reverse comparison closing. StopLoss/TakeProfit are point distances with no documented values so both fields stay null, and the candle type plus trailing toggle are not representable."
+    }
+  ]
+}

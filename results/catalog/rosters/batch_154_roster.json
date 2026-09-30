@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3983,
+      "name": "Sidus v1",
+      "family": "trend",
+      "entry_long": "ema(close,23) > ema(close,62) and rsi(close,67) < 59 and volume_ratio(volume,20) < 1",
+      "exit_long": "ema(close,23) < ema(close,62) or rsi(close,67) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastEmaLength=23, SlowEmaLength=62, RsiPeriod=67 and BuyRsiThreshold=59 are used as the long-side trend divergence plus oversold confirmation, and the low-volume restriction is expressed as volume_ratio below 1 because MaxCandleVolume=10 is broker-specific. BuyDifferenceThreshold=63 is a pip gap and the Buy/Sell pip stops are not percentages, so both stop fields are null."
+    },
+    {
+      "id": 2098,
+      "name": "Millenium Code",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), sma(close,20)) and close > donchian_high_prev(high,10)",
+      "exit_long": "crossbelow(sma(close,10), sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the market logic is expressible: the fast/slow MA cross with a recent-highs confirmation, using 10/20 for Fast MA, Slow MA and HighLow Bars because none have documented values. The one-trade-per-day limit, weekday toggles, Open/Close hour scheduling, price-step stop and target, and maximum duration exits are unsupported, so stops are null."
+    },
+    {
+      "id": 3319,
+      "name": "CorrTime",
+      "family": "trend",
+      "entry_long": "adx(high, low, close,14) > 25 and std(close,20) / close > 0.015 and crossabove(close, sma(close,10))",
+      "exit_long": "crossbelow(close, sma(close,10)) or adx(high, low, close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Pearson/Spearman/Kendall/Fechner correlation of price with time is not expressible, so the change in price-time coupling is approximated by a close crossing the short average while the documented gates are kept: ADX above 25 (AdxLevel default) and a Bollinger-equivalent width floor replacing BollingerSpreadMin/Max in pips. The trading window, correlation limits, reverse mode, pip-based risk and MaxOpenOrders are unsupported."
+    },
+    {
+      "id": 1554,
+      "name": "WarriorTrading Momentum",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 2 and close > open and (roc(close,3) < 0 or roc(open,1) > 2)",
+      "exit_long": "close < ema(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three documented setups are collapsed into one: a volume spike (GapVolumeMultiplier=2 via volume_ratio) with either a red-to-green turn after MinRedCandles=3 down bars or a GapThreshold=2% opening jump; VWAP is approximated away in favour of the documented EMA/ATR pair. The ATR stop, RiskRewardRatio=2 target and TrailingStopTrigger=1 are ATR-scaled rather than fixed percentages, and MaxDailyTrades is unsupported, so both stop fields are null."
+    },
+    {
+      "id": 2674,
+      "name": "Pending Orders By Time",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a schedule-driven straddle: at Opening Hour=9 it brackets the market with buy/sell stops Distance=20 pips away and at Closing Hour=2 it cancels and flattens, so there is no market-derived entry signal to translate. Marked non-trading; the pip-based Stop Loss 20 / Take Profit 500 are price distances, not percentages, and the digit-aware pip multiplier has no single-ticker equivalent."
+    },
+    {
+      "id": 4009,
+      "name": "Bull vs Medved Window",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Orders are only placed inside six fixed five-minute windows (StartTime0..5) as pending limits indented from the ask/bid, so the trigger is a clock rather than a market signal. Marked non-trading; the CandleSizePoints=75 body filter, StopLossMultiplier/TakeProfitMultiplier=0.8 body-derived levels and Buy/SellIndentPoints are pending-order mechanics the DSL cannot express."
+    },
+    {
+      "id": 3918,
+      "name": "Fortrader 10 Pips",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The robot immediately opens a long and a short and re-opens whichever leg a protective order closed, i.e. it is a two-sided hedging container with no market-derived signal. Marked non-trading; the per-leg take-profit, stop-loss and trailing distances in symbol points are not percentages and cannot be attached to a single long position."
+    },
+    {
+      "id": 840,
+      "name": "Global Index Spread RSI",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented input is the percentage spread between E-mini S&P 500 and a second global equity index, so the RsiLength=2 read of OversoldThreshold=35 and OverboughtThreshold=78 cannot be built from one price series without changing the strategy. Marked non-trading rather than substituting a single-instrument RSI; the docs also state no stops."
+    },
+    {
+      "id": 2969,
+      "name": "Avalanche AV",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry direction comes from a random draw (values above 16384 go long, otherwise short) after DecisionInterval=9 candles, so there is no market-derived signal to translate. Marked non-trading; the MartingaleMultiplier=1.6 sizing, StopLossPips=15 / TakeProfitPips=30 and the MaxDrawdownPercent=75 floating guard are pip and balance-based rules outside the DSL."
+    },
+    {
+      "id": 3321,
+      "name": "Bull & Bear Candle Martingale",
+      "family": "volume",
+      "entry_long": "close > open and close - open > atr(high, low, close,14)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The market leg is a strong bullish candle measured against the Bull Body Filter, expressed as a body larger than one ATR(14) since the filter is given in pips without a value; the bearish side and the Bull/Bear Multiplier martingale legs are dropped. Exits are documented only as per-direction pip stop and target, so an opposite-candle exit is used and both stop fields are null."
+    }
+  ]
+}

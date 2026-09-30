@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 754,
+      "name": "Enhanced BarUpDn",
+      "family": "trend",
+      "entry_long": "open > sma(close, 5) and close > open and close > sma(close, 50) and close > bb_lower(close, 20)",
+      "exit_long": "close < sma(close, 50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented bullish bar, gap, trend MA and lower-band conditions are kept with MaLength 50 and BbLength 20; the gap is approximated by an open above the recent close average because prior-bar values are not accessible. The ATR-based 2x/3x stop and target cannot be expressed as fixed percentages."
+    },
+    {
+      "id": 2952,
+      "name": "Wajdyss Ichimoku Candle MMRec",
+      "family": "trend",
+      "entry_long": "crossbelow(close, (donchian_high(high, 26) + donchian_low(low, 26)) / 2)",
+      "exit_long": "crossabove(close, (donchian_high(high, 26) + donchian_low(low, 26)) / 2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Ichimoku base line is the documented KijunLength 26 midpoint of the highest high and lowest low, and the long is the documented transition from above to below that line. The MMRec volume reduction and the 1000/2000 point protection are not percentage or DSL fields."
+    },
+    {
+      "id": 2610,
+      "name": "Vector",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This trades four major FX pairs simultaneously with a dynamic portfolio pip target and equity thresholds, so it is a multi-symbol engine with no single-symbol signal. A never-true guard is used rather than approximating the four-leg trend."
+    },
+    {
+      "id": 1577,
+      "name": "Zero-Lag TEMA Crosses",
+      "family": "trend",
+      "entry_long": "crossabove(3 * ema(close, 69) - 3 * ema(ema(close, 69), 69) + ema(ema(ema(close, 69), 69), 69), 3 * ema(close, 130) - 3 * ema(ema(close, 130), 130) + ema(ema(ema(close, 130), 130), 130))",
+      "exit_long": "crossbelow(3 * ema(close, 69) - 3 * ema(ema(close, 69), 69) + ema(ema(ema(close, 69), 69), 69), 3 * ema(close, 130) - 3 * ema(ema(close, 130), 130) + ema(ema(ema(close, 130), 130), 130)) or low < donchian_low_prev(low, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Triple EMA is built explicitly as 3*e1-3*e2+e3 with the documented FastPeriod 69 and SlowPeriod 130, and the documented Lookback 20 recent extreme serves as the stop-at-extreme exit. The 1.5 risk-reward target is a ratio of the stop distance, not a percentage."
+    },
+    {
+      "id": 515,
+      "name": "AI Volume",
+      "family": "trend",
+      "entry_long": "volume > ema(volume, 20) * 2 and close > ema(close, 50) and close > open",
+      "exit_long": "bars_since(close > ema(close, 50) and close > open) >= 5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented volume spike uses VolumeEmaLength 20 and VolumeMultiplier 2 with a 50-period price EMA and matching candle colour; the documented ExitBars 5 hold is expressed with bars_since on the same setup. Docs state there are no stops."
+    },
+    {
+      "id": 1484,
+      "name": "TRIN (Arms Index)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry requires the TRIN arms index, a breadth ratio of advancing versus declining issues that needs a multi-symbol universe and the previous session's values. No single-symbol substitute is documented, so a never-true guard is used."
+    },
+    {
+      "id": 285,
+      "name": "VWAP Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(sma((high + low + close) / 3, 20), 20), -2) and zscore(sma((high + low + close) / 3, 20), 20) < 0",
+      "exit_long": "zscore(sma((high + low + close) / 3, 20), 20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP is approximated by the typical-price average over the documented SlopeLookback 20 and the documented ThresholdMultiplier 2 becomes a z-score; the long enters when a stretched reading crosses back toward the mean. The documented StopLossPercent 2 is applied."
+    },
+    {
+      "id": 1160,
+      "name": "Payday Anomaly",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry and exit depend only on selected days of the month (1st, 2nd, 16th, 31st) with no indicators or price condition, which the DSL cannot date. A never-true guard is used instead of approximating day-of-month with price action."
+    },
+    {
+      "id": 1273,
+      "name": "RSI Strategy with Adjustable RSI and Stop-Loss",
+      "family": "other",
+      "entry_long": "rsi(close, 8) < 28",
+      "exit_long": "close > donchian_high_prev(high, 1)",
+      "stop_loss_pct": 5.0,
+      "take_profit_pct": null,
+      "notes": "Uses the documented RsiLength 8 and RsiThreshold 28 for the long entry and the documented break above the previous candle high as the exit, expressed with the prior-bar Donchian high. The documented StopLossPercent 5 is applied."
+    },
+    {
+      "id": 1176,
+      "name": "Power Hour Money",
+      "family": "other",
+      "entry_long": "close > open and close > ema(close, 20) and roc(close, 5) > 0",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented requirement that all time frames are green is approximated by a bullish bar aligned with the 20-bar and 5-bar trends, since month, week, day and hour feeds are unavailable. The NY session window, percent trailing and the 16:45 close are not expressible."
+    }
+  ]
+}

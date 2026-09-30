@@ -1,0 +1,98 @@
+{
+ "batch_037": {
+  "strategy_ids": [
+   139,
+   2734,
+   2730,
+   3063,
+   681,
+   452,
+   3264,
+   2678,
+   2922,
+   718
+  ],
+  "docs": {
+   "139": {
+    "id": 139,
+    "name": "ATR MACD",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 154%. It performs best in the stocks market.\n\nEntries occur when MACD crosses its signal line, with exits triggered by the opposite crossover or a volatility-based stop.\n\nThis combination seeks to capture momentum while accounting for changing volatility.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ATR, MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2734": {
+    "id": 2734,
+    "name": "Ema612CrossoverStrategy",
+    "family": "trend",
+    "overview": "## Summary\n- Port of the MetaTrader 5 expert advisor **\"EMA 6.12 (barabashkakvn's edition)\"** into the StockSharp high level API.\n- Trades the crossover between a fast and a slow simple moving average (the original script also used MODE_SMA despite its EMA name).\n- Adds optional take profit and trailing stop management expressed in absolute price units so the behaviour can be tuned per instrument.\n\n## Trading logic\n### Data preparation\n- The strategy subscribes to candles of the type defined by `CandleType` (15 minute timeframe by default).\n- Two simple moving averages are calculated: `FastPeriod` length for the fast curve and `SlowPeriod` length for the slow curve. The slow period must be greater than the fast period.\n\n### Entry rules\n- Signals are evaluated on the close of each finished candle.\n- A **bullish crossover** occurs when the slow SMA was above the fast SMA on the previous candle and drops below it on the current candle. Any open short position is closed and a long position is opened with the configured `Volume`.\n- A **bearish crossover** occurs when the slow SMA was below the fast SMA on the previous candle and rises above it on the current candle. Any open long position is closed and a short position is opened with the configured `Volume`.\n\n### Exit rules\n- Open positions are closed on the opposite crossover as described above.\n- Optional take profit: if `TakeProfitOffset` is greater than zero, the strategy calculates a fixed price target from the entry price. Long trades exit when price reaches `entry + TakeProfitOffset`; short trades exit when price reaches `entry - TakeProfitOffset`.\n- Optional trailing stop: when `TrailingStopOffset` is greater than zero the strategy waits until unrealised profit exceeds `TrailingStopOffset + TrailingStepOffset`. Once that threshold is crossed the stop price is tightened to stay `TrailingStopOffset` away from the latest close, but only if the new level is at least `TrailingStepOffset` closer to price than the previ",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 15 minute time frame | Candle resolution used for SMA calculations and signal evaluation. |\n| `FastPeriod` | 6 | Period for the fast simple moving average. Must be > 0 and less than `SlowPeriod`. |\n| `SlowPeriod` | 54 | Period for the slow simple moving average. Must be > 0 and greater than `FastPeriod`. |\n| `Volume` | 1 | Order volume used for new entries. |\n| `TakeProfitOffset` | 0.001 | Optional absolute price distance for the take profit target. Set to 0 to disable. |\n| `TrailingStopOffset` | 0.005 | Absolute distance between price and trailing stop. Set to 0 to disable trailing. |\n| `TrailingStepOffset` | 0.0005 | Additional favourable move required before the trailing stop is moved. |\n\n> **Important:** the offsets are specified in absolute price units. Adjust them to match the instrument's tick size (for example, on EURUSD with a 0.0001 step the defaults correspond to 10, 50 and 5 pips respectively)."
+   },
+   "2730": {
+    "id": 2730,
+    "name": "VR ZVER",
+    "family": "trend",
+    "overview": "The VR ZVER strategy is a trend-following system that combines three confirmation layers: a fast/slow/very-slow EMA stack, the Stochastic Oscillator, and the Relative Strength Index (RSI). All active filters must agree before a position is opened, which helps to avoid trades during choppy and conflicting market regimes. The conversion keeps the original break-even and protective logic while using StockSharp's high-level API.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle series used for calculations. |\n| `UseMovingAverage` | Enables or disables the EMA trend filter. |\n| `FastMaPeriod`, `SlowMaPeriod`, `VerySlowMaPeriod` | Periods for the fast, slow, and very slow EMAs. |\n| `UseStochastic` | Toggles the Stochastic confirmation layer. |\n| `StochasticKPeriod`, `StochasticDPeriod`, `StochasticSlowing` | Period settings for the Stochastic Oscillator. |\n| `StochasticUpperLevel`, `StochasticLowerLevel` | Overbought and oversold thresholds for %K. |\n| `UseRsi` | Enables or disables the RSI confirmation layer. |\n| `RsiPeriod` | RSI averaging period. |\n| `RsiUpperLevel`, `RsiLowerLevel` | RSI thresholds that define overbought/oversold regions. |\n| `StopLossPips`, `TakeProfitPips` | Distances (in pips) for stop-loss and take-profit placement. |\n| `BreakevenPips` | Price progress required before activating breakeven protection. |\n| `Volume` | Quantity to trade for every market order. |"
+   },
+   "3063": {
+    "id": 3063,
+    "name": "RSI Expert Trend Filter",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 5 expert advisor **RSI_Expert_v2.0** to StockSharp's high level strategy API.\n- Generates signals on the configured `CandleType` (default 1 hour) and executes trades at candle close.\n- Designed for net positions: the strategy keeps a single aggregate position instead of hedging multiple tickets.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Timeframe used for indicator updates and signal generation. |\n| `StopLossPips` | Initial stop-loss distance in pips; zero disables the stop. |\n| `TakeProfitPips` | Initial take-profit distance in pips; zero disables the target. |\n| `TrailingStopPips` | Trailing stop distance. Requires a positive `TrailingStepPips`. |\n| `TrailingStepPips` | Extra pips needed before the trailing stop moves again. |\n| `MoneyMode` | Selects fixed lot sizing or risk-percent calculation. |\n| `VolumeOrRiskValue` | Lot size in fixed mode or percent risk in risk mode. |\n| `UseMartingale` | Doubles the next order volume after a losing trade. |\n| `FastMaPeriod` | Period of the fast moving average used by the trend filter. |\n| `SlowMaPeriod` | Period of the slow moving average used by the trend filter. |\n| `RsiPeriod` | Averaging length for the RSI indicator. |\n| `RsiLevelUp` | Upper RSI threshold that triggers short setups. |\n| `RsiLevelDown` | Lower RSI threshold that triggers long setups. |\n| `MaMode` | Enables or inverts the moving average confirmation filter. |"
+   },
+   "681": {
+    "id": 681,
+    "name": "Divergence",
+    "family": "trend",
+    "overview": "Strategy based on price and RSI divergence with simple pivot detection.\n\nDivergence Strategy uses pivot highs and lows in price and RSI to detect bullish and bearish divergences. When price makes a new high but RSI fails to confirm, the strategy sells. Conversely, when price makes a new low while RSI rises, it buys.\n\n## Details\n\n- **Entry Criteria**: Price and RSI divergences.\n- **Long/Short**: Both directions (configurable).\n- **Exit Criteria**: Opposite RSI signal or protective orders.\n- **Stops**: Yes (stop loss & take profit).\n- **Default Values**:\n  - `TradeDirection` = Both\n  - `RsiPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `RiskReward` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price and RSI divergences.\n- **Long/Short**: Both directions (configurable).\n- **Exit Criteria**: Opposite RSI signal or protective orders.\n- **Stops**: Yes (stop loss & take profit).\n- **Default Values**:\n  - `TradeDirection` = Both\n  - `RsiPeriod` = 14\n  - `StopLossPercent` = 2m\n  - `RiskReward` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "452": {
+    "id": 452,
+    "name": "TTM Squeeze",
+    "family": "breakout",
+    "overview": "The TTM Squeeze strategy looks for periods of price compression when Bollinger Bands contract inside Keltner Channels. This \"squeeze\" signals a potential volatility expansion. During the squeeze the strategy monitors a linear regression momentum oscillator and RSI to gauge direction. When the squeeze releases and momentum turns, positions are taken in the direction of the move.\n\nThe method seeks explosive breakouts from quiet ranges. Trades are filtered so that long setups require momentum rising from below zero with RSI above 30, while short setups need momentum falling from positive territory with RSI below 70. An optional take-profit parameter can automatically close trades at a predefined gain.\n\n## Details\n\n- **Entry Criteria**:\n  - Squeeze off (Bollinger Bands outside Keltner Channels).\n  - **Long**: Momentum < 0 and rising, RSI > 30.\n  - **Short**: Momentum > 0 and falling, RSI < 70.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal or take-profit if enabled.\n- **Stops**: None by default, optional take-profit.\n- **Default Values**:\n  - `SqueezeLength` = 20\n  - `RsiLength` = 14\n  - `UseTP` = False\n  - `TpPercent` = 1.2\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, RSI, Linear Regression\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Squeeze off (Bollinger Bands outside Keltner Channels).\n  - **Long**: Momentum < 0 and rising, RSI > 30.\n  - **Short**: Momentum > 0 and falling, RSI < 70.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal or take-profit if enabled.\n- **Stops**: None by default, optional take-profit.\n- **Default Values**:\n  - `SqueezeLength` = 20\n  - `RsiLength` = 14\n  - `UseTP` = False\n  - `TpPercent` = 1.2\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, RSI, Linear Regression\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3264": {
+    "id": 3264,
+    "name": "Reverse Day Fractal",
+    "family": "breakout",
+    "overview": "Reverse Day Fractal is a price action strategy that looks for sharp reversals after an intraday breakout. The algorithm analyses the last three finished candles. When the current bar forms a new extreme beyond the previous two candles and closes back in the opposite direction, it treats this pattern as a failed breakout and enters a reversal trade. Protective orders are managed through configurable take-profit, stop-loss and trailing-stop distances measured in price steps.",
+    "details": "",
+    "parameters": "- `Trade Volume` – order volume for new entries.\n- `Take Profit` – distance to the profit target measured in price steps. Set to zero to disable.\n- `Stop Loss` – distance to the protective stop measured in price steps. Set to zero to disable.\n- `Trailing Stop` – trailing stop distance in price steps. Set to zero to disable.\n- `Trailing Step` – minimum movement (in steps) required before the trailing stop is adjusted.\n- `Only One Position` – when enabled the strategy ignores new signals while a position is open.\n- `Candle Type` – candle data type used for calculations (default: 1-hour time frame)."
+   },
+   "2678": {
+    "id": 2678,
+    "name": "MT45",
+    "family": "momentum",
+    "overview": "The MT45 strategy is a direct conversion of the original MetaTrader expert advisor. It alternates between long and short market positions on every completed bar, while protecting each trade with the same fixed take-profit and stop-loss distances that were used in the MQL implementation. Position sizing follows a martingale-style recovery rule so that the next trade increases its volume only after a losing result.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| Stop Points | Distance to the protective stop in instrument price steps. | 600 |\n| Take Points | Distance to the take-profit target in instrument price steps. | 700 |\n| Base Volume | Base volume used for new positions after wins. | 0.01 |\n| Martingale Multiplier | Volume multiplier applied after losses. | 2 |\n| Max Volume | Maximum allowed volume for martingale scaling. | 10 |\n| Candle Type | Candle series used to detect bar completion (default: 1 minute). | 1 minute |"
+   },
+   "2922": {
+    "id": 2922,
+    "name": "CloseProfit V2",
+    "family": "volatility",
+    "overview": "CloseProfit V2 replicates the behaviour of the original MetaTrader utility that force-closes all active trading exposure once a configurable profit or loss threshold is reached. The StockSharp port acts as an account-protection module: it monitors floating PnL on every completed candle and, when limits are exceeded, cancels outstanding orders and liquidates positions. The strategy is designed to run alongside discretionary or automated entries that rely on the same portfolio.\n\nUnlike signal-generating systems, CloseProfit V2 never opens positions on its own. It simply observes real-time profit and loss metrics, allowing traders to automate the “panic button” logic used in the MQL version. The monitoring frequency is controlled through a candle subscription, which makes the component compatible with both historical backtesting and live trading environments.",
+    "details": "",
+    "parameters": "- **ProfitClose (default 10)** – Floating profit threshold in account currency. When unrealized gains reach this level, the strategy flattens all monitored positions.\n- **LossClose (default 1000)** – Floating loss threshold. Once the unrealized drawdown exceeds this absolute value, every position is closed to stop further losses.\n- **AllSymbols (default false)** – If `false`, only the primary `Security` assigned to the strategy is watched. If `true`, the module aggregates floating PnL for every security in the strategy’s position set and liquidates all of them simultaneously.\n- **CandleType (default 1-minute time frame)** – Candle series used for evaluation. The candle’s close price drives profit calculations when `AllSymbols` is disabled. A shorter time frame provides faster reactions, while longer frames reduce computational load during backtests."
+   },
+   "718": {
+    "id": 718,
+    "name": "Dynamic Ticks Oscillator Model (DTOM)",
+    "family": "mean_reversion",
+    "overview": "The **Dynamic Ticks Oscillator Model** uses the rate of change of the NYSE Down Ticks index. When the ROC drops below a dynamic threshold based on standard deviation, the strategy opens a long position. The position is closed once the ROC rises above a positive threshold.\n\n## Details\n- **Entry Criteria**: `ROC < -StdDev * EntryStdDevMultiplier`\n- **Long/Short**: Long only.\n- **Exit Criteria**: `ROC > StdDev * ExitStdDevMultiplier`\n- **Stops**: No.\n- **Default Values**:\n  - `RocLength = 5`\n  - `VolatilityLookback = 24`\n  - `EntryStdDevMultiplier = 1.6m`\n  - `ExitStdDevMultiplier = 1.4m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: RateOfChange, StandardDeviation\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: `ROC < -StdDev * EntryStdDevMultiplier`\n- **Long/Short**: Long only.\n- **Exit Criteria**: `ROC > StdDev * ExitStdDevMultiplier`\n- **Stops**: No.\n- **Default Values**:\n  - `RocLength = 5`\n  - `VolatilityLookback = 24`\n  - `EntryStdDevMultiplier = 1.6m`\n  - `ExitStdDevMultiplier = 1.4m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: RateOfChange, StandardDeviation\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2810,
+      "name": "Crossing of Two iMA v2",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,5),sma(close,8)) and close > sma(close,13)",
+      "exit_long": "crossbelow(sma(close,5),sma(close,8)) or close < sma(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(5), SMA(8), and SMA(13) approximate the documented smoothed moving averages and directional filter. The configured MA shifts, percentage sizing, pip stops, and trailing-stop state are not expressible in this single-series DSL."
+    },
+    {
+      "id": 2531,
+      "name": "E-Skoch-Open Strategy (StockSharp Port)",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,3) > 0 and close > ema(close,10)",
+      "exit_long": "close < open or roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish three-bar momentum continuation with EMA(10) trend agreement is a fallback because the source does not specify its pattern thresholds. Martingale sizing, equity target, point offsets, and opposite-signal position state are omitted."
+    },
+    {
+      "id": 1576,
+      "name": "Zero-Lag MA Trend Following",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,34),ema(close,20)) and close > donchian_high_prev(high,14)",
+      "exit_long": "crossbelow(ema(close,34),ema(close,20)) or close < donchian_low_prev(low,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(34) is a documented-period proxy for the zero-lag MA, and the prior 14-bar high break approximates its ATR box breakout. ZLEMA arithmetic, the exact box, and dynamic ATR risk-reward exits are not available."
+    },
+    {
+      "id": 2525,
+      "name": "SilverTrend V3 Strategy (C#)",
+      "family": "trend",
+      "entry_long": "ema(close,20) > sma(close,50) and close > donchian_high_prev(high,20) and roc(close,10) > 0",
+      "exit_long": "ema(close,20) < sma(close,50) or close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA/SMA alignment, a prior 20-bar breakout, and positive momentum provide a trend-channel proxy for SilverTrend with J_TPO confirmation. Friday filtering, proprietary profile logic, price-step trailing, and point targets are unavailable."
+    },
+    {
+      "id": 4025,
+      "name": "Day Trading Impulse",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and rsi(close,5) > 50 and roc(close,14) > 0",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or rsi(close,5) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD(12,26,9) crossover is retained, with RSI(5) and ROC(14) standing in for Stochastic and Momentum filters. Parabolic SAR, the 20-point target, 15-point trailing, and zero-point stop cannot be encoded as percentage fields."
+    },
+    {
+      "id": 2298,
+      "name": "Donchian Channels System",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior-bar Donchian boundaries directly represent the documented 20-period channel breakout and reversal. The configured two-bar Shift is not available beyond the built-in previous-bar helper, and the short side is omitted."
+    },
+    {
+      "id": 2895,
+      "name": "ExFractals",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,15) and close-open > sma(close-open,15) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < donchian_low_prev(low,15) or close-open < sma(close-open,15)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 15-bar high break plus above-average body momentum and volume approximates averaged fractal levels and ExVol. Fractal confirmation, pip stop/target/trailing values, and pending-order mechanics are not DSL fields."
+    },
+    {
+      "id": 567,
+      "name": "BTC Future Gamma-Weighted Momentum Model",
+      "family": "momentum",
+      "entry_long": "close > sma(close * volume,60) / sma(volume,60) and roc(close,1) > 0 and roc(close,2) > 0",
+      "exit_long": "close < sma(close * volume,60) / sma(volume,60) or roc(close,2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 60-bar volume-weighted price proxy replaces GWAP, while positive one- and two-bar ROC approximates three rising closes. The gamma weighting, exact sequential-close test, and opposite-signal short branch are unsupported."
+    },
+    {
+      "id": 3507,
+      "name": "Sample Detect Economic Calendar",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Calendar events are external inputs absent from the OHLCV DSL, so the impossible guard preserves the utility's lack of a deterministic market signal. Pending order placement, event timing, and point-based protection are not represented."
+    },
+    {
+      "id": 155,
+      "name": "Vwap Volume",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close * volume,20) / sma(volume,20) and volume_ratio(volume,20) > 1.5",
+      "exit_long": "crossabove(close,sma(close * volume,20) / sma(volume,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A 20-bar volume-weighted close substitutes for VWAP, and volume_ratio(20)>1.5 matches the documented participation threshold. The documented 2% stop is retained; the ATR stop wording and short side are not expressed."
+    }
+  ]
+}

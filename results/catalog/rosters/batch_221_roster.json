@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 311,
+      "name": "Keltner RSI Divergence",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,20) - 2 * atr(high,low,close,14)) and roc(rsi(close,14),1) > 0",
+      "exit_long": "crossbelow(close, ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner channel uses the documented EmaPeriod 20, AtrPeriod 14 and AtrMultiplier 2.0, and a rising RSI(14) stands in for the divergence check because true divergence detection is not in the DSL. The documented ATR-multiple stop is an indicator stop, not a percentage."
+    },
+    {
+      "id": 1660,
+      "name": "Live Alligator",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high+low)/2,5), ema((high+low)/2,13)) and ema((high+low)/2,8) < ema((high+low)/2,13)",
+      "exit_long": "crossbelow(close, ema(close,13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Alligator lips/teeth/jaw are approximated by EMAs of median price at 5/8/13 because SMMA is unavailable; lips crossing above the jaw with teeth still below matches the documented long. TrailPeriod is undocumented so 13 is the fallback, and the five-EMA confirmation, line shifts and trading-hours filter are dropped."
+    },
+    {
+      "id": 691,
+      "name": "Double AI Super Trend Trading",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) + 3 * atr(high,low,close,10) and close > ema(close,20) + 3 * atr(high,low,close,20) and close > sma(close,20)",
+      "exit_long": "close < ema(close,20) + 3 * atr(high,low,close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two SuperTrends are approximated by close above an EMA plus an ATR multiple, and the price-WMA confirmation by close above SMA(20). The 10/20 periods and the multiplier 3 are explicit fallbacks since no SuperTrend or WMA parameters are documented, and the ATR trailing stop is an indicator stop."
+    },
+    {
+      "id": 1845,
+      "name": "TSI DeMarker",
+      "family": "trend",
+      "entry_long": "crossabove(macd(rsi(close,25),5,8), macd_signal(rsi(close,25),5,8,20))",
+      "exit_long": "crossbelow(macd(rsi(close,25),5,8), macd_signal(rsi(close,25),5,8,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "TSI is expressed as a MACD of DeMarker, where DeMarker is approximated by RSI(25) and the documented ShortLength 5, LongLength 8 and SignalLength 20 are used verbatim. The exit is the documented opposite cross and the docs state there are no stops."
+    },
+    {
+      "id": 2081,
+      "name": "EF Distance Reversal",
+      "family": "trend",
+      "entry_long": "roc(sma(close,10),2) < 0 and roc(sma(close,10),1) > 0 and atr(high,low,close,20) >= 0.01 * close",
+      "exit_long": "roc(sma(close,10),2) > 0 and roc(sma(close,10),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three-consecutive-SMA local bottom is captured with the documented SMA 10 over two and one bars plus the ATR(20) volatility filter; the documented threshold of 1 is unitless, so 1% of price is the fallback. Documented StopLoss 100 and TakeProfit 200 are price points, not percentages."
+    },
+    {
+      "id": 395,
+      "name": "Short Interest Effect",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a monthly cross-sectional ranking of short interest and days-to-cover, which the DSL cannot derive from OHLCV, so no entry is fabricated. Portfolio rebalancing and the fundamental inputs are not expressible."
+    },
+    {
+      "id": 1703,
+      "name": "VR MARS",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a port of a manual trading panel that only picks one of five lot sizes and fires a market buy or sell on start, with the docs stating it implements no trading logic. Lot selection and the start-time order flags are not market-derived signals."
+    },
+    {
+      "id": 385,
+      "name": "Overnight Sentiment Anomaly",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry depends on an external end-of-day sentiment series crossing a configurable Threshold, plus a session-close to next-open hold, neither of which is available in the DSL. MinTradeUsd sizing is not expressible."
+    },
+    {
+      "id": 2135,
+      "name": "Breakeven Trailing Stop",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a position-management demo that opens long on the first finished candle and then only moves a breakeven and trailing stop in points. There is no market-derived entry signal, so no fake one is invented."
+    },
+    {
+      "id": 1109,
+      "name": "Nadaraya-Watson Envelope",
+      "family": "other",
+      "entry_long": "crossabove(close, sma(close,8) - 0.5 * std(close,8))",
+      "exit_long": "crossbelow(close, sma(close,8) + 0.5 * std(close,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Nadaraya-Watson kernel regression in log scale is approximated by the documented LookbackWindow 8 as an SMA with a dispersion band; the 0.5 band width is a fallback because RelativeWeighting 8 is a smoothing weight, not an offset. Long-only mode keeps only the lower-envelope cross in and the upper-envelope cross out."
+    }
+  ]
+}

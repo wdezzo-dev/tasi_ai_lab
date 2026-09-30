@@ -1,0 +1,98 @@
+{
+ "batch_096": {
+  "strategy_ids": [
+   904,
+   996,
+   2016,
+   1260,
+   1583,
+   2618,
+   2300,
+   2403,
+   2745,
+   3343
+  ],
+  "docs": {
+   "904": {
+    "id": 904,
+    "name": "IBS Internal Bar Strength",
+    "family": "trend",
+    "overview": "IBS Internal Bar Strength is a mean-reversion strategy that uses the previous bar's close within its range to find oversold or overbought conditions. An optional EMA filter aligns trades with the trend and entries can be added only when price moves a minimum percentage from the last entry. Positions exit when IBS crosses the opposite threshold or a maximum holding time is reached.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: IBS below entry threshold, EMA condition met, and allowed direction.\n  - **Short**: IBS above exit threshold, EMA condition met, and allowed direction.\n- **Exit Criteria**: IBS crossing opposite threshold or trade duration limit.\n- **Stops**: Time-based exit.\n- **Default Values**:\n  - `IbsEntryThreshold` = 0.09\n  - `IbsExitThreshold` = 0.985\n  - `EmaPeriod` = 220\n  - `MinEntryPct` = 0\n  - `MaxTradeDuration` = 14\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: IBS, EMA\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: IBS below entry threshold, EMA condition met, and allowed direction.\n  - **Short**: IBS above exit threshold, EMA condition met, and allowed direction.\n- **Exit Criteria**: IBS crossing opposite threshold or trade duration limit.\n- **Stops**: Time-based exit.\n- **Default Values**:\n  - `IbsEntryThreshold` = 0.09\n  - `IbsExitThreshold` = 0.985\n  - `EmaPeriod` = 220\n  - `MinEntryPct` = 0\n  - `MaxTradeDuration` = 14\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long & Short\n  - Indicators: IBS, EMA\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "996": {
+    "id": 996,
+    "name": "Long-Only MTF EMA Cloud",
+    "family": "trend",
+    "overview": "EMA cloud crossover strategy that trades long when the short EMA crosses above the long EMA. Uses fixed percentage stop loss and take profit.\n\n## Details\n\n- **Entry Criteria**: Short EMA crosses above long EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price hits stop loss or take profit.\n- **Stops**: Fixed percentage stop loss and take profit.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `ShortLength` = 21\n  - `LongLength` = 50\n  - `StopLossPercent` = 1.0m\n  - `TakeProfitPercent` = 2.0m\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Short EMA crosses above long EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price hits stop loss or take profit.\n- **Stops**: Fixed percentage stop loss and take profit.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `ShortLength` = 21\n  - `LongLength` = 50\n  - `StopLossPercent` = 1.0m\n  - `TakeProfitPercent` = 2.0m\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2016": {
+    "id": 2016,
+    "name": "Color Schaff RSI Trend Cycle",
+    "family": "trend",
+    "overview": "Trend-following system based on the Color Schaff RSI Trend Cycle (STC) oscillator. The strategy reacts to color transitions of the STC indicator to enter and exit both long and short positions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Indicator color two bars ago > 5 and last bar < 6.\n  - **Short**: Indicator color two bars ago < 2 and last bar > 1.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Long positions close when indicator color two bars ago < 2.\n  - Short positions close when indicator color two bars ago > 5.\n- **Indicators**: Color Schaff RSI Trend Cycle.\n- **Default Values**:\n  - `Fast RSI` = 23\n  - `Slow RSI` = 50\n  - `Cycle` = 10\n  - `High Level` = 60\n  - `Low Level` = -60\n- **Timeframe**: 4-hour candles by default.\n- **Stops**: None.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Indicator color two bars ago > 5 and last bar < 6.\n  - **Short**: Indicator color two bars ago < 2 and last bar > 1.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Long positions close when indicator color two bars ago < 2.\n  - Short positions close when indicator color two bars ago > 5.\n- **Indicators**: Color Schaff RSI Trend Cycle.\n- **Default Values**:\n  - `Fast RSI` = 23\n  - `Slow RSI` = 50\n  - `Cycle` = 10\n  - `High Level` = 60\n  - `Low Level` = -60\n- **Timeframe**: 4-hour candles by default.\n- **Stops**: None.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1260": {
+    "id": 1260,
+    "name": "RSI + MACD Long-Only",
+    "family": "trend",
+    "overview": "Strategy enters long when RSI crosses above midline with MACD bullish confirmation or when MACD crosses above its signal line while RSI stays above the midline. Exits occur when RSI falls below the midline or MACD crosses below the signal with a non-positive histogram. Optional EMA trend filter and oversold context can refine entries.\n\n## Details\n\n- **Entry Criteria**: RSI crosses above midline with MACD bullish or MACD crosses above signal with RSI above midline\n- **Long/Short**: Long only\n- **Exit Criteria**: RSI crosses below midline or MACD crosses below signal with histogram ≤ 0\n- **Stops**: Optional percent take profit and stop loss\n- **Default Values**:\n  - `RsiLength` = 14\n  - `RsiOversold` = 30\n  - `RsiMidline` = 50\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `OversoldWindowBars` = 10\n  - `EmaLength` = 200\n  - `TakeProfitPercent` = 11.5\n  - `StopLossPercent` = 2.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: RSI, MACD, EMA\n  - Stops: Yes (optional)\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI crosses above midline with MACD bullish or MACD crosses above signal with RSI above midline\n- **Long/Short**: Long only\n- **Exit Criteria**: RSI crosses below midline or MACD crosses below signal with histogram ≤ 0\n- **Stops**: Optional percent take profit and stop loss\n- **Default Values**:\n  - `RsiLength` = 14\n  - `RsiOversold` = 30\n  - `RsiMidline` = 50\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `OversoldWindowBars` = 10\n  - `EmaLength` = 200\n  - `TakeProfitPercent` = 11.5\n  - `StopLossPercent` = 2.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: RSI, MACD, EMA\n  - Stops: Yes (optional)\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1583": {
+    "id": 1583,
+    "name": "MartinGale Scalping",
+    "family": "trend",
+    "overview": "SMA(3) crossing SMA(8) triggers entries with martingale-style pyramiding. Additional orders are added each bar until stop or take-profit is reached.\n\n## Details\n\n- **Entry Criteria**: `SMA3` above `SMA8` for longs, below for shorts; new entries added while signal persists.\n- **Long/Short**: Configurable via `TradingMode`.\n- **Exit Criteria**: Price hits `TakeProfit` or `StopLoss` and opposite SMA relationship.\n- **Stops**: Yes, based on slow SMA value.\n- **Default Values**:\n  - `FastLength` = 3\n  - `SlowLength` = 8\n  - `TakeProfit` = 1.03\n  - `StopLoss` = 0.95\n  - `TradingMode` = Long\n  - `CandleType` = 5 minutes\n  - `MaxPyramids` = 5\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**: `SMA3` above `SMA8` for longs, below for shorts; new entries added while signal persists.\n- **Long/Short**: Configurable via `TradingMode`.\n- **Exit Criteria**: Price hits `TakeProfit` or `StopLoss` and opposite SMA relationship.\n- **Stops**: Yes, based on slow SMA value.\n- **Default Values**:\n  - `FastLength` = 3\n  - `SlowLength` = 8\n  - `TakeProfit` = 1.03\n  - `StopLoss` = 0.95\n  - `TradingMode` = Long\n  - `CandleType` = 5 minutes\n  - `MaxPyramids` = 5\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "2618": {
+    "id": 2618,
+    "name": "Pipso Range Reversal",
+    "family": "breakout",
+    "overview": "This strategy is a StockSharp port of the Pipso MQL5 expert advisor. It acts as a mean-reversion system that sells into bullish breakouts and buys into bearish breakouts of a recent high/low range while limiting activity to a configurable trading session.\n\n## Core Idea\n- Build a Donchian-style channel from the highest high and lowest low of the last `LookbackPeriod` finished candles (defaults to 36).\n- Monitor the upper boundary to fade upside breakouts and the lower boundary to fade downside breakouts.\n- Open positions only when the current candle starts within the trading window defined by `StartHour` and `EndHour`.\n\n## Trade Logic\n### Entry Conditions\n- **Short entry**: when the candle's high touches or exceeds the previous channel high, close any long position and, if within the session window, sell `OrderVolume` contracts at market. The model records the entry price as the channel high.\n- **Long entry**: when the candle's low touches or breaks below the previous channel low, close any short position and, if trading is allowed, buy `OrderVolume` contracts at market with the channel low as entry reference.\n\n### Exit Conditions\n- Positions are closed immediately when price touches the opposite side of the channel (mirroring the original EA's behavior).\n- A protective stop is placed at a fixed distance from the entry price. The stop distance equals `(channelHigh - channelLow) * (1 + StopRangePercent / 100)`; with the default `StopRangePercent = 300` the stop sits four channel widths away.\n- Stops are evaluated on candle extremes: a long closes if the candle's low dips below the stop, and a short closes if the high exceeds the stop.\n\n### Session Filter\n- `StartHour` and `EndHour` are specified in exchange time. If `StartHour < EndHour` the strategy trades only between those hours on the same day. If `StartHour > EndHour` the window wraps across midnight, enabling night sessions (e.g., 21 → 9).\n- When the window is disabled (`StartHour == EndHour`) the strategy stays",
+    "details": "",
+    "parameters": "- **OrderVolume** *(default 0.1)* – trading volume per order.\n- **LookbackPeriod** *(default 36)* – number of candles used to compute the channel.\n- **StartHour** *(default 21)* – hour (0–23) when the session opens.\n- **EndHour** *(default 9)* – hour (0–23) when the session closes.\n- **StopRangePercent** *(default 300)* – additional percentage of channel width added to the raw range before converting to a stop distance.\n- **CandleType** *(default 1-hour candles)* – timeframe used for calculations."
+   },
+   "2300": {
+    "id": 2300,
+    "name": "Darvas Boxes System",
+    "family": "breakout",
+    "overview": "This strategy implements a breakout approach based on the classic **Darvas Boxes** concept. It monitors price movement within a dynamic price range (box) calculated using the **Donchian Channels** indicator. When price closes above the upper boundary of the box, a long position is opened. When price closes below the lower boundary, a short position is opened. Optional stop-loss and take-profit levels provide basic risk management.",
+    "details": "",
+    "parameters": "- **BoxPeriod** (`int`): Number of candles used to build the price box. Default is 20.\n- **StopLoss** (`decimal`): Distance from entry price to the stop-loss level. Default is 1000.\n- **TakeProfit** (`decimal`): Distance from entry price to the take-profit level. Default is 2000.\n- **AllowBuyEntry** (`bool`): Enables opening long positions. Default is `true`.\n- **AllowSellEntry** (`bool`): Enables opening short positions. Default is `true`.\n- **AllowBuyExit** (`bool`): Enables closing long positions on reverse signals or risk events. Default is `true`.\n- **AllowSellExit** (`bool`): Enables closing short positions on reverse signals or risk events. Default is `true`.\n- **CandleType** (`DataType`): Type of candles used for calculations. Default is 4-hour candles."
+   },
+   "2403": {
+    "id": 2403,
+    "name": "Re Open Positions",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp port of the MQL5 example `Exp_ReOpenPositions`. It demonstrates how to reopen positions when the current trade becomes profitable.\n\n## Logic\n\n1. The strategy opens an initial long position on start.\n2. When price advances by `ProfitThreshold` points from the last entry price, it opens another long position.\n3. Each new entry updates stop loss and take profit levels relative to its own price.\n4. If price reaches the stop loss or take profit, all positions are closed and the cycle resets.\n\nThe same rules work for short trades if the first position is short.\n\n## Parameters\n\n- `ProfitThreshold` – price movement in points required to add a new position.\n- `MaxPositions` – maximum number of opened positions.\n- `StopLossPoints` – distance from entry to protective stop.\n- `TakeProfitPoints` – distance from entry to target profit.\n- `CandleType` – candle data type for processing.\n\n## Notes\n\nThe example is simplified for educational purposes and does not manage trade volume or money management as in the original script.\n",
+    "details": "",
+    "parameters": "- `ProfitThreshold` – price movement in points required to add a new position.\n- `MaxPositions` – maximum number of opened positions.\n- `StopLossPoints` – distance from entry to protective stop.\n- `TakeProfitPoints` – distance from entry to target profit.\n- `CandleType` – candle data type for processing."
+   },
+   "2745": {
+    "id": 2745,
+    "name": "Arrows and Curves",
+    "family": "volatility",
+    "overview": "This strategy is a C# port of the MetaTrader 5 \"Arrows and Curves\" expert advisor (EA). It replicates the original indicator-based logic inside StockSharp using the high-level API. The system trades a single symbol and reacts to the custom channel signals generated by the Arrows and Curves indicator. Only one position can be active at a time, and every new signal either opens a fresh trade or closes an existing one.",
+    "details": "",
+    "parameters": "- `Volume`: fixed order size. Set to zero to enable risk-based sizing.\n- `Risk %`: percentage of portfolio value to risk when volume is zero.\n- `Stop Loss (pips)`: distance of the protective stop in pips.\n- `Take Profit (pips)`: distance of the profit target in pips.\n- `Trailing Stop (pips)`: trailing stop distance in pips; set to zero to disable.\n- `Trailing Step (pips)`: minimum additional move required before the trailing stop is shifted again.\n- `SSP`: number of candles used to calculate the channel range.\n- `Channel %`: outer envelope percentage, identical to the MT5 setting.\n- `Channel Stop %`: inner envelope percentage used to flip the secondary state.\n- `Relay`: shift applied to the channel calculation.\n- `Candle Type`: timeframe or candle type that feeds the indicator."
+   },
+   "3343": {
+    "id": 3343,
+    "name": "Basic RSI EA Template",
+    "family": "mean_reversion",
+    "overview": "The **Basic RSI EA Template Strategy** replicates the MetaTrader 4 expert advisor \"Basic Rsi EA Template.mq4\" (MQL/26750). It watches the Relative Strength Index (RSI) on the selected candle series and reacts when momentum stretches into configurable overbought or oversold zones. The StockSharp conversion keeps the simple one-position workflow and the protective stop/take logic of the original robot while adopting the high-level subscription API.\n\n## Strategy Logic\n\n### Indicators\n- **Relative Strength Index (RSI)** with a configurable period calculated on the chosen candle type.\n\n### Entry Conditions\n- **Long setup**: when RSI falls below `OversoldLevel` and the strategy has no open position, it sends a market buy order for the configured `OrderVolume`.\n- **Short setup**: when RSI rises above `OverboughtLevel` and the strategy has no open position, it sends a market sell order for the configured `OrderVolume`.\n\nThe algorithm works in a netting mode: only one position can exist at any time. If a long position is active the strategy waits for it to close before a short entry (and vice versa).\n\n### Exit Conditions\n- **Protective stop**: `StopLossPips` converts into an absolute price distance using the instrument tick size. Once the price retraces by that amount the built-in protection engine closes the position.\n- **Take profit**: `TakeProfitPips` is processed the same way—when price moves in favor by the configured distance the position is closed for profit.\n\nThere is no additional trailing or signal-based exit. The strategy relies purely on the protective distances or manual intervention to exit trades, mirroring the minimalist design of the original template.\n\n### Risk and Volume Handling\n- `OrderVolume` defines the fixed amount submitted with every market order (default 0.01 lots, matching the MQL sample).\n- The strategy does not pyramid nor hedge. If a protective stop or take-profit closes the active trade the algorithm becomes flat and waits for the next RSI tri",
+    "details": "",
+    "parameters": "- `CandleType`: candle series used for signal generation (default: 1-minute time frame).\n- `RsiPeriod`: number of bars in the RSI window (default: 14).\n- `OverboughtLevel`: RSI threshold that allows short entries (default: 70).\n- `OversoldLevel`: RSI threshold that allows long entries (default: 30).\n- `StopLossPips`: stop distance in pips converted to absolute price units (default: 30 pips).\n- `TakeProfitPips`: profit target in pips converted to absolute price units (default: 20 pips).\n- `OrderVolume`: fixed volume for market orders (default: 0.01)."
+   }
+  }
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2856,
+  "ticker": "2270",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2856,
+    "name": "Rollback Rebound",
+    "family": "volatility",
+    "entry_long": "close > open and (high - close) > (high - low) / 3.0",
+    "exit_long": "close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 15-pip rollback threshold is instrument-specific, so a bullish candle closing below half its range is used as a normalized rollback proxy. A bearish candle approximates rebound failure; the 30/90/1/15-pip protection and trailing logic are not percentage exits, and the short side is omitted."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2005-05-23",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4834,
+      "engine_win_ret": 358.8298935305676,
+      "alpha": 356.4312782981244,
+      "benchmark_ret": 2.398615232443126,
+      "trades": 647,
+      "win_rate": 0.500772797527048,
+      "sharpe": 1.4610058400488337,
+      "max_drawdown": -0.2508907270455897,
+      "profit_factor": 1.785082776022335
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.01896114433444107,
+      "alpha": 0.31725659887989566,
+      "benchmark_ret": -0.2982954545454546,
+      "trades": 41,
+      "win_rate": 0.5365853658536586,
+      "sharpe": 0.1727261255703988,
+      "max_drawdown": -0.0976132583183088,
+      "profit_factor": 1.1349370231678866
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.10106640667159494,
+      "alpha": 0.3308070873847231,
+      "benchmark_ret": -0.22974068071312814,
+      "trades": 22,
+      "win_rate": 0.3181818181818182,
+      "sharpe": 1.2399757800290547,
+      "max_drawdown": -0.050118249462222986,
+      "profit_factor": 1.5583251222827714
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2005-05-23",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4834,
+      "engine_win_ret": 13.128041338937166,
+      "alpha": 10.72942610649404,
+      "benchmark_ret": 2.398615232443126,
+      "trades": 647,
+      "win_rate": 0.4126738794435858,
+      "sharpe": 0.7051810197695458,
+      "max_drawdown": -0.3309878298672013,
+      "profit_factor": 1.1958148837765656
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.16849292121691806,
+      "alpha": 0.12980253332853653,
+      "benchmark_ret": -0.2982954545454546,
+      "trades": 41,
+      "win_rate": 0.34146341463414637,
+      "sharpe": -0.9950708549610368,
+      "max_drawdown": -0.18794045641599677,
+      "profit_factor": 0.5573324629712688
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.01388594835393453,
+      "alpha": 0.2158547323591936,
+      "benchmark_ret": -0.22974068071312814,
+      "trades": 22,
+      "win_rate": 0.2727272727272727,
+      "sharpe": -0.0970479485447762,
+      "max_drawdown": -0.10604383411426666,
+      "profit_factor": 0.9443698740482854
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

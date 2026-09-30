@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1161,
+      "name": "PEAD",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 3245,
+      "name": "Trading Criteria",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 4027,
+      "name": "Cyberia Trader AI",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 1230,
+      "name": "Redk Compound Ratio MA",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1638,
+      "name": "ARD Order Management",
+      "family": "trend",
+      "entry_long": "rsi(close,2) > 50",
+      "exit_long": "rsi(close,2) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is approximated with RSI because DeMarker is not available in the DSL."
+    },
+    {
+      "id": 4191,
+      "name": "ARD Order Management Command",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2080,
+      "name": "Color Schaff JCCX Trend Cycle",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30",
+      "exit_long": "rsi(close,14) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 426,
+      "name": "Heikin Ashi Universal",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Heikin-Ashi direction is approximated by raw candle direction because synthetic Heikin-Ashi fields are not present in the DSL."
+    },
+    {
+      "id": 2548,
+      "name": "Get Trend",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 445,
+      "name": "Strategy Tester Sample",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    }
+  ]
+}

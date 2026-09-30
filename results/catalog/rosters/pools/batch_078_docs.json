@@ -1,0 +1,98 @@
+{
+ "batch_078": {
+  "strategy_ids": [
+   241,
+   2537,
+   45,
+   1471,
+   2222,
+   3491,
+   3670,
+   4121,
+   3990,
+   1736
+  ],
+  "docs": {
+   "241": {
+    "id": 241,
+    "name": "ADX Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 70%. It performs best in the stocks market.\n\nA long trade is entered when ADX drops below the average minus `DeviationMultiplier` times the standard deviation and price is below the moving average. A short trade is opened when ADX spikes above the upper band and price is above the average. Positions are closed when ADX reverts toward its average.\n\nThis system appeals to traders looking for opportunities during low-trend environments. The stop-loss prevents small mean-reversion trades from growing into large losses if a new trend emerges.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: ADX < Avg - DeviationMultiplier * StdDev && Close < MA\n  - **Short**: ADX > Avg + DeviationMultiplier * StdDev && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when ADX > Avg\n  - **Short**: Exit when ADX < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: ADX < Avg - DeviationMultiplier * StdDev && Close < MA\n  - **Short**: ADX > Avg + DeviationMultiplier * StdDev && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when ADX > Avg\n  - **Short**: Exit when ADX < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2537": {
+    "id": 2537,
+    "name": "Fuzzy Logic",
+    "family": "trend",
+    "overview": "The Fuzzy Logic strategy replicates the MT5 expert advisor **Fuzzy logic (barabashkakvn's edition)** using the high-level StockSharp API. The system measures trend strength and momentum exhaustion with Bill Williams oscillators and momentum indicators, converts those readings into fuzzy membership grades, and aggregates them into a single decision score between 0 and 1.\n\nTrading actions are triggered when the fuzzy score crosses calibrated thresholds:\n\n- **Decision &gt; 0.75** – open a short position (strong exhaustion / overbought conditions).\n- **Decision &lt; 0.25** – open a long position (strong bullish reversal setup).\n\nPositions are managed with fixed take-profit and stop-loss distances expressed in price steps. When a trailing stop distance is supplied, the protective stop is converted into a trailing one.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `CandleType` | Time frame / candle type used for calculations. |\n| `BuyThreshold` | Fuzzy score below which a long entry is opened. Default 0.25. |\n| `SellThreshold` | Fuzzy score above which a short entry is opened. Default 0.75. |\n| `StopLossPoints` | Stop-loss distance in instrument price steps. Default 60. |\n| `TakeProfitPoints` | Take-profit distance in price steps. Default 20. |\n| `TrailingStopPoints` | Trailing stop distance in price steps. Default 0 (disabled). |\n| `WilliamsPeriod` | Lookback for Williams %R. Default 14. |\n| `RsiPeriod` | Lookback for RSI. Default 14. |\n| `DeMarkerPeriod` | Lookback for the embedded DeMarker calculation. Default 14. |"
+   },
+   "45": {
+    "id": 45,
+    "name": "Choppiness Index Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 172%. It performs best in the forex market.\n\nThis strategy enters in the direction of price relative to its moving average when choppiness falls. It exits if choppiness rises back above a high threshold or a stop-loss hits.\n\nThe goal is to catch new trends emerging from consolidation periods.\n\n## Details\n\n- **Entry Criteria**: Choppiness below `ChoppinessThreshold` with price above/below MA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Choppiness above `HighChoppinessThreshold` or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `ChoppinessPeriod` = 14\n  - `ChoppinessThreshold` = 38.2m\n  - `HighChoppinessThreshold` = 61.8m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Choppiness, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Choppiness below `ChoppinessThreshold` with price above/below MA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Choppiness above `HighChoppinessThreshold` or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `ChoppinessPeriod` = 14\n  - `ChoppinessThreshold` = 38.2m\n  - `HighChoppinessThreshold` = 61.8m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Choppiness, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1471": {
+    "id": 1471,
+    "name": "Trend Type Indicator",
+    "family": "trend",
+    "overview": "Trend Type Indicator detects market regime using ATR and ADX.\nIt goes long during uptrends, short during downtrends and exits when conditions turn sideways.\n\n## Details\n\n- **Entry Criteria**: +DI greater than -DI and not sideways\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite trend or sideways\n- **Stops**: No\n- **Default Values**:\n  - `UseAtr` = true\n  - `AtrLength` = 14\n  - `AtrMaLength` = 20\n  - `UseAdx` = true\n  - `AdxLength` = 14\n  - `AdxLimit` = 25\n  - `SmoothFactor` = 3\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, ADX\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: +DI greater than -DI and not sideways\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite trend or sideways\n- **Stops**: No\n- **Default Values**:\n  - `UseAtr` = true\n  - `AtrLength` = 14\n  - `AtrMaLength` = 20\n  - `UseAdx` = true\n  - `AdxLength` = 14\n  - `AdxLimit` = 25\n  - `SmoothFactor` = 3\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, ADX\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2222": {
+    "id": 2222,
+    "name": "Heiken Ashi Smoothed Trend",
+    "family": "trend",
+    "overview": "This strategy uses EMA-smoothed Heiken-Ashi candles to detect trend reversals. A bullish candle turning from red to green opens a long position and closes any short. Conversely, a bearish candle turning from green to red opens a short and closes any long.\n\n- **Indicators**: Heikin-Ashi (with EMA smoothing)\n- **Entry Rules**:\n  - Enter long when the smoothed Heikin-Ashi candle becomes bullish.\n  - Enter short when the smoothed candle becomes bearish.\n- **Exit Rules**:\n  - Reverse position on opposite signal.\n- **Parameters**:\n  - `EmaLength` – smoothing period for the EMA.\n  - `CandleType` – timeframe of candles.\n\nThe algorithm recomputes the smoothed open and close for each finished candle and flips the position accordingly.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3491": {
+    "id": 3491,
+    "name": "Time Bomb",
+    "family": "breakout",
+    "overview": "Time Bomb replicates the MetaTrader expert advisor that fires a single order whenever price explodes in one direction within a\nshort, configurable window. The strategy watches real-time best bid/ask quotes and measures the number of pips covered between\nthe last reference price and the newest quote. If the required distance is travelled quickly enough it opens a market order in\nthe direction of the breakout and immediately arms hidden stop-loss and take-profit levels expressed in pips.\n\nThe implementation acts only when no position is currently open, mirroring the original block logic that prevented overlapping\ntrades. Price references are reset either once a signal is triggered or when the observation window expires, so each burst of\nvolatility produces at most a single trade per side. Stop-loss and take-profit levels are maintained internally and enforced by\nthe strategy itself because StockSharp does not automatically place protective orders for market executions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: The best ask rises by at least `BuyPipsInTime` pips compared with the stored reference price and the move finishes\n    within `BuyTimeToWait` seconds. A buy order with size `BuyVolume` is sent once the condition is met.\n  - **Short**: The best bid falls by at least `SellPipsInTime` pips compared with the stored reference price and the move finishes\n    within `SellTimeToWait` seconds. A sell order with size `SellVolume` is sent once the condition is met.\n- **Long/Short**: Both directions are supported but only one position can exist at a time.\n- **Exit Criteria**:\n  - **Long**: Position closes when the best bid touches the calculated stop-loss or take-profit price.\n  - **Short**: Position closes when the best ask hits the calculated stop-loss or the best bid reaches the take-profit level.\n- **Stops**: Hidden protective stops are handled by the strategy. Distances are defined in pips and translated into prices using\n  the current symbol step size.\n- **Defa",
+    "details": "- **Entry Criteria**:\n  - **Long**: The best ask rises by at least `BuyPipsInTime` pips compared with the stored reference price and the move finishes\n    within `BuyTimeToWait` seconds. A buy order with size `BuyVolume` is sent once the condition is met.\n  - **Short**: The best bid falls by at least `SellPipsInTime` pips compared with the stored reference price and the move finishes\n    within `SellTimeToWait` seconds. A sell order with size `SellVolume` is sent once the condition is met.\n- **Long/Short**: Both directions are supported but only one position can exist at a time.\n- **Exit Criteria**:\n  - **Long**: Position closes when the best bid touches the calculated stop-loss or take-profit price.\n  - **Short**: Position closes when the best ask hits the calculated stop-loss or the best bid reaches the take-profit level.\n- **Stops**: Hidden protective stops are handled by the strategy. Distances are defined in pips and translated into prices using\n  the current symbol step size.\n- **Default Values**:\n  - `SellPipsInTime` = 5 pips, `SellTimeToWait` = 10 seconds, `SellVolume` = 0.01 lots.\n  - `SellStopLossPips` = 20 pips, `SellTakeProfitPips` = 20 pips.\n  - `BuyPipsInTime` = 5 pips, `BuyTimeToWait` = 10 seconds, `BuyVolume` = 0.01 lots.\n  - `BuyStopLossPips` = 20 pips, `BuyTakeProfitPips` = 20 pips.\n- **Filters**:\n  - Category: Breakout / momentum.\n  - Direction: Symmetric (long and short).\n  - Indicators: Raw price movement only, no oscillators.\n  - Stops: Yes (fixed pip distances per side).\n  - Complexity: Low—single breakout detector with simple state tracking.\n  - Timeframe: Intra-day, reacts to tick-level impulses once per second.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Depends on configured pip distances; defaults correspond to medium risk on major FX pairs.",
+    "parameters": ""
+   },
+   "3670": {
+    "id": 3670,
+    "name": "Prop Firm Helper",
+    "family": "breakout",
+    "overview": "Prop Firm Helper Strategy is a Donchian channel breakout system converted from the MetaTrader expert advisor \"Prop Firm Helper\". The strategy submits stop orders above the recent range for long entries and below the range for short entries. It automatically enforces prop firm challenge rules by stopping trading after the target equity is reached or when the daily loss limit is breached.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Entry Period` | Lookback for breakout Donchian channel. |\n| `Entry Shift` | Number of finished candles ignored when using the breakout channel. |\n| `Exit Period` | Lookback for trailing Donchian channel. |\n| `Exit Shift` | Number of finished candles ignored for trailing stops. |\n| `Risk Per Trade %` | Percentage of portfolio equity to risk on every entry. |\n| `ATR Period` | Lookback for ATR filter used when moving stops. |\n| `Use Challenge Rules` | Enables prop firm challenge conditions. |\n| `Pass Criteria` | Equity level that stops further trading. |\n| `Daily Loss Limit` | Allowed daily drawdown before trading halts. |\n| `Candle Type` | Candle subscription used for calculations. |"
+   },
+   "4121": {
+    "id": 4121,
+    "name": "ComFracti Fractal RSI",
+    "family": "momentum",
+    "overview": "ComFracti Fractal RSI Strategy is a StockSharp port of the MetaTrader expert *ComFracti*. The algorithm searches for directional bias using Bill Williams fractals on two timeframes and filters the signals with a fast RSI calculated on daily candles. Once a valid setup appears, the strategy opens a single position, protects it with configurable stop-loss and take-profit distances, and can optionally exit when the signal reverses or when a holding time limit is reached.\n\nThe default configuration replicates the 15-minute trading timeframe with a 1-hour confirmation timeframe and a daily RSI length of three periods using the candle open price, just like the original expert.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Volume` | Order volume used for every entry. | `0.1` |\n| `TakeProfitPips` | Profit target distance in pips. Set to `0` to disable. | `700` |\n| `StopLossPips` | Stop-loss distance in pips. Set to `0` to disable. | `2500` |\n| `ExpiryMinutes` | Maximum holding time in minutes before forcing an exit. `0` disables the timer. | `5555` |\n| `CloseOnOppositeSignal` | Close the active position when the signal flips to the opposite direction. | `false` |\n| `PrimaryBuyShift` | Bars back to inspect the bullish fractal on the trading timeframe. | `3` |\n| `HigherBuyShift` | Bars back to inspect the bullish fractal on the higher timeframe. | `3` |\n| `PrimarySellShift` | Bars back to inspect the bearish fractal on the trading timeframe. | `3` |\n| `HigherSellShift` | Bars back to inspect the bearish fractal on the higher timeframe. | `3` |\n| `RsiBuyOffset` | Offset below 50 required for long setups. | `3` |\n| `RsiSellOffset` | Offset above 50 required for short setups. | `3` |\n| `RsiPeriod` | RSI length on the daily timeframe. | `3` |\n| `CandleType` | Trading timeframe candle type. | 15-minute candles |\n| `HigherTimeFrame` | Confirmation timeframe candle type. | 1-hour candles |\n| `DailyTimeFrame` | Candle type used for the daily RSI. | 1-day candles |"
+   },
+   "3990": {
+    "id": 3990,
+    "name": "Risk Monitor",
+    "family": "volatility",
+    "overview": "Risk Monitor Strategy is a port of the MetaTrader 4 expert advisor `risk.mq4`. The original script never opened trades; instead it\ndetermined how many lots the trader could safely deploy based on the account balance and a user-defined risk percentage. This\nStockSharp version keeps the same spirit: it performs continuous account diagnostics, computes suggested trade sizes, monitors\nfloating and realized profits, and publishes the results directly into the strategy comment for quick decision making.\n\nUnlike conventional strategies, Risk Monitor Strategy does not send orders automatically. Its role is supervisory: it gives the\ntrader a snapshot of current exposure, available capacity according to the chosen risk budget, and the profitability of closed\npositions. The comment line is refreshed whenever positions, PnL, or trades change so the information always reflects the latest\nportfolio state.",
+    "details": "",
+    "parameters": "* **Risk %** – portion of the account balance that can be committed to new positions. Default: `10`. The parameter is exposed for\n  optimization so different risk budgets can be backtested quickly."
+   },
+   "1736": {
+    "id": 1736,
+    "name": "RGT EA RSI",
+    "family": "mean_reversion",
+    "overview": "This strategy combines the **Relative Strength Index (RSI)** with **Bollinger Bands** to identify extreme price movements and trade potential reversals. Positions are opened when the RSI enters oversold or overbought zones and price crosses the Bollinger Bands. A stop loss and trailing stop manage risk and secure profits.\n\n## How It Works\n\n1. Calculate RSI and Bollinger Bands for incoming candles.\n2. **Buy** when RSI is below the oversold level and the close price is below the lower band.\n3. **Sell** when RSI is above the overbought level and the close price is above the upper band.\n4. After entry, a fixed stop loss is placed. Once the position gains the minimum profit, the stop loss trails the price.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `Volume` | Order volume. |\n| `RsiPeriod` | RSI calculation period. |\n| `RsiHigh` | RSI overbought threshold. |\n| `RsiLow` | RSI oversold threshold. |\n| `StopLoss` | Initial stop loss distance in price units. |\n| `TrailingStop` | Trailing stop distance in price units. |\n| `MinProfit` | Minimum profit before trailing activates. |\n| `CandleType` | Candle type used for calculations. |\n\n## Notes\n\n- Works on any instrument and timeframe supported by StockSharp.\n- Uses market orders for entries and exits.\n- Trailing stop updates on every completed candle.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Volume` | Order volume. |\n| `RsiPeriod` | RSI calculation period. |\n| `RsiHigh` | RSI overbought threshold. |\n| `RsiLow` | RSI oversold threshold. |\n| `StopLoss` | Initial stop loss distance in price units. |\n| `TrailingStop` | Trailing stop distance in price units. |\n| `MinProfit` | Minimum profit before trailing activates. |\n| `CandleType` | Candle type used for calculations. |"
+   }
+  }
+ }
+}

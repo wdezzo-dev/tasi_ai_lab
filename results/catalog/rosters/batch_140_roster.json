@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 105,
+      "name": "False Breakout Trap",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high, 20) and close < donchian_high_prev(high, 20)",
+      "exit_long": "close < donchian_low_prev(low, 20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented reversal is a failed breakout closed back inside the range, so a long enters when a bar exceeds the prior 20-bar high intraday but closes beneath it, and the documented opposite-signal exit is the mirror failed breakdown. No lookback or CandleType is specified, so 20 daily bars is a fallback; the short leg and the 15-minute timeframe are dropped."
+    },
+    {
+      "id": 3183,
+      "name": "Exp Color PEMA Digit Tm Plus",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(ema(ema(close, 8), 8), 8))",
+      "exit_long": "crossbelow(close, ema(ema(ema(close, 8), 8), 8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The eight-stage Pentuple EMA is unreproducible, so the PEMA colour flip is approximated by a triple-smoothed EMA(8) and a bullish colour change becomes a cross of price above it, with the opposite flip as the documented exit. PEMA Length has no documented value, and Money Management / Money Mode, point-based stops, Use Time Exit with Holding Minutes, Rounding Digits, Signal Bar and Allowed Deviation are not expressible."
+    },
+    {
+      "id": 3543,
+      "name": "DeMarker Gaining Position Volume 2",
+      "family": "trend",
+      "entry_long": "rsi(close, 14) <= 30",
+      "exit_long": "rsi(close, 14) >= 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented DeMarker oscillator is not available, so the level rules DeMarker <= LowerLevel for longs and >= UpperLevel for shorts use RSI(14) as the bounded 0-100 stand-in with 30/70 fallbacks, and the documented opposite-side close becomes the exit. Fixed TradeVolume, point-based StopLossPoints/TakeProfitPoints, the trailing block, the session window and the one-entry-per-candle rule are execution settings."
+    },
+    {
+      "id": 1905,
+      "name": "Stufic Stochastic",
+      "family": "trend",
+      "entry_long": "sma(close, 10) > sma(close, 30) and crossabove(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), sma(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 3)) and 100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) < 20",
+      "exit_long": "sma(close, 10) < sma(close, 30) or 100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a fast-over-slow moving-average trend with %K crossing its %D smoothing line inside the oversold zone, so %K is rebuilt as the StochKPeriod range position with the StochDPeriod smoothing as its average. All periods and the Overbought/Oversold levels are given by name only, so 10/30/14/3 and 20/80 are fallbacks; StopLossPercent has no documented value."
+    },
+    {
+      "id": 3742,
+      "name": "TradingLab Best MACD",
+      "family": "trend",
+      "entry_long": "close > sma(close, 200) and bars_since(crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9))) < 3 and macd(close, 12, 26) < 0 and low <= donchian_low(low, 20) * 1.01",
+      "exit_long": "macd(close, 12, 26) > macd_signal(close, 12, 26, 9) or close < sma(close, 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MaLength 200 trend filter, the BoxPeriod 20 support/resistance box and the MACD crossover with its zero-line side are reproduced as documented, and SignalValidity is approximated by keeping a cross alive for three bars. The box touch uses a 1% tolerance because the source has no tolerance parameter; StopDistancePoints and RiskRewardMultiplier build dynamic price targets rather than percentages, and the 1-hour timeframe is dropped."
+    },
+    {
+      "id": 2474,
+      "name": "Neural Network MACD",
+      "family": "momentum",
+      "entry_long": "crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9)) and macd(close, 12, 26) < 0 and roc(close, 3) > 0",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9)) and macd(close, 12, 26) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MACD rule is kept exactly: a long needs the line below zero crossing above its signal while the filter agrees, and the short setup is the mirror. The three perceptrons cannot be reproduced because the integer weights X11-X34, the bar shifts P1-P3 and the Pass count are all undocumented, so short-horizon momentum stands in for the filter; Sl1/Tp1/Sl2/Tp2 are point distances."
+    },
+    {
+      "id": 3811,
+      "name": "Alexav SpeedUp M1",
+      "family": "volatility",
+      "entry_long": "close - open > 0.01 * close",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented trigger is a completed candle whose body exceeds a threshold and nothing else, so a long fires on a large bullish body with the opposite candle colour as the exit proxy for the attached protective orders. Body Threshold has no documented value, so 1% of price is an explicit fallback; Take Profit, Initial Stop and Trailing Stop are MetaTrader point distances and the default one-minute chart is not available."
+    },
+    {
+      "id": 2221,
+      "name": "CCI Automated",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close, 9), -0.8) and bars_since(zscore(close, 9) < -0.9) < 5",
+      "exit_long": "crossabove(zscore(close, 9), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so the documented CciPeriod 9 oscillator is scaled to standard deviations: crossing above -80 after a dip below -90 becomes a cross above -0.8 within five bars of a sub-0.9 reading, and the exit is the return to the mean. TradesDuplicator 3 stacking and the 50/200/50 point StopLoss, TakeProfit and TrailingStop cannot be expressed as percentages."
+    },
+    {
+      "id": 1879,
+      "name": "Ilan 1.6 Dynamic Grid",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first order is opened in the configured direction (StartLong) rather than on a market-derived condition, and the remaining logic only adds martingale orders every PipStep against price with LotExponent 1.6 up to MaxTrades 10, closing the basket at the average entry price, so no per-bar signal exists and the never-true close<0 guard is used. The point distances, optional trailing stop and volume ladder are not expressible."
+    },
+    {
+      "id": 2177,
+      "name": "Zakryvator",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy does not generate entries and only closes an existing position once unrealised loss exceeds the volume-tiered monetary limit, so there is no market-derived entry or exit signal and the never-true close<0 guard is used. The Min001002 to MinFrom1 tiers are fixed currency amounts on a tick-level position PnL check."
+    }
+  ]
+}

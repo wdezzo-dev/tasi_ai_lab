@@ -1,0 +1,98 @@
+{
+ "batch_106": {
+  "strategy_ids": [
+   3352,
+   159,
+   3338,
+   4141,
+   608,
+   4049,
+   686,
+   1672,
+   3064,
+   2954
+  ],
+  "docs": {
+   "3352": {
+    "id": 3352,
+    "name": "Tokyo Session",
+    "family": "trend",
+    "overview": "The Tokyo Session Strategy replicates the logic of the MetaTrader expert advisor *TokyoSessionEA_v2.8* in StockSharp. The\nstrategy is designed for intraday breakout or mean-reversion trading around the Asian (Tokyo) session. It captures a\nreference candle at a configurable hour, builds a price channel from that candle, and evaluates breakout or rebound\nconditions at another target hour. Depending on the chosen signal mode, the strategy can trade either contrary to the\nlevel breakout (fade moves that extend beyond the reference range) or along the breakout direction.\n\nThe StockSharp port focuses on high-level API usage. All signal calculations are performed inside the candle subscription\nhandler, stops are managed through `StartProtection`, and every action is logged through `LogInfo` to keep the behaviour\ntransparent during backtests and live trading.",
+    "details": "",
+    "parameters": "### General\n\n| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle series used for analysis (defaults to H1). |\n| `BrokerOffset` | Difference between broker time and GMT in hours. |\n\n### Signals\n\n| Parameter | Description |\n|-----------|-------------|\n| `TypeOfSignals` | `ContraryTrend` replicates fading the breakout; `AccordingTrend` follows the breakout direction. |\n| `TimeSetLevels` | Hour (0–23) when the reference candle is captured. |\n| `TimeCheckLevels` | Hour when breakout conditions are evaluated. |\n| `TimeRecheckPrices` | Additional momentum check hour. |\n| `MinDistanceOfLevel` | Minimum distance (in pips) between the close and the channel before allowing a trade. |\n| `MaxDistanceOfLevel` | Maximum distance (in pips) from the level. Zero disables the limit. |\n| `ReCheckPrices` | Enables/disables the additional momentum filter. |\n| `CheckAllBars` | Requires all intermediate closes to stay within the channel. |\n\n### Risk Management\n\n| Parameter | Description |\n|-----------|-------------|\n| `CloseInSignal` | Exit once price crosses back through the channel boundary. |\n| `CloseOrdersOnTime` | Flatten positions after `TimeCloseOrders`. |\n| `TimeCloseOrders` | Hour used by the time-based exit. |\n| `UseTakeProfit`, `TakeProfit` | Enable and configure a fixed take-profit (pips). |\n| `UseStopLoss`, `StopLoss` | Enable and configure a protective stop-loss (pips). |\n| `UseTrailingStop`, `TrailingStop`, `TrailingStep` | Enable StockSharp trailing stop management (pips). |\n| `UseBreakEven`, `BreakEven`, `BreakEvenAfter` | Move stop-loss to break-even once profit reaches the trigger distance. |\n\n### Trading\n\n| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Base order volume. When flipping direction the opposite position is closed automatically. |\n| `MaxOrders` | Maximum number of `Volume` blocks allowed in one direction. Set to 0 for no limit. |"
+   },
+   "159": {
+    "id": 159,
+    "name": "Hull Ma Rsi",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 64%. It performs best in the forex market.\n\nHull MA provides a smoothed trend line and RSI highlights momentum divergences. Trades occur when RSI turns at extremes while price follows the Hull direction.\n\nSuited to short-term swing traders who want early signals. ATR-based stops protect the trade.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `HullMA turning up && RSI < RsiOversold`\n  - Short: `HullMA turning down && RSI > RsiOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Hull MA change of direction\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `HullMA turning up && RSI < RsiOversold`\n  - Short: `HullMA turning down && RSI > RsiOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Hull MA change of direction\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3338": {
+    "id": 3338,
+    "name": "Sudoku UI",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 5 script **SudokuUI.mq5**. The original MQL program exposes a graphical Sudoku puzzle interface with parameters that control puzzle generation, shuffling and automatic updates. Because the StockSharp environment focuses on automated trading instead of interactive chart widgets, the port repurposes the underlying concepts into a grid-based mean reversion strategy driven by puzzle statistics.\n\nThe Sudoku board is interpreted as a 9x9 matrix of digits. Column averages define symmetric deviation thresholds around a simple moving average (SMA). When price deviates from the SMA beyond these Sudoku-derived levels the strategy enters a position in the opposite direction, seeking a reversion back toward the mean. Returning into a neutral zone closes the position, mimicking the original tool's ability to reset the board.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `PuzzleDefinition` | File path or inline digits that describe the Sudoku puzzle used for level calculations. |\n| `ShufflingRandomSeed` | Primary seed for puzzle generation. `-1` derives the seed from the trading day. |\n| `CompositionRandomSeed` | Secondary seed that perturbs the shuffling process to create alternative layouts. |\n| `ShufflingCycles` | Number of additional shuffling passes applied to the digit pool. Higher values create more randomized boards. |\n| `EliminateLabel` | Digit (1-9) removed from the board prior to computing averages. `0` keeps all digits. |\n| `EnableAutoUpdate` | Rebuild the puzzle levels when the trading date changes. |\n| `SmaPeriod` | Length of the SMA indicator used as the reversion anchor. |\n| `ThresholdRange` | Maximum absolute deviation (expressed as a fraction of price) produced by the puzzle. |\n| `NeutralBand` | Deviation zone that triggers position flattening when price re-enters it. |\n| `Volume` | Order volume for market entries. |\n| `CandleType` | Candle subscription used for indicator updates. |"
+   },
+   "4141": {
+    "id": 4141,
+    "name": "Multi Lot Scalper",
+    "family": "trend",
+    "overview": "The **Multi Lot Scalper Strategy** is a martingale-style averaging system converted from the classic MetaTrader expert advisor \"Multi Lot Scalper\". The original algorithm was designed for major FX pairs and relied on the slope of the MACD histogram to decide whether the market is entering a bullish or bearish phase. Once a direction is identified, the strategy opens a ladder of market orders, progressively increasing the volume after each adverse move. The StockSharp port keeps the original entry logic, money management rules, and protective mechanisms while leveraging the high-level candle subscription API.\n\nThe strategy works best on liquid instruments where spreads are tight and a pip definition is stable. By default it subscribes to 15-minute candles, but any other timeframe compatible with the instruments can be supplied through the `CandleType` parameter.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `TakeProfitPips` | Take-profit distance applied to each entry, expressed in pips. | `40` |\n| `LotSize` | Base lot size used when money management is disabled. | `0.1` |\n| `InitialStopPips` | Initial stop-loss distance in pips. | `0` |\n| `TrailingStopPips` | Trailing stop distance that activates after the threshold. | `20` |\n| `MaxTrades` | Maximum number of martingale entries permitted simultaneously. | `10` |\n| `EntryDistancePips` | Minimum adverse movement before adding a new order. | `15` |\n| `SecureProfit` | Floating profit (in currency) required to trigger account protection. | `10` |\n| `UseAccountProtection` | Enables closing the last trade when the secure profit threshold is met. | `true` |\n| `OrdersToProtect` | Number of final trades affected by the secure profit rule. | `3` |\n| `ReverseSignals` | Reverses the MACD interpretation (bullish becomes short, bearish becomes long). | `false` |\n| `UseMoneyManagement` | Enables account-balance-based lot calculation. | `false` |\n| `RiskPercent` | Risk percentage used when money management is active. | `12` |\n| `IsStandardAccount` | Uses standard-lot scaling instead of mini-lot scaling. | `false` |\n| `EurUsdPipValue` | Pip value override for EURUSD. | `10` |\n| `GbpUsdPipValue` | Pip value override for GBPUSD. | `10` |\n| `UsdChfPipValue` | Pip value override for USDCHF. | `10` |\n| `UsdJpyPipValue` | Pip value override for USDJPY. | `9.715` |\n| `DefaultPipValue` | Fallback pip value used for other instruments. | `5` |\n| `StartYear` | First calendar year when new positions may be opened. | `2005` |\n| `StartMonth` | First month allowed for new entries. | `1` |\n| `EndYear` | Last calendar year for initiating trades. | `2006` |\n| `EndMonth` | Last calendar month for initiating trades. | `12` |\n| `EndHour` | Hour (24h) after which fresh entries are blocked. | `22` |\n| `EndMinute` | Minute component of the daily cut-off time. | `30` |\n| `CandleType` | Candle type used for signal generation (default is 15-minute). | `15-minute time frame` |\n| `MacdFastLength` | Fast EMA length of the MACD indicator. | `14` |\n| `MacdSlowLength` | Slow EMA length of the MACD indicator. | `26` |\n| `MacdSignalLength` | Signal EMA length of the MACD indicator. | `9` |"
+   },
+   "608": {
+    "id": 608,
+    "name": "CE XAU/USDT",
+    "family": "trend",
+    "overview": "The strategy goes long when the close price crosses above its SMA and goes short when the close crosses below the SMA.\n\n## Details\n\n- **Entry Criteria:** close crosses above SMA for long, below for short.\n- **Long/Short:** Both.\n- **Exit Criteria:** reverse signal.\n- **Stops:** None.\n- **Default Values:**\n  - SMA period = 14\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:** close crosses above SMA for long, below for short.\n- **Long/Short:** Both.\n- **Exit Criteria:** reverse signal.\n- **Stops:** None.\n- **Default Values:**\n  - SMA period = 14\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4049": {
+    "id": 4049,
+    "name": "Hans123Trader RangeBreakout",
+    "family": "breakout",
+    "overview": "The **Hans123Trader Strategy** recreates the MetaTrader expert advisor \"Hans123Trader v1\" using the StockSharp high-level API. The system arms stop orders twice per day based on the break of the most recent 5-minute trading range. It is tailored for Forex-style symbols where price steps correspond to fractional pips. Pending orders are refreshed each trading day and any open position is forcefully closed when the calendar rolls over.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `BeginSession1` / `BeginSession2` | Preserved for UI compatibility (start-hour hints). The current implementation relies on the end-hour triggers. |\n| `EndSession1` / `EndSession2` | Hours (0–23) when new stop orders are armed; the minutes must be exactly zero. |\n| `TrailingStop` | Trailing distance in points. `0` disables trailing. |\n| `TakeProfit` | Take-profit distance in points. `0` disables take-profit. |\n| `InitialStopLoss` | Initial stop-loss distance in points. `0` leaves the trade without a protective stop unless trailing activates. |\n| `CandleType` | Candle series used for the 80-bar range (default `TimeSpan.FromMinutes(5)`). |\n| `Volume` | Strategy base volume inherited from `Strategy`. |"
+   },
+   "686": {
+    "id": 686,
+    "name": "Donchian Quest Research",
+    "family": "breakout",
+    "overview": "This strategy uses two Donchian channels with different lengths. A breakout above the upper band of the longer channel opens a long position, while a breakout below the lower band opens a short position. Positions close when price touches the opposite band of the shorter channel.\n\n## Parameters\n\n- `OpenPeriod` = 50\n- `ClosePeriod` = 50\n\n## Indicators\n\n- Donchian Channel\n",
+    "details": "",
+    "parameters": "- `OpenPeriod` = 50\n- `ClosePeriod` = 50"
+   },
+   "1672": {
+    "id": 1672,
+    "name": "TradePad",
+    "family": "momentum",
+    "overview": "TradePad Strategy is a manual trading panel ported from the original MQL TradePad expert. The strategy sets up a panel to manage trades interactively. It processes tick data, trade notifications, timer events and chart messages without automated entry or exit rules.\n\nThis sample demonstrates how to build a discretionary trading interface on top of StockSharp.\n\n## Details\n\n- **Entry Criteria**: Manual order placement through the panel.\n- **Long/Short**: Both, depending on user action.\n- **Exit Criteria**: Manual position closing.\n- **Stops**: None; user may implement custom logic.\n- **Filters**: No automatic filters.\n",
+    "details": "- **Entry Criteria**: Manual order placement through the panel.\n- **Long/Short**: Both, depending on user action.\n- **Exit Criteria**: Manual position closing.\n- **Stops**: None; user may implement custom logic.\n- **Filters**: No automatic filters.",
+    "parameters": ""
+   },
+   "3064": {
+    "id": 3064,
+    "name": "Two Per Bar",
+    "family": "volatility",
+    "overview": "The original MetaTrader expert \"Two PerBar\" opens a long and a short position at the very beginning of every new bar, closes the entire basket on the next bar, and optionally applies a martingale-like volume multiplier. The StockSharp port keeps the same rhythm by tracking both hedged legs explicitly and by reacting once per finished candle. All orders are created through the high-level API and respect the instrument metadata (price step, volume step, and min/max lot constraints).",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute time frame | Primary timeframe that triggers the once-per-bar workflow. |\n| `InitialVolume` | `decimal` | `1` | Lot size used when starting a new cycle with no surviving legs. |\n| `VolumeMultiplier` | `decimal` | `2` | Multiplier applied to the largest surviving leg from the previous cycle. |\n| `MaxVolume` | `decimal` | `10` | Maximum permitted lot size before resetting to `InitialVolume`. |\n| `TakeProfitPoints` | `int` | `50` | Distance in price points used to build the per-leg take-profit target. `0` disables take-profit and relies solely on the bar-close liquidation. |"
+   },
+   "2954": {
+    "id": 2954,
+    "name": "Gaps",
+    "family": "mean_reversion",
+    "overview": "A price action strategy that reacts to opening gaps between consecutive candles. It waits for a new bar to open beyond the prior\n high or low by a configurable pip distance, enters in the direction of the expected reversion, and manages the trade with fixed\n stops, targets, and an optional stepped trailing stop.\n\n## How It Works\n\n1. The strategy monitors a single symbol using the selected timeframe.\n2. When a new candle is formed, it compares the opening price with the previous candle:\n   - If the open is below the previous low minus `GapPips`, the strategy enters a long position expecting a bullish retracement.\n   - If the open is above the previous high plus `GapPips`, it enters a short position anticipating a downward correction.\n3. Once in a trade, risk management is handled entirely inside the strategy:\n   - A fixed stop-loss is placed `StopLossPips` below (for long) or above (for short) the entry price.\n   - A fixed take-profit is set `TakeProfitPips` away from the entry in the direction of the trade.\n   - A trailing stop can be enabled; it only moves after price has advanced by `TrailingStopPips + TrailingStepPips` and then\n     locks in profits by keeping the stop `TrailingStopPips` away from the most favorable price.\n4. Protective levels are evaluated on every completed candle using high/low extremes so intrabar touches trigger exits reliably.\n5. Open orders are cancelled before taking a new position, and position reversals automatically close the opposite side.\n\n## Parameters\n\n- `OrderVolume` = 0.1 — trading volume in lots for each new position.\n- `StopLossPips` = 50 — distance from the entry price to the stop-loss level in pips. Set to 0 to disable the stop.\n- `TakeProfitPips` = 50 — distance from the entry price to the take-profit level in pips. Set to 0 to disable the target.\n- `TrailingStopPips` = 5 — size of the trailing stop in pips. Set to 0 to turn off trailing.\n- `TrailingStepPips` = 5 — minimum price improvement (in pips) required before the trai",
+    "details": "",
+    "parameters": "- `OrderVolume` = 0.1 — trading volume in lots for each new position.\n- `StopLossPips` = 50 — distance from the entry price to the stop-loss level in pips. Set to 0 to disable the stop.\n- `TakeProfitPips` = 50 — distance from the entry price to the take-profit level in pips. Set to 0 to disable the target.\n- `TrailingStopPips` = 5 — size of the trailing stop in pips. Set to 0 to turn off trailing.\n- `TrailingStepPips` = 5 — minimum price improvement (in pips) required before the trailing stop moves again.\n- `GapPips` = 1 — minimal opening gap, expressed in pips, required to generate an entry signal.\n- `CandleType` = 1-hour time frame — candles used for gap detection and position management."
+   }
+  }
+ }
+}

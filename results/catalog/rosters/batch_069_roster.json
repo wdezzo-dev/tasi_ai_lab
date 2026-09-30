@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2555,
+      "name": "Chandel Exit Re-Entry",
+      "family": "trend",
+      "entry_long": "crossabove(donchian_low(low,22) + 3 * atr(high,low,close,10),donchian_high(high,22) - 3 * atr(high,low,close,10))",
+      "exit_long": "crossbelow(donchian_low(low,22) + 3 * atr(high,low,close,10),donchian_high(high,22) - 3 * atr(high,low,close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Chandelier-style bands are approximated by 22-bar Donchian bounds shifted by 3 ATR(10), preserving the docs' unusual bullish lower-over-upper cross. Range/ATR/multiplier values are fallbacks; signal-bar delay, additions, and point protection are unavailable."
+    },
+    {
+      "id": 2526,
+      "name": "2526 TDI-2 Re-Open",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,20,50),ema(macd(close,20,50),9))",
+      "exit_long": "crossbelow(macd(close,20,50),ema(macd(close,20,50),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A MACD(20,50) line versus EMA(9) cross is an explicit momentum/index proxy for TDI-2; 20 is the documented period and 50/9 are fallbacks. Re-entry ladders, SignalBar, H4 timing, and 1000/2000-point protection are unsupported."
+    },
+    {
+      "id": 2437,
+      "name": "Zonal Trading Oscillator",
+      "family": "trend",
+      "entry_long": "roc(macd(close,5,34),1) > 0 and roc(macd(close,5,34),1) > roc(sma(macd(close,5,34),5),1)",
+      "exit_long": "roc(macd(close,5,34),1) < 0 or roc(macd(close,5,34),1) < roc(sma(macd(close,5,34),5),1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(5,34) is an AO proxy and its SMA(5) difference is the AC proxy; rising changes for both enter, and either falling change exits. Exact Awesome/Accelerator formulas and H4 streams are approximated, and no stops are documented."
+    },
+    {
+      "id": 3589,
+      "name": "Divergence MACD Stochastic",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,10) and macd(close,12,26) - macd_signal(close,12,26,9) > 0 and rsi(close,14) < 30",
+      "exit_long": "high > donchian_high_prev(high,10) or rsi(close,14) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A new 10-bar low with a positive MACD(12,26,9) histogram and RSI(14)<30 approximates bullish histogram divergence plus oversold Stochastic; the swing length and oscillator threshold are fallbacks. Exact paired swing storage, Stochastic 50/9 filters, and 50-step protection are unavailable."
+    },
+    {
+      "id": 3124,
+      "name": "Tengri Strategy (StockSharp Port)",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and rsi(close,14) < 70 and atr(high,low,close,14) < sma(atr(high,low,close,14),20)",
+      "exit_long": "close < ema(close,20) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20), RSI(14)<70, and ATR(14) below its 20-bar mean approximate the trend gauge and two quiet-market filters. Higher-timeframe open bias, exact Silence levels, grid spacing, martingale sizing, profit locks, and clock controls are unsupported."
+    },
+    {
+      "id": 3574,
+      "name": "LazyBot V1",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar high break approximates the previous daily range's offset buy stop; Donchian length is an explicit fallback because no numeric trading defaults are supplied. Daily scheduling, spread/hour filters, pip trailing, and risk sizing are unavailable."
+    },
+    {
+      "id": 3916,
+      "name": "TCPivotStop Floor Breakout",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20) is an explicit proxy for the prior-day floor pivot crossed on the available series. Exact H/L/C pivot tiers, selected support/resistance target, session reset, and stop logic are unavailable; no numeric stop/target is supplied."
+    },
+    {
+      "id": 371,
+      "name": "ESG Factor Momentum",
+      "family": "momentum",
+      "entry_long": "roc(close,252) > 0",
+      "exit_long": "roc(close,252) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive documented 252-day momentum is a single-ticker proxy for holding the cross-sectional winner, with negative momentum as rebalance liquidation. ESG scoring, monthly first-day timing, universe ranking, and minimum USD size are unavailable; no stops are documented."
+    },
+    {
+      "id": 3297,
+      "name": "iTrade",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The manager opens shorts only after explicit button requests, so no long signal is fabricated. Ticket accounting, martingale sizing, bid/ask floating profit, timers, and best/worst-position liquidation require unsupported portfolio state."
+    },
+    {
+      "id": 300,
+      "name": "Hurst Exponent Volatility Filter",
+      "family": "mean_reversion",
+      "entry_long": "zscore(roc(close,10),100) < -1 and roc(roc(close,10),1) > 0 and atr(high,low,close,14) < 1.5 * sma(atr(high,low,close,14),20)",
+      "exit_long": "zscore(roc(close,10),100) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A normalized ten-bar momentum reversal with ATR(14) below 1.5 times its 20-bar mean proxies Hurst exhaustion and the volatility filter; HurstPeriod=100 is retained. Hurst estimation and unspecified thresholds are approximated; 2% is the documented stop."
+    }
+  ]
+}

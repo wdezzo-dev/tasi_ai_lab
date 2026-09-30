@@ -1,0 +1,98 @@
+{
+ "batch_153": {
+  "strategy_ids": [
+   1246,
+   2706,
+   2426,
+   3497,
+   3520,
+   679,
+   4217,
+   4099,
+   1973,
+   1881
+  ],
+  "docs": {
+   "1246": {
+    "id": 1246,
+    "name": "Responsive Linear Regression Channels",
+    "family": "trend",
+    "overview": "Adaptive linear regression channel that adjusts lookback to timeframe and trades pullbacks.\n\n## Details\n\n- **Data**: Price candles.\n- **Entry**: Buy when price drops below lower band in uptrend; sell when price rises above upper band in downtrend.\n- **Exit**: Close when price returns to regression line.\n- **Instruments**: Any.\n- **Risk**: Channel width controls exposure.\n",
+    "details": "- **Data**: Price candles.\n- **Entry**: Buy when price drops below lower band in uptrend; sell when price rises above upper band in downtrend.\n- **Exit**: Close when price returns to regression line.\n- **Instruments**: Any.\n- **Risk**: Channel width controls exposure.",
+    "parameters": ""
+   },
+   "2706": {
+    "id": 2706,
+    "name": "OsMaSter V0",
+    "family": "trend",
+    "overview": "- Converted from the MetaTrader 5 expert \"OsMaSter v0\" (MQL file `OsMaSter v0.mq5`).\n- Uses a MACD histogram (OsMA) pattern to identify momentum reversals after a short consolidation.\n- Designed to operate on a single instrument and timeframe selected by the user through the `CandleType` parameter.\n- Automatically converts pip-based risk settings (stop-loss and take-profit) to absolute price offsets using the instrument's price step and decimal precision.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `FastPeriod` | 9 | Fast EMA length for the MACD histogram. |\n| `SlowPeriod` | 26 | Slow EMA length for the MACD histogram. |\n| `SignalPeriod` | 5 | Signal EMA length used to smooth the histogram. |\n| `StopLossPips` | 30 | Distance to the protective stop in pips. Set to `0` to disable. |\n| `TakeProfitPips` | 50 | Distance to the profit target in pips. Set to `0` to disable. |\n| `TradeVolume` | 1 | Order volume (lots) used for market entries. |\n| `CandleType` | 15-minute candles | Timeframe used for indicator calculations. |"
+   },
+   "2426": {
+    "id": 2426,
+    "name": "Fractal RSI",
+    "family": "trend",
+    "overview": "Adaptive strategy based on the Fractal RSI indicator.\nFractal RSI adjusts the length of the RSI calculation using the fractal dimension of price movement,\nallowing the oscillator to react faster in trending markets and slower in ranging conditions.\n\nThe strategy opens positions when the indicator crosses predefined levels.\nIt can trade with the detected trend or against it depending on the chosen mode.\n\n## Details\n\n- **Entry Criteria**:\n  - *Trend Mode - Direct*:\n    - Buy: value crosses below `LowLevel`\n    - Sell: value crosses above `HighLevel`\n  - *Trend Mode - Against*:\n    - Buy: value crosses above `HighLevel`\n    - Sell: value crosses below `LowLevel`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: Optional fixed stop-loss and take-profit\n- **Default Values**:\n  - `CandleType` = `TimeSpan.FromHours(4).TimeFrame()`\n  - `FractalPeriod` = 30\n  - `NormalSpeed` = 30\n  - `HighLevel` = 60\n  - `LowLevel` = 40\n  - `StopLoss` = 1000 points\n  - `TakeProfit` = 2000 points\n- **Filters**:\n  - Category: Trend / Oscillator\n  - Direction: Both\n  - Indicators: Fractal Dimension, RSI\n  - Stops: Yes\n  - Complexity: Advanced indicator usage\n  - Timeframe: 4H (configurable)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - *Trend Mode - Direct*:\n    - Buy: value crosses below `LowLevel`\n    - Sell: value crosses above `HighLevel`\n  - *Trend Mode - Against*:\n    - Buy: value crosses above `HighLevel`\n    - Sell: value crosses below `LowLevel`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: Optional fixed stop-loss and take-profit\n- **Default Values**:\n  - `CandleType` = `TimeSpan.FromHours(4).TimeFrame()`\n  - `FractalPeriod` = 30\n  - `NormalSpeed` = 30\n  - `HighLevel` = 60\n  - `LowLevel` = 40\n  - `StopLoss` = 1000 points\n  - `TakeProfit` = 2000 points\n- **Filters**:\n  - Category: Trend / Oscillator\n  - Direction: Both\n  - Indicators: Fractal Dimension, RSI\n  - Stops: Yes\n  - Complexity: Advanced indicator usage\n  - Timeframe: 4H (configurable)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3497": {
+    "id": 3497,
+    "name": "More Orders After BreakEven (StockSharp Port)",
+    "family": "trend",
+    "overview": "This folder contains a StockSharp C# port of the MetaTrader 4 expert advisor **\"More Orders After BreakEven\"** (MQL source id `35609`). The original EA repeatedly adds new long positions once previous trades have been protected at break-even. The port reproduces that ticket-based money management while integrating with StockSharp's high-level API.\n\n## Strategy Overview\n\n* **Market side** – long only. Every trade is a market buy order placed on the strategy's primary security.\n* **Core idea** – while there are fewer open trades without break-even protection than `MaximumOrders`, the strategy buys again. When an existing trade reaches the break-even distance, its stop-loss is raised to the entry price so it no longer blocks additional entries.\n* **Exit management** – each order stores its own stop-loss and take-profit levels. Stops are moved to break-even when the price advances by `BreakEvenPips`. Market sell orders close positions when the bid price touches either protection level.\n* **Tick processing** – the original EA worked on every tick via `OnTick`. The port uses level 1 market data to monitor best bid/ask prices and emulates the same behaviour: each update evaluates entries, break-even rules, and potential exits.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `MaximumOrders` | Maximum number of long trades whose stop-loss has not yet reached break-even. Once the count drops below this threshold new positions can be opened. | `1` |\n| `TakeProfitPips` | Distance from entry price to the take-profit target expressed in MetaTrader pips. A value of `0` disables the take-profit. | `100` |\n| `StopLossPips` | Initial distance to the protective stop in MetaTrader pips. Set to `0` to leave the position without an initial stop (the break-even rule can still protect it later). | `200` |\n| `BreakEvenPips` | Profit distance (in MetaTrader pips) after which the stop-loss is lifted to the entry price. `0` means the stop moves to break-even",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `MaximumOrders` | Maximum number of long trades whose stop-loss has not yet reached break-even. Once the count drops below this threshold new positions can be opened. | `1` |\n| `TakeProfitPips` | Distance from entry price to the take-profit target expressed in MetaTrader pips. A value of `0` disables the take-profit. | `100` |\n| `StopLossPips` | Initial distance to the protective stop in MetaTrader pips. Set to `0` to leave the position without an initial stop (the break-even rule can still protect it later). | `200` |\n| `BreakEvenPips` | Profit distance (in MetaTrader pips) after which the stop-loss is lifted to the entry price. `0` means the stop moves to break-even as soon as the price exceeds the entry price. | `10` |\n| `TradeVolume` | Volume submitted with every market buy order. | `0.01` |\n| `DebugMode` | When enabled the strategy logs informational messages that mimic the original EA's `Comment()` output. | `true` |\n\nAll pip-based distances automatically adapt to 4/2 and 5/3 digit forex symbols by analysing the instrument's tick size and decimal precision, replicating the `points` scaling factor from the original code."
+   },
+   "3520": {
+    "id": 3520,
+    "name": "Fast Slow RVI Crossover",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader expert advisor `_HPCS_FastSlowRVIsCrossOver_MT4_EA_V01_WE`. It trades when the Relative Vigor Index (RVI) main line crosses its signal line during the configured trading session. Only one trade is allowed per candle, and the strategy supports optional stop loss, take profit, and trailing stop distances expressed in pips.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| **RVI Period** | Number of bars used by the Relative Vigor Index. |\n| **Take Profit (pips)** | Optional take-profit distance measured in pips. Set to zero to disable. |\n| **Stop Loss (pips)** | Optional stop-loss distance measured in pips. Set to zero to disable. |\n| **Trailing Stop (pips)** | Optional trailing stop distance in pips. Set to zero to disable trailing. |\n| **Trailing Step (pips)** | Minimum favorable move required before the trailing stop is tightened. Works only when the trailing stop is active. |\n| **Volume** | Order volume submitted on each entry. |\n| **Candle Type** | Time frame or custom candle data type used for analysis. |\n| **Start Time** | Beginning of the daily trading window (inclusive). |\n| **Stop Time** | End of the daily trading window (exclusive). |"
+   },
+   "679": {
+    "id": 679,
+    "name": "Divergence for Many Indicators v4",
+    "family": "momentum",
+    "overview": "This strategy detects divergences between price and multiple momentum indicators (MACD, RSI, Stochastic, CCI, Momentum, OBV, MFI).\nA position is opened when at least a specified number of indicators show divergence in the same direction.\n\n## Details\n- **Entry Criteria**: Enter long when price falls while most indicators rise (positive divergence). Enter short when price rises while most indicators fall (negative divergence).\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite divergence or position protection\n- **Stops**: Configurable take profit and stop loss percentages\n- **Default Values**: 5m candles, 2 confirmations, 4% take profit, 2% stop loss\n- **Filters**: Uses several momentum indicators for confirmation\n",
+    "details": "- **Entry Criteria**: Enter long when price falls while most indicators rise (positive divergence). Enter short when price rises while most indicators fall (negative divergence).\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite divergence or position protection\n- **Stops**: Configurable take profit and stop loss percentages\n- **Default Values**: 5m candles, 2 confirmations, 4% take profit, 2% stop loss\n- **Filters**: Uses several momentum indicators for confirmation",
+    "parameters": ""
+   },
+   "4217": {
+    "id": 4217,
+    "name": "CCIT3 Zero Cross",
+    "family": "volatility",
+    "overview": "The CCIT3 Zero Cross strategy is a StockSharp port of the MetaTrader 5 expert advisor that trades zero-line reversals of the CCIT3 oscillator. The indicator is built by applying the Tillson T3 smoothing chain to a Commodity Channel Index (CCI). Whenever the smoothed oscillator switches sign the strategy either opens a new position in the direction of the flip or, if configured, closes the current position and reverses it.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | 1 | Base order volume before any drawdown scaling. |\n| `Take Profit (pts)` | 1750 | Take-profit distance in points. |\n| `Stop Loss (pts)` | 0 | Stop-loss distance in points. |\n| `Trailing Stop (pts)` | 0 | Trailing stop distance in points (0 disables trailing). |\n| `Trade Overturn` | false | Reverse the position on opposite CCIT3 signals. |\n| `CCI Period` | 285 | Lookback period for the CCI indicator. |\n| `CCI Price` | Typical | Applied price used to feed the CCI. |\n| `T3 Period` | 60 | Tillson T3 smoothing length. |\n| `T3 Volume Factor` | 0.618 | Tillson T3 `B` coefficient. |\n| `Mode` | Simple | CCIT3 calculation mode (`Simple` or `NoRecalc`). |\n| `Candle Type` | 1 hour time frame | Timeframe used for candle subscriptions. |\n| `Max Drawdown Target` | 0 | Balance divisor for adaptive volume sizing (0 disables scaling). |"
+   },
+   "4099": {
+    "id": 4099,
+    "name": "ARD Order Management Stochastic",
+    "family": "mean_reversion",
+    "overview": "The **Ard Order Management** strategy is a StockSharp conversion of the MetaTrader expert `ARD_ORDER_MANAGEMENT_EA-BETA_1`. The original script focused on repeatedly closing existing positions before placing new orders and offered helper routines for manual stop-loss and take-profit updates. The StockSharp version keeps this discipline while adding indicator-driven automation based on the Stochastic oscillator.\n\nThe default setup targets intraday forex trading on a 5-minute chart, but the candle type is fully configurable. All trading logic runs on finished candles to stay faithful to the end-of-bar execution style of the source expert.",
+    "details": "",
+    "parameters": "- **Volume** – trading volume for new entries; additional size is added automatically to close opposing positions.\n- **TakeProfitPips / StopLossPips** – initial protective distances passed to the built-in protection module. Set to zero to disable either order.\n- **ModifyTakeProfitPips / ModifyStopLossPips** – trailing offsets (in pips) recalculated after every candle. Set to zero to disable trailing updates.\n- **StochasticPeriod / SignalPeriod / SlowingPeriod** – oscillator configuration mirroring the `iStochastic` call from the original expert.\n- **BuyThreshold / SellThreshold** – overbought/oversold levels that trigger long/short reversals.\n- **CandleType** – timeframe or custom candle data source powering the indicator.\n\nEach parameter exposes sensible optimisation ranges so you can back-test alternative settings in the StockSharp optimiser."
+   },
+   "1973": {
+    "id": 1973,
+    "name": "Angrybird xScalpingn",
+    "family": "volume",
+    "overview": "Angrybird xScalpingn is a martingale-style scalping strategy. It opens an initial trade based on short-term price direction and an RSI filter. When price moves against the open position by a dynamic step derived from recent range, the strategy adds another trade with volume multiplied by a factor. All positions are closed when CCI shows a strong counter move or when stop loss or take profit is hit.\n\n## Details\n\n- **Entry Criteria**: Initial trade follows the recent close direction with an RSI filter. Additional trades are opened when price moves against the position by the calculated step.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: CCI reversal or protective stop loss/take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Volume` = 0.01\n  - `LotExponent` = 2\n  - `DynamicPips` = true\n  - `DefaultPips` = 12\n  - `Depth` = 24\n  - `Del` = 3\n  - `TakeProfit` = 20\n  - `StopLoss` = 500\n  - `Drop` = 500\n  - `RsiMinimum` = 30\n  - `RsiMaximum` = 70\n  - `MaxTrades` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: RSI, CCI\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n",
+    "details": "- **Entry Criteria**: Initial trade follows the recent close direction with an RSI filter. Additional trades are opened when price moves against the position by the calculated step.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: CCI reversal or protective stop loss/take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Volume` = 0.01\n  - `LotExponent` = 2\n  - `DynamicPips` = true\n  - `DefaultPips` = 12\n  - `Depth` = 24\n  - `Del` = 3\n  - `TakeProfit` = 20\n  - `StopLoss` = 500\n  - `Drop` = 500\n  - `RsiMinimum` = 30\n  - `RsiMaximum` = 70\n  - `MaxTrades` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: RSI, CCI\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   },
+   "1881": {
+    "id": 1881,
+    "name": "Genie Pivot Fixed",
+    "family": "volume",
+    "overview": "This strategy implements the \"Genie\" pivot point reversal scalping system originally written in MQL4. It scans the last eight candles to detect sudden reversals at pivot points. A long trade is triggered when seven consecutive lows decrease and the current candle makes a higher low while closing above the previous high. A short trade is triggered when seven consecutive highs increase and the current candle makes a lower high while closing below the previous low.\n\nThe strategy uses a fixed position size (Strategy.Volume) and applies both a trailing stop and a take-profit measured in absolute price units. These parameters can be optimized and allow the method to capture quick reversals while protecting open profits.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Low[7] > Low[6] > ... > Low[1]` && `Low[1] < Low[0]` && `High[1] < Close[0]`.\n  - **Short**: `High[7] < High[6] < ... < High[1]` && `High[1] > High[0]` && `Low[1] > Close[0]`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Trailing stop or take-profit is hit.\n- **Stops**:\n  - Take-profit: absolute distance from entry.\n  - Trailing stop: absolute distance, trailing as the trade moves in favor.\n- **Default Values**:\n  - `TakeProfit` = 500.\n  - `TrailingStop` = 200.\n  - `CandleType` = 1 minute.\n- **Filters**:\n  - Category: Reversal.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Short-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Low[7] > Low[6] > ... > Low[1]` && `Low[1] < Low[0]` && `High[1] < Close[0]`.\n  - **Short**: `High[7] < High[6] < ... < High[1]` && `High[1] > High[0]` && `Low[1] > Close[0]`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Trailing stop or take-profit is hit.\n- **Stops**:\n  - Take-profit: absolute distance from entry.\n  - Trailing stop: absolute distance, trailing as the trade moves in favor.\n- **Default Values**:\n  - `TakeProfit` = 500.\n  - `TrailingStop` = 200.\n  - `CandleType` = 1 minute.\n- **Filters**:\n  - Category: Reversal.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Short-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   }
+  }
+ }
+}

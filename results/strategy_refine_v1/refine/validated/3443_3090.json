@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3443,
+  "ticker": "3090",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3443,
+    "name": "Expert AML MFI",
+    "family": "trend",
+    "entry_long": "close > open and close - open >= 1 * atr(high,low,close,1) and rsi(close,45.0) <= 45.0",
+    "exit_long": "close < open or rsi(close,1) >= 70",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(12) at the documented 40/70/30 levels proxies MFI, while a full-size bullish candle is a simplified Meeting Lines proxy. The equal-close two-candle pattern and BodyAveragePeriod=4 body test cannot be reconstructed without shifted OHLC; no percentage stops are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1994-08-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8024,
+      "engine_win_ret": 1.177284083414032,
+      "alpha": 0.7921298635518697,
+      "benchmark_ret": 0.38515421986216225,
+      "trades": 96,
+      "win_rate": 0.4895833333333333,
+      "sharpe": 0.5083853109694009,
+      "max_drawdown": -0.12780086200629426,
+      "profit_factor": 2.740035087302526
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.020624499662394435,
+      "alpha": 0.23511320525563828,
+      "benchmark_ret": -0.2557377049180327,
+      "trades": 1,
+      "win_rate": 0.0,
+      "sharpe": -0.9022138414234981,
+      "max_drawdown": -0.020624499662394435,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.02104425022924583,
+      "alpha": 0.21258020391922583,
+      "benchmark_ret": -0.23362445414847166,
+      "trades": 5,
+      "win_rate": 0.4,
+      "sharpe": -1.1616699613990888,
+      "max_drawdown": -0.03570109481495065,
+      "profit_factor": 0.150279525575312
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1994-08-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8024,
+      "engine_win_ret": 0.34658279348115695,
+      "alpha": -0.0385714263810053,
+      "benchmark_ret": 0.38515421986216225,
+      "trades": 96,
+      "win_rate": 0.40625,
+      "sharpe": 0.20803062210279794,
+      "max_drawdown": -0.17245007419394587,
+      "profit_factor": 1.4391791904489994
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.025570103877313732,
+      "alpha": 0.23016760104071898,
+      "benchmark_ret": -0.2557377049180327,
+      "trades": 1,
+      "win_rate": 0.0,
+      "sharpe": -0.9791076708724702,
+      "max_drawdown": -0.025570103877313732,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.0453518120879608,
+      "alpha": 0.18827264206051086,
+      "benchmark_ret": -0.23362445414847166,
+      "trades": 5,
+      "win_rate": 0.0,
+      "sharpe": -2.0305556153886872,
+      "max_drawdown": -0.05255974358882298,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

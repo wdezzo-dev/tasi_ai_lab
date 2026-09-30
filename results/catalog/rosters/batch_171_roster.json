@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1533,
+      "name": "Volatility Pulse with Dynamic Exit",
+      "family": "trend",
+      "entry_long": "atr(high,low,close,14) > sma(atr(high,low,close,14),20) * 1.5 and roc(close,20) > 0",
+      "exit_long": "roc(close,20) < 0 or bars_since(atr(high,low,close,14) > sma(atr(high,low,close,14),20) * 1.5 and roc(close,20) > 0) > 42",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR(14) expanding 50% above its own 20-bar SMA (VolThreshold=0.5) with 20-bar momentum confirmation is the documented long pulse; bars_since>42 proxies the ExitBars=42 holding timer. The ATR stop and 2R target are dynamic price distances, so both percent fields stay null."
+    },
+    {
+      "id": 957,
+      "name": "KST Strategy Skyrexio",
+      "family": "trend",
+      "entry_long": "crossabove(sma(roc(close,10),10) + 2 * sma(roc(close,15),10) + 3 * sma(roc(close,20),10) + 4 * sma(roc(close,30),15), sma(sma(roc(close,10),10) + 2 * sma(roc(close,15),10) + 3 * sma(roc(close,20),10) + 4 * sma(roc(close,30),15),9)) and close > sma(close,50) and adx(high,low,close,14) > 20",
+      "exit_long": "crossbelow(sma(roc(close,10),10) + 2 * sma(roc(close,15),10) + 3 * sma(roc(close,20),10) + 4 * sma(roc(close,30),15), sma(sma(roc(close,10),10) + 2 * sma(roc(close,15),10) + 3 * sma(roc(close,20),10) + 4 * sma(roc(close,30),15),9)) or close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "KST uses the standard ROC 10/15/20/30 lengths and a 9-period signal because the docs list only parameter names, not values; SMA(50) is the filter MA and ADX(14)>20 is a ranging-market proxy for the choppiness filter. The Alligator jaw and ATR-based stop/take-profit are not expressible, so percent fields are null."
+    },
+    {
+      "id": 469,
+      "name": "Three Down Three Up",
+      "family": "trend",
+      "entry_long": "roc(close,1) < 0 and roc(close,2) < 0 and roc(close,3) < 0 and close > ema(close,200)",
+      "exit_long": "roc(close,1) > 0 and roc(close,2) > 0 and roc(close,3) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Three consecutive lower closes (buy trigger 3) with the documented optional EMA(200) filter above; the exit is the mirrored three higher closes (sell trigger 3). The docs state no stops, and per-bar close access is approximated by multi-horizon ROC."
+    },
+    {
+      "id": 2940,
+      "name": "XPeriod Candle System TM Plus",
+      "family": "trend",
+      "entry_long": "close > bb_upper(ema(close,5),20,1.001) and roc(ema(close,5),1) > 0",
+      "exit_long": "close < bb_mid(ema(close,5),20) or close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The smoothed-EMA(5) close series drives the Bollinger(20, deviation 1.001) colour states, with an upward tilt required for the long breakout state. The 960-minute time exit, 10-point band offset, and 1000/2000 absolute protective distances are not DSL or percent fields."
+    },
+    {
+      "id": 1118,
+      "name": "Nifty 50 5mint",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,5) and close > bb_upper(close,20,2) and (2 * ema(close,6) - ema(ema(close,6),6)) > sma(close,20)",
+      "exit_long": "low < donchian_low_prev(low,5) or close < bb_lower(close,20,2) or (2 * ema(close,6) - ema(ema(close,6),6)) < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DEMA(6) is approximated by 2*EMA(6)-EMA(EMA(6),6) and VWAP by SMA(20) since no volume-weighted series exists in the DSL; LookbackPeriod=5 maps to the prior 5-bar high and Bollinger(20,2) is exact. The 25-point stop is an absolute price distance, not a percentage."
+    },
+    {
+      "id": 2170,
+      "name": "Zonal Trading",
+      "family": "momentum",
+      "entry_long": "sma((high + low) / 2,5) - sma((high + low) / 2,34) > 0 and roc(sma((high + low) / 2,5) - sma((high + low) / 2,34),1) > 0 and roc(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),1) > 0",
+      "exit_long": "roc(sma((high + low) / 2,5) - sma((high + low) / 2,34),1) < 0 and roc(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "AO is SMA(5)-SMA(34) of the median price and AC is AO minus its SMA(5); ROC(.,1) gives the documented one-bar rising/turning tests and the exit is both turning down. The take profit is given only as a price-unit parameter with no value, so the field is null."
+    },
+    {
+      "id": 3518,
+      "name": "HPCS Inter4 Strategy (3518)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA buys at market the moment it starts and closes after a 30-second timer, with no market-derived entry condition, so the never-true guard avoids fabricating a signal. The 10/20-pip protections and one-second exit timer have no daily-bar expression."
+    },
+    {
+      "id": 2998,
+      "name": "Basic CCI RSI",
+      "family": "mean_reversion",
+      "entry_long": "std(close,14) > 0 and (close - sma(close,14)) / (0.015 * std(close,14)) > 100 and rsi(close,14) > 70 and roc(close - sma(close,14), 1) > 0 and roc(rsi(close,14), 1) > 0",
+      "exit_long": "rsi(close,14) < 50 or close < sma(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI(14) is rebuilt as (close-SMA(14))/(0.015*std(14)) with the classic +/-100 levels and RSI(14) 70/30, since the docs name the periods and levels but give no values; ROC(.,1) terms require both indicators to hold above threshold on two consecutive bars. The pip stop, target, and trailing stop are dynamic price distances."
+    },
+    {
+      "id": 2722,
+      "name": "N Candles v5",
+      "family": "volume",
+      "entry_long": "close > open and roc(close,1) > 0 and roc(close,2) > 0 and roc(close,3) > 0",
+      "exit_long": "close < open and roc(close,1) < 0 and roc(close,2) < 0 and roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CandlesCount=3 is read as a three-bar streak of identical bullish bodies (bullish bar plus three rising closes) and the opposite streak exits, as the DSL cannot compare candles bar-for-bar. The 11:00-18:00 hour filter, 50-pip stop/target, and 10/4-pip trailing are unavailable."
+    },
+    {
+      "id": 2147,
+      "name": "Labouchere EA",
+      "family": "volume",
+      "entry_long": "donchian_high(high,10) - donchian_low(low,10) > 0 and crossabove(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), 190))",
+      "exit_long": "donchian_high(high,10) - donchian_low(low,10) > 0 and crossbelow(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), 190))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic %K is expressed as the 10-bar close position and %D as its SMA(190), both documented, with an explicit non-zero range guard; the mirrored cross supplies a long exit. Labouchere lot sequencing, the work-time window, and the 40/50 price-step stop and target are not percent fields."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2254,
+      "name": "Martingale MACD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 4017,
+      "name": "Starter 2005",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,14) > 0",
+      "exit_long": "zscore((high + low + close) / 3,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 447,
+      "name": "SuperTrend + EMA Rebound",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,10) > sma(atr(high,low,close,10),10)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,10) < sma(atr(high,low,close,10),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3800,
+      "name": "ExpICustomV1",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2423,
+      "name": "Frank Ud Hedging Grid",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 2240,
+      "name": "XDPO Histogram",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2296,
+      "name": "Volume Weighted MA Candle",
+      "family": "trend",
+      "entry_long": "close > sma(close,30) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWAP/VWMA is approximated with a volume-confirmed moving-average trend filter because anchored/session VWAP is unavailable in the DSL."
+    },
+    {
+      "id": 2259,
+      "name": "MaDelta",
+      "family": "trend",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2480,
+      "name": "Ten Pips EURUSD",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3306,
+      "name": "Cryptocurrency Divergence",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    }
+  ]
+}

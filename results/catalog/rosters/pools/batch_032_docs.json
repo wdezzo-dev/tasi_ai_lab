@@ -1,0 +1,98 @@
+{
+ "batch_032": {
+  "strategy_ids": [
+   19,
+   558,
+   1441,
+   4084,
+   3077,
+   3529,
+   156,
+   4056,
+   2586,
+   1263
+  ],
+  "docs": {
+   "19": {
+    "id": 19,
+    "name": "CCI Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 94%. It performs best in the stocks market.\n\nCCI Breakout uses the Commodity Channel Index to spot powerful moves. Surges beyond positive or negative CCI thresholds generate entries. Exits happen when CCI retreats toward zero or an opposite signal forms.\n\nBecause CCI measures deviation from a moving average, extreme readings imply unsustainable prices. This system waits for those extremes and then attempts to profit from the follow-through.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on CCI, Momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI, Momentum\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on CCI, Momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI, Momentum\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "558": {
+    "id": 558,
+    "name": "Bearish Wick Reversal",
+    "family": "trend",
+    "overview": "The strategy buys when a bearish candle forms a long lower wick that exceeds a user-defined percentage threshold. An optional EMA filter requires the close to be above a moving average to confirm trend direction. Positions are closed when price closes above the previous candle's high.\n\n## Details\n\n- **Entry Criteria:** bearish candle with lower wick <= threshold and within trading window; optionally price above EMA.\n- **Long/Short:** Long only.\n- **Exit Criteria:** close price > previous high.\n- **Stops:** None.\n- **Default Values:**\n  - Threshold = -1 (%)\n  - EMA filter disabled, EMA period = 200\n  - Start time = 2014-01-01, End time = 2099-01-01\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:** bearish candle with lower wick <= threshold and within trading window; optionally price above EMA.\n- **Long/Short:** Long only.\n- **Exit Criteria:** close price > previous high.\n- **Stops:** None.\n- **Default Values:**\n  - Threshold = -1 (%)\n  - EMA filter disabled, EMA period = 200\n  - Start time = 2014-01-01, End time = 2099-01-01\n  - Candle timeframe = 1 minute\n- **Filters:**\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1441": {
+    "id": 1441,
+    "name": "Time Candles",
+    "family": "trend",
+    "overview": "Displays RSI candles built from a custom time frame and its moving average. Intended for visualization only.\n\n## Details\n\n- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5-minute candles\n  - `RsiLength` = 14\n  - `SmaLength` = 14\n- **Filters**:\n  - Category: Visualization\n  - Direction: None\n  - Indicators: RSI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5-minute candles\n  - `RsiLength` = 14\n  - `SmaLength` = 14\n- **Filters**:\n  - Category: Visualization\n  - Direction: None\n  - Indicators: RSI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "4084": {
+    "id": 4084,
+    "name": "ADX System DI Cross",
+    "family": "trend",
+    "overview": "The ADX System strategy is the StockSharp conversion of the MetaTrader 4 expert `ADX_System.mq4`. The original EA compares the\nAverage Directional Index (ADX) with its +DI and -DI components on the two most recent completed candles. When the +DI line\nrises above the ADX value the system wants to be long; when the -DI line rises above the ADX value it wants to be short. The\nStockSharp port reproduces this behaviour by storing the indicator values from the previous two finished candles so the logic\nmirrors the `iADX(..., shift=1/2)` calls used in the MetaTrader code.\n\nOnly one position can be open at any time. The strategy submits market orders for entries and exits, matching the single-ticket\nlogic of MetaTrader netting accounts. Risk management mirrors the original expert advisor: fixed take-profit and stop-loss\nlevels are expressed in points relative to the average entry price, and an optional trailing stop can lock in profits once the\nposition moves favourably.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute time frame | Primary timeframe processed by the strategy. |\n| `AdxPeriod` | `int` | `14` | Number of candles used to compute the ADX and the DI components. |\n| `TradeVolume` | `decimal` | `1` | Lot size used for every market order. |\n| `TakeProfitPoints` | `decimal` | `100` | Take-profit distance in points relative to the entry price. |\n| `StopLossPoints` | `decimal` | `30` | Stop-loss distance in points relative to the entry price. |\n| `TrailingStopPoints` | `decimal` | `0` | Optional trailing-stop distance in points. Set to zero to disable trailing. |"
+   },
+   "3077": {
+    "id": 3077,
+    "name": "RNN Probability",
+    "family": "trend",
+    "overview": "The RNN Probability strategy is a conversion of the MetaTrader expert *RNN (barabashkakvn's edition)*. The original robot collects three RSI snapshots separated by the RSI period and feeds them into a hand-crafted probability lattice that emulates a recurrent neural network. The StockSharp port replicates this behaviour with the high-level candle subscription API, automatically converting the MetaTrader lots, price steps, and stop/target distances into StockSharp concepts.\n\nOnce the RSI value of the latest finished candle becomes available, the strategy looks back by one and two RSI periods to build a three-point history. These normalized readings are combined with the eight MetaTrader weights (`Weight0` … `Weight7`) to produce a probability that the market should fall. The probability is remapped into the `[-1; 1]` range, and the sign determines whether to open a long or short position. Only one position at a time is maintained, matching the original Expert Advisor.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-hour time frame | Primary candle series used for indicator updates and signal generation. |\n| `TradeVolume` | `decimal` | `1` | Lot size sent with each market order. |\n| `RsiPeriod` | `int` | `9` | Length of the RSI indicator. Also defines the distance between the historical RSI samples. |\n| `AppliedPrice` | `AppliedPriceType` | `Open` | Price component forwarded to the RSI (Open, Close, High, Low, Median, Typical, Weighted). |\n| `StopLossTakeProfitPips` | `decimal` | `100` | Pip distance for both stop-loss and take-profit. Set to zero to disable protective orders. |\n| `Weight0` … `Weight7` | `decimal` | `6, 96, 90, 35, 64, 83, 66, 50` | Probability weights applied to the eight lattice branches. Each value represents a percentage between 0 and 100. |"
+   },
+   "3529": {
+    "id": 3529,
+    "name": "Bull Row Breakout",
+    "family": "breakout",
+    "overview": "The Bull Row Breakout strategy is a C# conversion of the MetaTrader 5 expert advisor \"BULL row full EA\". The original robot was built with a block-constructor and combines price action patterns with momentum confirmation. The StockSharp port reproduces the same logic on a single configurable timeframe and keeps the trading commentary in English as required.\n\nThe strategy opens **long-only** positions after a sequence of bearish candles is followed by bullish momentum and a breakout above recent highs. Stochastic Oscillator filters control the momentum strength while dynamic stop loss and target levels recreate the risk settings from the MQL version.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Volume` | Fixed trade volume used for each entry. |\n| `CandleTimeFrame` | Timeframe of the processed candles. |\n| `StopLossLookback` | Number of bars used to calculate the dynamic stop price. |\n| `TakeProfitPercent` | Reward distance expressed as a percentage of the stop distance. |\n| `BearRowSize`, `BearMinBody`, `BearRowMode`, `BearShift` | Configuration of the bearish row that precedes the breakout. |\n| `BullRowSize`, `BullMinBody`, `BullRowMode`, `BullShift` | Configuration of the bullish row that immediately precedes the signal. |\n| `BreakoutLookback` | Length of the rolling high used for breakout confirmation. |\n| `StochasticKPeriod`, `StochasticDPeriod`, `StochasticSlowing` | Stochastic Oscillator settings. |\n| `StochasticRangePeriod` | Number of historical Stochastic values that must stay inside the bounds. |\n| `StochasticUpperLevel`, `StochasticLowerLevel` | Oscillator channel limits applied to %K. |\n\nAll body sizes are expressed in price steps to mirror the `toDigits` helper from the original code. When the instrument does not provide a price step, a default value of 1 is used."
+   },
+   "156": {
+    "id": 156,
+    "name": "Donchian Rsi",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 55%. It performs best in the stocks market.\n\nDonchian channels identify breakout levels, while RSI checks whether momentum supports the move. Positions follow when a breakout aligns with RSI direction.\n\nBest for traders expecting a sustained breakout rather than a fakeout. Risk is limited through an ATR stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > DonchianHigh && RSI < RsiOversoldLevel`\n  - Short: `Close < DonchianLow && RSI > RsiOverboughtLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Breakout failure or opposite signal\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `DonchianPeriod` = 20\n  - `RsiPeriod` = 14\n  - `RsiOverboughtLevel` = 70m\n  - `RsiOversoldLevel` = 30m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Donchian Channel, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > DonchianHigh && RSI < RsiOversoldLevel`\n  - Short: `Close < DonchianLow && RSI > RsiOverboughtLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Breakout failure or opposite signal\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `DonchianPeriod` = 20\n  - `RsiPeriod` = 14\n  - `RsiOverboughtLevel` = 70m\n  - `RsiOversoldLevel` = 30m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Donchian Channel, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4056": {
+    "id": 4056,
+    "name": "Billy Expert",
+    "family": "momentum",
+    "overview": "- Converted from the original MetaTrader 4 expert \"Billy_expert.mq4\".\n- Long-only momentum strategy that waits for four consecutive descending highs and opens before entering.\n- Uses two stochastic oscillators (fast on the trading timeframe, slow on a higher timeframe) to confirm that momentum is shifting upward.\n- Designed for spot FX pairs but can be applied to any instrument that provides minute-based candles.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Trading Candle` | Primary timeframe for price pattern and fast stochastic. | 1 minute |\n| `Slow Stochastic Candle` | Higher timeframe used for the confirmation stochastic. | 5 minutes |\n| `Stochastic Length` | Lookback window for %K. | 5 |\n| `%K Smoothing` | Smoothing applied to the %K line. | 3 |\n| `%D Period` | Smoothing applied to the %D line. | 3 |\n| `Slowing` | Additional smoothing factor for %K. | 3 |\n| `Stop Loss (pts)` | Stop loss distance in price steps. | 0 |\n| `Take Profit (pts)` | Take profit distance in price steps. | 12 |\n| `Max Orders` | Maximum simultaneous long entries. | 1 |"
+   },
+   "2586": {
+    "id": 2586,
+    "name": "Pending Order Grid",
+    "family": "volatility",
+    "overview": "This strategy reproduces the behaviour of the MetaTrader \"AntiFragile\" pending order grid expert advisor. It continuously builds a symmetric grid of stop orders around the current market price and applies protective exits once positions are opened.\n\n## Core logic\n- At start-up the strategy caches the best bid and ask from level-1/order book data and places buy-stop orders above price and sell-stop orders below price.\n- Order prices are offset from the market by the *Distance* parameter and each subsequent level is spaced by *Spacing (ticks)* multiplied by the instrument price step.\n- Every new grid level increases order volume by *Volume Increase %* relative to the starting size, implementing the martingale-style scaling from the MQL version.\n- When an order is filled the resulting net position is protected with stop-loss and take-profit orders. Optional trailing stop logic reuses the latest bid/ask to tighten the stop when unrealised profit exceeds the trailing distance.\n- The grid is rebuilt automatically after all pending orders have been filled or cancelled and the position returns to flat.\n\n## Parameters\n- **Starting Volume** – lot/contract size for the first pending order. Subsequent orders scale by *Volume Increase %*.\n- **Volume Increase %** – percentage increment added to each new grid level (0.1 equals +0.1% per level).\n- **Distance** – absolute price offset added before the first order (interpreted in instrument currency).\n- **Spacing (ticks)** – number of price steps between consecutive grid orders.\n- **Orders per side** – maximum number of grid orders for longs and shorts separately.\n- **Take Profit (ticks)** – distance of the profit target from the average entry, expressed in price steps.\n- **Stop Loss (ticks)** – stop distance from the average entry. Set to zero to disable the initial stop.\n- **Trailing Stop (ticks)** – trailing distance. Set to zero to disable trailing adjustments.\n- **Enable Long Grid / Enable Short Grid** – toggles for placing buy-",
+    "details": "",
+    "parameters": "- **Starting Volume** – lot/contract size for the first pending order. Subsequent orders scale by *Volume Increase %*.\n- **Volume Increase %** – percentage increment added to each new grid level (0.1 equals +0.1% per level).\n- **Distance** – absolute price offset added before the first order (interpreted in instrument currency).\n- **Spacing (ticks)** – number of price steps between consecutive grid orders.\n- **Orders per side** – maximum number of grid orders for longs and shorts separately.\n- **Take Profit (ticks)** – distance of the profit target from the average entry, expressed in price steps.\n- **Stop Loss (ticks)** – stop distance from the average entry. Set to zero to disable the initial stop.\n- **Trailing Stop (ticks)** – trailing distance. Set to zero to disable trailing adjustments.\n- **Enable Long Grid / Enable Short Grid** – toggles for placing buy-stop or sell-stop orders."
+   },
+   "1263": {
+    "id": 1263,
+    "name": "RSI Box (Pseudo Grid Bot)",
+    "family": "mean_reversion",
+    "overview": "A grid-based strategy that derives price levels from RSI overbought and oversold signals. When RSI crosses an extreme, dynamic grid lines are recalculated from recent highs and lows. Trades occur when price breaks above or below the next grid level. Optional shorts are supported.\n\n## Details\n\n- **Entry Criteria**: Price crosses the next grid line after an RSI extreme.\n- **Long/Short**: Long by default, shorts optional.\n- **Exit Criteria**: Price crosses the opposite grid line.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `UseShorts` = false\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: RSI, Highest, Lowest\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses the next grid line after an RSI extreme.\n- **Long/Short**: Long by default, shorts optional.\n- **Exit Criteria**: Price crosses the opposite grid line.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `UseShorts` = false\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: RSI, Highest, Lowest\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

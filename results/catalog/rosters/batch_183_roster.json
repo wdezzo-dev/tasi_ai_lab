@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2511,
+      "name": "True Scalper Profit Lock",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5), ema(close,20)) and rsi(close,2) > 50",
+      "exit_long": "crossbelow(ema(close,5), ema(close,20)) or rsi(close,2) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast EMAs plus the documented two-period RSI filter drive the long, with the opposite EMA cross or a lost RSI filter closing it; FastPeriod, SlowPeriod and RsiThreshold are not given, so 5, 20 and 50 are fallbacks. TakeProfitPoints/StopLossPoints, the abandon-after-N-candles timer, break-even moves and money management are not percentage or DSL fields."
+    },
+    {
+      "id": 3756,
+      "name": "ProtoType IX",
+      "family": "trend",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and 100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)) < -80 and roc(atr(high,low,close,14),1) > 0 and roc(close,1) > 0",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is rebuilt from a 14-bar Donchian range with an explicit zero-range guard and the -80 zone stands in for Criteria WPR, while rising ATR(14) is the documented breakout validation; the WPR period, ATR multiplier and TP/SL ratio are fallbacks and the exit uses a 20-bar mean because the ATR trailing needs a Zero Bar offset. Max Orders, Max Order Size and Risk % sizing are not expressible."
+    },
+    {
+      "id": 1281,
+      "name": "RSI Adaptive T3",
+      "family": "trend",
+      "entry_long": "crossabove(roc(3 * ema(close,5) - 3 * ema(ema(close,5),5) + ema(ema(ema(close,5),5),5), 2), 0)",
+      "exit_long": "crossbelow(roc(3 * ema(close,5) - 3 * ema(ema(close,5),5) + ema(ema(ema(close,5),5),5), 2), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "T3 is rebuilt with the standard 3*EMA-3*EMA+EMA combination at the documented MinT3Length=5, and its two-bar lag is expressed as a 2-bar ROC because shifted values cannot be referenced. The RSI-adaptive length, MaxT3Length=50 adaptation and VolumeFactor=0.7 filter are dropped, and the opposite cross is the exit."
+    },
+    {
+      "id": 1282,
+      "name": "RSI-CCI Fusion",
+      "family": "trend",
+      "entry_long": "crossabove(0.5 * rsi(close,14) + 0.5 * zscore(close,14), sma(0.5 * rsi(close,14) + 0.5 * zscore(close,14), 14) - 2 * std(0.5 * rsi(close,14) + 0.5 * zscore(close,14), 14))",
+      "exit_long": "crossbelow(0.5 * rsi(close,14) + 0.5 * zscore(close,14), sma(0.5 * rsi(close,14) + 0.5 * zscore(close,14), 14) + 2 * std(0.5 * rsi(close,14) + 0.5 * zscore(close,14), 14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI has no DSL form, so the documented RsiWeight=0.5 fusion is half RSI(14) plus half a standardised price z-score, and the dynamic bands are that 14-bar SMA plus/minus two standard deviations, the documented Length=14 with SMA and StandardDeviation components. The smoothed bands can only be crossed after a two-sigma dislocation, which is the intended mean-reversion trigger, and the short leg is disabled by default."
+    },
+    {
+      "id": 228,
+      "name": "Hurst Exponent Reversion",
+      "family": "trend",
+      "entry_long": "close < sma(close,20)",
+      "exit_long": "close >= sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented long rule is Hurst < 0.5 with Close < MA, and the AveragePeriod=20 mean is exact, but no Hurst estimator exists in the DSL so the regime filter and the 'Hurst > 0.5' exit leg are dropped. StopLossPercent is documented as 2 percent, so the stop field carries it."
+    },
+    {
+      "id": 381,
+      "name": "Momentum Style Rotation",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy ranks a set of factor ETFs plus a benchmark by trailing 63-day return each month and invests fully in the top-ranked one, so the signal is a cross-sectional rank rather than a single-symbol market condition. Monthly rebalancing and the MinTradeUsd filter cannot be expressed."
+    },
+    {
+      "id": 2236,
+      "name": "Panel Joke",
+      "family": "volatility",
+      "entry_long": "close > open and close > (high + low) / 2",
+      "exit_long": "close < open and close < (high + low) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The seven-metric comparison is against the previous candle, and the DSL exposes no shifted highs or lows, so the buy/sell counters are approximated by current-bar structure: an up candle that closes above the high/low midpoint, with the mirrored condition as the reversal exit. The source uses no indicators and no stops, and the 5-minute timeframe is a subscription setting."
+    },
+    {
+      "id": 292,
+      "name": "ATR Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(atr(high,low,close,14), sma(atr(high,low,close,14),20) - 2 * std(atr(high,low,close,14),20))",
+      "exit_long": "atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented AtrPeriod=14, LookbackPeriod=20 and DeviationMultiplier=2.0 build the mean-plus-two-deviation band, and the long is ATR crossing back through it toward its 20-bar average, which is the documented revert-to-average exit. The 2x ATR protective stop is not a percentage field and the 5-minute candle type is a subscription setting."
+    },
+    {
+      "id": 1674,
+      "name": "Shuriken Lite",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The tool only groups already-executed trades by order-comment magic numbers and logs trade counts, win/loss totals, pips and profit factor, so it generates no market signal at all. Magic-number parsing and score display are reporting utilities."
+    },
+    {
+      "id": 2115,
+      "name": "Digital Filter T01",
+      "family": "other",
+      "entry_long": "crossbelow(ema(close,10), sma(close,20))",
+      "exit_long": "crossabove(ema(close,10), sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The digital filter and its shifted trigger line have no documented values, so EMA(10) stands in for the filter and SMA(20) for the trigger, with the documented long being a filter cross below the trigger and the opposite cross the exit. Half Channel, stop-loss and take-profit are point distances and are omitted."
+    }
+  ]
+}

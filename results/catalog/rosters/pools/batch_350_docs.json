@@ -1,0 +1,98 @@
+{
+ "batch_350": {
+  "strategy_ids": [
+   1005,
+   3696,
+   1382,
+   2736,
+   3059,
+   703,
+   2993,
+   1863,
+   4219,
+   240
+  ],
+  "docs": {
+   "1005": {
+    "id": 1005,
+    "name": "MA With Logistic",
+    "family": "trend",
+    "overview": "MA With Logistic is a moving average strategy that uses a fast and slow moving average for entries and supports percent or logistic-based exits.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close > fast MA and fast MA > slow MA.\n  - **Short**: Close < fast MA and fast MA < slow MA.\n- **Exit Criteria**: Percentage targets or logistic probability thresholds.\n- **Stops**: Percentage-based or logistic probability exits.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `MaType` = MaTypeEnum.EMA\n  - `ExitType` = ExitTypeEnum.Percent\n  - `TakeProfitPercent` = 20\n  - `StopLossPercent` = 5\n  - `LogisticSlope` = 10\n  - `LogisticMidpoint` = 0\n  - `TakeProfitProbability` = 0.8\n  - `StopLossProbability` = 0.2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: MA\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close > fast MA and fast MA > slow MA.\n  - **Short**: Close < fast MA and fast MA < slow MA.\n- **Exit Criteria**: Percentage targets or logistic probability thresholds.\n- **Stops**: Percentage-based or logistic probability exits.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `MaType` = MaTypeEnum.EMA\n  - `ExitType` = ExitTypeEnum.Percent\n  - `TakeProfitPercent` = 20\n  - `StopLossPercent` = 5\n  - `LogisticSlope` = 10\n  - `LogisticMidpoint` = 0\n  - `TakeProfitProbability` = 0.8\n  - `StopLossProbability` = 0.2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: MA\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3696": {
+    "id": 3696,
+    "name": "Bollinger Bands Session Reversal",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader expert advisor **BollingerBandsEA (ver. 3.0)**. It trades mean-reversion setups that occur after price stretches beyond the Bollinger Bands during the active trading session.\n\n## Trading logic\n\n1. Subscribe to the primary intraday candle series (15-minute candles by default) and to a daily candle series used to build the trend filter.\n2. Calculate Bollinger Bands (length 20, width 2.0) on the intraday series and a 100-period SMA on daily closes.\n3. Track the current and previous day highs/lows, and keep the previous Bollinger Band values for signal evaluation.\n4. Only allow entries within the trading session window: from `SessionStartOffsetMinutes` after the trading day open until `SessionEndOffsetMinutes` before the trading day end.\n5. Skip trading once the cumulative PnL for the current day turns positive, mimicking the EA daily stop.\n6. Enter short when the previous candle is bearish, closed above the upper band, the current close remains above that band, the band width is wide enough, price is below the daily SMA, and price trades above the current or previous daily high.\n7. Enter long when the previous candle is bullish, closed below the lower band, the current close remains below that band, the band width is wide enough, price is above the daily SMA, and price trades below the current or previous daily low.\n8. Position size is determined by either the configured fixed volume or risk-based sizing that uses the distance to the stop-loss in points.\n9. Exits are performed by checking stop-loss, take-profit, optional closing on the middle band, an optional trailing stop, and the optional break-even logic. Losing trades can also be liquidated after a configurable holding time.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Intraday candle series used for trading. |\n| `BollingerLength` | Period of the Bollinger Bands moving average. |\n| `BollingerWidth` | Width multiplier of the Bo",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Intraday candle series used for trading. |\n| `BollingerLength` | Period of the Bollinger Bands moving average. |\n| `BollingerWidth` | Width multiplier of the Bollinger Bands. |\n| `DailyMaLength` | Length of the daily SMA filter. |\n| `StopLossPoints` | Stop-loss distance expressed in instrument points. |\n| `UseRiskVolume` | Enables risk-based position sizing. |\n| `RiskPercent` | Account percentage used for risk-based sizing. |\n| `FixedVolume` | Fallback fixed volume when risk sizing is disabled or not possible. |\n| `SessionStartOffsetMinutes` | Minutes after session start before entries are allowed. |\n| `SessionEndOffsetMinutes` | Minutes before session end when entries are blocked. |\n| `CloseOnMiddleBand` | Exit position when price crosses the Bollinger middle band. |\n| `EnableTrailing` | Enables trailing stop adjustments. |\n| `TrailingFactor` | Distance multiplier required before trailing the stop. |\n| `EnableBreakEven` | Enables moving the stop to the entry price. |\n| `BreakEvenFactor` | Profit multiple required to move the stop to break-even. |\n| `CloseLosingAfterMinutes` | Closes losing trades after holding them for the specified minutes. |"
+   },
+   "1382": {
+    "id": 1382,
+    "name": "Supertrend Cross RSI",
+    "family": "trend",
+    "overview": "Combines a higher timeframe SuperTrend with RSI-based exits.\n\n- **Long**: Price crosses above higher timeframe SuperTrend line.\n- **Short**: Price crosses below higher timeframe SuperTrend line.\n- **Exit Long**: Take profit percent or RSI above upper limit.\n- **Exit Short**: Take profit percent or RSI below lower limit.\n- **Indicators**: SuperTrend, RSI.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2736": {
+    "id": 2736,
+    "name": "Ichimoku Cloud Retrace",
+    "family": "trend",
+    "overview": "- Works on any instrument and timeframe that provides candle data.\n- Uses the standard Ichimoku settings (9/26/52) by default but they are fully configurable.\n- Trades both long and short. Position size is defined by the strategy `Volume` property.\n- Optional stop-loss and take-profit can be configured in absolute price units.",
+    "details": "",
+    "parameters": ""
+   },
+   "3059": {
+    "id": 3059,
+    "name": "Volatility HFT EA",
+    "family": "trend",
+    "overview": "This strategy ports the **Volatility HFT EA** MetaTrader 5 expert advisor into the StockSharp high-level API. It reproduces the original logic that buys when the closing price jumps well above a fast simple moving average and waits for a pullback to that average. Order generation, indicator management, and protective exits all follow the guidelines from `AGENTS.md` while keeping the behaviour of the MQL script.\n\n## How It Works\n\n1. **Indicator setup** – a single simple moving average (default length: 5) is calculated on the working timeframe specified by `CandleType`.\n2. **New bar detection** – processing happens only once a candle is finished (`CandleStates.Finished`), mirroring the `IsNewBar` checks in the EA.\n3. **Warm-up requirement** – the strategy waits for 60 completed candles before evaluating trades, matching the `Bars < 60` guard used in MQL.\n4. **Entry filter** – a long setup appears when the latest close is at least `MaDifferencePips` above the SMA (difference converted to price using the instrument's pip size) and the SMA value is higher than it was two bars ago. The original EA used `val[0] < -0.0015` and `MA_Val1[0] > MA_Val1[2]`; this port checks the same conditions without manually storing arrays.\n5. **One position at a time** – only long trades are supported because the sell branch was commented out in the source file. A new signal is ignored while a position is open.\n\n## Risk Management\n\n- **Stop loss** – optional protective stop expressed in pips. The code derives the pip size from `Security.PriceStep`, multiplying by 10 when the instrument has 3 or 5 decimal places, reproducing the `_Digits` scaling from MetaTrader.\n- **Take profit** – the exit target is anchored to the SMA value captured at entry, mirroring the `mrequest.tp = MA_Val1[0];` call. The strategy closes the position when the candle's low touches the stored SMA level, emulating a limit order at the average.\n\n## Parameters\n\n| Parameter | Description |\n| --- | --- |\n| `OrderVolume` | Vo",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `OrderVolume` | Volume used for every market order. |\n| `FastMaLength` | Period of the fast simple moving average (default 5). |\n| `StopLossPips` | Stop-loss distance in pips; set to `0` to disable. |\n| `MaDifferencePips` | Minimum distance (in pips) between the close and the SMA required for a long entry. |\n| `CandleType` | Timeframe used for candle subscription and indicator calculations. |\n\n`MinimumBars` is a fixed internal constant equal to `60`, reflecting the EA's requirement for sufficient history."
+   },
+   "703": {
+    "id": 703,
+    "name": "Quantum Sentiment Flux (Beginners)",
+    "family": "trend",
+    "overview": "This strategy enters long when the fast EMA crosses above the slow EMA and the difference between them exceeds an ATR-based threshold. It enters short on the opposite signal. Positions are exited when price moves an ATR multiple against the trade or reaches a profit target of two ATR multiples. A cooldown period limits trade frequency.\n\n## Parameters\n- Candle Type\n- Fast EMA length\n- Slow EMA length\n- ATR length\n- ATR multiplier\n- MA strength threshold\n- Cooldown bars\n- Quantity\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Fast EMA length\n- Slow EMA length\n- ATR length\n- ATR multiplier\n- MA strength threshold\n- Cooldown bars\n- Quantity"
+   },
+   "2993": {
+    "id": 2993,
+    "name": "Exp XRSI Histogram Vol",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the original MQL5 expert advisor `Exp_XRSI_Histogram_Vol`. It trades breakouts in the volume-weighted RSI histogram by interpreting the five color states produced by the indicator. The script runs on any timeframe provided through the candle subscription and is built on StockSharp's high-level strategy API.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Timeframe used for candles and indicator calculations. |\n| `RsiPeriod` | RSI length. |\n| `VolumeMode` | Choose between tick volume and real volume. Tick mode falls back to one unit when volume data is missing. |\n| `HighLevel2`, `HighLevel1`, `LowLevel1`, `LowLevel2` | Multipliers that scale the smoothed volume to build histogram thresholds. |\n| `MaMethod`, `MaLength`, `MaPhase` | Smoothing settings. Unsupported methods (Parabolic, T3, Vidya, Ama) fall back to simple moving average. `MaPhase` is kept for completeness but only affects advanced methods such as Jurik. |\n| `SignalBar` | How many closed bars back should be evaluated when reading the histogram color. |\n| `Mm1`, `Mm2` | Volume multipliers for the first and second positions in each direction. |\n| `BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose` | Enable or disable opening and closing logic for longs/shorts. |\n| `StopLossPoints`, `TakeProfitPoints` | Protective offsets expressed in price steps. |"
+   },
+   "1863": {
+    "id": 1863,
+    "name": "Kauf WMA Cross",
+    "family": "trend",
+    "overview": "This strategy trades when the Kaufman Adaptive Moving Average (KAMA) crosses a Weighted Moving Average (WMA). An upward cross closes short positions and optionally opens a long if allowed. A downward cross closes long positions and optionally opens a short. Opening and closing for each side can be enabled or disabled through parameters.\n\n## Parameters\n- Candle type\n- AMA length\n- Fast EMA\n- Slow EMA\n- WMA length\n- Open long\n- Open short\n- Close long\n- Close short\n",
+    "details": "",
+    "parameters": "- Candle type\n- AMA length\n- Fast EMA\n- Slow EMA\n- WMA length\n- Open long\n- Open short\n- Close long\n- Close short"
+   },
+   "4219": {
+    "id": 4219,
+    "name": "ErrorEA",
+    "family": "trend",
+    "overview": "The **ErrorEA Strategy** is a StockSharp port of the MetaTrader advisor `errorEA.mq4`. The original expert compared the +DI and -DI components of the Average Directional Index and kept stacking market orders in the detected trend direction while applying a very large safety stop-loss and a tight scalping take-profit. This C# version recreates the same idea with StockSharp's high-level API, adds clear parameter controls, and documents the risk model explicitly.",
+    "details": "",
+    "parameters": "| Name | Type | Default | MetaTrader counterpart | Description |\n| --- | --- | --- | --- | --- |\n| `AdxPeriod` | `int` | `14` | `iADX(..., 14, ...)` | Smoothing period of the Average Directional Index. |\n| `CandleType` | `DataType` | 15-minute time frame | chart timeframe | Candle series used for all calculations. |\n| `MaxTrades` | `int` | `9` | `MaxTrades` | Maximum number of scale-in orders per direction. |\n| `EnableRiskControl` | `bool` | `true` | `RiskControl` | Enables the dynamic lot calculation based on the portfolio value. |\n| `BaseVolume` | `decimal` | `0.15` | `MiniLots` | Base lot size before applying the risk multiplier. |\n| `RiskDivider` | `decimal` | `10000` | implicit (divisor in `PowerRisk`) | Divider applied to the portfolio value when risk control is active. |\n| `MaxVolume` | `decimal` | `3` | `MaxLot` | Cap for the auto-calculated volume (before exchange rounding). |\n| `MinVolume` | `decimal` | `0.01` | `MarketInfo(..., MODE_MINLOT)` | Minimum volume allowed in the final order. |\n| `StopLossPoints` | `int` | `1000` | `StopLoss` | Stop-loss distance in price steps. Set to `0` to disable the stop. |\n| `EnableTakeProfit` | `bool` | `true` | `ScalpeControl` | Enables the tight scalping take-profit. |\n| `TakeProfitPoints` | `int` | `10` | `ScalpeProfit` | Take-profit distance in price steps. |"
+   },
+   "240": {
+    "id": 240,
+    "name": "MACD Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 67%. It performs best in the stocks market.\n\nA long position is entered when the MACD histogram falls below the mean by `DeviationMultiplier` standard deviations. A short position is opened when the histogram rises above the mean by the same amount. The trade is closed when the histogram crosses back through its average.\n\nThis approach caters to traders comfortable fading momentum extremes. A stop-loss measured as a percentage of entry price guards against trends that continue to strengthen.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: MACD Histogram < Avg - DeviationMultiplier * StdDev\n  - **Short**: MACD Histogram > Avg + DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Histogram > Avg\n  - **Short**: Exit when Histogram < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `FastMacdPeriod` = 12\n  - `SlowMacdPeriod` = 26\n  - `SignalPeriod` = 9\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD Histogram < Avg - DeviationMultiplier * StdDev\n  - **Short**: MACD Histogram > Avg + DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Histogram > Avg\n  - **Short**: Exit when Histogram < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `FastMacdPeriod` = 12\n  - `SlowMacdPeriod` = 26\n  - `SignalPeriod` = 9\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

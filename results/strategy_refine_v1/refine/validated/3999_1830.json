@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3999,
+  "ticker": "1830",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3999,
+    "name": "Open Close2 Ampn Stochastic",
+    "family": "volatility",
+    "entry_long": "donchian_high(high,0.2) - donchian_low(low,0.2) > 0.2 and close > open and roc(close,1) > 0.2 and crossabove(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3), sma(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3),3))",
+    "exit_long": "donchian_high(high,9) - donchian_low(low,9) > 0 and crossbelow(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3), sma(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "StochasticLength=9 with the documented 3/3 %K and %D smoothing is exact, and the two-bar price filter is rendered as a bullish current bar continuing the prior up close, with a non-zero range guard. The risk-based sizing, MaximumRisk drawdown guard, DecreaseFactor volume reduction, and MinimumVolume floor are not DSL fields."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2018-09-10",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1469,
+      "engine_win_ret": 0.0,
+      "alpha": -2.9215686274509802,
+      "benchmark_ret": 2.9215686274509802,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": 0.502997002997003,
+      "benchmark_ret": -0.502997002997003,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.25098039215686274,
+      "benchmark_ret": -0.25098039215686274,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2018-09-10",
+        "2024-07-31"
+      ],
+      "bars_in_window": 1469,
+      "engine_win_ret": 0.0,
+      "alpha": -2.9215686274509802,
+      "benchmark_ret": 2.9215686274509802,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.0,
+      "alpha": 0.502997002997003,
+      "benchmark_ret": -0.502997002997003,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.25098039215686274,
+      "benchmark_ret": -0.25098039215686274,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

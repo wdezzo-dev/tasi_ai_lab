@@ -1,0 +1,98 @@
+{
+ "batch_182": {
+  "strategy_ids": [
+   352,
+   986,
+   416,
+   4213,
+   547,
+   100,
+   4110,
+   473,
+   354,
+   1989
+  ],
+  "docs": {
+   "352": {
+    "id": 352,
+    "name": "Asset Class Trend Following",
+    "family": "trend",
+    "overview": "This strategy follows trends across multiple asset classes. It applies a simple moving average filter to each security in the universe and rebalances the portfolio on the first trading day of each month. Positions are taken only when price is above the moving average.\n\nTesting indicates an average annual return of about 15%. It performs best on diversified futures portfolios.\n\nAt the start of each month, securities trading above their SMA receive an equal allocation of capital. Positions are closed when price falls below the SMA or when capital is reassigned at the next rebalance.\n\n## Details\n\n- **Entry Criteria**: `Close > SMA`\n- **Long/Short**: Long only\n- **Exit Criteria**: `Close <= SMA` or removed at rebalance\n- **Stops**: None; capital is redistributed monthly\n- **Default Values**:\n  - `SmaLength` = 210\n  - `MinTradeUsd` = 50\n  - `CandleType` = daily\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: `Close > SMA`\n- **Long/Short**: Long only\n- **Exit Criteria**: `Close <= SMA` or removed at rebalance\n- **Stops**: None; capital is redistributed monthly\n- **Default Values**:\n  - `SmaLength` = 210\n  - `MinTradeUsd` = 50\n  - `CandleType` = daily\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "986": {
+    "id": 986,
+    "name": "Litecoin Trailing Stop",
+    "family": "trend",
+    "overview": "The **Litecoin Trailing Stop Strategy** uses the Kaufman Adaptive Moving Average (KAMA) to detect bullish and bearish trends. It opens long positions when KAMA is rising and short positions when it is falling. After a configurable delay, a percentage-based trailing stop protects profits.\n\n## Details\n- **Entry Criteria**: KAMA slope with cooldown between entries.\n- **Long/Short**: both directions.\n- **Exit Criteria**: trailing stop.\n- **Stops**: trailing stop after delay.\n- **Default Values**:\n  - `KamaLength = 50`\n  - `BarsBetweenEntries = 30`\n  - `TrailingStopPercent = 12`\n  - `DelayBars = 50`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: KAMA\n  - Stops: Trailing stop\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: KAMA slope with cooldown between entries.\n- **Long/Short**: both directions.\n- **Exit Criteria**: trailing stop.\n- **Stops**: trailing stop after delay.\n- **Default Values**:\n  - `KamaLength = 50`\n  - `BarsBetweenEntries = 30`\n  - `TrailingStopPercent = 12`\n  - `DelayBars = 50`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: KAMA\n  - Stops: Trailing stop\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "416": {
+    "id": 416,
+    "name": "Bollinger Breakout",
+    "family": "trend",
+    "overview": "Bollinger Breakout seeks to capture moves that push beyond the Bollinger Bands\nand keep going. When price closes above the upper band or below the lower band,\nthe strategy enters in the direction of the breakout if optional confirmations\nsupport the trade.\n\nRSI, Aroon and moving‑average filters can be enabled to validate momentum and\ntrend. An optional stop‑loss helps control risk. Positions are closed when price\nreaches the opposite band or the stop is triggered.\n\nThis approach favors markets prone to strong trends where band breaks lead to\nfollow‑through rather than mean reversion.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close above upper band and all enabled filters confirm.\n  - **Short**: Close below lower band and all enabled filters confirm.\n- **Exit Criteria**: Touch of opposite band or stop‑loss if `UseSL`.\n- **Stops**: Optional stop‑loss (`UseSL`).\n- **Default Values**:\n  - `UseRSI` = True\n  - `UseAroon` = False\n  - `UseMA` = True\n  - `UseSL` = True\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Bollinger Bands, RSI, Aroon, Moving Average\n  - Complexity: Moderate\n  - Risk level: High\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Close above upper band and all enabled filters confirm.\n  - **Short**: Close below lower band and all enabled filters confirm.\n- **Exit Criteria**: Touch of opposite band or stop‑loss if `UseSL`.\n- **Stops**: Optional stop‑loss (`UseSL`).\n- **Default Values**:\n  - `UseRSI` = True\n  - `UseAroon` = False\n  - `UseMA` = True\n  - `UseSL` = True\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Bollinger Bands, RSI, Aroon, Moving Average\n  - Complexity: Moderate\n  - Risk level: High",
+    "parameters": ""
+   },
+   "4213": {
+    "id": 4213,
+    "name": "VmMatrix Double Zero",
+    "family": "trend",
+    "overview": "VmMatrix Double Zero is a StockSharp port of the MetaTrader 4 expert advisor `vMATRIXDoubleZero`. The original robot looks for \"double zero\" breakouts by rounding the previous candle close to two decimals and entering trades when price crosses that rounded level. The port keeps the layered filter structure of the EA: configurable multi-bar bias comparisons, optional volume and range checks, an ATR acceleration gate, and a secondary swing-strength filter. The strategy can also require the daily Commodity Channel Index (CCI) to confirm direction and offers an adaptive take-profit component derived from hourly ATR statistics.\n\nTrading is limited to a user-defined terminal-time window, and separate toggles control whether long or short setups may be taken. Stops and targets are managed internally, including an approximation of the original trailing-stop behaviour that widens the take-profit level whenever trailing is enabled.",
+    "details": "",
+    "parameters": "The following table summarises the exposed parameters (all are available for optimisation unless noted):\n\n| Group | Parameter | Description |\n| --- | --- | --- |\n| General | `StartHour` / `EndHour` | Inclusive trading window in terminal time. |\n| General | `OrderVolume` | Base order size, normalised to the instrument’s volume step. |\n| General | `UseTrailingStop` | Enables the trailing-stop approximation and widens the take-profit factor to emulate the EA. |\n| General | `CloseOnBiasFlip` | If true, closes opposing exposure before entering a new trade. |\n| Long / Short | `EnableLongs` / `EnableShorts` | Toggles long or short signal processing. |\n| Long / Short | `LongStopLossPips`, `LongTakeProfitPips`, `ShortStopLossPips`, `ShortTakeProfitPips` | Stop-loss and take-profit distances measured in pips. |\n| Filters | `UseBiasFilter` with `LongK1…LongK6`, `ShortK1…ShortK6`, `LongQc`, `LongQg`, `ShortQc`, `ShortQg` | Configures the matrix-style deviation comparisons for long and short signals. |\n| Filters | `UseRangeFilter`, `RangeBars`, `RangeThresholdPips` | Rejects trades when recent price range exceeds the pip threshold. |\n| Filters | `UseVolumeFilter`, `MinimumVolume` | Requires the previous candle volume to exceed the threshold. |\n| Filters | `UseVsaFilter`, `AtrPeriod`, `AtrShift` | Demands that ATR has increased relative to `AtrShift` bars ago. |\n| Filters | `UseSecondaryFilter`, `Xb2`, `Xs2`, `Yb2`, `Ys2`, `SecondaryPivot` | Weighted swing-strength filter based on highs and lows. |\n| Filters | `UseDailyCciFilter`, `DailyCciPeriod` | Daily CCI gate; longs need positive CCI, shorts need negative CCI. |\n| Take Profit | `UseDynamicTakeProfit`, `WeightSn1…WeightSn4`, `SwingPivot` | Controls the adaptive take-profit component that blends hourly ATR metrics and swing distances. |\n| General | `CandleType` | Primary timeframe that drives all signal calculations. |"
+   },
+   "547": {
+    "id": 547,
+    "name": "Bar Balance",
+    "family": "trend",
+    "overview": "This strategy measures the balance between upward and downward moves inside each candle. A positive balance suggests buyers dominate the bar, while a negative balance points to selling pressure.\n\nThe system smooths this balance with a moving average. When both the current balance and its average are above zero, the strategy enters a long position. When both drop below zero, it enters short.\n\n## Details\n\n- **Entry criteria**: balance > 0 and average > 0 for long; balance < 0 and average < 0 for short.\n- **Exit criteria**: opposite signal triggers position reversal.\n- **Indicators**: custom bar balance, SMA.\n- **Long/Short**: both.\n- **Stop-loss**: none.\n",
+    "details": "- **Entry criteria**: balance > 0 and average > 0 for long; balance < 0 and average < 0 for short.\n- **Exit criteria**: opposite signal triggers position reversal.\n- **Indicators**: custom bar balance, SMA.\n- **Long/Short**: both.\n- **Stop-loss**: none.",
+    "parameters": ""
+   },
+   "100": {
+    "id": 100,
+    "name": "Tweezer Top",
+    "family": "momentum",
+    "overview": "Testing indicates an average annual return of about 187%. It performs best in the stocks market.\n\nThe strategy opens a short once the second candle confirms the ceiling, expecting a pullback as bullish momentum stalls.\n\nA tight stop above the twin highs keeps risk in check and the trade exits if price climbs back above that resistance.\n\n## Details\n\n- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4110": {
+    "id": 4110,
+    "name": "Rubber Bands Grid",
+    "family": "volatility",
+    "overview": "- Conversion of the MetaTrader 4 expert advisor **RUBBERBANDS_2.mq4**.\n- Runs a symmetric grid around the current price using best bid/ask quotes instead of candles.\n- Keeps separate ledgers for long and short exposure so the behaviour matches the hedged MT4 implementation.\n- Implements session level profit and loss controls and a manual quiesce/stop mode identical to the original inputs.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Volume for every market order (MT4 `Lots`). |\n| `MaxTrades` | Maximum count of simultaneously open trades (MT4 `maxcount`). |\n| `GridStepPoints` | Distance in price points between grid layers (MT4 `pipstep`). |\n| `QuiesceMode` | If enabled the strategy waits once flat, identical to `quiescenow`. |\n| `TriggerImmediateEntries` | Opens an initial buy and sell as soon as the strategy is ready (`donow`). |\n| `StopNow` | Pauses automated entries while keeping current positions alive (`stopnow`). |\n| `CloseNow` | Requests an immediate flatten on start (`closenow`). |\n| `UseSessionTakeProfit` & `SessionTakeProfitPerLot` | Session level floating profit target per lot. |\n| `UseSessionStopLoss` & `SessionStopLossPerLot` | Session level floating loss threshold per lot. |\n| `UseInitialValues`, `InitialMax`, `InitialMin` | Optional restart support that reuses previous extremes (`useinvalues`, `inmax`, `inmin`). |"
+   },
+   "473": {
+    "id": 473,
+    "name": "RSI 30-70",
+    "family": "mean_reversion",
+    "overview": "This simple momentum strategy uses the Relative Strength Index (RSI) to identify oversold and overbought zones. When RSI dips below the oversold level, a long position is opened. The trade is closed once RSI rises above the overbought threshold. The system operates on a single timeframe and does not take short trades.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `RSI < oversold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: `RSI > overbought`.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Overbought/Oversold` = 70 / 30.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `RSI < oversold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: `RSI > overbought`.\n- **Stops**: None.\n- **Default Values**:\n  - `RSI Length` = 14.\n  - `Overbought/Oversold` = 70 / 30.\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "354": {
+    "id": 354,
+    "name": "Betting Against Beta Stocks",
+    "family": "other",
+    "overview": "The **Betting Against Beta Stocks** strategy longs the lowest beta decile of a stock universe and shorts the highest beta decile. Rebalancing occurs on the first trading day of each month.\n\nThe approach aims to exploit the anomaly that low-beta stocks tend to outperform on a risk-adjusted basis. It assumes access to a benchmark security for beta calculations.\n\n## Details\n- **Entry Criteria**: Monthly selection of low/high beta stocks.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions are adjusted at the next rebalance.\n- **Stops**: No explicit stop logic.\n- **Default Values**:\n  - `WindowDays = 252`\n  - `Deciles = 10`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n  - `MinTradeUsd = 100`\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Beta\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly selection of low/high beta stocks.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions are adjusted at the next rebalance.\n- **Stops**: No explicit stop logic.\n- **Default Values**:\n  - `WindowDays = 252`\n  - `Deciles = 10`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n  - `MinTradeUsd = 100`\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Beta\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1989": {
+    "id": 1989,
+    "name": "Trailing Stop Activation",
+    "family": "other",
+    "overview": "The **Trailing Stop Activation Strategy** manages protective stop levels for existing positions. It does not generate entry signals; instead, it adjusts stops after a position is opened to lock in profits.",
+    "details": "",
+    "parameters": "- `TrailingStop` – distance in price units that the market must move in favor of the position before a trailing stop is activated.\n- `StopLoss` – optional initial stop-loss distance in price units. Set to `0` to disable.\n- `CandleType` – type of candles used for price tracking."
+   }
+  }
+ }
+}

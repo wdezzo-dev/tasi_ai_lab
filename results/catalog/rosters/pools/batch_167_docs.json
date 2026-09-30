@@ -1,0 +1,98 @@
+{
+ "batch_167": {
+  "strategy_ids": [
+   1315,
+   800,
+   3815,
+   1743,
+   2982,
+   1702,
+   2472,
+   1251,
+   1770,
+   2613
+  ],
+  "docs": {
+   "1315": {
+    "id": 1315,
+    "name": "Smart Grid Scalping Pullback",
+    "family": "trend",
+    "overview": "Grid-based scalping strategy that expands ATR-driven price levels from a base price twenty bars back. Pullbacks are filtered with RSI before entries. Positions use a profit target and an ATR trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close < basePrice - (LongLevel + 1) * ATR * GridFactor && range/low > NoTradeZone && RSI < MaxRsiLong && close > open\n  - Short: close > basePrice + (ShortLevel + 1) * ATR * GridFactor && range/high > NoTradeZone && RSI > MinRsiShort && close < open\n- **Long/Short**: Both\n- **Exit Criteria**: profit target or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `AtrLength` = 10\n  - `GridFactor` = 0.35m\n  - `ProfitTarget` = 0.004m\n  - `NoTradeZone` = 0.003m\n  - `ShortLevel` = 5\n  - `LongLevel` = 5\n  - `MinRsiShort` = 70\n  - `MaxRsiLong` = 30\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: ATR, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: close < basePrice - (LongLevel + 1) * ATR * GridFactor && range/low > NoTradeZone && RSI < MaxRsiLong && close > open\n  - Short: close > basePrice + (ShortLevel + 1) * ATR * GridFactor && range/high > NoTradeZone && RSI > MinRsiShort && close < open\n- **Long/Short**: Both\n- **Exit Criteria**: profit target or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `AtrLength` = 10\n  - `GridFactor` = 0.35m\n  - `ProfitTarget` = 0.004m\n  - `NoTradeZone` = 0.003m\n  - `ShortLevel` = 5\n  - `LongLevel` = 5\n  - `MinRsiShort` = 70\n  - `MaxRsiLong` = 30\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Scalping\n  - Direction: Both\n  - Indicators: ATR, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "800": {
+    "id": 800,
+    "name": "Flexible Moving Average",
+    "family": "trend",
+    "overview": "Adjusts position based on crossovers between the previous period's close and a configurable moving average. A cross below reduces the position by a user-defined percentage, while a cross above restores the full position.\n\n## Details\n\n- **Entry Criteria**:\n  - **Initial**: Optional full long on the first bar.\n  - **Increase**: Previous close crosses above the moving average → position to 100%.\n- **Exit Criteria**:\n  - **Decrease**: Previous close crosses below the moving average → reduce by `SellPercentage`.\n- **Indicators**:\n  - Simple, Exponential, Weighted, Hull or Smoothed moving average.\n- **Stops**: None.\n- **Default Values**:\n  - `MaLength` = 200\n  - `SellPercentage` = 100\n  - `MaMethod` = SMA\n  - `AllowInitialBuy` = true\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: moving averages\n  - Stops: none\n  - Complexity: Low\n\n",
+    "details": "- **Entry Criteria**:\n  - **Initial**: Optional full long on the first bar.\n  - **Increase**: Previous close crosses above the moving average → position to 100%.\n- **Exit Criteria**:\n  - **Decrease**: Previous close crosses below the moving average → reduce by `SellPercentage`.\n- **Indicators**:\n  - Simple, Exponential, Weighted, Hull or Smoothed moving average.\n- **Stops**: None.\n- **Default Values**:\n  - `MaLength` = 200\n  - `SellPercentage` = 100\n  - `MaMethod` = SMA\n  - `AllowInitialBuy` = true\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: moving averages\n  - Stops: none\n  - Complexity: Low",
+    "parameters": ""
+   },
+   "3815": {
+    "id": 3815,
+    "name": "Simple FX Crossover",
+    "family": "trend",
+    "overview": "## Summary\n- High-level port of the MetaTrader 4 expert advisor *simplefx2.mq4* (Simple FX 2.0).\n- Trades crossovers between a fast and a slow simple moving average on finished candles.\n- Keeps only one position open and flips when the dominant trend reverses.\n\n## Trading Logic\n1. Build candles using the configurable timeframe parameter.\n2. Compute two simple moving averages (fast and slow) on candle close prices.\n3. Confirm a bullish trend when both the current and the previous candle show the fast MA above the slow MA. Confirm a bearish trend when both candles show the fast MA below the slow MA.\n4. When the confirmed trend differs from the stored trend state, close any opposite position and immediately open a market order in the new direction using the configured volume.\n5. Optional stop-loss and take-profit protections expressed in price steps can be enabled. They use StockSharp's built-in protection service to emulate the MT4 risk settings.\n\nThe strategy processes only finished candles, never intrabar ticks, to stay close to the original expert advisor behaviour. Logging is provided on each new entry so that every crossover decision can be audited.\n\n## Parameters\n| Name | Description | Default | Optimization |\n| --- | --- | --- | --- |\n| `ShortPeriod` | Length of the fast simple moving average. | 50 | 10 → 150 step 5 |\n| `LongPeriod` | Length of the slow simple moving average. | 200 | 50 → 400 step 10 |\n| `Volume` | Order volume submitted with each market trade. | 0.1 | 0.1 → 2 step 0.1 |\n| `StopLossPoints` | Protective stop distance in instrument price steps (0 disables). | 0 | — |\n| `TakeProfitPoints` | Profit target distance in instrument price steps (0 disables). | 0 | — |\n| `CandleType` | Candle timeframe used for analysis. | 1 hour | — |\n\n## Notes & Differences from MT4 Version\n- The MT4 persistence file (`simplefx.dat`) is not required; the last trend direction is tracked in memory by the strategy state.\n- Slippage, order comment, magic number, and arrow ",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimization |\n| --- | --- | --- | --- |\n| `ShortPeriod` | Length of the fast simple moving average. | 50 | 10 → 150 step 5 |\n| `LongPeriod` | Length of the slow simple moving average. | 200 | 50 → 400 step 10 |\n| `Volume` | Order volume submitted with each market trade. | 0.1 | 0.1 → 2 step 0.1 |\n| `StopLossPoints` | Protective stop distance in instrument price steps (0 disables). | 0 | — |\n| `TakeProfitPoints` | Profit target distance in instrument price steps (0 disables). | 0 | — |\n| `CandleType` | Candle timeframe used for analysis. | 1 hour | — |"
+   },
+   "1743": {
+    "id": 1743,
+    "name": "Universal Investor",
+    "family": "trend",
+    "overview": "The **Universal Investor Strategy** uses the crossover between the Exponential Moving Average (EMA) and the Linear Weighted Moving Average (LWMA) to determine market direction. It confirms trend strength by checking that both averages move in the same direction.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `MovingPeriod` | Length for EMA and LWMA calculations. |\n| `DecreaseFactor` | Lot reduction factor after losses (0 disables reduction). |\n| `CandleType` | Candle data type for calculations. |\n| `Volume` | Base trade volume from the strategy settings. |"
+   },
+   "2982": {
+    "id": 2982,
+    "name": "Russian20 Momentum MA",
+    "family": "trend",
+    "overview": "The **Russian20 Momentum MA Strategy** is a direct conversion of the MetaTrader 5 expert advisor `Russian20-hp1.mq5`. The original script was published by Gordago Software Corp. and relies on a two-hour chart, a 20-period simple moving average (SMA), and a 5-period Momentum indicator to identify short-term trend continuations. The StockSharp implementation keeps the same analytical core while adapting order handling and money management to the high-level strategy API.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 2-hour candles | Data type used for signal generation. |\n| `MovingAverageLength` | 20 | Lookback for the SMA filter. |\n| `MomentumPeriod` | 5 | Lookback for the Momentum indicator. |\n| `StopLossBuyPips` | 50 | Long stop-loss distance expressed in pips. Set to 0 to disable. |\n| `TakeProfitBuyPips` | 50 | Long take-profit distance in pips. Set to 0 to disable. |\n| `StopLossSellPips` | 50 | Short stop-loss distance in pips. Set to 0 to disable. |\n| `TakeProfitSellPips` | 50 | Short take-profit distance in pips. Set to 0 to disable. |\n\nAll numeric parameters are exposed through `StrategyParam<T>` and marked as optimizable when applicable, enabling backtesting and optimisation with StockSharp tools."
+   },
+   "1702": {
+    "id": 1702,
+    "name": "Renko Scalper",
+    "family": "momentum",
+    "overview": "This strategy attempts to capture short-term momentum by comparing the current close to the previous close.\nIf the latest candle closes higher than the prior one, the strategy opens a long position.\nIf the latest candle closes lower than the prior one, it opens a short position.\n\nStops and optional trailing stop are handled via the built-in protection module.\nThe approach works on both sides of the market and relies solely on price action.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close(t) > Close(t-1)`.\n  - **Short**: `Close(t) < Close(t-1)`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or protective stops.\n- **Stops**: Optional trailing stop, stop loss, and take profit via `StartProtection`.\n- **Default Values**:\n  - `CandleType` = 1-minute.\n  - `StopLossPercent` = 1.\n  - `TakeProfitPercent` = 2.\n  - `IsTrailingStop` = true.\n- **Filters**:\n  - Category: Scalping.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Short-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: High.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close(t) > Close(t-1)`.\n  - **Short**: `Close(t) < Close(t-1)`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or protective stops.\n- **Stops**: Optional trailing stop, stop loss, and take profit via `StartProtection`.\n- **Default Values**:\n  - `CandleType` = 1-minute.\n  - `StopLossPercent` = 1.\n  - `TakeProfitPercent` = 2.\n  - `IsTrailingStop` = true.\n- **Filters**:\n  - Category: Scalping.\n  - Direction: Both.\n  - Indicators: None.\n  - Stops: Yes.\n  - Complexity: Simple.\n  - Timeframe: Short-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: High.",
+    "parameters": ""
+   },
+   "2472": {
+    "id": 2472,
+    "name": "Angry Bird Scalping",
+    "family": "volatility",
+    "overview": "This strategy replicates the MetaTrader \"Angry Bird (Scalping)\" expert advisor using StockSharp's high level API.\n\n## Logic\n- Observes 15-minute candles and computes the highest high and lowest low over the last `Depth` bars to derive a dynamic grid step.\n- When no position is open and the previous candle closes above the current one, RSI on the hourly timeframe triggers entries: values above `RsiMin` open short positions, values below `RsiMax` open long positions.\n- If a position exists and price moves against it by at least the grid step, a new position is opened in the same direction with its volume multiplied by `LotExponent` until `MaxTrades` is reached.\n- A strong CCI reading above `CciDrop` for shorts or below `-CciDrop` for longs forces all positions to close.\n- Positions are also closed when profit reaches `TakeProfit` or loss reaches `StopLoss` relative to the average entry price.\n\n## Parameters\n- `StopLoss` – stop-loss in points.\n- `TakeProfit` – take-profit in points.\n- `DefaultPips` – minimal distance between grid orders in pips.\n- `Depth` – number of candles used for high/low calculation.\n- `LotExponent` – multiplier for subsequent order volume.\n- `MaxTrades` – maximum number of averaging positions.\n- `RsiMin` / `RsiMax` – RSI thresholds for entry.\n- `CciDrop` – absolute CCI value forcing position closure.\n- `Volume` – initial order volume.\n- `CandleType` – timeframe of working candles (default 15 minutes).\n\n## Usage\nAttach the strategy to a security and start. The strategy uses market orders and manages a single net position, averaging as price moves against it.\n",
+    "details": "",
+    "parameters": "- `StopLoss` – stop-loss in points.\n- `TakeProfit` – take-profit in points.\n- `DefaultPips` – minimal distance between grid orders in pips.\n- `Depth` – number of candles used for high/low calculation.\n- `LotExponent` – multiplier for subsequent order volume.\n- `MaxTrades` – maximum number of averaging positions.\n- `RsiMin` / `RsiMax` – RSI thresholds for entry.\n- `CciDrop` – absolute CCI value forcing position closure.\n- `Volume` – initial order volume.\n- `CandleType` – timeframe of working candles (default 15 minutes)."
+   },
+   "1251": {
+    "id": 1251,
+    "name": "Reversal Trap Sniper",
+    "family": "mean_reversion",
+    "overview": "Reversal Trap Sniper looks for RSI traps where momentum resets but price keeps moving.\nIt buys after an overbought reversal that still closes higher, and sells after an oversold reversal that still closes lower.\n\n## Details\n\n- **Entry Criteria**: RSI overbought/oversold three bars ago with current RSI crossing back and price continuing in same direction\n- **Long/Short**: Both\n- **Exit Criteria**: ATR stop or target or maximum bars\n- **Stops**: ATR based\n- **Default Values**:\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `RiskReward` = 2\n  - `MaxBars` = 30\n  - `AtrLength` = 14\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI overbought/oversold three bars ago with current RSI crossing back and price continuing in same direction\n- **Long/Short**: Both\n- **Exit Criteria**: ATR stop or target or maximum bars\n- **Stops**: ATR based\n- **Default Values**:\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `RiskReward` = 2\n  - `MaxBars` = 30\n  - `AtrLength` = 14\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1770": {
+    "id": 1770,
+    "name": "Collector v1.0",
+    "family": "volume",
+    "overview": "Strategy opens market orders when price reaches dynamic buy or sell levels spaced by a fixed distance. Volume increases after a specified number of trades. All positions are closed once cumulative profit exceeds a threshold.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close price >= buy level\n  - Short: close price <= sell level\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Close all when total profit >= ProfitClose\n- **Stops**: None\n- **Default Values**:\n  - `Distance` = 10m\n  - `InitialVolume` = 0.01m\n  - `VolumeStep` = 0.01m\n  - `IncreaseTrade` = 3\n  - `MaxTrades` = 200\n  - `ProfitClose` = 500000m\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n",
+    "details": "- **Entry Criteria**:\n  - Long: close price >= buy level\n  - Short: close price <= sell level\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Close all when total profit >= ProfitClose\n- **Stops**: None\n- **Default Values**:\n  - `Distance` = 10m\n  - `InitialVolume` = 0.01m\n  - `VolumeStep` = 0.01m\n  - `IncreaseTrade` = 3\n  - `MaxTrades` = 200\n  - `ProfitClose` = 500000m\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   },
+   "2613": {
+    "id": 2613,
+    "name": "Cheduecoglioni Alternating",
+    "family": "volume",
+    "overview": "This strategy is a StockSharp port of the MQL5 expert advisor \"cheduecoglioni\". It always keeps the trader in the market by alternating between short and long positions. Every entry is protected with fixed take-profit and stop-loss levels that are defined in pips and converted to price offsets according to the instrument precision.",
+    "details": "",
+    "parameters": "- `Trade Volume` – volume used for each market entry. This mirrors the `InpLots` input.\n- `Take Profit (pips)` – distance in pips for the take-profit order. The strategy converts it to absolute price distance using the detected pip size.\n- `Stop Loss (pips)` – distance in pips for the protective stop loss, converted with the same pip size logic.\n- `Candle Type` – timeframe of the candles that drive the decision loop. Any supported `DataType` can be supplied."
+   }
+  }
+ }
+}

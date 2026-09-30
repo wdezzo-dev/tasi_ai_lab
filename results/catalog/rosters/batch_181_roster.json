@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1872,
+      "name": "T3MA Alarm Trend",
+      "family": "trend",
+      "entry_long": "roc(2 * ema(close,20) - ema(ema(close,20),20), 1) > 0",
+      "exit_long": "roc(2 * ema(close,20) - ema(ema(close,20),20), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "T3MA is approximated by the double-smoothed EMA 2*EMA(20)-EMA(EMA(20),20) and its documented direction change is read as a one-bar ROC turn; MaPeriod=20 is a fallback because no value is supplied. Absolute price-distance stop-loss/take-profit and the ReverseOnSignal toggle are not percentage or DSL fields."
+    },
+    {
+      "id": 2723,
+      "name": "BeerGod EMA Timing",
+      "family": "trend",
+      "entry_long": "close < ema(close,60) and roc(ema(close,60),1) < 0 and close < open",
+      "exit_long": "close > ema(close,60) and roc(ema(close,60),1) > 0 and close > open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented buy setup is price below a falling EMA(60) and below the previous bar close, which the current open equals, and the sell setup is mirrored as the long exit. The intrabar minute offset and the order-size position flip are unavailable in the engine."
+    },
+    {
+      "id": 3920,
+      "name": "Universal Investor",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), ema(close,20)) and roc(sma(close,20),1) > 0 and roc(ema(close,20),1) > 0",
+      "exit_long": "crossbelow(sma(close,20), ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "LWMA is approximated by SMA(20) because only SMA/EMA exist and MovingPeriod=20 is a fallback; the buy needs the previous LWMA above the previous EMA with both rising, and the documented long exit is the LWMA dropping below the EMA. MaximumRisk sizing and DecreaseFactor lot reduction are not expressible."
+    },
+    {
+      "id": 3035,
+      "name": "RSI & CCI Divergence",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,10) and roc(rsi(close,14),1) > 0 and sma(close,6) > sma(close,85)",
+      "exit_long": "high > donchian_high_prev(high,10) and roc(rsi(close,14),1) < 0 or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish divergence is a new CandlesToRetrace=10 bar low with RSI turning up under the documented fast/slow LWMA 6/85 trend filter read as SMAs; the mirrored divergence or a MACD 12/26/9 flip closes the long. The CCI divergence, the three-timeframe MACD alignment, the higher-timeframe momentum gate and the absolute point stops are dropped."
+    },
+    {
+      "id": 3899,
+      "name": "Up3x1 Premium 2vM",
+      "family": "trend",
+      "entry_long": "sma(close,12) > sma(close,26) and (high - low) / close > 0.006 and (close - open) / close > 0.005",
+      "exit_long": "crossbelow(sma(close,12), sma(close,26)) or close < sma(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented FastMaPeriod 12 / SlowMaPeriod 26 smoothed averages with the RangeThreshold 0.0060 and BodyThreshold 0.0050 momentum filters, and convergence of the two averages liquidates. The daily midnight-breakout filter needs a second timeframe, and the 150/100 point take-profit, stop and 10 point trailing are not percentages, so both fields are null."
+    },
+    {
+      "id": 1824,
+      "name": "VR Overturn",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented martingale/anti-martingale loop explicitly uses no market indicators: side and size come from the previous trade's realised profit, so there is no single-symbol market-derived long signal to translate. Point-based stop/take-profit and the volume Multiplier are order-management features."
+    },
+    {
+      "id": 2499,
+      "name": "Simple Trade",
+      "family": "volatility",
+      "entry_long": "roc(open,3) > 0",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a higher open than three bars ago for a long, and holding only one completed candle is approximated by closing on the first down close. StopLossPips=120 is a pip distance on a specific instrument rather than a percentage, so stop_loss_pct stays null."
+    },
+    {
+      "id": 1297,
+      "name": "Sharpe Ratio Forced Selling",
+      "family": "mean_reversion",
+      "entry_long": "sma(roc(close,1),8) < -0.89 * std(roc(close,1),8)",
+      "exit_long": "sma(roc(close,1),8) > 2.32 * std(roc(close,1),8)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No Sharpe indicator exists, so the documented thresholds are rewritten as mean(returns,Length=8) versus standard deviation of the same returns; the -5 and 13 values are annualised with the documented PeriodsPerYear=252, giving -0.89 and 2.32 standard deviations. MaxHoldingDays=80 cannot be tracked and log returns are approximated by simple returns."
+    },
+    {
+      "id": 1679,
+      "name": "Psar Bug 6",
+      "family": "other",
+      "entry_long": "crossabove(close, ema(close,20))",
+      "exit_long": "crossbelow(close, ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not in the DSL, so the documented 'close above SAR having been below' flip is approximated by a close/EMA(20) cross with EMA length as a fallback. SarStep, SarMax, the Reverse and SarClose toggles, trailing and the fixed price-unit stop/take-profit are dropped."
+    },
+    {
+      "id": 861,
+      "name": "Grid Tendence V1",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A grid engine that is always in the market and only reopens or reverses when realised profit or loss reaches Percent=1.0, with no indicators at all, so no deterministic market-derived long signal exists. Direction flipping and the 1-minute grid cadence are order-management logic."
+    }
+  ]
+}

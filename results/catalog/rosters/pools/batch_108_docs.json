@@ -1,0 +1,98 @@
+{
+ "batch_108": {
+  "strategy_ids": [
+   259,
+   3940,
+   424,
+   1531,
+   2964,
+   3955,
+   2507,
+   709,
+   4151,
+   239
+  ],
+  "docs": {
+   "259": {
+    "id": 259,
+    "name": "Ichimoku Cloud Width Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 64%. It performs best in the forex market.\n\nA position opens once the indicator pierces a band derived from recent data and a deviation multiplier. Long and short trades are possible with a stop attached.\n\nThis system fits momentum traders seeking early breakouts. Trades close as the Ichimoku falls back toward the mean. Defaults start with `TenkanPeriod` = 9.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLoss` = 2.0m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopLoss` = 2.0m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3940": {
+    "id": 3940,
+    "name": "Pipsover 8167",
+    "family": "trend",
+    "overview": "The **Pipsover 8167** strategy is a StockSharp port of the MetaTrader 4 expert advisor `Pipsover.mq4` distributed with build 8167. The expert searches for strong Chaikin oscillator spikes that appear immediately after a pullback to the 20-period simple moving average on the previous candle. When that combination happens, the script opens a position in the direction of the impulse and protects it with fixed stop-loss and take-profit distances (70 and 140 points respectively in the original MQL code). This C# version rebuilds the exact same logic using high-level StockSharp components so that no direct buffer access is required.\n\nThe implementation uses the Accumulation/Distribution Line (ADL) indicator and two exponential moving averages to reconstruct the Chaikin oscillator values produced by `iCustom(\"Chaikin\", ...)` in MetaTrader. All trading decisions are delayed until the candle is fully closed, replicating the `OrdersTotal()` and `Close[1]` / `Open[1]` checks from the source script.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TradeVolume` | 0.1 | Market order volume (lots or contracts, depending on the security). |\n| `MaLength` | 20 | Period of the SMA used for the pullback check. |\n| `StopLossPoints` | 70 | Stop-loss distance measured in price steps. |\n| `TakeProfitPoints` | 140 | Take-profit distance measured in price steps. |\n| `OpenLevel` | 55 | Absolute Chaikin oscillator threshold that unlocks new entries. |\n| `CloseLevel` | 90 | Absolute Chaikin oscillator threshold that forces exits. |\n| `ChaikinFastLength` | 3 | Fast EMA length in the Chaikin reconstruction. |\n| `ChaikinSlowLength` | 10 | Slow EMA length in the Chaikin reconstruction. |\n| `CandleType` | H1 | Time-frame used to subscribe for candles and calculate indicators. |"
+   },
+   "424": {
+    "id": 424,
+    "name": "Full Candle",
+    "family": "trend",
+    "overview": "The Full Candle setup enters when a candle closes beyond its EMA and leaves only a small wick on the breakout side. The intent is to trade momentum candles that show decisive action without much rejection. Optional percentage based take-profit and stop-loss exits manage the trade once it is open.\n\nThe system is best suited for short-term breakouts where strong candles often lead to quick follow-through.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: bullish candle closing above EMA with shadow ≤ threshold\n  - **Short**: bearish candle closing below EMA with shadow ≤ threshold\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - Take-profit or stop-loss percentages if enabled\n- **Stops**: Optional\n- **Default Values**:\n  - `EmaLength` = 10\n  - `ShadowPercent` = 5\n  - `TPPercent` = 1.2\n  - `SLPercent` = 1.8\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, price action\n  - Stops: Optional\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: bullish candle closing above EMA with shadow ≤ threshold\n  - **Short**: bearish candle closing below EMA with shadow ≤ threshold\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - Take-profit or stop-loss percentages if enabled\n- **Stops**: Optional\n- **Default Values**:\n  - `EmaLength` = 10\n  - `ShadowPercent` = 5\n  - `TPPercent` = 1.2\n  - `SLPercent` = 1.8\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, price action\n  - Stops: Optional\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1531": {
+    "id": 1531,
+    "name": "Volatility Capture RSI-Bollinger",
+    "family": "trend",
+    "overview": "Strategy combines dynamic Bollinger bands with an optional RSI filter to catch volatility swings.\n\n## Details\n- **Entry Criteria**: Price crossing adaptive Bollinger band with optional RSI confirmation.\n- **Long/Short**: Configurable via `Direction`.\n- **Exit Criteria**: Price crossing opposite of the trailing band.\n- **Stops**: No.\n- **Default Values**:\n  - `BollingerLength` = 50\n  - `Multiplier` = 2.7183m\n  - `UseRsi` = true\n  - `RsiPeriod` = 10\n  - `RsiSmaPeriod` = 5\n  - `BoughtRangeLevel` = 55m\n  - `SoldRangeLevel` = 50m\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Configurable\n  - Indicators: Bollinger, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing adaptive Bollinger band with optional RSI confirmation.\n- **Long/Short**: Configurable via `Direction`.\n- **Exit Criteria**: Price crossing opposite of the trailing band.\n- **Stops**: No.\n- **Default Values**:\n  - `BollingerLength` = 50\n  - `Multiplier` = 2.7183m\n  - `UseRsi` = true\n  - `RsiPeriod` = 10\n  - `RsiSmaPeriod` = 5\n  - `BoughtRangeLevel` = 55m\n  - `SoldRangeLevel` = 50m\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Configurable\n  - Indicators: Bollinger, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2964": {
+    "id": 2964,
+    "name": "1H EUR/USD MACD Swing",
+    "family": "trend",
+    "overview": "This strategy ports the \"1H EUR_USD\" MetaTrader expert advisor into the StockSharp high-level API. It trades the EUR/USD pair on hourly candles using dual moving averages and MACD swing detection. Entries require both a trend filter (fast MA above/below slow MA) and a MACD double-bottom/double-top pattern combined with a breakout of recent highs or lows. Risk is controlled with pip-based stop loss, take profit, and an incremental trailing stop that mirrors the original EA logic.\n\n## Details\n\n- **Market**: Designed for EUR/USD on the 1-hour timeframe but can be applied to any instrument producing standard candles.\n- **Entry Criteria**:\n  - **Long**:\n    - Fast MA is above the slow MA (type selectable between SMA, EMA, SMMA, LWMA).\n    - MACD main line forms either of the following bullish swings entirely below the zero line:\n      - `MACD[-1] > MACD[-2] < MACD[-3]` with `MACD[-2] < 0` and the current close breaks the previous candle high.\n      - `MACD[-2] > MACD[-3] < MACD[-4]` with `MACD[-3] < 0` and the current close breaks the high from two candles ago.\n  - **Short**:\n    - Fast MA is below the slow MA.\n    - MACD main line forms the mirrored bearish swings entirely above the zero line and price closes below the relevant prior low.\n- **Exit Criteria**:\n  - Pip-based take profit and stop loss are attached immediately after entry.\n  - Trailing stop activates only after price moves in favor by `TrailingStop + TrailingStep` pips and then follows price at a distance of `TrailingStop` pips, matching the EA's stepwise modification logic.\n  - Protective orders trigger on the candle's intraperiod high/low.\n- **Position Management**:\n  - Uses the configured trade volume; reversing positions closes the opposite side before opening the new one.\n  - Long and short trades share the same pip calculations (pip size automatically adapts to 4/5-digit quotes).\n- **Indicators**:\n  - Fast and slow moving averages with selectable type (Simple, Exponential, Smoothed, Linear Weighted) a",
+    "details": "- **Market**: Designed for EUR/USD on the 1-hour timeframe but can be applied to any instrument producing standard candles.\n- **Entry Criteria**:\n  - **Long**:\n    - Fast MA is above the slow MA (type selectable between SMA, EMA, SMMA, LWMA).\n    - MACD main line forms either of the following bullish swings entirely below the zero line:\n      - `MACD[-1] > MACD[-2] < MACD[-3]` with `MACD[-2] < 0` and the current close breaks the previous candle high.\n      - `MACD[-2] > MACD[-3] < MACD[-4]` with `MACD[-3] < 0` and the current close breaks the high from two candles ago.\n  - **Short**:\n    - Fast MA is below the slow MA.\n    - MACD main line forms the mirrored bearish swings entirely above the zero line and price closes below the relevant prior low.\n- **Exit Criteria**:\n  - Pip-based take profit and stop loss are attached immediately after entry.\n  - Trailing stop activates only after price moves in favor by `TrailingStop + TrailingStep` pips and then follows price at a distance of `TrailingStop` pips, matching the EA's stepwise modification logic.\n  - Protective orders trigger on the candle's intraperiod high/low.\n- **Position Management**:\n  - Uses the configured trade volume; reversing positions closes the opposite side before opening the new one.\n  - Long and short trades share the same pip calculations (pip size automatically adapts to 4/5-digit quotes).\n- **Indicators**:\n  - Fast and slow moving averages with selectable type (Simple, Exponential, Smoothed, Linear Weighted) and optional horizontal shift.\n  - Classic MACD (fast/slow/signal EMA lengths).\n- **Parameters**:\n  - `TradeVolume` – base lot size sent with each order.\n  - `StopLossPips`, `TakeProfitPips` – protective distances in pips (set to zero to disable).\n  - `TrailingStopPips`, `TrailingStepPips` – trailing configuration; trailing step must remain positive when trailing is active.\n  - `FastMaLength`, `FastMaShift`, `FastMaType` – fast MA settings.\n  - `SlowMaLength`, `SlowMaShift`, `SlowMaType` – slow MA settings.\n  - `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` – MACD parameters.\n  - `CandleType` – timeframe for processing (defaults to 1 hour).\n  - `LookbackPeriod` – preserved for compatibility with the MQL inputs; it does not alter logic because the original EA also left it unused.",
+    "parameters": ""
+   },
+   "3955": {
+    "id": 3955,
+    "name": "She Kanskigor Daily",
+    "family": "breakout",
+    "overview": "She Kanskigor Daily Strategy is a once-per-day breakout system that mirrors the original MetaTrader expert advisor `SHE_kanskigor.mq4`. The strategy evaluates the direction of the previous daily candle and opens a single market position inside a narrow time window at the start of the new trading day. It automatically monitors the position to close it by a configurable take-profit or stop-loss distance, expressed in security price steps.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| **Volume** | Order volume used for entries. | `0.1` |\n| **Take Profit** | Profit target expressed in price steps. A value of `0` disables the target. | `35` |\n| **Stop Loss** | Loss threshold expressed in price steps. A value of `0` disables the stop. | `55` |\n| **Start Time** | Time of day (exchange time zone) when the entry window starts. | `00:05` |\n| **Window (min)** | Duration, in minutes, of the entry window. | `5` |\n| **Intraday Candle** | Candle data type used for intraday processing (default: 1-minute candles). | `TimeFrameCandleMessage(1m)` |"
+   },
+   "2507": {
+    "id": 2507,
+    "name": "Previous Candle Breakout",
+    "family": "breakout",
+    "overview": "- Subscribes to a single candle series (1-hour timeframe by default).\n- Stores the previous candle's high and low to act as breakout triggers.\n- Trades only at candle close to mirror the original tick-based logic without relying on intra-bar data.\n- Supports both long and short trades and always stays flat when no breakout condition is active.",
+    "details": "",
+    "parameters": "- **Candle Type** – data type used for subscription (defaults to hourly time frame). Set this to the bar size that matches the\n  chart used in MetaTrader for the original expert.\n- **Stop Loss** – distance in absolute price units between the entry price and the protective stop. Keep at `0` to disable\n  stop-loss handling.\n- **Take Profit** – distance in absolute price units between the entry price and the profit target. Keep at `0` to disable\n  take-profit handling."
+   },
+   "709": {
+    "id": 709,
+    "name": "Dual RSI Differential",
+    "family": "momentum",
+    "overview": "Dual RSI Differential compares two RSI periods and trades when their difference crosses a threshold. This dual-length approach seeks to capture divergences between short-term and long-term momentum.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `RSI(Long) - RSI(Short)` < `RsiDiffLevel`.\n  - **Short**: `RSI(Long) - RSI(Short)` > `RsiDiffLevel`.\n- **Exit Criteria**: Opposite threshold, optional holding period, optional take profit / stop loss.\n- **Stops**: Optional take profit and stop loss (`Condition`).\n- **Default Values**:\n  - `ShortRsiPeriod` = 21\n  - `LongRsiPeriod` = 42\n  - `RsiDiffLevel` = 5\n  - `UseHoldDays` = True\n  - `HoldDays` = 5\n  - `Condition` = None\n  - `TakeProfitPerc` = 15\n  - `StopLossPerc` = 10\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Basic\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `RSI(Long) - RSI(Short)` < `RsiDiffLevel`.\n  - **Short**: `RSI(Long) - RSI(Short)` > `RsiDiffLevel`.\n- **Exit Criteria**: Opposite threshold, optional holding period, optional take profit / stop loss.\n- **Stops**: Optional take profit and stop loss (`Condition`).\n- **Default Values**:\n  - `ShortRsiPeriod` = 21\n  - `LongRsiPeriod` = 42\n  - `RsiDiffLevel` = 5\n  - `UseHoldDays` = True\n  - `HoldDays` = 5\n  - `Condition` = None\n  - `TakeProfitPerc` = 15\n  - `StopLossPerc` = 10\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long & Short\n  - Indicators: RSI\n  - Complexity: Basic\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4151": {
+    "id": 4151,
+    "name": "Nevalyashka Direction",
+    "family": "volatility",
+    "overview": "The Nevalyashka strategy is a C# port of the original MetaTrader 4 expert advisor `Nevalyashka.mq4`. The EA repeatedly flips its trading direction: it opens a single market order, waits until the position is closed by a stop-loss, take-profit or manual action, and instantly re-enters in the opposite direction with the same volume. The StockSharp implementation reproduces this behaviour while exposing all critical settings as strategy parameters.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `StopLossPips` | Distance of the protective stop in pips. | `50` | Converted to price points via the pip size calculation; set to `0` to disable the stop. |\n| `TakeProfitPips` | Distance of the protective take-profit in pips. | `50` | Converted in the same way as the stop-loss; set to `0` to disable the take-profit. |\n| `Volume` | Lot size used for the very first trade. | `1` | After the first fill the strategy reuses the actually executed volume for all future entries. |\n| `InitialDirection` | Side of the initial market order. | `Sell` | Choose between `Buy` and `Sell` to match the desired starting bias. |"
+   },
+   "239": {
+    "id": 239,
+    "name": "Williams R Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 154%. It performs best in the stocks market.\n\nA long trade triggers when Williams %R falls below the average minus `DeviationMultiplier` times the standard deviation. A short trade is taken when it rises above the average plus that multiplier. Exits occur when Williams %R moves back toward its average level.\n\nThe approach suits traders who rely on momentum exhaustion to time entries. A protective stop-loss limits risk if price keeps moving to new extremes.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: %R < Avg - DeviationMultiplier * StdDev\n  - **Short**: %R > Avg + DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %R > Avg\n  - **Short**: Exit when %R < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `WilliamsRPeriod` = 14\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Williams %R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %R < Avg - DeviationMultiplier * StdDev\n  - **Short**: %R > Avg + DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %R > Avg\n  - **Short**: Exit when %R < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `WilliamsRPeriod` = 14\n  - `AveragePeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Williams %R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

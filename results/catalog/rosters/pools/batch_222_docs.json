@@ -1,0 +1,98 @@
+{
+ "batch_222": {
+  "strategy_ids": [
+   1190,
+   2549,
+   4125,
+   227,
+   2509,
+   2447,
+   122,
+   369,
+   1293,
+   1547
+  ],
+  "docs": {
+   "1190": {
+    "id": 1190,
+    "name": "Price Statistical Z-Score",
+    "family": "trend",
+    "overview": "Strategy using smoothed Z-Score cross with a candle momentum filter.\n\nIt buys when the short-term Z-Score rises above the long-term Z-Score and closes when it falls below. The strategy ignores signals after several identical ones and avoids entries following three bullish candles.\n\n## Details\n\n- **Entry Criteria**: Short-term Z-Score above long-term, no prior bullish 3-bar sequence, gap between signals.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Short-term Z-Score below long-term, no prior bearish 3-bar sequence, gap between signals.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreBasePeriod` = 3\n  - `ShortSmoothPeriod` = 3\n  - `LongSmoothPeriod` = 5\n  - `GapBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Short-term Z-Score above long-term, no prior bullish 3-bar sequence, gap between signals.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Short-term Z-Score below long-term, no prior bearish 3-bar sequence, gap between signals.\n- **Stops**: No.\n- **Default Values**:\n  - `ZScoreBasePeriod` = 3\n  - `ShortSmoothPeriod` = 3\n  - `LongSmoothPeriod` = 5\n  - `GapBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2549": {
+    "id": 2549,
+    "name": "Money Rain",
+    "family": "trend",
+    "overview": "- Conversion of the original **MoneyRain (barabashkakvn's edition)** expert advisor from MQL5 to StockSharp high-level API.\n- Uses the DeMarker oscillator to choose direction: values above 0.5 trigger long entries, while values at or below 0.5 trigger short entries.\n- Trades only one position at a time and relies on fixed stop-loss / take-profit offsets expressed in points.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `DeMarkerPeriod` | Averaging period of the DeMarker indicator. | 31 |\n| `TakeProfitPoints` | Take-profit offset in DeMarker-style points. | 5 |\n| `StopLossPoints` | Stop-loss offset in DeMarker-style points. | 20 |\n| `BaseVolume` | Default order volume (lot size). | 0.01 |\n| `LossLimit` | Maximum consecutive losses allowed before pausing. | 1,000,000 |\n| `FastOptimize` | When `true`, disables adaptive position sizing. | `false` |\n| `CandleType` | Candle data type used for calculations. | 30-minute candles |"
+   },
+   "4125": {
+    "id": 4125,
+    "name": "ComFracti",
+    "family": "trend",
+    "overview": "ComFracti is a directional strategy translated from the MT4 \"ComFracti\" expert advisor. The logic combines multi-timeframe fractal confirmation with RSI and stochastic filters, while optional moving average, parabolic SAR, channel and perceptron filters control trend alignment. The C# implementation trades a single position at a time and evaluates signals on completed candles using StockSharp high-level APIs.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `TakeProfitPoints`, `StopLossPoints` | Take-profit and stop-loss distances in instrument points. |\n| `UseTrailingStop`, `TrailingStopPoints`, `ProfitTrailing` | Trailing stop controls (distance and whether trailing requires open profit). |\n| `BaseVolume`, `UseMoneyManagement`, `RiskPercent`, `AccountMicro`, `MinimumVolume` | Position sizing configuration. |\n| `UseFractals`, `FractalShift*` | Enables fractal confirmation and defines the bar offsets to inspect on the current and higher timeframes. |\n| `UseRsi`, `RsiLevelBuy`, `RsiLevelSell`, `RsiType` | RSI filter offsets and timeframe. |\n| `UseStochastic`, `StochasticPeriod*`, `StochasticLevel*` | Stochastic oscillator periods and thresholds. |\n| `UseMaFilter`, `MaPeriod` | EMA filter configuration on the filter timeframe. |\n| `UsePsarFilter`, `PsarStep` | Parabolic SAR filter configuration. |\n| `UseChannelFilter`, `ChannelLookback`, `ChannelK` | Channel breakout filter parameters. |\n| `UsePerceptronFilter`, `PerceptronV1`–`PerceptronV4` | Perceptron filter weights (0–100, centred around 50). |\n| `CandleType`, `HigherFractalType`, `FilterType` | Data timeframes used by the strategy. |"
+   },
+   "227": {
+    "id": 227,
+    "name": "Hurst Exponent Trend",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 40%. It performs best in the crypto market.\n\nThe strategy buys when the Hurst exponent is greater than the threshold and price closes above the moving average. It sells short when the Hurst exponent is high and price closes below the average. If the Hurst exponent drops below the threshold, existing positions are closed to avoid trading in choppy markets.\n\nSuch an approach works for traders who want objective confirmation that a trend is present before entering. The combination of trend filter and stop-loss helps manage the risk of false signals.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Hurst > Threshold && Close > MA\n  - **Short**: Hurst > Threshold && Close < MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close < MA or Hurst < Threshold\n  - **Short**: Exit when Close > MA or Hurst < Threshold\n- **Stops**: Yes, percentage stop-loss.\n- **Default Values**:\n  - `HurstPeriod` = 100\n  - `MaPeriod` = 20\n  - `HurstThreshold` = 0.55m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Hurst Exponent, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Hurst > Threshold && Close > MA\n  - **Short**: Hurst > Threshold && Close < MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close < MA or Hurst < Threshold\n  - **Short**: Exit when Close > MA or Hurst < Threshold\n- **Stops**: Yes, percentage stop-loss.\n- **Default Values**:\n  - `HurstPeriod` = 100\n  - `MaPeriod` = 20\n  - `HurstThreshold` = 0.55m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Hurst Exponent, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2509": {
+    "id": 2509,
+    "name": "UP3x1 Premium",
+    "family": "trend",
+    "overview": "The UP3x1 Premium Strategy is a C# port of the MetaTrader expert advisor *up3x1_premium_v2M*. It blends fast/slow EMA crossovers with wide-range candle filters and a daily context filter to capture momentum breakouts while keeping risk managed through fixed targets and trailing stops.\n\n## How It Works\n\n1. **Trend Detection**\n   - Calculates two EMAs on the working timeframe (default 12 and 26 periods).\n   - Tracks the previous two EMA values to identify bullish or bearish crossovers similar to the MQL logic.\n   - Maintains a daily EMA to understand the broader bias.\n\n2. **Entry Logic**\n   - **Long setups** trigger when any of the following occurs:\n     - The fast EMA crosses above the slow EMA and the previous two candle opens show upward progress.\n     - The prior candle forms a bullish wide-range bar whose body exceeds the configured body threshold.\n     - At midnight, if the previous daily candle closed notably lower than it opened (capitulation), a bounce signal is allowed.\n     - Price trades above the current daily EMA, favouring the long side.\n   - **Short setups** trigger when the mirror conditions hold (bearish EMA cross, wide bearish bar, or midnight reversal in the opposite direction).\n   - When both long and short triggers fire simultaneously, the strategy follows the prevailing EMA relationship to break the tie.\n\n3. **Exit Management**\n   - An open position is closed when:\n     - The EMAs converge within ±0.1%, signalling a loss of directional conviction.\n     - Price touches the take-profit or stop-loss offsets defined in absolute price units.\n     - The trailing stop (if enabled) is pulled behind price and subsequently hit.\n\n4. **Position Handling**\n   - Trades are opened only when the strategy is flat, matching the original EA behaviour.\n   - Volume is controlled via the `OrderVolume` parameter and applied to every market order.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Order size in lots/contracts for ",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OrderVolume` | Order size in lots/contracts for every trade. |\n| `FastEmaLength` / `SlowEmaLength` | Periods for the fast and slow EMAs on the working timeframe. |\n| `DailyEmaLength` | Period for the EMA computed on the daily candles. |\n| `TakeProfit` | Absolute profit target in price units (set to zero to disable). |\n| `StopLoss` | Absolute stop distance in price units (set to zero to disable). |\n| `TrailingStop` | Trailing distance that follows price once the move exceeds the threshold. |\n| `RangeThreshold` | Minimum total range the previous candle must exceed to qualify as a wide bar. |\n| `BodyThreshold` | Minimum candle body size that defines bullish/bearish thrust bars. |\n| `DailyReversalThreshold` | Size of the previous daily reversal required during the midnight filter. |\n| `CandleType` | Working timeframe for the main EMA and price logic. |\n| `DailyCandleType` | Higher timeframe used for the daily EMA context. |"
+   },
+   "2447": {
+    "id": 2447,
+    "name": "PROphet",
+    "family": "other",
+    "overview": "The PROphet strategy evaluates price ranges of the last three completed candles to generate signals during specified trading hours. A custom function combines the ranges with user-defined coefficients. If the function is positive, the strategy opens a position in the corresponding direction.\n\nLong trades use coefficients `X1..X4` and a trailing stop defined by `BuyStopPoints`. Short trades use coefficients `Y1..Y4` and `SellStopPoints`. Stops trail when price moves in favor of the position by more than the spread plus twice the stop distance. Positions are closed after 18:00 or when the trailing stop is hit.\n\n## Details\n\n- **Entry Criteria**\n  - **Long**: `Qu(X1,X2,X3,X4) > 0` and current hour between 10 and 18.\n  - **Short**: `Qu(Y1,Y2,Y3,Y4) > 0` and current hour between 10 and 18.\n- **Exit Criteria**\n  - **Long**: Hour > 18 or best bid falls below trailing stop.\n  - **Short**: Hour > 18 or best ask rises above trailing stop.\n- **Parameters**\n  - `EnableBuy` – allow opening long positions.\n  - `EnableSell` – allow opening short positions.\n  - `X1, X2, X3, X4` – coefficients for long signal function.\n  - `Y1, Y2, Y3, Y4` – coefficients for short signal function.\n  - `BuyStopPoints` – trailing stop distance in points for long trades.\n  - `SellStopPoints` – trailing stop distance in points for short trades.\n  - `CandleType` – candle type for calculations (default 5‑minute).\n- **Filters**\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: None\n  - Stops: Trailing stop\n  - Complexity: Moderate\n  - Timeframe: Short-term\n",
+    "details": "- **Entry Criteria**\n  - **Long**: `Qu(X1,X2,X3,X4) > 0` and current hour between 10 and 18.\n  - **Short**: `Qu(Y1,Y2,Y3,Y4) > 0` and current hour between 10 and 18.\n- **Exit Criteria**\n  - **Long**: Hour > 18 or best bid falls below trailing stop.\n  - **Short**: Hour > 18 or best ask rises above trailing stop.\n- **Parameters**\n  - `EnableBuy` – allow opening long positions.\n  - `EnableSell` – allow opening short positions.\n  - `X1, X2, X3, X4` – coefficients for long signal function.\n  - `Y1, Y2, Y3, Y4` – coefficients for short signal function.\n  - `BuyStopPoints` – trailing stop distance in points for long trades.\n  - `SellStopPoints` – trailing stop distance in points for short trades.\n  - `CandleType` – candle type for calculations (default 5‑minute).\n- **Filters**\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: None\n  - Stops: Trailing stop\n  - Complexity: Moderate\n  - Timeframe: Short-term",
+    "parameters": ""
+   },
+   "122": {
+    "id": 122,
+    "name": "January Effect",
+    "family": "other",
+    "overview": "Testing indicates an average annual return of about 103%. It performs best in the stocks market.\n\nThe strategy follows that schedule, entering near year-end and exiting mid-January.\n\nA stop-loss ensures losses stay manageable if the effect fails to appear.\n\n## Details\n\n- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "369": {
+    "id": 369,
+    "name": "Earnings Announcements With Buybacks",
+    "family": "other",
+    "overview": "The **Earnings Announcements With Buybacks** strategy buys stocks running active buyback programs a few days before their earnings announcements and exits shortly after the report.\n\n## Details\n- **Entry Criteria**: Buy `DaysBefore` days before earnings if the company has an active buyback.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Sell `DaysAfter` days after the earnings date.\n- **Stops**: No.\n- **Default Values**:\n  - `DaysBefore = 5`\n  - `DaysAfter = 1`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Event-driven\n  - Direction: Long\n  - Indicators: Buyback + Calendar\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Buy `DaysBefore` days before earnings if the company has an active buyback.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Sell `DaysAfter` days after the earnings date.\n- **Stops**: No.\n- **Default Values**:\n  - `DaysBefore = 5`\n  - `DaysAfter = 1`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Event-driven\n  - Direction: Long\n  - Indicators: Buyback + Calendar\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1293": {
+    "id": 1293,
+    "name": "Security Free MTF Example",
+    "family": "other",
+    "overview": "Demonstrates how to calculate previous day's OHLC values without separate security requests. The strategy enters long when price breaks above the prior day's high and enters short when price drops below the prior day's low.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1547": {
+    "id": 1547,
+    "name": "VRS Vegas Reversal",
+    "family": "other",
+    "overview": "Reversal strategy using candle wicks.\n\nTesting indicates an average annual return of about 37%. It performs best in the crypto market.\n\nThe system looks for large spikes relative to the close price. A large lower wick triggers a long entry while a large upper wick triggers a short. Positions are closed when price moves twice the spike size in profit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: lower wick ≥ Spike% * close and no upper spike.\n  - **Short**: upper wick ≥ Spike% * close and no lower spike.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Target at entry ± (spike * 2).\n- **Stops**: No.\n- **Default Values**:\n  - `SpikePercent` = 0.025\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: lower wick ≥ Spike% * close and no upper spike.\n  - **Short**: upper wick ≥ Spike% * close and no lower spike.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Target at entry ± (spike * 2).\n- **Stops**: No.\n- **Default Values**:\n  - `SpikePercent` = 0.025\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

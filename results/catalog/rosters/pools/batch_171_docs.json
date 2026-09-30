@@ -1,0 +1,98 @@
+{
+ "batch_171": {
+  "strategy_ids": [
+   1533,
+   957,
+   469,
+   2940,
+   1118,
+   2170,
+   3518,
+   2998,
+   2722,
+   2147
+  ],
+  "docs": {
+   "1533": {
+    "id": 1533,
+    "name": "Volatility Pulse with Dynamic Exit",
+    "family": "trend",
+    "overview": "Momentum-based strategy detecting volatility expansion. Enters in the direction of momentum when ATR rises above its average and exits using ATR-based stop and take-profit after a holding period.\n\n## Details\n\n- **Entry Criteria**: ATR volatility expansion with momentum confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss and take profit placed after holding period\n- **Stops**: ATR-based stop, risk-reward take profit\n- **Default Values**:\n  - `AtrLength` = 14\n  - `MomentumLength` = 20\n  - `VolThreshold` = 0.5\n  - `MinVolatility` = 1.0\n  - `ExitBars` = 42\n  - `RiskReward` = 2\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, Momentum\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: ATR volatility expansion with momentum confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss and take profit placed after holding period\n- **Stops**: ATR-based stop, risk-reward take profit\n- **Default Values**:\n  - `AtrLength` = 14\n  - `MomentumLength` = 20\n  - `VolThreshold` = 0.5\n  - `MinVolatility` = 1.0\n  - `ExitBars` = 42\n  - `RiskReward` = 2\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, Momentum\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "957": {
+    "id": 957,
+    "name": "KST Strategy Skyrexio",
+    "family": "trend",
+    "overview": "The strategy goes long when the Know Sure Thing (KST) indicator crosses above its signal while price trades above a chosen moving average and the Alligator jaw. A choppiness index filter can disable entries in ranging markets. Positions are closed using ATR-based stop-loss and take-profit levels.\n\n- **Entry Criteria**: KST crosses above signal, price above filter MA and Alligator jaw, choppiness below threshold.\n- **Exit Criteria**: Price hits ATR stop-loss or ATR take-profit.\n- **Indicators**: KST, ATR, Moving Average, Alligator jaw, Choppiness Index.\n\n## Parameters\n- `CandleType` – candle timeframe.\n- `AtrStopLoss` – ATR multiplier for stop-loss.\n- `AtrTakeProfit` – ATR multiplier for take-profit.\n- `FilterMaType` – type of trend filter MA.\n- `FilterMaLength` – length of trend filter MA.\n- `EnableChopFilter` – enable choppiness filter.\n- `ChopThreshold` – choppiness index threshold.\n- `ChopLength` – choppiness index period.\n- `RocLen1..4` – ROC lengths for KST.\n- `SmaLen1..4` – SMA lengths for KST.\n- `SignalLength` – KST signal SMA length.\n",
+    "details": "",
+    "parameters": "- `CandleType` – candle timeframe.\n- `AtrStopLoss` – ATR multiplier for stop-loss.\n- `AtrTakeProfit` – ATR multiplier for take-profit.\n- `FilterMaType` – type of trend filter MA.\n- `FilterMaLength` – length of trend filter MA.\n- `EnableChopFilter` – enable choppiness filter.\n- `ChopThreshold` – choppiness index threshold.\n- `ChopLength` – choppiness index period.\n- `RocLen1..4` – ROC lengths for KST.\n- `SmaLen1..4` – SMA lengths for KST.\n- `SignalLength` – KST signal SMA length."
+   },
+   "469": {
+    "id": 469,
+    "name": "Three Down Three Up",
+    "family": "trend",
+    "overview": "The strategy buys after a specified number of consecutive down closes and closes the position after a run of up closes. An optional EMA filter allows entries only when price is above the moving average.\n\n## Details\n\n- **Entry Criteria**: Price closes lower than previous bar for N bars. Optional condition price above EMA.\n- **Exit Criteria**: Price closes higher than previous bar for M bars.\n- **Long/Short**: Long only.\n- **Stops**: None.\n- **Default Values**: Buy trigger = 3, sell trigger = 3, EMA period = 200.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: EMA (optional)\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Price closes lower than previous bar for N bars. Optional condition price above EMA.\n- **Exit Criteria**: Price closes higher than previous bar for M bars.\n- **Long/Short**: Long only.\n- **Stops**: None.\n- **Default Values**: Buy trigger = 3, sell trigger = 3, EMA period = 200.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: EMA (optional)\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2940": {
+    "id": 2940,
+    "name": "XPeriod Candle System TM Plus",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor `Exp_XPeriodCandleSystem_Tm_Plus`. The original robot relies on the custom *XPeriod Candle System* indicator that smooths candle data and colors bars according to Bollinger Band breakouts. The translated version reproduces this behaviour by applying exponential smoothing to the OHLC series, mapping the same applied price modes, and driving trades from the resulting color states. A time-based exit and configurable protective orders complement the breakout logic.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `OrderVolume` | Base order size used for market entries. | 0.1 |\n| `BuyPosOpen` / `SellPosOpen` | Enable/disable long or short entries. | `true` |\n| `BuyPosClose` / `SellPosClose` | Allow long or short position exits. | `true` |\n| `TimeTrade` | Enables the time-based exit filter. | `true` |\n| `HoldingMinutes` | Maximum holding time before the time filter closes a position. | 960 |\n| `CandleType` | Candle data type (time frame) requested from the market. | 4 hours |\n| `Period` | Length of the smoothing exponential moving averages. | 5 |\n| `BollingerLength` | Number of smoothed bars inside the Bollinger calculation window. | 20 |\n| `BandsDeviation` | Band width multiplier. | 1.001 |\n| `AppliedPriceMode` | Price transformation used before the Bollinger indicator (close, open, median, trend-following, Demark, etc.). | Close |\n| `SignalBar` | Index of the bar used for signal evaluation (1 = last closed bar). | 1 |\n| `StopLoss` / `TakeProfit` | Absolute distances (in price units) used by the protective engine. | 1000 / 2000 |\n| `Deviation` | Extra breakout offset added above/below the Bollinger bands. | 10 |"
+   },
+   "1118": {
+    "id": 1118,
+    "name": "Nifty 50 5mint",
+    "family": "trend",
+    "overview": "The **Nifty 50 5mint Strategy** trades breakouts on the Nifty 50 index using DEMA, VWAP and Bollinger Bands confirmation.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: close above previous high, close above upper Bollinger band and DEMA above VWAP.\n  - **Short**: close below previous low, close below lower Bollinger band and DEMA below VWAP.\n- **Long/Short**: both.\n- **Exit Criteria**: stop-loss.\n- **Stops**: yes, fixed points.\n- **Default Values**:\n  - `DemaPeriod = 6`\n  - `BollingerLength = 20`\n  - `BollingerStdDev = 2`\n  - `LookbackPeriod = 5`\n  - `StopLossPoints = 25`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: DEMA, VWAP, Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: close above previous high, close above upper Bollinger band and DEMA above VWAP.\n  - **Short**: close below previous low, close below lower Bollinger band and DEMA below VWAP.\n- **Long/Short**: both.\n- **Exit Criteria**: stop-loss.\n- **Stops**: yes, fixed points.\n- **Default Values**:\n  - `DemaPeriod = 6`\n  - `BollingerLength = 20`\n  - `BollingerStdDev = 2`\n  - `LookbackPeriod = 5`\n  - `StopLossPoints = 25`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: DEMA, VWAP, Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2170": {
+    "id": 2170,
+    "name": "Zonal Trading",
+    "family": "momentum",
+    "overview": "This strategy uses the Awesome Oscillator (AO) and the Accelerator Oscillator (AC) to capture changes in market momentum.\n\n## Logic\n- Buy when both AO and AC rise above their previous values and at least one of them has turned upward from the prior bar while both oscillators are positive.\n- Sell when both AO and AC fall below their previous values and at least one of them has turned downward from the prior bar while both oscillators are negative.\n- Close a long position when AO and AC turn downward.\n- Close a short position when AO and AC turn upward.\n\n## Parameters\n- **Candle Type** – source candle series for calculations.\n- **Take Profit** – fixed take profit value in price units.\n\nThe strategy trades a single position at a time using market orders.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – source candle series for calculations.\n- **Take Profit** – fixed take profit value in price units.\n\nThe strategy trades a single position at a time using market orders."
+   },
+   "3518": {
+    "id": 3518,
+    "name": "HPCS Inter4 Strategy (3518)",
+    "family": "volatility",
+    "overview": "This strategy ports the MetaTrader expert advisor \"_HPCS_IntFourth_MT4_EA_V01_WE\" to the StockSharp high-level API. The original script immediately opens a long position, applies protective stop-loss and take-profit levels measured in MetaTrader pips, and forcefully closes the trade after a short holding period. The C# version reproduces the same behaviour by combining the built-in protection manager with a one-second timer that monitors the elapsed time since entry.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimizable |\n| --- | --- | --- | --- |\n| `OrderVolume` | Fixed volume used when sending the initial market buy order. | `1` | No |\n| `StopLossPips` | Base MetaTrader pip distance applied to the initial stop-loss. | `10` | No |\n| `ExtraStopPips` | Additional MetaTrader pip buffer subtracted from the stop after entry. | `10` | No |\n| `TakeProfitPips` | MetaTrader pip distance of the profit target. | `10` | No |\n| `CloseDelaySeconds` | Time in seconds before the position is forcefully closed. `0` disables the timer exit. | `30` | No |"
+   },
+   "2998": {
+    "id": 2998,
+    "name": "Basic CCI RSI",
+    "family": "mean_reversion",
+    "overview": "The Basic CCI RSI strategy reproduces the original MetaTrader expert advisor that waits for both the Commodity Channel Index (CCI) and Relative Strength Index (RSI) to confirm momentum for two consecutive closed candles before entering a trade. The StockSharp version keeps the pip-based money management rules, converts them into price steps automatically, and adds the same trailing-stop behaviour that was implemented with position modifications in MQL5.\n\n## How the strategy trades\n\n1. At the close of each candle (hourly by default) the strategy receives fresh CCI and RSI values.\n2. Long entries require **both** indicators to stay above their respective upper thresholds for the current and the previous closed candle. Short entries require both to stay below their lower thresholds for the last two candles.\n3. When a signal occurs the strategy opens a position with the configured volume (closing any opposite exposure) and immediately calculates fixed stop-loss and take-profit prices using the pip distances from the original script.\n4. While the position is open the strategy constantly checks whether the candle range touched the stop or take levels and exits at market if either is hit.\n5. A trailing stop replicates the MetaTrader implementation: once profit exceeds `TrailingStopPips + TrailingStepPips`, the protective stop is moved to `TrailingStopPips` behind the current close (for longs) or above it (for shorts). Further adjustments require an additional `TrailingStepPips` of profit before tightening again.\n\nThis flow keeps the logic close to the source MQL5 expert while using StockSharp's high-level candle subscriptions and indicators.\n\n## Risk management\n\n- **Stop-loss**: fixed pip distance converted to the instrument's price step. Disabled when set to zero.\n- **Take-profit**: fixed pip distance converted to the instrument's price step. Disabled when set to zero.\n- **Trailing stop**: optional pip distance with a step buffer that mimics the expert advisor's `Trailing",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `StopLossPips` | Distance in pips between the entry price and the stop-loss order. |\n| `TakeProfitPips` | Distance in pips between the entry price and the take-profit target. |\n| `TrailingStopPips` | Profit (in pips) required to start trailing the stop. |\n| `TrailingStepPips` | Additional profit (in pips) required before each new trailing adjustment. |\n| `CciPeriod` | Averaging period for the CCI indicator. |\n| `RsiPeriod` | Averaging period for the RSI indicator. |\n| `RsiLevelUp` | Overbought level that must be exceeded to validate long trades. |\n| `RsiLevelDown` | Oversold level that must be broken to validate short trades. |\n| `CciLevelUp` | Upper CCI threshold that confirms bullish momentum. |\n| `CciLevelDown` | Lower CCI threshold that confirms bearish momentum. |\n| `CandleType` | Timeframe used for candle aggregation and indicator calculations. |"
+   },
+   "2722": {
+    "id": 2722,
+    "name": "N Candles v5",
+    "family": "volume",
+    "overview": "The N Candles v5 strategy searches for runs of identical candles and opens a trade\nin the same direction as soon as the required streak appears. The original MQL\nimplementation by Vladimir Karputov has been translated to the StockSharp high\nlevel API. The strategy operates on closed candles only and can be executed on\nany timeframe, with one hour candles being the default for the StockSharp\nversion.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `TradeVolume` | Order size used for new entries. | `1` |\n| `CandlesCount` | Number of consecutive identical candles required for a signal. | `3` |\n| `TakeProfitPips` | Take profit distance in pips (0 disables). | `50` |\n| `StopLossPips` | Stop loss distance in pips (0 disables). | `50` |\n| `TrailingStopPips` | Distance that activates the trailing stop (0 disables). | `10` |\n| `TrailingStepPips` | Additional progress required before tightening the trailing stop. | `4` |\n| `UseTradingHours` | Enables the trading hour filter. | `true` |\n| `StartHour` | First hour (0–23) when new positions are allowed. | `11` |\n| `EndHour` | Last hour (0–23) when new positions are allowed. | `18` |\n| `MaxNetVolume` | Maximum absolute position size allowed. | `2` |\n| `CandleType` | Candle data type to analyse. Default is 1 hour candles. | `TimeSpan.FromHours(1)` |"
+   },
+   "2147": {
+    "id": 2147,
+    "name": "Labouchere EA",
+    "family": "volume",
+    "overview": "This strategy combines a Stochastic Oscillator crossover with a Labouchere money management sequence. The Stochastic indicator generates signals when %K crosses %D. The Labouchere system adjusts trade volume after each closed position: losses append a new element equal to the sum of the first and last numbers in the sequence, while profits remove these elements.\n\nTrades are taken only on finished candles. The sequence can optionally restart when all numbers are removed. A time filter allows trading within a specific intraday window, and opposite signals can close existing positions. Fixed stop-loss and take-profit levels (in price steps) are supported.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: %K crosses above %D.\n  - **Short**: %K crosses below %D.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Optional opposite signal exit.\n  - Fixed stop-loss and take-profit (if set).\n- **Stops**: Yes.\n- **Money Management**: Labouchere sequence.\n- **Default Values**:\n  - `LotSequence` = \"0.01,0.02,0.01,0.02,0.01,0.01,0.01,0.01\"\n  - `NewRecycle` = true\n  - `StopLoss` = 40\n  - `TakeProfit` = 50\n  - `IsReversed` = false\n  - `UseOppositeExit` = false\n  - `UseWorkTime` = false\n  - `StartTime` = 00:00\n  - `StopTime` = 24:00\n  - `KPeriod` = 10\n  - `DPeriod` = 190\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %K crosses above %D.\n  - **Short**: %K crosses below %D.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Optional opposite signal exit.\n  - Fixed stop-loss and take-profit (if set).\n- **Stops**: Yes.\n- **Money Management**: Labouchere sequence.\n- **Default Values**:\n  - `LotSequence` = \"0.01,0.02,0.01,0.02,0.01,0.01,0.01,0.01\"\n  - `NewRecycle` = true\n  - `StopLoss` = 40\n  - `TakeProfit` = 50\n  - `IsReversed` = false\n  - `UseOppositeExit` = false\n  - `UseWorkTime` = false\n  - `StartTime` = 00:00\n  - `StopTime` = 24:00\n  - `KPeriod` = 10\n  - `DPeriod` = 190\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

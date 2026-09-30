@@ -1,0 +1,98 @@
+{
+ "batch_059": {
+  "strategy_ids": [
+   2247,
+   2308,
+   3341,
+   1052,
+   2762,
+   1047,
+   2986,
+   3261,
+   3910,
+   396
+  ],
+  "docs": {
+   "2247": {
+    "id": 2247,
+    "name": "Aroon Horn Sign",
+    "family": "trend",
+    "overview": "The **Aroon Horn Sign** strategy looks for trend reversals using the Aroon indicator.\nIt monitors the Aroon Up and Down lines on higher timeframe candles. When the\nAroon Up line crosses above the Aroon Down line and stays above the 50 level,\nthis signals a potential bullish reversal. The strategy closes any short\nposition and opens a new long. Conversely, when Aroon Down dominates above 50,\nany existing long is closed and a short position is initiated.\n\nThe approach uses fixed take-profit and stop-loss levels expressed in price\nunits. These levels are activated through the built-in risk protection module.\nBecause the logic relies only on the Aroon values, it works across different\nmarkets and timeframes without additional filters.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `Aroon Up` > `Aroon Down` and `Aroon Up` >= 50.\n  - **Short**: `Aroon Down` > `Aroon Up` and `Aroon Down` >= 50.\n- **Exit Criteria**:\n  - Long positions close when a short entry condition appears.\n  - Short positions close when a long entry condition appears.\n- **Stops**: Fixed stop-loss and take-profit using `StartProtection`.\n- **Default Values**:\n  - `AroonPeriod` = 9\n  - `CandleType` = 4‑hour candles\n  - `TakeProfit` = 2000 (price units)\n  - `StopLoss` = 1000 (price units)\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Long and Short\n  - Indicators: Aroon\n  - Complexity: Simple\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `Aroon Up` > `Aroon Down` and `Aroon Up` >= 50.\n  - **Short**: `Aroon Down` > `Aroon Up` and `Aroon Down` >= 50.\n- **Exit Criteria**:\n  - Long positions close when a short entry condition appears.\n  - Short positions close when a long entry condition appears.\n- **Stops**: Fixed stop-loss and take-profit using `StartProtection`.\n- **Default Values**:\n  - `AroonPeriod` = 9\n  - `CandleType` = 4‑hour candles\n  - `TakeProfit` = 2000 (price units)\n  - `StopLoss` = 1000 (price units)\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Long and Short\n  - Indicators: Aroon\n  - Complexity: Simple\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2308": {
+    "id": 2308,
+    "name": "ICAi",
+    "family": "trend",
+    "overview": "Strategy based on the ICAi adaptive moving average indicator. The indicator smooths price and adapts its slope using standard deviation. Long positions are opened when the indicator turns upward, short positions when it turns downward.\n\nThe algorithm works on any market where candle data is available. Default settings use a 4-hour timeframe and a smoothing length of 12.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Prev < PrevPrev && Current >= Prev`\n  - Short: `Prev > PrevPrev && Current <= Prev`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: Optional fixed stop loss and take profit\n- **Default Values**:\n  - `Length` = 12\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ICAi\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Prev < PrevPrev && Current >= Prev`\n  - Short: `Prev > PrevPrev && Current <= Prev`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: Optional fixed stop loss and take profit\n- **Default Values**:\n  - `Length` = 12\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ICAi\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3341": {
+    "id": 3341,
+    "name": "Histo Scalper",
+    "family": "trend",
+    "overview": "The **Histo Scalper Strategy** is a C# port of the MetaTrader expert advisor *HistoScalperEA v1.0*. The algorithm fuses eight histogram-style indicators (ADX, ATR, Bollinger Bands, Bulls/Bears Power, CCI, MACD, RSI, and Stochastic) and requires unanimous agreement from all enabled filters before opening a trade. A second requirement is that at least one filter reported the opposite direction on the previous bar, which prevents the strategy from entering during flat markets and mimics the original \"two bar\" confirmation logic.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Base volume for new trades.\n| `AllowPyramiding` | Allows stacking additional trades while already positioned.\n| `CloseOnOppositeSignal` | Closes existing positions when the aggregated signal flips.\n| `UseTimeFilter`, `SessionStart`, `SessionEnd` | Restricts trading to a custom daily window.\n| `UseTakeProfit`, `TakeProfitPoints` | Enables and configures take profit in price steps.\n| `UseStopLoss`, `StopLossPoints` | Enables and configures stop loss in price steps.\n| `UseIndicator1` … `UseIndicator8` | Enable individual filters.\n| `ModeIndicatorX` | Switch between straight and inverted logic for each filter.\n| Indicator-specific settings | Periods, thresholds, and levels that replicate the original expert advisor inputs."
+   },
+   "1052": {
+    "id": 1052,
+    "name": "MicuRobert EMA Cross",
+    "family": "trend",
+    "overview": "This strategy uses two Zero Lag Exponential Moving Averages (ZLEMA) to trade crossovers. It can restrict trading to a given session and optionally uses a trailing stop.\n\n## Details\n\n- **Entry Criteria:**\n  - **Long:** fast ZLEMA crosses above slow ZLEMA, or price crosses above fast ZLEMA while fast is above slow.\n  - **Short:** fast ZLEMA crosses below slow ZLEMA, or price crosses below fast ZLEMA while fast is below slow.\n- **Exit Criteria:** positions close on trailing stop or fixed stop-loss and take-profit levels.\n- **Stops:** optional trailing stop with fixed take-profit and stop-loss.\n- **Filters:** session time filter.\n",
+    "details": "- **Entry Criteria:**\n  - **Long:** fast ZLEMA crosses above slow ZLEMA, or price crosses above fast ZLEMA while fast is above slow.\n  - **Short:** fast ZLEMA crosses below slow ZLEMA, or price crosses below fast ZLEMA while fast is below slow.\n- **Exit Criteria:** positions close on trailing stop or fixed stop-loss and take-profit levels.\n- **Stops:** optional trailing stop with fixed take-profit and stop-loss.\n- **Filters:** session time filter.",
+    "parameters": ""
+   },
+   "2762": {
+    "id": 2762,
+    "name": "Percentage Crossover Channel",
+    "family": "trend",
+    "overview": "The Percentage Crossover Channel strategy originates from the MetaTrader 5 expert advisor *Percentage_Crossover_Channel_EA*. It relies on a custom channel constructed around a fast moving average and reacts to either band touches or middle line crossovers. This StockSharp implementation follows the same logic while using the high-level API to process completed candles.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle data type to subscribe to (15-minute time frame by default). |\n| `Percent` | Channel width in percent of price (converted to ±percent/100 factors). |\n| `PriceMode` | Applied price for the channel. Options: Close, Open, High, Low, Median (H+L)/2, Typical (H+L+C)/3, Weighted (H+L+2C)/4, Average (O+H+L+C)/4. |\n| `TradeOnMiddleCross` | Switch between band touch logic and middle line crossover logic. |\n| `ReverseSignals` | Invert long and short conditions. |\n| `StopLossPoints` | Protective stop distance expressed in security price steps. |\n| `TakeProfitPoints` | Profit target distance expressed in security price steps. |\n| `OrderVolume` | Base volume for market entries. The strategy adds the absolute open position to reverse in one transaction. |"
+   },
+   "1047": {
+    "id": 1047,
+    "name": "Merovinh - Mean Reversion Lowest Low",
+    "family": "breakout",
+    "overview": "This strategy buys when the current lowest low of a lookback period breaks successive previous lows a configurable number of times. It closes the position once a new highest high appears within the same period.\n\n## Parameters\n- Bars — lookback length for highest/lowest.\n- Number Of Lows — required consecutive broken lows to enter.\n- Start Date / End Date — trading range.\n- Candle Type — type of candles.\n",
+    "details": "",
+    "parameters": "- Bars — lookback length for highest/lowest.\n- Number Of Lows — required consecutive broken lows to enter.\n- Start Date / End Date — trading range.\n- Candle Type — type of candles."
+   },
+   "2986": {
+    "id": 2986,
+    "name": "The 20s Breakout",
+    "family": "breakout",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert advisor **Exp_The_20s_v020**. It reproduces the original \"The 20s\" indicator logic that searches for breakout patterns after a volatility squeeze. The algorithm analyses completed candles from a configurable timeframe and reacts when price pushes through 20% bands around the previous bar's range. The implementation keeps the high-level feel of the StockSharp API and exposes all trading permissions so you can enable or disable long or short actions independently.",
+    "details": "",
+    "parameters": "- `OrderVolume` – default `1`. Lot size used for new positions.\n- `StopLossPoints` – default `1000`. Protective stop in points (`0` disables it).\n- `TakeProfitPoints` – default `2000`. Profit target in points (`0` disables it).\n- `AllowLongEntry` / `AllowShortEntry` – enable long/short entries.\n- `AllowLongExit` / `AllowShortExit` – allow the strategy to close existing positions when opposite signals occur.\n- `SignalBar` – default `1`. Number of bars to wait before acting on a signal.\n- `LevelPoints` – default `100`. Distance that confirms breakouts beyond the previous bar extremes.\n- `Ratio` – default `0.2`. Width of the 20% bands around the previous candle.\n- `IsDirect` – default `false`. Keeps the original buy/sell mapping when `true`, flips it when `false`.\n- `Mode` – default `Mode1`. Selects between the two calculation algorithms.\n- `CandleType` – default `H1` time frame. Defines the subscription used for the calculations."
+   },
+   "3261": {
+    "id": 3261,
+    "name": "Explosion",
+    "family": "momentum",
+    "overview": "The strategy reproduces the logic of the MetaTrader \"Explosion\" expert. It watches the range of each finished candle and enters the market when the latest bar \"explodes\" – its height more than doubles the range of the previous bar. The direction is decided by the candle body: a bullish body opens a long position, while a bearish body opens a short one.\n\n## Trading rules\n\n1. Process only finished candles coming from the configured `CandleType` subscription.\n2. Compute the current range as `High - Low` and compare it with the range of the previous candle.\n3. A **long** entry is opened when `currentRange > previousRange * 2` and the close is above the open.\n4. A **short** entry is opened when `currentRange > previousRange * 2` and the close is below the open.\n5. When `OnlyOnePositionPerBar` is enabled, at most one trade per direction is allowed for a candle open time. Attempts on the same bar are ignored.\n6. The strategy keeps a single net position, therefore an opposite trade automatically closes any existing exposure before establishing the new direction.\n7. Protective mechanics:\n   - `StopLossPips` and `TakeProfitPips` place virtual exit levels measured in pips from the entry price.\n   - `TrailingStopPips` and `TrailingStepPips` move the stop once price travels in favour of the position by at least the trailing distance and every additional step.\n   - The optional pip multiplier emulates the MQL auto-digits helper by multiplying the pip size by 10 on 3- and 5-digit instruments.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TradeVolume` | `0.01` | Market order volume used on entries. |\n| `StopLossPips` | `20` | Stop-loss distance in pips. Zero disables the stop. |\n| `TakeProfitPips` | `10` | Take-profit distance in pips. Zero disables the take. |\n| `TrailingStopPips` | `25` | Activation distance for the trailing stop in pips. Zero disables trailing. |\n| `TrailingStepPips` | `5` | Additional move in pips required before",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TradeVolume` | `0.01` | Market order volume used on entries. |\n| `StopLossPips` | `20` | Stop-loss distance in pips. Zero disables the stop. |\n| `TakeProfitPips` | `10` | Take-profit distance in pips. Zero disables the take. |\n| `TrailingStopPips` | `25` | Activation distance for the trailing stop in pips. Zero disables trailing. |\n| `TrailingStepPips` | `5` | Additional move in pips required before the trailing stop advances. Must stay positive when trailing is enabled. |\n| `UseAutoPipMultiplier` | `true` | Multiply the pip size by 10 on instruments with 3 or 5 decimal places, matching the MQL auto-digits helper. |\n| `OnlyOnePositionPerBar` | `true` | Forbid more than one entry per bar open time. |\n| `CandleType` | `TimeSpan.FromMinutes(1).TimeFrame()` | Candle series used for calculations. |"
+   },
+   "3910": {
+    "id": 3910,
+    "name": "Elite eFibo Trader v2.1",
+    "family": "volatility",
+    "overview": "Elite eFibo Trader v2.1 recreates the MetaTrader expert advisor that stacks Fibonacci-sized orders in one direction while sharing a common protective stop. The StockSharp port keeps the original behaviour: a single market order launches a sequence of stop orders spaced by `LevelDistancePips`, and every filled tier increases the exposure according to the Fibonacci progression. The strategy immediately closes the entire basket once the shared stop is touched or when the floating profit reaches `MoneyTakeProfit`.\n\nThe algorithm is intentionally directional. Set `OpenBuy` to `true` (and `OpenSell` to `false`) to trade bullish pullbacks, or flip the switches to run the bearish variant. Only one ladder is active at a time, mirroring the single-cycle logic from the MQL4 script.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `OpenBuy` | Allow the strategy to build a bullish ladder (must be exclusive with `OpenSell`). |\n| `OpenSell` | Allow the strategy to build a bearish ladder (must be exclusive with `OpenBuy`). |\n| `TradeAgainAfterProfit` | Resume trading after the basket closes on the money take-profit. |\n| `LevelDistancePips` | Distance in MetaTrader pips between consecutive stop orders. |\n| `StopLossPips` | Distance in MetaTrader pips used to derive the protective stop for every filled level. |\n| `MoneyTakeProfit` | Cash profit target that closes the entire basket. |\n| `Level1Volume` … `Level14Volume` | Volumes used for each Fibonacci level; set to zero to skip a tier. |"
+   },
+   "396": {
+    "id": 396,
+    "name": "Short-Term Reversal Futures",
+    "family": "mean_reversion",
+    "overview": "The **Short-Term Reversal Futures** strategy seeks mean reversion across futures contracts. Each day the strategy identifies contracts with the worst return over the previous week and buys them while selling contracts that rallied the most, expecting a snap back.\n\nTrades are held for a few days before closing on the next signal.\n\n## Details\n- **Entry Criteria**: Daily ranking by trailing one-week return.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions closed after a short holding period or when ranking updates.\n- **Stops**: Volatility-based stop may be applied.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Daily ranking by trailing one-week return.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions closed after a short holding period or when ranking updates.\n- **Stops**: Volatility-based stop may be applied.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

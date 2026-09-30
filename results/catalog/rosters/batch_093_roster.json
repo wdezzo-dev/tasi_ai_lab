@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4137,
+      "name": "AIS5 Trade Machine",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 1.5 and close > donchian_high_prev(high,20)",
+      "exit_long": "volume_ratio(volume,20) < 1 or close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Lookback 20 and strong-volume multiplier 1.5 are explicit fallbacks; a prior 20-bar high represents the profile-zone breakout. Two timeframes, profile zones, point buffers, and ATR-scaled targets/stops are unsupported."
+    },
+    {
+      "id": 1458,
+      "name": "Trend Confirmation",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and macd(close,12,26) > macd_signal(close,12,26,9) and close > sma(close * volume,20) / sma(volume,20)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or close < sma(close * volume,20) / sma(volume,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10) proxies SuperTrend and a 20-bar volume-weighted mean proxies VWAP, while documented MACD 12/26/9 is exact. SuperTrend's true ATR state and any higher-timeframe context are omitted."
+    },
+    {
+      "id": 1763,
+      "name": "MMA Breakout Volume I",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,200))",
+      "exit_long": "crossbelow(close,ema(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(200) substitutes for the unsupported SMMA, and the documented EMA(5) adverse cross is the exit. The strategy name's volume is not part of the supplied rules, and no fixed stop is documented."
+    },
+    {
+      "id": 917,
+      "name": "IMACD Sniper",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and close > ema(close,20) and volume_ratio(volume,20) > 1 and close - open > 0.5 * atr(high,low,close,14)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD 12/26/9, EMA(20), volume above average, and a 0.5-ATR bullish body retain the documented core; zero-distance normalization is omitted. Dynamic 4.0/1.5 ATR targets and stops are not percentage fields."
+    },
+    {
+      "id": 2637,
+      "name": "Double ZigZag Alignment",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,13) and close > donchian_high_prev(high,104)",
+      "exit_long": "close < bb_mid(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast 13-bar and slow 104-bar prior highs are the x8 fallback for the two ZigZag windows. Pivot counting and the 2.1 strength/breakout comparisons cannot be reconstructed statelessly."
+    },
+    {
+      "id": 1144,
+      "name": "ORB Heikin Ashi SPY Correlation",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and volume_ratio(volume,20) > 1.2",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar opening-range high with a 1.2 volume multiple is an explicit regular-candle fallback. SPY, Heikin-Ashi transformation, session times, and the fixed close window are unavailable."
+    },
+    {
+      "id": 3803,
+      "name": "Macd Stochastic Trailing",
+      "family": "breakout",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and close > donchian_high_prev(high,20)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Standard MACD 12/26/9 and a 20-bar breakout form a single-timeframe fallback because exact lengths are absent. Hourly stochastic, three-timeframe confirmation, and fast-timeframe trailing are omitted."
+    },
+    {
+      "id": 2492,
+      "name": "Gazonkos Rollback",
+      "family": "momentum",
+      "entry_long": "roc(close,3) > 0.4 and roc(close,1) <= 0",
+      "exit_long": "roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 0.004 absolute momentum threshold is normalized to 0.4% and the shifts 3/2 are approximated by three- and one-bar ROC. State-based rollback tracking and absolute-price SL 0.0040/TP 0.0016 are not percentage fields."
+    },
+    {
+      "id": 3847,
+      "name": "Gselector Pattern Probability",
+      "family": "volatility",
+      "entry_long": "atr(high,low,close,10) > sma(atr(high,low,close,10),20) + std(atr(high,low,close,10),20) and close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "An ATR(10) expansion above its 20-bar mean plus one standard deviation approximates the 0.8 probability regime, with a Bollinger breakout. Synthetic ladders, pattern memory, sizing, cooldown, and point protection are unsupported."
+    },
+    {
+      "id": 2383,
+      "name": "The MasterMind 2",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 3",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) is an explicit fallback period for the extreme stochastic %D threshold, with 3 retained as the oversold trigger. Williams %R and all point-based stop, target, trailing, and break-even settings are unsupported."
+    }
+  ]
+}

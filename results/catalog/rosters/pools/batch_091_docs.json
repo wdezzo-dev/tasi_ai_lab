@@ -1,0 +1,98 @@
+{
+ "batch_091": {
+  "strategy_ids": [
+   272,
+   1887,
+   1430,
+   2538,
+   1780,
+   3768,
+   248,
+   3393,
+   1778,
+   387
+  ],
+  "docs": {
+   "272": {
+    "id": 272,
+    "name": "ADX Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 145%. It performs best in the crypto market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `AdxPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1887": {
+    "id": 1887,
+    "name": "Vlt Trader",
+    "family": "trend",
+    "overview": "This strategy detects periods of very low volatility and prepares breakout orders. When the range of the current candle becomes the smallest over the specified lookback period, the strategy places buy stop and sell stop orders around the previous candle.\n\n## Parameters\n- **Period** – lookback period for the minimum range calculation.\n- **Pending level** – distance in ticks from the previous high/low to place stop orders.\n- **Stop loss** – protective stop in ticks.\n- **Take profit** – profit target in ticks.\n- **Candle type** – timeframe used for analysis.\n\n## Logic\n1. For each finished candle, compute its range (`High - Low`).\n2. Track the smallest range over the last *Period* candles.\n3. When the current range sets a new minimum, cancel existing orders and place stop orders above and below the previous candle at the given offset.\n4. `StartProtection` manages stop-loss and take-profit once a position is opened.\n",
+    "details": "",
+    "parameters": "- **Period** – lookback period for the minimum range calculation.\n- **Pending level** – distance in ticks from the previous high/low to place stop orders.\n- **Stop loss** – protective stop in ticks.\n- **Take profit** – profit target in ticks.\n- **Candle type** – timeframe used for analysis."
+   },
+   "1430": {
+    "id": 1430,
+    "name": "Tick Delta Volume",
+    "family": "trend",
+    "overview": "Analyzes per-tick changes in price and volume. The delta is compared against its moving average and standard deviation to generate simple momentum-based entries.\n\n## Details\n\n- **Entry Criteria**: delta > mean + stdev for long, delta < -(mean + stdev) for short\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Mode` = Volume\n  - `Length` = 10\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: EMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: delta > mean + stdev for long, delta < -(mean + stdev) for short\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Mode` = Volume\n  - `Length` = 10\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: EMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Tick\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2538": {
+    "id": 2538,
+    "name": "ADX MA Crossover",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"ADX & MA\" Expert Advisor by combining a smoothed moving average with an Average Directional Index (ADX) trend filter. The logic analyses the last two completed candles on the selected timeframe and reacts only after both the moving average and ADX have produced confirmed values. It is designed for hedging-style entries but is implemented on a netted position model, automatically reversing the position when opposite signals appear.\n\nThe moving average is calculated on the median price of each candle, matching the MetaTrader version that used an SMMA built on `(High + Low) / 2`. The ADX threshold prevents trades when the trend strength is weak, reducing false signals from short-lived crosses.",
+    "details": "",
+    "parameters": "- `MaPeriod` – length of the smoothed moving average (default 15).\n- `AdxPeriod` – ADX smoothing period (default 12).\n- `AdxThreshold` – minimum ADX value required to confirm a trend (default 16).\n- `TakeProfitBuy` / `StopLossBuy` / `TrailingStopBuy` – pip distances for long trades.\n- `TakeProfitSell` / `StopLossSell` / `TrailingStopSell` – pip distances for short trades.\n- `CandleType` – timeframe for input candles, default 1 minute.\n\nSet the strategy `Volume` to control the base order size. The implementation retains the original behaviour where short trades receive their own risk settings instead of reusing the long parameters."
+   },
+   "1780": {
+    "id": 1780,
+    "name": "PZ Parabolic SAR EA",
+    "family": "trend",
+    "overview": "This strategy replicates the *PZ Parabolic SAR* expert advisor. It employs two Parabolic SAR indicators with different step and maximum acceleration settings. The \"trade\" SAR detects trend direction for entries, while the \"stop\" SAR follows price more closely and triggers exits when the trend reverses.\n\nRisk control is handled through the Average True Range (ATR). An initial ATR-based stop is set when a position opens. Optionally, a trailing stop based on ATR can tighten the stop as price moves in the trade's favor. The strategy also supports partial closing: once the profit exceeds the initial stop distance, half of the position is closed and the stop is moved to break-even.\n\nThe strategy works in both long and short directions and operates on finished candles only. It uses market orders without placing actual stop orders.\n\n## Details\n\n- **Entry Criteria**: Price above/below trade SAR and stop SAR in the same direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop SAR crossing price or ATR trailing stop hit.\n- **Stops**: ATR-based stop with optional trailing and break-even.\n- **Default Values**:\n  - `TradeStep` = 0.002\n  - `TradeMax` = 0.2\n  - `StopStep` = 0.004\n  - `StopMax` = 0.4\n  - `AtrPeriod` = 30\n  - `AtrMultiplier` = 2.5\n  - `UseTrailing` = false\n  - `TrailingAtrPeriod` = 30\n  - `TrailingAtrMultiplier` = 1.75\n  - `PartialClosing` = true\n  - `PercentageToClose` = 0.5\n  - `BreakEven` = true\n  - `LotSize` = 0.1\n  - `CandleType` = TimeFrame(5m)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, ATR\n  - Stops: ATR, Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price above/below trade SAR and stop SAR in the same direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop SAR crossing price or ATR trailing stop hit.\n- **Stops**: ATR-based stop with optional trailing and break-even.\n- **Default Values**:\n  - `TradeStep` = 0.002\n  - `TradeMax` = 0.2\n  - `StopStep` = 0.004\n  - `StopMax` = 0.4\n  - `AtrPeriod` = 30\n  - `AtrMultiplier` = 2.5\n  - `UseTrailing` = false\n  - `TrailingAtrPeriod` = 30\n  - `TrailingAtrMultiplier` = 1.75\n  - `PartialClosing` = true\n  - `PercentageToClose` = 0.5\n  - `BreakEven` = true\n  - `LotSize` = 0.1\n  - `CandleType` = TimeFrame(5m)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, ATR\n  - Stops: ATR, Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3768": {
+    "id": 3768,
+    "name": "Wss Trader",
+    "family": "breakout",
+    "overview": "Port of the \"Wss_trader\" MetaTrader 4 expert advisor published on forex-instruments.info. The original EA combines Camarilla-style reversal levels with classic pivot distances and opens a single trade per bar whenever price breaks the configured bands during the London session.\n\n## Strategy logic\n\n1. At the start of every new trading day the strategy reads the previous daily high, low, and close to build a pivot ladder:\n   - `Pivot = (High + Low + Close) / 3`\n   - `Long entry = Pivot + Metric × point`\n   - `Short entry = Pivot − Metric × point`\n   - `Long stop = Short entry`\n   - `Short stop = Long entry`\n   - Targets mirror the MetaTrader formulas `Close ± (High − Low) × 1.1 / 2` with the same safety clamp as the original code.\n2. Trading is only allowed between `Start Hour` and `End Hour` (inclusive). Outside of the window every open position is closed immediately.\n3. When a finished candle crosses above the long entry level (close >= level and previous close < level), the strategy buys once with the configured volume, attaches the pre-calculated stop and target, and blocks any further entries for that bar. A symmetric rule applies for shorts.\n4. If the position moves in favour by at least `Trailing Points` price steps the stop is trailed to keep the same distance to the closing price. The stop never moves backwards.\n\n## Parameters\n\n| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Working Candle` | Primary candle type used for intraday calculations. | `15 Minute` |\n| `Daily Candle` | Candle type used to read the previous day for pivot levels. | `1 Day` |\n| `Start Hour` | Hour (0-23) when trading is enabled. | `8` |\n| `End Hour` | Hour (0-23) when trading stops accepting new entries. | `16` |\n| `Metric Points` | Distance from the pivot to the breakout levels measured in price steps. | `20` |\n| `Trailing Points` | Trailing stop distance in price steps. Set to `0` to disable trailing. | `20` |\n| `Order Volume` | Order size that mirrors the origina",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Working Candle` | Primary candle type used for intraday calculations. | `15 Minute` |\n| `Daily Candle` | Candle type used to read the previous day for pivot levels. | `1 Day` |\n| `Start Hour` | Hour (0-23) when trading is enabled. | `8` |\n| `End Hour` | Hour (0-23) when trading stops accepting new entries. | `16` |\n| `Metric Points` | Distance from the pivot to the breakout levels measured in price steps. | `20` |\n| `Trailing Points` | Trailing stop distance in price steps. Set to `0` to disable trailing. | `20` |\n| `Order Volume` | Order size that mirrors the original `lots` parameter. | `0.1` |"
+   },
+   "248": {
+    "id": 248,
+    "name": "Stochastic Breakout",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 181%. It performs best in the crypto market.\n\nA long position is triggered when %K crosses above the upper threshold after a period of contraction. A short position is taken when %K breaks below the lower threshold. The trade is closed when the oscillator drifts back toward its average or hits a protective stop.\n\nThe strategy is designed for intraday traders who want early entry into momentum swings. Using volatility-based bands helps filter noise so only decisive moves create signals.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: %K > Avg + DeviationMultiplier * StdDev\n  - **Short**: %K < Avg - DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %K < Avg\n  - **Short**: Exit when %K > Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `StochasticPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %K > Avg + DeviationMultiplier * StdDev\n  - **Short**: %K < Avg - DeviationMultiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %K < Avg\n  - **Short**: Exit when %K > Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `StochasticPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3393": {
+    "id": 3393,
+    "name": "Easy Robot",
+    "family": "momentum",
+    "overview": "Easy Robot is a momentum-following Expert Advisor that trades once per completed hourly candle. When the previous candle closes bullish the strategy opens a new long position; when it closes bearish it opens a short. Only one position can be active at any time, fully mirroring the original MetaTrader 4 logic.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `TakeFactor` | 4.2 | ATR multiplier for take-profit distance (maps to `TakeFactor` input in MQL). |\n| `StopFactor` | 4.9 | ATR multiplier for stop-loss distance (maps to `StopFactor`). |\n| `UseTrailingStop` | true | Enables MetaTrader-style trailing (`UseTstop`). |\n| `TrailingStartPips` | 40 | Profit in pips before trailing can start (`Tstart`). |\n| `TrailingStepPips` | 19 | Pip step applied when trailing updates (`Tstep`). |\n| `AtrPeriod` | 14 | ATR calculation period for volatility sizing. |\n| `CandleType` | H1 | Candle series used for signals and ATR input. |"
+   },
+   "1778": {
+    "id": 1778,
+    "name": "C Factor HLH4 Buy Only",
+    "family": "volatility",
+    "overview": "This strategy is a C# translation of the original MQL expert advisor **C_Factor_HLH4_buy_only**. It demonstrates how to port MetaTrader strategies to the StockSharp high-level API.\n\n## Strategy Logic\n\n- Uses four-hour time frame candles.\n- Opens a long position when the current candle closes above the previous candle's high.\n- Exits the long position when the close price:\n  - exceeds the previous candle's low by 100 ticks, or\n  - falls below the previous candle's high by 20 ticks.\n- Risk management is handled with configurable stop-loss and take-profit distances.\n- Order volume is calculated from the percentage of account equity risked per trade.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `StopLoss` | Distance in ticks for the protective stop. |\n| `TakeProfit` | Distance in ticks for the profit target. |\n| `RiskPercent` | Percent of account equity risked on each trade. |\n| `CandleType` | Candle type and timeframe for analysis (default: 4-hour candles). |\n\n## Notes\n\nThe strategy is long-only and designed for educational purposes. Adjust parameters and risk settings before using it in live trading.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `StopLoss` | Distance in ticks for the protective stop. |\n| `TakeProfit` | Distance in ticks for the profit target. |\n| `RiskPercent` | Percent of account equity risked on each trade. |\n| `CandleType` | Candle type and timeframe for analysis (default: 4-hour candles). |"
+   },
+   "387": {
+    "id": 387,
+    "name": "Pairs Trading Country ETFs",
+    "family": "mean_reversion",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis mean-reversion strategy trades a pair of country ETFs based on the z-score of their price ratio. When the ratio deviates beyond a threshold the system enters a long/short position expecting the spread to revert toward its average.\n\nThe price ratio is tracked with a rolling window and positions are closed when the z-score crosses the exit level.\n\n## Details\n\n- **Universe**: exactly two country ETFs.\n- **Signal**: z-score of rolling price ratio exceeding `EntryZ`.\n- **Exit**: close when z-score reverts to `ExitZ`.\n- **Data**: daily candles, 60-day window by default.\n- **Risk control**: orders skipped if trade value below `MinTradeUsd`.\n",
+    "details": "- **Universe**: exactly two country ETFs.\n- **Signal**: z-score of rolling price ratio exceeding `EntryZ`.\n- **Exit**: close when z-score reverts to `ExitZ`.\n- **Data**: daily candles, 60-day window by default.\n- **Risk control**: orders skipped if trade value below `MinTradeUsd`.",
+    "parameters": ""
+   }
+  }
+ }
+}

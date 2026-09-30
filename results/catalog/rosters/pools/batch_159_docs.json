@@ -1,0 +1,98 @@
+{
+ "batch_159": {
+  "strategy_ids": [
+   3809,
+   756,
+   1045,
+   2832,
+   958,
+   359,
+   3641,
+   1885,
+   1621,
+   1926
+  ],
+  "docs": {
+   "3809": {
+    "id": 3809,
+    "name": "Above Below MA Rejoin",
+    "family": "trend",
+    "overview": "The Above Below MA Rejoin strategy is a StockSharp conversion of the MetaTrader 4 expert advisor \"AboveBelowMA\". The original script monitors the 15-minute chart of GBP/USD and compares the current price with a one-period exponential moving average (EMA) calculated on the typical price. When price trades on the opposite side of a rising or falling average, the strategy attempts to fade that excursion and rejoin the underlying direction of the EMA. This port keeps the signal structure intact while leveraging StockSharp high-level APIs (`SubscribeCandles` + `Bind`).",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `EmaLength` | Period of the exponential moving average (defaults to 1, matching the EA). |\n| `CandleType` | Timeframe used to build the candles that feed the EMA (default 15 minutes). |\n| `InitialVolume` | Fixed order volume when dynamic sizing is disabled. |\n| `UseDynamicVolume` | Enables portfolio-based position sizing (`Balance / BalanceToVolumeDivider`). |\n| `BalanceToVolumeDivider` | Divider applied to the portfolio value to emulate `AccountFreeMargin / 10000`. |\n| `MaxVolume` | Maximum order volume allowed by the strategy. |"
+   },
+   "756": {
+    "id": 756,
+    "name": "Enhanced Doji Candle",
+    "family": "trend",
+    "overview": "This strategy trades doji candles with simple confirmation rules and fixed risk-reward management. It enters when a doji appears and the candle or its predecessor confirms direction by closing beyond the open with small wicks. Protective orders use a stop loss in pips and a take profit defined by a risk-reward ratio.\n\n## Details\n\n- **Entry Criteria**: Doji candle (body <= 30% of range). If bullish with lower wick <=1% or previous candle bullish, go long. If bearish with upper wick <=1% or previous candle bearish, go short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Take-profit or stop-loss, or any new doji that closes the position.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RiskRewardRatio` = 2.0m\n  - `StopLossPips` = 5\n  - `SmaPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Candlestick\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: Doji candle (body <= 30% of range). If bullish with lower wick <=1% or previous candle bullish, go long. If bearish with upper wick <=1% or previous candle bearish, go short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Take-profit or stop-loss, or any new doji that closes the position.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RiskRewardRatio` = 2.0m\n  - `StopLossPips` = 5\n  - `SmaPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Candlestick\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "1045": {
+    "id": 1045,
+    "name": "Medico Action Zone Self Adjust TF Version 2",
+    "family": "trend",
+    "overview": "EMA crossover strategy with higher timeframe confirmation. A position opens when the fast EMA crosses the slow EMA and the higher timeframe close is above the fast EMA. The position reverses on the opposite signal.\n\n## Details\n\n- **Entry Criteria**: Fast EMA crosses above slow EMA with higher timeframe close above fast EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover with confirmation.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `HigherCandleType` = TimeSpan.FromDays(7)\n  - `FastEmaLength` = 12\n  - `SlowEmaLength` = 26\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Fast EMA crosses above slow EMA with higher timeframe close above fast EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover with confirmation.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `HigherCandleType` = TimeSpan.FromDays(7)\n  - `FastEmaLength` = 12\n  - `SlowEmaLength` = 26\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2832": {
+    "id": 2832,
+    "name": "Universal MA Cross",
+    "family": "trend",
+    "overview": "The **Universal MA Cross Strategy** is a direct conversion of the original MQL5 expert advisor \"UniversalMACrossEA\" into the StockSharp high-level strategy framework. The algorithm compares a fast and a slow moving average that can be configured with different calculation methods and price sources. Optional filters control how signals are confirmed, whether trades are reversed immediately, how risk management is performed and when the strategy is allowed to trade.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `FastMaPeriod`, `SlowMaPeriod` | Periods of the fast and slow moving averages. |\n| `FastMaType`, `SlowMaType` | Moving average methods: Simple, Exponential, Smoothed (RMA) or Linear Weighted. |\n| `FastPriceType`, `SlowPriceType` | Price sources fed into the averages. |\n| `StopLoss`, `TakeProfit` | Protective distances in absolute price units. Set to 0 to disable. |\n| `TrailingStop`, `TrailingStep` | Trailing stop offset and minimum extra move required before shifting the stop. |\n| `MinCrossDistance` | Minimum distance between the averages at the crossover bar. |\n| `ReverseCondition` | Swap bullish and bearish rules. |\n| `ConfirmedOnEntry` | Use only completed bars for validation. |\n| `OneEntryPerBar` | Allow at most one entry per candle. |\n| `StopAndReverse` | Close the current position and reverse on opposite signals. |\n| `PureSar` | Disable stop-loss, take-profit and trailing logic. |\n| `UseHourTrade`, `StartHour`, `EndHour` | Time filter for trading sessions (0–23 hours). |\n| `Volume` | Order volume for each position. |\n| `CandleType` | Candle data type subscribed for calculations. |"
+   },
+   "958": {
+    "id": 958,
+    "name": "KumoTrade Ichimoku",
+    "family": "trend",
+    "overview": "Strategy based on Ichimoku Cloud and Stochastic Oscillator.\nIt enters long when price pulls back above Kijun with oversold Stochastic and no cloud ahead.\nIt enters short when price drops below the cloud with overbought Stochastic and bearish Kumo.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Low > Kijun && Kijun > Tenkan && Close < SenkouA && StochD < 29`\n  - Short: `Close < min(SenkouA, SenkouB) && High > Kijun && prevStochD > StochD >= 90`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - ATR based trailing stop\n- **Stops**: Trailing stop using ATR * 3\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouPeriod` = 52\n  - `StochK` = 70\n  - `StochD` = 15\n  - `AtrPeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Stochastic, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Low > Kijun && Kijun > Tenkan && Close < SenkouA && StochD < 29`\n  - Short: `Close < min(SenkouA, SenkouB) && High > Kijun && prevStochD > StochD >= 90`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - ATR based trailing stop\n- **Stops**: Trailing stop using ATR * 3\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouPeriod` = 52\n  - `StochK` = 70\n  - `StochD` = 15\n  - `AtrPeriod` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Stochastic, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "359": {
+    "id": 359,
+    "name": "Consistent Momentum",
+    "family": "momentum",
+    "overview": "The **Consistent Momentum** strategy selects instruments that exhibit strong momentum across two time windows and rebalances the portfolio monthly. It holds each tranche for a fixed number of months and allocates capital equally to long and short baskets.\n\n## Details\n- **Entry Criteria**: On the first trading day of each month, go long on securities in the top decile of both momentum measures and short the bottom decile.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions are closed after the holding period expires or when rebalancing occurs.\n- **Stops**: No explicit stop logic; position size is based on dollar allocation.\n- **Default Values**:\n  - `LookbackDays = 7 * 21`\n  - `HoldingMonths = 6`\n  - `MinTradeUsd = 50`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price momentum\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: On the first trading day of each month, go long on securities in the top decile of both momentum measures and short the bottom decile.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions are closed after the holding period expires or when rebalancing occurs.\n- **Stops**: No explicit stop logic; position size is based on dollar allocation.\n- **Default Values**:\n  - `LookbackDays = 7 * 21`\n  - `HoldingMonths = 6`\n  - `MinTradeUsd = 50`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price momentum\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3641": {
+    "id": 3641,
+    "name": "Martingale Trade Simulator",
+    "family": "volatility",
+    "overview": "`MartingaleTradeSimulatorStrategy` recreates the \"Martingale Trade Simulator\" expert advisor from MetaTrader inside the StockSharp framework. The strategy is a manual trading panel that lets a trader send immediate market orders, apply martingale-style averaging, and manage trailing protection without scripting additional automation. It reacts to parameter switches in real time, making it suitable for Strategy Tester experiments just like the original MQL robot.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Order Volume` | Base size for manual market orders. | `1` |\n| `Stop Loss (points)` | Distance to the protective stop. Zero disables the stop-loss. | `500` |\n| `Take Profit (points)` | Distance to the protective target. Zero disables the take-profit. | `500` |\n| `Enable Trailing` | Turns the trailing stop module on/off. | `true` |\n| `Trailing Stop (points)` | Distance between price and trailing stop. | `50` |\n| `Trailing Step (points)` | Minimal favorable move required to advance the trailing stop. | `20` |\n| `Enable Martingale` | Allows averaging orders controlled by the `Martingale` button. | `true` |\n| `Martingale Multiplier` | Volume multiplier used for each additional averaging trade. | `1.2` |\n| `Martingale Step (points)` | Required adverse movement before an averaging order is allowed. | `150` |\n| `Martingale TP Offset (points)` | Additional offset applied to the averaged take-profit level. | `50` |\n| `Buy` | Set to `true` to send a market buy order (auto-resets). | `false` |\n| `Sell` | Set to `true` to send a market sell order (auto-resets). | `false` |\n| `Martingale` | Set to `true` to evaluate and place an averaging order (auto-resets). | `false` |"
+   },
+   "1885": {
+    "id": 1885,
+    "name": "Genie RSI",
+    "family": "mean_reversion",
+    "overview": "This strategy trades overbought and oversold reversals using the Relative Strength Index (RSI). When RSI rises above 80 the strategy opens a short position; when RSI falls below 20 it opens a long position. Optional take profit and trailing stop levels manage risk after entry.\n\nThe strategy is designed for oscillating markets where price frequently moves between support and resistance. It works on any timeframe, as defined by the `CandleType` parameter.\n\n## Details\n\n- **Entry Criteria**  \n  - **Long**: RSI value crosses below 20 on a finished candle and no position is open.  \n  - **Short**: RSI value crosses above 80 on a finished candle and no position is open.\n- **Exit Criteria**  \n  - **Long**: RSI rises above 80, price reaches the take profit distance, or price touches the trailing stop level.  \n  - **Short**: RSI falls below 20, price reaches the take profit distance, or price touches the trailing stop level.\n- **Indicators**: RSI.\n- **Parameters**:  \n  - `RSI Period` – length of the RSI indicator.  \n  - `Take Profit` – distance in price units for profit target.  \n  - `Trailing Stop` – distance in price units for trailing stop.  \n  - `Candle Type` – timeframe of processed candles.\n- **Position Management**: Uses market orders for entries and exits. Trailing stop is recalculated on each finished candle.\n",
+    "details": "- **Entry Criteria**  \n  - **Long**: RSI value crosses below 20 on a finished candle and no position is open.  \n  - **Short**: RSI value crosses above 80 on a finished candle and no position is open.\n- **Exit Criteria**  \n  - **Long**: RSI rises above 80, price reaches the take profit distance, or price touches the trailing stop level.  \n  - **Short**: RSI falls below 20, price reaches the take profit distance, or price touches the trailing stop level.\n- **Indicators**: RSI.\n- **Parameters**:  \n  - `RSI Period` – length of the RSI indicator.  \n  - `Take Profit` – distance in price units for profit target.  \n  - `Trailing Stop` – distance in price units for trailing stop.  \n  - `Candle Type` – timeframe of processed candles.\n- **Position Management**: Uses market orders for entries and exits. Trailing stop is recalculated on each finished candle.",
+    "parameters": ""
+   },
+   "1621": {
+    "id": 1621,
+    "name": "Sea Dragon 2",
+    "family": "volume",
+    "overview": "Sea Dragon 2 is a hedging grid strategy that opens positions in both directions and adds new orders when price moves by a user defined step. Order sizes follow a predefined sequence and take profit levels adapt depending on the balance between long and short exposure.\n\n## Details\n\n- **Initial Orders**: Opens both a buy and a sell order with the same volume at start.\n- **Order Addition**: When the market moves by *Step* points from the last order price, a new pair of orders is added. The side with more exposure receives the larger order according to the sequence.\n- **Volume Sequence**: 1,1,2,3,6,9,14,22,33,48,82,111,122,164,185 scaled by *Volume Scale*.\n- **Take Profit**:\n  - When long and short counts are equal, each side uses *Take Profit*.\n  - If one side dominates, that side uses *Alt Take Profit* while the other keeps *Take Profit*.\n- **Stop Loss**: Each side has a stop placed *Max Stop* points away from its average price.\n- **Data Source**: Strategy operates on completed candles of type *Candle Type*.\n- **Long/Short**: Both, hedged.\n- **Exit**: Positions close when price hits take profit or stop levels.\n",
+    "details": "- **Initial Orders**: Opens both a buy and a sell order with the same volume at start.\n- **Order Addition**: When the market moves by *Step* points from the last order price, a new pair of orders is added. The side with more exposure receives the larger order according to the sequence.\n- **Volume Sequence**: 1,1,2,3,6,9,14,22,33,48,82,111,122,164,185 scaled by *Volume Scale*.\n- **Take Profit**:\n  - When long and short counts are equal, each side uses *Take Profit*.\n  - If one side dominates, that side uses *Alt Take Profit* while the other keeps *Take Profit*.\n- **Stop Loss**: Each side has a stop placed *Max Stop* points away from its average price.\n- **Data Source**: Strategy operates on completed candles of type *Candle Type*.\n- **Long/Short**: Both, hedged.\n- **Exit**: Positions close when price hits take profit or stop levels.",
+    "parameters": ""
+   },
+   "1926": {
+    "id": 1926,
+    "name": "Ilan Dynamic HT",
+    "family": "volume",
+    "overview": "Grid-based martingale strategy that opens positions based on RSI signals and expands the position using a dynamic price range. Each additional trade increases volume by a multiplier and shares the same take profit and stop loss.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: RSI below `RsiMinimum`\n  - Short: RSI above `RsiMaximum`\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Common take profit or stop loss is reached\n- **Stops**:\n  - `TakeProfit` in points\n  - `StopLoss` in points\n- **Default Values**:\n  - `LotExponent` = 1.4\n  - `MaxTrades` = 10\n  - `DynamicPips` = true\n  - `DefaultPips` = 120\n  - `Depth` = 24\n  - `Del` = 3\n  - `BaseVolume` = 0.1\n  - `RsiPeriod` = 14\n  - `RsiMinimum` = 30\n  - `RsiMaximum` = 70\n  - `TakeProfit` = 100\n  - `StopLoss` = 500\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Grid / Martingale\n  - Direction: Long and Short\n  - Indicators: RSI, Highest, Lowest\n  - Stops: Take Profit, Stop Loss\n  - Complexity: Advanced\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High\n",
+    "details": "- **Entry Criteria**:\n  - Long: RSI below `RsiMinimum`\n  - Short: RSI above `RsiMaximum`\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Common take profit or stop loss is reached\n- **Stops**:\n  - `TakeProfit` in points\n  - `StopLoss` in points\n- **Default Values**:\n  - `LotExponent` = 1.4\n  - `MaxTrades` = 10\n  - `DynamicPips` = true\n  - `DefaultPips` = 120\n  - `Depth` = 24\n  - `Del` = 3\n  - `BaseVolume` = 0.1\n  - `RsiPeriod` = 14\n  - `RsiMinimum` = 30\n  - `RsiMaximum` = 70\n  - `TakeProfit` = 100\n  - `StopLoss` = 500\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Grid / Martingale\n  - Direction: Long and Short\n  - Indicators: RSI, Highest, Lowest\n  - Stops: Take Profit, Stop Loss\n  - Complexity: Advanced\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

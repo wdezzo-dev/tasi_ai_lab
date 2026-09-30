@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 518,
+      "name": "ALMA & UT Bot Confluence",
+      "family": "trend",
+      "entry_long": "close > ema(close,72) and rsi(close,14) > 30 and adx(high,low,close,10) > 30 and close < bb_upper(close,20,3) and volume_ratio(volume,20) > 1 and atr(high,low,close,14) > 0",
+      "exit_long": "close < ema(close,72) or rsi(close,14) < 30",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(72), RSI(14), ADX(10), Bollinger(20,3), volume_ratio(20), and ATR(14) retain the documented numeric features; ALMA and the UT Bot signal are approximated or omitted. The 5x/4x ATR protection, cooldown, and optional time exit are not percentage fields."
+    },
+    {
+      "id": 344,
+      "name": "Hull MA Implied Volatility Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,9)",
+      "exit_long": "close < ema(close,20) - 2 * atr(high,low,close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The unavailable Hull MA and implied-volatility indicators are represented by a prior 9-bar high breakout and an ATR(20) lower band. The documented 2x ATR stop is not a fixed percentage field, and the 15-minute execution layer is unavailable."
+    },
+    {
+      "id": 4082,
+      "name": "AIS3 Trading Robot Template",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The multi-timeframe primary-range breakout is approximated by a prior 20-bar high break with an EMA(20) exit. Secondary-timeframe trailing distance, range multipliers, portfolio sizing, buffers, and pending-order state are not expressible in the DSL."
+    },
+    {
+      "id": 1932,
+      "name": "Hybrid Scalper",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2) and ema(close,10) > ema(close,30) and rsi(close,14) > 50",
+      "exit_long": "close < bb_mid(close,20) or crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source names RSI, dual EMA, and Bollinger inputs but gives no values; EMA(10/30), RSI(14), and Bollinger(20,2) are explicit fallbacks. The weekday and 1-minute filters, exact volatility limits, and order protections are omitted."
+    },
+    {
+      "id": 508,
+      "name": "ADX for BTC",
+      "family": "trend",
+      "entry_long": "crossabove(adx(high,low,close,14),14) and sma(close,20) > sma(close,200)",
+      "exit_long": "crossbelow(adx(high,low,close,14),45) or crossbelow(sma(close,20),sma(close,200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ADX entry 14 and exit 45 are retained; SMA(20) versus SMA(200) is an explicit fast/slow fallback because the source supplies only SmaLength. The optional 5-minute candle type is not part of this long-only daily DSL translation."
+    },
+    {
+      "id": 48,
+      "name": "VWAP Breakout",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWAP is unavailable, so a 20-bar close average is used as the closest value-line proxy for the documented close-side breakout and reversal. The source gives no numeric stop or target value, and the 5-minute timeframe is omitted."
+    },
+    {
+      "id": 3295,
+      "name": "Virtual Profit/Loss Trail",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source never opens positions and only manages an existing position, so an impossible negative-price guard is used instead of fabricating an entry. Pip-based virtual stop, take-profit, and trailing levels are not percentage fields."
+    },
+    {
+      "id": 4054,
+      "name": "N7S AO 772012",
+      "family": "momentum",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and roc(close,1) > 0",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) and one-bar ROC provide a deterministic bullish momentum proxy for the Awesome Oscillator/perceptron decision tree. The multi-timeframe AO perceptrons, neural mode, price gate, and point-based protection are not expressible."
+    },
+    {
+      "id": 3439,
+      "name": "Mission Impossible Power Two Open",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish completed candle is retained as the initial basket direction and the bearish candle is the opposite exit. Averaging grid, power sizing, shared pip targets, and maximum-trade controls require state and are omitted."
+    },
+    {
+      "id": 3548,
+      "name": "RSI Dual Cloud",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,7) < 30 and rsi(close,21) < 30",
+      "exit_long": "rsi(close,7) > 50 or rsi(close,21) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast RSI(7), slow RSI(21), and the 30/50 zone levels are explicit fallbacks because the source exposes names but no defaults. The configurable entrance/being/leaving/crossing toggles and reverse/long-only modes are represented by the long-zone interpretation."
+    }
+  ]
+}

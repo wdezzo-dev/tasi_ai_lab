@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3733,
+      "name": "Extreme Strength Reversal",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 20 and rsi(close,14) > 0 and low < bb_lower(close,20,2) and close > open",
+      "exit_long": "rsi(close,14) > 50 or close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used verbatim: RSI(14) below the 20 oversold level but above zero, a low under the lower Bollinger band (20, 2.0) and a bullish body. The 150/300 pip stop and target are pip distances rather than percentages, so the exit is a reversion proxy (RSI back above mid or close at the band midpoint); single-position and reversal rules are engine-side."
+    },
+    {
+      "id": 1585,
+      "name": "Fibonacci Bands",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,233) + 4.236 * atr(high,low,close,89)) and rsi(close,14) > 60",
+      "exit_long": "crossbelow(close, sma(close,233))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "fbUpper3 is rebuilt as the Keltner basis (MaLength 233) plus Fib3 4.236 x ATR(89), with SMA standing in for the documented WMA since no weighted average exists in the DSL; the RSI 60 confirmation and the cross back over the MA exit are documented. Fib1/Fib2 bands, the short side and the 5-minute CandleType are not used for a long-only roster and no stops are documented."
+    },
+    {
+      "id": 3081,
+      "name": "Exp XBullsBearsEyes Vol Direct",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high - low) * volume_ratio(volume,20), 20), ema((high - low) * volume_ratio(volume,20), 50))",
+      "exit_long": "crossbelow(ema((high - low) * volume_ratio(volume,20), 20), ema((high - low) * volume_ratio(volume,20), 50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power minus Bears Power reduces to the bar range, so the oscillator is rebuilt as range x volume_ratio(volume,20) (20 is an explicit fallback for Period/SmoothingLength) and the direction buffer is read as a slope turn: a fast/slow EMA cross of the smoothed histogram opens long and the opposite turn closes. The adaptive gamma filter, Jurik phase, SignalBar offset and price-step StopLossPoints/TakeProfitPoints are not expressible."
+    },
+    {
+      "id": 1231,
+      "name": "RedK Slow Smooth WMA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(ema(close,15),15),15), ema(ema(close,15),15))",
+      "exit_long": "crossbelow(ema(ema(ema(close,15),15),15), ema(ema(close,15),15))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The triple-pass smoothed average is approximated by three chained EMA(15) passes using the documented CombinedSmoothness 15, because no weighted moving average is available; a turn up versus the twice-smoothed line is the long slope signal and the turn down is the documented opposite-signal exit. The 1-minute CandleType and no-stop configuration carry over unchanged."
+    },
+    {
+      "id": 3806,
+      "name": "5min RSI Qualified",
+      "family": "trend",
+      "entry_long": "rsi(close,28) < 45 and bars_since(rsi(close,28) >= 45) >= 13",
+      "exit_long": "rsi(close,28) > 55",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented defaults are used: RSI(28) held below the 45 bullish-qualification threshold for QualificationLength 12 consecutive bars (bars_since of the complementary test >= 13) opens the contrarian long. The 21-point trailing stop that follows the previous close and the 11-point initial stop are point offsets, not percentages, so the qualified opposite zone (RSI above 55) is the exit; 5-minute CandleType and the single-position rule are not representable."
+    },
+    {
+      "id": 3514,
+      "name": "Hpcs Inter6 RSI",
+      "family": "momentum",
+      "entry_long": "crossbelow(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Directly follows the documented rule: an RSI(14) downward cross through LowerLevel 30 flips into long and an upward cross of UpperLevel 70 closes it. The symmetric 10-pip take-profit and stop-loss (OffsetInPips) are pip distances that cannot be expressed as fixed percentages, and the 1-hour CandleType is fixed by the roster."
+    },
+    {
+      "id": 3484,
+      "name": "IsConnected",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an infrastructure monitor that polls Connector.IsConnected on a timer and logs uptime transitions; it places no orders, so the never-true negative-price guard is used instead of inventing a signal. The 1-second CheckIntervalSeconds has no market analogue."
+    },
+    {
+      "id": 665,
+      "name": "DCA Mean Reversion Bollinger Band",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(close, bb_lower(close,20,2))",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Bollinger mean-reversion leg is the downward cross under the lower band with a return to the band midpoint as exit; period 20 and multiplier 2 are explicit fallbacks because only parameter names are supplied. The first-day-of-month DCA leg, StrategyMode switch, OpenDate/CloseDate schedule and InvestmentAmount sizing are date/size features the DSL cannot express."
+    },
+    {
+      "id": 1429,
+      "name": "Tick Data Detailed",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state Entry/Exit Criteria: None - it only aggregates tick volume into the documented 10k-400k buckets for tape reading, so no market signal exists and the never-true guard is used. Bucket thresholds, tick timeframe and the buy/sell tallies are reporting features, not DSL conditions."
+    },
+    {
+      "id": 1820,
+      "name": "Price Action",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only alternates buy/sell after each position closes, so its direction comes from position bookkeeping rather than any market-derived condition; the negative-price guard prevents fabricating an entry. The TP 100 with Leverage 5 target, fixed stop distance and optional trailing step are price-point offsets, not percentages."
+    }
+  ]
+}

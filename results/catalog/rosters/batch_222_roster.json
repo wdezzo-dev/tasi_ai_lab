@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1190,
+      "name": "Price Statistical Z-Score",
+      "family": "trend",
+      "entry_long": "crossabove(sma(zscore(close,3),3), sma(zscore(close,3),5))",
+      "exit_long": "crossbelow(sma(zscore(close,3),3), sma(zscore(close,3),5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZScoreBasePeriod 3 is the base z-score and the documented ShortSmoothPeriod 3 and LongSmoothPeriod 5 are the two smoothers; the long-only rule maps the short-above-long cross to entry and the reverse to exit. The three-bullish-candle filter and the GapBars 5 signal gap need shifted bars and are not represented."
+    },
+    {
+      "id": 2549,
+      "name": "Money Rain",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,31), 50)",
+      "exit_long": "crossbelow(rsi(close,31), 50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented DeMarker 0.5 decision level is approximated by RSI with the documented DeMarkerPeriod 31, since DeMarker is not in the DSL. TakeProfitPoints 5 and StopLossPoints 20 are oscillator-style point offsets, not percentages, and the loss-limit and volume logic are not expressible."
+    },
+    {
+      "id": 4125,
+      "name": "ComFracti",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,3) and low < donchian_low_prev(low,10) and rsi(close,3) < 50",
+      "exit_long": "high > donchian_high_prev(high,3) and high > donchian_high_prev(high,10) and rsi(close,3) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Current- and higher-timeframe bullish fractals are approximated by new 3-bar and 10-bar lows and the documented RSI filter by RSI(3) on the 50 line. Stochastic levels, EMA slope, Parabolic SAR, channel and perceptron filters are unavailable, and the point-based stops are not percentages."
+    },
+    {
+      "id": 227,
+      "name": "Hurst Exponent Trend",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,20) > 25 and close > sma(close,20)",
+      "exit_long": "close < sma(close,20) or adx(high,low,close,20) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hurst is approximated by ADX strength, so the documented HurstThreshold 0.55 persistence test becomes an ADX band and the documented MaPeriod 20 is used verbatim. ADX 20/25 are fallbacks for HurstPeriod 100 and no numeric percentage stop is given despite the docs saying a percentage stop exists."
+    },
+    {
+      "id": 2509,
+      "name": "UP3x1 Premium",
+      "family": "trend",
+      "entry_long": "(crossabove(ema(close,12), ema(close,26)) and roc(open,2) > 0) or (close > ema(close,26) and close > open and high - low > atr(high,low,close,14))",
+      "exit_long": "ema(close,12) - ema(close,26) <= 0.001 * ema(close,26) and ema(close,26) - ema(close,12) <= 0.001 * ema(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 12/26 EMA pair is used with the two-bar rising-open filter, and the wide-range bullish bar branch uses an ATR-scaled body so the undocumented RangeThreshold/BodyThreshold values are not invented. The documented plus or minus 0.1 percent EMA convergence exit is expressed without a function call, while the midnight daily-EMA filter and absolute price stop targets are dropped."
+    },
+    {
+      "id": 2447,
+      "name": "PROphet",
+      "family": "other",
+      "entry_long": "ema(close-open,3) > 0",
+      "exit_long": "ema(close-open,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom Qu function is a weighted combination of the last three completed candle ranges, but X1..X4 are given no values, so an equal-weight combination of the three candle bodies is used as the default. The 10:00-18:00 hour window, the coefficient-driven trailing stop and the 18:00 close are not expressible."
+    },
+    {
+      "id": 122,
+      "name": "January Effect",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Entry is a calendar effect that buys near year-end and sells mid-January, so the DSL has no market-derived trigger and none is invented. The documented StopLoss of 2 percent is kept, while the mid-January exit schedule is not representable."
+    },
+    {
+      "id": 369,
+      "name": "Earnings Announcements With Buybacks",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented signal is DaysBefore 5 ahead of an earnings date for companies with an active buyback program, which requires a corporate calendar and fundamental feed absent from the DSL. The DaysAfter 1 exit is equally calendar-based."
+    },
+    {
+      "id": 1293,
+      "name": "Security Free MTF Example",
+      "family": "other",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On the base series donchian_high_prev of one bar is exactly the previous period high, so the documented prior-period high break is a close above it and the short branch becomes the mirrored long exit. The separate per-symbol prior-day request in the sample has no market effect."
+    },
+    {
+      "id": 1547,
+      "name": "VRS Vegas Reversal",
+      "family": "other",
+      "entry_long": "close - low >= 0.025 * close and high - close < 0.025 * close",
+      "exit_long": "roc(close,3) > 5",
+      "stop_loss_pct": null,
+      "take_profit_pct": 5.0,
+      "notes": "Spikes are measured from the close as documented, using the default SpikePercent 0.025 for the lower wick and the no-upper-spike condition. The target of twice the spike becomes a 5 percent take-profit and a three-bar 5 percent move as the exit, since the entry price is not available in the DSL."
+    }
+  ]
+}

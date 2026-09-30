@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 699,
+      "name": "Dskyz (DAFE) AI Adaptive Regime - Beginners Version",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and adx(high,low,close,14) > 25",
+      "exit_long": "ema(close,20) < ema(close,50) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The overview documents EMA trend detection with ADX confirmation but gives no numeric defaults, so 20/50 EMA and 14/25/20 ADX are explicit research fallbacks. ATR-based risk management has no documented percentage or multiplier and is not encoded."
+    },
+    {
+      "id": 1041,
+      "name": "Mean Reversion Pro",
+      "family": "trend",
+      "entry_long": "close < sma(close,5) and close < low + 0.2 * (high - low) and close > sma(close,100)",
+      "exit_long": "crossabove(close,sma(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Retains the documented fast/slow SMA periods and translates the 20% range level as low plus 0.2 times the current bar range. The no-position condition is supplied by the simulator; no stop is documented."
+    },
+    {
+      "id": 2126,
+      "name": "Last Price",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Level 1 best bid/ask, the 400-point interval, spread, volume limits, and session windows are unavailable in the OHLCV DSL. A close above the prior two-bar high is the long-side breakout proxy, with a mirrored prior-low exit; the absolute stop remains null."
+    },
+    {
+      "id": 2252,
+      "name": "Reco RSI Grid",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The corpus gives RSI zones but no defaults, so RSI(14) with standard 30/70 oversold/overbought levels is a fallback. Geometric counter-position grids, volume scaling, and collective profit/loss thresholds cannot be represented; the opposite RSI zone supplies a long exit proxy."
+    },
+    {
+      "id": 2274,
+      "name": "Directed Movement Candle",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),70)",
+      "exit_long": "crossbelow(rsi(close,14),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented RSI(14), high level 70, and low level 30 directly. The long entry is the bullish RSI cross above 70 and the opposite cross below 30 exits; no default stop is documented."
+    },
+    {
+      "id": 2573,
+      "name": "e_RP_250 Reverse Point",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,250)",
+      "exit_long": "high > donchian_high_prev(high,250)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A strict new 250-bar low is the documented long reversal signal, and a new 250-bar high is the opposite reversal exit. The 15-point take-profit, 999-point stop, trailing logic, short side, and same-candle guard are not percentage/DSL fields."
+    },
+    {
+      "id": 2963,
+      "name": "Expert Ichimoku",
+      "family": "trend",
+      "entry_long": "sma((high + low) / 2,9) > sma((high + low) / 2,26) and close > (sma((high + low) / 2,9) + sma((high + low) / 2,26)) / 2 and close > sma((high + low) / 2,52)",
+      "exit_long": "sma((high + low) / 2,9) < sma((high + low) / 2,26) or close < sma((high + low) / 2,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The overview names Ichimoku components and supplies periods 9/26/52 but gives no explicit entry/exit rule. A current-value SMA(midpoint) proxy uses bullish Tenkan/Kijun alignment, the cloud A/B thresholds, and Kijun loss as the exit; shifted cloud, price-action filters, martingale, and default zero offsets are unsupported."
+    },
+    {
+      "id": 3592,
+      "name": "Reverse",
+      "family": "trend",
+      "entry_long": "low < bb_lower(close,20,2) and crossabove(rsi(close,14),30)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Retains Bollinger(20,2), RSI(14), and the documented RSI oversold/overbought levels. The long exhaustion proxy requires price below the lower band and RSI recrossing above 30; a middle-band reversion is the target proxy. Band-based protection has no percentage values, and the short side is omitted."
+    },
+    {
+      "id": 3727,
+      "name": "Butterfly Pattern",
+      "family": "volatility",
+      "entry_long": "close > open and low <= donchian_low_prev(low,3) and close > sma(close,20)",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No butterfly lookback, harmonic X/A/B/C/D ratios, or target values are supplied. A bullish reversal at a prior three-bar low with an SMA(20) filter is a bounded proxy; harmonic validation, three staged targets, break-even/trailing logic, and the short side are unsupported."
+    },
+    {
+      "id": 3804,
+      "name": "3MA Bunny Cross",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,5),sma(close,20))",
+      "exit_long": "crossbelow(sma(close,5),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast/slow periods are 5/20 and the reference says the signal is a crossover on closing prices. SMA(5)/SMA(20) proxies the unavailable LWMAs, with the opposite crossover as the reversal exit; no point-based protection values are documented."
+    }
+  ]
+}

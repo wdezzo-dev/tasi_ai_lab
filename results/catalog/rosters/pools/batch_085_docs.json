@@ -1,0 +1,98 @@
+{
+ "batch_085": {
+  "strategy_ids": [
+   590,
+   2629,
+   3360,
+   3878,
+   262,
+   3202,
+   256,
+   2716,
+   3489,
+   296
+  ],
+  "docs": {
+   "590": {
+    "id": 590,
+    "name": "Bollinger Bands Enhanced",
+    "family": "trend",
+    "overview": "Buys when price dips below the lower Bollinger Band while the market stays above a 200-period EMA.  \nA stop loss is placed at `entry - ATR * stop`, and after price rises `ATR * trail` above entry, the middle band becomes a trailing target.\n\n## Details\n\n- **Entry Criteria**: `Low > EMA` and `Low <= Lower Band`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below middle band after trailing activates or low below stop.\n- **Stops**: ATR-based stop loss.\n- **Default Values**:\n  - Bollinger period = 20\n  - EMA period = 200\n  - ATR period = 14\n  - Stop ATR = 1.75\n  - Trail ATR = 2.25\n\n",
+    "details": "- **Entry Criteria**: `Low > EMA` and `Low <= Lower Band`.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below middle band after trailing activates or low below stop.\n- **Stops**: ATR-based stop loss.\n- **Default Values**:\n  - Bollinger period = 20\n  - EMA period = 200\n  - ATR period = 14\n  - Stop ATR = 1.75\n  - Trail ATR = 2.25",
+    "parameters": ""
+   },
+   "2629": {
+    "id": 2629,
+    "name": "XROC2 VG Time Filter",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader expert advisor **Exp_XROC2_VG_Tm** using the StockSharp high-level API. It builds two smoothed rate-of-change (ROC) curves and opens contrarian trades when the faster curve crosses the slower one. A trading session filter and optional protective targets reproduce the original money-management settings.\n\n## Trading logic\n\n- Two ROC values are calculated from the closing price using independent lookbacks.\n- Each ROC stream is smoothed with a configurable moving-average method.\n- Signals are evaluated on a shifted bar index, matching the original `SignalBar` behavior.\n- When the fast line was above the slow line on the prior bar but falls below it on the signal bar, the strategy closes any short position and may open a long position.\n- When the fast line was below the slow line on the prior bar but rises above it on the signal bar, the strategy closes any long position and may open a short position.\n- An optional trading window can flat all positions outside the allowed session before any new trades are placed.\n\nThe order side switches only after the previous position is fully closed, mimicking the MetaTrader trade algorithms.\n\n## Indicators\n\n- **Fast ROC** – Momentum, percent or ratio of price change over `RocPeriod1` bars, smoothed with `SmoothMethod1` and length `SmoothLength1`.\n- **Slow ROC** – Same calculation over `RocPeriod2` bars, smoothed with `SmoothMethod2` and length `SmoothLength2`.\n- Supported smoothing methods: Simple, Exponential, Smoothed (RMA) and Weighted moving averages. The original JJMA/VIDYA/AMA options are approximated by exponential smoothing.\n\n## Risk management\n\n- `StopLoss` and `TakeProfit` specify optional fixed-distance exits in absolute price units. When either threshold is hit the position is closed immediately.\n- `OrderVolume` defines the size of all new positions.\n- Indicator-based exits may also flatten positions even if the protective targets are disabled.\n\n## Session filter\n\n- `UseTimeFilter` ",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `CandleType` | Candle data type used for calculations (default: 4-hour candles). |\n| `RocPeriod1`, `RocPeriod2` | Lookback lengths for the fast and slow ROC streams. |\n| `SmoothLength1`, `SmoothLength2` | Smoothing lengths for each stream. |\n| `SmoothMethod1`, `SmoothMethod2` | Moving-average types applied to the ROC outputs. |\n| `RocType` | ROC calculation formula: momentum, percent change or ratio. |\n| `SignalShift` | Number of completed bars back used to read signal values. |\n| `AllowBuyOpen`, `AllowSellOpen` | Enable or disable opening long/short positions. |\n| `AllowBuyClose`, `AllowSellClose` | Enable or disable indicator-based exits for long/short positions. |\n| `UseTimeFilter` | Activates the trading session window. |\n| `StartTime`, `EndTime` | Session start and end times. |\n| `OrderVolume` | Volume for each new trade. |\n| `StopLoss`, `TakeProfit` | Optional absolute distances for protective exits. |"
+   },
+   "3360": {
+    "id": 3360,
+    "name": "MACD Sample Hedging Grid",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader \"MACD Sample Hedging Grid\" expert advisor. It combines a short-term MACD crossover, a local EMA slope filter, and higher timeframe confirmations. When conditions align the strategy builds a grid of positions in the detected direction, scaling the trade size by a configurable exponent.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `CandleType` | Main timeframe used for MACD and EMA calculations. | 5-minute time frame |\n| `MomentumCandleType` | Higher timeframe feeding the momentum confirmation. | 30-minute time frame |\n| `TrendCandleType` | Long timeframe used for the trend MACD filter. | 30-day time frame |\n| `FastMaPeriod` | Fast EMA length inside MACD. | 12 |\n| `SlowMaPeriod` | Slow EMA length inside MACD. | 26 |\n| `SignalPeriod` | Signal SMA length for MACD. | 9 |\n| `TrendMaPeriod` | EMA length for the local trend filter. | 26 |\n| `MomentumPeriod` | Momentum indicator length (higher timeframe). | 14 |\n| `MacdOpenLevel` | Minimum absolute MACD level (in price steps) required for a trade. | 3 |\n| `MomentumBuyThreshold` | Minimum absolute momentum distance from 100 for longs. | 0.3 |\n| `MomentumSellThreshold` | Minimum absolute momentum distance from 100 for shorts. | 0.3 |\n| `MaxTrades` | Maximum number of grid entries per direction. | 10 |\n| `LotExponent` | Multiplier used for each additional grid entry. | 1.44 |\n| `StopLossSteps` | Stop-loss distance measured in price steps. | 20 |\n| `TakeProfitSteps` | Take-profit distance measured in price steps. | 50 |"
+   },
+   "3878": {
+    "id": 3878,
+    "name": "True Scalper Profit Lock BreakEven",
+    "family": "trend",
+    "overview": "The True Scalper Profit Lock strategy is a conversion of the MetaTrader 4 expert advisor **TrueScalperProfitLock.mq4**. It combines a short-term exponential moving average crossover with RSI-based polarity filters to time entries. The strategy is designed for high-frequency scalping environments where positions are actively managed using a protective stop, a fixed take-profit level, and an optional break-even lock.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Timeframe of the processed candles. |\n| `FixedVolume` | Base order volume when money management is disabled. |\n| `TakeProfitPoints` / `StopLossPoints` | Profit target and protective stop in price steps. |\n| `UseRsiMethodA` / `UseRsiMethodB` | Enable RSI confirmation methods matching the EA. |\n| `RsiThreshold` | RSI level used by both confirmation modes. |\n| `AbandonMethodA` / `AbandonMethodB` | Enable the abandon logic variants. |\n| `AbandonBars` | Number of completed candles before the abandon logic triggers. |\n| `UseMoneyManagement`, `RiskPercent`, `AccountIsMini`, `LiveTradingMode` | Volume calculation controls. |\n| `UseProfitLock`, `BreakEvenTriggerPoints`, `BreakEvenOffsetPoints` | Break-even activation and offset. |\n| `MaxOpenTrades` | Maximum number of concurrent trades (default behaviour is one open position). |"
+   },
+   "262": {
+    "id": 262,
+    "name": "Hull MA Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 121%. It performs best in the crypto market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `HullLength` = 9.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `HullLength` = 9\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLoss` = new Unit(2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Hull\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `HullLength` = 9\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLoss` = new Unit(2\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Hull\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3202": {
+    "id": 3202,
+    "name": "Plan X",
+    "family": "breakout",
+    "overview": "The Plan X strategy is a breakout system converted from the original MetaTrader 5 expert advisor. It evaluates the close of each finished candle against a reference candle shifted by a configurable number of bars. When the most recent close exceeds the reference close by a specified channel height, the strategy opens a position in the breakout direction. Optional signal reversal allows trading breakouts in the opposite direction.\n\nThe implementation uses StockSharp's high-level API. It supports adjustable stop-loss, take-profit, trailing stop logic and a trading session filter.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Stop Loss (pips)` | Protective stop distance in pips, converted to price units based on the security price step. |\n| `Take Profit (pips)` | Target distance in pips. |\n| `Trailing Stop (pips)` | Distance between price and the trailing stop. Set to zero to disable trailing. |\n| `Trailing Step (pips)` | Additional profit required before the trailing stop is advanced. Must be positive when trailing is enabled. |\n| `Channel Height (pips)` | Breakout threshold expressed in pips. |\n| `Candle Shift` | Number of bars between the latest close and the reference candle. |\n| `Use Time Control` | Enables or disables the trading session filter. |\n| `Start Hour` | First hour (0–23) when trading is allowed. |\n| `End Hour` | Final hour (0–23) when trading is allowed. |\n| `Reverse Signals` | Flips the breakout direction. |\n| `Order Volume` | Market order size expressed in lots/contracts. |\n| `Candle Type` | Data type of candles used for analysis. |"
+   },
+   "256": {
+    "id": 256,
+    "name": "Bollinger Band Width Breakout",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 109%. It performs best in the crypto market.\n\nA position opens once the indicator pierces a band derived from recent data and a deviation multiplier. Long and short trades are possible with a stop attached.\n\nThis system fits momentum traders seeking early breakouts. Trades close as the Bollinger falls back toward the mean. Defaults start with `BollingerLength` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerDeviation` = 2.0m\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopMultiplier` = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BollingerLength` = 20\n  - `BollingerDeviation` = 2.0m\n  - `AvgPeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `StopMultiplier` = 2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2716": {
+    "id": 2716,
+    "name": "KDJ Expert Advisor",
+    "family": "momentum",
+    "overview": "This strategy replicates the MetaTrader 5 \"KDJ Expert Advisor\" by senlin ge. It trades a single symbol using signals from the KDJ oscillator, an evolution of the stochastic oscillator where the %K line is smoothed twice. The strategy observes the difference between the %K and %D lines (often called the J line) to identify momentum reversals, opening only one position at a time. Trade management mirrors the original expert advisor: each trade immediately receives a fixed stop-loss and take-profit that are expressed in pips and translated into price distance using the instrument settings.\n\nThe implementation uses StockSharp's high-level API with a candle subscription and the built-in `Stochastic` indicator, configured to match the KDJ parameters from the MQL5 version. The code automatically detects 3- or 5-digit Forex symbols and adjusts the pip value accordingly.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| **Candle Type** | Data type/timeframe of the input candles. | 15-minute time frame |\n| **KDJ Length** | Number of candles for RSV calculation. | 30 |\n| **Smooth %K** | Number of RSV values used to smooth the %K line. | 3 |\n| **Smooth %D** | Number of %K values used to smooth the %D line. | 6 |\n| **Stop Loss (pips)** | Distance of the protective stop-loss. Set to 0 to disable. | 25 |\n| **Take Profit (pips)** | Distance of the protective take-profit. Set to 0 to disable. | 45 |\n| **Order Volume** | Quantity sent with market orders. | 1 |\n\nAll parameters support optimization ranges identical to the original expert's inputs."
+   },
+   "3489": {
+    "id": 3489,
+    "name": "BuySellOnYourPrice",
+    "family": "volatility",
+    "overview": "- Converts the MetaTrader expert advisor **BuySellonYourPrice.mq5** (id 35391) to the StockSharp high-level API.\n- Sends exactly one order on start, matching the original logic that requires no active orders or positions.\n- Supports market, limit, and stop entries with optional stop-loss and take-profit levels expressed as absolute prices.\n- Automatically configures StockSharp protective orders when valid stop-loss / take-profit distances can be derived from the provided price levels.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Mode` | Order type to submit (None, Buy, Sell, BuyLimit, SellLimit, BuyStop, SellStop). | `None` |\n| `OrderVolume` | Volume for the generated order. | `1` |\n| `EntryPrice` | Price used for pending orders; ignored for market orders. | `0` |\n| `StopLossPrice` | Absolute price level for the stop-loss. | `0` |\n| `TakeProfitPrice` | Absolute price level for the take-profit. | `0` |"
+   },
+   "296": {
+    "id": 296,
+    "name": "Z-Score Volume Filter",
+    "family": "mean_reversion",
+    "overview": "Signals require the indicator to surpass a threshold while volatility meets predefined criteria. Positions can be long or short with built-in stops.\n\nDesigned for traders who value risk control, the strategy exits as soon as the indicator mean reverts or volatility shifts. Initial setting `LookbackPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `ZScoreThreshold` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Z-Score\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `ZScoreThreshold` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Z-Score\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

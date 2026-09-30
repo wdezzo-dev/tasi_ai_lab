@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3963,
+      "name": "Cash Machine 5 min Legacy",
+      "family": "trend",
+      "entry_long": "rsi(close, 14) < 30 and crossabove(rsi(close, 5), 20)",
+      "exit_long": "rsi(close, 5) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is unavailable, so the documented DeMarker 14 oversold reading plus the fast stochastic reversal is approximated by RSI(14) oversold with RSI(5) crossing up, matching the documented StochLength 5 smoothing. The 60/30 pip hidden targets and the three staged trailing milestones are not percentage fields."
+    },
+    {
+      "id": 3732,
+      "name": "Tuyul Gap End Of Week",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 10)",
+      "exit_long": "close < donchian_low_prev(low, 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The staged weekly breakout stop orders are translated as price breaking the highest high or lowest low of the documented lookback scan, with a 10-bar lookback as an explicit default. The Friday-night setup window, pending-order staging, Monday cancel and currency profit target are not expressible."
+    },
+    {
+      "id": 687,
+      "name": "Donchian WMA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(donchian_low(low, 7), ema(close, 62))",
+      "exit_long": "crossbelow(donchian_low(low, 7), ema(close, 62)) and roc(ema(close, 62), 3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": 0.01,
+      "notes": "Uses the documented DonchianLength 7 and WmaLength 62, with the weighted moving average approximated by an EMA. The documented TakeProfitPercent 0.01 is applied, while the year-2025 date filter cannot be expressed without date fields."
+    },
+    {
+      "id": 850,
+      "name": "Gold Scalping Strategy with Precise Entries",
+      "family": "trend",
+      "entry_long": "ema(close, 50) > ema(close, 200) and rsi(close, 14) > 45 and rsi(close, 14) < 55 and crossabove(close, open) and close > ema(close, 50)",
+      "exit_long": "close < ema(close, 50) or rsi(close, 14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA 50/200 trend filter, RSI 45-55 window and engulfing candle near EMA50 are kept, with crossabove(close, open) standing in for the bullish engulfing. The ATR-based stop and the 2 pip target are not percentages, so the exit uses the trend and RSI reversal instead."
+    },
+    {
+      "id": 2471,
+      "name": "Fractal MFI",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close, 14), 20)",
+      "exit_long": "crossabove(rsi(close, 14), 80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MFI is unavailable, so the documented Direct-mode long on the MFI crossing down through the Low Level is approximated by RSI(14) crossing below 20, with the opposite High Level cross closing the long. MfiPeriod and the level values are undocumented (14/20/80) and the original money management is excluded per docs."
+    },
+    {
+      "id": 3277,
+      "name": "ZeeZee Level",
+      "family": "volatility",
+      "entry_long": "high > donchian_high_prev(high, 12)",
+      "exit_long": "low < donchian_low_prev(low, 12)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag swing direction is approximated by breakouts of the prior 12-bar extreme, trading in the direction of the most recent swing; the lookback is an explicit default because ZigZagDepth and ZigZagDeviation carry no values. Martingale sizing and pip-based stop, target and trailing are not expressible."
+    },
+    {
+      "id": 637,
+      "name": "COSTAR",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, sma(close, 100) - std(close, 100))",
+      "exit_long": "crossabove(close, sma(close, 100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The regression line and residual deviation are approximated by SMA(100) and one standard deviation using the documented Length 100 and Multiplier 1, keeping the documented long on a cross back above the lower band. Docs state there are no stops."
+    },
+    {
+      "id": 1337,
+      "name": "Statistical Arbitrage Spread",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is the z-scored spread between two correlated instruments, which requires a second security and cannot be reduced to one symbol. A never-true guard is used; the documented 20-bar lookback and 2.0 multiplier have no single-series meaning."
+    },
+    {
+      "id": 2194,
+      "name": "Pending Order",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only maintains four pending orders at fixed tick offsets from bid and ask during allowed hours, so the entry is an order-placement distance rather than a market signal. A never-true guard is used; the documented offsets and hour window are not DSL fields."
+    },
+    {
+      "id": 623,
+      "name": "Color Code Overlay",
+      "family": "other",
+      "entry_long": "crossabove(close, open) and close - open > 0.01 * (high - low)",
+      "exit_long": "crossbelow(close, open)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom color code is approximated by a bullish candle whose body exceeds the documented 1% of range threshold, and the red-to-green switch becomes a close-over-open cross. The StartTime/EndTime window and the pip-based stop and target (values not supplied) are not expressible."
+    }
+  ]
+}

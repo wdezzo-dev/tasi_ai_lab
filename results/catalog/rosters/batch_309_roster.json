@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2450,
+      "name": "Trend Alexcud",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 327,
+      "name": "Parabolic SAR Hurst Filter",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 467,
+      "name": "2Mars OKX",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 1001,
+      "name": "Lux Clara EMA + VWAP",
+      "family": "trend",
+      "entry_long": "close > sma(close,50) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWAP/VWMA is approximated with a volume-confirmed moving-average trend filter because anchored/session VWAP is unavailable in the DSL."
+    },
+    {
+      "id": 3097,
+      "name": "Fluctuate",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2279,
+      "name": "ColorJFatl Digit",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1534,
+      "name": "Volume and Volatility Ratio Indicator WODI",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 3244,
+      "name": "Grr AL Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3660,
+      "name": "Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 2155,
+      "name": "Loco",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    }
+  ]
+}

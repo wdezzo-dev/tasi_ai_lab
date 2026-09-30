@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2050,
+  "ticker": "4190",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2050,
+    "name": "VininI Trend LRMA",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,6),0) and roc(close,20) > 0",
+    "exit_long": "crossbelow(zscore(close,13),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Z-score(13) replaces the unavailable linear-regression moving average, with zero substituting the instrument-specific +10/-10 breakdown levels. The Twist mode, 4-hour timeframe, and opposite-signal exit are approximated; no stops are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1999-11-30",
+        "2024-07-31"
+      ],
+      "bars_in_window": 5263,
+      "engine_win_ret": 20.28923643339362,
+      "alpha": 14.066086739459283,
+      "benchmark_ret": 6.223149693934335,
+      "trades": 225,
+      "win_rate": 0.5111111111111111,
+      "sharpe": 0.8824639320554625,
+      "max_drawdown": -0.39462241544081933,
+      "profit_factor": 2.428852322050763
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.047849231458816366,
+      "alpha": 0.06021399189158294,
+      "benchmark_ret": -0.012364760432766575,
+      "trades": 17,
+      "win_rate": 0.47058823529411764,
+      "sharpe": 0.39959409726638756,
+      "max_drawdown": -0.05802445195538941,
+      "profit_factor": 1.7012994267371941
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.2602520400386823,
+      "alpha": 0.010252040038682297,
+      "benchmark_ret": 0.25,
+      "trades": 10,
+      "win_rate": 0.8,
+      "sharpe": 2.3382425691121655,
+      "max_drawdown": -0.09293739933225709,
+      "profit_factor": 4.445039510509819
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1999-11-30",
+        "2024-07-31"
+      ],
+      "bars_in_window": 5263,
+      "engine_win_ret": 5.919072299762246,
+      "alpha": -0.3040773941720891,
+      "benchmark_ret": 6.223149693934335,
+      "trades": 225,
+      "win_rate": 0.39111111111111113,
+      "sharpe": 0.5807122844318975,
+      "max_drawdown": -0.4103036410460278,
+      "profit_factor": 1.695650808421867
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.04018754153756521,
+      "alpha": -0.027822781104798633,
+      "benchmark_ret": -0.012364760432766575,
+      "trades": 17,
+      "win_rate": 0.4117647058823529,
+      "sharpe": -0.2444507690364885,
+      "max_drawdown": -0.0906609184185001,
+      "profit_factor": 0.810945795009258
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.20208815426581483,
+      "alpha": -0.047911845734185166,
+      "benchmark_ret": 0.25,
+      "trades": 10,
+      "win_rate": 0.6,
+      "sharpe": 1.8250172495305967,
+      "max_drawdown": -0.10217731188675316,
+      "profit_factor": 3.125619128186002
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

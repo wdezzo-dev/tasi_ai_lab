@@ -1,0 +1,84 @@
+{
+  "strategy_id": 1627,
+  "ticker": "2284",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1627,
+    "name": "ZeroLag MACD Cross",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,3,34),macd_signal(close,4,34,2))",
+    "exit_long": "crossbelow(macd(close,2,34),macd_signal(close,2,34,2))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented FastEmaLength 2, SlowEmaLength 34 and SignalEmaLength 2 are used directly, and crossabove/crossbelow already enforce the documented UseFreshSignal requirement. Session hours 9-15, the KillDay/KillHour forced exit and Volume are not expressible, and the docs state there are no stops."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.013638367239553029,
+      "alpha": 0.4423808822096129,
+      "benchmark_ret": -0.4287425149700599,
+      "trades": 31,
+      "win_rate": 0.3870967741935484,
+      "sharpe": 0.13878079715611502,
+      "max_drawdown": -0.11882144363745406,
+      "profit_factor": 1.036029988762876
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.18788927624905294,
+      "alpha": 0.25409136684138733,
+      "benchmark_ret": -0.0662020905923344,
+      "trades": 17,
+      "win_rate": 0.5882352941176471,
+      "sharpe": 1.9932755081126947,
+      "max_drawdown": -0.053523189454224074,
+      "profit_factor": 2.7942916969291134
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.13245040430710497,
+      "alpha": 0.2962921106629549,
+      "benchmark_ret": -0.4287425149700599,
+      "trades": 31,
+      "win_rate": 0.3548387096774194,
+      "sharpe": -0.6832237014642576,
+      "max_drawdown": -0.19731669171294808,
+      "profit_factor": 0.7033293252459143
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.09107333498984604,
+      "alpha": 0.15727542558218044,
+      "benchmark_ret": -0.0662020905923344,
+      "trades": 17,
+      "win_rate": 0.4117647058823529,
+      "sharpe": 1.0153808863986824,
+      "max_drawdown": -0.05656250602544277,
+      "profit_factor": 1.6412866822045107
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

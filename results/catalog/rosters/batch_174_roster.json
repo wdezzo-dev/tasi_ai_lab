@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 541,
+      "name": "Average High-Low Range IBS Reversal",
+      "family": "trend",
+      "entry_long": "high > low and close < donchian_high(high,20) - 2.5 * sma(high - low,20) and bars_since(close >= donchian_high(high,20) - 2.5 * sma(high - low,20)) > 2 and (close - low) / (high - low) < 0.2",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The buy threshold is built literally from the 20-bar highest high minus 2.5 times the average high-low range, bars_since>2 enforces the two bars below threshold, and IBS<0.2 is the documented intrabar strength limit with a non-zero range guard. Exit is a close above the previous bar high; the StartTime/EndTime window and the absent stops are dropped."
+    },
+    {
+      "id": 3403,
+      "name": "CDC PL MFI",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) < 0 and close > (donchian_high_prev(high,1) + donchian_low_prev(low,1)) / 2 and close < donchian_high_prev(high,1) and rsi((high + low + close) / 3,49) > 40",
+      "exit_long": "rsi((high + low + close) / 3,49) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long side keeps the Piercing Line shape (down close then an up bar closing above the prior two-bar midpoint but under the prior high) confirmed by MFI(49) above LongEntryLevel=40, and closes at the 70 exit level. MFI is approximated by RSI(49) on typical price since the volume-weighted formula is unavailable, exact body/open comparisons need an unshiftable previous open, and the 50-pip stop and target are not percent fields."
+    },
+    {
+      "id": 735,
+      "name": "EMA Dow Theory",
+      "family": "trend",
+      "entry_long": "ema(close,47) >= ema(close,50) and close > donchian_high_prev(high,6)",
+      "exit_long": "ema(close,47) < ema(close,50) or close < donchian_low_prev(low,6)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast EMA(47) >= slow EMA(50) with a break above the 6-bar swing high is the documented long entry and the symmetric condition is the exit. Swing points are taken as prior-bar Donchian extremes because the DSL cannot read a fractal bar, and the docs specify no stops."
+    },
+    {
+      "id": 3106,
+      "name": "MA MACD Position Averaging v2",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) * 1.005 and macd(close,12,26) > macd_signal(close,12,26,9) and macd(close,12,26) > 0",
+      "exit_long": "close < sma(close,20) * 0.995 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MA filter and MACD block are kept with fallbacks (MA period 20, standard 12/26/9 MACD, and a 0.5% MA indent standing in for the undocumented MaIndentPips) because the docs list no values. The averaging module (StepLossPips, LotCoefficient), the MACD ratio test, BarOffset shift, trailing stop, and pip protections are not expressible."
+    },
+    {
+      "id": 2529,
+      "name": "V1N1 Lonny Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and roc(ema(close,20),1) > 0 and rsi(close,14) < 70",
+      "exit_long": "close < ema(close,20) or rsi(close,14) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A decisive close above the 20-bar opening range (TradeRange fallback) with a rising EMA(20) slope and RSI(14) below the 70 stochastic boundary captures the documented long breakout, and loss of the EMA slope or an overbought reading exits. London/New York session times, MinRangePoints, breakout-distance bands, point stop/target, trailing stop, and the bar timeout are unavailable."
+    },
+    {
+      "id": 2667,
+      "name": "Slime Mold RSI",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi((high + low) / 2,12) + rsi((high + low) / 2,36) + rsi((high + low) / 2,108) + rsi((high + low) / 2,324), 200)",
+      "exit_long": "crossbelow(rsi((high + low) / 2,12) + rsi((high + low) / 2,36) + rsi((high + low) / 2,108) + rsi((high + low) / 2,324), 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "With the documented default weight of -100 on all four inputs, normalizing each median-price RSI to -1..+1 makes the perceptron's zero crossing identical to the summed RSI(12/36/108/324) crossing 200, so the cross is exact. The opposite crossing reverses the position and the docs state there are no stops or targets."
+    },
+    {
+      "id": 1769,
+      "name": "Follow Your Heart",
+      "family": "volatility",
+      "entry_long": "roc(open,6) > 2.3 and roc(close,6) > 2.3 and roc(high,6) > 2.3 and roc(low,6) > 2.3 and roc(open,6) + roc(close,6) + roc(high,6) + roc(low,6) > 0",
+      "exit_long": "roc(open,6) + roc(close,6) + roc(high,6) + roc(low,6) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The six-bar relative changes of open, close, high and low must all clear Level=2.3 with a positive sum for the long, and the mirrored sum turns negative to exit. ROC is a percentage, so the 2.3 threshold is read in percent rather than the documented price points; the account-currency profit/loss limits, 550-point stop and target, and session hours are not expressible."
+    },
+    {
+      "id": 418,
+      "name": "Double RSI",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and rsi(close,50) > 50",
+      "exit_long": "crossbelow(rsi(close,14),70) or rsi(close,50) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) leaving oversold with a bullish higher-timeframe reading is the documented long entry and the mirrored conditions exit. The DSL loads a single series, so the 15-minute RSI is proxied by a slower RSI(50) on the same data; UseTP defaults to false and no stops are documented."
+    },
+    {
+      "id": 1701,
+      "name": "Geedo",
+      "family": "volume",
+      "entry_long": "roc(open,4) > 0",
+      "exit_long": "roc(open,4) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The comparison of Open[T1] with Open[T2] (6 versus 2 bars back, i.e. four bars apart) is exactly ROC(open,4), and the opposite sign exits; the docs list no indicators. The TradeTime=18 hour gate, the DeltaLong=6/DeltaShort=21 point thresholds, the 39/147 point protections, and MaxOpenTime=504 hours are not available on the daily DSL."
+    },
+    {
+      "id": 1716,
+      "name": "Scheduled Time Trader",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA fires one order at a configured Trade Hour:Minute:Second with no market-derived entry condition, so the never-true negative-price guard avoids fabricating a signal. The tick-based stop/target and the 1-second candle clock have no DSL representation."
+    }
+  ]
+}

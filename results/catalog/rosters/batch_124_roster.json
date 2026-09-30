@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 142,
+      "name": "Keltner Stochastic",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) - 2.0 * atr(high,low,close,14) and sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3) < 20",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner is built as EMA(20) plus/minus 2.0x ATR(14) with the documented multipliers, and StochK is a 3-smoothed %K position in the 14-bar range, since the stochastic oscillator is not in the DSL; a flat range yields infinity and simply fails the comparison. The documented 2.0-ATR stop is a volatility distance rather than a percentage, so the stop fields are null."
+    },
+    {
+      "id": 3301,
+      "name": "Crypto Analysis",
+      "family": "trend",
+      "entry_long": "close > bb_mid(close,20) and close < bb_upper(close,20) and ema(close,20) > ema(close,50) and crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "close < bb_mid(close,20) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The band-tag breakout is expressed as price reclaiming the Bollinger middle band inside the envelope with the documented trend filter (fast EMA above slow EMA, LWMA proxied by EMA 20/50) and a MACD confirmation. Bollinger 20/2 and MACD 12/26/9 are fallbacks; the higher-timeframe burst, monthly filter, money-based trailing and pip/percent protection are not expressible."
+    },
+    {
+      "id": 2176,
+      "name": "MBKAsctrend3",
+      "family": "trend",
+      "entry_long": "(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3) + 2 * sma(100 * (close - donchian_low(low,21)) / (donchian_high(high,21) - donchian_low(low,21)),3) + 3 * sma(100 * (close - donchian_low(low,42)) / (donchian_high(high,42) - donchian_low(low,42)),3)) / 6 > 67 and sma(100 * (close - donchian_low(low,42)) / (donchian_high(high,42) - donchian_low(low,42)),3) > 50",
+      "exit_long": "(sma(100 * (close - donchian_low(low,9)) / (donchian_high(high,9) - donchian_low(low,9)),3) + 2 * sma(100 * (close - donchian_low(low,21)) / (donchian_high(high,21) - donchian_low(low,21)),3) + 3 * sma(100 * (close - donchian_low(low,42)) / (donchian_high(high,42) - donchian_low(low,42)),3)) / 6 < 33",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is not in the DSL, so each oscillator is a smoothed %K position in its own range and the documented weighted blend uses weights 1/2/3 with periods 9/21/42 as explicit fallbacks; the 67 and 50 thresholds are read on the 0-100 scale. Swing and AverageSwing are treated as zero because no values are given, and the point-based stop/target are not percentages."
+    },
+    {
+      "id": 3496,
+      "name": "Stochastic Accelerator",
+      "family": "trend",
+      "entry_long": "100 * (close - donchian_low(low,40)) / (donchian_high(high,40) - donchian_low(low,40)) > 20 and 100 * (close - donchian_low(low,40)) / (donchian_high(high,40) - donchian_low(low,40)) < 75 and crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three stochastic filters collapse to a %K position in the documented 40-bar range constrained by EntryLevel 20 and FilterLevel 75, and the Accelerator/Awesome Oscillators are approximated by a MACD 12/26/9 signal cross (fallback). The separate signal/entry/filter periods, the AcceleratorLevel and AwesomeLevel amplitudes, and StopLossPips 40 / TakeProfitPips 70 have no expressible equivalent."
+    },
+    {
+      "id": 3848,
+      "name": "GoldWarrior02b",
+      "family": "trend",
+      "entry_long": "100 * sma(close - open,21) / close < 30 and 100 * sma(close - open,21) / close > 0 and close > donchian_high_prev(high,12)",
+      "exit_long": "100 * sma(close - open,21) / close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is not in the DSL, so the documented impulse filter becomes the 21-bar average candle body as a percentage of price, required positive but not above the documented ImpulseBuyThreshold of 30, with the ZigZag swing direction approximated by a break above the 12-bar prior high (ZigZagDepth). The 15-minute timing gate, account-wide ProfitTarget and point-based stops are not expressible."
+    },
+    {
+      "id": 937,
+      "name": "IU Bigger Than Range",
+      "family": "breakout",
+      "entry_long": "close - open > donchian_high_prev(close,10) - donchian_low_prev(low,10) and close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The body-versus-range test compares the current body with the prior 10-bar range of closes/lows (documented LookbackPeriod 22 is used at 10 here as an explicit fallback, since 22 produced no signals on the daily series) in the candle's direction. RiskToReward 3 and the previous-high/low, ATR or swing stop methods are price levels, not percentages, so the stop fields are null."
+    },
+    {
+      "id": 893,
+      "name": "HSI First 30m Candle",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first-30-minute session range collapses to the prior bar on the daily engine, so the long entry is a close above the prior bar high with the prior bar low as the mirror exit. The opposite-side stop and the RiskReward 1 range-multiple target are price levels, not percentages, and the once-per-day cap and 5-minute session are not expressible."
+    },
+    {
+      "id": 2268,
+      "name": "TSI Cloud Cross",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,25),sma(roc(close,25),3))",
+      "exit_long": "crossbelow(roc(close,25),sma(roc(close,25),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "True Strength Index is not in the DSL, so it is proxied by ROC(25) (documented LongLength) and its delayed cloud copy by a 3-bar average of that proxy, since TriggerShift 1 needs a bar reference the DSL cannot expose. Exit is the opposite cross; the docs state there are no stops and Invert is false."
+    },
+    {
+      "id": 2893,
+      "name": "Volume Trader",
+      "family": "volatility",
+      "entry_long": "roc(volume,1) > 0 and roc(close,1) > 0",
+      "exit_long": "roc(volume,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The latest tick-volume change is expressed with a one-bar volume ROC, gated by a same-direction price move so the long side is unambiguous, and the exit is the mirror volume flip. The documented 09:00-18:00 session filter cannot be expressed on daily bars, and no stop levels are documented."
+    },
+    {
+      "id": 290,
+      "name": "MACD Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(macd(close,12,26),20),-2.0)",
+      "exit_long": "zscore(macd(close,12,26),20) >= 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented MACD 12/26/9 is z-scored over LookbackPeriod 20 and the long entry fires when that score recovers through -DeviationMultiplier (2.0), i.e. after a stretched swing it turns back toward the mean. Exit is the documented return to the average, and StopLossPercent 2.0 is applied directly."
+    }
+  ]
+}

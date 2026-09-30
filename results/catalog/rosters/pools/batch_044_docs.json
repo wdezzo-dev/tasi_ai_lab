@@ -1,0 +1,98 @@
+{
+ "batch_044": {
+  "strategy_ids": [
+   1405,
+   1918,
+   702,
+   169,
+   3241,
+   779,
+   1196,
+   4024,
+   3577,
+   4000
+  ],
+  "docs": {
+   "1405": {
+    "id": 1405,
+    "name": "Trading The Channel",
+    "family": "trend",
+    "overview": "This strategy uses a linear regression channel to generate signals.\n\nThree trade rules are supported:\n\n1. Trade the trend – enter on slope changes.\n2. Trade channel breakouts – enter on breaks above or below the channel.\n3. Trade within the channel – fade moves inside the channel with an optional trend filter.\n\nParameters include period, zone percent, range source, trade rule, trend filter and a long-only option.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1918": {
+    "id": 1918,
+    "name": "Trend Collector",
+    "family": "trend",
+    "overview": "This strategy is a conversion of the original MQL `TrendCollector.mq4` algorithm. It combines trend detection using two exponential moving averages with momentum and volatility filters.\n\n## Strategy Logic\n\n- **Fast EMA vs Slow EMA** – The strategy follows the main trend by comparing a fast EMA with a slow EMA.\n- **Stochastic Oscillator** – Determines overbought and oversold conditions. Long positions open when the stochastic value is below the lower threshold and the fast EMA is above the slow EMA. Short positions trigger when the stochastic value is above the upper threshold and the fast EMA is below the slow EMA.\n- **ATR Volatility Filter** – Trades only occur when the current ATR value is below the volatility limit, avoiding highly volatile periods.\n- **Trading Window** – Orders are generated only between the configured start and end hours.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- | --- |\n| FastMaLength | Period of the fast EMA | 4 |\n| SlowMaLength | Period of the slow EMA | 204 |\n| StochasticPeriod | Period for the stochastic oscillator | 14 |\n| StochasticUpper | Upper level for stochastic | 80 |\n| StochasticLower | Lower level for stochastic | 20 |\n| AtrPeriod | Period for ATR | 14 |\n| AtrLimit | Maximum ATR value allowed to trade | 2 |\n| StartHour | Start hour for trading window | 5 |\n| EndHour | End hour for trading window | 24 |\n| CandleTimeFrame | Time frame of processed candles | 5 minutes |\n\nImplementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| FastMaLength | Period of the fast EMA | 4 |\n| SlowMaLength | Period of the slow EMA | 204 |\n| StochasticPeriod | Period for the stochastic oscillator | 14 |\n| StochasticUpper | Upper level for stochastic | 80 |\n| StochasticLower | Lower level for stochastic | 20 |\n| AtrPeriod | Period for ATR | 14 |\n| AtrLimit | Maximum ATR value allowed to trade | 2 |\n| StartHour | Start hour for trading window | 5 |\n| EndHour | End hour for trading window | 24 |\n| CandleTimeFrame | Time frame of processed candles | 5 minutes |\n\nImplementations are available in both C# and Python."
+   },
+   "702": {
+    "id": 702,
+    "name": "Dskyz (DAFE) MAtrix with ATR-Powered Precision",
+    "family": "trend",
+    "overview": "This strategy enters long when a fast moving average is above a slow moving average with ATR, volume and time filters. Short positions are taken on the opposite conditions.\n\n## Parameters\n- Candle Type\n- Fast MA Type\n- Fast MA Length\n- Slow MA Type\n- Slow MA Length\n- ATR Period\n- ATR Multiplier\n- Use Trend Filter\n- Minimum Volume\n- Volatility Threshold\n- Trading Start Hour\n- Trading End Hour\n- Trailing Stop ATR Multiplier\n- Profit Target ATR Multiplier\n- Fixed Stop ATR Multiplier\n- Trade Quantity\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Fast MA Type\n- Fast MA Length\n- Slow MA Type\n- Slow MA Length\n- ATR Period\n- ATR Multiplier\n- Use Trend Filter\n- Minimum Volume\n- Volatility Threshold\n- Trading Start Hour\n- Trading End Hour\n- Trailing Stop ATR Multiplier\n- Profit Target ATR Multiplier\n- Fixed Stop ATR Multiplier\n- Trade Quantity"
+   },
+   "169": {
+    "id": 169,
+    "name": "Hull Ma Stochastic",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 94%. It performs best in the stocks market.\n\nHull MA quickly reveals trend direction. Stochastic waits for a dip or rally within that trend to trigger the trade.\n\nA flexible approach for those wanting smooth signals. ATR-based stops cap potential loss.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `HullMA turning up && StochK < 20`\n  - Short: `HullMA turning down && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Hull MA change of direction\n- **Stops**: ATR-based using `StopLossAtr`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `StopLossAtr` = 2m\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `HullMA turning up && StochK < 20`\n  - Short: `HullMA turning down && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Hull MA change of direction\n- **Stops**: ATR-based using `StopLossAtr`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `StopLossAtr` = 2m\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3241": {
+    "id": 3241,
+    "name": "Pure Price Action Fractal",
+    "family": "trend",
+    "overview": "The **Pure Price Action Strategy** is a StockSharp port of the MetaTrader expert advisor \"Pure Price Action\" (MQL id 24291).\nIt combines breakout confirmation from Bill Williams fractals with a momentum filter computed on a higher timeframe and a long-term MACD trend filter.\nThe algorithm attempts to capture trend continuation trades immediately after the market retests the most recent fractal level.",
+    "details": "",
+    "parameters": "- `CandleType` – Main signal timeframe (default: 15-minute time frame).\n- `MomentumCandleType` – Timeframe for the momentum indicator (default: 1-hour time frame).\n- `MacdCandleType` – Timeframe for the MACD filter (default: 30-day time frame, emulating monthly candles).\n- `FastPeriod` / `SlowPeriod` – Periods of the fast and slow LWMA.\n- `MomentumPeriod` – Momentum indicator length.\n- `MomentumThreshold` – Minimum absolute deviation of Momentum from 100.\n- `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` – MACD configuration.\n- `StopLossPoints`, `TakeProfitPoints` – Risk protection distances in price steps.\n- `TrailingStopPoints` – Trailing distance in price steps.\n- `BreakEvenTriggerPoints`, `BreakEvenOffsetPoints` – Break-even trigger and locked profit distances.\n- `MaxPosition` – Maximum absolute position size handled by the strategy.\n- `EnableTrailing`, `EnableBreakEven`, `UseStopLoss`, `UseTakeProfit` – Toggles for risk-management blocks."
+   },
+   "779": {
+    "id": 779,
+    "name": "Fancy Bollinger Bands",
+    "family": "breakout",
+    "overview": "This strategy trades Bollinger Band breakouts. It buys when the close price crosses above the upper band and sells when the close price crosses below the lower band.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: close crosses above upper band\n  - **Short**: close crosses below lower band\n- **Exit Conditions**: reverse crossover\n- **Type**: Breakout\n- **Indicators**: Bollinger Bands\n- **Timeframe**: 1 minute (default)\n- **Stops**: none\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: close crosses above upper band\n  - **Short**: close crosses below lower band\n- **Exit Conditions**: reverse crossover\n- **Type**: Breakout\n- **Indicators**: Bollinger Bands\n- **Timeframe**: 1 minute (default)\n- **Stops**: none",
+    "parameters": ""
+   },
+   "1196": {
+    "id": 1196,
+    "name": "Projection",
+    "family": "breakout",
+    "overview": "This strategy computes the average percentage change of recent daily opens and projects breakout levels around the current day's open. Long positions are entered when price breaks above the upper projection, while short positions are opened on a break below the lower projection. Protective stops are placed near the opposite side of the projection.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: price crosses above `open + threshold`.\n  - **Short**: price crosses below `open - threshold`.\n- **Exit Criteria**:\n  - **Long**: price falls below the long stop.\n  - **Short**: price rises above the short stop.\n- **Stops**: yes, based on average change.\n- **Parameters**:\n  - `TargetMultiple` – multiplier for the average change (default 0.2).\n  - `Threshold` – percentage of the average change used to form breakout levels (default 1.0).\n  - `CalculationPeriod` – number of days in the average (default 5).\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: price crosses above `open + threshold`.\n  - **Short**: price crosses below `open - threshold`.\n- **Exit Criteria**:\n  - **Long**: price falls below the long stop.\n  - **Short**: price rises above the short stop.\n- **Stops**: yes, based on average change.\n- **Parameters**:\n  - `TargetMultiple` – multiplier for the average change (default 0.2).\n  - `Threshold` – percentage of the average change used to form breakout levels (default 1.0).\n  - `CalculationPeriod` – number of days in the average (default 5).",
+    "parameters": ""
+   },
+   "4024": {
+    "id": 4024,
+    "name": "App Price Level Cross",
+    "family": "momentum",
+    "overview": "- Conversion of the MetaTrader 4 expert advisor **BT_v4** (`MQL/8543/BT_v4.mq4`).\n- Reimplemented with the high-level StockSharp strategy API (candle subscriptions, indicator-free processing, built-in protections).\n- Focused on reacting to the close price crossing a user-defined horizontal level (`AppPrice`).",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `AppPrice` | Level that triggers trades when the close crosses it. | `0` |\n| `BuyOnly` | `true` = long-only mode (original default), `false` = short-only. | `true` |\n| `FixedVolume` | Lot size when MM is disabled. | `0.1` |\n| `EnableMoneyManagement` | Enables balance-percentage sizing. | `false` |\n| `LotBalancePercent` | Percent of balance used when MM is on. | `10` |\n| `MinLot` / `MaxLot` | Bounds for the computed lot size. | `0.1` / `5` |\n| `LotPrecision` | Number of decimals to round the calculated lot. | `1` |\n| `StopLossPoints` | Stop-loss distance in price points (0 = disabled). | `140` |\n| `TakeProfitPoints` | Take-profit distance in price points (0 = disabled). | `180` |\n| `CandleType` | Candle timeframe used for the cross detection. | `1 Minute` |"
+   },
+   "3577": {
+    "id": 3577,
+    "name": "XP Trade Manager Grid (C#)",
+    "family": "volatility",
+    "overview": "The **XP Trade Manager Grid** strategy is a direct port of the MetaTrader 4 expert advisor `XP Trade Manager Grid.mq4`. It automates a symmetrical grid that continually adds new positions every time the market moves a configurable number of points away from the latest filled leg. The original expert managed profits with partial take-profit levels for the first three orders, a break-even cluster when the ladder grows larger, and a global risk guard based on account percentage. The StockSharp implementation keeps the same ideas while leveraging high-level API primitives (market orders, candle subscriptions, and strategy parameters).",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Data type used to drive the strategy (default: 1-minute candles). |\n| `OrderVolume` | Volume of each market order/leg. |\n| `MaxOrders` | Maximum simultaneous legs across both directions. |\n| `StepPoints` | Distance in points between consecutive grid orders. |\n| `RiskPercent` | Maximum tolerable floating loss as % of the portfolio starting balance. |\n| `TakeProfit1Total` | Total point goal accumulated by order #1 cycles before no automatic renewal occurs. |\n| `TakeProfit1Partitive` | Take-profit distance (points) for the very first leg. |\n| `TakeProfit1Offset` | Minimum retracement distance required before re-creating the first order. |\n| `TakeProfit2` / `TakeProfit3` | Individual TP offsets (points) for legs #2 and #3. |\n| `TakeProfit4Total` … `TakeProfit15Total` | Break-even TP totals used once the ladder size reaches the matching number of orders. |\n| `InitialSide` | Direction of the very first order (Buy or Sell). |\n\n> **Note:** All point-based inputs are automatically scaled by the security `PriceStep`, matching the original `Point()` logic from MetaTrader."
+   },
+   "4000": {
+    "id": 4000,
+    "name": "Master Mind Triple WPR",
+    "family": "mean_reversion",
+    "overview": "- Port of the MetaTrader 4 expert advisor `MasterMind3CE` (folder `MQL/8458`).\n- Uses four Williams %R indicators with periods 26, 27, 29 and 30 to detect extreme overbought / oversold conditions.\n- Designed for mean-reversion entries: buy after a deep sell-off, sell after an overextended rally.\n- Includes configurable stop-loss, take-profit and optional trailing-stop logic expressed in instrument price steps.\n- Works on any timeframe supported by the connected StockSharp terminal; default is 15-minute candles.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Target net position size (lots/contracts). | `1` |\n| `OversoldLevel` | Williams %R threshold that confirms oversold conditions. | `-99.99` |\n| `OverboughtLevel` | Williams %R threshold that confirms overbought conditions. | `-0.01` |\n| `StopLossSteps` | Stop-loss distance in `PriceStep` units. Set `0` to disable. | `2000` |\n| `TakeProfitSteps` | Take-profit distance in `PriceStep` units. Set `0` to disable. | `0` |\n| `TrailingStopSteps` | Trailing-stop distance in `PriceStep` units. Requires `TrailingStepSteps > 0`. | `0` |\n| `TrailingStepSteps` | Minimum improvement before the trailing stop is moved (in `PriceStep` units). | `1` |\n| `CandleType` | Candle data type / timeframe processed by the strategy. | `TimeFrame(15m)` |"
+   }
+  }
+ }
+}

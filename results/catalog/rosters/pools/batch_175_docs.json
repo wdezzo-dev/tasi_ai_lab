@@ -1,0 +1,98 @@
+{
+ "batch_175": {
+  "strategy_ids": [
+   1425,
+   269,
+   869,
+   2314,
+   1599,
+   708,
+   2572,
+   237,
+   1553,
+   2445
+  ],
+  "docs": {
+   "1425": {
+    "id": 1425,
+    "name": "Three Moving Averages",
+    "family": "trend",
+    "overview": "This strategy trades when a short moving average crosses a medium one while both are aligned relative to a long-term average.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Short MA crosses above medium MA and medium MA is above long MA.\n  - **Short**: Short MA crosses below medium MA and medium MA is below long MA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortMa` = 20\n  - `MediumMa` = 50\n  - `LongMa` = 200\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Short MA crosses above medium MA and medium MA is above long MA.\n  - **Short**: Short MA crosses below medium MA and medium MA is below long MA.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `ShortMa` = 20\n  - `MediumMa` = 50\n  - `LongMa` = 200",
+    "parameters": ""
+   },
+   "269": {
+    "id": 269,
+    "name": "CCI Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 94%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `CciPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CciPeriod` = 20\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "869": {
+    "id": 869,
+    "name": "Hamster Bot MRS 2",
+    "family": "trend",
+    "overview": "Simplified strategy based on a single moving average level.\n\n## Details\n\n- **Entry Criteria**: Price crosses MA level adjusted by shift\n- **Long/Short**: Both\n- **Exit Criteria**: Reverse crossing of the same level\n- **Stops**: No\n- **Default Values**:\n  - `MA Length` = 3\n  - `Shift` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Simple Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses MA level adjusted by shift\n- **Long/Short**: Both\n- **Exit Criteria**: Reverse crossing of the same level\n- **Stops**: No\n- **Default Values**:\n  - `MA Length` = 3\n  - `Shift` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Simple Moving Average\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2314": {
+    "id": 2314,
+    "name": "CaiChannel System Digit",
+    "family": "trend",
+    "overview": "This strategy is a simplified StockSharp port of the MetaTrader expert **i-CAiChannel System Digit**.\n\nThe algorithm monitors a volatility channel built from a moving average and standard deviation (Bollinger Bands).\nWhen a candle closes outside the channel and the next candle returns inside, the strategy trades in the direction of the re-entry.\n\n## Parameters\n- `Length` – period of the moving average.\n- `Width` – standard deviation multiplier.\n- `Candle Type` – timeframe for processing.\n\n## Trading Logic\n1. Subscribe to candles of the selected timeframe.\n2. Calculate Bollinger Bands with the specified parameters.\n3. If the previous candle closed above the upper band and the current candle closes back inside, go long.\n4. If the previous candle closed below the lower band and the current candle closes back inside, go short.\n5. The position is reversed when the opposite signal occurs.\n\nAll signals are generated only on finished candles.\n",
+    "details": "",
+    "parameters": "- `Length` – period of the moving average.\n- `Width` – standard deviation multiplier.\n- `Candle Type` – timeframe for processing."
+   },
+   "1599": {
+    "id": 1599,
+    "name": "ATR Sell the Rip Mean Reversion",
+    "family": "trend",
+    "overview": "Short-only strategy that sells when price spikes above a smoothed ATR threshold and covers on a drop below the prior low. An optional EMA filter limits trades to downtrends.\n\n## Details\n\n- **Entry Criteria**: close above smoothed (close + ATR * multiplier)\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `AtrPeriod` = 20\n  - `AtrMultiplier` = 1.0\n  - `SmoothPeriod` = 10\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Short\n  - Indicators: ATR, SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: close above smoothed (close + ATR * multiplier)\n- **Long/Short**: Short\n- **Exit Criteria**: close below previous low\n- **Stops**: No\n- **Default Values**:\n  - `AtrPeriod` = 20\n  - `AtrMultiplier` = 1.0\n  - `SmoothPeriod` = 10\n  - `EmaPeriod` = 200\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Short\n  - Indicators: ATR, SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "708": {
+    "id": 708,
+    "name": "Dual Momentum",
+    "family": "momentum",
+    "overview": "Rotates between a risky and a safe asset using dual momentum.\nThe strategy invests in the risky asset only when its momentum is positive and greater than the safe asset's momentum.\n\n## Details\n\n- **Entry Criteria**: Risky momentum > 0 and > safe momentum\n- **Long/Short**: Long only\n- **Exit Criteria**: Switch to safe asset when condition fails\n- **Stops**: No\n- **Default Values**:\n  - `Period` = 12\n  - `CandleType` = TimeSpan.FromDays(30).TimeFrame()\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long-only\n  - Indicators: RateOfChange\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Monthly\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Risky momentum > 0 and > safe momentum\n- **Long/Short**: Long only\n- **Exit Criteria**: Switch to safe asset when condition fails\n- **Stops**: No\n- **Default Values**:\n  - `Period` = 12\n  - `CandleType` = TimeSpan.FromDays(30).TimeFrame()\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long-only\n  - Indicators: RateOfChange\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Monthly\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2572": {
+    "id": 2572,
+    "name": "Nevalyashka Martingale",
+    "family": "volatility",
+    "overview": "The Nevalyashka Martingale strategy is a direct port of the MetaTrader 5 expert advisor \"Nevalyashka3_1\". It runs a single-symbol martingale that alternates between buying and selling after losing trades. The strategy always starts by selling and measures account equity to decide whether the previous trade cycle ended in profit or loss. Profit resets the volume back to the base lot size and keeps the direction unchanged, while a loss multiplies the lot size and flips the direction in an attempt to recover the drawdown.",
+    "details": "",
+    "parameters": "- `BaseVolume` – lot size for the initial trade and any profitable cycle (default 0.1).\n- `VolumeMultiplier` – factor applied after a loss to increase the next lot (default 1.1).\n- `TakeProfitPoints` – take-profit distance measured in price points (default 94).\n- `MoveProfitPoints` – minimum favorable excursion before the trailing stop activates (default 25).\n- `MoveStepPoints` – extra buffer required between successive trailing adjustments (default 11).\n- `StopLossPoints` – initial stop-loss distance measured in price points (default 70).\n- `CandleType` – timeframe used for trade management. The default is 5-minute candles."
+   },
+   "237": {
+    "id": 237,
+    "name": "Stochastic Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 64%. It performs best in the forex market.\n\nA long trade is placed when Stochastic %K falls below the lower band defined by the average minus `Multiplier` times the standard deviation. A short trade occurs when %K exceeds the upper band. Positions are closed once %K crosses back through its average line.\n\nThe method is designed for short-term traders who like to trade overbought and oversold extremes. The stop-loss protects against sustained momentum that fails to mean revert.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: %K < Avg - Multiplier * StdDev\n  - **Short**: %K > Avg + Multiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %K > Avg\n  - **Short**: Exit when %K < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `AveragePeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %K < Avg - Multiplier * StdDev\n  - **Short**: %K > Avg + Multiplier * StdDev\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when %K > Avg\n  - **Short**: Exit when %K < Avg\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `AveragePeriod` = 20\n  - `Multiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1553": {
+    "id": 1553,
+    "name": "Waindrops Makit0",
+    "family": "volume",
+    "overview": "Simplified strategy that compares VWAP of two halves of a custom period.\n\n## Details\n\n- **Entry Criteria**: Right-half VWAP vs left-half VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `PeriodMinutes` = 60\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: Right-half VWAP vs left-half VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `PeriodMinutes` = 60\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "2445": {
+    "id": 2445,
+    "name": "Elite eFibo Trader",
+    "family": "volume",
+    "overview": "The **Elite eFibo Trader Strategy** is a conversion of the MQL5 expert advisor \"Elite eFibo Trader\". It implements a Fibonacci-based averaging grid that opens an initial market position and layers additional stop orders at fixed distances. The strategy operates on tick data and automatically manages trailing stops as the grid expands.",
+    "details": "",
+    "parameters": "- `OpenBuy` – enables the long-only version of the grid.\n- `OpenSell` – enables the short-only version of the grid.\n- `TradeAgainAfterProfit` – automatically starts a new cycle after taking profit.\n- `LevelDistance` – spacing between pending orders, measured in security price steps.\n- `StopLossPoints` – stop-loss distance from each entry, measured in price steps.\n- `MoneyTakeProfit` – unrealized profit target expressed in account currency.\n- `LotsLevel1` … `LotsLevel14` – individual volumes for each grid level. Default values follow the Fibonacci sequence (1, 1, 2, 3, 5, …, 377)."
+   }
+  }
+ }
+}

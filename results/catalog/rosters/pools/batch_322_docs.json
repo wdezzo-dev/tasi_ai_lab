@@ -1,0 +1,98 @@
+{
+ "batch_322": {
+  "strategy_ids": [
+   3075,
+   3001,
+   1662,
+   1126,
+   1155,
+   1250,
+   421,
+   26,
+   3630,
+   2322
+  ],
+  "docs": {
+   "3075": {
+    "id": 3075,
+    "name": "Exp UltraFATL Duplex",
+    "family": "trend",
+    "overview": "The **Exp UltraFATL Duplex Strategy** is a C# conversion of the MetaTrader 5 expert advisor `Exp_UltraFatl_Duplex`. The system runs two independent UltraFATL indicator pipelines: one dedicated to long opportunities and another tuned for short setups. Each pipeline evaluates a ladder of smoothed FATL values and counts how many stages are rising or falling. The balance between the bullish and bearish counters defines the direction of the next trade.",
+    "details": "",
+    "parameters": "### Long Block\n- **Long Volume** – order size when opening a long trade.\n- **Allow Long Entries** – enable or disable new long positions.\n- **Allow Long Exits** – allow closing longs on opposing signals.\n- **Long Candle Type** – timeframe used for the long UltraFATL pipeline.\n- **Long Applied Price** – price source (close, typical, DeMark, etc.) fed into the FATL kernel.\n- **Long Trend Method / Start Length / Phase / Step / Steps** – ladder smoothing configuration.\n- **Long Counter Method / Counter Length / Counter Phase** – smoothing settings for the bullish/bearish counters.\n- **Long Signal Bar** – number of completed candles used as the signal offset (values below 1 are treated as 1).\n- **Long Stop (pts)** – optional stop-loss distance in price steps.\n- **Long Target (pts)** – optional take-profit distance in price steps.\n\n### Short Block\nSymmetric settings for the short pipeline: **Short Volume**, **Allow Short Entries**, **Allow Short Exits**, **Short Candle Type**, **Short Applied Price**, **Short Trend Method / Start Length / Phase / Step / Steps**, **Short Counter Method / Counter Length / Counter Phase**, **Short Signal Bar**, **Short Stop (pts)**, **Short Target (pts)**."
+   },
+   "3001": {
+    "id": 3001,
+    "name": "Previous Candle Breakdown 2",
+    "family": "trend",
+    "overview": "- **Entry Logic**: Enter long when price exceeds the previous candle high plus an indent. Enter short when price breaks below the\n  previous candle low minus the same indent.\n- **Filters**: Optional fast/slow moving averages with shift parameters require directional confirmation before trading. Trading is\n  also constrained to a start/end time window.\n- **Position Sizing**: Choose between a fixed order volume or dynamic sizing based on portfolio value and stop-loss distance.\n- **Risk Controls**: Static stop-loss and take-profit levels in pips, trailing stop with a step filter, and a global profit target\n  that closes all positions.\n- **Scaling**: The `MaxPositions` limit caps the absolute net position size for each direction.",
+    "details": "",
+    "parameters": ""
+   },
+   "1662": {
+    "id": 1662,
+    "name": "Live RSI",
+    "family": "trend",
+    "overview": "Uses multiple RSI calculations (close, weighted, typical, median, open) and Parabolic SAR to detect trend reversals. Enters long when RSI values align in bullish order and price is above SAR, enters short when alignment is bearish and price is below SAR. SAR value acts as a trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when RSI sequence is bullish and price is above SAR.\n  - Short when RSI sequence is bearish and price is below SAR.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite trend signal or SAR trailing stop.\n- **Stops**: Optional fixed stop loss plus SAR-based trailing stop.\n- **Default Values**:\n  - `RSI Period` = 30\n  - `SAR Step` = 0.08\n  - `Stop Loss` = 40\n  - `Check Hour` = false\n  - `Start Hour` = 17\n  - `End Hour` = 1\n  - `Candle Type` = 1 hour\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long & Short\n  - Indicators: RSI, Parabolic SAR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Optional (time filter)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long when RSI sequence is bullish and price is above SAR.\n  - Short when RSI sequence is bearish and price is below SAR.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite trend signal or SAR trailing stop.\n- **Stops**: Optional fixed stop loss plus SAR-based trailing stop.\n- **Default Values**:\n  - `RSI Period` = 30\n  - `SAR Step` = 0.08\n  - `Stop Loss` = 40\n  - `Check Hour` = false\n  - `Start Hour` = 17\n  - `End Hour` = 1\n  - `Candle Type` = 1 hour\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long & Short\n  - Indicators: RSI, Parabolic SAR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Optional (time filter)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1126": {
+    "id": 1126,
+    "name": "NY First Candle Break and Retest",
+    "family": "trend",
+    "overview": "Trades breakouts of the first New York session candle with retest confirmation. Uses ATR for stop placement and reward-to-risk targets with optional EMA trend filter and trailing stop.\n\n## Details\n\n- **Entry Criteria**: Break of the first session candle high or low followed by a retest within `RetestThreshold` ATR.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based stop and `RewardRiskRatio` target. Optional trailing stop.\n- **Stops**: `AtrMultiplier` * ATR.\n- **Default Values**:\n  - `NyStartHour` = 9\n  - `NyStartMinute` = 30\n  - `SessionLength` = 4\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.2\n  - `RewardRiskRatio` = 1.5\n  - `MinBreakSize` = 0.15\n  - `RetestThreshold` = 0.25\n  - `UseEmaFilter` = true\n  - `EmaLength` = 13\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, EMA\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Break of the first session candle high or low followed by a retest within `RetestThreshold` ATR.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR-based stop and `RewardRiskRatio` target. Optional trailing stop.\n- **Stops**: `AtrMultiplier` * ATR.\n- **Default Values**:\n  - `NyStartHour` = 9\n  - `NyStartMinute` = 30\n  - `SessionLength` = 4\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.2\n  - `RewardRiskRatio` = 1.5\n  - `MinBreakSize` = 0.15\n  - `RetestThreshold` = 0.25\n  - `UseEmaFilter` = true\n  - `EmaLength` = 13\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, EMA\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1155": {
+    "id": 1155,
+    "name": "Parabolic SAR with MACD Confirmation",
+    "family": "trend",
+    "overview": "This strategy combines the Parabolic SAR indicator with MACD confirmation. A position is opened when price crosses the SAR in a direction supported by MACD, aiming to capture trend reversals.\n\n## Details\n\n- **Entry Criteria**: Price crosses SAR and MACD line is on the same side of its signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover of price/SAR or MACD.\n- **Stops**: No.\n- **Default Values**:\n  - `SarStart` = 0.02m\n  - `SarIncrement` = 0.02m\n  - `SarMax` = 0.2m\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, MACD\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses SAR and MACD line is on the same side of its signal line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover of price/SAR or MACD.\n- **Stops**: No.\n- **Default Values**:\n  - `SarStart` = 0.02m\n  - `SarIncrement` = 0.02m\n  - `SarMax` = 0.2m\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR, MACD\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1250": {
+    "id": 1250,
+    "name": "Reversal Trading Bot",
+    "family": "trend",
+    "overview": "Reversal Trading Bot Strategy uses RSI divergence with optional volume, ADX, Bollinger Bands, and RSI crossover filters to catch market reversals. Positions are protected with fixed percent stop-loss and take-profit.\n\n## Details\n\n- **Entry Criteria**: RSI divergence with optional volume, ADX, Bollinger Bands, and RSI crossover filters\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or take-profit\n- **Stops**: Fixed percent\n- **Default Values**:\n  - `RsiLength` = 8\n  - `FastRsiLength` = 14\n  - `SlowRsiLength` = 21\n  - `BbLength` = 20\n  - `AdxThreshold` = 20\n  - `DivLookback` = 5\n  - `StopLossPercent` = 1\n  - `TakeProfitPercent` = 2\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI, ADX, Bollinger Bands, SMA\n  - Stops: Fixed\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: RSI divergence with optional volume, ADX, Bollinger Bands, and RSI crossover filters\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or take-profit\n- **Stops**: Fixed percent\n- **Default Values**:\n  - `RsiLength` = 8\n  - `FastRsiLength` = 14\n  - `SlowRsiLength` = 21\n  - `BbLength` = 20\n  - `AdxThreshold` = 20\n  - `DivLookback` = 5\n  - `StopLossPercent` = 1\n  - `TakeProfitPercent` = 2\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: RSI, ADX, Bollinger Bands, SMA\n  - Stops: Fixed\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "421": {
+    "id": 421,
+    "name": "EMA/SMA + RSI Crossover",
+    "family": "trend",
+    "overview": "This strategy tracks three exponential moving averages (fast, medium, and slow) along with an RSI filter to participate in emerging trends. A trade is triggered when the fast average crosses the medium one in the direction of the prevailing slow average, indicating that momentum is accelerating. Only candles that close in the direction of the crossover are considered to avoid whipsaws.\n\nA protective exit can optionally close positions after a user-defined number of bars if they remain profitable. The RSI acts as an overbought/oversold guard to exit when momentum becomes stretched.\n\nBacktests show the technique works best on liquid crypto pairs during trending phases where moving averages offer clear separation.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `EMA_fast > EMA_medium` and `EMA_fast(t-1) <= EMA_medium(t-1)` and `Close > EMA_slow` and `Close > Open`\n  - **Short**: `EMA_fast < EMA_medium` and `EMA_fast(t-1) >= EMA_medium(t-1)` and `Close < EMA_slow` and `Close < Open`\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `RSI > 70` or `X bars in profit and Close > entry`\n  - **Short**: `RSI < 30` or `X bars in profit and Close < entry`\n- **Stops**: None.\n- **Default Values**:\n  - `EMA_fast` = 10\n  - `EMA_medium` = 20\n  - `EMA_slow` = 100\n  - `RSI_length` = 14\n  - `X bars` = 24\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA, RSI\n  - Stops: Optional time-based\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `EMA_fast > EMA_medium` and `EMA_fast(t-1) <= EMA_medium(t-1)` and `Close > EMA_slow` and `Close > Open`\n  - **Short**: `EMA_fast < EMA_medium` and `EMA_fast(t-1) >= EMA_medium(t-1)` and `Close < EMA_slow` and `Close < Open`\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `RSI > 70` or `X bars in profit and Close > entry`\n  - **Short**: `RSI < 30` or `X bars in profit and Close < entry`\n- **Stops**: None.\n- **Default Values**:\n  - `EMA_fast` = 10\n  - `EMA_medium` = 20\n  - `EMA_slow` = 100\n  - `RSI_length` = 14\n  - `X bars` = 24\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA, RSI\n  - Stops: Optional time-based\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "26": {
+    "id": 26,
+    "name": "RSI Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 115%. It performs best in the stocks market.\n\nRSI Reversion assumes price will revert after reaching extreme RSI values. When RSI falls below the lower threshold it buys; when above the upper threshold it sells. Positions close as RSI moves back toward neutral.\n\nThe extremes can be calibrated to suit various markets. Using additional filters like trend direction helps avoid fading strong moves too early.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on RSI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `OversoldThreshold` = 30m\n  - `OverboughtThreshold` = 70m\n  - `ExitLevel` = 50m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on RSI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `OversoldThreshold` = 30m\n  - `OverboughtThreshold` = 70m\n  - `ExitLevel` = 50m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3630": {
+    "id": 3630,
+    "name": "Maybeawo222",
+    "family": "trend",
+    "overview": "The Maybeawo222 strategy replicates the MetaTrader expert advisor \"maybeawo222\" using StockSharp's high-level API. It trades a single instrument with a simple moving average (SMA) crossover on the previous candle and limits activity to a configurable time window. The conversion keeps the staged breakeven management that attempts to lock in profits as soon as the price advances by predefined distances.",
+    "details": "",
+    "parameters": "| Name | Default | Range / Notes | Description |\n|------|---------|---------------|-------------|\n| `MovingPeriod` | `14` | Positive integer | SMA length used for the crossover check. |\n| `MovingShift` | `0` | `0` – `10` (suggested) | Number of completed candles to shift the SMA value backwards. |\n| `StopLossPips` | `100` | `0` disables | Distance from the entry price to the protective stop-loss, measured in pips. |\n| `TakeProfitPips` | `800` | `0` disables | Distance from the entry to the take-profit level, measured in pips. |\n| `BreakevenPips1` | `180` | `0` disables | Profit threshold (in pips) that triggers the first breakeven adjustment. |\n| `DesiredBreakevenDistancePips1` | `60` | Any non-negative | New stop distance from the entry after breakeven stage 1 fires. |\n| `BreakevenPips2` | `500` | `0` disables | Profit threshold (in pips) that triggers the second breakeven adjustment. |\n| `DesiredBreakevenDistancePips2` | `350` | Any non-negative | New stop distance from the entry after breakeven stage 2 fires. |\n| `StartHour` | `3` | `0` – `23` | Inclusive start hour of the trading session, based on exchange time. |\n| `EndHour` | `22` | `0` – `23` | Exclusive end hour of the trading session. |\n| `OrderVolume` | `0.5` | Greater than `0` | Volume sent with every market order before position netting. |\n| `CandleType` | `H1` | Any candle data type | Candle series used for generating signals and calculating the SMA. |"
+   },
+   "2322": {
+    "id": 2322,
+    "name": "SAR Trailing System",
+    "family": "trend",
+    "overview": "Strategy that enters random long or short positions at fixed time intervals and manages exits using the Parabolic SAR indicator.\nThe Parabolic SAR value acts as a trailing stop: the position closes when price crosses the SAR level.\n\n## Details\n\n- **Entry Criteria**:\n  - Every `TimerInterval`, if there is no open position and `UseRandomEntry` is enabled, a random long or short trade is opened.\n- **Long/Short**: Both\n- **Exit Criteria**: Price crossing the Parabolic SAR.\n- **Stops**: Initial stop-loss in ticks with Parabolic SAR trailing exit.\n- **Default Values**:\n  - `TimerInterval` = 300 seconds\n  - `StopLossTicks` = 10\n  - `AccelerationStep` = 0.02\n  - `AccelerationMax` = 0.2\n  - `UseRandomEntry` = true\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Every `TimerInterval`, if there is no open position and `UseRandomEntry` is enabled, a random long or short trade is opened.\n- **Long/Short**: Both\n- **Exit Criteria**: Price crossing the Parabolic SAR.\n- **Stops**: Initial stop-loss in ticks with Parabolic SAR trailing exit.\n- **Default Values**:\n  - `TimerInterval` = 300 seconds\n  - `StopLossTicks` = 10\n  - `AccelerationStep` = 0.02\n  - `AccelerationMax` = 0.2\n  - `UseRandomEntry` = true\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

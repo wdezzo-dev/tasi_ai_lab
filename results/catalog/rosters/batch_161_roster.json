@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1727,
+      "name": "Three Parabolic SAR",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close, 20)) and ema(close, 20) > ema(close, 60) and roc(close, 20) > 0",
+      "exit_long": "crossbelow(close, ema(close, 20)) or ema(close, 20) < ema(close, 60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR and the 6h/3h/1h streams do not exist in the DSL, so a bullish EMA(20) flip with a longer EMA(60) uptrend plus positive ROC(20) stands in for the 1h flip confirmed by the two higher timeframes; the inverse flip or higher-timeframe reversal exits. Acceleration 0.02/0.2 and the short side are unsupported and no stops are documented."
+    },
+    {
+      "id": 2282,
+      "name": "DeMarker Sign",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close, 14), 30)",
+      "exit_long": "crossbelow(rsi(close, 14), 70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is unavailable, so the bounded 0-1 oscillator role is played by RSI(14) rescaled to the same band: an upward cross of the documented 0.3 level buys and a downward cross of 0.7 is the opposite signal that closes. The 4-hour timeframe, configurable thresholds beyond the 0.3/0.7 defaults, and the short side are not represented."
+    },
+    {
+      "id": 3885,
+      "name": "Weekly Rebound Corridor",
+      "family": "trend",
+      "entry_long": "open - close / (1 + roc(close, 1) / 100) > 0.5 * atr(high, low, close, 14) and close > open",
+      "exit_long": "close < ema(close, 5) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior close is reconstructed as close/(1+roc(close,1)/100), so the entry is a gap from the previous session close wider than 0.5 ATR(14) with a positive completed candle, an explicit corridor proxy for the 10-point gap. The 5-point take-profit, 49-point stop, Friday-only gate, and forced pre-session close are not percentage/DSL fields."
+    },
+    {
+      "id": 2015,
+      "name": "Color Schaff Momentum Trend Cycle",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(zscore(macd(close, 23, 50), 50) * 100, 10), 60)",
+      "exit_long": "crossabove(ema(zscore(macd(close, 23, 50), 50) * 100, 10), -60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Schaff cycle is approximated by the documented fast 23 / slow 50 momentum pair normalised with zscore(50) and smoothed over the Cycle=10 bars, so a drop out of the overbought zone buys and a rise out of the oversold zone closes. The colour scale levels (>5/<6) are mapped onto the documented HighLevel 60 / LowLevel -60; the short side and explicit stops are omitted."
+    },
+    {
+      "id": 835,
+      "name": "Gaussian Detrended Reversion",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close - sma(close, 26), 52), ema(close - sma(close, 26), 78)) and ema(close - sma(close, 26), 52) < 0",
+      "exit_long": "crossbelow(ema(close - sma(close, 26), 52), ema(close - sma(close, 26), 78)) or crossbelow(ema(close - sma(close, 26), 52), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The DPO is approximated by close minus half of PriceLength 52 and the ALMA smoothing by EMA(52); the LagLength 26 lag line is emulated by a longer EMA(78) because bar shifting is unavailable. Long needs the bullish lag cross while below zero, and the opposite lag cross or a zero-line cross exits; the short side and stops are unsupported."
+    },
+    {
+      "id": 1340,
+      "name": "Stochastic RSI OHLC",
+      "family": "momentum",
+      "entry_long": "roc(rsi(close, 14), 1) > 0 and bars_since(crossabove(rsi(close, 14), 30)) < 3",
+      "exit_long": "roc(rsi(close, 14), 1) < 0 and bars_since(crossbelow(rsi(close, 14), 60)) < 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic RSI of high/low/close is approximated by close-only RSI(14): rising RSI that crossed the documented LongEntry 30 within three bars stands for the pivot-and-three-bar confirmation, and the falling ShortEntry 60 case is the mirrored exit. The LongPivot 2 / ShortPivot 98 levels, K/D smoothing, and OHLC-built bars are dropped."
+    },
+    {
+      "id": 2679,
+      "name": "Multicurrency Overlay Hedge",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is built from rolling Pearson correlation and synthetic overlays between a user-supplied pair universe, then traded as two-leg hedged blocks, so no single-series long entry exists and the impossible negative-price guard avoids inventing one. Correlation/ATR lookbacks, mutual point and currency take-profits, MaxOpenPairs, and spread limits are not DSL fields."
+    },
+    {
+      "id": 2406,
+      "name": "RSI Threshold",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close, 14), 40)",
+      "exit_long": "crossbelow(rsi(close, 14), 60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule is an RSI(14) upward cross of RSI Low Level 40 and the reverse signal that closes is the downward cross of High Level 60. Stop Loss 1000 and Take Profit 2000 are absolute price units, not percentages, so both protection fields stay null; the H4 timeframe and short side are not represented."
+    },
+    {
+      "id": 2295,
+      "name": "Trade Panel With Autopilot",
+      "family": "volume",
+      "entry_long": "roc(close, 1) > 0 and roc(close, 5) > 0 and roc(close, 20) > 0 and close > sma(close, 10) and close > open",
+      "exit_long": "roc(close, 1) < 0 and roc(close, 5) < 0 and roc(close, 20) < 0 and close < sma(close, 10) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 1m-to-1M buy/sell vote tally is emulated on the single daily stream as five bullish horizons (1/5/20-bar ROC, SMA(10) and candle body) that must all agree; Open % and Close % have no documented values so 5-of-5 is the fallback. The panel buttons, dynamic volume modes, multi-timeframe streams, and fractal stop are not represented."
+    },
+    {
+      "id": 3527,
+      "name": "TurnGrid",
+      "family": "volume",
+      "entry_long": "roc(close, 1) <= -1",
+      "exit_long": "roc(close, 1) >= 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The GridDistance of 0.01 becomes a 1% cell, so a one-cell downward migration is the long leg of the alternating grid and a one-cell rebound closes it. GridShares 50, the 2% equity rebalance target, FeeRate, and the multi-order rebalancing with simultaneous long and short legs cannot be expressed in a single long-only position."
+    }
+  ]
+}

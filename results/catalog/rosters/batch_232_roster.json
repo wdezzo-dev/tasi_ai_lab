@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1808,
+      "name": "Close Cross Kijun Sen",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state explicitly that the strategy never opens new trades and only closes existing positions when close crosses the Kijun line. Marked non-trading rather than inventing an entry; Kijun(50) would only be usable as an exit condition."
+    },
+    {
+      "id": 1665,
+      "name": "Fibo Average MA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), sma(close,21))",
+      "exit_long": "crossbelow(sma(close,10), sma(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The slow length is the sum of the base period and a Fibonacci offset; since neither MaPeriod nor FiboNumPeriod carries a value, a 10/21 pair is a documented-style fallback for that sum. The trailing stop, price-step stop/target and portfolio-based money management are not DSL fields."
+    },
+    {
+      "id": 873,
+      "name": "Heatmap MACD",
+      "family": "trend",
+      "entry_long": "macd(close,9,26) > 0 and macd(close,12,26) > 0 and crossabove(macd(close,12,34), 0)",
+      "exit_long": "macd(close,9,26) < 0 or macd(close,12,26) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The five-timeframe heatmap is compressed to three MACD horizons anchored on the documented 9/26/9 lengths, with the slowest needing a fresh positive cross to satisfy the 'previously not all positive' transition. The optional CloseOnOpposite exit is off by default but the opposite histogram sign still flattens the long."
+    },
+    {
+      "id": 2520,
+      "name": "TDS Global",
+      "family": "trend",
+      "entry_long": "bars_since(roc(macd(close,12,23),1) > 0 and rsi(close,14) < 30) < 5 and high > donchian_high_prev(high,1)",
+      "exit_long": "roc(macd(close,12,23),1) < 0 or rsi(close,14) > 75",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Triple Screen is kept: rising MACD(12,23,9) slope plus an oversold oscillator arms the buy-stop, which then triggers on a break of the prior session high (5-bar arming window is a fallback for the buffer steps). Williams %R -75 is approximated by RSI 30 at an undocumented Williams length of 14; stop, target and trailing are in price steps and the symbol stagger windows are unavailable."
+    },
+    {
+      "id": 2528,
+      "name": "5/8 MA Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5), ema(open,8))",
+      "exit_long": "crossbelow(ema(close,5), ema(open,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule compares a close-based fast EMA(5) with an open-based slow EMA(8) and acts on the crossover, which maps directly. The 40-point take profit, disabled stop and disabled trailing are price points and are not percent fields."
+    },
+    {
+      "id": 960,
+      "name": "LANZ Strategy 1.0 [Backtest]",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy places one limit order per day inside fixed New York clock windows (08:00-18:00 observation, 18:00-08:00 placement, forced close at a configured hour) with no market-derived trigger, and the DSL has no time or date fields. Marked non-trading."
+    },
+    {
+      "id": 682,
+      "name": "Dkoderweb Repainting Issue Fix",
+      "family": "pattern",
+      "entry_long": "close > donchian_low_prev(low,20) and close <= donchian_high(high,20) - 0.382 * (donchian_high(high,20) - donchian_low(low,20))",
+      "exit_long": "close < donchian_low_prev(low,20) or close >= donchian_low(low,20) + 0.618 * (donchian_high(high,20) - donchian_low(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag ABCD geometry is replaced by a 20-bar Donchian structure with the documented 0.382 entry and 0.618 target retracement rates (20 is a fallback lookback). The fib-rate stop/target are ratios of the range, not percentages, so the percent fields stay null."
+    },
+    {
+      "id": 372,
+      "name": "Fed Model",
+      "family": "pattern",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a macro allocation model regressing equity earnings yield against the 10-year Treasury yield at month end, requiring external yield series and an equity/cash ETF universe that the single-symbol OHLCV engine cannot supply. Marked non-trading."
+    },
+    {
+      "id": 849,
+      "name": "Gold Scalping BOS & CHoCH",
+      "family": "pattern",
+      "entry_long": "high > donchian_high_prev(high,5) and crossabove(close, donchian_low_prev(low,5))",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Swing high/low are taken as the documented 5-bar SwingLength extremes, so the long rule is a break of the prior swing high with a close recovering the prior swing low (RecentLength 10 is a fallback). The dynamic stop and TakeProfitFactor 2 targets are structure-based distances, not percent fields."
+    },
+    {
+      "id": 680,
+      "name": "Divergence Indicator (Any Oscillator)",
+      "family": "pattern",
+      "entry_long": "low < donchian_low_prev(low,10) and roc(rsi(close,14),5) > 0",
+      "exit_long": "crossbelow(rsi(close,14),50) or high > donchian_high_prev(high,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish divergence (new price low with RSI rising over the pivot spacing) is approximated by a 10-bar price low plus rising RSI; the pivot left/right bars, min/max range and hidden-divergence mode are dropped since shifted pivots are unavailable. RSI length 14 is documented, the pivot lengths are fallbacks."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 89,
+      "name": "Hull MA Reversal",
+      "family": "trend",
+      "entry_long": "crossabove(roc(2 * ema(close,9) - ema(ema(close,9),9), 1), 0)",
+      "exit_long": "crossbelow(roc(2 * ema(close,9) - ema(ema(close,9),9), 1), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Hull MA is approximated by the DEMA form 2*EMA-EMA(EMA) at the documented HmaPeriod=9, and the documented entry is its slope turning from falling to rising. The 2-ATR stop beyond the recent candle is a volatility-based distance, not a percentage, so both stop fields stay null."
+    },
+    {
+      "id": 945,
+      "name": "J-Lines Ribbon 4-Cycle Engine",
+      "family": "trend",
+      "entry_long": "close > ema(close,72) and ema(close,72) > ema(close,126) and ema(close,72) > ema(close,89) and adx(high,low,close,8) > 12",
+      "exit_long": "close < ema(close,72) and ema(close,72) < ema(close,126)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long case is the EMA72 rebound above the EMA72/EMA126 ribbon while EMA72 stays above EMA89, filtered by the documented AdxFloor=12 with DmiLength=8. The CHOP/SHORT cycle state machine and the last-swing-high stop are not expressible, so both stop fields are null."
+    },
+    {
+      "id": 773,
+      "name": "Express Generator",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), sma(close,30)) and rsi(close,14) < 70 and crossabove(macd(close,12,26), macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(sma(close,10), sma(close,30)) or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All three documented entry filters are kept, with SMA 10/30, RSI 14 with a 70 overbought bound and MACD 12/26/9 as fallbacks because no values are supplied. The exit stands in for the pip-based trailing stop, and the ATR risk sizing and equity percentage are position-management fields the DSL cannot hold."
+    },
+    {
+      "id": 1628,
+      "name": "MAM Crossover Trader",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(open,20))",
+      "exit_long": "crossbelow(sma(close,20), sma(open,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented close-SMA versus open-SMA crossover at the exact MaPeriod=20 is the entry, and a cross on the current bar already encodes the confirmed two-bar transition. StopLossTicks=40 and TakeProfitTicks=190 are tick distances, so both fields are null."
+    },
+    {
+      "id": 3022,
+      "name": "Exp XHullTrend Digit",
+      "family": "trend",
+      "entry_long": "crossabove(2 * ema(close,16) - ema(ema(close,16),16), ema(close,16))",
+      "exit_long": "crossbelow(2 * ema(close,16) - ema(ema(close,16),16), ema(close,16))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The digital XHullTrend state is approximated by comparing a DEMA-form Hull line with its own base EMA, so a cross above enters the documented bullish digit. BaseLength and SignalLength have no documented values so 16 and the nested 16 are fallbacks, and RoundingDigits, Phase, PriceSource and the price-step stops are not expressible."
+    },
+    {
+      "id": 2026,
+      "name": "Cronex CCI",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(zscore((high + low + close) / 3, 25), 14), ema(ema(zscore((high + low + close) / 3, 25), 14), 25))",
+      "exit_long": "crossabove(ema(zscore((high + low + close) / 3, 25), 14), ema(ema(zscore((high + low + close) / 3, 25), 14), 25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by the standardized typical price at the documented CciPeriod=25, and the fast/slow smoothing keeps the documented FastPeriod=14 and SlowPeriod=25, with the fast line crossing below the slow one opening the contrarian long. The docs state no stops and the 4-hour timeframe is not selectable from a roster."
+    },
+    {
+      "id": 4135,
+      "name": "Scalpel",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10) and zscore((high + low + close) / 3, 14) < 0.75",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented momentum breakout with the CCI filter is kept, with the base-timeframe breakout approximated by a 10-bar extreme and CciPeriod=14 with CciLimit=75 mapped to a 0.75 z-score bound. The higher-timeframe confirmation, directional volume study, shrinking take profit, TakeProfitPoints=40, StopLossPoints=340 and the Friday close are not expressible."
+    },
+    {
+      "id": 1669,
+      "name": "Tester v0.14",
+      "family": "trend",
+      "entry_long": "close > sma(close,14) and macd(close,12,26) > 0",
+      "exit_long": "close < sma(close,14) or macd(close,12,26) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The reduced rule set is documented exactly: close above the 14-period SMA with positive MACD buys, and the inverse condition exits. The BarsNumber time exit, MinSignSum, Risk percentage and the point-based TakeProfit/StopLoss are not expressible, so both stop fields are null."
+    },
+    {
+      "id": 3901,
+      "name": "Moving Average Shift",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,12))",
+      "exit_long": "crossbelow(close, sma(close,12))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MovingPeriod=12 average is exact, and the market execution plus single-position rule matches the engine. MovingShift=6 has no DSL equivalent because bar offsets are unavailable, so the current-bar average is used and signals become slower; BaseVolume is not a DSL field."
+    },
+    {
+      "id": 2664,
+      "name": "Stopreversal Trailing",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high, 10))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low, 10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The adaptive Stopreversal line is approximated by a 10-bar trailing extreme, so an upward pierce is the documented bullish reversal. Npips=0.004 has no price-independent translation, StopLossSteps=1000 and TakeProfitSteps=2000 are instrument steps rather than percentages so both fields are null, and SignalBar=1 is not expressible."
+    }
+  ]
+}

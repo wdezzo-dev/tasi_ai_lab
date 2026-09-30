@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 627,
+      "name": "Combo 2/20 EMA & CCI",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,2), ema(close,20)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,2), ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 2/20 EMA periods come from the strategy name; the bullish CCI confirmation is mapped to RSI(14) above its 50 midpoint because CCI is not in the DSL, and the opposite cross is the long exit. The short leg and \"exits otherwise\" wording are the mirror of the same condition."
+    },
+    {
+      "id": 130,
+      "name": "Lunch Break Fade",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented entry is only \"indicator signal\" inside a noon session on 15-minute candles, so the trigger is purely time-based with no single-symbol market-derived condition and the never-true guard is used. The documented 2% percent stop is recorded but can never be exercised without an entry."
+    },
+    {
+      "id": 1385,
+      "name": "Supply Demand Order Block",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close > ema(close,50) and volume_ratio(volume,20) > 2",
+      "exit_long": "close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian(20) breakout with the documented EMA trend filter plus a volume-spike filter; the 2.0x volume multiple is an explicit fallback because no threshold is documented. StopLossTicks=1000 and TrailingStartTicks=2000 are tick distances, not percentages, and the 5-minute timeframe is unavailable."
+    },
+    {
+      "id": 3204,
+      "name": "Plateau",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10), ema(close,30)) and close < bb_lower(close,20)",
+      "exit_long": "crossbelow(ema(close,10), ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast/slow EMA cross while price sits below the lower Bollinger band; the documented parameters are names only, so 10/30 for the MA pair and 20 for the bands are explicit fallbacks. The previous-candle band test is approximated with the current bar, and pip-based stop/target, trailing, Reverse and Close Opposite are not expressible."
+    },
+    {
+      "id": 3280,
+      "name": "Envelopes EA",
+      "family": "trend",
+      "entry_long": "close < ema(close,50) * 0.995",
+      "exit_long": "close >= ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Contrarian entry below the documented EMA(50) envelope with UpperDeviationPercent/LowerDeviationPercent=0.5%, exiting as price re-enters the envelope. The EntryOffsetPoints=100 extra distance and volume/lot settings are not price-series fields."
+    },
+    {
+      "id": 2997,
+      "name": "AMA Trader",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and rsi(close,14) < 30",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Kaufman's AMA is approximated by EMA(10) and the pullback filter uses RSI(14)<30; the documentation lists parameter names without defaults, so 10 and 30 are explicit fallbacks. ProfitTarget/WithdrawalAmount exits and the StepLength RSI scan are not expressible."
+    },
+    {
+      "id": 1133,
+      "name": "OKX MA Crossover",
+      "family": "trend",
+      "entry_long": "low < sma(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long trigger is the candle low dipping below the MA, so a SMA(20) level is used; the 20-bar length is an explicit fallback because only the parameter name is documented. \"Previous MA value\" needs a bar shift, and the take-profit/stop-loss percentages and start date have no documented values."
+    },
+    {
+      "id": 1711,
+      "name": "High Low MA Breakout",
+      "family": "trend",
+      "entry_long": "close > sma(high,20)",
+      "exit_long": "close < sma(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a close above the moving average of highs (long) and below the moving average of lows (short); 20 is an explicit fallback for the undocumented MA length. The optional take-profit and stop-loss levels have no documented values, so the mirrored low-average condition is used as the long exit."
+    },
+    {
+      "id": 236,
+      "name": "RSI Mean Reversion",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < sma(rsi(close,14),20) - 2 * std(rsi(close,14),20)",
+      "exit_long": "rsi(close,14) > sma(rsi(close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long entry below the documented Avg - Multiplier*StdDev band with RsiPeriod=14, AveragePeriod=20 and Multiplier=2.0, exiting when RSI returns above its average. The percent stop-loss is mentioned but has no documented value, so no percentage is set."
+    },
+    {
+      "id": 3095,
+      "name": "Volatility Pivot",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) - 3 * ema(atr(high,low,close,100),10)",
+      "exit_long": "close < donchian_low_prev(low,20) + 3 * ema(atr(high,low,close,100),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ATR pivot mode is rebuilt as a Donchian(20) level offset by the documented 3.0 AtrMultiplier times the EMA(10) smoothing of ATR(100); the channel lookback is an explicit fallback. The DeltaPrice mode, SignalBar offset and absolute-unit stop/target are not representable."
+    }
+  ]
+}

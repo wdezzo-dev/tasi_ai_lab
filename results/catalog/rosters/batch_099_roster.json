@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2197,
+      "name": "IMA Expert",
+      "family": "trend",
+      "entry_long": "roc(close / sma(close,5),1) >= 0.5",
+      "exit_long": "roc(close / sma(close,5),1) <= -0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC of close/SMA(5) directly proxies the one-bar relative change in IMA and uses the documented 0.5 threshold. Tick protection and volume sizing are not percentage exit rules."
+    },
+    {
+      "id": 1363,
+      "name": "SuperATR 7-Step Profit",
+      "family": "trend",
+      "entry_long": "atr(high,low,close,14) > sma(atr(high,low,close,14),14) and close > sma(close,10) and sma(close,10) > sma(close,50)",
+      "exit_long": "atr(high,low,close,14) < sma(atr(high,low,close,14),14) or close < sma(close,10) or sma(close,10) < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR(14) expansion and SMA 10/50 are explicit fallbacks because no periods or thresholds are supplied. The seven staged ATR/percentage exits and partial-position accounting are not supported by the roster."
+    },
+    {
+      "id": 1352,
+      "name": "Reversal Catcher",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),30) and low <= bb_lower(close,20,1.5) and close > ema(close,21) and ema(close,21) > ema(close,50)",
+      "exit_long": "close < ema(close,21) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14), Bollinger(20,1.5), and EMA 21/50 retain the stated oversold re-entry and trend structure. Prior-candle stop/target and the 15:00 flatten require bar-shift or clock state."
+    },
+    {
+      "id": 1248,
+      "name": "Reversal & Breakout Strategy with ORB",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or rsi(close,14) < 40",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA 9/21 with RSI 50/40 is an explicit fallback for the documented but underspecified EMA-breakout component. The SMA reversal, ORB clock range, and ATR targets/stops are omitted."
+    },
+    {
+      "id": 3424,
+      "name": "RangeBreakout2",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) + 0.5 * atr(high,low,close,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior 20-bar high plus 50% of ATR(20) retains the default ATR range breakout. Schedule, range restart, martingale/Fibonacci sizing, and range-derived exits require state."
+    },
+    {
+      "id": 2106,
+      "name": "CandleStop Trailing",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an exit/trailing manager for manual or externally opened trades, not an entry strategy, so an impossible negative-price guard preserves that limitation. Donchian trailing cannot create a long signal."
+    },
+    {
+      "id": 2754,
+      "name": "ZigZag EvgeTrofi",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,17)",
+      "exit_long": "close < bb_mid(close,17)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented contrarian new-high trigger uses a prior 17-bar high; the mean band is an exit proxy. Point deviation, backstep, urgency, and persistent pivot state are not representable."
+    },
+    {
+      "id": 3884,
+      "name": "Otkat Sys",
+      "family": "momentum",
+      "entry_long": "close > open and roc(close,3) < 0",
+      "exit_long": "close < open and roc(close,3) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish candle within a negative three-bar move is a single-timeframe proxy for the prior-session reversal. Daily statistics, corridor thresholds, Tuesday-Thursday 00:00-00:03 timing, and point exits are unsupported."
+    },
+    {
+      "id": 4061,
+      "name": "Parabolic SAR Fibo Limits",
+      "family": "volatility",
+      "entry_long": "ema(close,10) > ema(close,20) and low <= ema(close,10)",
+      "exit_long": "ema(close,10) < ema(close,20) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Aligned EMA(10)/EMA(20) replaces dual SAR direction and a touch of the fast line approximates a Fibonacci limit entry. Swing/Fibonacci levels, session timing, break-even, trailing, and point protection are unsupported."
+    },
+    {
+      "id": 4016,
+      "name": "Rsi Test",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),12) and close > open",
+      "exit_long": "close < open or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing above the documented oversold level 12 plus a bullish candle is an explicit momentum/candle proxy. The exact fast filter, risk sizing, position cap, and step-based trailing are unavailable."
+    }
+  ]
+}

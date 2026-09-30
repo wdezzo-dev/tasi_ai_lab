@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3046,
+      "name": "Exp X2MA Candle MM Recovery",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(ema(close,7),3) - ema(ema(open,7),3),0)",
+      "exit_long": "crossabove(ema(ema(close,7),3) - ema(ema(open,7),3),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The X2MA synthetic candle colour is rebuilt as a doubly smoothed close minus open body and the documented bullish-to-non-bullish colour change becomes a cross of that body below zero. FirstLength and SecondLength have no values so 7 and 3 are fallbacks, and the GapPoints flattening, SignalBar shift and the loss-based volume reduction are not expressible."
+    },
+    {
+      "id": 3347,
+      "name": "Martingale Smart",
+      "family": "trend",
+      "entry_long": "(sma(close,10) < sma(close,20) and macd(close,12,26) > macd_signal(close,12,26,9)) or (close > sma(close,20) * 0.99)",
+      "exit_long": "(sma(close,10) > sma(close,20) and macd(close,12,26) < macd_signal(close,12,26,9)) or (close < sma(close,20) * 1.01)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented entry filters are kept: the primary MA cross with MACD above its signal, and the envelope filter where a close above the lower band enters. EnvelopeDeviation has no value so 1 percent is a fallback, and alternating filters after losses, martingale sizing and the pip stops are dropped."
+    },
+    {
+      "id": 631,
+      "name": "Consecutive Bars Above Below EMA Buy The Dip",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) and sma(close,3) < sma(ema(close,20),3)",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "N consecutive closes below the average is approximated by the three-bar close average sitting below the three-bar average of EMA(20); N is undocumented so 3 is a fallback and EMA(20) is a choice between the two documented options. The documented exit, a close above the previous candle high, is exact."
+    },
+    {
+      "id": 781,
+      "name": "Fibonacci & Bollinger Bands",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2) and close > donchian_low_prev(low,20) + 0.618 * (donchian_high_prev(high,20) - donchian_low_prev(low,20))",
+      "exit_long": "close > bb_upper(close,20,2) or close > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 61.8 percent Fibonacci level and Bollinger lower-band break are both retained; the last swing high and low are approximated by 20-bar Donchian levels because the swing anchors are not in the DSL. The 20 periods are fallbacks and the upper-band or prior-swing-high exit is the documented one."
+    },
+    {
+      "id": 1417,
+      "name": "Bar Counter Trend Reversal",
+      "family": "trend",
+      "entry_long": "roc(close,1) < 0 and roc(close,2) < 0 and roc(close,3) < 0 and close < bb_lower(close,20,2)",
+      "exit_long": "roc(close,1) > 0 and roc(close,2) > 0 and roc(close,3) > 0 and close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented NoOfFalls 3 and NoOfRises 3 are kept as three consecutive negative or positive rate-of-change readings, and ChannelLength 20 becomes Bollinger bands because the docs list Keltner or Bollinger. The optional volume confirmation and ChannelMultiplier 2 are not expressed."
+    },
+    {
+      "id": 657,
+      "name": "Daily Play Ace Spectrum",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the study contains no trading rules and is for visualization only, drawing lines between past open prices. Nothing to translate."
+    },
+    {
+      "id": 2263,
+      "name": "CCI Woodies",
+      "family": "other",
+      "entry_long": "crossbelow(zscore((high+low+close)/3,10), zscore((high+low+close)/3,21))",
+      "exit_long": "crossabove(zscore((high+low+close)/3,10), zscore((high+low+close)/3,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is not in the DSL, so fast and slow Woodies lines become z-scores of typical price and the documented inverted rule is kept: a fast-below-slow cross opens the long and the opposite cross exits. FastPeriod and SlowPeriod have no values so 10 and 21 are fallbacks, and InvertSignals plus point stops are dropped."
+    },
+    {
+      "id": 1584,
+      "name": "Ehlers SwamiCharts RSI",
+      "family": "other",
+      "entry_long": "(rsi(close,2) + rsi(close,8) + rsi(close,16) + rsi(close,32) + rsi(close,48)) / 5 > 50",
+      "exit_long": "(rsi(close,2) + rsi(close,8) + rsi(close,16) + rsi(close,32) + rsi(close,48)) / 5 < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented averaging of RSI values across periods 2 to 48 is approximated by five sampled periods, and the color map becomes the documented LongColor and ShortColor of 50 as an average-RSI regime. The discrete green/red state machine and the five-minute context are not represented, and the docs state there are no stops."
+    },
+    {
+      "id": 862,
+      "name": "Grid TLong V1",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This grid engine always stays in the market and restarts positions each Percent 1 step with no directional signal, so it has no single-symbol long entry to translate. Grid step and limit-order handling are not DSL constructs."
+    },
+    {
+      "id": 2160,
+      "name": "ColorMETRO Stochastic",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,5), sma(rsi(close,5),3))",
+      "exit_long": "crossbelow(rsi(close,5), sma(rsi(close,5),3))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 2.0,
+      "notes": "The stock built-in stochastic is approximated by RSI at the documented KPeriod 5 with a documented DPeriod 3 average, and the documented cross-above entry and cross-below exit are kept. The documented 2 percent stop and take-profit are applied; Slowing 3 is folded into the average."
+    }
+  ]
+}

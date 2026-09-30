@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 149,
+      "name": "Ma Adx",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and adx(high,low,close,14) > 25",
+      "exit_long": "crossbelow(close, sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Price above MA(20) with ADX(14) > 25 confirms a strong trend; exit on close back through MA. Corpus exit is reverse MA cross or stop, take-profit set to 2x ATR which is not representable as fixed pct; left null. StopLossPercent=2 documented."
+    },
+    {
+      "id": 685,
+      "name": "Donchian Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close > ema(close,50) and rsi(close,14) > 50",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "20-bar Donchian upper breakout (prior-bar channel high per DSL) confirmed by EMA(50) trend and RSI(14) > 50; exit on opposite 10-bar lower breakout (ExitLength=10 documented). Corpus ATR-based stop (AtrMultiplier=1.5, AtrLength=14) not representable as fixed pct; left null. Documented volume/ATR envelope filters omitted as values are undocumented."
+    },
+    {
+      "id": 1078,
+      "name": "Moving Average Crossover Swing",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5), ema(close,10)) and close > ema(close,50) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(ema(close,5), ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast EMA(5) crosses above medium EMA(10) with slow EMA(50) trend filter and MACD histogram above zero (EnableSlow/EnableMacd true by default); ATR-based stop/take (1.4x/3.2x ATR14) not representable; left null. MACD periods undocumented in defaults; standard 12/26/9 used. Exit on fast/medium reverse cross."
+    },
+    {
+      "id": 591,
+      "name": "Bollinger Bands Long",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,10,2) and rsi(close,14) < 30",
+      "exit_long": "close >= bb_mid(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Close below lower Bollinger band (BbLength=10, BbDeviation=2) with RSI(14) below oversold 30; exit when price returns to the middle band. No stop documented; left null. Distinct from prior 20-bar BB reverts via shorter 10-bar length."
+    },
+    {
+      "id": 692,
+      "name": "Double Bollinger Bands Signals",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, bb_lower(close,20,3))",
+      "exit_long": "close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long when close crosses back above the 3-SD lower band (Length=20, Width2=3); exit when close crosses above the 2-SD upper band (Width1=2). Short side omitted (long-only engine). No stops documented; left null."
+    },
+    {
+      "id": 215,
+      "name": "RSI Donchian",
+      "family": "breakout",
+      "entry_long": "rsi(close,14) < 30 and close > donchian_high_prev(high,20)",
+      "exit_long": "close < (donchian_high(high,20) + donchian_low(low,20)) / 2",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Fade-exhaustion breakout: RSI(14) oversold (<30) while price breaks prior 20-bar channel high; exit when close falls back through the Donchian middle line. Corpus 'Donchian Middle' approximated as (channel high + channel low)/2 (DSL has no mid-band primitive). StopLossPercent=2 documented."
+    },
+    {
+      "id": 147,
+      "name": "Bollinger Volume",
+      "family": "breakout",
+      "entry_long": "close > bb_upper(close,20,2) and volume_ratio(volume,20) > 1.5",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Close above upper Bollinger band (20,2) on volume above 1.5x its 20-bar baseline (VolumeMultiplier=1.5 documented); exit when price returns to the middle band. Corpus ATR-based stop (StopLossAtr=2, AtrPeriod=14) not representable as fixed pct; left null."
+    },
+    {
+      "id": 1226,
+      "name": "Rate of Change",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,365), 0)",
+      "exit_long": "crossbelow(roc(close,365), 0)",
+      "stop_loss_pct": 6.0,
+      "take_profit_pct": null,
+      "notes": "Zero-line crossover of ROC(365) detects long-run momentum regime (RocLength=365); exit on opposite zero cross. Corpus bubble threshold (180) and dynamic fixed-ratio sizing are not representable; daily zero-cross core only. StopLossPercent=6 documented."
+    },
+    {
+      "id": 855,
+      "name": "Good Mode RSI v2",
+      "family": "momentum",
+      "entry_long": "rsi(close,2) < 4",
+      "exit_long": "rsi(close,2) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ultra-short-horizon RSI(2) dip below buy level 4; exit when RSI reaches take-profit level 80. Corpus trailing stop in ticks not representable; left null. Extreme-oscillator variant, expected to trade frequently."
+    },
+    {
+      "id": 441,
+      "name": "RSI + 1200",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14), 28) and close <= 1.01 * ema(close,150)",
+      "exit_long": "rsi(close,14) > 72",
+      "stop_loss_pct": 10.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crosses above oversold 28 while close sits within 1% of the multi-timeframe EMA(150) trend filter; exit when RSI rises above overbought 72. Higher-TF 120-minute EMA approximated as EMA(150) on the same bar (dsl lacks ref()/MTF). StopLossPercent=10 documented."
+    }
+  ]
+}

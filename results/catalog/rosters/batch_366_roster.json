@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1897,
+      "name": "Exp Oracle",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,20) > 0",
+      "exit_long": "zscore((high + low + close) / 3,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 1157,
+      "name": "Parabolic SAR Early Buy MA Exit",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10))",
+      "exit_long": "crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by a moving-average crossover because SAR is not available in the local DSL."
+    },
+    {
+      "id": 190,
+      "name": "Vwap Adx",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 14",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 1083,
+      "name": "Moving Regression",
+      "family": "trend",
+      "entry_long": "roc(sma(close,18),1) > 0",
+      "exit_long": "roc(sma(close,18),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Regression-based direction is approximated by the one-bar slope of SMA(18); the DSL has no regression primitive."
+    },
+    {
+      "id": 2995,
+      "name": "VR BUCH Moving Average",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3457,
+      "name": "IFS Fractals",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1480,
+      "name": "Tri-Monthly BTC Swing",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 4204,
+      "name": "Easiest RSI",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 162,
+      "name": "Bollinger Cci",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 1369,
+      "name": "Supertrend - SSL Strategy with Toggle",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    }
+  ]
+}

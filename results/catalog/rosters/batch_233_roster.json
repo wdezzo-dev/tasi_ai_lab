@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3172,
+      "name": "Hoop Master Breakout",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,20)",
+      "exit_long": "low < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The breakout box around the latest close is approximated by a 20-bar range, so the armed buy-stop above the box becomes a fresh-range high and the box low is the long exit. The martingale lot doubling after losses, the 15-pip indent and the 25/70 pip stop-target are not expressible; no percent values are documented."
+    },
+    {
+      "id": 2449,
+      "name": "ADX System",
+      "family": "trend",
+      "entry_long": "roc(adx(high,low,close,14),1) > 0 and crossabove(roc(donchian_high(high,14),1), -roc(donchian_low(low,14),1))",
+      "exit_long": "roc(adx(high,low,close,14),1) < 0 or crossbelow(roc(donchian_high(high,14),1), -roc(donchian_low(low,14),1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "+DI/-DI are not available, so directional pressure is taken from the one-bar rate of change of the 14-bar high versus 14-bar low, and the documented ADX(14) rising condition is kept as the regime filter. TakeProfit 15 / StopLoss 100 / TrailingStop 20 are absolute price units, not percent fields."
+    },
+    {
+      "id": 1492,
+      "name": "TTM Grid",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a grid engine that keeps adding tickets on every grid level touch and explicitly has no exit, accumulating positions. Grid/martingale mechanics and the TTM state reset cannot be expressed as a single long signal, so it is marked non-trading."
+    },
+    {
+      "id": 1004,
+      "name": "MA MACD BB BackTester",
+      "family": "trend",
+      "entry_long": "crossabove(close, bb_upper(close,20,2))",
+      "exit_long": "crossbelow(close, bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs expose MA, MACD and BB as mutually exclusive modes with no numeric defaults, so the roster resolves the selector to the Bollinger breakout variant with 20-period and 2.0 multiplier fallbacks and the long direction flag. The MA and MACD variants and the StartDate/EndDate window are not represented."
+    },
+    {
+      "id": 1648,
+      "name": "EMA SAR Bulls Bears",
+      "family": "trend",
+      "entry_long": "ema(close,3) > ema(close,34) and roc(ema(close,3),1) > 0 and (high - ema(close,13)) > 0 and roc(high - ema(close,13),1) < 0",
+      "exit_long": "ema(close,3) < ema(close,34) or roc(high - ema(close,13),1) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by the EMA(3) slope against the candle extreme and Bulls Power by high minus EMA(13) with its documented falling slope, alongside the documented EMA(3)/EMA(34) trend test. The 09:00-17:00 window and the 400/2000 point targets are not expressible as percent fields."
+    },
+    {
+      "id": 406,
+      "name": "Turn Of Month",
+      "family": "pattern",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a calendar-seasonality system that buys N days before month end and exits M days into the new month, driven purely by the date index with no price-derived signal, and the DSL exposes no date or time fields. Marked non-trading."
+    },
+    {
+      "id": 2780,
+      "name": "Patterns EA",
+      "family": "pattern",
+      "entry_long": "crossabove(close, open) and close > sma(close,20)",
+      "exit_long": "crossbelow(close, open) or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs list 30 single/double/triple-bar formations with per-pattern enable and direction toggles but never enumerate the rules, so the roster keeps one representative long reversal candle (close crossing above open) with an SMA(20) filter. Equality-pip tolerance, the opened-mode logic and per-pattern order assignment are not expressible."
+    },
+    {
+      "id": 833,
+      "name": "Gartley 222",
+      "family": "pattern",
+      "entry_long": "close < ema(close,20) and bars_since(close < ema(close,20)) <= 5",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The 222 ratio geometry and pivot-based confirmation are replaced by an EMA(20) pullback-and-recovery proxy, with the documented PivotLength 5 encoded as the 5-bar arming window and Fib Tolerance 0.05 dropped. The documented 2% stop loss is used; the 1.27 fib extension target is a range ratio, not a percent field."
+    },
+    {
+      "id": 942,
+      "name": "IU Open Equal to High Low",
+      "family": "pattern",
+      "entry_long": "open <= low * 1.001 and close > open",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The open-equals-low geometry is applied to any bar with a 0.1% equality tolerance because the DSL has no session/time fields to isolate the first candle of the day, and the long side (open at the low, close up) is traded. The prior-candle low becomes the structural exit; the RiskReward 2 target and stop are price distances, not percents."
+    },
+    {
+      "id": 1120,
+      "name": "Non-Repainting Renko Emulation",
+      "family": "pattern",
+      "entry_long": "close > ema(close,10) and roc(close,3) > 0",
+      "exit_long": "roc(close,3) < 0 or close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Renko brick construction is approximated by a 3-bar price continuation in the EMA(10) direction, so an upward brick sequence enters long and a reversal closes it. The documented BrickSize 3 is a point offset that cannot be enforced without shifted brick levels, and no stops are documented."
+    }
+  ]
+}

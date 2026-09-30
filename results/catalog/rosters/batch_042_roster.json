@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 514,
+      "name": "AI Supertrend Pivot Percentile",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and close > ema(close,20) and adx(high,low,close,14) > 20 and rsi(close,14) > 50",
+      "exit_long": "close < ema(close,10) or close < ema(close,20) or adx(high,low,close,14) < 20 or rsi(close,14) < 50",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "The two Supertrends are approximated by EMA(10) and EMA(20); ADX(14)>20 is retained, and RSI(14)>50 is a Williams %R>-50 proxy. Supertrend/pivot calculations are unavailable; the documented 1% stop and 2% target are retained."
+    },
+    {
+      "id": 4102,
+      "name": "Wajdyss MA Expert",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(10)/EMA(20) close-price crossover and opposite exit are translated directly. The 100-pip target, 50-pip stop, trailing, money management, and daily/Friday close filters cannot be represented as percentage exits."
+    },
+    {
+      "id": 3233,
+      "name": "AutoAdjustingStrategy",
+      "family": "trend",
+      "entry_long": "ema(close,6) > ema(close,14) and ema(close,14) > ema(close,26) and low <= ema(close,14) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,6) < ema(close,14) or ema(close,14) < ema(close,26) or crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(6/14/26) stack, middle-EMA tag, and MACD(12,26,9) trend alignment are retained. Higher-timeframe momentum, monthly mapping, swing-pip protection, and re-armed dynamic targets are unavailable in the single-series DSL."
+    },
+    {
+      "id": 559,
+      "name": "Bedo Osaimi Istr",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(open,20))",
+      "exit_long": "crossbelow(sma(close,20),sma(open,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented close-SMA/open-SMA crossover at length 20 is exact, with the inverse cross as the long exit. Both short reversal handling and the unspecified protection are outside this long-only roster entry."
+    },
+    {
+      "id": 753,
+      "name": "Engulfing with Trend",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) > 0 and close > ema(close,20)",
+      "exit_long": "close < open or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish candle with positive one-bar momentum and an EMA(20) trend filter proxies the engulfing/SuperTrend condition. Exact candle engulfing, SuperTrend, ATR(10) offset, boring threshold, and point stop level are not expressible."
+    },
+    {
+      "id": 500,
+      "name": "Gold RSI Divergence",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,2) and roc(rsi(close,60),1) > 0 and rsi(close,60) < 40",
+      "exit_long": "rsi(close,60) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A new two-bar low with a rising RSI proxy and RSI(60)<40 retains the bullish divergence setup. Two-pivot confirmation and the 11/33 pip stop and target are approximated or omitted because they are not percentage fields."
+    },
+    {
+      "id": 2829,
+      "name": "Doji Arrows",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close above the previous candle high is the executable next-bar proxy for the doji-range breakout, with the mirror low as exit. Doji body classification, optional trailing, and 30/90 price-step protection are unavailable."
+    },
+    {
+      "id": 2371,
+      "name": "Limits RSI Momentum Bot",
+      "family": "momentum",
+      "entry_long": "rsi(close,14) < 30 and roc(close,5) < 0",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<30 and negative five-bar ROC are explicit fallbacks for the unspecified buy RSI and Momentum thresholds. Pending limit distance, session window, cancellation, protection distances, and sell side are not representable."
+    },
+    {
+      "id": 2617,
+      "name": "Fractals Minimum Distance",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,5) and std(close,20) > 0",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior-bar range extremes stand in for confirmed Bill Williams fractals, while positive 20-bar standard deviation is a weak distance/volatility fallback. The pip threshold, confirmation offset, reversal logic, and absence of source stops are omitted."
+    },
+    {
+      "id": 1829,
+      "name": "Universal EA",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and rsi(close,14) < 40",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) is used as a stochastic %K/%D oversold-reversal proxy: an upward cross below 40 enters and recovery above 50 exits. The K, D, slowing periods, oversold/overbought controls, and both-direction handling are not expressible."
+    }
+  ]
+}

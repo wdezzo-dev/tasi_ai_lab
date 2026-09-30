@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3352,
+      "name": "Tokyo Session",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,10) and close > donchian_low_prev(low,10)",
+      "exit_long": "close > donchian_high_prev(high,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The reference-candle channel is rendered as a 10-bar Donchian range and the ContraryTrend mode (the first documented signal mode) fades an overextended spike back through the band, which is also the documented CloseInSignal exit. The reference/check hours, MinDistanceOfLevel/MaxDistanceOfLevel in pips, ReCheckPrices and CheckAllBars, break-even and the time-close exit are not expressible."
+    },
+    {
+      "id": 159,
+      "name": "Hull Ma Rsi",
+      "family": "trend",
+      "entry_long": "roc(ema(close,9),1) > 0 and rsi(close,14) < 40",
+      "exit_long": "roc(ema(close,9),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull MA cannot be computed, so the documented HmaPeriod 9 is approximated with EMA(9) and a change of its direction is the exit; the documented RsiPeriod 14 oversold gate is widened from 30 to 40 because a rising Hull with RSI below 30 is unreachable. StopLoss is documented as an absolute unit of 2, not a percentage, so protection is null."
+    },
+    {
+      "id": 3338,
+      "name": "Sudoku UI",
+      "family": "trend",
+      "entry_long": "close <= sma(close,20) * 0.98",
+      "exit_long": "close >= sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The repurposed Sudoku grid only contributes deviation levels, so the documented mean-reversion idea is kept with a 2% SMA(20) deviation (SmaPeriod is not documented) and the return into the neutral band closes. The 9x9 board generation, shuffling seeds, EliminateLabel, ThresholdRange/NeutralBand values and puzzle regeneration on date change are not expressible."
+    },
+    {
+      "id": 4141,
+      "name": "Multi Lot Scalper",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,14,26),macd_signal(close,14,26,9))",
+      "exit_long": "crossbelow(macd(close,14,26),macd_signal(close,14,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented MACD-histogram slope direction is kept, using the documented MacdFastLength 14, MacdSlowLength 26 and MacdSignalLength 9. The martingale ladder (MaxTrades 10, EntryDistancePips 15), 40-pip take-profit, 20-pip trailing, secure-profit protection, money management and the 2005-2006 date/hour window are not DSL signals."
+    },
+    {
+      "id": 608,
+      "name": "CE XAU/USDT",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,14))",
+      "exit_long": "crossbelow(close,sma(close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Directly implements the documented rule: a close crossing above the SMA period 14 opens the long and the reverse cross closes it. The 1-minute candle choice and the documented 'no stops' setting are carried over unchanged."
+    },
+    {
+      "id": 4049,
+      "name": "Hans123Trader RangeBreakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The break of the most recent trading range becomes a 20-bar Donchian channel (no range length is documented) with a mirrored exit. The twice-daily EndSession triggers, pending-order refresh, forced rollover close and point-based stop/target/trailing distances are not expressible."
+    },
+    {
+      "id": 686,
+      "name": "Donchian Quest Research",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,50)",
+      "exit_long": "close < donchian_low_prev(low,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented OpenPeriod 50 channel upper band and ClosePeriod 50 opposite band are used directly, with the previous-bar band standing in for the intrabar touch of the exit band. Docs list no stops."
+    },
+    {
+      "id": 1672,
+      "name": "TradePad",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a manual trading panel driven by tick, notification, timer and chart-message events with discretionary order placement, so there is no market-derived signal and the never-true guard is used. User-implemented custom stop logic is by definition not a DSL rule."
+    },
+    {
+      "id": 3064,
+      "name": "Two Per Bar",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The routine opens a hedged long and short at the start of every bar and liquidates the basket on the next bar, so it is bar-schedule driven with no directional market signal and the never-true guard is used. The martingale VolumeMultiplier, MaxVolume and TakeProfitPoints 50 ladder are order-management, not entry logic."
+    },
+    {
+      "id": 2954,
+      "name": "Gaps",
+      "family": "mean_reversion",
+      "entry_long": "open < donchian_low_prev(low,1) * 0.995",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented gap rule (open below the previous low by GapPips) is expressed in percent, using 0.5% as the pip-equivalent buffer, and the exit is the gap fill. StopLossPips 50 and TakeProfitPips 50 are pip distances rather than percentages, so the stepped 5/5-pip trailing and pending-order cancellation are dropped."
+    }
+  ]
+}

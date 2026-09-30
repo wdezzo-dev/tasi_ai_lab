@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 87,
+      "name": "Parabolic SAR Reversal",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10))",
+      "exit_long": "crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by a moving-average crossover because SAR is not available in the local DSL."
+    },
+    {
+      "id": 3957,
+      "name": "MasterMind 2",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 1175,
+      "name": "Post Open Long ATR Stop Loss Take Profit",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,14,2)",
+      "exit_long": "close < bb_mid(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 14 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 1521,
+      "name": "Vegas Tunnel",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 71,
+      "name": "Evening Star Pattern",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 936,
+      "name": "IU Big Body Bar",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1366,
+      "name": "Supertrade RVI Long-Only",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2776,
+      "name": "CH2010 Structure Multi-Timeframe Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3841,
+      "name": "FrBestExp02 Maloma Mod",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 337,
+      "name": "Adaptive RSI Volume Filter",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using ATR versus its rolling average; absolute point/pip risk controls are not encoded."
+    }
+  ]
+}

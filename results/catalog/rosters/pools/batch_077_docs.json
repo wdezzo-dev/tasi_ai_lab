@@ -1,0 +1,98 @@
+{
+ "batch_077": {
+  "strategy_ids": [
+   1009,
+   3406,
+   3003,
+   2168,
+   807,
+   4065,
+   1623,
+   1152,
+   3317,
+   1148
+  ],
+  "docs": {
+   "1009": {
+    "id": 1009,
+    "name": "MACD Enhanced Strategy MTF with Stop Loss",
+    "family": "trend",
+    "overview": "Multi-timeframe strategy using MACD-based scoring and an ATR-derived trailing stop line.\n\n## Details\n\n- **Entry Criteria**: MACD score turns positive or negative.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or trailing stop line break.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `CrossScore` = 10\n  - `IndicatorScore` = 8\n  - `HistogramScore` = 2\n  - `StopLossFactor` = 1.2\n  - `StopLossPeriod` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD score turns positive or negative.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or trailing stop line break.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `CrossScore` = 10\n  - `IndicatorScore` = 8\n  - `HistogramScore` = 2\n  - `StopLossFactor` = 1.2\n  - `StopLossPeriod` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3406": {
+    "id": 3406,
+    "name": "Range Follower",
+    "family": "trend",
+    "overview": "The Range Follower strategy reproduces the MetaTrader 5 expert advisor \"Range Follower\" using the StockSharp high-level API. It monitors the current day's price range relative to a daily Average True Range (ATR) benchmark and opens a single breakout trade when price travels far enough away from the session high or low. The conversion keeps the original approach of splitting the ATR into a trigger portion and a residual portion that becomes the take-profit distance.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Working timeframe used to detect session boundaries. |\n| `TriggerPercent` | 60 | Percentage of the daily ATR used as the breakout trigger distance. Must stay between 10 and 90. |\n| `Volume` | 0.1 | Market order volume for both long and short entries. |"
+   },
+   "3003": {
+    "id": 3003,
+    "name": "eInTradePanel",
+    "family": "trend",
+    "overview": "The eInTradePanel strategy automates the workflow of the original MetaTrader trade panel. It allows the same eight order modes (market, stop, limit and stop-limit in both directions) while automatically computing trigger, entry, stop-loss and take-profit distances from the current spread and a volatility-sensitive ATR estimate. Protective orders are simulated through candle monitoring so the strategy can be used with data vendors that do not support attached SL/TP orders.\n\n## Highlights\n\n- **Order modes** – choose between Buy, Sell, Buy/Sell Stop, Buy/Sell Limit or Buy/Sell Stop-Limit. Stop-limit orders are armed once price reaches the trigger distance and then submit the limit entry.\n- **Dynamic distances** – pending levels, triggers, stops and targets are proportional to the larger of the current spread or an ATR-derived synthetic spread (`ATR × AtrFactor`). When ATR is not ready, a configurable base tick distance is used.\n- **Volatility adaptation** – ATR length follows the original panel (55) so offsets react to regime changes without extra tuning.\n- **Order expiration** – optional cancellation window with minimum lifetime enforcement (default 11 minutes) keeps stale pending orders off the book.\n- **Risk management** – every open position is watched on each closed candle; if the high/low pierces the computed stop or target the position is closed at market.\n- **Quote awareness** – the strategy subscribes to the order book to obtain best bid/ask prices for more accurate offset calculations, falling back to candle closes when depth is unavailable.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `Volume` | Order size used for all entries. |\n| `Mode` | Entry mode (market, stop, limit or stop-limit). |\n| `Candle Type` | Aggregation used for ATR and candle-based execution checks. |\n| `Base Ticks` | Minimum tick distance when ATR data is not available. |\n| `Pending Multiplier` | Multiplier applied to the base tick distance for pending order offsets. |\n| `Trigger ",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Volume` | Order size used for all entries. |\n| `Mode` | Entry mode (market, stop, limit or stop-limit). |\n| `Candle Type` | Aggregation used for ATR and candle-based execution checks. |\n| `Base Ticks` | Minimum tick distance when ATR data is not available. |\n| `Pending Multiplier` | Multiplier applied to the base tick distance for pending order offsets. |\n| `Trigger Multiplier` | Additional multiplier for stop-limit trigger distances. |\n| `Stop Multiplier` | Multiplier for stop-loss distance (set to 0 to disable). |\n| `Take Multiplier` | Multiplier for take-profit distance (set to 0 to disable). |\n| `Use ATR` | Enables ATR-based scaling of all distances. |\n| `ATR Factor` | Fraction of ATR treated as synthetic spread when scaling. |\n| `Expiration` | Minutes until pending orders are cancelled (0 keeps them GTC). |\n| `Min Expiration` | Minimum pending lifetime in minutes, mirroring the panel's guardrail. |"
+   },
+   "2168": {
+    "id": 2168,
+    "name": "AfterEffects",
+    "family": "trend",
+    "overview": "The AfterEffects strategy is based on the idea that market prices may show aftereffects.\nIt calculates a signal using the current close price and the opens from `p` and `2p` bars ago:\n\n`signal = Close - 2 * Open[p] + Open[2p]`\n\nA positive signal opens a long position, while a negative signal opens a short position.\nSetting `Random` to true inverts the signal.\n\nOnce in a position the strategy places a stop loss `StopLoss` points away from the entry.\nWhen price moves `2 * StopLoss` points in the favorable direction:\n\n- if the signal changes sign the position is reversed by trading double volume;\n- otherwise the stop loss is trailed to the new level.\n\n## Details\n\n- **Entry Criteria**: `signal > 0` for long, `signal < 0` for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop loss.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `StopLoss` = 500\n  - `Period` = 3\n  - `Random` = false\n  - `Volume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom formula\n  - Stops: Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: `signal > 0` for long, `signal < 0` for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop loss.\n- **Stops**: Trailing stop.\n- **Default Values**:\n  - `StopLoss` = 500\n  - `Period` = 3\n  - `Random` = false\n  - `Volume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom formula\n  - Stops: Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "807": {
+    "id": 807,
+    "name": "Forex Fire EMA MA RSI",
+    "family": "trend",
+    "overview": "Multi-timeframe trend strategy using EMA, MA and RSI confirmation. Uses 4h candles for confluence and 15m candles for entries.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Short EMA above long EMA, price above MA, fast RSI above slow RSI and >50, volume increasing with higher timeframe confirmation.\n  - Short: Opposite conditions.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - EMA cross or RSI reaching thresholds.\n  - Optional stop loss, take profit, trailing stop and ATR-based exit.\n- **Stops**: Yes, configurable.\n- **Default Values**:\n  - `EmaShortLength` = 13\n  - `EmaLongLength` = 62\n  - `MaLength` = 200\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `RsiSlowLength` = 28\n  - `RsiFastLength` = 7\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `UseStopLoss` = true\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = true\n  - `TakeProfitPercent` = 4\n  - `UseTrailingStop` = true\n  - `TrailingPercent` = 1.5\n  - `UseAtrExits` = true\n  - `AtrMultiplier` = 2\n  - `AtrLength` = 14\n  - `EntryCandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n  - `ConfluenceCandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, MA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Short EMA above long EMA, price above MA, fast RSI above slow RSI and >50, volume increasing with higher timeframe confirmation.\n  - Short: Opposite conditions.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - EMA cross or RSI reaching thresholds.\n  - Optional stop loss, take profit, trailing stop and ATR-based exit.\n- **Stops**: Yes, configurable.\n- **Default Values**:\n  - `EmaShortLength` = 13\n  - `EmaLongLength` = 62\n  - `MaLength` = 200\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `RsiSlowLength` = 28\n  - `RsiFastLength` = 7\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `UseStopLoss` = true\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = true\n  - `TakeProfitPercent` = 4\n  - `UseTrailingStop` = true\n  - `TrailingPercent` = 1.5\n  - `UseAtrExits` = true\n  - `AtrMultiplier` = 2\n  - `AtrLength` = 14\n  - `EntryCandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n  - `ConfluenceCandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, MA, RSI, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4065": {
+    "id": 4065,
+    "name": "Pipso Night Breakout",
+    "family": "breakout",
+    "overview": "Pipso is a night-session breakout system converted from the MetaTrader expert advisor `Pipso.mq4`. The strategy measures the\nhighest and lowest prices of the previously completed candles and reacts when the market breaks outside of that range. Every\nbreakout reverses the position: long positions are closed and a short is opened when price breaks above the recent highs, while\nshort positions are covered and a new long is established when price pierces the recent lows. Protective stops are derived from\nthe width of the range so that the stop distance automatically adapts to current volatility.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle data type used for signal calculation. | 15-minute time-frame |\n| `OrderVolume` | Fixed order size for every market order. | 1 |\n| `SessionStartHour` | Hour of day when the breakout window begins. | 21 |\n| `SessionLengthHours` | Duration of the trading window in hours. | 9 |\n| `BreakoutPeriod` | Number of completed candles that define the breakout range. | 36 |\n| `StopLossMultiplier` | Multiplier applied to the range width to derive the stop distance (value `3` corresponds to the original `SLpp = 300`). | 3 |\n| `MinStopDistance` | Minimal stop-loss distance in absolute price units, emulating the MetaTrader stop level restriction. | 0 |"
+   },
+   "1623": {
+    "id": 1623,
+    "name": "Fxscalper",
+    "family": "breakout",
+    "overview": "Bollinger Band breakout scalping strategy translated from the MQL4 \"fxscalper\" expert.\nThe strategy subscribes to candle data and Bollinger Bands. When the closing price breaks above the upper band it opens a long position; when the closing price breaks below the lower band it opens a short position. Positions are protected by stop-loss and take-profit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > Upper Band`\n  - Short: `Close < Lower Band`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal or protective stops\n- **Stops**: Stop loss and take profit\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2\n  - `StopLoss` = 200m\n  - `TakeProfit` = 150m\n- **Filters**:\n  - Category: Bollinger Bands\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > Upper Band`\n  - Short: `Close < Lower Band`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal or protective stops\n- **Stops**: Stop loss and take profit\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2\n  - `StopLoss` = 200m\n  - `TakeProfit` = 150m\n- **Filters**:\n  - Category: Bollinger Bands\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1152": {
+    "id": 1152,
+    "name": "P-Square Nth Percentile",
+    "family": "momentum",
+    "overview": "Estimates the selected percentile of the source series using the P-Square algorithm. Opens a long position when the value exceeds the upper percentile and a short position when the value falls below the lower percentile.\n\n## Parameters\n- `Percentile` – percentile to estimate.\n- `UseReturns` – process returns instead of prices.\n- `CandleType` – candle data type.\n",
+    "details": "",
+    "parameters": "- `Percentile` – percentile to estimate.\n- `UseReturns` – process returns instead of prices.\n- `CandleType` – candle data type."
+   },
+   "3317": {
+    "id": 3317,
+    "name": "Virtual Robot",
+    "family": "volatility",
+    "overview": "The Virtual Robot strategy recreates the grid-based averaging approach of the original MetaTrader expert advisor. The algorithm maintains two independent virtual grids (long and short) on a configurable candle timeframe. Only when the number of virtual levels reaches the defined threshold are real market orders sent. This allows the strategy to simulate the MT4 behaviour where virtual levels guide actual position management.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle series used to form the virtual ladder (default: 60-minute candles). |\n| `StopLossPips` | Stop distance in pips from the latest filled order. |\n| `TakeProfitPips` | Take-profit distance for single-order baskets. |\n| `MinTakeProfitPips` | Minimum profit required to close a single virtual level. |\n| `AverageTakeProfitPips` | Profit target applied to the weighted average of the basket. |\n| `BaseVolume` | Base lot size for the first grid orders. |\n| `MaxVolume` | Maximum allowed lot size. |\n| `Multiplier` | Lot multiplier for averaged entries. |\n| `RealStepper` | Number of filled real orders before the multiplier kicks in. |\n| `VirtualStepper` | Virtual orders filled at the base lot before scaling. |\n| `PipStepPips` | Minimum adverse excursion (in pips) between successive grid levels. |\n| `MaxTrades` | Hard cap on the number of real orders per side. |\n| `StartingRealOrders` | Number of virtual orders required before the first real order is placed. |\n| `RealAverageThreshold` | Switches the averaged price from virtual to real once this many orders are filled. |\n| `VisualMode` | Kept for parity with the MT4 input (no effect in StockSharp). |"
+   },
+   "1148": {
+    "id": 1148,
+    "name": "Outlier Detector with N-Sigma Confidence Intervals",
+    "family": "mean_reversion",
+    "overview": "The strategy identifies outliers in price changes using N-sigma confidence intervals and trades mean reversion when extreme moves occur.\n\n## Details\n\n- **Entry Criteria**:\n  - Short when z-score > `SecondLimit`.\n  - Long when z-score < -`SecondLimit`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Close position when |z-score| < `FirstLimit`.\n- **Stops**: None.\n- **Default Values**:\n  - `SampleSize` = 30\n  - `FirstLimit` = 2\n  - `SecondLimit` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: StandardDeviation, Z-Score\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Short when z-score > `SecondLimit`.\n  - Long when z-score < -`SecondLimit`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Close position when |z-score| < `FirstLimit`.\n- **Stops**: None.\n- **Default Values**:\n  - `SampleSize` = 30\n  - `FirstLimit` = 2\n  - `SecondLimit` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: StandardDeviation, Z-Score\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

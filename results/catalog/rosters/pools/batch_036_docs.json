@@ -1,0 +1,98 @@
+{
+ "batch_036": {
+  "strategy_ids": [
+   2989,
+   2166,
+   1692,
+   499,
+   885,
+   4119,
+   580,
+   4145,
+   2482,
+   1677
+  ],
+  "docs": {
+   "2989": {
+    "id": 2989,
+    "name": "Trendline Cross Alert",
+    "family": "trend",
+    "overview": "This strategy reproduces the behaviour of the original MetaTrader expert advisor that watched for price crossings of manually drawn horizontal lines and trendlines. It continuously monitors finished candles, checks whether the candle body straddled any registered level, and generates alerts the first time a crossing occurs. No automatic orders are submitted by default; the module focuses on tracking discretionary levels and informing the operator.",
+    "details": "",
+    "parameters": "| Parameter | Type | Description |\n| --- | --- | --- |\n| `MonitoringColor` | `string` | Colour label that lines must match to be monitored. Case-insensitive. |\n| `CrossedColor` | `string` | Label used in alert messages to indicate that the line was crossed. |\n| `HorizontalLevelsInput` | `string` | Semicolon-separated list of horizontal levels. Each entry is `Name|Color|Price`; if colour is omitted the monitoring colour is assumed. |\n| `TrendlineDefinitions` | `string` | Semicolon-separated list of trendlines. Each entry is `Name|Color|StartTime|StartPrice|EndTime|EndPrice`. Times must be in ISO 8601 format and use the trading calendar’s timezone. |\n| `EnableAlerts` | `bool` | When `true` the strategy writes an info log entry describing the crossing. |\n| `EnableNotifications` | `bool` | Adds a second log entry that emulates a push notification. |\n| `EnableEmails` | `bool` | Adds a third log entry that emulates an email alert. |\n| `CandleType` | `DataType` | Candle series used to monitor the market. |"
+   },
+   "2166": {
+    "id": 2166,
+    "name": "Digital CCI Woodies",
+    "family": "trend",
+    "overview": "This strategy trades on the crossover of two Commodity Channel Index (CCI) indicators. A fast CCI reacts quickly to price changes while a slow CCI smooths market noise. Signals are generated when the fast line crosses the slow one.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: fast CCI crosses above slow CCI.\n  - Short: fast CCI crosses below slow CCI.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Long positions closed when fast CCI crosses below slow CCI.\n  - Short positions closed when fast CCI crosses above slow CCI.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 6-hour candles\n  - `FastLength` = 14\n  - `SlowLength` = 6\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: fast CCI crosses above slow CCI.\n  - Short: fast CCI crosses below slow CCI.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Long positions closed when fast CCI crosses below slow CCI.\n  - Short positions closed when fast CCI crosses above slow CCI.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = 6-hour candles\n  - `FastLength` = 14\n  - `SlowLength` = 6\n  - `BuyOpen` = true\n  - `SellOpen` = true\n  - `BuyClose` = true\n  - `SellClose` = true\n- **Filters**:\n  - Category: Trend-following\n  - Direction: Both\n  - Indicators: CCI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1692": {
+    "id": 1692,
+    "name": "Parabolic SAR Bug",
+    "family": "trend",
+    "overview": "The **Parabolic SAR Bug** strategy trades trend reversals using the Parabolic SAR indicator. When the SAR flips below price the strategy enters long, and when the SAR flips above price it enters short. Optional reverse mode inverts signals. Protective stop loss, take profit, and trailing stop are supported through the built-in position protection module.\n\n## Details\n\n- **Entry Criteria**: Parabolic SAR direction change.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite SAR signal or protective stop.\n- **Stops**: Stop loss, take profit, optional trailing stop.\n- **Default Values**:\n  - `Step` = 0.02\n  - `MaxStep` = 0.2\n  - `StopLossPercent` = 2\n  - `TakeProfitPercent` = 1\n  - `UseTrailingStop` = false\n  - `Reverse` = false\n  - `CloseOnSar` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Stop loss, take profit\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Parabolic SAR direction change.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite SAR signal or protective stop.\n- **Stops**: Stop loss, take profit, optional trailing stop.\n- **Default Values**:\n  - `Step` = 0.02\n  - `MaxStep` = 0.2\n  - `StopLossPercent` = 2\n  - `TakeProfitPercent` = 1\n  - `UseTrailingStop` = false\n  - `Reverse` = false\n  - `CloseOnSar` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Stop loss, take profit\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "499": {
+    "id": 499,
+    "name": "Advanced EMA Cross",
+    "family": "trend",
+    "overview": "This strategy goes long when a short-term EMA crosses above a long-term EMA while filtering signals with normalized ATR, ADX trend strength and a SuperTrend direction check. Stop-loss and take-profit levels adapt based on USD strength inferred from a 50-period EMA.\n\n## Details\n\n- **Entry Criteria**:\n  - Short EMA crosses above long EMA.\n  - Normalized ATR above thresholds depending on trend direction.\n  - SuperTrend confirms bull or bear market.\n- **Exit Criteria**:\n  - Opposite EMA cross or ADX above threshold after a minimum holding period.\n  - Stop-loss or take-profit hit.\n- **Indicators**: EMA, ATR, ADX, SuperTrend, SMA (volume).\n- **Stops**: Dynamic percentage stop-loss and take-profit.\n- **Type**: Trend following.\n- **Timeframe**: 30 minutes (default).\n\n",
+    "details": "- **Entry Criteria**:\n  - Short EMA crosses above long EMA.\n  - Normalized ATR above thresholds depending on trend direction.\n  - SuperTrend confirms bull or bear market.\n- **Exit Criteria**:\n  - Opposite EMA cross or ADX above threshold after a minimum holding period.\n  - Stop-loss or take-profit hit.\n- **Indicators**: EMA, ATR, ADX, SuperTrend, SMA (volume).\n- **Stops**: Dynamic percentage stop-loss and take-profit.\n- **Type**: Trend following.\n- **Timeframe**: 30 minutes (default).",
+    "parameters": ""
+   },
+   "885": {
+    "id": 885,
+    "name": "HMA Crossover ATR Curvature",
+    "family": "trend",
+    "overview": "HMA Crossover ATR Curvature is a trend-following strategy combining a fast and slow Hull Moving Average crossover with a curvature filter. Position size is based on ATR and risk percent, and trades are protected by an ATR-based trailing stop.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Fast HMA crosses above slow HMA and curvature is above threshold.\n  - **Short**: Fast HMA crosses below slow HMA and curvature is below negative threshold.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `FastLength` = 15\n  - `SlowLength` = 34\n  - `AtrLength` = 14\n  - `RiskPercent` = 1\n  - `AtrMultiplier` = 1.5\n  - `TrailMultiplier` = 1\n  - `CurvatureThreshold` = 0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: HMA, ATR\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Fast HMA crosses above slow HMA and curvature is above threshold.\n  - **Short**: Fast HMA crosses below slow HMA and curvature is below negative threshold.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `FastLength` = 15\n  - `SlowLength` = 34\n  - `AtrLength` = 14\n  - `RiskPercent` = 1\n  - `AtrMultiplier` = 1.5\n  - `TrailMultiplier` = 1\n  - `CurvatureThreshold` = 0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: HMA, ATR\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4119": {
+    "id": 4119,
+    "name": "4119 Champion",
+    "family": "breakout",
+    "overview": "This strategy is a high-level C# port of the MetaTrader Expert Advisor located in `MQL/919/champion.mq5`. The original EA waits for a Relative Strength Index (RSI) signal and places three stop orders in the direction of the anticipated breakout. Every pending order already includes a stop-loss and take-profit and the stop-loss is trailed whenever price moves favourably. The StockSharp version keeps the same behaviour while relying exclusively on high-level API calls (`SubscribeCandles`, `Bind`, `BuyStop`, `SellStop`, etc.).\n\nThe default configuration targets liquid FX instruments where the MetaTrader \"point\" matches the StockSharp `PriceStep` (typically 0.0001). The candle type is configurable and the strategy can be applied to any time frame as long as the account provides best bid/ask quotes and, optionally, stop level information.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitPoints` | MetaTrader points added/subtracted from the fill price to place the take-profit order. Set to `0` to disable the target. |\n| `StopLossPoints` | MetaTrader points added/subtracted from the fill price to place the stop-loss order and to compute the trailing distance. |\n| `RsiPeriod` | RSI length (number of candles). |\n| `RsiLevel` | Symmetric RSI threshold. Values below the level trigger longs, values above `100 - level` trigger shorts. |\n| `BalancePerLot` | Account currency amount considered equivalent to one standard lot when sizing positions. |\n| `MinOrderDistancePoints` | Fallback minimum distance (in points) between the market price and new stop orders when the trading venue does not report a stop level. |\n| `RepriceDistancePoints` | Distance (in points) that triggers pending order repricing. |\n| `CandleType` | Candle data type used for the RSI calculation. |"
+   },
+   "580": {
+    "id": 580,
+    "name": "Bjorgum Double Tap",
+    "family": "breakout",
+    "overview": "The strategy searches for double top and double bottom patterns. A short trade is opened when price breaks below the neckline of a double top, and a long trade is opened when price breaks above the neckline of a double bottom. Target and stop levels are calculated as Fibonacci extensions of the pattern height.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Double bottom breakout above the neckline.\n  - **Short**: Double top breakout below the neckline.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop or target levels.\n- **Stops**: Fibonacci percentage via `StopLossFib`.\n- **Default Values**:\n  - Pivot length 50.\n  - Pivot tolerance 15%.\n  - Target fib 100%.\n  - Stop fib 0%.\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Highest/Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Double bottom breakout above the neckline.\n  - **Short**: Double top breakout below the neckline.\n- **Long/Short**: Both.\n- **Exit Criteria**: Stop or target levels.\n- **Stops**: Fibonacci percentage via `StopLossFib`.\n- **Default Values**:\n  - Pivot length 50.\n  - Pivot tolerance 15%.\n  - Target fib 100%.\n  - Stop fib 0%.\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Highest/Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "4145": {
+    "id": 4145,
+    "name": "RobotPowerM5 Meta4 V12",
+    "family": "momentum",
+    "overview": "The RobotPowerM5 Meta4 V12 strategy is a C# port of the MetaTrader 4 expert advisor `RobotPowerM5_meta4V12.mq4`. The original EA\nwas designed for five-minute Forex charts and evaluates the balance between Bulls Power and Bears Power to decide whether a new\nlong or short position should be opened. The StockSharp version keeps the one-position-at-a-time behaviour, reproduces the point-\nbased stop-loss / take-profit settings, and reimplements the trailing-stop logic that gradually locks in profits once the market\nmoves in the trade's favour.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `BullBearPeriod` | Averaging period supplied to both Bulls Power and Bears Power indicators. | `5` | Increasing the value smooths the momentum filter. |\n| `Volume` | Requested lot size for every entry. | `1` | The actual traded volume depends on the broker's lot step and limits. |\n| `StopLossPoints` | Initial protective stop distance in MetaTrader points. | `45` | Set to `0` to disable the hard stop-loss. |\n| `TakeProfitPoints` | Take-profit distance in MetaTrader points. | `150` | Set to `0` to trade without a fixed profit target. |\n| `TrailingStopPoints` | Distance used by the trailing stop once the trade is profitable. | `15` | Set to `0` to disable trailing. |\n| `CandleType` | Timeframe used for indicator calculations. | `5m time frame` | Any other `DataType` can be selected if needed. |"
+   },
+   "2482": {
+    "id": 2482,
+    "name": "JK BullP AutoTrader",
+    "family": "volatility",
+    "overview": "The JK BullP AutoTrader is a port of the original MetaTrader expert advisor that relies on the Bulls Power oscillator. It interprets the relationship between two consecutive Bulls Power values to detect when bullish strength is fading above the zero line or when it drops below zero and reverses. Long and short trades are protected with fixed stops and an incremental trailing stop that tightens as the trade becomes profitable.\n\n## Details\n\n- **Entry Criteria**: Sell when Bulls Power two bars ago is above the previous bar and the previous bar is above zero. Buy when the previous Bulls Power bar is below zero.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take profit, fixed stop loss, or trailing stop hit. Opposite signals reverse the position.\n- **Stops**: Fixed take profit, fixed stop loss, trailing stop.\n- **Default Values**:\n  - `BullsPeriod` = 13\n  - `TakeProfitPoints` = 350\n  - `StopLossPoints` = 100\n  - `TrailingStopPoints` = 100\n  - `TrailingStepPoints` = 40\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Bulls Power\n  - Stops: Fixed + Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday / Swing (1H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Sell when Bulls Power two bars ago is above the previous bar and the previous bar is above zero. Buy when the previous Bulls Power bar is below zero.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take profit, fixed stop loss, or trailing stop hit. Opposite signals reverse the position.\n- **Stops**: Fixed take profit, fixed stop loss, trailing stop.\n- **Default Values**:\n  - `BullsPeriod` = 13\n  - `TakeProfitPoints` = 350\n  - `StopLossPoints` = 100\n  - `TrailingStopPoints` = 100\n  - `TrailingStepPoints` = 40\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Bulls Power\n  - Stops: Fixed + Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday / Swing (1H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1677": {
+    "id": 1677,
+    "name": "Averaged Stoch & WPR",
+    "family": "mean_reversion",
+    "overview": "This strategy combines the Stochastic oscillator with Williams %R to detect extreme market conditions.\nA long position is opened when the Stochastic value drops below 0.1 and Williams %R is under -90, signaling deep oversold pressure.\nA short position is opened when the Stochastic rises above 99.9 and Williams %R exceeds -5, indicating strong overbought conditions.\n\nThe strategy works on any instrument and timeframe supported by the selected candle type. It can trade both long and short positions and offers an optional percentage stop loss for risk management.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Stochastic < 0.1 and Williams %R < -90.\n  - **Short**: Stochastic > 99.9 and Williams %R > -5.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or triggered stop loss.\n- **Stops**: Optional percentage-based stop loss.\n- **Indicators**:\n  - Stochastic oscillator (default period 26).\n  - Williams %R (default period 26).\n\n## Parameters\n\n- `StochPeriod` – Stochastic calculation period.\n- `WprPeriod` – Williams %R calculation period.\n- `StopLossPercent` – Percent-based stop loss size.\n- `CandleType` – Candle type used for indicator calculations.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Stochastic < 0.1 and Williams %R < -90.\n  - **Short**: Stochastic > 99.9 and Williams %R > -5.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or triggered stop loss.\n- **Stops**: Optional percentage-based stop loss.\n- **Indicators**:\n  - Stochastic oscillator (default period 26).\n  - Williams %R (default period 26).",
+    "parameters": "- `StochPeriod` – Stochastic calculation period.\n- `WprPeriod` – Williams %R calculation period.\n- `StopLossPercent` – Percent-based stop loss size.\n- `CandleType` – Candle type used for indicator calculations."
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1640,
+      "name": "OCO Order Execution",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an order ticket that watches Level-1 bid/ask against four user-set absolute trigger prices, so the entry is a trader input rather than a market-derived condition and the never-true guard is used. The 300-pip stop/target, OCO mode and pip-to-price conversion are order-management settings."
+    },
+    {
+      "id": 4147,
+      "name": "EMA WMA Risk",
+      "family": "trend",
+      "entry_long": "crossabove(ema(open,8),ema(open,28))",
+      "exit_long": "crossbelow(ema(open,8),ema(open,28))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "WMA is not in the DSL, so the documented WmaPeriod 8 is approximated with EMA(8) against the documented EmaPeriod 28 on candle opens, and the fast/slow reversal pair gives entry and exit. The 50-point stop and target plus the 10% risk-based sizing are not percentage exit rules."
+    },
+    {
+      "id": 1242,
+      "name": "Renko RSI",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,2),20)",
+      "exit_long": "crossbelow(rsi(close,2),80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RsiLength 2 crossing RsiOversold 20 opens the long and RsiOverbought 80 closes, exactly as written. Renko ATR(14) bricks cannot be built from OHLC bars in the DSL, so standard candles are used; docs state no stops."
+    },
+    {
+      "id": 478,
+      "name": "Three Kilos BTC 15m",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,50),ema(close,30)) and ema(close,50) > ema(close,140)",
+      "exit_long": "crossbelow(ema(close,50),ema(close,30))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 1.0,
+      "notes": "TEMA is approximated by EMA of the same documented ShortPeriod 30 / LongPeriod 50 / Long2Period 140, and the opposite cross exits; the Supertrend leg is dropped because close above EMA(AtrLength 10) plus Multiplier 2 times ATR(10) never coincides with the documented medium-over-fast cross. The documented 1% take-profit and 1% stop are applied."
+    },
+    {
+      "id": 70,
+      "name": "Morning Star Pattern",
+      "family": "trend",
+      "entry_long": "sma(close - open,2) < 0 and close > open and (close - open) > 0.5 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,5)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The three-candle Morning Star is approximated by a net-negative two-bar body stretch (the down candle plus the small middle candle) followed by a strong bullish confirmation body above 0.5xATR(14), since shifted opens are unavailable. The documented StopLossPercent 1 is used; the confirmation-bar-high target is already met at entry, so a short-MA loss stands in for the exit."
+    },
+    {
+      "id": 1159,
+      "name": "Pavan CPR",
+      "family": "breakout",
+      "entry_long": "low < donchian_high_prev(high,10) and close > donchian_high_prev(high,10)",
+      "exit_long": "close < donchian_high_prev(high,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The top CPR needs the session open, high, low and close, which are not available as series, so the prior 10-bar high stands in for the pivot level: probing below it and closing above is the documented cross from below. TakeProfitTarget 50 is a price-step distance, not a percentage, and the stop at the pivot is mirrored in the exit."
+    },
+    {
+      "id": 4189,
+      "name": "Early Bird Range Break",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and rsi(close,14) > 50 and atr(high,low,close,16) > sma(atr(high,low,close,16),50)",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The consolidation-range break is rendered as a 20-bar channel with the documented RsiPeriod 14 filter and the documented VolatilityPeriod 16 ATR gate above its own average. The 03:00-07:00 range window, 07:15-15:00 entry window, three-part 10/20/30 take-profits, 60-point stop and trailing activation are not expressible."
+    },
+    {
+      "id": 988,
+      "name": "Logistic RSI STOCH ROC AO",
+      "family": "momentum",
+      "entry_long": "crossabove(zscore(rsi(close,14),13),0)",
+      "exit_long": "crossbelow(zscore(rsi(close,14),13),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The logistic map and the signed standard deviation are not computable, so the documented Length 13 is applied as a z-score of RsiLength 14 and the documented zero-cross rule is used directly. The AO, ROC and Stochastic input variants, LenLd 5 and Highest smoothing are dropped; docs state no stops."
+    },
+    {
+      "id": 3368,
+      "name": "Dynamic Stop Loss",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA explicitly opens no trades and only repositions the stop of an existing position by StopLossPoints 800 on each new bar, so no market-derived signal exists and the never-true guard is used. Point-to-price conversion and stop recalculation are not DSL rules."
+    },
+    {
+      "id": 2891,
+      "name": "FullDump BB RSI",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fade of short-term extremes inside the envelope uses BandsPeriod 20 with RsiPeriod 14 oversold, and the exit is the return toward the middle band as described. The Depth 6 candle inspection, IndentInPoints 10 offsets and OrderVolume 1 are not expressible, so no percentage stops are set."
+    }
+  ]
+}

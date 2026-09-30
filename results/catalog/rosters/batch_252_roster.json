@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1234,
+      "name": "Reflected EMA Difference RED",
+      "family": "trend",
+      "entry_long": "roc(sma(((2 * sma(close,10) - sma(close,20)) - (2 * sma(close,5) - sma(close,10))) / (close + 0.0001) * 100, 2), 5) > 4 and ((2 * sma(close,10) - sma(close,20)) - (2 * sma(close,5) - sma(close,10))) > 0",
+      "exit_long": "roc(sma(((2 * sma(close,10) - sma(close,20)) - (2 * sma(close,5) - sma(close,10))) / (close + 0.0001) * 100, 2), 5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull moving averages are unavailable, so a Hull proxy is 2*SMA(n/2) - SMA(n) and the reflected distance between the slow and fast Hulls is normalised by price before the documented Smoothing Period 2 is applied. The documented Change Percent 0.04 is read as a 4% rise of that smoothed reflection over five bars while the reflection is positive, and its roll-over exits; the pullback-limit state and short branch are dropped."
+    },
+    {
+      "id": 1673,
+      "name": "Ride Alligator",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,5), sma(close,13)) and sma(close,8) < sma(close,13)",
+      "exit_long": "close <= sma(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Alligator lines are approximated by plain SMAs with the documented AlligatorPeriod 5 as Lips and the standard 8/13 Teeth and Jaws lengths, since the weighted, shifted SMMA construction is not available. The documented exit is the stop at the Jaws line, so no percentage stop is encoded; the short branch is dropped."
+    },
+    {
+      "id": 2293,
+      "name": "JFATL Digit System",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,5))",
+      "exit_long": "crossbelow(close, ema(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Jurik moving average is unavailable, so the documented Length 5 average is approximated by EMA(5) and a slope sign change becomes a cross of price over and under that line. Phase -100 has no analogue, and StartProtection is mentioned without numeric percentages, so both percentage fields stay null."
+    },
+    {
+      "id": 2453,
+      "name": "Exp Price Position",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and close > sma(close,26) and ema(close,2) > ema(close,30)",
+      "exit_long": "close < sma(close,20) or ema(close,2) < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The median-pair swing level is approximated by the documented MedianSlowPeriod 20 and MedianFastPeriod 26 averages, and the bullish step trend by the documented FastPeriod 2 over SlowPeriod 30 pair; a long needs price above the level with the step trend up, and the mirror condition exits. TpSlRatio 3 and TrailingStopPips 10 are point/trailing controls with no percentage equivalent."
+    },
+    {
+      "id": 2409,
+      "name": "Turtle Trader SAR",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry and exit rules are used directly: a close above the prior ShortPeriod 20 Donchian high enters long and the opposite ExitPeriod 10 low break exits. ATR(20) stop and take levels (StopAtr/TakeAtr 1), LongPeriod 55, pyramiding AddInterval, ATR risk sizing and the optional Parabolic SAR trail have no percentage or position-layer equivalent in the DSL."
+    },
+    {
+      "id": 429,
+      "name": "Javo v1",
+      "family": "trend",
+      "entry_long": "close > open and close > ema(close,30)",
+      "exit_long": "close < open or close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Heikin Ashi is approximated by the raw candle close versus open, and the documented FastEmaPeriod 1 is kept even though EMA(1) mathematically equals close, which reduces the entry to a bullish candle above the SlowEmaPeriod 30 line. The documented opposite-signal exit is the mirror test, and the short branch plus hourly candle type are dropped."
+    },
+    {
+      "id": 78,
+      "name": "Outside Bar Reversal",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,1) and low < donchian_low_prev(low,1) and close > open and close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "A one-bar shifted Donchian level is the previous candle's extreme, so the outside-bar envelope is exact: high above and low below the prior bar, with a bullish close through the prior high after the decline. The documented StopLossPercent 1 is encoded as the percentage stop, and the pattern stop below the bar is approximated by the prior-low exit."
+    },
+    {
+      "id": 479,
+      "name": "3x Supertrend",
+      "family": "trend",
+      "entry_long": "close > sma(close,11) - 1.0 * atr(high,low,close,11) and close > sma(close,12) - 2.0 * atr(high,low,close,12) and close > sma(close,13) - 3.0 * atr(high,low,close,13) and crossabove(close, sma(close,11) - 1.0 * atr(high,low,close,11))",
+      "exit_long": "close < sma(close,11) - 1.0 * atr(high,low,close,11) and close < sma(close,12) - 2.0 * atr(high,low,close,12) and close < sma(close,13) - 3.0 * atr(high,low,close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Each Supertrend band is approximated by its own average minus the documented factor times ATR, keeping the documented AtrPeriod 11/12/13 and Factor 1/2/3 pairs, and the fast band's flip up is the cross condition. The recursive Supertrend state machine itself cannot be rebuilt in the DSL, and no stops are documented."
+    },
+    {
+      "id": 503,
+      "name": "Advanced Position Management",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20), ema(close,50))",
+      "exit_long": "crossbelow(ema(close,20), ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented EMA crossover entry is translatable, with 20/50 as explicit fallbacks because no lengths are given, and the opposite cross stands in for the three take-profit levels. The trailing stop and initial stop have no documented values, so no percentages are encoded and the short branch is dropped."
+    },
+    {
+      "id": 2760,
+      "name": "Blau Ergodic MDI",
+      "family": "trend",
+      "entry_long": "crossabove(sma(sma(roc(close,14),10),10), sma(sma(sma(roc(close,14),10),10),5))",
+      "exit_long": "crossbelow(sma(sma(roc(close,14),10),10), sma(sma(sma(roc(close,14),10),10),5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Blau ergodic is rebuilt as a triple-smoothed rate of change (primary, first and second smoothing) with an extra SMA as the signal line, and the CloudTwist entry mode is translated as a histogram/signal cross. No lengths, mode default or prices are documented, so 14/10/10/5 are explicit fallbacks; point-based protection, the long/short permission flags and SignalBarShift are unavailable."
+    }
+  ]
+}

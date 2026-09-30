@@ -1,0 +1,98 @@
+{
+ "batch_343": {
+  "strategy_ids": [
+   766,
+   4162,
+   2428,
+   770,
+   3998,
+   3906,
+   464,
+   809,
+   3814,
+   1800
+  ],
+  "docs": {
+   "766": {
+    "id": 766,
+    "name": "NY ORB CP",
+    "family": "trend",
+    "overview": "NY opening range breakout strategy with retest confirmation. Trades breakouts of the 9:30-9:45 NY range when price retests and resumes the breakout direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Price retests the NY high after breakout with trend and volume confirmation.\n  - Short: Price retests the NY low after breakdown with trend and volume confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Profit target at 0.33 of range * `RiskReward`.\n  - Stop loss at 0.33 of range.\n- **Stops**: Yes, dynamic.\n- **Default Values**:\n  - `MinRangePoints` = 60\n  - `RiskReward` = 3\n  - `MaxTradesPerSession` = 3\n  - `MaxDailyLoss` = -1000\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, VWAP, SMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Price retests the NY high after breakout with trend and volume confirmation.\n  - Short: Price retests the NY low after breakdown with trend and volume confirmation.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Profit target at 0.33 of range * `RiskReward`.\n  - Stop loss at 0.33 of range.\n- **Stops**: Yes, dynamic.\n- **Default Values**:\n  - `MinRangePoints` = 60\n  - `RiskReward` = 3\n  - `MaxTradesPerSession` = 3\n  - `MaxDailyLoss` = -1000\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA, VWAP, SMA\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4162": {
+    "id": 4162,
+    "name": "Grail Expert MA",
+    "family": "trend",
+    "overview": "Grail Expert MA is a StockSharp port of the MetaTrader 4 expert advisor `_GrailExpertMAV1_0`. The system searches for fresh breakouts beyond the recent high/low channel and waits for a pullback before joining the move. An exponential moving average of the typical price provides the directional bias: trades are only allowed when the EMA has gained or lost a configurable number of pips across the last two completed candles. Risk management mirrors the original expert with pip-based stop-loss and take-profit distances and ignores new entries while a position is active.",
+    "details": "",
+    "parameters": "* **Order Volume** – trade volume in lots/contracts for market orders.\n* **Take Profit (pips)** – distance to the fixed profit target; set to `0` to disable.\n* **Stop Loss (pips)** – distance to the protective stop; set to `0` to disable.\n* **Range Period** – number of completed candles used to measure the breakout channel.\n* **EMA Period** – length of the exponential moving average applied to the typical price.\n* **EMA Slope (pips)** – minimum pip advance/decline between consecutive EMA values required to enable entries.\n* **Breakout Buffer (pips)** – additional distance away from the fresh extreme before arming pullback entries.\n* **Candle Type** – timeframe requested from the data feed (default: 1-hour candles)."
+   },
+   "2428": {
+    "id": 2428,
+    "name": "Cross MA",
+    "family": "trend",
+    "overview": "This strategy trades a simple moving average crossover with an ATR-based stop loss. A long position is opened when the fast SMA crosses above the slow SMA. A short position is opened when the fast SMA crosses below the slow SMA. After entering a position, a stop loss is placed one ATR away from the entry price and is checked on each new candle.\n\n## Parameters\n- Candle Type\n- Fast SMA period\n- Slow SMA period\n- ATR period\n- Volume\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Fast SMA period\n- Slow SMA period\n- ATR period\n- Volume"
+   },
+   "770": {
+    "id": 770,
+    "name": "EUR/USD Multi-Layer Statistical Regression",
+    "family": "trend",
+    "overview": "Strategy that uses multiple linear regression layers to estimate trend direction on EUR/USD. It calculates short, medium and long regressions, validates them by R² and slope thresholds and trades in the direction of the weighted ensemble.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: weighted slope > 0 and reliability > 0.5\n  - Short: weighted slope < 0 and reliability > 0.5\n- **Long/Short**: Both\n- **Exit Criteria**: Reverse when opposite signal appears\n- **Stops**: Daily loss protection\n- **Default Values**:\n  - `ShortLength` = 20\n  - `MediumLength` = 50\n  - `LongLength` = 100\n  - `MinRSquared` = 0.45m\n  - `SlopeThreshold` = 0.00005m\n  - `WeightShort` = 0.4m\n  - `WeightMedium` = 0.35m\n  - `WeightLong` = 0.25m\n  - `PositionSizePct` = 50m\n  - `MaxDailyLossPct` = 12m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: weighted slope > 0 and reliability > 0.5\n  - Short: weighted slope < 0 and reliability > 0.5\n- **Long/Short**: Both\n- **Exit Criteria**: Reverse when opposite signal appears\n- **Stops**: Daily loss protection\n- **Default Values**:\n  - `ShortLength` = 20\n  - `MediumLength` = 50\n  - `LongLength` = 100\n  - `MinRSquared` = 0.45m\n  - `SlopeThreshold` = 0.00005m\n  - `WeightShort` = 0.4m\n  - `WeightMedium` = 0.35m\n  - `WeightLong` = 0.25m\n  - `PositionSizePct` = 50m\n  - `MaxDailyLossPct` = 12m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3998": {
+    "id": 3998,
+    "name": "Support & Resistance Breakout",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"SupportResistTrade\" MetaTrader expert by combining a breakout of recent support and resistance with a long-term EMA trend filter. Trades are opened only when the price breaks the Donchian channel boundary **and** the candle opens on the same side of a long exponential moving average. Risk is managed through immediate protective stops and a three-step trailing routine that locks in profits at +10, +20 and +30 points.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `RangeLength` | `55` | Number of candles used to compute support (low) and resistance (high). |\n| `EmaPeriod` | `500` | Period of the EMA trend filter applied to candle opens. |\n| `CandleType` | `1 Minute` | Candle series used for all calculations (can be switched to any other timeframe). |"
+   },
+   "3906": {
+    "id": 3906,
+    "name": "Universum 3.0 Original",
+    "family": "trend",
+    "overview": "This strategy reproduces the original **Universum_3_0** MQL4 expert advisor using the StockSharp high-level API.\nIt combines a simple DeMarker threshold entry model with a martingale-like position sizing rule that adapts\nlot size after losing trades.\n\n## Trading Logic\n\n- **Indicator**: classic DeMarker oscillator with configurable period.\n- **Signal Generation**:\n  - Open a long position when `DeMarker > 0.5` at the close of a finished candle.\n  - Open a short position when `DeMarker < 0.5` at the close of a finished candle.\n  - Only one position can be active at a time; new signals are ignored while a trade is open.\n- **Exit Management**:\n  - Protective stop-loss and take-profit levels are attached using absolute price offsets measured in points.\n  - Positions are closed automatically by these protective levels; the strategy does not flip immediately.\n- **Money Management**:\n  - After a profitable trade, volume resets to the base lot.\n  - After a losing trade, volume is multiplied by `(TakeProfitPoints + StopLossPoints) / (TakeProfitPoints - SpreadPoints)`.\n  - The spread value is taken from live Level1 quotes and converted to \"points\" using symbol precision.\n  - Consecutive losses are counted; reaching the limit stops the strategy to emulate the original loss protection.\n  - Setting `FastOptimize = true` disables the adaptive sizing rule and always uses the base lot, which speeds up optimisations.\n\n## Parameters\n\n| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Time frame used for DeMarker calculations. | 1-minute time frame |\n| `DemarkerPeriod` | Look-back period of the DeMarker oscillator. | `10` |\n| `TakeProfitPoints` | Take-profit distance expressed in points (converted to absolute price internally). | `50` |\n| `StopLossPoints` | Stop-loss distance expressed in points. | `50` |\n| `BaseVolume` | Initial trading volume used after each profitable trade. | `1` |\n| `LossesLimit` | Maximum number of consecutive losses befo",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Time frame used for DeMarker calculations. | 1-minute time frame |\n| `DemarkerPeriod` | Look-back period of the DeMarker oscillator. | `10` |\n| `TakeProfitPoints` | Take-profit distance expressed in points (converted to absolute price internally). | `50` |\n| `StopLossPoints` | Stop-loss distance expressed in points. | `50` |\n| `BaseVolume` | Initial trading volume used after each profitable trade. | `1` |\n| `LossesLimit` | Maximum number of consecutive losses before the strategy stops. | `1,000,000` |\n| `FastOptimize` | When `true` disables adaptive sizing for fast optimisation passes. | `true` |"
+   },
+   "464": {
+    "id": 464,
+    "name": "MA PSAR ATR Trend",
+    "family": "trend",
+    "overview": "The MA PSAR ATR Trend strategy combines a moving-average crossover with a daily Parabolic SAR filter. Trades are taken only when price aligns above or below both averages and the PSAR agrees. An ATR-based stop controls risk.\n\nThe method suits traders seeking trend following with dynamic stops. Signals trigger on 5-minute candles by default.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Fast MA > Slow MA, Close > Fast MA, Low > Daily PSAR\n  - **Short**: Fast MA < Slow MA, Close < Fast MA, High < Daily PSAR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Trend turns bearish or price falls below ATR stop\n  - **Short**: Trend turns bullish or price rises above ATR stop\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `FastMaPeriod` = 40\n  - `SlowMaPeriod` = 160\n  - `SarStep` = 0.02m\n  - `SarMaxStep` = 0.2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplierLong` = 2m\n  - `AtrMultiplierShort` = 2m\n  - `UsePsarFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Parabolic SAR, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast MA > Slow MA, Close > Fast MA, Low > Daily PSAR\n  - **Short**: Fast MA < Slow MA, Close < Fast MA, High < Daily PSAR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Trend turns bearish or price falls below ATR stop\n  - **Short**: Trend turns bullish or price rises above ATR stop\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `FastMaPeriod` = 40\n  - `SlowMaPeriod` = 160\n  - `SarStep` = 0.02m\n  - `SarMaxStep` = 0.2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplierLong` = 2m\n  - `AtrMultiplierShort` = 2m\n  - `UsePsarFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Parabolic SAR, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "809": {
+    "id": 809,
+    "name": "Forex Pair Yield Momentum",
+    "family": "trend",
+    "overview": "This strategy trades a selected forex pair using the momentum of the 2-year yield spread between its currencies. The momentum is measured as the difference between the spread and its moving average. Bollinger Bands applied to the momentum define overbought and oversold zones. Positions are closed after a fixed number of bars.\n\n## Key Features\n\n- Uses 2-year yield spread momentum for signals.\n- Bollinger Bands on momentum identify extreme conditions.\n- Optional reversal of entry logic.\n- Closes positions after a specified number of bars.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `YieldASecurity` | First yield security. |\n| `YieldBSecurity` | Second yield security. |\n| `CandleType` | Candle timeframe for analysis. |\n| `MomentumLength` | Period for yield spread average. |\n| `BollingerLength` | Period for Bollinger Bands. |\n| `BollingerStdDev` | Standard deviation multiplier for bands. |\n| `HoldPeriods` | Bars to hold a position. |\n| `ReverseLogic` | Invert long and short conditions. |\n\n## Complexity\n\nBeginner\n\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `YieldASecurity` | First yield security. |\n| `YieldBSecurity` | Second yield security. |\n| `CandleType` | Candle timeframe for analysis. |\n| `MomentumLength` | Period for yield spread average. |\n| `BollingerLength` | Period for Bollinger Bands. |\n| `BollingerStdDev` | Standard deviation multiplier for bands. |\n| `HoldPeriods` | Bars to hold a position. |\n| `ReverseLogic` | Invert long and short conditions. |"
+   },
+   "3814": {
+    "id": 3814,
+    "name": "Avalanche",
+    "family": "trend",
+    "overview": "The Avalanche strategy is a grid-style mean reversion system inspired by the original MetaTrader Avalanche v1.2 expert advisor. The idea is to monitor the relationship between price and a higher-timeframe equilibrium reference price (ERP) computed as a simple moving average. When price trades below the ERP the strategy expects a rebound toward the average and accumulates long positions. When price trades above the ERP the strategy looks for a decline and accumulates short positions. Each additional position is spaced by configurable distance thresholds, while every entry receives individual stop-loss and take-profit levels.\n\nThis StockSharp port focuses on the \"toward\" leg of the original algorithm. Away-from-ERP hedging orders from the MQL version are not replicated because StockSharp strategies operate on a single net position, but the grid stacking, buffering, and profit-taking logic remain faithful to the original approach.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `BaseVolume` | Base order volume used before applying multipliers. |\n| `TowardMultiplier` | Lot multiplier for standard toward-ERP entries. |\n| `TowardInterestMultiplier` | Multiplier used when the instrument pays positive swap in the trading direction. |\n| `IntervalToward` | Distance in points required to add a trend-following stack. |\n| `StackBufferToward` | Additional buffer added to the interval when stacking against adverse price moves. |\n| `TakeProfitToward` | Take-profit distance in points for each entry. Set to `0` to disable. |\n| `StopLossToward` | Stop-loss distance in points for each entry. Set to `0` to disable. |\n| `ErpPeriod` | Number of periods for the ERP simple moving average. |\n| `ErpChangeBuffer` | Buffer (in points) applied around the ERP before switching bias. |\n| `CandleType` | Trading timeframe used to trigger entries and exits. |\n| `ErpCandleType` | Timeframe used to calculate the ERP moving average. |\n| `OpenStartingOrders` | If enabled, immediately opens the first grid order when conditions are satisfied. |"
+   },
+   "1800": {
+    "id": 1800,
+    "name": "Bulls Bears Eyes",
+    "family": "trend",
+    "overview": "This strategy evaluates the balance between bullish and bearish pressure using the **Bulls Power** and **Bears Power** indicators. The two indicators are combined into a single oscillator scaled from 0 to 100. High values indicate dominance of buyers, while low values point to sellers' strength.\n\nTrading decisions are based on threshold levels similar to the original *BullsBearsEyes* expert. When the oscillator crosses above the overbought level after being below it, a long position is opened and any short position is closed. Conversely, crossing below the oversold level triggers a short entry and closes existing longs. Neutral values between the thresholds keep the current position but close opposing trades.",
+    "details": "",
+    "parameters": "- **Period** – averaging period for Bulls/Bears Power (default: 13).\n- **High Level** – overbought threshold generating long signals (default: 75).\n- **Middle Level** – reference middle level used for trend interpretation (default: 50).\n- **Low Level** – oversold threshold generating short signals (default: 25).\n- **Candle Type** – timeframe of candles processed by the strategy (default: 4‑hour candles)."
+   }
+  }
+ }
+}

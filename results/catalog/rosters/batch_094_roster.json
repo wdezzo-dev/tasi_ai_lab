@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3986,
+      "name": "Straddle Trail v2.40",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) and close > bb_mid(close,20)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior-candle upside stop and 20-bar trend filter are fallbacks for the event straddle because no default distances are supplied. Order-book scheduling, pending recentering, pip protection, and trailing state are unavailable."
+    },
+    {
+      "id": 2747,
+      "name": "XDidi Index Cloud Duplex",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5) / ema(close,20),ema(close,10) / ema(close,20))",
+      "exit_long": "crossbelow(ema(close,5) / ema(close,20),ema(close,10) / ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast/medium/slow lengths 5/10/20 are explicit fallbacks for the two ratio crossovers. Divergence-based persistent exits, two timeframes, method variants, and point protection are not representable."
+    },
+    {
+      "id": 3004,
+      "name": "Roman Direction Flip",
+      "family": "trend",
+      "entry_long": "close > sma(close,5)",
+      "exit_long": "close < sma(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(5) is an explicit single-asset proxy for buy-state cycling because the source's position and direction memory are unavailable. The 46/31 price-step target and stop cannot be converted to percentages."
+    },
+    {
+      "id": 1840,
+      "name": "Exp TSI CCI",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD 12/26/9 is an explicit proxy for the unavailable CCI-based TSI and its EMA signal because no source lengths are supplied. The inverse crossover exits and no stops are documented."
+    },
+    {
+      "id": 1474,
+      "name": "TrendGuard Scalper SSL + Hama Candle with Consolidation Zones",
+      "family": "trend",
+      "entry_long": "close > sma(close,10) and ema(close,20) > ema(close,100) and close > ema(close,20)",
+      "exit_long": "close < ema(close,20) or ema(close,20) < ema(close,100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20)/EMA(100) and price confirmation are direct; SMA(10) is an explicit fallback for the SSL average whose period is absent. Consolidation analysis and fixed percentage exits are mentioned without numeric values."
+    },
+    {
+      "id": 3880,
+      "name": "Lbs V12",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_high_prev(high,1) + atr(high,low,close,3))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,1) - atr(high,low,close,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ATR(3) offset is applied around the prior candle extremes for the long and mirror stop orders. Trigger-hour timing, 100-point target, and 20-point trailing cannot be translated into the daily DSL."
+    },
+    {
+      "id": 4079,
+      "name": "AIS2 Trading Robot 20005 (StockSharp port)",
+      "family": "breakout",
+      "entry_long": "crossabove(close,(donchian_high_prev(high,20) + donchian_low_prev(low,20)) / 2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar range midpoint substitutes for the prior 15-minute candle, and a mean-band cross is an exit proxy. Range-scaled 1.7 factors, fast-timeframe trailing, pause, and equity sizing are unsupported."
+    },
+    {
+      "id": 394,
+      "name": "Sector Momentum Rotation",
+      "family": "momentum",
+      "entry_long": "roc(close,20) > 0",
+      "exit_long": "roc(close,20) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Twenty-bar positive momentum is a single-ticker proxy for selecting the strongest sector; the period is an explicit fallback. Cross-sectional ranking, monthly rebalancing, rotation state, and capital allocation are unavailable."
+    },
+    {
+      "id": 2821,
+      "name": "Price Impulse",
+      "family": "volatility",
+      "entry_long": "roc(open,5) > 1",
+      "exit_long": "roc(open,5) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Five-bar open ROC above 1% is an explicit OHLCV fallback because HistoryGap and ImpulsePoints have no values. Level1 buffering, cooldown, and point-based stop/target are unsupported."
+    },
+    {
+      "id": 824,
+      "name": "Futures Trading Hours RSI",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing 30 retains the long entry, while a recross above 50 proxies mean reversion because the 15:00 session exit cannot be scheduled. The 08:30-15:00 filter is omitted."
+    }
+  ]
+}

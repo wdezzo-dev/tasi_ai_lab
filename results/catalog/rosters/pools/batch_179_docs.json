@@ -1,0 +1,98 @@
+{
+ "batch_179": {
+  "strategy_ids": [
+   2292,
+   2897,
+   3109,
+   3832,
+   513,
+   1451,
+   3999,
+   283,
+   1497,
+   648
+  ],
+  "docs": {
+   "2292": {
+    "id": 2292,
+    "name": "Fisher Org Signal",
+    "family": "trend",
+    "overview": "This strategy uses the Fisher Transform indicator with predefined upper and lower levels. A long position is opened when the Fisher value crosses above the lower level. A short position is opened when the Fisher value crosses below the upper level.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Fisher crosses above DownLevel`\n  - **Short**: `Fisher crosses below UpLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite signal triggers position reversal\n- **Stops**: No\n- **Default Values**:\n  - `Fisher Length` = 7\n  - `UpLevel` = 1.5\n  - `DownLevel` = -1.5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fisher Transform\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Medium-term (H4)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Fisher crosses above DownLevel`\n  - **Short**: `Fisher crosses below UpLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite signal triggers position reversal\n- **Stops**: No\n- **Default Values**:\n  - `Fisher Length` = 7\n  - `UpLevel` = 1.5\n  - `DownLevel` = -1.5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fisher Transform\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Medium-term (H4)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2897": {
+    "id": 2897,
+    "name": "Caudate X Period Candle TM Plus",
+    "family": "trend",
+    "overview": "The strategy replicates the logic of the Caudate X Period Candle TM Plus expert advisor. It smooths the candle open, high, low and close prices with a configurable moving average, builds a Donchian-style range and classifies each finished candle into one of six color codes depending on the position of the body inside the range. Long entries are triggered by the bullish lower-tail colors (0 or 1), while short entries are triggered by the bearish upper-tail colors (5 or 6). Opposite color groups are used to exit existing positions.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Candle Type` | Time frame used for signal calculations. |\n| `Donchian Period` | Number of candles for the smoothed high/low range. |\n| `Signal Bar` | Number of bars to delay signal evaluation (0 = current bar). |\n| `Smoothing Method` | Moving average applied to OHLC prices (SMA, EMA, SMMA, LWMA, Jurik JJMA approximation, Kaufman AMA). |\n| `MA Length` | Length of the smoothing filter. |\n| `MA Phase` | Reserved for JJMA compatibility (not used by StockSharp averages). |\n| `Enable Long/Short Entries` | Toggle opening new long or short positions. |\n| `Enable Long/Short Exits` | Toggle closing existing long or short positions on signals. |\n| `Enable Time Exit` | Enable the maximum holding time filter. |\n| `Time Exit (minutes)` | Holding duration before a forced exit. |\n| `Stop Loss (points)` | Stop-loss distance in price steps (multiplied by `Security.PriceStep`). |\n| `Take Profit (points)` | Take-profit distance in price steps. |"
+   },
+   "3109": {
+    "id": 3109,
+    "name": "Exp i-KlPrice Vol Direct",
+    "family": "trend",
+    "overview": "The **Exp i-KlPrice Vol Direct Strategy** is a StockSharp adaptation of the MetaTrader 5 expert advisor `Exp_i-KlPrice_Vol_Direct`. The original system multiplies a custom KlPrice oscillator by volume, smooths it with several moving-average stages, and reacts to changes in the slope of the resulting line. The port keeps the multi-stage processing chain, exposes the same configurable parameters, and executes trades through StockSharp’s high-level API on completed candles.\n\nKey ideas preserved from the MQL5 version:\n- **Two-stage smoothing of price and range** – price data is filtered by a configurable moving average, the high-low range is smoothed separately, and the results form adaptive dynamic bands.\n- **Volume weighting** – the oscillator output is multiplied by the selected volume stream (tick or real) before a final Jurik filter, amplifying moves that occur on higher activity.\n- **Directional colour map** – the strategy monitors the sign of the smoothed oscillator slope. A flip from bearish to bullish colour opens longs and closes shorts; the opposite flip opens shorts and closes longs.\n- **Signal delay** – `SignalBar` lets the user require additional closed candles before acting, matching the “confirmed bar” logic of the source code.",
+    "details": "",
+    "parameters": ""
+   },
+   "3832": {
+    "id": 3832,
+    "name": "Envelope Limit Ladder",
+    "family": "trend",
+    "overview": "The **Envelope Limit Ladder Strategy** is a C# port of the MetaTrader expert advisor `E_2_12_5min.mq4` (ID 7671). It rebuilds the original ladder of limit orders around an EMA envelope on 5-minute candles while keeping the multi-target and trailing management model from the legacy robot.\n\n## Concept\n\n1. **Envelope filter** – a moving average envelope (default EMA 144 with a 0.05% deviation) calculated on the configurable `EnvelopeCandleType` timeframe provides the midline and upper/lower bands.\n2. **Signal candle** – trading signals are evaluated on the `CandleType` subscription (default 5 minutes). When the previous candle closes between the midline and the nearest band, the strategy arms limit orders at the midline.\n3. **Order ladder** – up to three buy limits and three sell limits are placed simultaneously:\n   - Entry price: aligned midline value.\n   - Stop-loss: opposite envelope band.\n   - Take-profit: band ± user defined offsets (8, 13 and 21 points by default).\n4. **Trading window** – pending orders are created only when `TradingStartHour < Hour < TradingEndHour`. All remaining limits are cancelled once the opening hour reaches `TradingEndHour`.\n5. **Position management** – each filled limit order immediately places its own stop and take-profit order. An optional trailing mode moves the stop to the moving average (or keeps it on the opposite band) when price breaks out beyond the envelope.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 5 minutes | Candle type for signal detection. |\n| `EnvelopeCandleType` | 5 minutes | Candle type used to compute the envelope. Use a higher timeframe to mimic the MT4 `EnvTimeFrame` input. |\n| `EnvelopePeriod` | 144 | Moving average length of the envelope. |\n| `MaMethod` | EMA | Moving average method (`SMA`, `EMA`, `SMMA`, `LWMA`). |\n| `EnvelopeDeviation` | 0.05 | Envelope width in percent (0.05 = 0.05%). |\n| `TradingStartHour` | 0 | First hour when pending orders ma",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 5 minutes | Candle type for signal detection. |\n| `EnvelopeCandleType` | 5 minutes | Candle type used to compute the envelope. Use a higher timeframe to mimic the MT4 `EnvTimeFrame` input. |\n| `EnvelopePeriod` | 144 | Moving average length of the envelope. |\n| `MaMethod` | EMA | Moving average method (`SMA`, `EMA`, `SMMA`, `LWMA`). |\n| `EnvelopeDeviation` | 0.05 | Envelope width in percent (0.05 = 0.05%). |\n| `TradingStartHour` | 0 | First hour when pending orders may appear (exclusive check, matches MT4 behaviour). |\n| `TradingEndHour` | 17 | Hour when all pending orders are removed (exclusive upper bound). |\n| `FirstTakeProfitPoints` | 8 | Offset in points added beyond the envelope for the first ladder rung. |\n| `SecondTakeProfitPoints` | 13 | Offset in points for the second rung. |\n| `ThirdTakeProfitPoints` | 21 | Offset in points for the third rung. |\n| `UseOppositeEnvelopeTrailing` | `true` | Keeps the stop on the opposite band (`true`) or trails it to the moving average (`false`). Mirrors the MT4 `MaElineTSL` flag. |\n| `OrderVolume` | 0.1 | Volume per pending order (replaces the adaptive lot sizing from MT4). |"
+   },
+   "513": {
+    "id": 513,
+    "name": "AI SuperTrend",
+    "family": "trend",
+    "overview": "The AI SuperTrend strategy blends the SuperTrend indicator with weighted moving averages of price and the SuperTrend line. A long trade is opened when the SuperTrend turns upward and the price WMA moves above the WMA of the SuperTrend. A short trade is opened on the opposite conditions. Positions are protected with an ATR-based trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: SuperTrend direction flips up and price WMA is above SuperTrend WMA.\n  - **Short**: SuperTrend direction flips down and price WMA is below SuperTrend WMA.\n- **Exit Criteria**:\n  - Trend reversal or ATR trailing stop.\n- **Stops**: Dynamic ATR trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `AtrFactor` = 3\n  - `PriceWmaLength` = 20\n  - `SuperWmaLength` = 100\n  - `EnableLong` = true\n  - `EnableShort` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend, WMA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: SuperTrend direction flips up and price WMA is above SuperTrend WMA.\n  - **Short**: SuperTrend direction flips down and price WMA is below SuperTrend WMA.\n- **Exit Criteria**:\n  - Trend reversal or ATR trailing stop.\n- **Stops**: Dynamic ATR trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `AtrFactor` = 3\n  - `PriceWmaLength` = 20\n  - `SuperWmaLength` = 100\n  - `EnableLong` = true\n  - `EnableShort` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend, WMA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1451": {
+    "id": 1451,
+    "name": "TradingViewTo Strategy Template With Dynamic Alerts",
+    "family": "momentum",
+    "overview": "Template strategy that opens positions based on RSI levels and manages trades with percentage stop loss and take profit.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: RSI > `UpperLevel`\n  - **Short**: RSI < `LowerLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**: Percent stop loss and take profit\n- **Default Values**:\n  - `RsiLength` = 14\n  - `UpperLevel` = 60\n  - `LowerLevel` = 40\n  - `StopLossPct` = 2m\n  - `TakeProfitPct` = 4m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI > `UpperLevel`\n  - **Short**: RSI < `LowerLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**: Percent stop loss and take profit\n- **Default Values**:\n  - `RsiLength` = 14\n  - `UpperLevel` = 60\n  - `LowerLevel` = 40\n  - `StopLossPct` = 2m\n  - `TakeProfitPct` = 4m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3999": {
+    "id": 3999,
+    "name": "Open Close2 Ampn Stochastic",
+    "family": "volatility",
+    "overview": "- Port of the MetaTrader 4 expert *open_close2ampnstochastic_strategy* rebuilt on top of the StockSharp high-level API.\n- Uses a classic Stochastic Oscillator (length 9, smoothing 3/3) together with a two-bar price action filter: the current candle must continue the direction of the previous one before an order is sent.\n- Designed for single-position trading. The default candle source is one hour, but any timeframe can be plugged in through the `CandleType` parameter.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `BaseVolume` | decimal | `0.1` | Fallback order size when risk-based sizing cannot be computed. |\n| `MaximumRisk` | decimal | `0.3` | Fraction of equity used both for dynamic sizing and the drawdown guard. Set to `0` to disable risk calculations. |\n| `DecreaseFactor` | decimal | `100` | Divisor applied after consecutive losses. Higher values slow down the reduction. |\n| `MinimumVolume` | decimal | `0.1` | Absolute floor for the calculated volume. |\n| `StochasticLength` | int | `9` | Look-back period of the Stochastic oscillator. |\n| `StochasticKLength` | int | `3` | Smoothing period of the %K line. |\n| `StochasticDLength` | int | `3` | Smoothing period of the %D signal line. |\n| `CandleType` | `DataType` | `TimeFrame(1h)` | Candle source used to drive the indicator and price filters. |"
+   },
+   "283": {
+    "id": 283,
+    "name": "MA Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the MA returns toward balance. Starting parameter `MaPeriod` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1497": {
+    "id": 1497,
+    "name": "Turn of the Month Strategy Honestcowboy",
+    "family": "other",
+    "overview": "A calendar-based strategy that opens long positions near the end of each month and closes a few days into the new month, adjusting for weekends.\n\n## Details\n\n- **Entry Criteria**: dates near month end adjusted for weekends\n- **Long/Short**: Long\n- **Exit Criteria**: a few days after month start\n- **Stops**: None\n- **Default Values**:\n  - `DaysBeforeEnd` = 2\n  - `DaysAfterStart` = 3\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: dates near month end adjusted for weekends\n- **Long/Short**: Long\n- **Exit Criteria**: a few days after month start\n- **Stops**: None\n- **Default Values**:\n  - `DaysBeforeEnd` = 2\n  - `DaysAfterStart` = 3\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "648": {
+    "id": 648,
+    "name": "Customizable BTC Seasonality",
+    "family": "other",
+    "overview": "This strategy exploits intraday seasonality in Bitcoin by entering and exiting at user-defined UTC hours.\nA long position is opened at the entry hour and closed at the exit hour.\n\n## Details\n\n- **Entry Criteria**: time equals user-defined entry hour\n- **Long/Short**: Long only\n- **Exit Criteria**: time equals user-defined exit hour\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `EntryHour` = 21\n  - `ExitHour` = 23\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: time equals user-defined entry hour\n- **Long/Short**: Long only\n- **Exit Criteria**: time equals user-defined exit hour\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `EntryHour` = 21\n  - `ExitHour` = 23\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

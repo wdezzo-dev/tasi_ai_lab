@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3809,
+      "name": "Above Below MA Rejoin",
+      "family": "trend",
+      "entry_long": "close < (high + low + close) / 3 and roc((high + low + close) / 3,5) > 0",
+      "exit_long": "close > (high + low + close) / 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EmaLength=1 applied to the typical price collapses to the typical price itself, so the fade is close below that average while the average is rising, and the exit is the rejoin back above it. The average's direction is measured with a five-bar rate of change because a one-period EMA has no usable slope of its own; InitialVolume, UseDynamicVolume, BalanceToVolumeDivider and MaxVolume sizing are unsupported and no stops are documented."
+    },
+    {
+      "id": 756,
+      "name": "Enhanced Doji Candle",
+      "family": "trend",
+      "entry_long": "close >= open and close - open <= 0.3 * (high - low) and open - low <= 0.01 * close",
+      "exit_long": "close - open <= 0.3 * (high - low) and close >= open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented doji body of at most 30% of the candle range plus the bullish lower-wick condition of 1% or less are written literally; the alternative previous-bullish-candle clause is dropped as redundant here. The exit is the documented 'any new doji closes the position' rule, StopLossPips=5 is a pip distance and the RiskRewardRatio=2.0 target cannot be converted without a pip size, so both stop fields are null."
+    },
+    {
+      "id": 1045,
+      "name": "Medico Action Zone Self Adjust TF Version 2",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,12), ema(close,26)) and close > ema(close,100)",
+      "exit_long": "crossbelow(ema(close,12), ema(close,26))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastEmaLength=12 / SlowEmaLength=26 crossover is kept exactly; the weekly (HigherCandleType=7 days) close above the fast EMA is approximated by a long EMA(100) on the same series because only one timeframe is available. The short branch is dropped for long-only and the docs state no stops."
+    },
+    {
+      "id": 2832,
+      "name": "Universal MA Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10), ema(close,20))",
+      "exit_long": "crossbelow(ema(close,10), ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system is a configurable fast/slow average crossover, but no periods, methods or price sources are documented, so EMA(10)/EMA(20) on close are explicit defaults. MinCrossDistance, ReverseCondition, ConfirmedOnEntry, OneEntryPerBar, StopAndReverse, PureSar, the trading-hour filter and the absolute-price StopLoss/TakeProfit with trailing are unsupported, so both stop fields are null."
+    },
+    {
+      "id": 958,
+      "name": "KumoTrade Ichimoku",
+      "family": "trend",
+      "entry_long": "low > sma(close,26) and close < sma(close,52) and rsi(close,2) < 29",
+      "exit_long": "low < sma(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ichimoku components are approximated by the documented TenkanPeriod=9, KijunPeriod=26 and SenkouPeriod=52 averages, and the oversold StochD < 29 by a fast RSI reading because Stochastic is unavailable; the Kijun > Tenkan leg is dropped since it cannot hold together with the oversold condition. The documented ATR(5) x 3 trailing stop cannot be expressed as a fixed percentage, so the exit is the Kijun break and both stop fields are null; the short branch is dropped."
+    },
+    {
+      "id": 359,
+      "name": "Consistent Momentum",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry is a monthly cross-sectional decision: rank the whole universe by two momentum windows and buy only the top decile, holding for six months. Ranking across instruments and calendar rebalancing are outside a single-ticker DSL, so it is marked non-trading rather than substituting a time-series momentum rule that would test something different."
+    },
+    {
+      "id": 3641,
+      "name": "Martingale Trade Simulator",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The port is explicitly a manual trading panel driven by the Buy, Sell and Martingale parameter switches, with averaging and trailing modules layered on top, so there is no market-derived entry signal to translate. Marked non-trading; the point-based stop, target and trailing distances are also not percentages."
+    },
+    {
+      "id": 1885,
+      "name": "Genie RSI",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),20)",
+      "exit_long": "crossabove(rsi(close,14),80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented oversold 20 and overbought 80 RSI crossings are used as entry and exit; RSI Period is listed without a value so 14 is an explicit default. The short branch is dropped for long-only and Take Profit / Trailing Stop are distances in price units, so both stop fields are null."
+    },
+    {
+      "id": 1621,
+      "name": "Sea Dragon 2",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-sided hedging grid that opens a buy and a sell at start and then adds order pairs on every Step move according to a fixed volume sequence, with per-side take-profit and Max Stop levels. There is no market-derived directional signal to translate, so it is marked non-trading; the multi-leg basket cannot be held by a single long position."
+    },
+    {
+      "id": 1926,
+      "name": "Ilan Dynamic HT",
+      "family": "volume",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the first grid order is expressible: the documented long trigger is RSI(14) below RsiMinimum=30. The dynamic-step averaging ladder (LotExponent=1.4, MaxTrades=10, Depth=24, Del=3) cannot be represented by a single position, and the documented exits are the shared TakeProfit=100 and StopLoss=500 point levels, so a neutral RSI cross stands in and both stop fields are null."
+    }
+  ]
+}

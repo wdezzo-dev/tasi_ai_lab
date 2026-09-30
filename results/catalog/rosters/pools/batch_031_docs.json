@@ -1,0 +1,98 @@
+{
+ "batch_031": {
+  "strategy_ids": [
+   3494,
+   1066,
+   4015,
+   1707,
+   1345,
+   3180,
+   633,
+   841,
+   3390,
+   2416
+  ],
+  "docs": {
+   "3494": {
+    "id": 3494,
+    "name": "MA Break Impulse Buy",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"M.A break mt4 buy\" expert advisor using StockSharp's high-level API. It focuses on identifying strong bullish breakouts after a quiet consolidation. The entry logic looks for a sequence of exponential moving average (EMA) filters, a quiet market phase, and then a powerful bullish impulse candle that interacts with a breakout EMA. The strategy opens **long** positions only.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `FirstFastPeriod` | 20 | Fast EMA used in the first trend filter. |\n| `FirstSlowPeriod` | 30 | Slow EMA used in the first trend filter. |\n| `SecondFastPeriod` | 30 | Fast EMA for the second trend filter. |\n| `SecondSlowPeriod` | 50 | Slow EMA for the second trend filter. |\n| `TrendMaPeriod` | 30 | EMA that the impulse candle open must exceed. |\n| `BreakoutMaPeriod` | 20 | EMA that the impulse candle low must touch. |\n| `QuietBarsCount` | 2 | Number of calm candles before the impulse is evaluated. |\n| `QuietBarsMinRange` | 0.0 | Minimum quiet range (pips). |\n| `ImpulseStrength` | 1.1 | Multiplier applied to the quiet range to validate the impulse body size. |\n| `UpperWickLimit` | 100.0 | Maximum upper wick as percent of candle range. |\n| `LowerWickFloor` | 0.0 | Minimum lower wick as percent of candle range. |\n| `CandleMinSize` | 0.0 | Minimum allowed range of the impulse candle in pips. |\n| `CandleMaxSize` | 100.0 | Maximum allowed range of the impulse candle in pips. |\n| `VolumeSize` | 0.01 | Trade volume sent with `BuyMarket`. Normalized to exchange `VolumeStep`. |\n| `StopLossPips` | 20.0 | Stop-loss distance in pips (converted with `PriceStep`). |\n| `TakeProfitPips` | 20.0 | Take-profit distance in pips (converted with `PriceStep`). |\n| `CandleType` | 15-minute time frame | Candle data type requested from the connector. |"
+   },
+   "1066": {
+    "id": 1066,
+    "name": "MomentumSync PSAR RSI ADX Filtered 3-Tier Exit",
+    "family": "trend",
+    "overview": "This strategy uses the Parabolic SAR to detect early trend reversals and requires both RSI and ADX to exceed configurable thresholds before entering a long position. After a bearish PSAR flip, the trade is closed on the third bar, implementing a three-step exit sequence.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "4015": {
+    "id": 4015,
+    "name": "Corrected Average Channel",
+    "family": "trend",
+    "overview": "The **Corrected Average Channel Strategy** is a C# port of the MetaTrader expert advisor `e-CA-5`. The system rebuilds the \"Corrected Average\" (CA) indicator every time a candle closes and opens a position when price crosses the corrected moving average by a configurable sigma offset. The converted implementation relies on StockSharp's high-level candle API, uses market orders, and manages protective exits (stop-loss, take-profit, trailing stop) internally to mirror the behaviour of the original Expert Advisor.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `OrderVolume` | Quantity used for market entries. Must be positive. |\n| `TakeProfitPoints` | Profit target in price steps (0 disables the take-profit). |\n| `StopLossPoints` | Stop-loss distance in price steps (0 disables the stop-loss). |\n| `TrailingPoints` | Profit distance (in price steps) required before the trailing stop activates. |\n| `TrailingStepPoints` | Minimum extra distance that must be captured before moving the trailing stop again. |\n| `MaPeriod` | Period of both the moving average and the standard deviation. |\n| `MaTypeOption` | Moving average type: SMA, EMA, SMMA, or LWMA. |\n| `SigmaBuyPoints` | Sigma offset added above the corrected average before opening a long position. |\n| `SigmaSellPoints` | Sigma offset subtracted below the corrected average before opening a short position. |\n| `CandleType` | Candle series used for indicator calculations and signal evaluation. |\n\nAll numeric parameters support optimisation through `SetCanOptimize(true)` so the strategy can be calibrated directly inside the StockSharp environment."
+   },
+   "1707": {
+    "id": 1707,
+    "name": "Intraday Beta",
+    "family": "trend",
+    "overview": "This strategy searches for intraday turning points using smoothed moving average slopes and the Relative Strength Index (RSI).\nA long position is opened when the slope of the 10-period moving average turns upward after a downward move, the RSI is below 70,\nand the previous candle is bullish. A short position is opened when the slope turns downward after an upward move, the RSI is\nabove 30, and the previous candle is bearish.\n\nAn Average True Range (ATR) filter blocks new entries when volatility is too high. Open positions are protected by an adaptive\ntrailing stop that moves in the trade's favor and exits when price crosses the stop level.\n\n## Parameters\n- **RSI Period** – period of the RSI indicator.\n- **Trailing Stop** – trailing stop distance in price units.\n- **ATR Threshold** – maximum ATR value allowed for trading.\n- **Candle Type** – timeframe of candles used for analysis.\n",
+    "details": "",
+    "parameters": "- **RSI Period** – period of the RSI indicator.\n- **Trailing Stop** – trailing stop distance in price units.\n- **ATR Threshold** – maximum ATR value allowed for trading.\n- **Candle Type** – timeframe of candles used for analysis."
+   },
+   "1345": {
+    "id": 1345,
+    "name": "Stop Loss Take Profit Money",
+    "family": "trend",
+    "overview": "The strategy enters long when a short-term SMA crosses above a long-term SMA and shorts on the opposite crossover. Positions are closed once profit or loss reaches predefined money amounts.\n\n## Details\n\n- **Entry Criteria**: SMA(14) crosses SMA(28)\n- **Long/Short**: Both\n- **Exit Criteria**: Profit or loss in money hits the target\n- **Stops**: Yes\n- **Default Values**:\n  - `FastLength` = 14\n  - `SlowLength` = 28\n  - `TakeProfitMoney` = 200\n  - `StopLossMoney` = 100\n",
+    "details": "- **Entry Criteria**: SMA(14) crosses SMA(28)\n- **Long/Short**: Both\n- **Exit Criteria**: Profit or loss in money hits the target\n- **Stops**: Yes\n- **Default Values**:\n  - `FastLength` = 14\n  - `SlowLength` = 28\n  - `TakeProfitMoney` = 200\n  - `StopLossMoney` = 100",
+    "parameters": ""
+   },
+   "3180": {
+    "id": 3180,
+    "name": "Fraktrak XonaX Advanced",
+    "family": "breakout",
+    "overview": "This strategy is a C# conversion of the MetaTrader 5 expert advisor **Fraktrak xonax.mq5**. The original robot tracks Williams fractals and opens trades when price breaks through the most recent fractal level. The StockSharp version keeps the same idea while leveraging high-level API features such as candle subscriptions, built-in money management helpers, and automatic trade protection.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `StopLossPips` | Stop-loss distance expressed in pips. Set to zero to disable the stop-loss level. |\n| `TakeProfitPips` | Take-profit distance in pips. Zero disables the target. |\n| `TrailingStopPips` | Base trailing stop distance. Requires `TrailingStepPips` to be greater than zero. |\n| `TrailingStepPips` | Additional distance that price must move before the trailing stop is advanced. |\n| `ReverseMode` | Invert the breakout rules (sell upper fractals, buy lower fractals). |\n| `CloseOpposite` | When true, any opposite position is closed before a new trade is opened. |\n| `ManagementMode` | Select between `FixedLot` or `RiskPercent` money management. |\n| `ManagementValue` | Value used by the active money management mode (lot size or percentage). |\n| `CandleType` | Candle series used for both fractal detection and trading decisions. |"
+   },
+   "633": {
+    "id": 633,
+    "name": "Contrarian DC",
+    "family": "breakout",
+    "overview": "The Contrarian DC strategy fades Donchian Channel breakouts. It buys when price pierces the lower band and sells when price touches the upper band. After a stop-loss, entries in the same direction are paused for a number of candles. Risk management uses symmetric stop-loss and take-profit based on a risk/reward ratio.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price low <= Donchian Low && pause satisfied\n  - **Short**: Price high >= Donchian High && pause satisfied\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Stop**: Percentage stop-loss\n  - **Target**: Risk/Reward based take-profit\n  - **Band**: Close when reaching opposite band\n- **Stops**: Yes, percentage-based\n- **Default Values**:\n  - `DonchianPeriod` = 20\n  - `RiskRewardRatio` = 1.7m\n  - `StopLossPercent` = 0.3m\n  - `PauseCandles` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price low <= Donchian Low && pause satisfied\n  - **Short**: Price high >= Donchian High && pause satisfied\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Stop**: Percentage stop-loss\n  - **Target**: Risk/Reward based take-profit\n  - **Band**: Close when reaching opposite band\n- **Stops**: Yes, percentage-based\n- **Default Values**:\n  - `DonchianPeriod` = 20\n  - `RiskRewardRatio` = 1.7m\n  - `StopLossPercent` = 0.3m\n  - `PauseCandles` = 3\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "841": {
+    "id": 841,
+    "name": "Macd Momentum Reversal",
+    "family": "momentum",
+    "overview": "Strategy uses MACD histogram to detect momentum reversals.\nShorts when bullish candle grows but MACD histogram declines.\nBuys when bearish candle grows but MACD histogram rises.\n\n## Details\n\n- **Entry Criteria**: Larger candle body with fading MACD momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Larger candle body with fading MACD momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3390": {
+    "id": 3390,
+    "name": "Ring System EA",
+    "family": "volatility",
+    "overview": "This strategy ports the multi-currency \"RingSystemEA\" grid hedging expert from MetaTrader 4 to the StockSharp high level API. It arranges a configurable list of currencies into triangular rings (three currencies generate three correlated pairs) and manages two hedged baskets per ring: a **plus** basket (long/short/long) and a **minus** basket (short/long/short). The strategy continuously monitors floating profit across every ring, applies step-based martingale-style reinforcement when losses exceed configured thresholds, and coordinates global or per-side exits when profit or loss targets are reached.\n\n## Trading Logic\n\n* Build all unique combinations of three currencies from the ordered `CurrenciesTrade` list (e.g. EUR/GBP/AUD produces EURGBP, EURAUD, and GBPAUD).\n* Each ring maintains two synchronized baskets:\n  * **Plus basket** opens BUY on the first pair, SELL on the second pair, BUY on the third pair.\n  * **Minus basket** opens the mirrored SELL/BUY/SELL sequence.\n* Baskets are opened automatically once the ring has price data and the session filter allows trading. Both sides may run simultaneously, or only one side depending on `SideOpenOrders`.\n* When an active basket draws down beyond the `StepOpenNextOrders` threshold (optionally scaled geometrically or exponentially), a new layer of orders is added using volume progression rules (`LotOrdersProgress`).\n* Baskets are closed when their floating PnL satisfies the chosen exit mode:\n  * `SingleTicket` closes the plus and minus baskets independently.\n  * `BasketTicket` closes both baskets together once their combined profit hits the target.\n  * `PairByPair` closes individual pairs when their PnL exceeds the target.\n* Protective exits mirror the MT4 logic. Depending on `TypeCloseInLoss` the strategy either closes entire baskets, halves the exposure, or lets the baskets recover without forced exits.\n* Optional session guard replicates the wait-after-Monday-open and stop-before-Friday-close behaviour.\n* Parameters ",
+    "details": "",
+    "parameters": ""
+   },
+   "2416": {
+    "id": 2416,
+    "name": "DoubleUp2 CCI MACD",
+    "family": "mean_reversion",
+    "overview": "DoubleUp2 is a martingale-style strategy combining the Commodity Channel Index (CCI) and MACD.\nIt opens short positions when both indicators show extreme positive values and long positions when both are extremely negative.\nAfter a losing trade the position size doubles, seeking to recover previous losses.\nProfitable trades are closed once price advances by a fixed number of points.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `CCI < -Threshold` and `MACD < -Threshold`.\n  - **Short**: `CCI > Threshold` and `MACD > Threshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal or price moves `ExitDistance` points in profit.\n- **Stops**: No explicit stop loss.\n- **Default Values**:\n  - `CCI Period` = 8\n  - `MACD Fast` = 13\n  - `MACD Slow` = 33\n  - `MACD Signal` = 2\n  - `Threshold` = 230\n  - `Base Volume` = 0.1\n  - `ExitDistance` = `120 * price step`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: CCI, MACD\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `CCI < -Threshold` and `MACD < -Threshold`.\n  - **Short**: `CCI > Threshold` and `MACD > Threshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal or price moves `ExitDistance` points in profit.\n- **Stops**: No explicit stop loss.\n- **Default Values**:\n  - `CCI Period` = 8\n  - `MACD Fast` = 13\n  - `MACD Slow` = 33\n  - `MACD Signal` = 2\n  - `Threshold` = 230\n  - `Base Volume` = 0.1\n  - `ExitDistance` = `120 * price step`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: CCI, MACD\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

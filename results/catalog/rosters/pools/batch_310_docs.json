@@ -1,0 +1,98 @@
+{
+ "batch_310": {
+  "strategy_ids": [
+   733,
+   604,
+   175,
+   1085,
+   2116,
+   3246,
+   2657,
+   315,
+   1766,
+   810
+  ],
+  "docs": {
+   "733": {
+    "id": 733,
+    "name": "EMA 34 Crossover with Break Even Stop Loss",
+    "family": "trend",
+    "overview": "The **EMA 34 Crossover with Break Even Stop Loss** strategy enters long when price crosses above the 34-period EMA. Stop loss is placed at the previous candle's low, take profit is ten times the risk, and the stop moves to break even after price reaches three times the risk.\n\n## Details\n- **Entry Criteria**: Close crosses above EMA(34) from below.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Stop loss at previous low or take profit at 10× risk.\n- **Stops**: Yes, break-even stop.\n- **Default Values**:\n  - `EmaPeriod = 34`\n  - `TakeProfitMultiplier = 10m`\n  - `BreakEvenMultiplier = 3m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close crosses above EMA(34) from below.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Stop loss at previous low or take profit at 10× risk.\n- **Stops**: Yes, break-even stop.\n- **Default Values**:\n  - `EmaPeriod = 34`\n  - `TakeProfitMultiplier = 10m`\n  - `BreakEvenMultiplier = 3m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "604": {
+    "id": 604,
+    "name": "CCI Support Resistance",
+    "family": "trend",
+    "overview": "This strategy uses CCI pivots to build dynamic support and resistance levels. A trend filter based on EMA cross or slope is applied before trading breakouts of these levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price closes above the CCI-based support after touching it and the trend is bullish.\n  - Short: price closes below the CCI-based resistance after touching it and the trend is bearish.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - ATR-based stop loss and take profit.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `CciLength` = 50\n  - `LeftPivot` = 50\n  - `RightPivot` = 50\n  - `Buffer` = 10\n  - `TrendMatter` = true\n  - `TrendType` = Cross\n  - `SlowMaLength` = 100\n  - `FastMaLength` = 50\n  - `SlopeLength` = 5\n  - `Ksl` = 1.1\n  - `Ktp` = 2.2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price closes above the CCI-based support after touching it and the trend is bullish.\n  - Short: price closes below the CCI-based resistance after touching it and the trend is bearish.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - ATR-based stop loss and take profit.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `CciLength` = 50\n  - `LeftPivot` = 50\n  - `RightPivot` = 50\n  - `Buffer` = 10\n  - `TrendMatter` = true\n  - `TrendType` = Cross\n  - `SlowMaLength` = 100\n  - `FastMaLength` = 50\n  - `SlopeLength` = 5\n  - `Ksl` = 1.1\n  - `Ktp` = 2.2\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: CCI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "175": {
+    "id": 175,
+    "name": "Rsi Supertrend",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 112%. It performs best in the forex market.\n\nThe RSI oscillator defines momentum extremes while Supertrend points to the prevailing direction. Trades occur when RSI aligns with the Supertrend color.\n\nWorks for traders who appreciate a trailing-stop style exit. ATR settings further safeguard the position.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `RSI < 30 && Close > Supertrend`\n  - Short: `RSI > 70 && Close < Supertrend`\n- **Long/Short**: Both\n- **Exit Criteria**: Supertrend change\n- **Stops**: Trailing with Supertrend\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `RSI < 30 && Close > Supertrend`\n  - Short: `RSI > 70 && Close < Supertrend`\n- **Long/Short**: Both\n- **Exit Criteria**: Supertrend change\n- **Stops**: Trailing with Supertrend\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1085": {
+    "id": 1085,
+    "name": "MTF Seconds Values JD",
+    "family": "trend",
+    "overview": "This strategy demonstrates handling of custom multi-timeframe candles based on a specified seconds interval. It calculates a simple moving average over aggregated candles and trades on price crossing the average.\n\n## Parameters\n\n- `SecondsTimeframe` – seconds interval for candle aggregation.\n- `AverageLength` – period for the simple moving average.\n",
+    "details": "",
+    "parameters": "- `SecondsTimeframe` – seconds interval for candle aggregation.\n- `AverageLength` – period for the simple moving average."
+   },
+   "2116": {
+    "id": 2116,
+    "name": "Simple Levels",
+    "family": "trend",
+    "overview": "Opens trades when the price crosses user defined trend lines. Each line can trigger long, short or both directions. Stop loss and take profit are set in price steps.\n\n## Details\n\n- **Entry Criteria**: Price crossing a configured trend line\n- **Long/Short**: Determined by line direction (Buy/Sell/Both)\n- **Exit Criteria**: Stop loss or take profit levels\n- **Stops**: Yes\n- **Default Values**:\n  - `StopLoss` = 300 steps\n  - `TakeProfit` = 900 steps\n  - `Volume` = 1\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Levels\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n## Usage\n\n1. Create and configure trend lines via `AddLine`.\n2. Start the strategy to monitor incoming candles.\n3. When price crosses an active line in the specified direction, the strategy sends a market order.\n4. Position is closed when stop loss or take profit is reached.\n",
+    "details": "- **Entry Criteria**: Price crossing a configured trend line\n- **Long/Short**: Determined by line direction (Buy/Sell/Both)\n- **Exit Criteria**: Stop loss or take profit levels\n- **Stops**: Yes\n- **Default Values**:\n  - `StopLoss` = 300 steps\n  - `TakeProfit` = 900 steps\n  - `Volume` = 1\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Levels\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3246": {
+    "id": 3246,
+    "name": "EA Vishal EURGBP H4",
+    "family": "trend",
+    "overview": "The **EA Vishal EURGBP H4 Strategy** replicates the original MetaTrader expert advisor that combines a stochastic crossover entry filter with envelope-based exits. The logic operates on H4 candles by default and uses virtual risk management tools (stop-loss, take-profit, and optional trailing stop) defined in pips, closely mirroring the MT4 behaviour.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `Volume` | 0.5 | Order volume in lots for every trade. |\n| `StopLossPips` | 0 | Hard stop-loss distance in pips (0 disables the stop). |\n| `TakeProfitPips` | 22 | Take-profit distance in pips (0 disables the target). |\n| `UseTrailingStop` | false | Enables the virtual trailing stop that follows the previous candle’s extremum. Requires `StopLossPips` &gt; 0. |\n| `StochasticKPeriod` | 6 | Lookback period for the stochastic %K calculation. |\n| `StochasticDPeriod` | 3 | Smoothing period for the %D line. |\n| `StochasticSlowing` | 1 | Slowing factor applied to %K. |\n| `EnvelopePeriod` | 32 | Length of the SMA used as the envelope basis. |\n| `EnvelopeDeviationPercent` | 0.3 | Deviation in percent applied above/below the SMA to build the envelopes. |\n| `CandleType` | H4 time frame | Candle series that feeds the strategy (default is four-hour candles). |"
+   },
+   "2657": {
+    "id": 2657,
+    "name": "OzFx Accelerator Stochastic",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader expert advisor *OzFx (barabashkakvn's edition)* to the StockSharp high-level strategy API.\n- Combines the Acceleration/Deceleration oscillator (AC) with a stochastic threshold to layer into trends.\n- Designed for discretionary-style forex trading where orders are sized in lots and protection is expressed in pips.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Lot size per layer. | `0.1` |\n| `StopLossPips` | Distance for protective stop orders (pips). | `100` |\n| `TakeProfitPips` | Base distance between layered take profits (pips). | `50` |\n| `TrailingStopPips` | Trailing stop distance in pips (0 disables trailing). | `50` |\n| `TrailingStepPips` | Additional distance before advancing the trailing stop. | `5` |\n| `KPeriod` | Stochastic `%K` lookback. | `5` |\n| `DPeriod` | Stochastic `%D` smoothing. | `3` |\n| `SmoothingPeriod` | Final smoothing applied to `%K`. | `3` |\n| `StochasticLevel` | Threshold separating bullish/bearish regimes. | `50` |\n| `CandleType` | Source candle series for calculations. | `4h time-frame` |"
+   },
+   "315": {
+    "id": 315,
+    "name": "Stochastic Dynamic Zones",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 52%. It performs best in the crypto market.\n\nSignals trigger when Stochastic confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like StochPeriod, StochKPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `StochPeriod = 14`\n  - `StochKPeriod = 3`\n  - `StochDPeriod = 3`\n  - `LookbackPeriod = 20`\n  - `StandardDeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `StochPeriod = 14`\n  - `StochKPeriod = 3`\n  - `StochDPeriod = 3`\n  - `LookbackPeriod = 20`\n  - `StandardDeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1766": {
+    "id": 1766,
+    "name": "Laguerre CCI MA",
+    "family": "trend",
+    "overview": "- Laguerre filter highlights overbought and oversold extremes on a 0-1 scale.\n- CCI confirms momentum in the same direction.\n- EMA slope filters trades to the prevailing trend.",
+    "details": "",
+    "parameters": "- `LagGamma` – gamma value for the Laguerre filter.\n- `CciPeriod` – period for CCI calculation.\n- `CciLevel` – absolute CCI level used for entries.\n- `MaPeriod` – period for the moving average.\n- `TakeProfit` – take profit in absolute price units (optional).\n- `StopLoss` – stop loss in absolute price units (optional).\n- `CandleType` – candle type used for indicators.\n\nThe strategy processes only finished candles and uses StockSharp's high level API bindings for indicators."
+   },
+   "810": {
+    "id": 810,
+    "name": "Four WMA Strategy with TP and SL",
+    "family": "trend",
+    "overview": "Strategy using crossover of four moving averages with optional take profit, stop loss, and alternate exit condition.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Long MA1 crosses above Long MA2\n  - Short: Short MA1 crosses below Short MA2\n- **Long/Short**: Configurable\n- **Stops**: Percent-based TP and SL\n- **Default Values**:\n  - `LongMa1Length` = 10\n  - `LongMa2Length` = 20\n  - `ShortMa1Length` = 30\n  - `ShortMa2Length` = 40\n  - `MaType` = Wma\n  - `EnableTpSl` = true\n  - `TakeProfitPercent` = 1m\n  - `StopLossPercent` = 1m\n  - `Direction` = Both\n  - `EnableAltExit` = false\n  - `AltExitMaOption` = LongMa1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Moving Averages\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Long MA1 crosses above Long MA2\n  - Short: Short MA1 crosses below Short MA2\n- **Long/Short**: Configurable\n- **Stops**: Percent-based TP and SL\n- **Default Values**:\n  - `LongMa1Length` = 10\n  - `LongMa2Length` = 20\n  - `ShortMa1Length` = 30\n  - `ShortMa2Length` = 40\n  - `MaType` = Wma\n  - `EnableTpSl` = true\n  - `TakeProfitPercent` = 1m\n  - `StopLossPercent` = 1m\n  - `Direction` = Both\n  - `EnableAltExit` = false\n  - `AltExitMaOption` = LongMa1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Moving Averages\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2983,
+      "name": "AnyRange Cloud Tail System Tm Plus",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close < donchian_high(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 02:00-07:00 intraday range cannot be isolated without time fields, so a 20-bar Donchian stands in for the stored range; the documented SignalBar=1 delay is kept by requiring the signal bar to close back inside the band. StopLossPoints/TakeProfitPoints and the 1500-minute time exit are price-step/time fields, not percentages."
+    },
+    {
+      "id": 1321,
+      "name": "SMC Strategy BTC 1H OB FVG",
+      "family": "trend",
+      "entry_long": "bars_since(close > donchian_high_prev(high,20)) < 10 and close < donchian_high(high,20) and close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish break of structure is a close above the prior 20-bar high and the entry is a pullback into that broken zone within the documented ZoneTimeout of 10 bars while price holds above EMA(20). Order-block and fair-value-gap construction and the ATR(6x) stop with a 2.5 risk/reward target are not expressible as percentage fields."
+    },
+    {
+      "id": 748,
+      "name": "EMA RSI Swing Trend Filter",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20), ema(close,50)) and close > ema(close,200) and rsi(close,14) < 70",
+      "exit_long": "crossbelow(ema(close,20), ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented lengths are used (EMA 20/50/200, RSI 14) with RsiMaxLong=70 blocking overbought longs, and ExitOnOpposite supplies the mirror cross. The 5-minute timeframe and the short side are outside this long-only roster; stops are documented as absent."
+    },
+    {
+      "id": 3214,
+      "name": "Hedging Martingale",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA opens a simultaneous long and short leg on every new bar and only averages after adverse pip moves, so it contains no market-derived directional signal; the impossible negative-price guard avoids fabricating one. Money/percent basket targets, trailing lock, per-leg take profit and trade caps are portfolio overlays."
+    },
+    {
+      "id": 3559,
+      "name": "Two Pending Orders 2",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a pending-order placement utility that brackets the market with symmetric stops on every evaluation and never derives a direction from price, so no signal is invented. Stop/target/trailing distances in price steps, MaxPositions, spread filter and expiry minutes are not DSL fields."
+    },
+    {
+      "id": 553,
+      "name": "BB Breakout Momentum Squeeze",
+      "family": "breakout",
+      "entry_long": "crossabove(zscore(close,14), 0) and bb_upper(close,20,2) > ema(close,20) + 2 * atr(high,low,close,10)",
+      "exit_long": "crossbelow(zscore(close,14), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The squeeze-off state is Bollinger(20,2) bands outside an EMA(20)+-2*ATR(10) Keltner proxy and the bull oscillator is a z-score(14) crossing its midline, matching the documented Threshold 50. The ATR(30) x1.4 stop and the 1.5 risk-reward target are ATR-based, not percentage, fields."
+    },
+    {
+      "id": 1197,
+      "name": "Prop Firm Business Simulator",
+      "family": "breakout",
+      "entry_long": "close > ema(close,20) + 2 * atr(high,low,close,10)",
+      "exit_long": "close < ema(close,20) - 2 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner channels are rebuilt as EMA(20) +- 2*ATR(10) using the documented MaPeriod, AtrPeriod and Multiplier, so a close outside the band is the entry and the opposite band the exit. The band-distance stop and RiskPerTrade position sizing are account-level, not percentage exits."
+    },
+    {
+      "id": 2777,
+      "name": "N Candles v6",
+      "family": "momentum",
+      "entry_long": "close > open and bars_since(close < open) > 3",
+      "exit_long": "close < open and bars_since(close > open) > 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "bars_since counts the streak of identical candles, so no down bar within the last three bars is the documented CandlesCount=3 of consecutive bullish candles. TakeProfitPips/StopLossPips/TrailingStopPips, the 11-18 session window and MaxPositionVolume are pip, time and sizing fields."
+    },
+    {
+      "id": 3325,
+      "name": "Reversing Martingale",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states the strategy uses no indicators or market structure and simply alternates direction after each closed deal, so there is no deterministic market-derived signal to translate. The lot multiplier cycle and symmetric point-based stop/target are position-management fields."
+    },
+    {
+      "id": 1341,
+      "name": "Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14) + 0.0001), 50)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14) + 0.0001), 50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "%K is rebuilt as the classic fast stochastic over a 14-bar window (the document gives no period) with the documented default level of 50 for both directions; the small epsilon guards a zero-width range."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3060,
+      "name": "ReInitChart",
+      "family": "trend",
+      "entry_long": "close > sma(close,20)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is a state, not a cross: the strategy is long while the close is above the SMA and reverses when it falls below, so the crossover form is deliberately not used and SmaLength 20 is an explicit fallback. The manual refresh toggle, the AutoRefreshInterval timer, the button metadata and the log reporting are chart-maintenance features of the original utility, the short side is ignored, and no stops or targets are documented."
+    },
+    {
+      "id": 2353,
+      "name": "I4 DRF v2",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,11), 0)",
+      "exit_long": "crossbelow(roc(close,11), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom i4_DRF_v2 indicator counts up and down closes over the documented Period 11 and the strategy acts on its sign flip, so the 11-bar rate of change stands in for that up-minus-down balance and its zero cross is the sign change. TrendModes Direct versus NotDirect selects contrarian or trend-following interpretation of the same signal and the long leg is used, BuyPosClose supplies the opposite-sign exit, and StopLoss 1000 and TakeProfit 2000 are price steps, not percentages, so both percentage fields are null."
+    },
+    {
+      "id": 906,
+      "name": "Ichimoku RSI MACD",
+      "family": "trend",
+      "entry_long": "close > ema(close,26) and close > ema(close,52) and rsi(close,14) < 70 and crossabove(macd(close,12,26), macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The DSL has no Ichimoku function, so the cloud is approximated by its two longer boundaries, ema(close,26) from KijunPeriod and ema(close,52) from SenkouSpanBPeriod, and being above both is the above-cloud test while TenkanPeriod 9 is dropped. The RSI filter uses the documented RsiOverbought 70 as a ceiling against chasing, RsiOversold 30 and the short branch are unused, MacdFast 12, MacdSlow 26 and MacdSignal 9 are exact, and the opposite MACD crossover is the documented exit. Stops: None leaves both percentage fields null and the 1-hour CandleType is not selectable."
+    },
+    {
+      "id": 404,
+      "name": "Time Series Momentum",
+      "family": "trend",
+      "entry_long": "roc(close,240) > 0",
+      "exit_long": "roc(close,240) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a trailing 12-month return, which on a daily series is approximated with 240 bars, and the long leg is exactly the documented rule of being in a positive trailing return. Exit is the sign change of that return, i.e. the documented reversal. Monthly rebalancing, equal weighting across assets, volatility scaling and diversification are cross-asset portfolio features that a single-security roster cannot express, and no stops are documented."
+    },
+    {
+      "id": 1714,
+      "name": "LotScalp",
+      "family": "trend",
+      "entry_long": "roc(open,2) > 1",
+      "exit_long": "roc(open,2) < -1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long trigger is Open[t2] minus Open[t1] exceeding DeltaLong, i.e. rising earlier opens, which is written as the rate of change of the open series with T1 1 and T2 2 as explicit fallbacks and the point-based DeltaLong replaced by a 1% rise. Because no percentage exits are documented, the mirror condition stands in for the TakeProfitLong and StopLossLong pair. The single TradeTime hour window, the one-trade-per-day limit, DeltaShort, the four point take-profit and stop-loss distances, MaxOpenTime and the fixed Volume are schedule, point and size settings."
+    },
+    {
+      "id": 2811,
+      "name": "Universal Trailing Manager",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doc states the strategy does not rely on indicators and reacts to price levels and time windows for trade management, handling scheduled entries, grid-like pending orders, trailing and scalping for discretionary or semi-automatic trading, so it emits no market-derived directional signal and the never-true guard is used. Market/Pending point distances, WaitForProfit, ScalpProfitPoints, MaxMarketPositions, the pending-order switches and the equity notifications are order-management settings."
+    },
+    {
+      "id": 4199,
+      "name": "Easiest Ever Daytrade",
+      "family": "volatility",
+      "entry_long": "roc(close,1) > 0",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy uses no indicators and simply follows the direction of the previous daily candle, which on a daily series is the sign of the one-bar return; both legs are the documented direction rule and the exit is the sign flip that also stands in for the MarketCloseHour flatten. EntryHourLimit 1 and MarketCloseHour 20 are clock settings, the at-most-one-position-per-session limit and TradeVolume are position constraints, and the 1-minute and 5-minute candle types are not selectable, so no percentages are set."
+    },
+    {
+      "id": 1276,
+      "name": "RSI",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14), 25)",
+      "exit_long": "crossbelow(rsi(close,14), 75)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All three documented values are used verbatim: RsiLength 14, OverSold 25 for the long cross and OverBought 75 for the opposite-signal exit, with the short branch ignored. The doc states Stops: No, so both percentage fields are null, and the 5-minute CandleType is a subscription attribute the roster cannot set."
+    },
+    {
+      "id": 3125,
+      "name": "Pendulum",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is a grid martingale: the grid is aligned to the candle close by rounding to multiples of StepSize 0.001, and positions open when a trigger level is touched, then reverse with the Multiplier 2 volume scaling up to MaxLayers 3 layers with per-layer step-based targets and stops. Those triggers are absolute price steps rather than market-derived signals, so the never-true guard is used and BaseVolume, the volume rounding and StartProtection are position-management features."
+    },
+    {
+      "id": 1877,
+      "name": "Two Direction Martin Stylized",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On start it hedges with a sell market order plus a buy limit below the bid and a buy market order plus a sell limit above the ask, then rebalances volumes and replaces pending orders when price leaves the predefined range, so the entries are limit-order placements and hedged inventory management with no directional market signal. Take Profit %, Base Volume, Volume Limit and Same Side % are placement and sizing settings, and the candle type is only a time driver."
+    }
+  ]
+}

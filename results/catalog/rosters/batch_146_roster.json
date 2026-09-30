@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1851,
+      "name": "Channel Trailing Stop",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high_prev(high,5))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry is a close outside the Donchian channel and TrailPeriod 5 is used verbatim; the prior-bar window is required because donchian_high includes the current bar, so the cross tests a genuine break of the prior five-bar channel. The channel and noose trailing stops, the TrailStop 50 offset, DeletePendingOrders and the 5-minute CandleType are order-management features with no fixed percentage."
+    },
+    {
+      "id": 2565,
+      "name": "Renko Line Break vs RSI",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and rsi(close,4) <= 30",
+      "exit_long": "close < ema(close,20) or rsi(close,4) >= 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented RSI values are used: RsiPeriod 4 with RsiShift 20 gives the 30/70 qualification bands, and the exit is the RSI recross of the opposite midpoint or the Renko trend flip. Renko bricks (BoxSize 500m) have no DSL equivalent so an EMA(20) trend proxy replaces the bullish Renko state, while the three-bar-ago high plus IndentFromHighLow stop placement, the price-unit TakeProfit 1000m and pending-order cancellation are not expressible."
+    },
+    {
+      "id": 843,
+      "name": "Gold & EUR/USD Liquidity Grab",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low,20) and close > sma(close,50) and rsi(close,14) < 40",
+      "exit_long": "high > donchian_high_prev(high,20) and close < sma(close,50) and rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The wick below the recent swing low plus a close back above MaLength 50 as the structure shift are kept with the documented RsiLength 14, but Oversold 30 is relaxed to 40 because a close above SMA(50) with RSI(14) below 30 is unsatisfiable in daily data. Stochastic and the ATR-based fair value gap have no DSL equivalent and are dropped, the swing window uses 20 bars as an explicit fallback, and the mirrored reverse signal exits with no stops documented."
+    },
+    {
+      "id": 1748,
+      "name": "EM VOL",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) + atr(high,low,close,14) and adx(high,low,close,14) < 20",
+      "exit_long": "close < donchian_low_prev(low,1) - atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pivot is the previous bar high/low with a one-ATR buffer, and trading is allowed only in the low-volatility regime; AtrPeriod 14, AdxPeriod 14 and the ADX ceiling of 20 are explicit fallbacks because only parameter names are supplied. TakeProfit, StopLoss, TrailStart and TrailStep are price-step distances that are not expressible, so the mirrored support break is used as the long exit."
+    },
+    {
+      "id": 3260,
+      "name": "Fibo Arc Momentum",
+      "family": "trend",
+      "entry_long": "close > sma(close,10) and sma(close,10) > sma(close,20) and roc(close,14) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < sma(close,20) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "No defaults are published, so the fast/slow trend averages (10/20) stand in for the documented LWMA lengths, the momentum-versus-100 filter becomes a positive MomentumPeriod 14 rate of change and the MACD histogram crossover keeps its 12/26/9 fallback. The object-based Fibonacci arc rebuilt from anchor opens is reduced to the fast-average break, and absolute-unit stop/target, break-even and trailing distances are not expressible."
+    },
+    {
+      "id": 2872,
+      "name": "Trading Boxing",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy does not rely on indicator logic or market data events: it is a manual control surface whose boolean toggles submit or cancel orders at operator-supplied prices and volumes, so the never-true guard is used. Volumes, activation prices and the close/delete switches are order-management settings."
+    },
+    {
+      "id": 3134,
+      "name": "Open Close",
+      "family": "volatility",
+      "entry_long": "close > open and roc(open,1) < 0",
+      "exit_long": "close > open and roc(open,1) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The relationship between the two most recent finished candles is approximated by the current body direction plus the bar-over-bar open change (roc(open,1)), since shifted bars are unavailable: a bullish candle after a lower open is the documented reversal entry and two agreeing candles are the documented exit. MaximumRiskPercent 0.02, DecreaseFactor 3, HistoryDays 60 and FallbackVolume are adaptive lot-sizing settings, and no stops are documented."
+    },
+    {
+      "id": 1555,
+      "name": "Weighted Harrell-Davis Quantile Estimator with AbsoluteDeviation",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close,39) - 1.213 * std(close,39)",
+      "exit_long": "close > sma(close,39) + 1.213 * std(close,39)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented values are used: the weighted median is approximated by sma(close,39) since no median estimator exists in the DSL, and the absolute-deviation band is std(close,39) scaled by DeviationMultiplier 1.213. The buy is a close below the lower band and the documented exit is the opposite band cross above the upper band; no stops are specified."
+    },
+    {
+      "id": 2921,
+      "name": "Simple Pivot",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation only describes always-in-the-market swing trading, order sizing through Volume and the 1-hour CandleType; no pivot formula, entry rule or exit rule is stated, so no market-derived signal can be translated and the never-true guard is used."
+    },
+    {
+      "id": 1723,
+      "name": "Candle Trader",
+      "family": "volume",
+      "entry_long": "close > open and roc(close,4) < 0",
+      "exit_long": "close < open or roc(close,4) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The four-candle direction analysis for short-term reversals is approximated by a bullish body after a negative four-bar rate of change, since the specific bullish/bearish patterns are not enumerated in the docs. TakeProfitTicks and StopLossTicks are price-step offsets (no percentages documented), and Continuation and ReverseClose are order-state options."
+    }
+  ]
+}

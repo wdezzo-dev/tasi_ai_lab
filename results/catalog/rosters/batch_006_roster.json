@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1,
+      "name": "MA CrossOver",
+      "family": "trend",
+      "entry_long": "ema(close,100) > ema(close,400)",
+      "exit_long": "ema(close,100) < ema(close,400)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "EMA(100) above EMA(400) indicates long-term trend. Corpus uses cross (1min), approximated by sustained state for daily+. StopLoss=2% documented."
+    },
+    {
+      "id": 7,
+      "name": "Keltner Channel Breakout",
+      "family": "breakout",
+      "entry_long": "close > ema(close,20) + 2 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,20) - 2 * atr(high,low,close,14)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Keltner Channel: EMA(20) center + 2*ATR(14) bands. Long breakout above upper band, exit when price drops below lower band or stop-loss. StopLoss=2% documented."
+    },
+    {
+      "id": 55,
+      "name": "Volume Surge",
+      "family": "volume",
+      "entry_long": "volume_ratio(volume,20) > 2 and close > sma(close,20)",
+      "exit_long": "volume_ratio(volume,20) < 1 or close < sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Volume ratio above 2x with price above MA(20) confirms participation in uptrend. Exit when volume normalizes or price drops below MA. VolumeSurgeMultiplier=2.0 documented."
+    },
+    {
+      "id": 69,
+      "name": "Bollinger Band Reversal",
+      "family": "mean_reversion",
+      "entry_long": "close > bb_upper(close,20,2) and close < open",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Close above upper Bollinger band with a bearish candle (close<open) signals fade. Exit when price returns to middle band. ATR-based stop approximated as percent. BollingerPeriod=20, Deviation=2."
+    },
+    {
+      "id": 91,
+      "name": "MACD Histogram Reversal",
+      "family": "momentum",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "MACD line above signal line (histogram positive) signals bullish momentum. Exit on reverse cross. Standard 12/26/9 parameters. StopLoss=2% documented."
+    },
+    {
+      "id": 115,
+      "name": "Volume Climax Reversal",
+      "family": "volume",
+      "entry_long": "volume_ratio(volume,20) > 2 and close < open",
+      "exit_long": "volume_ratio(volume,20) < 1",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Volume climax with bearish candle signals exhaustion. Enter long anticipating reversal when volume normalizes. StopLoss=2% documented."
+    },
+    {
+      "id": 6,
+      "name": "Triple MA",
+      "family": "trend",
+      "entry_long": "ema(close,5) > ema(close,20) and ema(close,20) > ema(close,50)",
+      "exit_long": "ema(close,5) < ema(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Triple EMA stack (5/20/50) for strong trend confirmation. Long when fast > medium > slow. Exit when fast crosses below medium. ShortMa=5, MiddleMa=20, LongMa=50 documented."
+    },
+    {
+      "id": 58,
+      "name": "RSI Overbought Oversold",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) below 30 (oversold) enters long, exits when RSI returns to neutral (50). NeutralLevel=50 documented. StopLoss=2%."
+    },
+    {
+      "id": 548,
+      "name": "Bar Range",
+      "family": "volatility",
+      "entry_long": "close < open and (high - low) > 2 * atr(high,low,close,14)",
+      "exit_long": "close > open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Large bearish bar (range > 2*ATR) signals selling climax. Enter long on reversal candle (close>open). LookbackPeriod=50/PercentRankThreshold=95 approximated as 2*ATR comparison. ExitBars=1."
+    },
+    {
+      "id": 38,
+      "name": "BB Width Breakout",
+      "family": "breakout",
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) > 2 * atr(high,low,close,14) and close > bb_mid(close,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Bollinger Band width (upper-lower) exceeds 2*ATR while price above middle band indicates volatility expansion breakout. Exit when price returns to mid. BollingerPeriod=20, Deviation=2."
+    }
+  ]
+}

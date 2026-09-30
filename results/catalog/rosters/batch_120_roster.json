@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2307,
+      "name": "Trend Continuation",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close, 20), ema(close, 50))",
+      "exit_long": "crossbelow(ema(close, 20), ema(close, 50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast/slow EMA continuation is translated with the default 20/50 pair from the parameter table and the mirrored cross as the exit. Bollinger(20,2) bands and the visual profit target are chart objects or points, and the docs specify no percentage stops."
+    },
+    {
+      "id": 527,
+      "name": "Arpeet MACD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9)) and macd(close, 12, 26) < 0",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastLength 12, SlowLength 26 and SignalLength 9 are used and the below-zero filter on the MACD cross above its signal is retained, with the opposite cross closing. The mirrored above-zero case belongs to the short side, which this long-only roster omits, and stops are documented as None."
+    },
+    {
+      "id": 1072,
+      "name": "Monthly Performance Table",
+      "family": "trend",
+      "entry_long": "adx(high, low, close, 14) >= 20 and roc(adx(high, low, close, 14), 1) > 0",
+      "exit_long": "adx(high, low, close, 14) < 20 or roc(adx(high, low, close, 14), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA is a chart-only performance table that plots monthly profit, equity and drawdown and draws no orders, so its only translatable content is the market-strength filter: ADX(14) at or above 20 with a rising one-bar change. The 1-minute, 4-hour and daily columns, colour coding and month-boundary rows are display and calendar fields."
+    },
+    {
+      "id": 64,
+      "name": "Bearish Engulfing Pattern",
+      "family": "trend",
+      "entry_long": "close > open and close > donchian_high_prev(high,1) and open < donchian_low_prev(low,1)",
+      "exit_long": "close < open and close < donchian_low_prev(low,1) and open > donchian_high_prev(high,1)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The documented short-only bearish engulfing is mirrored to the long side: an up bar that fully covers the prior bar's range, with the inverse pattern as the exit. The documented StopLossPercent of 1 is applied, while the original placement above the pattern high is not expressible; RequireUptrend over UptrendBars=3 is a pattern filter without a documented rule."
+    },
+    {
+      "id": 3068,
+      "name": "Exp TimeZone Pivots Open System Tm Plus",
+      "family": "trend",
+      "entry_long": "close > ema(close, 20) and bars_since(close > donchian_high_prev(high, 20)) <= 15 and close > open",
+      "exit_long": "close < ema(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The proprietary indicator anchors its bands to a StartHour session open, which has no DSL equivalent, so the 20-bar prior high stands in for the upper pivot and the documented post-breakout pullback becomes a continuation entry above EMA(20) within 15 bars of such a break, confirmed by an up bar. StopLossPoints 1000 and TakeProfitPoints 2000 are price distances, so the percent fields stay null; HoldingMinutes, SignalBar, DeviationPoints and the money presets are time/slippage/sizing fields."
+    },
+    {
+      "id": 1179,
+      "name": "PowerZone",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 5) and bars_since(close < open) > 5",
+      "exit_long": "close < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close above the prior five-bar high after more than five bars without a down close matches the documented rule of trading the start of a sustained advance, and breaking the prior five-bar low is the exit. The OrderCloseLevel=4, OrderCloseMultiplication and the work/close time windows are point and calendar fields, and the docs specify no percent stops."
+    },
+    {
+      "id": 2184,
+      "name": "Order Example",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 26)",
+      "exit_long": "close < donchian_low_prev(low, 26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a minimal demonstration EA whose only documented logic is placing a buy above the prior bar range, which a close above the prior 26-bar high reproduces; the 100-point stop and 10-point take profit are price steps rather than percentages, so the percent fields remain null."
+    },
+    {
+      "id": 3588,
+      "name": "Pause Trading On Consecutive Loss",
+      "family": "momentum",
+      "entry_long": "roc(close, 1) > 0",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states the EA has no entry logic and only pauses trading after StopLossCount=3 consecutive losing trades, so the only market-derived rule available is a positive close-to-close return as the stand-in signal, with a down close as the exit. CloseOrdersWhenPaused, 1-hour time frame and the close-price basis are configuration fields."
+    },
+    {
+      "id": 3787,
+      "name": "Semilong WWW Forex Instruments Info",
+      "family": "volatility",
+      "entry_long": "roc(close, 10) < -5 and roc(close, 20) < 0",
+      "exit_long": "roc(close, 10) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bid-versus-shifted-closes comparison is approximated by a 10-bar return below -5 percent while the 20-bar return is still negative, entering long on the stretched move, and a positive 10-bar return exits. TakeProfitPercent, StopLossPercent, TrailingPercent and Shift parameters are not numerically documented, so no percent field is set."
+    },
+    {
+      "id": 174,
+      "name": "Macd Vwap",
+      "family": "mean_reversion",
+      "entry_long": "macd(close, 12, 26) > macd_signal(close, 12, 26, 9) and close > sma(close * volume, 20) / (sma(volume, 20) + 0.0001)",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented MacdFast 12, MacdSlow 26 and MacdSignal 9 are used, and the session VWAP is approximated by a 20-bar volume-weighted price since VWAP is unavailable; the epsilon guards a zero mean volume. The documented percent-based StopLossPercent of 2.0 is applied and the opposite MACD cross is the exit, while the 5-minute default is a timeframe detail."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_089": {
+  "strategy_ids": [
+   2826,
+   2167,
+   1507,
+   1925,
+   1867,
+   4216,
+   1526,
+   2029,
+   3469,
+   4100
+  ],
+  "docs": {
+   "2826": {
+    "id": 2826,
+    "name": "Blau Ergodic",
+    "family": "trend",
+    "overview": "This strategy ports the **Exp_BlauErgodic** expert advisor from MQL5 to StockSharp. It rebuilds the Blau Ergodic oscillator by\ntriple-smoothing the momentum and its absolute value with EMA filters, generates a normalized oscillator and a signal line, and\noffers three distinct signal modes that mirror the original EA.\n\nThe default configuration evaluates completed 4-hour candles. You can change the applied price (close, open, high/low-based\naverages), every smoothing depth, and the bar index (`SignalBar`) used to read signals. Trades are sized via the strategy's\n`Volume` property; long/short entries or exits can be disabled individually through boolean parameters. Protective stop-loss and\ntake-profit levels are defined in points and are converted into absolute prices through `Security.PriceStep`.\n\n## Signal modes\n\n- **Breakdown** – reacts to the oscillator crossing the zero line. Longs open on negative-to-positive flips and shorts on\n  positive-to-negative flips. Positions are closed when the oscillator remains on the opposite side of zero.\n- **Twist** – searches for slope reversals. A long setup appears when the oscillator was falling on the prior bar but turns up on\n  the most recent bar; a short setup requires the inverse pattern.\n- **CloudTwist** – monitors the oscillator crossing its signal line. Longs trigger when the oscillator rises through the signal\n  cloud, and shorts when it falls back below it.\n\nAll modes read indicator values from the bar specified by `SignalBar` (default `1`, meaning the last completed bar) and rely on\nolder values for confirmation. Set `SignalBar` to at least `1` because the conversion processes finished candles only.\n\n## Entry and exit rules\n\n- **Long entries:** enabled when `AllowBuyEntry` is true, no existing long position is open (`Position <= 0`), and the active mode\n  generates a buy condition. The strategy reverses any short exposure by buying `Volume + |Position|`.\n- **Short entries:** enabled when `AllowSellEntry` is true, no",
+    "details": "",
+    "parameters": "- `CandleType` – timeframe for candle subscriptions (default 4-hour candles).\n- `Mode` – one of `Breakdown`, `Twist`, or `CloudTwist`.\n- `MomentumLength` – lookback for the raw momentum difference.\n- `First/Second/ThirdSmoothingLength` – EMA depths for the cascading momentum filters.\n- `SignalSmoothingLength` – EMA depth for the signal line.\n- `SignalBar` – index of the completed bar used to read signals (minimum `1`).\n- `AppliedPrices` – price source feeding the oscillator (close, open, median, typical, weighted, etc.).\n- `AllowBuyEntry`, `AllowSellEntry`, `AllowBuyExit`, `AllowSellExit` – enable or disable specific operations.\n- `StopLossPoints`, `TakeProfitPoints` – protective distances in points (converted via `Security.PriceStep`).\n\nThe conversion maintains the behaviour of the MQL5 expert, while leveraging the StockSharp high-level API (`SubscribeCandles`,\n`Bind`) and adhering to StockSharp strategy conventions with tab indentation and English comments."
+   },
+   "2167": {
+    "id": 2167,
+    "name": "ColorMETRO WPR",
+    "family": "trend",
+    "overview": "This strategy uses the ColorMETRO Williams %R indicator, which builds fast and slow step lines around the Williams %R oscillator.\nThe fast line reacts quickly to price changes, while the slow line smooths out noise. Trading decisions are made when these lines\ncross each other, signalling potential shifts in momentum. When the fast line crosses below the slow line, the strategy assumes the\nmarket is oversold and enters a long position. Conversely, when the fast line crosses above the slow line, it enters a short position.\nExisting positions are exited when the opposite condition is detected.\n\nRisk management is handled through percentage-based take profit and stop loss levels. These allow the strategy to adapt to price\nlevels across different instruments. The default candle timeframe is eight hours, which helps to filter out intraday volatility and\nfocus on medium-term trends. The logic works on both sides of the market, enabling long and short operations.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Fast line` crosses **below** `Slow line`.\n  - **Short**: `Fast line` crosses **above** `Slow line`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `Fast line` rises above `Slow line`.\n  - **Short**: `Fast line` falls below `Slow line`.\n- **Stops**: Yes, percentage-based take profit and stop loss.\n- **Default Values**:\n  - `WprPeriod` = 7.\n  - `FastStep` = 5.\n  - `SlowStep` = 15.\n  - `TakeProfitPercent` = 4.\n  - `StopLossPercent` = 2.\n  - `CandleType` = 8-hour candles.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Single (Williams %R based).\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Fast line` crosses **below** `Slow line`.\n  - **Short**: `Fast line` crosses **above** `Slow line`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: `Fast line` rises above `Slow line`.\n  - **Short**: `Fast line` falls below `Slow line`.\n- **Stops**: Yes, percentage-based take profit and stop loss.\n- **Default Values**:\n  - `WprPeriod` = 7.\n  - `FastStep` = 5.\n  - `SlowStep` = 15.\n  - `TakeProfitPercent` = 4.\n  - `StopLossPercent` = 2.\n  - `CandleType` = 8-hour candles.\n- **Filters**:\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Single (Williams %R based).\n  - Stops: Yes.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   },
+   "1507": {
+    "id": 1507,
+    "name": "Ultimate Strategy Template",
+    "family": "trend",
+    "overview": "Basic moving average crossover template that opens long or short positions when fast and slow averages cross. Includes optional percent stop loss and take profit protections.\n\n## Details\n\n- **Entry Criteria**: Fast SMA crossing the slow SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover or risk protections.\n- **Stops**: Percent stop loss and take profit.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `StopLossPercent` = 1\n  - `TakeProfitPercent` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Fast SMA crossing the slow SMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover or risk protections.\n- **Stops**: Percent stop loss and take profit.\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `StopLossPercent` = 1\n  - `TakeProfitPercent` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1925": {
+    "id": 1925,
+    "name": "FmOne Scalping",
+    "family": "trend",
+    "overview": "FmOne Scalping Strategy is a simplified translation of the FMOneEA MetaTrader 4 expert advisor. The strategy combines a fast and a slow exponential moving average with the MACD indicator to capture short-term momentum on any timeframe.",
+    "details": "",
+    "parameters": "- **FastMaPeriod** – Length of the fast EMA.\n- **SlowMaPeriod** – Length of the slow EMA.\n- **MacdSignalPeriod** – Signal line period for the MACD indicator.\n- **StopLossPercent** – Stop-loss size in percent of entry price.\n- **TakeProfitPercent** – Take-profit size in percent of entry price.\n- **EnableTrailingStop** – Enables trailing stop management.\n- **CandleType** – Time frame for incoming candles."
+   },
+   "1867": {
+    "id": 1867,
+    "name": "MA SAR ADX",
+    "family": "trend",
+    "overview": "Strategy combining Moving Average, Parabolic SAR and Average Directional Index (ADX).\nBuys when the price is above both the moving average and SAR while +DI is above -DI.\nSells when the price is below both the moving average and SAR while +DI is below -DI.\nPositions are closed when price crosses the SAR.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > MA && +DI >= -DI && Close > SAR`\n  - Short: `Close < MA && +DI <= -DI && Close < SAR`\n- **Long/Short**: Both\n- **Exit Criteria**: Price crosses Parabolic SAR\n- **Stops**: No\n- **Default Values**:\n  - `MaPeriod` = 100\n  - `AdxPeriod` = 14\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, Parabolic SAR, ADX\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > MA && +DI >= -DI && Close > SAR`\n  - Short: `Close < MA && +DI <= -DI && Close < SAR`\n- **Long/Short**: Both\n- **Exit Criteria**: Price crosses Parabolic SAR\n- **Stops**: No\n- **Default Values**:\n  - `MaPeriod` = 100\n  - `AdxPeriod` = 14\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, Parabolic SAR, ADX\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4216": {
+    "id": 4216,
+    "name": "PSAR Multi Timeframe",
+    "family": "breakout",
+    "overview": "The strategy replicates the MetaTrader expert advisor **EA_PSar_002B**. It evaluates Parabolic SAR values on three timeframes (M15, M30 and H1) while managing positions on a one-minute stream. Trading is directional: only one net position can be active at a time and new trades appear only when the previous exposure is flat. The original expert was designed for EURUSD on the M1 chart and the port keeps the same context.",
+    "details": "",
+    "parameters": "- `BaseCandleType` – timeframe used for trade management (defaults to M1).\n- `FastSarCandleType`, `MediumSarCandleType`, `SlowSarCandleType` – timeframes for the SAR filters (defaults: 15m, 30m, 60m).\n- `EnableParabolicFilter` – mirrors the `sar2` flag from MQL; switching it off stops trading completely.\n- `TakeProfitPoints`, `StopLossPoints` – offsets in points (minimum price increments). Pip size is derived from `Security.PriceStep` and `Security.Decimals` to handle 3/5-digit forex quotes correctly.\n- `UseMoneyManagement`, `PercentMoneyManagement`, `FixedVolume` – volume controls described above."
+   },
+   "1526": {
+    "id": 1526,
+    "name": "Visible Chart",
+    "family": "breakout",
+    "overview": "This sample shows how to work with a visible range of candles. The strategy tracks the highest high and lowest low over a configurable number of recent bars. A breakout above the visible high triggers a long entry, while a break below the visible low triggers a short entry.\n\n## Details\n- **Entry**: Breakout of the visible high/low.\n- **Exit**: Opposite breakout.\n- **Indicators**: Highest, Lowest.\n",
+    "details": "- **Entry**: Breakout of the visible high/low.\n- **Exit**: Opposite breakout.\n- **Indicators**: Highest, Lowest.",
+    "parameters": ""
+   },
+   "2029": {
+    "id": 2029,
+    "name": "DiNapoli Stochastic",
+    "family": "momentum",
+    "overview": "This strategy implements a trading system based on the **DiNapoli Stochastic** oscillator. It reacts to the crossovers between the %K and %D lines of the stochastic indicator.\n\n## Strategy Logic\n\n1. Subscribe to candles of the selected timeframe.\n2. Calculate the DiNapoli Stochastic values using the standard Stochastic oscillator with smoothing periods.\n3. Close short positions whenever the previous %K was above %D.\n4. Close long positions whenever the previous %K was below %D.\n5. Open a long position when %K crosses below %D and long trades are allowed.\n6. Open a short position when %K crosses above %D and short trades are allowed.\n\n## Parameters\n\n- `FastK` – base period for %K.\n- `SlowK` – smoothing period for %K.\n- `SlowD` – smoothing period for %D.\n- `BuyOpen` – enable or disable long entries.\n- `SellOpen` – enable or disable short entries.\n- `BuyClose` – enable or disable closing long positions.\n- `SellClose` – enable or disable closing short positions.\n- `CandleType` – candle timeframe used for calculations.\n\n## Notes\n\nThe strategy uses the high-level StockSharp API and processes only finished candles. Indicator values are obtained through `BindEx` without using historical value requests.\n",
+    "details": "",
+    "parameters": "- `FastK` – base period for %K.\n- `SlowK` – smoothing period for %K.\n- `SlowD` – smoothing period for %D.\n- `BuyOpen` – enable or disable long entries.\n- `SellOpen` – enable or disable short entries.\n- `BuyClose` – enable or disable closing long positions.\n- `SellClose` – enable or disable closing short positions.\n- `CandleType` – candle timeframe used for calculations."
+   },
+   "3469": {
+    "id": 3469,
+    "name": "Trading Panel Batch",
+    "family": "volatility",
+    "overview": "`TradingPanelBatchStrategy` is a StockSharp port of the MetaTrader 4 expert advisor **EA_TradingPanel**. The original script exposed a manual panel where the trader configured the number of simultaneous trades, lot size and protective distances before pressing **BUY** or **SELL**. In the StockSharp version the same behaviour is automated: once the operator sets the `Direction` parameter the strategy fires a batch of market orders on the next finished candle and instantly resets the direction back to `None`.\n\nThe logic is intentionally simple so that the module can be combined with external signals or manual supervision. All orders inherit optional stop-loss and take-profit distances measured in pips, mirroring the risk controls available in the MQL implementation.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `NumberOfOrders` | `int` | `1` | Number of market orders sent in the next batch. |\n| `OrderVolume` | `decimal` | `0.01` | Volume applied to each market order. |\n| `StopLossPips` | `decimal` | `2` | Stop-loss distance converted from pips to absolute price using the current instrument metadata. Set to `0` to disable. |\n| `TakeProfitPips` | `decimal` | `10` | Take-profit distance in pips. Set to `0` to disable. |\n| `Direction` | `TradeDirection` | `None` | Requested direction for the next execution. The strategy resets the value after the orders are placed. |\n| `CandleType` | `DataType` | `TimeFrameCandle(1m)` | Candle series used to trigger execution. |"
+   },
+   "4100": {
+    "id": 4100,
+    "name": "JMaster RSX",
+    "family": "mean_reversion",
+    "overview": "The JMaster RSX strategy is a straight conversion of the MetaTrader 4 expert advisor **jMasterRSXv1**. The system aligns Jurik RSX oscillator values calculated on a fast (M5) and a slow (M30) timeframe. When the higher timeframe points in a bullish or bearish direction and the fast oscillator reaches oversold/overbought territory, the strategy enters a position in the corresponding direction. All signals are evaluated on the open of the new bar using the previous fully closed candles, matching the MT4 implementation that referenced `shift = 1` values.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `FastCandleType` | Candle type for the fast RSX calculation | `M5` |\n| `SlowCandleType` | Candle type for the slow RSX calculation | `M30` |\n| `RsxLength` | Lookback length shared by both RSX instances | `14` |\n| `OverboughtLevel` | Fast RSX threshold for short entries | `75` |\n| `OversoldLevel` | Fast RSX threshold for long entries | `25` |\n| `MidlineLevel` | Slow RSX midline separating bullish/bearish regimes | `50` |\n| `Volume` | Order volume for market entries | `0.1` |"
+   }
+  }
+ }
+}

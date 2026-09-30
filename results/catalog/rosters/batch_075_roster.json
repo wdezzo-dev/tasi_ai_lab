@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2632,
+      "name": "EMA Crossover Trailing",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,4),ema(close,18))",
+      "exit_long": "crossbelow(ema(close,4),ema(close,18))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(4/18) bullish crossover enters and the bearish crossover is a state-free proxy for the trailing exit. The 20/5-point trailing controls are not percentage fields."
+    },
+    {
+      "id": 3907,
+      "name": "Money Rain Recovery",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,10),0)",
+      "exit_long": "crossbelow(roc(close,10),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(10) crossing zero approximates DeMarker(10) crossing its documented 0.5 threshold, with the inverse cross exiting. The 50-point stop and target and loss-recovery volume are not expressible here."
+    },
+    {
+      "id": 3450,
+      "name": "Simplest DeMarker",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) is used as a bounded DeMarker proxy: recovery through the fallback oversold level 30 enters and overbought 70 exits. Exact DeMarker zones, next-bar flag, and point protections are unavailable."
+    },
+    {
+      "id": 3225,
+      "name": "Exp Cronex AO",
+      "family": "trend",
+      "entry_long": "crossabove(sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),3),sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),6))",
+      "exit_long": "crossbelow(sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),3),sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Median-price 5/34 SMA separation approximates Awesome Oscillator and SMA(3/6) supplies the two Cronex lines. These are explicit fallbacks because the source gives parameter names only; signal-bar inspection and point protection are omitted."
+    },
+    {
+      "id": 1013,
+      "name": "MACD Volume XAUUSD",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,16,26),0) and ema(volume,5) > ema(volume,8) and volume_ratio(volume,8) > 1",
+      "exit_long": "crossbelow(macd(close,16,26),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 16/26 MACD zero cross is confirmed by positive 5/8 volume EMA alignment and above-average volume. The 10100-point stop and 1.1 multiple cannot be represented as percentages."
+    },
+    {
+      "id": 1177,
+      "name": "PowerHouse SwiftEdge AI v2.10",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and roc(close,5) > 0",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A positive-momentum 20-bar breakout approximates the pivot signal. The minimum distance from the previous signal, point stop/target, and exact pivot spacing cannot be expressed and are omitted."
+    },
+    {
+      "id": 3774,
+      "name": "Time-Based Range Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and roc(close,1) > 0",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar breakout approximates the seven-day intraday range snapshot and omits its 08:00 session gate. The check-time mode, factor-based distances, daily entry cap, and overnight handling are not DSL state."
+    },
+    {
+      "id": 3902,
+      "name": "Auto KDJ",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,30),0) and ema(roc(close,30),3) > 0",
+      "exit_long": "crossbelow(roc(close,30),0) or ema(roc(close,30),3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(30) with 3/6-style smoothing approximates KDJ momentum because Stochastic is unavailable; the opposite momentum turn exits. Exact KDJ buffers and 100/200-pip protections are omitted."
+    },
+    {
+      "id": 4174,
+      "name": "Stoch Levels",
+      "family": "volatility",
+      "entry_long": "close < sma(close,2) - 0.55 * atr(high,low,close,14)",
+      "exit_long": "close > sma(close,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-bar midpoint less 0.55*ATR(14) approximates the prior-session synthetic buy-limit level for a long-only roster, with recovery to its midpoint as exit. Midnight reset, pending-order behavior, and 40/20-point protection are omitted."
+    },
+    {
+      "id": 632,
+      "name": "Consecutive Bearish Candle",
+      "family": "mean_reversion",
+      "entry_long": "bars_since(close >= open) >= 3 and close < open",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented three-bar bearish run is counted with bars_since and a break above the prior high exits. The source's date window is unavailable and no stop is documented."
+    }
+  ]
+}

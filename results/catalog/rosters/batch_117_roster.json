@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 47,
+      "name": "OBV Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(volume_ratio(volume, 20), donchian_high_prev(volume_ratio(volume, 20), 20)) and roc(close, 1) > 0",
+      "exit_long": "crossbelow(volume_ratio(volume, 20), sma(volume_ratio(volume, 20), 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "OBV is cumulative state and unavailable, so volume_ratio(20) stands in for it: a cross above its prior 20-value maximum is the documented breakout, gated by a rising close, and the cross of its 20-period mean is the documented OBV-MA exit. Both documented lookbacks of 20 are used; the stop distance is not quantified in the docs."
+    },
+    {
+      "id": 2521,
+      "name": "Simple MACD",
+      "family": "trend",
+      "entry_long": "roc(macd(close, 12, 26), 1) > 0",
+      "exit_long": "roc(macd(close, 12, 26), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule compares the two most recent MACD readings, so a positive one-bar return of the MACD line with the documented FastPeriod 12 and SlowPeriod 26 buys and a negative return sells. The SignalPeriod 9 line is only retained for compatibility in the source and the reversal sizing logic is a volume module."
+    },
+    {
+      "id": 4073,
+      "name": "TrueSort 1001",
+      "family": "trend",
+      "entry_long": "sma(close, 10) > sma(close, 20) and sma(close, 20) > sma(close, 50) and sma(close, 50) > sma(close, 100) and sma(close, 100) > sma(close, 200) and adx(high, low, close, 14) > 25 and roc(adx(high, low, close, 14), 1) > 0",
+      "exit_long": "sma(close, 10) <= sma(close, 20) or sma(close, 20) <= sma(close, 50) or sma(close, 50) <= sma(close, 100) or sma(close, 100) <= sma(close, 200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All five documented SMA lengths and the ADX(14) above 25 with a rising value are kept, and any loss of strict ordering is the documented de-synchronisation exit. Requiring the order on the last three completed candles is not expressible without shifted bars, and the 100-point trailing stop is not a percentage field."
+    },
+    {
+      "id": 4182,
+      "name": "MACD Signal ATR",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 9, 15) - macd_signal(close, 9, 15, 8), 0.004 * atr(high, low, close, 200))",
+      "exit_long": "crossbelow(macd(close, 9, 15) - macd_signal(close, 9, 15, 8), 0.004 * atr(high, low, close, 200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The histogram is built with the documented Fast 9, Slow 15 and Signal 8 periods and the breakout band is the documented ThresholdMultiplier 0.004 times ATR(200); the same band on the other side is the reversal exit. TakeProfitPoints 10 and TrailingStopPoints 25 are instrument price steps, not percentages."
+    },
+    {
+      "id": 2739,
+      "name": "Dealers Trade ZeroLag MACD",
+      "family": "trend",
+      "entry_long": "roc(macd(close, 12, 26), 1) > 0",
+      "exit_long": "roc(macd(close, 12, 26), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented directional trigger is translated: a rising zero-lag MACD slope favours long accumulation, approximated by the MACD line's one-bar return with 12/26/9 fallbacks since the parameter table lists no values. Grid spacing, IntervalCoefficient scaling, SecureProfit, AccountProtection and MaximumBalance are position-management modules."
+    },
+    {
+      "id": 3167,
+      "name": "Daily Range",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 3) * 1.01",
+      "exit_long": "close < donchian_low_prev(low, 3) * 0.99",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SlidingWindowDays of 3 becomes a three-bar high/low range and the OffsetCoefficient of 1 percent is applied to the breakout levels; RangeMode, the 10:05 session reset and MaxPositionsPerDay=3 are calendar or order-count fields. StopLossCoefficient 0.03 and TakeProfitCoefficient 0.05 scale with the range and are not fixed percentages."
+    },
+    {
+      "id": 989,
+      "name": "London BreakOut Classic",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 20)",
+      "exit_long": "close < (donchian_high_prev(high, 20) + donchian_low_prev(low, 20)) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 00:00-06:55 Asian box cannot be isolated without time fields, so a 20-bar prior range stands in and a close above its high is the documented long breakout; the documented stop at the box midpoint is the exit, with CRV=1 making the target symmetric. The 07:00-16:00 window is unavailable."
+    },
+    {
+      "id": 2766,
+      "name": "Rnd Trade",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA closes the position and opens a new market position in a randomly selected direction on a fixed timer, so no deterministic market-derived signal exists; the impossible negative-price guard avoids fabricating one. IntervalMinutes and Volume are timer and sizing parameters."
+    },
+    {
+      "id": 3071,
+      "name": "Vortex Indicator Duplex",
+      "family": "volatility",
+      "entry_long": "crossabove(roc(close, 1), 0) and adx(high, low, close, 14) > 20",
+      "exit_long": "crossbelow(roc(close, 1), 0) and adx(high, low, close, 14) > 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Vortex streams are unavailable, so the documented VI+ crossing VI- is proxied by directional dominance: a one-bar return crossing zero while ADX(14) confirms trend strength, with the mirror cross as the long exit. LongLength/SignalBar, the separate long/short candle types and the 1000/2000-step protections are not expressible here."
+    },
+    {
+      "id": 3601,
+      "name": "SwingTrader",
+      "family": "mean_reversion",
+      "entry_long": "low <= bb_lower(close, 20, 2) and close > open",
+      "exit_long": "crossbelow(close, bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented BollingerPeriod 20 band bounce is kept with a bullish close at the lower band entering, and the middle-line cross from the source is used as the exit instead of a second entry filter. The martingale averaging grid, TakeProfitFactor 0.05 liquidation and Multiplier 1.5 volume scaling are position-management modules."
+    }
+  ]
+}

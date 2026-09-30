@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1333,
+      "name": "SPY TLT",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The engine evaluates a single series, so the documented TLT trend signal is proxied by the same instrument's close versus the documented SMA Length 20, keeping the cross-above/close-below structure intact. Cross-asset timing and the 2014-2099 window are not expressible, and the docs state there are no stops."
+    },
+    {
+      "id": 4014,
+      "name": "Brandy v1.2 Strategy (C#)",
+      "family": "trend",
+      "entry_long": "sma(close,70) > sma(close,80) and sma(close,20) > sma(close,30)",
+      "exit_long": "sma(close,70) < sma(close,80) or sma(close,20) < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented LongPeriod 70 and ShortPeriod 20 SMAs are kept, and the backward shifts of 5 bars are approximated by comparing each against a longer SMA (80 and 30) since the DSL cannot index a past bar. Exit is the documented slope reversal, and StopLossPoints 50 / TrailingStopPoints 150 are price steps, not percentages."
+    },
+    {
+      "id": 2748,
+      "name": "ColorJFatl Digit TM Plus",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5),ema(close,20))",
+      "exit_long": "crossbelow(ema(close,5),ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The FATL digital filter smoothed by a Jurik MA is approximated by a fast/slow EMA pair, and the documented colour change on the latest finished bar becomes a cross in the new slope direction. JmaLength has no documented default so 5/20 are explicit fallbacks; the timed exit, SignalBar offset and price-step stop/target are not expressible."
+    },
+    {
+      "id": 1373,
+      "name": "Supertrend AT v1.0",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10) + 3.0 * atr(high,low,close,10))",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The SuperTrend line is approximated by EMA(10) with the documented SupertrendLength 10 and Multiplier 3 on ATR(10); the entry is the documented down-to-up flip above the band and the exit is the loss of the bullish regime. RiskPerTrade 2% and RewardRatio 3 size the position and its target from the previous Supertrend value, which the DSL cannot express, so the stop fields are null."
+    },
+    {
+      "id": 1617,
+      "name": "Ultimate T3 Fibonacci BTC Scalping",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(ema(close,5),5),5),ema(ema(ema(close,20),20),20))",
+      "exit_long": "crossbelow(ema(ema(ema(close,5),5),5),ema(ema(ema(close,20),20),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tilson T3 is approximated by triple EMA smoothing, keeping the documented fast-above-slow crossover and the opposite-cross exit. The 0.618 volume factor behind the Fibonacci-tuned T3 line is not reproducible, so periods 5/20 are explicit fallbacks, and the optional percentage TP/SL has no documented values so both stop fields are null."
+    },
+    {
+      "id": 54,
+      "name": "Cumulative Delta Breakout",
+      "family": "breakout",
+      "entry_long": "sma((close - open) * volume,20) > donchian_high_prev(sma((close - open) * volume,20),20)",
+      "exit_long": "crossbelow(sma((close - open) * volume,20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Cumulative delta is not available in OHLCV, so it is proxied by the LookbackPeriod 20 average of signed close-open volume, and the documented breakout is a new 20-bar extreme of that series (prior-bar window so the current bar is not self-referential). The exit is the documented cross back through zero, and the stop is referenced but never quantified, so the stop fields are null."
+    },
+    {
+      "id": 787,
+      "name": "Fibonacci Swing Trading Bot",
+      "family": "breakout",
+      "entry_long": "close > donchian_low_prev(low,50) + 0.786 * (donchian_high(high,50) - donchian_low_prev(low,50))",
+      "exit_long": "close < donchian_low_prev(low,50) + 0.618 * (donchian_high(high,50) - donchian_low_prev(low,50))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The documented 0.786 and 0.618 retracements of the last 50-bar range are rebuilt from Donchian levels, with the long entry on the break above the deeper level and the exit on a fall back through the shallow one. The documented StopLossPercent 1 is applied; RiskRewardRatio 2 is a multiple of the stop rather than a percentage, so take_profit_pct stays null."
+    },
+    {
+      "id": 1116,
+      "name": "Neon Momentum Waves",
+      "family": "momentum",
+      "entry_long": "crossabove(macd(close,12,26) - macd_signal(close,12,26,20),0)",
+      "exit_long": "macd(close,12,26) - macd_signal(close,12,26,20) >= 11",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastLength 12, SlowLength 26 and SignalLength 20 are used, and the histogram (MACD line minus signal) crossing the EntryLevel 0 gives the long entry. The exit uses the documented LongExitLevel 11, which daily histograms rarely reach, so positions are held long; the docs state there are no stops."
+    },
+    {
+      "id": 3652,
+      "name": "Close on Profit or Loss in Account Currency",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented module only watches portfolio equity and liquidates positions when the account-currency Positive/Negative Closure thresholds are hit; it never opens trades, and account equity is not an OHLCV series. Marked with a never-true guard."
+    },
+    {
+      "id": 769,
+      "name": "RSI CCI Williams %R",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and (close - sma(close,20)) / (0.015 * std(close,20)) < -100 and 100 * (close - donchian_high(high,14)) / (donchian_high(high,14) - donchian_low(low,14)) < -80",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is rebuilt from its standard formula and Williams %R from the 14-bar range position, and the long entry requires all three oscillators oversold at once; RSI 30 / CCI -100 / %R -80 are explicit fallbacks because no thresholds are documented. Since exits are only percentage TP/SL with no values, the mirrored RSI overbought condition is used as the signal exit and the stop fields are null."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 556,
+      "name": "Bbsr Extreme",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_lower(close,20,2)) and ema(close,7) > ema(close,20)",
+      "exit_long": "crossbelow(close,bb_mid(close,20)) or ema(close,7) < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The lower Bollinger(20,2) rebound and EMA(7) trend filter retain the documented numeric settings. ATR(14) 2x/3x protection is dynamic and not a fixed percentage field; EMA(20) is an explicit trend-baseline fallback."
+    },
+    {
+      "id": 705,
+      "name": "DSL",
+      "family": "trend",
+      "entry_long": "roc(ema(close,34),1) > 0 and bars_since(low > ema(close,34)) < 3 and rsi(close,10) > 30",
+      "exit_long": "roc(ema(close,34),1) < 0 or close < ema(close,34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(34) and RSI(10) preserve the documented DSL and Beluga lengths; a three-bar persistence test and RSI above oversold approximate the proprietary oscillator. ATR-band stops and the 1.5 risk-reward target are not fixed percentages."
+    },
+    {
+      "id": 1244,
+      "name": "Resampling Filter Pack",
+      "family": "trend",
+      "entry_long": "roc(ema(close,9),5) > 0 and close > ema(close,9)",
+      "exit_long": "roc(ema(close,9),5) < 0 and close < ema(close,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The five-bar ROC of EMA(9) approximates five-bar resampling while retaining the documented sample and MA periods. Stateful sampling is unavailable, and the opposite slope/price state exits; no stops are documented."
+    },
+    {
+      "id": 2361,
+      "name": "Color 3rd Generation XMA",
+      "family": "trend",
+      "entry_long": "roc(ema(ema(close,5),5),1) > 0 and close > ema(close,20)",
+      "exit_long": "roc(ema(ema(close,5),5),1) < 0 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A doubly smoothed EMA(5) approximates the third-generation average, with EMA(20) and slope as fallbacks because no lengths are supplied. Scheduled entry, holding time, and optional point-based protection are unavailable."
+    },
+    {
+      "id": 951,
+      "name": "Kaufman Trend",
+      "family": "trend",
+      "entry_long": "zscore(roc(close,5),20) > 1 and close > ema(close,20)",
+      "exit_long": "zscore(roc(close,5),20) < 0 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Normalized five-bar momentum strength above one and price above EMA(20) proxy the unavailable Kalman filter and threshold 60. The 50/25/25 figures are staged-profit allocations rather than price percentages; swing/ATR stops and timing are unavailable."
+    },
+    {
+      "id": 3517,
+      "name": "Hpcs Inter7",
+      "family": "breakout",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Bollinger(20,2) outside-band breakout is exact, with middle-band reversion as the long exit proxy. Equal 10-point stop/target protection and the 1-minute timeframe are not fixed percentage/DSL fields."
+    },
+    {
+      "id": 278,
+      "name": "Donchian Width Mean Reversion",
+      "family": "breakout",
+      "entry_long": "close < bb_lower(close,20,2) and close > open",
+      "exit_long": "close >= sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A bullish reversal below a two-standard-deviation 20-bar band approximates the documented extreme and turn; the 2% stop is retained. Exact Donchian-width state and channel exit are unavailable, so Bollinger(20,2) is an explicit proxy."
+    },
+    {
+      "id": 2670,
+      "name": "Burg Extrapolator",
+      "family": "momentum",
+      "entry_long": "roc(close,10) > 2 and volume_ratio(volume,20) > 1",
+      "exit_long": "roc(close,10) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive ten-bar ROC above 2% is an explicit fallback for a favorable Burg forecast amplitude; volume confirmation is also a fallback. The autoregressive model, forecast high/low thresholds, pip stops, and multi-position risk controls are unavailable."
+    },
+    {
+      "id": 4164,
+      "name": "Parabolic SAR Flip Alert Strategy (4164)",
+      "family": "volatility",
+      "entry_long": "crossabove(close,ema(close,20))",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The optional auto-trading mode is represented with bullish/bearish EMA(20) crosses as a Parabolic SAR flip proxy; EMA(20) is a fallback because no values are supplied. SAR step/max settings and alert-only behavior cannot be configured in the roster."
+    },
+    {
+      "id": 2070,
+      "name": "RSI Expert",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing up through the documented 30 oversold level enters long, and 70 exits. Stop, target, and trailing percentages default to zero, so all are left null."
+    }
+  ]
+}

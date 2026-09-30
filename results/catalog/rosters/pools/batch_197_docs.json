@@ -1,0 +1,98 @@
+{
+ "batch_197": {
+  "strategy_ids": [
+   754,
+   2952,
+   2610,
+   1577,
+   515,
+   1484,
+   285,
+   1160,
+   1273,
+   1176
+  ],
+  "docs": {
+   "754": {
+    "id": 754,
+    "name": "Enhanced BarUpDn",
+    "family": "trend",
+    "overview": "The strategy looks for bullish or bearish bars combined with Bollinger Bands and trend confirmation. It enters long on bullish gaps in uptrends and short on bearish gaps in downtrends. Exits use ATR-based stop-loss and take-profit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: bullish candle with gap up, close above trend MA and above lower Bollinger band.\n  - Short: bearish candle with gap down, close below trend MA and below upper Bollinger band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Price touches ATR-based stop-loss or take-profit (1.5× ATR).\n- **Stops**: ATR-based stop and take-profit.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbMultiplier` = 2\n  - `MaLength` = 50\n  - `AtrLength` = 14\n  - `AtrMultiplierSl` = 2\n  - `AtrMultiplierTp` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: bullish candle with gap up, close above trend MA and above lower Bollinger band.\n  - Short: bearish candle with gap down, close below trend MA and below upper Bollinger band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Price touches ATR-based stop-loss or take-profit (1.5× ATR).\n- **Stops**: ATR-based stop and take-profit.\n- **Default Values**:\n  - `BbLength` = 20\n  - `BbMultiplier` = 2\n  - `MaLength` = 50\n  - `AtrLength` = 14\n  - `AtrMultiplierSl` = 2\n  - `AtrMultiplierTp` = 3\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2952": {
+    "id": 2952,
+    "name": "Wajdyss Ichimoku Candle MMRec",
+    "family": "trend",
+    "overview": "This strategy is a direct port of the MetaTrader expert *Exp_wajdyss_Ichimoku_Candle_MMRec*. It recreates the \"wajdyss Ichimoku candle\"\nindicator by computing the Ichimoku base line (Kijun) and classifying each finished candle into one of four color states. The system then\nlooks for a reversal in those colors to fade the most recent move. When the previous bar was above the Kijun and the latest signal bar falls\nbelow it, the algorithm closes any short exposure and opens a long trade. The opposite transition flips into a short position. An adaptive\nmoney management module replicates the original MMRec logic by shrinking the position size after a configurable number of losing trades in the\nsame direction.\n\nThe converted version uses the StockSharp high-level API. Candles are supplied through a single `SubscribeCandles` call, and the Kijun level is\ncalculated with `Highest`/`Lowest` indicators. Trading decisions are only evaluated on finished candles to keep the behaviour deterministic\nacross real-time and historical modes.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle data type (time-frame) used for the indicator | 1 hour candles |\n| `KijunLength` | Lookback of the Ichimoku base line | 26 |\n| `SignalBarShift` | Number of closed bars to skip before evaluating the color transition | 1 |\n| `BuyPosOpen` / `SellPosOpen` | Enable or disable opening positions in each direction | `true` |\n| `BuyPosClose` / `SellPosClose` | Allow closing existing positions on the opposite signal | `true` |\n| `NormalVolume` | Default order volume | `1` |\n| `ReducedVolume` | Order volume after the configured number of losses | `0.1` |\n| `LossTriggerCount` | Number of losing trades in a row before reducing size | `2` |\n| `StopLossPoints` | Stop distance in price steps (set to `0` to disable) | `1000` |\n| `TakeProfitPoints` | Take-profit distance in price steps (set to `0` to disable) | `2000` |"
+   },
+   "2610": {
+    "id": 2610,
+    "name": "Vector",
+    "family": "trend",
+    "overview": "The Vector Strategy is a multi-currency trend-following system converted from the MetaTrader 5 \"Vector\" expert. It trades four major\nforex pairs — EURUSD, GBPUSD, USDCHF, and USDJPY — simultaneously. The strategy calculates smoothed moving averages on the median\nprice of each pair and opens synchronized positions when the combined trend points in the same direction. A dynamic pip target based\non four-hour volatility and portfolio-level profit and loss thresholds control exits.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Fast MA** | Length of the smoothed moving average used for the fast trend on each pair. |\n| **Slow MA** | Length of the smoothed moving average used for the slow trend on each pair. |\n| **MA Shift** | Additional number of finished candles required before signals are evaluated, mirroring the shift setting in the original EA. |\n| **Equity Take Profit %** | Floating profit percentage that triggers closing every open position. |\n| **Equity Stop Loss %** | Floating loss percentage that triggers an emergency exit for all trades. |\n| **Signal Timeframe** | Candle timeframe used for the smoothed moving averages (default 15 minutes). |\n| **Range Timeframe** | Candle timeframe used for volatility averaging (default 4 hours). |\n| **Range Period** | Number of higher-timeframe candles used to compute the average pip target. |\n| **EURUSD / GBPUSD / USDCHF / USDJPY** | Securities that correspond to each traded instrument. |\n\nAll parameters support optimization ranges identical to the original expert advisor where applicable."
+   },
+   "1577": {
+    "id": 1577,
+    "name": "Zero-Lag TEMA Crosses",
+    "family": "trend",
+    "overview": "Zero-lag triple EMA crossover system. Positions use recent highs and lows for stops and risk-reward based targets.\n\n## Details\n\n- **Entry Criteria**: Fast TEMA crossing slow TEMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop at recent extreme or target by ratio.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Lookback` = 20\n  - `FastPeriod` = 69\n  - `SlowPeriod` = 130\n  - `RiskReward` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: TEMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Fast TEMA crossing slow TEMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop at recent extreme or target by ratio.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Lookback` = 20\n  - `FastPeriod` = 69\n  - `SlowPeriod` = 130\n  - `RiskReward` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: TEMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "515": {
+    "id": 515,
+    "name": "AI Volume",
+    "family": "trend",
+    "overview": "AI Volume Strategy hunts for sudden participation bursts. A volume spike occurs when current volume exceeds its EMA by a given multiplier. If the spike aligns with the 50-period price EMA and the candle color, the strategy enters in that direction. Each trade is closed after a fixed number of bars.\n\n## Details\n\n- **Entry Criteria**: Volume > VolumeEMA * VolumeMultiplier and price above/below 50 EMA with matching candle color.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position closed after `ExitBars` candles.\n- **Stops**: None.\n- **Default Values**:\n  - `VolumeEmaLength` = 20\n  - `VolumeMultiplier` = 2.0\n  - `ExitBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volume breakout\n  - Direction: Both\n  - Indicators: EMA, Volume EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Volume > VolumeEMA * VolumeMultiplier and price above/below 50 EMA with matching candle color.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position closed after `ExitBars` candles.\n- **Stops**: None.\n- **Default Values**:\n  - `VolumeEmaLength` = 20\n  - `VolumeMultiplier` = 2.0\n  - `ExitBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volume breakout\n  - Direction: Both\n  - Indicators: EMA, Volume EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1484": {
+    "id": 1484,
+    "name": "TRIN (Arms Index)",
+    "family": "volatility",
+    "overview": "Long-only strategy that buys when the TRIN index rises above a dynamic threshold and exits on a break above the previous day's high or on a volatility-based stop.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "285": {
+    "id": 285,
+    "name": "VWAP Slope Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "Trades trigger when the indicator swings far from its mean and then begins to reverse. Both long and short setups include a protective stop.\n\nSuited for swing traders expecting oscillations, the strategy closes out once the VWAP returns toward balance. Starting parameter `SlopeLookback` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Indicator crosses back toward mean.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SlopeLookback` = 20\n  - `ThresholdMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1160": {
+    "id": 1160,
+    "name": "Payday Anomaly",
+    "family": "other",
+    "overview": "This strategy opens a long position on selected paydays (1st, 2nd, 16th, 31st of each month) and closes the position on the following day.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: open a long position on selected days of the month.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - close the long position when the day is not selected.\n- **Stops**: No.\n- **Default Values**:\n  - `Trade1st` = true.\n  - `Trade2nd` = true.\n  - `Trade16th` = true.\n  - `Trade31st` = true.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: open a long position on selected days of the month.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - close the long position when the day is not selected.\n- **Stops**: No.\n- **Default Values**:\n  - `Trade1st` = true.\n  - `Trade2nd` = true.\n  - `Trade16th` = true.\n  - `Trade31st` = true.\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame().\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1273": {
+    "id": 1273,
+    "name": "RSI Strategy with Adjustable RSI and Stop-Loss",
+    "family": "other",
+    "overview": "Buys when the RSI value drops below a threshold and closes the long position when the price breaks above the previous candle's high. A percent-based stop loss protects each trade.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: RSI below `RsiThreshold`\n- **Long/Short**: Long\n- **Exit Criteria**:\n  - Close price above previous candle high\n  - Stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `RsiLength` = 8\n  - `RsiThreshold` = 28m\n  - `StopLossPercent` = 5m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: RSI below `RsiThreshold`\n- **Long/Short**: Long\n- **Exit Criteria**:\n  - Close price above previous candle high\n  - Stop loss\n- **Stops**: Yes\n- **Default Values**:\n  - `RsiLength` = 8\n  - `RsiThreshold` = 28m\n  - `StopLossPercent` = 5m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1176": {
+    "id": 1176,
+    "name": "Power Hour Money",
+    "family": "other",
+    "overview": "This strategy trades during selected New York sessions and opens positions when all major time frames agree.\nA long position is taken when month, week, day and hour candles close higher than they open.\nA short position is taken when all of them close lower.\nOptional trailing stops protect profits, and positions can be closed at 16:45.\n\n## Details\n- **Entry**: long when all time frames are green, short when all are red.\n- **Session filter**: NY 9:30-11:30, extended 8:00-16:00 or all sessions.\n- **Trailing stop**: percent-based for long and short sides.\n- **End of day**: optional closing of all positions at 16:45.\n",
+    "details": "- **Entry**: long when all time frames are green, short when all are red.\n- **Session filter**: NY 9:30-11:30, extended 8:00-16:00 or all sessions.\n- **Trailing stop**: percent-based for long and short sides.\n- **End of day**: optional closing of all positions at 16:45.",
+    "parameters": ""
+   }
+  }
+ }
+}

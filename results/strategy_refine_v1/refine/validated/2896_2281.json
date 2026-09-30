@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2896,
+  "ticker": "2281",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2896,
+    "name": "WAMI Cloud X2",
+    "family": "trend",
+    "entry_long": "crossabove(ema(roc(close,0.0),4),ema(ema(roc(close,1),5),10)) and roc(close,10) > 0.0",
+    "exit_long": "crossbelow(ema(roc(close,1),5),ema(ema(roc(close,1),5),10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "WAMI is built from the first difference of closes, so ROC(1) smoothed by SMA 5 stands in for the main line with a 10-period signal line, and the documented higher-timeframe bullish bias is approximated by a positive 10-bar ROC. Smoothing 5/10 are fallbacks, the 6H/30M split and selectable MA methods are not expressible, and no stops are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2021-08-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 745,
+      "engine_win_ret": 0.11998407928051624,
+      "alpha": -0.48736379672407626,
+      "benchmark_ret": 0.6073478760045925,
+      "trades": 7,
+      "win_rate": 0.7142857142857143,
+      "sharpe": 0.45432965028670097,
+      "max_drawdown": -0.16581178637114957,
+      "profit_factor": 2.89177048439637
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.19955162078698163,
+      "alpha": 0.7854211860043729,
+      "benchmark_ret": -0.5858695652173913,
+      "trades": 4,
+      "win_rate": 0.5,
+      "sharpe": 1.5969422449756356,
+      "max_drawdown": -0.04372918357131772,
+      "profit_factor": 8.784740539850626
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.20705734043101898,
+      "alpha": 0.26867266099721376,
+      "benchmark_ret": -0.06161532056619479,
+      "trades": 2,
+      "win_rate": 1.0,
+      "sharpe": 2.2020619277374744,
+      "max_drawdown": -0.06843900272086201,
+      "profit_factor": Infinity
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2021-08-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 745,
+      "engine_win_ret": 0.08154436497514683,
+      "alpha": -0.5258035110294457,
+      "benchmark_ret": 0.6073478760045925,
+      "trades": 7,
+      "win_rate": 0.5714285714285714,
+      "sharpe": 0.3268108613436539,
+      "max_drawdown": -0.170318085011132,
+      "profit_factor": 2.087250758742562
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.1761103955484724,
+      "alpha": 0.7619799607658637,
+      "benchmark_ret": -0.5858695652173913,
+      "trades": 4,
+      "win_rate": 0.5,
+      "sharpe": 1.4062780129564705,
+      "max_drawdown": -0.04860306572476858,
+      "profit_factor": 5.7206673747780385
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.19542286716594415,
+      "alpha": 0.25703818773213893,
+      "benchmark_ret": -0.06161532056619479,
+      "trades": 2,
+      "win_rate": 1.0,
+      "sharpe": 2.1007296642225057,
+      "max_drawdown": -0.07090531690531687,
+      "profit_factor": Infinity
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

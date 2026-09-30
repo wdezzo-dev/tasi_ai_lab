@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3723,
+      "name": "RRS Impulse",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close, 14), 30)",
+      "exit_long": "crossbelow(rsi(close, 14), 70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default Rsi mode in Trend direction trades the oscillator leaving oversold for longs and overbought for shorts, so the RSI zone exits are the long translation. The Stochastic/Bollinger modes, multi-timeframe signal-strength ladder and pip-based protective exits are not expressible."
+    },
+    {
+      "id": 3771,
+      "name": "VarMovAvg",
+      "family": "trend",
+      "entry_long": "close > ema(close, 10) and low < ema(close, 10) and close > open",
+      "exit_long": "crossbelow(close, ema(close, 10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The adaptive Variable Moving Average is approximated by EMA(10); Bar A is the dip into that average inside a rising VMA and Bar B the bullish reclaim that triggers the long. The pip-scaled Bar A/B distances, entry tolerance and the moving-average trailing stop are not expressible."
+    },
+    {
+      "id": 3199,
+      "name": "BladeRunner",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 5) and ema(close, 6) > ema(close, 85) and roc(close, 14) > 0.3",
+      "exit_long": "close < ema(close, 6) or low < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fractal breakout is approximated by a fresh five-bar high, with the documented fast/slow LWMA 6/85 and Momentum 14 threshold 0.3 retained. The 200-bar fractal lookback, separate momentum and MACD candle feeds, scaling and price-step stops/targets are dropped."
+    },
+    {
+      "id": 3423,
+      "name": "Harami CCI Confirmation",
+      "family": "trend",
+      "entry_long": "crossabove(close, open) and (close - open) < 0.5 * (high - low) and close > ema(close, 20)",
+      "exit_long": "crossbelow(close, open) or close < ema(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "crossabove(close, open) encodes the two-candle harami turn (previous candle not bullish, current candle bullish) and the body-versus-range test keeps the small-body confirmation; CCI is replaced by the body-size moving average since CCI is not in the DSL. Body Average and CCI periods have no documented values."
+    },
+    {
+      "id": 995,
+      "name": "Long-Leg Doji Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 1) and high - low > 0.5 * atr(high, low, close, 14)",
+      "exit_long": "crossbelow(close, sma(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doji high is approximated by the prior bar high so the long breakout is a fresh one-bar high, and the documented ATR filter (ATR 14, multiplier 0.5) becomes a volatility-expansion test. Docs state no stops, and the exit is the documented SMA(20) cross."
+    },
+    {
+      "id": 2088,
+      "name": "KPrmSt Cross",
+      "family": "volatility",
+      "entry_long": "crossbelow(rsi(close, 5), sma(rsi(close, 5), 3))",
+      "exit_long": "crossabove(rsi(close, 5), sma(rsi(close, 5), 3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "KPrmSt is approximated by a bounded oscillator (RSI) whose main line crosses its smoothed signal line downward to open the documented long. K/D/slowing periods have no documented values (5/3) and the price-unit stop and target cannot be expressed as percentages."
+    },
+    {
+      "id": 2965,
+      "name": "Forex Fraus M1",
+      "family": "mean_reversion",
+      "entry_long": "close < donchian_low(low, 360) + 0.1 * (donchian_high(high, 360) - donchian_low(low, 360))",
+      "exit_long": "close > donchian_low(low, 360) + 0.5 * (donchian_high(high, 360) - donchian_low(low, 360))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is not in the DSL, so the documented WilliamsPeriod 360 oscillator is approximated by the close's position inside the 360-bar range: long in the bottom tenth, exit back at the range mid-point. The 50/150 pip stop and target are pip values, not percentages, and the session filter is unavailable."
+    },
+    {
+      "id": 1025,
+      "name": "Martingale with MACD and KDJ",
+      "family": "other",
+      "entry_long": "crossabove(macd(close, 12, 26), macd_signal(close, 12, 26, 9)) and crossabove(rsi(close, 9), sma(rsi(close, 9), 3))",
+      "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented dual condition (MACD line and the oscillator main line crossing their signal lines together) keeps MACD 12/26/9 and substitutes RSI(9)/SMA(3) for KDJ %K/%D, whose periods are not documented. Martingale pyramiding, percent add/rebound levels and pip exits are not representable."
+    },
+    {
+      "id": 535,
+      "name": "Auto Fibonacci and Gann Fan Retracements Combo",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states the levels are written to the log and that no trading logic is executed, so there is no market-derived signal to translate. A never-true guard is used rather than inventing entries from swing points."
+    },
+    {
+      "id": 390,
+      "name": "R&D Expenditures",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a cross-sectional monthly quintile strategy ranked on R&D expense to market cap, requiring fundamental data and multi-name ranking that a single-symbol DSL cannot express. A never-true guard prevents fabricating a price signal."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_218": {
+  "strategy_ids": [
+   2063,
+   736,
+   313,
+   1252,
+   1237,
+   883,
+   2851,
+   1564,
+   569,
+   1137
+  ],
+  "docs": {
+   "2063": {
+    "id": 2063,
+    "name": "Ichimoku Oscillator",
+    "family": "trend",
+    "overview": "The **Ichimoku Oscillator** strategy uses a custom oscillator derived from the Ichimoku indicator. The oscillator is defined as the difference between the lagging line and Senkou Span B minus the difference between Tenkan-sen and Kijun-sen. The resulting value is smoothed with a Jurik moving average.\n\nThe strategy enters positions when this smoothed oscillator changes direction and crosses its previous value, attempting to capture emerging trends.\n\n## How it Works\n- **Long Entry**: The oscillator is rising and the current value crosses above the previous value. Any short position is closed before opening the long.\n- **Short Entry**: The oscillator is falling and the current value crosses below the previous value. Any long position is closed before opening the short.\n- Optional stop loss and take profit in percent are applied for risk management.\n\n## Parameters\n- **Tenkan Period** – Tenkan-sen period of the Ichimoku indicator.\n- **Kijun Period** – Kijun-sen period of the Ichimoku indicator.\n- **Senkou Span B Period** – Senkou Span B period of the Ichimoku indicator.\n- **Smoothing Period** – Period for the Jurik moving average smoothing the oscillator.\n- **Candle Type** – Timeframe used for calculations.\n- **Stop Loss %** – Stop loss expressed in percent.\n- **Enable Stop Loss** – Enables or disables stop loss protection.\n- **Take Profit %** – Take profit expressed in percent.\n\n## Indicators\n- Ichimoku\n- Jurik Moving Average\n\n## Notes\nThis strategy is intended for educational purposes and should be tested on historical data before real trading.\n",
+    "details": "",
+    "parameters": "- **Tenkan Period** – Tenkan-sen period of the Ichimoku indicator.\n- **Kijun Period** – Kijun-sen period of the Ichimoku indicator.\n- **Senkou Span B Period** – Senkou Span B period of the Ichimoku indicator.\n- **Smoothing Period** – Period for the Jurik moving average smoothing the oscillator.\n- **Candle Type** – Timeframe used for calculations.\n- **Stop Loss %** – Stop loss expressed in percent.\n- **Enable Stop Loss** – Enables or disables stop loss protection.\n- **Take Profit %** – Take profit expressed in percent."
+   },
+   "736": {
+    "id": 736,
+    "name": "EMA Cross MACD Session Start",
+    "family": "trend",
+    "overview": "This strategy enters long when a fast EMA crosses above a slow EMA and the MACD histogram is positive. It enters short on the opposite cross with a negative histogram. If these conditions are already true at the first bar of a trading session, a position is opened immediately. Positions close on an opposite crossover or when the session ends.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA with positive MACD histogram.\n  - Or on the first session bar when fast EMA is above slow EMA and MACD histogram is positive.\n- **Exit Criteria**:\n  - Opposite EMA cross or session end.\n- **Indicators**: EMA, MACD.\n- **Type**: Trend following.\n- **Timeframe**: 5 minutes (default).\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA with positive MACD histogram.\n  - Or on the first session bar when fast EMA is above slow EMA and MACD histogram is positive.\n- **Exit Criteria**:\n  - Opposite EMA cross or session end.\n- **Indicators**: EMA, MACD.\n- **Type**: Trend following.\n- **Timeframe**: 5 minutes (default).",
+    "parameters": ""
+   },
+   "313": {
+    "id": 313,
+    "name": "VWAP ADX Trend Strength",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 46%. It performs best in the stocks market.\n\nSignals trigger when its indicators confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like AdxPeriod, AdxThreshold. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `AdxPeriod = 14`\n  - `AdxThreshold = 25m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `AdxPeriod = 14`\n  - `AdxThreshold = 25m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1252": {
+    "id": 1252,
+    "name": "Reverse Keltner Channel",
+    "family": "trend",
+    "overview": "Strategy that enters when price re-enters the Keltner channel from outside and aims for the opposite band, with optional ADX filter.\n\nThe strategy goes long when price crosses the lower Keltner band from below and closes at the upper band or at a stop placed at half of the channel width. Short trades are symmetrical. An ADX filter can restrict trades to weak or strong trend regimes.\n\n## Details\n\n- **Entry Criteria**: Price crosses outer Keltner band into channel, optional ADX filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 2m\n  - `StopLossFactor` = 0.5m\n  - `AdxLength` = 14\n  - `AdxThreshold` = 25m\n  - `UseAdxFilter` = true\n  - `WeakTrendOnly` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Keltner, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses outer Keltner band into channel, optional ADX filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `AtrMultiplier` = 2m\n  - `StopLossFactor` = 0.5m\n  - `AdxLength` = 14\n  - `AdxThreshold` = 25m\n  - `UseAdxFilter` = true\n  - `WeakTrendOnly` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Keltner, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1237": {
+    "id": 1237,
+    "name": "Relative Currency Strength",
+    "family": "trend",
+    "overview": "Relative Currency Strength compares a currency pair to a basket of major currencies.\nIt buys when the traded pair outperforms the average of other majors and sells when it underperforms.\nThe comparison is based on percentage change from the start of the session.\n\n## Details\n\n- **Entry Criteria**: Main pair strength exceeds average by threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Strength falls below average by threshold.\n- **Stops**: No.\n- **Default Values**:\n  - `Threshold` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Price change\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Main pair strength exceeds average by threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Strength falls below average by threshold.\n- **Stops**: No.\n- **Default Values**:\n  - `Threshold` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Price change\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "883": {
+    "id": 883,
+    "name": "Highs Lows",
+    "family": "other",
+    "overview": "Strategy trading on candle midpoints relative to highest and lowest range.\n\nBuys when the current candle midpoint is below the average of the highest and lowest values and the normalized distance is below LowThreshold. Closes the long position when the midpoint rises above the average and the normalized distance is above HighThreshold.\n\n## Details\n\n- **Entry Criteria**: Midpoint below average and normalized distance below LowThreshold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Midpoint above average and normalized distance above HighThreshold.\n- **Stops**: No.\n- **Default Values**:\n  - `Range` = 100\n  - `LowThreshold` = 15m\n  - `HighThreshold` = 85m\n  - `CandleType` = TimeSpan.FromMinutes(240)\n- **Filters**:\n  - Category: Range\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (240m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Midpoint below average and normalized distance below LowThreshold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Midpoint above average and normalized distance above HighThreshold.\n- **Stops**: No.\n- **Default Values**:\n  - `Range` = 100\n  - `LowThreshold` = 15m\n  - `HighThreshold` = 85m\n  - `CandleType` = TimeSpan.FromMinutes(240)\n- **Filters**:\n  - Category: Range\n  - Direction: Long\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (240m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2851": {
+    "id": 2851,
+    "name": "Expotest",
+    "family": "other",
+    "overview": "The Expotest Strategy is a direct StockSharp conversion of the original `Expotest.mq5` expert advisor. It trades a single instrument using the Parabolic SAR indicator and a simple martingale-inspired money management rule. The strategy opens only one position at a time and relies on predefined stop-loss and take-profit levels for exits.",
+    "details": "",
+    "parameters": ""
+   },
+   "1564": {
+    "id": 1564,
+    "name": "XAUUSD Simple 20 Profit 100 Loss",
+    "family": "other",
+    "overview": "This strategy opens a long position when no position is held and both cooldown timers are inactive.\nIt closes the position once unrealized profit reaches $20 or the loss hits $100.\nAfter a profitable exit the strategy waits 15 minutes before re-entering, and after a losing exit it waits 12 hours.\n\n## Parameters\n\n- `ProfitTarget` – profit target in USD.\n- `LossLimit` – maximum loss in USD.\n- `TradeCooldown` – time to wait after a loss.\n- `EntryCooldown` – time to wait after a profit.\n- `CandleType` – candle timeframe.\n",
+    "details": "",
+    "parameters": "- `ProfitTarget` – profit target in USD.\n- `LossLimit` – maximum loss in USD.\n- `TradeCooldown` – time to wait after a loss.\n- `EntryCooldown` – time to wait after a profit.\n- `CandleType` – candle timeframe."
+   },
+   "569": {
+    "id": 569,
+    "name": "Big Runner",
+    "family": "trend",
+    "overview": "The Big Runner strategy trades when the closing price and a fast SMA both cross in the direction of a slower SMA, indicating strong momentum. Position size is derived from a percentage of portfolio value multiplied by leverage. Optional stop-loss and take-profit levels manage risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Buy when close crosses above the fast SMA and the fast SMA crosses above the slow SMA.\n  - Sell when close crosses below the fast SMA and the fast SMA crosses below the slow SMA.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Optional stop loss and take profit based on entry price.\n  - Opposite signal closes existing position.\n- **Stops**: Configurable stop loss and take profit percentages.\n- **Default Values**:\n  - `FastLength` = 5\n  - `SlowLength` = 20\n  - `TakeProfitLongPercent` = 4\n  - `TakeProfitShortPercent` = 7\n  - `StopLossLongPercent` = 2\n  - `StopLossShortPercent` = 2\n  - `PercentOfPortfolio` = 10\n  - `Leverage` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Buy when close crosses above the fast SMA and the fast SMA crosses above the slow SMA.\n  - Sell when close crosses below the fast SMA and the fast SMA crosses below the slow SMA.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Optional stop loss and take profit based on entry price.\n  - Opposite signal closes existing position.\n- **Stops**: Configurable stop loss and take profit percentages.\n- **Default Values**:\n  - `FastLength` = 5\n  - `SlowLength` = 20\n  - `TakeProfitLongPercent` = 4\n  - `TakeProfitShortPercent` = 7\n  - `StopLossLongPercent` = 2\n  - `StopLossShortPercent` = 2\n  - `PercentOfPortfolio` = 10\n  - `Leverage` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1137": {
+    "id": 1137,
+    "name": "Optimized Grid with KNN",
+    "family": "other",
+    "overview": "This strategy opens long positions when the T3 fast line crosses above the T3 slow line and the KNN-based average price change is positive. Entry and exit thresholds are adjusted by the average change. Positions close once the T3 fast line crosses below the slow line and price exceeds the profit threshold.\n\n- **Entry Conditions**: `t3Fast > t3Slow` and `averageChange > 0`\n- **Exit Conditions**: `t3Fast < t3Slow` and `(close - lastEntryPrice)/lastEntryPrice > adjustedCloseTh`\n- **Indicators**: T3\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

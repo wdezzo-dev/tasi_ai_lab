@@ -1,0 +1,98 @@
+{
+ "batch_235": {
+  "strategy_ids": [
+   3647,
+   519,
+   502,
+   3932,
+   3121,
+   1994,
+   981,
+   838,
+   2460,
+   268
+  ],
+  "docs": {
+   "3647": {
+    "id": 3647,
+    "name": "Indices Tester",
+    "family": "trend",
+    "overview": "The **Indices Tester Strategy** is a direct port of the MetaTrader 5 expert advisor \"Indices Tester\". The system focuses on intraday index trading where a single long position is opened during a very narrow trading window. Trading decisions rely purely on time filters and operational limits:\n\n- A single configurable candle stream drives the internal clock of the strategy.\n- New positions can only be opened between the configured session start and end times.\n- A fixed number of trades is allowed per day, preventing repeated re-entries.\n- All open positions are forcibly closed at a defined liquidation time.\n- The strategy operates on the long side only, mirroring the original expert advisor.\n\nThis implementation uses the high-level StockSharp API, subscribes to candle data with `SubscribeCandles`, and handles trading decisions in the `ProcessCandle` callback. No indicators are required, keeping the logic lean and focused on timing and risk controls.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Primary candle series driving the strategy clock (defaults to 1-minute candles). |\n| `SessionStart` | Time of day when new trades are allowed to start. |\n| `SessionEnd` | Time of day when new trades are no longer allowed. |\n| `CloseTime` | Time of day when any remaining open position is liquidated. |\n| `DailyTradeLimit` | Maximum number of entries allowed per day before trading is suspended. |\n| `MaxOpenPositions` | Maximum number of simultaneously open long positions (counted in trade units). |\n| `TradeVolume` | Market order volume used for each entry. |"
+   },
+   "519": {
+    "id": 519,
+    "name": "ALMA Optimized",
+    "family": "trend",
+    "overview": "This strategy blends an Arnaud Legoux Moving Average with a long-term EMA, ADX, RSI, and Bollinger Bands. An ATR based filter ensures sufficient volatility. Positions use ATR multiples for stop-loss and take-profit, with an optional time-based exit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: ATR above threshold, close above EMA and ALMA, RSI > 30, ADX > 30, close below upper Bollinger band, and cooldown passed.\n  - **Short**: Close crosses below fast EMA under same volatility filter.\n- **Exit Criteria**:\n  - Stop-loss or take-profit based on ATR multiples.\n  - Optional time-based exit in bars.\n- **Default Values**:\n  - Fast EMA = 20.\n  - ATR length = 14.\n  - EMA length = 72.\n  - ADX length = 10.\n  - RSI length = 14.\n  - Cooldown = 7 bars.\n  - Bollinger multiplier = 3.0.\n  - Stop ATR multiplier = 5.0.\n  - Take ATR multiplier = 4.0.\n  - Time exit = 0.\n  - Minimum ATR = 0.005.\n- **Filters**:\n  - Category: Trend + Momentum\n  - Direction: Both\n  - Indicators: EMA, ALMA, ADX, RSI, ATR, Bollinger Bands\n  - Stops: ATR based\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: ATR above threshold, close above EMA and ALMA, RSI > 30, ADX > 30, close below upper Bollinger band, and cooldown passed.\n  - **Short**: Close crosses below fast EMA under same volatility filter.\n- **Exit Criteria**:\n  - Stop-loss or take-profit based on ATR multiples.\n  - Optional time-based exit in bars.\n- **Default Values**:\n  - Fast EMA = 20.\n  - ATR length = 14.\n  - EMA length = 72.\n  - ADX length = 10.\n  - RSI length = 14.\n  - Cooldown = 7 bars.\n  - Bollinger multiplier = 3.0.\n  - Stop ATR multiplier = 5.0.\n  - Take ATR multiplier = 4.0.\n  - Time exit = 0.\n  - Minimum ATR = 0.005.\n- **Filters**:\n  - Category: Trend + Momentum\n  - Direction: Both\n  - Indicators: EMA, ALMA, ADX, RSI, ATR, Bollinger Bands\n  - Stops: ATR based\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "502": {
+    "id": 502,
+    "name": "Fib Hurst Breakout",
+    "family": "trend",
+    "overview": "Fib Hurst Breakout combines Fibonacci retracement levels from the daily timeframe with a Hurst exponent filter. Price crossing the key Fibonacci levels in the direction of the prevailing trend triggers entries while a 2% stop and 1:2 risk-reward manage risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Close crosses above the 61.8% level and daily Hurst > 0.5\n  - Short: Close crosses below the 38.2% level and daily Hurst < 0.5\n- **Long/Short**: Both\n- **Exit Criteria**: Stop-loss or take-profit\n- **Stops**: Yes\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `HurstPeriod` = 50\n  - `MaxTradesPerDay` = 5\n  - `MaxTotalTrades` = 510\n  - `RiskPercent` = 2m\n  - `RiskReward` = 2m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Hurst, Fibonacci\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Close crosses above the 61.8% level and daily Hurst > 0.5\n  - Short: Close crosses below the 38.2% level and daily Hurst < 0.5\n- **Long/Short**: Both\n- **Exit Criteria**: Stop-loss or take-profit\n- **Stops**: Yes\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `HurstPeriod` = 50\n  - `MaxTradesPerDay` = 5\n  - `MaxTotalTrades` = 510\n  - `RiskPercent` = 2m\n  - `RiskReward` = 2m\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Hurst, Fibonacci\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3932": {
+    "id": 3932,
+    "name": "Trend Capture Legacy",
+    "family": "trend",
+    "overview": "**Trend Capture Legacy Strategy** ports the MetaTrader expert `TrendCapture.mq4` to the high-level StockSharp API. The C# version keeps the original rule set based on Parabolic SAR direction, a low ADX filter and simple break-even money management.\n\n## Core ideas\n- Process finished candles of the selected timeframe and feed them to Parabolic SAR (`0.02/0.2`) and Average Directional Index (`14`).\n- Enter only when ADX is below the `AdxThreshold`, signalling a calm market where SAR reversals are more reliable.\n- Remember the direction and outcome of the last closed trade: repeat the same side after a winner, flip to the opposite side after a loser.\n- Apply fixed-distance stop-loss and take-profit levels (configured in price points) and move the stop to break-even once the trade gains `BreakEvenGuard` points.\n- Size the order volume from the available portfolio value and `MaximumRisk`; fall back to the strategy `Volume` when portfolio information is unavailable.\n\n## Parameters\n| Name | Default | Description |\n| --- | --- | --- |\n| `SarStep` | 0.02 | Initial Parabolic SAR acceleration step. |\n| `SarMax` | 0.2 | Maximum Parabolic SAR acceleration. |\n| `AdxPeriod` | 14 | ADX averaging period. |\n| `AdxThreshold` | 20 | Maximum ADX value that still allows a fresh entry. |\n| `TakeProfitPoints` | 180 | Take-profit distance in price points. |\n| `StopLossPoints` | 50 | Stop-loss distance in price points. |\n| `BreakEvenGuard` | 5 | Profit buffer (in points) required before moving the stop to entry. |\n| `MaximumRisk` | 0.03 | Fraction of free margin used for position sizing. |\n| `CandleType` | 1 hour candles | Timeframe for indicator calculations and trading signals. |\n\n## Order management\n- Long entries require the close price above SAR with low ADX; shorts require the close price below SAR with the same ADX filter.\n- Stop-loss and take-profit levels are recalculated on every entry and evaluated on each completed candle.\n- Break-even activation simply shifts the stop to the entr",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `SarStep` | 0.02 | Initial Parabolic SAR acceleration step. |\n| `SarMax` | 0.2 | Maximum Parabolic SAR acceleration. |\n| `AdxPeriod` | 14 | ADX averaging period. |\n| `AdxThreshold` | 20 | Maximum ADX value that still allows a fresh entry. |\n| `TakeProfitPoints` | 180 | Take-profit distance in price points. |\n| `StopLossPoints` | 50 | Stop-loss distance in price points. |\n| `BreakEvenGuard` | 5 | Profit buffer (in points) required before moving the stop to entry. |\n| `MaximumRisk` | 0.03 | Fraction of free margin used for position sizing. |\n| `CandleType` | 1 hour candles | Timeframe for indicator calculations and trading signals. |"
+   },
+   "3121": {
+    "id": 3121,
+    "name": "Bruno",
+    "family": "trend",
+    "overview": "The Bruno expert advisor is a trend-following system originally written for MetaTrader 5. The port keeps the same confirmation chain: Average Directional Index (ADX) with directional movement, a pair of exponential moving averages (EMA 8/21), MACD (13, 34, 8), a Stochastic Oscillator (21, 3, 3) and the slope of a Parabolic SAR (0.055, 0.21). Every filter that agrees with the direction multiplies the order size by a configurable factor. If both long and short signals are amplified on the same candle, trading is skipped to avoid conflicting orders.\n\n### Trading logic\n\n- **Directional bias**\n  - Long pressure is strengthened when `+DI > -DI` and `+DI > 20`.\n  - Short pressure is strengthened when `+DI < -DI` and `+DI < 40`.\n- **Momentum alignment**\n  - Long preference requires EMA(8) above EMA(21), Stochastic %K above %D and %K below the overbought threshold (default 80).\n  - Short preference requires EMA(8) below EMA(21), Stochastic %K below %D and %K above the oversold threshold (default 20).\n- **MACD filter**\n  - Long bias: MACD histogram above zero and MACD main line above the signal line.\n  - Short bias: MACD histogram below zero and MACD main line below the signal line.\n- **Parabolic SAR slope**\n  - Long bias is reinforced when the previous SAR values are rising while EMA(8) > EMA(21).\n  - Short bias is reinforced when the previous SAR values are falling while EMA(8) < EMA(21).\n\nEach satisfied condition multiplies the base lot size by `SignalMultiplier` (default 1.6). Only one side may be active at a time. When a final signal is generated, the strategy closes any opposite position, submits the market order with the multiplied volume, and stores the current close as the entry price.\n\n### Position management\n\n- **Stop-loss / take-profit** – fixed distances expressed in adjusted pips, matching the MetaTrader version. If either level is hit intrabar the position is closed immediately.\n- **Trailing stop** – activates once floating profit exceeds `TrailingStop + Traili",
+    "details": "",
+    "parameters": ""
+   },
+   "1994": {
+    "id": 1994,
+    "name": "Heiken Ashi No Wick",
+    "family": "pattern",
+    "overview": "This strategy trades against Heiken Ashi candles that appear without wicks. A bullish Heiken Ashi candle whose body is larger than the previous one and lacks a lower shadow triggers a short entry. A bearish candle with a longer body and no upper shadow opens a long. Positions close when an opposite candle without the respective wick forms.\n\n## Details\n\n- **Entry Criteria**: bullish HA without lower wick and body larger than previous for shorts; bearish HA without upper wick and body larger than previous for longs\n- **Long/Short**: Long & Short\n- **Exit Criteria**: opposite colored HA candle without wick\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 15-minute candles\n- **Filters**:\n  - Category: Pattern\n  - Direction: Reversal\n  - Indicators: Heikin-Ashi\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: bullish HA without lower wick and body larger than previous for shorts; bearish HA without upper wick and body larger than previous for longs\n- **Long/Short**: Long & Short\n- **Exit Criteria**: opposite colored HA candle without wick\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 15-minute candles\n- **Filters**:\n  - Category: Pattern\n  - Direction: Reversal\n  - Indicators: Heikin-Ashi\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "981": {
+    "id": 981,
+    "name": "Liquidity Engulfment",
+    "family": "pattern",
+    "overview": "This strategy detects bullish and bearish engulfing patterns that occur after price touches recent liquidity highs or lows. Trades are filtered by mode and include fixed stop loss and optional take profit defined in pips.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: Bullish engulfing after lower liquidity touch.\n  - **Short**: Bearish engulfing after upper liquidity touch.\n- **Exit Conditions**: Opposite signal, stop loss or take profit.\n- **Long/Short**: Configurable (both by default).\n- **Indicators**: Highest, Lowest.\n- **Stops**: `StopLossPips` and optional `TakeProfitPips`.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `UpperLookback` = 10\n  - `LowerLookback` = 10\n  - `StopLossPips` = 10\n  - `TakeProfitPips` = 20\n  - `Mode` = Both\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: Bullish engulfing after lower liquidity touch.\n  - **Short**: Bearish engulfing after upper liquidity touch.\n- **Exit Conditions**: Opposite signal, stop loss or take profit.\n- **Long/Short**: Configurable (both by default).\n- **Indicators**: Highest, Lowest.\n- **Stops**: `StopLossPips` and optional `TakeProfitPips`.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `UpperLookback` = 10\n  - `LowerLookback` = 10\n  - `StopLossPips` = 10\n  - `TakeProfitPips` = 20\n  - `Mode` = Both",
+    "parameters": ""
+   },
+   "838": {
+    "id": 838,
+    "name": "Geo",
+    "family": "pattern",
+    "overview": "Strategy that buys when candle high/low ratio is close to the golden ratio.\n\n## Details\n\n- **Entry Criteria**: High/low ratio within tolerance of phi.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite condition.\n- **Stops**: No.\n- **Default Values**:\n  - `Tolerance` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candle ratio\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: High/low ratio within tolerance of phi.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite condition.\n- **Stops**: No.\n- **Default Values**:\n  - `Tolerance` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candle ratio\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2460": {
+    "id": 2460,
+    "name": "Price Rollback",
+    "family": "pattern",
+    "overview": "This strategy trades daily price gaps.\nAt the beginning of a selected weekday it compares the last closing price with the opening price 24 hours earlier.\nIf the gap is greater than the **Corridor** parameter it opens a position in the direction of rollback:\n\n- Gap up → sell.\n- Gap down → buy.\n\nTrades use fixed stop-loss and take-profit in price units.\nA trailing stop with step is applied after the position moves in profit.\nAll positions are closed near the end of the day (22:45).\n\n## Parameters\n- `Corridor` – gap threshold.\n- `StopLoss` – fixed loss distance.\n- `TakeProfit` – fixed profit target.\n- `TrailingStop` – trailing distance.\n- `TrailingStep` – movement required to update trailing.\n- `TradingDay` – weekday for opening trades (0=Sunday).\n- `CandleType` – time frame for calculations.\n",
+    "details": "",
+    "parameters": "- `Corridor` – gap threshold.\n- `StopLoss` – fixed loss distance.\n- `TakeProfit` – fixed profit target.\n- `TrailingStop` – trailing distance.\n- `TrailingStep` – movement required to update trailing.\n- `TradingDay` – weekday for opening trades (0=Sunday).\n- `CandleType` – time frame for calculations."
+   },
+   "268": {
+    "id": 268,
+    "name": "Stochastic Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 91%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `StochPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

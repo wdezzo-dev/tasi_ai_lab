@@ -1,0 +1,98 @@
+{
+ "batch_198": {
+  "strategy_ids": [
+   583,
+   1239,
+   3189,
+   2968,
+   417,
+   1684,
+   2122,
+   785,
+   1275,
+   1610
+  ],
+  "docs": {
+   "583": {
+    "id": 583,
+    "name": "Bober XM",
+    "family": "trend",
+    "overview": "The Bober XM strategy uses a dual-channel approach based on a custom Keltner calculation. Breakout entries are confirmed by a Weighted Moving Average and overall trend strength from ADX. Exits rely on On-Balance Volume crossing its moving average while ADX remains strong.\n\nDesigned for traders seeking momentum confirmation with volume-based exits.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close > UpperBand && Close > WMA && ADX > Threshold`\n  - **Short**: `Close < LowerBand && Close < WMA && ADX > Threshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - **Long**: `OBV < OBV_MA && ADX > Threshold`\n  - **Short**: `OBV > OBV_MA && ADX > Threshold`\n- **Stops**: percent stop-loss via `StopLossPercent`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `KeltnerMultiplier` = 1.5m\n  - `WmaPeriod` = 15\n  - `ObvMaPeriod` = 22\n  - `AdxPeriod` = 60\n  - `AdxThreshold` = 35m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner Channel, WMA, OBV, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close > UpperBand && Close > WMA && ADX > Threshold`\n  - **Short**: `Close < LowerBand && Close < WMA && ADX > Threshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - **Long**: `OBV < OBV_MA && ADX > Threshold`\n  - **Short**: `OBV > OBV_MA && ADX > Threshold`\n- **Stops**: percent stop-loss via `StopLossPercent`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `KeltnerMultiplier` = 1.5m\n  - `WmaPeriod` = 15\n  - `ObvMaPeriod` = 22\n  - `AdxPeriod` = 60\n  - `AdxThreshold` = 35m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner Channel, WMA, OBV, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1239": {
+    "id": 1239,
+    "name": "Relative Strength",
+    "family": "trend",
+    "overview": "This strategy computes a weighted relative strength measure from multiple moving averages.\nBollinger bands on the strength signal overbought and oversold zones.\nThe strategy buys when strength moves above the upper band and sells when it drops below the lower band.\n\n## Details\n\n- **Entry**: strength crosses above upper band for long, below lower band for short.\n- **Exit**: opposite band cross.\n- **Indicators**: EMA 8, EMA 34, SMA 20, SMA 50, SMA 200, Bollinger Bands.\n- **Type**: Momentum.\n",
+    "details": "- **Entry**: strength crosses above upper band for long, below lower band for short.\n- **Exit**: opposite band cross.\n- **Indicators**: EMA 8, EMA 34, SMA 20, SMA 50, SMA 200, Bollinger Bands.\n- **Type**: Momentum.",
+    "parameters": ""
+   },
+   "3189": {
+    "id": 3189,
+    "name": "Demarker Martingale Strategy (StockSharp)",
+    "family": "trend",
+    "overview": "The **Demarker Martingale Strategy** recreates the MetaTrader expert advisor \"Demarker Martingale\" using the StockSharp high-level API. The system combines a medium-term DeMarker oscillator signal with a higher timeframe MACD trend filter. Entries are followed by martingale-style position sizing, hard stop-loss and take-profit levels, break-even protection, and a trailing stop that mimics the original expert's money management toolkit.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Trading timeframe used for DeMarker signals. |\n| `MacdCandleType` | Higher timeframe used to compute the MACD trend filter. |\n| `DemarkerPeriod` | DeMarker lookback period. |\n| `DemarkerThreshold` | Neutral boundary between bullish and bearish setups. |\n| `MacdFast` / `MacdSlow` / `MacdSignal` | MACD EMA lengths. |\n| `InitialVolume` | Base order size before martingale adjustments. |\n| `MartingaleMultiplier` | Multiplication factor when `DoubleLotSize` is enabled. |\n| `LotIncrement` | Additive increase when doubling is disabled. |\n| `DoubleLotSize` | Toggle between multiplicative and additive martingale. |\n| `MaxMartingaleSteps` | Maximum number of consecutive escalations. |\n| `StopLossPips` | Stop-loss distance in pips. |\n| `TakeProfitPips` | Take-profit distance in pips. |\n| `TrailingStopPips` | Trailing stop distance in pips. |\n| `UseBreakEven` | Enable or disable break-even logic. |\n| `BreakEvenTriggerPips` | Profit threshold (in pips) before shifting to break-even. |\n| `BreakEvenOffsetPips` | Buffer applied to the break-even stop. |"
+   },
+   "2968": {
+    "id": 2968,
+    "name": "ColorXPWMA Digit MMRec",
+    "family": "trend",
+    "overview": "The **ColorXPWMA Digit MMRec Strategy** replicates the MetaTrader expert adviser `Exp_ColorXPWMA_Digit_MMRec`. It uses the ColorXPWMA Digit indicator to identify trend inflection points and wraps the original money-management recounter logic. The indicator builds a power-weighted moving average (PWMA) that is optionally smoothed by a selected moving-average method. The slope of the smoothed line is converted into discrete colors: `2` for an up-slope, `0` for a down-slope and `1` when the direction is flat.\n\nTrading decisions are taken after the indicator colors are evaluated on a configurable historical bar (`SignalBar`). When the previous color (`SignalBar + 1`) was bullish (2) but the bar at `SignalBar` no longer keeps the bullish color, the strategy closes short positions and optionally opens a new long position. The inverse logic is applied when the historical color was bearish (0) but the more recent bar no longer keeps that bearish color.",
+    "details": "",
+    "parameters": "| Group | Parameter | Description |\n| --- | --- | --- |\n| General | `CandleType` | Timeframe used for both indicator calculations and trading decisions. |\n| Indicator | `IndicatorPeriod` | Period of the power-weighted moving average. |\n| Indicator | `IndicatorPower` | Exponent applied to weights. Higher values emphasize the latest bars. |\n| Indicator | `SmoothingMethod` | Moving-average method used for smoothing. JurX, ParMa and Vidya fall back to an exponential average. |\n| Indicator | `SmoothingLength` | Length of the smoothing moving average. |\n| Indicator | `SmoothingPhase` | Phase parameter forwarded to smoothers that support it. |\n| Indicator | `AppliedPrices` | Source price used by the indicator (close, open, high, low, etc.). |\n| Indicator | `RoundingDigits` | Number of decimal digits used to round the indicator output. |\n| Logic | `SignalBar` | Historical shift (in bars) used when reading the color buffer. |\n| Permissions | `EnableBuyEntries` / `EnableSellEntries` | Allow opening long/short positions. |\n| Permissions | `EnableBuyExits` / `EnableSellExits` | Allow closing longs/shorts. |\n| Money Management | `NormalVolume` | Default order size. |\n| Money Management | `ReducedVolume` | Order size applied after a loss streak. |\n| Money Management | `BuyTotalTrigger`, `BuyLossTrigger` | Number of recent long trades to inspect and loss threshold for switching to reduced volume. |\n| Money Management | `SellTotalTrigger`, `SellLossTrigger` | Same logic for short trades. |\n| Risk Management | `StopLossPoints`, `TakeProfitPoints` | Optional protective distances (points) applied through `StartProtection` if non-zero. |"
+   },
+   "417": {
+    "id": 417,
+    "name": "DMI Winner",
+    "family": "trend",
+    "overview": "DMI Winner is a trend‑following strategy based on the Directional Movement Index\n(DMI). It opens trades when the `+DI` and `-DI` lines cross and the Average\nDirectional Index (ADX) rises above a key threshold, signalling a strong trend.\n\nAn optional moving‑average filter keeps trades in the direction of the broader\ntrend. A stop‑loss can also be enabled to cap downside risk, though by default\nthe system relies on signal reversals for exits.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `+DI` crosses above `-DI` AND `ADX` > `KeyLevel` (with optional MA filter).\n  - **Short**: `-DI` crosses above `+DI` AND `ADX` > `KeyLevel` (with optional MA filter).\n- **Exit Criteria**: Opposite DI cross or stop‑loss if enabled.\n- **Stops**: Optional stop‑loss (`UseSL`).\n- **Default Values**:\n  - `DILength` = 14\n  - `KeyLevel` = 23\n  - `UseMA` = True\n  - `UseSL` = False\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: DMI, Moving Average\n  - Complexity: Moderate\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: `+DI` crosses above `-DI` AND `ADX` > `KeyLevel` (with optional MA filter).\n  - **Short**: `-DI` crosses above `+DI` AND `ADX` > `KeyLevel` (with optional MA filter).\n- **Exit Criteria**: Opposite DI cross or stop‑loss if enabled.\n- **Stops**: Optional stop‑loss (`UseSL`).\n- **Default Values**:\n  - `DILength` = 14\n  - `KeyLevel` = 23\n  - `UseMA` = True\n  - `UseSL` = False\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: DMI, Moving Average\n  - Complexity: Moderate\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1684": {
+    "id": 1684,
+    "name": "Line Order Dual Level",
+    "family": "volatility",
+    "overview": "This strategy is an adaptation of the MetaTrader expert advisor \"MyLineOrder\" for the StockSharp API. It allows a trader to define horizontal price levels that trigger automatic market orders when touched. Optional stop loss, take profit and trailing stop distances are expressed in pips, and the trade volume can be configured.\n\nWhen the market price reaches the **BuyPrice** level, the strategy enters a long position. Hitting the **SellPrice** level opens a short position. After entry, the strategy monitors the position and exits when one of the protective conditions is met: stop loss, take profit or trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price touches or exceeds `BuyPrice`.\n  - **Short**: Price touches or falls below `SellPrice`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Stop loss, take profit or trailing stop.\n- **Stops**:\n  - `StopLossPips`, `TakeProfitPips`, `TrailingStopPips`.\n- **Filters**:\n  - None.\n- **Parameters**:\n  - `BuyPrice` – level for long entry.\n  - `SellPrice` – level for short entry.\n  - `StopLossPips` – stop-loss distance in pips.\n  - `TakeProfitPips` – take-profit distance in pips.\n  - `TrailingStopPips` – trailing stop distance in pips.\n  - `TradeVolume` – order volume.\n  - `CandleType` – timeframe of candles for price monitoring.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price touches or exceeds `BuyPrice`.\n  - **Short**: Price touches or falls below `SellPrice`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Stop loss, take profit or trailing stop.\n- **Stops**:\n  - `StopLossPips`, `TakeProfitPips`, `TrailingStopPips`.\n- **Filters**:\n  - None.\n- **Parameters**:\n  - `BuyPrice` – level for long entry.\n  - `SellPrice` – level for short entry.\n  - `StopLossPips` – stop-loss distance in pips.\n  - `TakeProfitPips` – take-profit distance in pips.\n  - `TrailingStopPips` – trailing stop distance in pips.\n  - `TradeVolume` – order volume.\n  - `CandleType` – timeframe of candles for price monitoring.",
+    "parameters": ""
+   },
+   "2122": {
+    "id": 2122,
+    "name": "Auto Trade With Bollinger Bands",
+    "family": "mean_reversion",
+    "overview": "This strategy uses Bollinger Bands, RSI and Stochastic oscillator to automatically open trades during a specified GMT time window. A short position is opened when the previous candle closes above the upper Bollinger Band while RSI is above 75 and Stochastic %K is above 85. A long position is opened when the candle closes below the lower Bollinger Band with RSI below 25 and Stochastic %K below 155. Only one position per direction is allowed. A trailing stop in points protects open positions.\n\n## Parameters\n\n- `OpenBuy` – enable opening long positions.\n- `OpenSell` – enable opening short positions.\n- `GmtTradeStart` – trading start hour in GMT (exclusive).\n- `GmtTradeStop` – trading stop hour in GMT (exclusive).\n- `BbPeriod` – period for Bollinger Bands.\n- `RsiPeriod` – period for RSI indicator.\n- `StochKPeriod` – %K period for Stochastic oscillator.\n- `StochDPeriod` – %D period for Stochastic oscillator.\n- `StochSlowing` – smoothing factor for Stochastic oscillator.\n- `TrailingStop` – trailing stop distance in points.\n- `CandleType` – candle timeframe used for calculations.\n",
+    "details": "",
+    "parameters": "- `OpenBuy` – enable opening long positions.\n- `OpenSell` – enable opening short positions.\n- `GmtTradeStart` – trading start hour in GMT (exclusive).\n- `GmtTradeStop` – trading stop hour in GMT (exclusive).\n- `BbPeriod` – period for Bollinger Bands.\n- `RsiPeriod` – period for RSI indicator.\n- `StochKPeriod` – %K period for Stochastic oscillator.\n- `StochDPeriod` – %D period for Stochastic oscillator.\n- `StochSlowing` – smoothing factor for Stochastic oscillator.\n- `TrailingStop` – trailing stop distance in points.\n- `CandleType` – candle timeframe used for calculations."
+   },
+   "785": {
+    "id": 785,
+    "name": "Fibonacci Levels High Low",
+    "family": "other",
+    "overview": "Uses Fibonacci level from a higher timeframe candle along with highest and lowest price criteria.\nBuys when the close is above the previous lowest low and the Fibonacci level. Sells when the close is below the previous highest high and the same level.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1275": {
+    "id": 1275,
+    "name": "RSI Strategy With TP/SL (Lower TF)",
+    "family": "other",
+    "overview": "RSI-based strategy for lower timeframes. Opens long below the buy level and short above the sell level. Positions are closed using percentage-based take profit and stop loss.\n\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1610": {
+    "id": 1610,
+    "name": "`security()` Revisited",
+    "family": "other",
+    "overview": "`security()` Revisited shows how to access higher timeframe data in StockSharp and control repainting by using previous or current values.\n\n## Details\n\n- **Purpose**: higher timeframe data access with repaint control\n- **Trading**: demonstration\n- **Indicators**: none\n- **Stops**: no\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `HigherTimeframe` = 5 minutes\n  - `Repaint` = false\n",
+    "details": "- **Purpose**: higher timeframe data access with repaint control\n- **Trading**: demonstration\n- **Indicators**: none\n- **Stops**: no\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `HigherTimeframe` = 5 minutes\n  - `Repaint` = false",
+    "parameters": ""
+   }
+  }
+ }
+}

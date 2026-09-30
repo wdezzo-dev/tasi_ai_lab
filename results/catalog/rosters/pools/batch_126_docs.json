@@ -1,0 +1,98 @@
+{
+ "batch_126": {
+  "strategy_ids": [
+   3268,
+   1342,
+   1383,
+   2415,
+   2132,
+   1854,
+   639,
+   1986,
+   3921,
+   1737
+  ],
+  "docs": {
+   "3268": {
+    "id": 3268,
+    "name": "RsiBoosterStrategy",
+    "family": "trend",
+    "overview": "`RsiBoosterStrategy` is a StockSharp port of the MetaTrader expert advisor *RSI booster*. The strategy compares the fast RSI value calculated on the current candle with a delayed RSI that uses the previous candle. When the difference exceeds a user-defined ratio, the strategy opens a market position and then manages the trade using fixed stops, take-profit targets, an optional trailing stop, and a loss-recovery reverse order chain.\n\nThe strategy is built on StockSharp's high-level API. It subscribes to a single candle series, relies on built-in `RelativeStrengthIndex` indicators, and uses the strategy parameter system so that all inputs are available for optimization inside Designer.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Trading volume used for each market order (lots or contracts). |\n| `Ratio` | Minimum RSI difference required to open a position. |\n| `StopLossPips` | Stop-loss distance in instrument points. |\n| `TakeProfitPips` | Take-profit distance in instrument points. |\n| `TrailingStopPips` | Trailing stop distance in instrument points. |\n| `TrailingStepPips` | Minimum improvement before moving the trailing stop. |\n| `OnlyOnePositionPerBar` | Prevents multiple entries during the same candle. |\n| `ReturnOrderEnabled` | Enables the reverse order recovery logic. |\n| `ReturnOrdersMax` | Maximum number of consecutive recovery orders. |\n| `FirstRsiPeriod` | Period of the fast RSI. |\n| `FirstRsiPrice` | Price source for the fast RSI (matches MetaTrader applied price modes). |\n| `SecondRsiPeriod` | Period of the delayed RSI. |\n| `SecondRsiPrice` | Price source for the delayed RSI (matches MetaTrader applied price modes). |\n| `CandleType` | Candle series used for analysis. |"
+   },
+   "1342": {
+    "id": 1342,
+    "name": "Stochastic Z-Score Oscillator",
+    "family": "trend",
+    "overview": "Combines a rescaled Stochastic oscillator with a price Z-Score. A trade is opened when their average crosses a threshold and closed when the Z-Score returns to zero. Cooldown counters prevent frequent signals.\n\n## Details\n\n- **Entry Criteria**: average of rescaled Stochastic %K and price Z-Score crosses above/below threshold after cooldown\n- **Long/Short**: Both\n- **Exit Criteria**: Z-Score crossing zero\n- **Stops**: No\n- **Default Values**:\n  - `RollingWindow` = 80\n  - `ZThreshold` = 2.8\n  - `CoolDown` = 5\n  - `StochLength` = 14\n  - `StochSmooth` = 7\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: average of rescaled Stochastic %K and price Z-Score crosses above/below threshold after cooldown\n- **Long/Short**: Both\n- **Exit Criteria**: Z-Score crossing zero\n- **Stops**: No\n- **Default Values**:\n  - `RollingWindow` = 80\n  - `ZThreshold` = 2.8\n  - `CoolDown` = 5\n  - `StochLength` = 14\n  - `StochSmooth` = 7\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Stochastic, SMA, StandardDeviation\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1383": {
+    "id": 1383,
+    "name": "Supertrend TP SL PRO",
+    "family": "trend",
+    "overview": "Trades SuperTrend direction changes with optional fixed take profit and stop loss.\n\n- **Long**: SuperTrend switches to uptrend.\n- **Short**: SuperTrend switches to downtrend.\n- **Stop Loss**: fixed distance from entry (optional).\n- **Take Profit**: fixed distance from entry (optional).\n- **Indicators**: SuperTrend.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2415": {
+    "id": 2415,
+    "name": "Opening and Closing on Time v2",
+    "family": "trend",
+    "overview": "A time-based strategy that opens trades at a specific time and closes them later in the day. Trade direction is confirmed by comparing a fast and a slow exponential moving average. Stop-loss and take-profit levels are expressed in ticks.\n\n## Details\n\n- **Entry Criteria**: At `OpenTime`, go long if the fast EMA is above the slow EMA, go short if it is below. Direction depends on `TradeMode`.\n- **Long/Short**: Configurable (buy, sell, or both).\n- **Exit Criteria**: Positions are closed at `CloseTime` or by protective stops.\n- **Stops**: Yes, both stop-loss and take-profit in ticks.\n- **Default Values**:\n  - `OpenTime` = 05:00\n  - `CloseTime` = 21:01\n  - `SlowPeriod` = 200\n  - `FastPeriod` = 50\n  - `StopLossTicks` = 30\n  - `TakeProfitTicks` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Time Based\n  - Direction: Configurable\n  - Indicators: EMA\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: At `OpenTime`, go long if the fast EMA is above the slow EMA, go short if it is below. Direction depends on `TradeMode`.\n- **Long/Short**: Configurable (buy, sell, or both).\n- **Exit Criteria**: Positions are closed at `CloseTime` or by protective stops.\n- **Stops**: Yes, both stop-loss and take-profit in ticks.\n- **Default Values**:\n  - `OpenTime` = 05:00\n  - `CloseTime` = 21:01\n  - `SlowPeriod` = 200\n  - `FastPeriod` = 50\n  - `StopLossTicks` = 30\n  - `TakeProfitTicks` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Time Based\n  - Direction: Configurable\n  - Indicators: EMA\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "2132": {
+    "id": 2132,
+    "name": "Exp Super Trend",
+    "family": "trend",
+    "overview": "Strategy converted from MQL script **Exp_Super_Trend.mq5** (ID 14269). It follows the direction of the SuperTrend indicator and reverses positions whenever the trend flips. The implementation uses StockSharp high level API and the built-in SuperTrend indicator.\n\nThe indicator calculates a dynamic support or resistance line based on ATR. When price stays above this line the trend is considered bullish, otherwise bearish. The strategy opens a long position during bullish periods and switches to a short position during bearish periods. Each flip of the indicator causes an immediate position reversal.\n\nThis approach works best in trending markets where large moves follow a breakout. It is also useful as an educational template showing how to connect an indicator using `BindEx` and execute market orders on completed candles.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: SuperTrend signals an uptrend.\n  - Short: SuperTrend signals a downtrend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal from SuperTrend (position is reversed).\n- **Stops**: No explicit stop-loss; the indicator line acts as a trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Multiplier` = 3m\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend\n  - Stops: Indicator based\n  - Complexity: Basic\n  - Timeframe: Medium (1 hour by default)\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: SuperTrend signals an uptrend.\n  - Short: SuperTrend signals a downtrend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal from SuperTrend (position is reversed).\n- **Stops**: No explicit stop-loss; the indicator line acts as a trailing stop.\n- **Default Values**:\n  - `AtrPeriod` = 10\n  - `Multiplier` = 3m\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend\n  - Stops: Indicator based\n  - Complexity: Basic\n  - Timeframe: Medium (1 hour by default)\n  - Seasonality: None\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1854": {
+    "id": 1854,
+    "name": "Heiken Ashi Simplified EA",
+    "family": "breakout",
+    "overview": "A pattern-based system built on Heikin Ashi candles. The strategy watches a sequence of prior Heikin Ashi opens and closes. When three consecutive closes rise (or fall) above their respective opens while the opens form a decelerating pullback, the next candle can trigger a breakout trade once price moves away from the last Heikin Ashi open by a minimum distance. The algorithm scales into positions up to a defined limit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Three previous HA closes are above prior opens and the opens form a decreasing series with shrinking differences.\n  - **Short**: Three previous HA closes are below prior opens and the opens form an increasing series with expanding differences.\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `MaxPositions` = 3\n  - `DistancePoints` = 300\n  - `Volume` = 1\n- **Filters**:\n  - Category: Pattern breakout\n  - Direction: Both\n  - Indicators: Heikin Ashi\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Hourly\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Three previous HA closes are above prior opens and the opens form a decreasing series with shrinking differences.\n  - **Short**: Three previous HA closes are below prior opens and the opens form an increasing series with expanding differences.\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `MaxPositions` = 3\n  - `DistancePoints` = 300\n  - `Volume` = 1\n- **Filters**:\n  - Category: Pattern breakout\n  - Direction: Both\n  - Indicators: Heikin Ashi\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Hourly\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "639": {
+    "id": 639,
+    "name": "CP Strat ORB",
+    "family": "breakout",
+    "overview": "This strategy trades breakouts of the New York opening range (9:30-9:45) with a retest. It enters long after price breaks above the range high and closes back above it, and enters short after price breaks below the range low and closes back below it. Exits use fixed stop-loss and take-profit levels.\n\n## Details\n\n- **Entry Criteria**: Breakout of the NY opening range followed by a retest and close beyond the range limit.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take-profit or stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MinRangePoints` = 60m\n  - `StopPoints` = 20m\n  - `TakePoints` = 60m\n  - `MaxTradesPerSession` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Breakout of the NY opening range followed by a retest and close beyond the range limit.\n- **Long/Short**: Both.\n- **Exit Criteria**: Fixed take-profit or stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MinRangePoints` = 60m\n  - `StopPoints` = 20m\n  - `TakePoints` = 60m\n  - `MaxTradesPerSession` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1986": {
+    "id": 1986,
+    "name": "Four Screens",
+    "family": "momentum",
+    "overview": "The Four Screens strategy trades using Heikin-Ashi candles across four timeframes: 5, 15, 30, and 60 minutes.\nIt goes long when all timeframes show bullish candles and goes short when all show bearish candles.\nStop-loss and take-profit levels are set in points with optional trailing stop.\n\n## How it works\n1. Subscribes to candle streams for 5, 15, 30 and 60 minutes.\n2. Calculates Heikin-Ashi open and close for each candle.\n3. Marks each timeframe as bullish or bearish.\n4. Enters long when all are bullish, enters short when all are bearish.\n5. Uses `StartProtection` to apply stop-loss, take-profit and optional trailing.\n\n## Parameters\n- `CandleType` – base timeframe for 5 minute candles.\n- `StopLossPoints` – stop-loss distance in points.\n- `TakeProfitPoints` – take-profit distance in points.\n- `UseTrailing` – enable trailing stop (true/false).\n\nThe trading volume is defined by the strategy `Volume` property.\n\n## Notes\n- Works with high-level API using `SubscribeCandles` and `Bind`.\n- Processes only finished candles.\n- Comments in code are provided in English.\n",
+    "details": "",
+    "parameters": "- `CandleType` – base timeframe for 5 minute candles.\n- `StopLossPoints` – stop-loss distance in points.\n- `TakeProfitPoints` – take-profit distance in points.\n- `UseTrailing` – enable trailing stop (true/false).\n\nThe trading volume is defined by the strategy `Volume` property."
+   },
+   "3921": {
+    "id": 3921,
+    "name": "GTerminal",
+    "family": "volatility",
+    "overview": "The GTerminal strategy is a C# port of the MetaTrader 4 expert advisor `GTerminal_V5a`. The original script allowed manual\ncontrol of entries and exits by drawing horizontal lines on the chart. This port recreates the same line-driven behaviour inside\nthe StockSharp framework by exposing each virtual line as a configurable parameter. Whenever the closing price of the selected\ncandle series crosses one of these virtual lines, the strategy opens, closes, or reverses positions in the same way as the MQL4\nversion. Optional automatic protection levels emulate the \"tpinit\" and \"slinit\" helper lines from the original tool.",
+    "details": "",
+    "parameters": "* **Volume** – order volume for new entries. The final order size automatically includes any opposite exposure that must be\nclosed during a reversal.\n* **Cross Method** – select the crossing algorithm (`0` strict, `1` instant).\n* **Start Shift** – candle offset used for the crossing calculation.\n* **Pause Trading** – disables all trading actions while `true`.\n* **Use Initial Protection** – enables automatic application of the initial stop/take-profit levels after each fill.\n* **Buy Stop Level / Buy Limit Level** – price levels that trigger long entries.\n* **Sell Stop Level / Sell Limit Level** – price levels that trigger short entries.\n* **Long Stop Level / Long Take Profit** – exit lines for the active long position.\n* **Short Stop Level / Short Take Profit** – exit lines for the active short position.\n* **All Long Stop / All Long Take Profit** – global exit lines that close every long position.\n* **All Short Stop / All Short Take Profit** – global exit lines that close every short position.\n* **Initial Long Stop / Initial Long Take Profit** – protective levels activated after each long entry when initial protection is\nenabled.\n* **Initial Short Stop / Initial Short Take Profit** – protective levels activated after each short entry when initial protection is\nenabled.\n* **Candle Type** – timeframe that supplies the closing prices used for comparisons."
+   },
+   "1737": {
+    "id": 1737,
+    "name": "RGT RSI Bollinger",
+    "family": "mean_reversion",
+    "overview": "This strategy combines the Relative Strength Index (RSI) with Bollinger Bands to spot mean-reversion opportunities. A long position is opened when RSI indicates an oversold market and price trades below the lower Bollinger Band. A short position is entered when RSI shows an overbought market and price rises above the upper band. The strategy applies an initial stop-loss and later trails the stop once a minimum profit is reached.\n\nThe trailing stop locks in profits by following price at a fixed distance once the trade moves favorably. Positions are closed when the trailing stop is hit.\n\n## Details\n\n- **Entry Criteria**: RSI below `RsiLow` and price under lower band for longs; RSI above `RsiHigh` and price above upper band for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Trailing stop hit.\n- **Stops**: Initial stop-loss and trailing stop.\n- **Default Values**:\n  - `RsiPeriod` = 8\n  - `RsiHigh` = 90\n  - `RsiLow` = 10\n  - `StopLossPips` = 70\n  - `TrailingStopPips` = 35\n  - `MinProfitPips` = 30\n  - `Volume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, Bollinger Bands\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: RSI below `RsiLow` and price under lower band for longs; RSI above `RsiHigh` and price above upper band for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Trailing stop hit.\n- **Stops**: Initial stop-loss and trailing stop.\n- **Default Values**:\n  - `RsiPeriod` = 8\n  - `RsiHigh` = 90\n  - `RsiLow` = 10\n  - `StopLossPips` = 70\n  - `TrailingStopPips` = 35\n  - `MinProfitPips` = 30\n  - `Volume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, Bollinger Bands\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

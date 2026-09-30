@@ -1,0 +1,98 @@
+{
+ "batch_211": {
+  "strategy_ids": [
+   326,
+   1495,
+   675,
+   310,
+   523,
+   1158,
+   398,
+   1647,
+   1347,
+   1906
+  ],
+  "docs": {
+   "326": {
+    "id": 326,
+    "name": "VWAP Stochastic Divergence",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 79%. It performs best in the stocks market.\n\nSignals trigger when Stochastic confirms divergence setups on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like AdxPeriod, AdxThreshold. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `AdxPeriod = 14`\n  - `AdxThreshold = 25m`\n  - `AdxExitThreshold = 20m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `AdxPeriod = 14`\n  - `AdxThreshold = 25m`\n  - `AdxExitThreshold = 20m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1495": {
+    "id": 1495,
+    "name": "Turn Around Tuesday on Steroids",
+    "family": "trend",
+    "overview": "A seasonal long strategy that buys after two consecutive down days at the start of the week and exits on a breakout above the previous high. An optional moving average filter confirms trend direction.\n\n## Details\n\n- **Entry Criteria**: first or second day of the week with two-day decline\n- **Long/Short**: Long\n- **Exit Criteria**: close above prior high\n- **Stops**: None\n- **Default Values**:\n  - `StartingDay` = Sunday\n  - `MaPeriod` = 200\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: first or second day of the week with two-day decline\n- **Long/Short**: Long\n- **Exit Criteria**: close above prior high\n- **Stops**: None\n- **Default Values**:\n  - `StartingDay` = Sunday\n  - `MaPeriod` = 200\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "675": {
+    "id": 675,
+    "name": "Demo GPT - Day Trading Scalping",
+    "family": "trend",
+    "overview": "Enters long after two consecutive green candles when the second candle opens above the first one's close and volume exceeds its 20-bar average. Closes the position on two consecutive red candles where the second opens below the first one's close under the same volume condition. Calculates EMA(20), VWAP, and Camarilla levels for reference.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "310": {
+    "id": 310,
+    "name": "Donchian Volatility Contraction",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 187%. It performs best in the stocks market.\n\nSignals trigger when Donchian confirms volatility contraction patterns on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like DonchianPeriod, AtrPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `DonchianPeriod = 20`\n  - `AtrPeriod = 14`\n  - `VolatilityFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Donchian\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `DonchianPeriod = 20`\n  - `AtrPeriod = 14`\n  - `VolatilityFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Donchian\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "523": {
+    "id": 523,
+    "name": "Anomaly Counter-Trend",
+    "family": "trend",
+    "overview": "The algorithm detects sharp percentage moves over a short window and trades against them. When price jumps above the threshold it sells; when price drops below the threshold it buys. Stop-loss and take-profit are set in ticks.\n\n## Details\n\n- **Entry Criteria**: Percentage change over lookback window exceeds threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `PercentageThreshold` = 1\n  - `LookbackMinutes` = 30\n  - `StopLossTicks` = 100\n  - `TakeProfitTicks` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Counter-trend\n  - Direction: Both\n  - Indicators: Price\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Percentage change over lookback window exceeds threshold.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `PercentageThreshold` = 1\n  - `LookbackMinutes` = 30\n  - `StopLossTicks` = 100\n  - `TakeProfitTicks` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Counter-trend\n  - Direction: Both\n  - Indicators: Price\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1158": {
+    "id": 1158,
+    "name": "Parent Session Sweeps Alert",
+    "family": "other",
+    "overview": "This strategy monitors daily sessions and detects when the current session sweeps the previous session's high or low. When a sweep occurs and the candle closes back inside the prior range, a trade is opened in the opposite direction with a configurable risk-reward ratio.\n\n## Details\n\n- **Entry Criteria**: Sweep of previous session high/low with optional candle close filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop at session extreme or target based on risk-reward.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MinRiskReward` = 1\n  - `UseCandleFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Sweep of previous session high/low with optional candle close filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop at session extreme or target based on risk-reward.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MinRiskReward` = 1\n  - `UseCandleFilter` = true\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Price Action\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "398": {
+    "id": 398,
+    "name": "Skewness Commodity",
+    "family": "other",
+    "overview": "The **Skewness Commodity** strategy ranks commodity futures by the skewness of their return distribution. Contracts with positive skewness are favored for long positions, while those with strongly negative skewness are sold short, assuming extreme downside moves will mean revert.\n\n## Details\n- **Entry Criteria**: Ranking by historical return skewness.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Periodic rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Ranking by historical return skewness.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Periodic rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Statistical\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1647": {
+    "id": 1647,
+    "name": "Stop Loss Mover",
+    "family": "other",
+    "overview": "This utility strategy monitors an open position and moves its stop-loss to the entry price when the market reaches a predefined level. It subscribes to candle data and checks each completed candle. For long positions, once the candle's high exceeds the configured `MoveSlPrice`, a stop order at the entry price is placed. For short positions, the stop is moved when the candle's low falls below the level.\n\nThe strategy does not generate new trading signals. It opens a single long position at start for demonstration purposes and then protects it by moving the stop to break-even once conditions are met. This allows traders to secure profits while letting the trade run.\n\n## Details\n\n- **Entry Criteria**: A long position is opened at the beginning. No additional signals are used.\n- **Long/Short**: Supports both, but the sample opens a long position.\n- **Exit Criteria**: Position exits when the stop order at the entry price is triggered.\n- **Stops**: Stop-loss moves to the entry price when `MoveSlPrice` is reached.\n- **Default Values**:\n  - `MoveSlPrice` = 0 (should be adjusted before run).\n  - `CandleType` = 1-minute time frame.\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: A long position is opened at the beginning. No additional signals are used.\n- **Long/Short**: Supports both, but the sample opens a long position.\n- **Exit Criteria**: Position exits when the stop order at the entry price is triggered.\n- **Stops**: Stop-loss moves to the entry price when `MoveSlPrice` is reached.\n- **Default Values**:\n  - `MoveSlPrice` = 0 (should be adjusted before run).\n  - `CandleType` = 1-minute time frame.\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1347": {
+    "id": 1347,
+    "name": "Strategy Connectable",
+    "family": "other",
+    "overview": "Template strategy that can be connected to external signal sources.\nIt supports long and short directions and applies percent based stop-loss and take-profit.\n\n## Details\n\n- **Entry Criteria**: external signal\n- **Long/Short**: Both\n- **Exit Criteria**: external signal or stop-loss/take-profit\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `StopLossPercent` = 2%\n  - `TakeProfitPercent` = 4%\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: external signal\n- **Long/Short**: Both\n- **Exit Criteria**: external signal or stop-loss/take-profit\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `StopLossPercent` = 2%\n  - `TakeProfitPercent` = 4%\n- **Filters**:\n  - Category: Other\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1906": {
+    "id": 1906,
+    "name": "Auto Trailing Stop",
+    "family": "other",
+    "overview": "Automatically attaches stop-loss and take-profit orders to existing positions and trails the stop as price moves in favor.\n\n## Details\n- **Entry Criteria**: None, the strategy does not open trades.\n- **Long/Short**: Works with both long and short positions already open.\n- **Exit Criteria**: Stop-loss and take-profit orders. Trailing stop updates after price moves by half of trailing distance.\n- **Stops**: Initial stop-loss and take-profit placed when position appears; stop loss trails by `TrailingStopStep`.\n- **Default Values**: TrailingStop 6, TrailingStopStep 1, TakeProfit 35, StopLoss 114.\n- **Filters**: Optional disabling of trailing stop, automatic take profit, or automatic stop loss via parameters.\n\n## Parameters\n- `FridayTrade` - allow trailing on Fridays.\n- `UseTrailingStop` - enable trailing stop logic.\n- `AutoTrailingStop` - use default trailing distance of 6 when true.\n- `TrailingStop` - trailing distance in price units when AutoTrailingStop is false.\n- `TrailingStopStep` - minimum price movement before trailing stop is moved.\n- `AutomaticTakeProfit` - automatically place take profit order.\n- `TakeProfit` - take profit distance.\n- `AutomaticStopLoss` - automatically place stop loss order.\n- `StopLoss` - stop loss distance.\n- `CandleType` - candle type for price updates (default 1-minute).\n",
+    "details": "- **Entry Criteria**: None, the strategy does not open trades.\n- **Long/Short**: Works with both long and short positions already open.\n- **Exit Criteria**: Stop-loss and take-profit orders. Trailing stop updates after price moves by half of trailing distance.\n- **Stops**: Initial stop-loss and take-profit placed when position appears; stop loss trails by `TrailingStopStep`.\n- **Default Values**: TrailingStop 6, TrailingStopStep 1, TakeProfit 35, StopLoss 114.\n- **Filters**: Optional disabling of trailing stop, automatic take profit, or automatic stop loss via parameters.",
+    "parameters": "- `FridayTrade` - allow trailing on Fridays.\n- `UseTrailingStop` - enable trailing stop logic.\n- `AutoTrailingStop` - use default trailing distance of 6 when true.\n- `TrailingStop` - trailing distance in price units when AutoTrailingStop is false.\n- `TrailingStopStep` - minimum price movement before trailing stop is moved.\n- `AutomaticTakeProfit` - automatically place take profit order.\n- `TakeProfit` - take profit distance.\n- `AutomaticStopLoss` - automatically place stop loss order.\n- `StopLoss` - stop loss distance.\n- `CandleType` - candle type for price updates (default 1-minute)."
+   }
+  }
+ }
+}

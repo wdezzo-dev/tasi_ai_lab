@@ -1,0 +1,98 @@
+{
+ "batch_285": {
+  "strategy_ids": [
+   3954,
+   15,
+   784,
+   2125,
+   2828,
+   4211,
+   3451,
+   963,
+   1277,
+   1539
+  ],
+  "docs": {
+   "3954": {
+    "id": 3954,
+    "name": "Macd Pattern Trader v03 (StockSharp port)",
+    "family": "trend",
+    "overview": "Macd Pattern Trader v03 is a high-level StockSharp strategy converted from the MetaTrader 4 expert advisor *MacdPatternTraderv03*. The original robot searches the MACD main line for a three-peak reversal formation and applies partial profit-taking rules based on moving averages. This C# port preserves the pattern logic while using StockSharp subscriptions, indicators, and order helpers.\n\nThe strategy is designed for trend exhaustion setups on liquid FX pairs, but it can be applied to any instrument that exposes a smooth MACD curve. The default timeframe is 30-minute candles, matching the original advisor, and the default trade size is one contract (or lot equivalent in StockSharp terms).",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `Volume` | 1 | Trade size submitted on each entry. |\n| `CandleType` | 30-minute time frame | Candle series used for indicator calculations. |\n| `FastEmaLength` / `SlowEmaLength` | 5 / 13 | MACD fast and slow EMA periods. |\n| `UpperThreshold` / `LowerThreshold` | 0.0045 / −0.0045 | Exhaustion band where pattern confirmations happen. |\n| `UpperActivation` / `LowerActivation` | 0.0030 / −0.0030 | Outer band that arms the bearish/bullish setups. |\n| `EmaOneLength` / `EmaTwoLength` | 7 / 21 | Auxiliary EMAs for visualization and scaling logic. |\n| `SmaLength` | 98 | Slow SMA used together with EMA(365) during stage-two exits. |\n| `EmaFourLength` | 365 | Long-term EMA used during stage-two exits. |\n| `ProfitThreshold` | 5 | Minimum unrealized PnL (price * volume units) required before scaling out. |"
+   },
+   "15": {
+    "id": 15,
+    "name": "Gann Swing Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 82%. It performs best in the stocks market.\n\nGann Swing Breakout tracks swing highs and lows from Gann analysis. A breakout beyond the latest swing starts a trade in that direction and it stays open until an opposing swing is breached.\n\nThe method is designed for traders who view past swing points as important support and resistance. By trading the break, it attempts to ride the next leg of a trend.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on MA, Gann.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `SwingLookback` = 5\n  - `MaPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA, Gann\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on MA, Gann.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `SwingLookback` = 5\n  - `MaPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA, Gann\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "784": {
+    "id": 784,
+    "name": "Fibonacci Counter-Trend Trading",
+    "family": "trend",
+    "overview": "This strategy uses a Volume Weighted Moving Average (VWMA) and standard deviation to build Fibonacci bands. It enters long when price drops below the selected lower band and short when price rises above the upper band. Optionally positions close when price crosses the VWMA basis.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses below the chosen lower band.\n  - **Short**: Close crosses above the chosen upper band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Basis**: Optional exit when price crosses VWMA.\n  - **Reverse**: Opposite band signal reverses position.\n- **Stops**: None.\n- **Indicators**: VolumeWeightedMovingAverage, StandardDeviation.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses below the chosen lower band.\n  - **Short**: Close crosses above the chosen upper band.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Basis**: Optional exit when price crosses VWMA.\n  - **Reverse**: Opposite band signal reverses position.\n- **Stops**: None.\n- **Indicators**: VolumeWeightedMovingAverage, StandardDeviation.",
+    "parameters": ""
+   },
+   "2125": {
+    "id": 2125,
+    "name": "XMA Range Channel",
+    "family": "trend",
+    "overview": "Strategy that builds an upper and lower channel from moving averages of the high and low prices. A breakout above the upper band triggers a long entry, while a breakout below the lower band triggers a short entry. The model mirrors the behaviour of the original MQL \"XMA Range Channel\" expert.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > UpperChannel`\n  - Short: `Close < LowerChannel`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n  - `Length` = 7\n- **Filters**:\n  - Category: Channel breakout\n  - Direction: Both\n  - Indicators: SMA on High/Low\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > UpperChannel`\n  - Short: `Close < LowerChannel`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n  - `Length` = 7\n- **Filters**:\n  - Category: Channel breakout\n  - Direction: Both\n  - Indicators: SMA on High/Low\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2828": {
+    "id": 2828,
+    "name": "GoldWarrior02b",
+    "family": "trend",
+    "overview": "Algorithmic strategy converted from the MetaTrader expert advisor *GoldWarrior02b*.\nIt combines an impulse gauge, Commodity Channel Index (CCI) and a simple ZigZag swing detector\nto trade close to the end of every 15 minute block.\n\nThe implementation targets StockSharp's high-level API and focuses on net positions.\nMulti-level hedging from the original script is not supported because StockSharp works with netted positions.\n\n## Concept\n\n- Use a custom impulse indicator that averages the difference between candle open and close prices.\n- Evaluate CCI values to detect overbought/oversold reversals and strong momentum spikes.\n- Derive a ZigZag swing direction from recent highs and lows to avoid trading against the dominant move.\n- Only evaluate signals during the final seconds (>= 45s) of minutes 14, 29, 44 and 59.\n- Apply dynamic risk management with stop-loss, take-profit, trailing-stop and a global profit target.\n\n## Entry Rules\n\nA trade is considered only if no position is currently open and the current candle closes within\nthe time window described above.\n\n### Long Setup\n- ZigZag swing is pointing down (recent low is lower than the previous one).\n- Either:\n  - CCI rises above its previous reading while the previous CCI was below -50, current CCI below -30,\n    impulse turns positive and the previous impulse was negative.\n  - Or CCI falls below -200, the previous CCI was still lower, impulse remains below the positive threshold\n    and the previous impulse is weaker than the current value.\n\n### Short Setup\n- ZigZag swing is pointing up (recent high is higher than the previous one).\n- Either:\n  - CCI drops below its previous reading while the previous CCI was above 50, current CCI above 30,\n    impulse turns negative and the previous impulse was positive.\n  - Or CCI breaks above 200, the previous CCI was higher, impulse stays above the negative threshold\n    and the previous impulse is stronger than the current value.\n\nIf the previous impulse stays between the config",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `BaseVolume` | Trade size for entries. | `0.1` |\n| `StopLossPoints` | Stop distance in points. | `100` |\n| `TakeProfitPoints` | Take-profit distance in points. | `150` |\n| `TrailingStopPoints` | Base trailing stop distance. | `5` |\n| `TrailingStepPoints` | Additional distance before the trailing stop activates. | `5` |\n| `ImpulsePeriod` | Period for both CCI and impulse calculations. | `21` |\n| `ZigZagDepth` | Minimum bars between new ZigZag swings. | `12` |\n| `ZigZagDeviation` | Minimum price move (in points) to confirm a swing. | `5` |\n| `ZigZagBackstep` | Minimum bars before accepting a new swing. | `3` |\n| `ProfitTarget` | Unrealized profit threshold to close all positions. | `300` |\n| `ImpulseSellThreshold` | Impulse threshold for shorts (typically negative). | `-30` |\n| `ImpulseBuyThreshold` | Impulse threshold for longs (typically positive). | `30` |\n| `CandleType` | Timeframe used for calculations. | `5 minute time frame` |"
+   },
+   "4211": {
+    "id": 4211,
+    "name": "Cyclops Cycle Identifier",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader expert advisor **Cyclops v1.2** together with its proprietary *CycleIdentifier* indicator to StockSharp's high level API. The algorithm smooths closing prices with a smoothed moving average (SMMA), measures recent volatility through a long lookback average true range, and marks cycle turning points when price travels far enough from the most recent swing. Major cycle reversals generate new entries while minor reversals offer optional exit signals.\n\nA configurable zero-lag filter validates the slope of the smoothed series. The filter can work directly on smoothed price data or on a Wilder-style RSI derived from the same series. Additional confirmation is available through a classic Momentum indicator, and trading can be limited to a specific weekday/hour window.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order volume used for entries. |\n| `PriceActionFilter` | Length of the smoothed moving average applied to close price. |\n| `Length` | Multiplier applied to the average range to detect minor cycles. |\n| `MajorCycleStrength` | Multiplier separating major from minor swings. |\n| `UseCycleFilter` | Enables the zero-lag slope confirmation. |\n| `CycleFilterMode` | Selects zero-lag input: smoothed price (`Sma`) or RSI (`Rsi`). |\n| `FilterStrengthSma` | Length of the zero-lag filter when the smoothed price is used. |\n| `FilterStrengthRsi` | Length and RSI period when the filter relies on RSI values. |\n| `UseMomentumFilter` | Turns the momentum confirmation on or off. |\n| `MomentumPeriod` | Momentum indicator length. |\n| `MomentumTriggerLong` | Minimum momentum required for long entries. |\n| `MomentumTriggerShort` | Maximum momentum allowed for short entries. |\n| `UseExitSignal` | Enables minor-cycle based exits when profitable. |\n| `UseTimeRestriction` | Limits trading to the configured weekday/hour window. |\n| `DayEnd` | Last day of week when new entries are permitted. |\n| `HourEnd` | Last hour on the final trading day for new entries. |\n| `BreakEvenTrigger` | Profit in pips required to activate the break-even stop. |\n| `TrailingStopTrigger` | Profit in pips required to start trailing. |\n| `TrailingStopPips` | Distance in pips maintained by the trailing stop. |\n| `TakeProfitPips` | Fixed take-profit distance in pips. |\n| `StopLossPips` | Fixed stop-loss distance in pips. |\n| `CandleType` | Primary timeframe that feeds the strategy. |"
+   },
+   "3451": {
+    "id": 3451,
+    "name": "Basic Martingale EA 3",
+    "family": "trend",
+    "overview": "The **Basic Martingale EA 3** strategy replicates the MetaTrader 5 expert advisor that combines a trend filter based on the Triple Exponential Moving Average (TEMA) with ATR-driven martingale averaging. The converted StockSharp version keeps the same risk parameters, trading window and money management logic while exposing everything through strategy parameters for optimisation.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | H1 time-frame | Candle series that drives the strategy. |\n| `StartVolume` | `decimal` | `0.01` | Initial volume for the first order in a basket. |\n| `StopLossPoints` | `decimal` | `20` | Stop-loss distance in price steps. Set to `0` to disable. |\n| `TakeProfitPoints` | `decimal` | `20` | Take-profit distance in price steps. Set to `0` to disable. |\n| `StartHour` | `int` | `3` | Hour (inclusive) when new baskets can start. |\n| `EndHour` | `int` | `18` | Hour (exclusive) when basket creation stops. |\n| `TemaPeriod` | `int` | `50` | Length of the TEMA indicator. |\n| `BarsCalculated` | `int` | `3` | Number of finished candles required before trading begins. |\n| `AtrPeriod` | `int` | `14` | Period of the Average True Range indicator. |\n| `GridMultiplier` | `decimal` | `0.75` | ATR multiplier that defines the grid spacing. |\n| `MaxAverageOrders` | `int` | `3` | Maximum number of averaging orders per direction (including the initial one). |\n| `Averaging` | enum | `AverageDown` | Choose between averaging in drawdown, averaging in profit, or disabling extra entries. |\n| `Martin` | enum | `Multiply` | Select between multiplicative or incremental martingale sizing. |\n| `LotMultiplier` | `decimal` | `1.5` | Factor used by the `Multiply` martingale mode. |\n| `LotIncrement` | `decimal` | `0.1` | Additional volume used by the `Increment` martingale mode. |\n| `TradeAtNewBar` | `bool` | `false` | Restrict new baskets to one per finished candle. |\n| `TrailingStart` | `int` | `100` | Profit in points required to activate trailing. |\n| `TrailingStop` | `int` | `50` | Trailing stop distance in points. |\n| `TrailingStep` | `int` | `30` | Minimum improvement (points) before moving the trailing stop again. |"
+   },
+   "963": {
+    "id": 963,
+    "name": "LANZ Strategy 4.0 Backtest",
+    "family": "trend",
+    "overview": "LANZ Strategy 4.0 Backtest is a breakout strategy using swing pivots to detect trend changes. When price breaks above the last pivot high, it enters long; when price breaks below the last pivot low, it enters short. Position size is calculated from risk percent and pip value, with stop loss below/above the last swing plus buffer and take profit by risk-reward ratio.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Price crosses above last pivot high.\n  - **Short**: Price crosses below last pivot low.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Recent swing high/low with buffer.\n- **Default Values**:\n  - `SwingLength` = 180\n  - `SlBufferPoints` = 50\n  - `RiskReward` = 1\n  - `RiskPercent` = 1\n  - `PipValueUsd` = 10\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Complexity: Medium\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Price crosses above last pivot high.\n  - **Short**: Price crosses below last pivot low.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Recent swing high/low with buffer.\n- **Default Values**:\n  - `SwingLength` = 180\n  - `SlBufferPoints` = 50\n  - `RiskReward` = 1\n  - `RiskPercent` = 1\n  - `PipValueUsd` = 10\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Highest, Lowest\n  - Complexity: Medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1277": {
+    "id": 1277,
+    "name": "RSI SwingRadar",
+    "family": "trend",
+    "overview": "Enters long when RSI crosses above its SMA after staying below an oversold level. Stop-loss uses ATR, and take-profit is based on a configurable risk-reward ratio.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1539": {
+    "id": 1539,
+    "name": "Volume ValueWhen Velocity",
+    "family": "trend",
+    "overview": "This strategy seeks long entries when volume expands, the market is oversold based on RSI, volatility measured by ATR is contracting and the distance between recent SMA breakouts exceeds a specified value. When all conditions are satisfied a market buy order is issued.\n\n## Parameters\n- **RSI Length** – period for RSI.\n- **RSI Oversold** – oversold threshold.\n- **ATR Small / ATR Big** – periods for ATR comparison.\n- **Distance** – minimum difference between breakout prices.\n- **Candle Type** – timeframe of input candles.\n",
+    "details": "",
+    "parameters": "- **RSI Length** – period for RSI.\n- **RSI Oversold** – oversold threshold.\n- **ATR Small / ATR Big** – periods for ATR comparison.\n- **Distance** – minimum difference between breakout prices.\n- **Candle Type** – timeframe of input candles."
+   }
+  }
+ }
+}

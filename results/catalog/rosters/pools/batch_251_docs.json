@@ -1,0 +1,98 @@
+{
+ "batch_251": {
+  "strategy_ids": [
+   1612,
+   1977,
+   1875,
+   2130,
+   913,
+   1586,
+   375,
+   3706,
+   532,
+   2575
+  ],
+  "docs": {
+   "1612": {
+    "id": 1612,
+    "name": "Backtest UT Bot + RSI",
+    "family": "trend",
+    "overview": "Combines a UT Bot trend detector with RSI levels. Enters long on a bullish UT Bot reversal when RSI is oversold and short on a bearish reversal when RSI is overbought.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: UT Bot turns up and RSI < `RSI Oversold`.\n  - **Short**: UT Bot turns down and RSI > `RSI Overbought`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Take profit or stop loss percentages.\n- **Stops**: Take Profit & Stop Loss.\n- **Default Values**:\n  - `RSI Length` = 14\n  - `RSI Overbought` = 60\n  - `RSI Oversold` = 40\n  - `ATR Length` = 10\n  - `UT Bot Factor` = 1.0\n  - `Take Profit %` = 3.0\n  - `Stop Loss %` = 1.5\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: UT Bot turns up and RSI < `RSI Oversold`.\n  - **Short**: UT Bot turns down and RSI > `RSI Overbought`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Take profit or stop loss percentages.\n- **Stops**: Take Profit & Stop Loss.\n- **Default Values**:\n  - `RSI Length` = 14\n  - `RSI Overbought` = 60\n  - `RSI Oversold` = 40\n  - `ATR Length` = 10\n  - `UT Bot Factor` = 1.0\n  - `Take Profit %` = 3.0\n  - `Stop Loss %` = 1.5\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1977": {
+    "id": 1977,
+    "name": "ADX Smoothed Cross",
+    "family": "trend",
+    "overview": "## Summary\n\nThe strategy trades based on a double-smoothed Average Directional Index (ADX). It compares the smoothed +DI and -DI lines to detect trend changes. When the smoothed +DI line crosses above the smoothed -DI line, the strategy enters a long position. When the smoothed +DI line crosses below the smoothed -DI line, it opens a short position.\n\n## How It Works\n\n- Uses an ADX indicator with configurable period.\n- Applies two exponential smoothing passes controlled by **Alpha1** and **Alpha2** parameters.\n- A long signal occurs when the previous smoothed +DI was below the smoothed -DI and the current smoothed +DI is above.\n- A short signal occurs on the opposite cross.\n- Optional parameters allow disabling long or short trades and control whether existing positions can be closed when an opposite signal appears.\n- Built-in risk management sets stop-loss and take-profit levels in points.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `AdxPeriod` | Period for the ADX calculation. |\n| `Alpha1` | First smoothing coefficient (0-1). |\n| `Alpha2` | Second smoothing coefficient (0-1). |\n| `StopLoss` | Stop-loss in points. |\n| `TakeProfit` | Take-profit in points. |\n| `AllowBuy` | Enable long entries. |\n| `AllowSell` | Enable short entries. |\n| `AllowCloseBuy` | Allow closing long positions on sell signals. |\n| `AllowCloseSell` | Allow closing short positions on buy signals. |\n| `CandleType` | Timeframe used for the indicator. |\n\n## Notes\n\n- Only finished candles are processed.\n- The strategy uses the high-level API with indicator binding.\n- Stop-loss and take-profit are handled via `StartProtection`.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `AdxPeriod` | Period for the ADX calculation. |\n| `Alpha1` | First smoothing coefficient (0-1). |\n| `Alpha2` | Second smoothing coefficient (0-1). |\n| `StopLoss` | Stop-loss in points. |\n| `TakeProfit` | Take-profit in points. |\n| `AllowBuy` | Enable long entries. |\n| `AllowSell` | Enable short entries. |\n| `AllowCloseBuy` | Allow closing long positions on sell signals. |\n| `AllowCloseSell` | Allow closing short positions on buy signals. |\n| `CandleType` | Timeframe used for the indicator. |"
+   },
+   "1875": {
+    "id": 1875,
+    "name": "Genie",
+    "family": "trend",
+    "overview": "Genie is a Parabolic SAR expert advisor enhanced with the Average Directional Index (ADX) to confirm trend strength. The strategy opens positions when the SAR flips relative to price while the +DI and -DI components of ADX change dominance. A trailing stop and fixed take profit manage risk.\n\nTesting shows that the approach works best on trending instruments with moderate volatility.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous SAR above prior close, current SAR below current close, previous +DI < previous -DI, current +DI > current -DI, and ADX above both current +DI and -DI.\n  - **Short**: Previous SAR below prior close, current SAR above current close, previous +DI > previous -DI, current +DI < current -DI, and ADX above both current +DI and -DI.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Trailing stop hits or previous candle closes against the position.\n- **Stops**: Yes, trailing stop and take profit measured in price units.\n- **Default Values**:\n  - `TakeProfit` = 500\n  - `TrailingStop` = 200\n  - `SarStep` = 0.02\n  - `AdxPeriod` = 14\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (between +DI and -DI)\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous SAR above prior close, current SAR below current close, previous +DI < previous -DI, current +DI > current -DI, and ADX above both current +DI and -DI.\n  - **Short**: Previous SAR below prior close, current SAR above current close, previous +DI > previous -DI, current +DI < current -DI, and ADX above both current +DI and -DI.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Trailing stop hits or previous candle closes against the position.\n- **Stops**: Yes, trailing stop and take profit measured in price units.\n- **Default Values**:\n  - `TakeProfit` = 500\n  - `TrailingStop` = 200\n  - `SarStep` = 0.02\n  - `AdxPeriod` = 14\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (between +DI and -DI)\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2130": {
+    "id": 2130,
+    "name": "Color XCCX Candle",
+    "family": "trend",
+    "overview": "Converted from MQL code `MQL/14260`.\n\nThis strategy compares two simple moving averages (SMA) built from candle open and close prices. When the SMA calculated from close prices crosses above the SMA based on open prices, a long position is opened. When the close-based SMA crosses below the open-based SMA, a short position is opened. Any existing opposite position is closed before opening a new one.\n\nParameters:\n\n- `SMA Length` – number of candles used to calculate both SMAs.\n- `Candle Type` – timeframe for incoming candles.\n- `Stop Loss %` – stop loss size as a percent of entry price.\n- `Take Profit %` – take profit size as a percent of entry price.\n\nThe strategy uses the high-level StockSharp API to subscribe to candles and bind indicators. It also plots both SMAs and executed trades on the chart when visualization is available.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "913": {
+    "id": 913,
+    "name": "ICT Indicator with Paper Trading",
+    "family": "trend",
+    "overview": "This strategy stores order block highs and lows and goes long when the close crosses above the latest order block high. The long position is closed when the stored order block low crosses above price.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: close price crosses above latest order block high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Exit long when order block low crosses above price.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: close price crosses above latest order block high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Exit long when order block low crosses above price.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1586": {
+    "id": 1586,
+    "name": "Horizontal Ray",
+    "family": "trend",
+    "overview": "Draws horizontal rays at SMA cross points and trades in the cross direction.\n\n## Details\n\n- **Entry Criteria**: `SMA20` crossing `SMA50` upward for long, downward for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 20\n  - `SlowLength` = 50\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Drawing\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: `SMA20` crossing `SMA50` upward for long, downward for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 20\n  - `SlowLength` = 50\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Drawing\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "375": {
+    "id": 375,
+    "name": "January Barometer",
+    "family": "trend",
+    "overview": "The January Barometer states that the market’s performance in January sets the tone for the remainder of the year. This strategy invests in an equity ETF for the rest of the year only if January closes higher; otherwise it stays in a cash proxy. The allocation decision is made once per year and held until year end.\n\nOn the first trading day of February the algorithm measures the total return of the equity ETF during January. If the return is positive and the order value exceeds the minimum threshold, it buys the equity ETF and holds it through December. If January was negative, it holds the cash ETF instead. The process repeats each year.\n\n## Details\n\n- **Entry Criteria**:\n  - On the first trading day of February calculate the total January return of `EquityETF`.\n  - Buy `EquityETF` if the return is positive and order size >= `MinTradeUsd`; otherwise hold `CashETF`.\n- **Long/Short**: Long equities or cash only.\n- **Exit Criteria**: Close the equity position on the last trading day of the year.\n- **Stops**: None.\n- **Default Values**:\n  - `EquityETF` – ETF representing the equity market.\n  - `CashETF` – cash proxy ETF.\n  - `CandleType` = 1 day.\n  - `MinTradeUsd` – minimum trade value.\n- **Filters**:\n  - Category: Seasonal.\n  - Direction: Long only.\n  - Timeframe: Long‑term.\n  - Rebalance: Annually.\n\n",
+    "details": "- **Entry Criteria**:\n  - On the first trading day of February calculate the total January return of `EquityETF`.\n  - Buy `EquityETF` if the return is positive and order size >= `MinTradeUsd`; otherwise hold `CashETF`.\n- **Long/Short**: Long equities or cash only.\n- **Exit Criteria**: Close the equity position on the last trading day of the year.\n- **Stops**: None.\n- **Default Values**:\n  - `EquityETF` – ETF representing the equity market.\n  - `CashETF` – cash proxy ETF.\n  - `CandleType` = 1 day.\n  - `MinTradeUsd` – minimum trade value.\n- **Filters**:\n  - Category: Seasonal.\n  - Direction: Long only.\n  - Timeframe: Long‑term.\n  - Rebalance: Annually.",
+    "parameters": ""
+   },
+   "3706": {
+    "id": 3706,
+    "name": "BreakRevert Pro",
+    "family": "trend",
+    "overview": "BreakRevert Pro is the StockSharp conversion of the MetaTrader 5 expert advisor *BreakRevertPro.mq5*. The strategy combines breakout confirmation on the one-minute timeframe with broader trend and volatility context from the 15-minute and one-hour charts. Probability-style scores are reproduced through indicator-driven approximations so that the behaviour remains close to the original EA while following StockSharp high-level API patterns.\n\n## Core Logic\n\n1. **Primary timeframe (1 minute)**\n   - Average True Range (ATR) estimates intraday volatility.\n   - A moving average of close prices measures the short-term directional bias.\n   - A second moving average tracks the frequency of large candle-to-candle moves, representing the Poisson breakout probability from the MQL code.\n   - An exponential moving average of absolute price moves produces the exponential-style probability used by the original safety filter.\n2. **Confirmation timeframe (15 minutes)**\n   - A simple moving average measures the medium-term trend direction and blocks trades against the dominant flow.\n3. **Context timeframe (1 hour)**\n   - Hourly candles provide the higher timeframe trend and the volatility range required for breakout validation and mean-reversion flattening checks.\n\nWhen the Poisson and Weibull proxy probabilities exceed the breakout threshold, the 1-minute and 15-minute trends are aligned to the upside, and hourly volatility is elevated, the strategy enters a long breakout trade. Conversely, when probabilities drop below the mean-reversion threshold and the hourly trend is flat, the strategy sells short, targeting pullbacks back into the range. Market orders are used to mirror the immediate execution style of the original expert advisor.\n\n## Risk Management\n\n- A configurable trade delay prevents over-trading by enforcing a pause between consecutive entries.\n- `MaxPositions` limits the number of simultaneous open positions. When reversing from an opposite trade the strategy closes the c",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `RiskPerTrade` | Risk per trade in percent of the portfolio value (used for dynamic lot calculation). |\n| `LookbackPeriod` | Number of finished candles used for moving averages and ATR calculations across all timeframes. |\n| `BreakoutThreshold` | Minimum composite probability required for a breakout entry. |\n| `MeanReversionThreshold` | Maximum probability that still allows mean-reversion shorts. |\n| `TradeDelaySeconds` | Minimum number of seconds between consecutive entries. |\n| `MaxPositions` | Maximum simultaneous positions (used for both long and short exposure). |\n| `EnableSafetyTrade` | Enables optional validation safety trades when no positions are open. |\n| `SafetyTradeIntervalSeconds` | Waiting period between safety trade checks. |\n| `CandleType` | Primary timeframe used for the main signal subscription (default: 1 minute). |"
+   },
+   "532": {
+    "id": 532,
+    "name": "ATR Stop Loss Double SMA",
+    "family": "trend",
+    "overview": "This strategy enters long when a fast Simple Moving Average (SMA) crosses above a slow SMA and enters short on the opposite cross.\nAn optional stop-loss uses the Average True Range (ATR) multiplied by a user-defined factor to determine exit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA.\n  - **Short**: Fast SMA crosses below slow SMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - ATR-based stop-loss if enabled.\n- **Stops**: ATR multiple from entry price.\n- **Default Values**:\n  - `FastLength` = 15\n  - `SlowLength` = 45\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA.\n  - **Short**: Fast SMA crosses below slow SMA.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - ATR-based stop-loss if enabled.\n- **Stops**: ATR multiple from entry price.\n- **Default Values**:\n  - `FastLength` = 15\n  - `SlowLength` = 45\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2575": {
+    "id": 2575,
+    "name": "RSI Trader",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader expert advisor *\"RSI trader v0.15\"* in the StockSharp high-level API. It aligns trend direction between price action and a smoothed Relative Strength Index (RSI). Trading is performed on a single instrument using one-hour candles by default, but the timeframe is configurable through the `CandleType` parameter.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `RsiPeriod` | Lookback period used for RSI calculation. | 14 |\n| `ShortRsiMaPeriod` | Length of the fast SMA applied to RSI values. | 9 |\n| `LongRsiMaPeriod` | Length of the slow SMA applied to RSI values. | 45 |\n| `ShortPriceMaPeriod` | Length of the short SMA applied to closing prices. | 9 |\n| `LongPriceMaPeriod` | Length of the long weighted moving average applied to prices. | 45 |\n| `Reverse` | When `true`, buy and sell orders are swapped (mirrors the original \"Reverse\" input). | `false` |\n| `CandleType` | Data type for price candles. Defaults to one-hour time frame. | `1h` |\n\nAll integer parameters expose optimization ranges mirroring the flexibility of the MetaTrader expert input settings."
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4004,
+      "name": "FT Bill Williams Trader",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5) and ema(close,8) < ema(close,13)",
+      "exit_long": "close < donchian_low_prev(low,5) and ema(close,8) > ema(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fresh up-fractal is a close above the prior 5-bar high per the documented FractalPeriod 5, and the Alligator is approximated by EMAs using the documented TeethPeriod 8 and JawPeriod 13 with lips below jaw for an awakening trend. IndentPoints, MaxDistancePoints, trend alignment, the jaw exit and the 50-point stop and target are not expressible as percentages."
+    },
+    {
+      "id": 468,
+      "name": "Two X SPY TIPS",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,200))",
+      "exit_long": "crossbelow(close, sma(close,200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SmaLength 200 trend test is used, with the two-instrument S&P plus TIPS conjunction reduced to a single-instrument cross and the new-month rebalance dropped since there is no calendar. The docs say there are no exits, so the mirrored cross below the average is added as a risk exit."
+    },
+    {
+      "id": 3874,
+      "name": "3874 Trendcapture",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and adx(high,low,close,14) < 20",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule of closing above SAR with the AdxPeriod 14 main line below 20 is kept, with SAR proxied by EMA(10) since the DSL has no SAR. Direction flipping after a closed trade, the GuardPoints break-even move and the 180/50-point take-profit and stop are not expressible."
+    },
+    {
+      "id": 3129,
+      "name": "Simple EA MA plus MACD",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) and ema(close,100) < donchian_high_prev(high,1) and bars_since(crossabove(macd(close,12,26),0)) < 3",
+      "exit_long": "close < donchian_low_prev(low,1) and ema(close,100) > donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaPeriod 100 must sit below the signal-bar high, the documented MACD 12/26 zero cross is allowed within the last three bars instead of two preceding bars because state cannot be stored, and the breakout is a close beyond the prior bar extremum. The pip stop, target and trailing distances are not percentages."
+    },
+    {
+      "id": 4157,
+      "name": "Combo EA4 FSF R Updated 5",
+      "family": "trend",
+      "entry_long": "ema(close,10) > ema(close,20) and rsi(close,14) > 50 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,10) < ema(close,20) and rsi(close,14) < 50 and macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented strict consensus rule is preserved by requiring the MA, RSI and MACD modules to agree, with the documented MACD 12/26/9 and MA periods as fallbacks since Ma1 to Ma3 and RsiPeriod carry no values. Stochastic, Parabolic SAR, the zero-lag variant, the ATR-based protection and the trailing stop are dropped."
+    },
+    {
+      "id": 2114,
+      "name": "Universal Trailing Stop",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy generates no entry signal and only moves a stop for a position opened manually or by another strategy. Delta, Step and StartProfit are point distances for stop placement, not a market-derived trigger."
+    },
+    {
+      "id": 1690,
+      "name": "News Pending Orders",
+      "family": "other",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long leg is a buy stop placed Step ticks above the ask, so on a bar series it becomes an upside break of the prior bar, with the sell-stop leg as the mirrored exit. The Level1 pending-order repricing, break-even, Tick and StopLoss values, which are in ticks rather than percentages, are not expressible."
+    },
+    {
+      "id": 1235,
+      "name": "Reflex Oscillator",
+      "family": "other",
+      "entry_long": "crossabove(zscore(roc(close,20),20),1)",
+      "exit_long": "crossbelow(zscore(roc(close,20),20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ehlers Reflex with its super-smoother and post-smoothing stages is not in the DSL, so it is approximated by a volatility-normalized momentum z-score over the documented ReflexPeriod 20, which keeps the documented UpperLevel 1 and zero-line exit thresholds meaningful. SuperSmootherPeriod 8 and PostSmoothPeriod 33 are not separately represented and the docs state there are no stops."
+    },
+    {
+      "id": 820,
+      "name": "Function Highest Lowest",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe an indicator showcase that demonstrates highest and lowest helpers with LengthA 10 and LengthB 20 and generate no trades. There is no entry logic to translate."
+    },
+    {
+      "id": 812,
+      "name": "FreedX Grid Backtest",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a multi-level grid engine that distributes orders across price levels and buys each lower level, so it has no single-symbol directional entry signal. Long, short and neutral grid modes and level spacing are not DSL constructs."
+    }
+  ]
+}

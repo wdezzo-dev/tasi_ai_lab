@@ -1,0 +1,98 @@
+{
+ "batch_156": {
+  "strategy_ids": [
+   2230,
+   1556,
+   4052,
+   2281,
+   2256,
+   2380,
+   3867,
+   573,
+   2461,
+   1538
+  ],
+  "docs": {
+   "2230": {
+    "id": 2230,
+    "name": "Doctor",
+    "family": "trend",
+    "overview": "The strategy combines several classic indicators to detect trend direction and momentum:\n\n- **Slope detection** using a 40-period Weighted Moving Average to evaluate trend direction.\n- **Linear location** via a 400-period Weighted Moving Average compared against the highs and lows of the last three candles.\n- **Momentum** confirmation with Relative Strength Index periods 14 and 5.\n- **Trend reversal** filter from Parabolic SAR.\n\nA long position is opened when all bullish conditions align, and a short position when all bearish conditions align. Existing positions are closed on opposite signals or when protective levels are hit. An optional trailing stop pushes the stop loss forward once half of the stop distance is achieved.",
+    "details": "",
+    "parameters": "- `StopLossTicks` – stop-loss distance in ticks.\n- `TakeProfitTicks` – take-profit distance in ticks.\n- `TrailingStop` – enables trailing stop logic.\n- `CandleType` – timeframe used for candles (default 30 minutes)."
+   },
+   "1556": {
+    "id": 1556,
+    "name": "Weighted Ichimoku",
+    "family": "trend",
+    "overview": "Strategy combines Ichimoku signals into a weighted score.\nIt buys when the score exceeds the buy threshold and exits when the score drops below the sell threshold.\n\n## Details\n\n- **Entry Criteria**: score >= BuyThreshold\n- **Long/Short**: Long only\n- **Exit Criteria**: score <= SellThreshold or below zero if threshold disabled\n- **Stops**: No\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `Offset` = 26\n  - `BuyThreshold` = 60\n  - `SellThreshold` = -49\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: score >= BuyThreshold\n- **Long/Short**: Long only\n- **Exit Criteria**: score <= SellThreshold or below zero if threshold disabled\n- **Stops**: No\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `Offset` = 26\n  - `BuyThreshold` = 60\n  - `SellThreshold` = -49\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "4052": {
+    "id": 4052,
+    "name": "MTrendLine",
+    "family": "trend",
+    "overview": "The **MTrendLine Strategy** ports the MetaTrader script `MTrendLine.mq4` to StockSharp's high-level strategy API. The original\nexpert advisor repeatedly adjusts the price of existing pending orders so they remain aligned with a trend line drawn on the\nchart. The StockSharp version automates the same behaviour by rebuilding the moving trend line with a configurable\n`LinearRegression` indicator. Up to three independent pending order slots can follow the calculated regression line with their\nown order type, distance, and volume. Every time a new candle closes the strategy recomputes the line value, evaluates the\nrequired offsets, and refreshes the pending orders accordingly.\n\nThe port adds modern risk and usability improvements such as structured parameters, automatic conversion from MetaTrader points\ninto real price steps, and optional stop-loss / take-profit distances that move together with the pending orders. Bid/ask\nupdates are monitored via `SubscribeLevel1()` so the strategy honours the minimal distance that brokers demand between the\ncurrent market price and resting orders.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-hour candles | Primary timeframe used to build the regression trend line. |\n| `RegressionLength` | `int` | `24` | Number of completed candles fed into the `LinearRegression` indicator. |\n| `PointValue` | `decimal` | `0` | Monetary value of one MetaTrader point. When zero the strategy uses the security price step. |\n| `TradeVolume` | `decimal` | `1` | Default volume used by all slots when their own volume is zero. |\n| `StopLossPoints` | `decimal` | `0` | Stop-loss distance in points. Set to zero to disable automatic stop-loss placement. |\n| `TakeProfitPoints` | `decimal` | `0` | Take-profit distance in points. Set to zero to disable automatic take-profit placement. |\n| `MinDistancePoints` | `decimal` | `0` | Minimum gap (in points) that must exist between the best bid/ask and the pending order. |\n| `PendingOrder{1,2,3}Enabled` | `bool` | Slot specific | Enables or disables the given slot. |\n| `PendingOrder{1,2,3}Mode` | `enum` | Slot specific | Pending order type: BuyLimit, BuyStop, SellLimit, or SellStop. |\n| `PendingOrder{1,2,3}DistancePoints` | `decimal` | Slot specific | Distance (in points) added to the regression value to compute the order price. |\n| `PendingOrder{1,2,3}Volume` | `decimal` | Slot specific | Volume for the slot. Zero reuses `TradeVolume`. |"
+   },
+   "2281": {
+    "id": 2281,
+    "name": "Multik SMA Exp",
+    "family": "trend",
+    "overview": "This strategy implements a contrarian approach based on the slope of a simple moving average (SMA). It was ported from the MetaTrader 5 expert advisor \"Multik_SMA_Exp\".\n\nThe strategy monitors the last three SMA values. If the SMA has been falling for the two most recent completed segments, the strategy enters a long position. If the SMA has been rising for the two segments, it opens a short position. Positions are closed when the slope of the SMA reverses.",
+    "details": "",
+    "parameters": "- **MA Period** – length of the simple moving average. Default: 50.\n- **Candle Type** – type of candles used for calculations. Default: 1-minute timeframe."
+   },
+   "2256": {
+    "id": 2256,
+    "name": "XDPO Candle",
+    "family": "trend",
+    "overview": "This strategy is a conversion of the original MQL5 expert **Exp_XDPOCandle**. It builds synthetic candles by applying two consecutive exponential moving averages to the open and close prices. The color of the resulting candle (bullish, bearish or neutral) drives trading decisions.\n\n## Strategy Logic\n\n1. Each incoming market candle is smoothed twice:\n   - The first smoothing uses an EMA of length `FastLength`.\n   - The second smoothing applies another EMA of length `SlowLength` to the result of the first one.\n2. If the smoothed close is above the smoothed open, the candle is considered *bullish*.\n3. If the smoothed close is below the smoothed open, the candle is considered *bearish*.\n4. The strategy opens a long position when a bullish candle appears after a non-bullish one. It opens a short position when a bearish candle appears after a non-bearish one.\n5. Existing opposite positions are closed automatically by reversing through market orders.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `FastLength` | Length of the first EMA applied to prices. |\n| `SlowLength` | Length of the second EMA applied to the first EMA result. |\n| `CandleType` | The timeframe and type of candles used for calculation. |\n\n## Usage\n\n1. Attach the strategy to a security within StockSharp environment.\n2. Configure the parameters if needed. Default values are tuned to match the original expert settings.\n3. Start the strategy. It will subscribe to the specified candle type and trade on color changes of the smoothed candles.\n\n## Notes\n\n- Risk management is handled by `StartProtection()` with default settings. Adjust `Volume` and protection parameters externally as required.\n- Implementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `FastLength` | Length of the first EMA applied to prices. |\n| `SlowLength` | Length of the second EMA applied to the first EMA result. |\n| `CandleType` | The timeframe and type of candles used for calculation. |"
+   },
+   "2380": {
+    "id": 2380,
+    "name": "Day Trading Indicator Fusion",
+    "family": "momentum",
+    "overview": "The strategy trades 5-minute candles using Parabolic SAR, MACD (12,26,9), Stochastic Oscillator (5,3,3) and Momentum (14). It requires all indicators to align before entering a position.\n\n- **Long entry**: SAR below price with previous SAR above current, Momentum < 100, MACD line below signal line, Stochastic %K < 35.\n- **Short entry**: SAR above price with previous SAR below current, Momentum > 100, MACD line above signal line, Stochastic %K > 60.\n\nPositions are closed when the opposite conditions occur. Risk management uses a trailing stop and optional take profit.\n\n## Parameters\n- **Volume** – order volume.\n- **Take Profit** – target profit in points.\n- **Trailing Stop** – trailing stop distance in points.\n- **Candle Type** – candle subscription type (default 5-minute).\n",
+    "details": "",
+    "parameters": "- **Volume** – order volume.\n- **Take Profit** – target profit in points.\n- **Trailing Stop** – trailing stop distance in points.\n- **Candle Type** – candle subscription type (default 5-minute)."
+   },
+   "3867": {
+    "id": 3867,
+    "name": "Equal Volume & Range Bars",
+    "family": "volatility",
+    "overview": "Equal Volume & Range Bars ports the MetaTrader 4 script `equalvolumebars.mq4` to StockSharp. The original script generated off-line charts whose candles closed after either a fixed number of ticks or after the price had traversed a configurable point range. The strategy reproduces the same candle-building logic inside the StockSharp environment: it listens to live ticks, optionally preloads historical M1 candles, and emits detailed log entries whenever a synthetic bar is completed.",
+    "details": "",
+    "parameters": "* **Work Mode** – selects between `EqualVolumeBars` and `RangeBars` candle construction.\n* **Ticks In Bar** – number of ticks per candle (equal volume mode) or point range measured in price steps (range mode).\n* **Use Minute History** – enables the synthetic replay of finished M1 candles before live ticks arrive.\n* **Minute Candle Type** – candle subscription used for the historical seeding step (defaults to one-minute time frame)."
+   },
+   "573": {
+    "id": 573,
+    "name": "BTFD",
+    "family": "trend",
+    "overview": "Volume and RSI based dip buying strategy with five take-profit levels and a protective stop.\n\n## Details\n\n- **Entry Criteria**: Volume spike over SMA and RSI below oversold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Five layered take-profit targets or stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeLength` = 70\n  - `VolumeMultiplier` = 2.5\n  - `RsiLength` = 20\n  - `RsiOversold` = 30\n  - `Tp1` = 0.4\n  - `Tp2` = 0.6\n  - `Tp3` = 0.8\n  - `Tp4` = 1.0\n  - `Tp5` = 1.2\n  - `Q1` = 20\n  - `Q2` = 40\n  - `Q3` = 60\n  - `Q4` = 80\n  - `Q5` = 100\n  - `StopLossPercent` = 5\n  - `CandleType` = TimeSpan.FromMinutes(3)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (3m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Volume spike over SMA and RSI below oversold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Five layered take-profit targets or stop loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VolumeLength` = 70\n  - `VolumeMultiplier` = 2.5\n  - `RsiLength` = 20\n  - `RsiOversold` = 30\n  - `Tp1` = 0.4\n  - `Tp2` = 0.6\n  - `Tp3` = 0.8\n  - `Tp4` = 1.0\n  - `Tp5` = 1.2\n  - `Q1` = 20\n  - `Q2` = 40\n  - `Q3` = 60\n  - `Q4` = 80\n  - `Q5` = 100\n  - `StopLossPercent` = 5\n  - `CandleType` = TimeSpan.FromMinutes(3)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (3m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2461": {
+    "id": 2461,
+    "name": "Ilan14",
+    "family": "volume",
+    "overview": "Ilan14 is a hedging grid strategy that opens long and short positions simultaneously. When the market moves against one side by a user defined pip distance, the strategy adds a new order in that direction with its volume multiplied by the **Lot Exponent**. The average price of the position is tracked and once price reverts by the configured **Take Profit** distance, all orders on that side are closed.\n\nParameters:\n- **Pip Step** – distance in pips between grid orders.\n- **Lot Exponent** – multiplier applied to the volume of each additional order.\n- **Max Trades** – maximum number of orders per direction.\n- **Take Profit** – profit target in pips from the weighted average price.\n- **Initial Volume** – volume of the first order.\n- **Candle Type** – timeframe for candle subscription.\n\nThe implementation uses the high level StockSharp API with candle subscriptions and avoids manual data collections. Both sides of the grid are managed independently, allowing the strategy to capture rebounds after adverse moves.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1538": {
+    "id": 1538,
+    "name": "Volume Profile",
+    "family": "volume",
+    "overview": "This simplified volume profile strategy tracks session high, low and the point of control defined by the price of the candle with the highest volume. The strategy buys when price is above the point of control and sells when it is below. Positions are closed when price returns to the session mid level.\n\n## Parameters\n- **Candle Type** – timeframe of input candles.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe of input candles."
+   }
+  }
+ }
+}

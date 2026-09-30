@@ -1,0 +1,98 @@
+{
+ "batch_319": {
+  "strategy_ids": [
+   1031,
+   2914,
+   907,
+   2465,
+   908,
+   2097,
+   1794,
+   747,
+   3151,
+   2918
+  ],
+  "docs": {
+   "1031": {
+    "id": 1031,
+    "name": "Function Matrix Library",
+    "family": "trend",
+    "overview": "Demonstrates multiple linear regression using basic matrix algebra. The strategy computes coefficients for two explanatory variables without generating trades.\n\n## Details\n\n- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 20\n  - `Length1` = 10\n  - `Length2` = 20\n  - `Candle Type` = 5-minute\n- **Filters**:\n  - Category: Indicator showcase\n  - Direction: None\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 20\n  - `Length1` = 10\n  - `Length2` = 20\n  - `Candle Type` = 5-minute\n- **Filters**:\n  - Category: Indicator showcase\n  - Direction: None\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2914": {
+    "id": 2914,
+    "name": "Global Stop Timer",
+    "family": "trend",
+    "overview": "The Global Stop Timer Strategy is a risk-management overlay converted from the MetaTrader expert `Exp_GStop_Tm`.\nIt continuously watches the portfolio value on every finished candle and halts trading once a global profit target\nor loss limit is reached. Additionally, it can restrict trading to a user-defined time window and force all open\npositions to be flattened whenever the window is closed.\n\n## How It Works\n\n- When the strategy starts it records the initial portfolio balance as a reference point.\n- Each time the subscribed candle series closes, the strategy reads the current portfolio value and calculates the\n  difference from the initial balance.\n- Depending on the selected `StopCalculationMode`, the difference is converted to a percentage or left as currency.\n- If the loss exceeds `StopLoss` or the profit exceeds `TakeProfit`, the strategy enters the stopped state, logs the\n  event, and sends market orders to close any remaining position.\n- When the optional trading window is enabled and the current time leaves the window, the strategy also attempts to\n  flatten the position. Once the position size becomes zero the stop flag is reset, allowing trading to resume inside\n  the next valid window.\n\nThe strategy itself never opens new positions. It is designed to supervise other strategies or manual trades and to\nprotect the account from excessive drawdown or to lock in account-wide profits.\n\n## Trading Window Logic\n\nThe trading window replicates the original expert logic:\n\n- If the start hour is less than the end hour, trading is allowed between the start minute (inclusive) and the end\n  minute (exclusive) on the same day.\n- If the start and end hours are equal, trading is permitted only when the current minute is between `StartMinute`\n  (inclusive) and `EndMinute` (exclusive).\n- If the start hour is greater than the end hour, the session wraps past midnight. Trading is enabled from the start\n  time until midnight and resumes from midnight until the end time on the",
+    "details": "",
+    "parameters": "- `StopCalculationMode` – choose between percentage-based or currency-based global stops.\n- `StopLoss` – global loss threshold. Treated as a percentage when the percent mode is active, otherwise as account\n  currency.\n- `TakeProfit` – global profit target. Uses the same unit as `StopLoss`.\n- `UseTradingWindow` – enable or disable the session filter.\n- `StartHour` / `StartMinute` – starting time of the allowed trading window.\n- `EndHour` / `EndMinute` – closing time of the allowed trading window.\n- `CandleType` – candle series that defines how often the account state is evaluated."
+   },
+   "907": {
+    "id": 907,
+    "name": "Ichimoku by FarmerBTC",
+    "family": "trend",
+    "overview": "Ichimoku by FarmerBTC enters long positions when price trades above the Ichimoku cloud, the cloud is bullish, a higher-timeframe SMA confirms the uptrend, and volume exceeds its moving average multiplied by a factor. It exits when price falls below the cloud.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Long only\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `TenkanPeriod` = 10\n  - `KijunPeriod` = 30\n  - `SenkouSpanBPeriod` = 53\n  - `SmaLength` = 13\n  - `VolumeLength` = 20\n  - `VolumeMultiplier` = 1.5\n  - `CandleType` = 1 hour\n  - `HtfCandleType` = 1 day\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Ichimoku, SMA, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Long only\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `TenkanPeriod` = 10\n  - `KijunPeriod` = 30\n  - `SenkouSpanBPeriod` = 53\n  - `SmaLength` = 13\n  - `VolumeLength` = 20\n  - `VolumeMultiplier` = 1.5\n  - `CandleType` = 1 hour\n  - `HtfCandleType` = 1 day\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Ichimoku, SMA, Volume\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2465": {
+    "id": 2465,
+    "name": "Stochastic Martingale",
+    "family": "trend",
+    "overview": "This strategy combines a classic Stochastic oscillator entry with a martingale style averaging.\nIt opens a position when the %K line crosses the %D line and the oscillator is above/below configurable zones.\nIf price moves against the position by a defined step, the strategy increases volume by a multiplier.\nPositions are closed when accumulated profit reaches a defined number of points.\n\n## Details\n- **Entry Criteria**\n  - Long: %K > %D and %D > ZoneBuy\n  - Short: %K < %D and %D < ZoneSell\n- **Averaging**\n  - Additional orders are placed every `Step` points (or `Step * orders count` in mode 1).\n  - Volume of each new order is multiplied by `Mult`.\n- **Exit Criteria**\n  - Long: price ≥ last buy price + `ProfitFactor * orders count` points.\n  - Short: price ≤ last sell price − `ProfitFactor * orders count` points.\n- **Parameters** include step size, step mode, profit factor, multiplier, initial volumes and stochastic periods.\n- **Filters**\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**\n  - Long: %K > %D and %D > ZoneBuy\n  - Short: %K < %D and %D < ZoneSell\n- **Averaging**\n  - Additional orders are placed every `Step` points (or `Step * orders count` in mode 1).\n  - Volume of each new order is multiplied by `Mult`.\n- **Exit Criteria**\n  - Long: price ≥ last buy price + `ProfitFactor * orders count` points.\n  - Short: price ≤ last sell price − `ProfitFactor * orders count` points.\n- **Parameters** include step size, step mode, profit factor, multiplier, initial volumes and stochastic periods.\n- **Filters**\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "908": {
+    "id": 908,
+    "name": "Ichimoku Cloud Breakout Only Long",
+    "family": "trend",
+    "overview": "Strategy enters long positions when price breaks above the Ichimoku cloud and exits when price falls back below it. Only long trades are taken.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close` crosses above `max(SenkouA, SenkouB)`\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - `Close` crosses below `min(SenkouA, SenkouB)`\n- **Stops**: None\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close` crosses above `max(SenkouA, SenkouB)`\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - `Close` crosses below `min(SenkouA, SenkouB)`\n- **Stops**: None\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanBPeriod` = 52\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Ichimoku\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2097": {
+    "id": 2097,
+    "name": "Laguerre Filter",
+    "family": "trend",
+    "overview": "The strategy trades the crossover between a Laguerre filter and a short FIR filter built as a weighted moving average of recent median prices.\n\n- The Laguerre filter smooths price using the Gamma parameter to reduce noise.\n- The FIR line is a 4-period weighted moving average with symmetrical weights.\n- When the FIR line was above the Laguerre line and crosses below it, the strategy opens a long position.\n- When the FIR line was below and crosses above the Laguerre line, a short position is opened.\n- Opposite positions are closed when the relation between the lines reverses.\n- A stop-loss in percent of entry price protects every trade.\n\nThis mean-reversion approach attempts to capture pullbacks when price deviates from the smoothed Laguerre curve.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1794": {
+    "id": 1794,
+    "name": "Brake Exp",
+    "family": "trend",
+    "overview": "This strategy trades based on the **BrakeExp** indicator. The indicator draws an adaptive support and resistance channel built from an exponential curve. A switch of the channel from lower to upper line generates a sell signal, and a switch from upper to lower line generates a buy signal.\n\n## How it works\n\n- When the indicator reports an **up signal**, the strategy closes short positions and opens a new long position.\n- When a **down signal** appears, existing long positions are closed and a short position is opened.\n- If only an **up trend** is detected the strategy exits short positions.\n- If only a **down trend** is detected the strategy exits long positions.\n\nSignals are processed on finished candles only.\n\n## Parameters\n\n- `A` – curve acceleration factor of the BrakeExp indicator.\n- `B` – price step used for the channel width.\n- `CandleType` – candle series for indicator calculation.\n- `Volume` – order volume used when entering the market.\n\n## Notes\n\nThe strategy uses the high level StockSharp API and can be run in Designer, Shell or any other StockSharp product.\n",
+    "details": "",
+    "parameters": "- `A` – curve acceleration factor of the BrakeExp indicator.\n- `B` – price step used for the channel width.\n- `CandleType` – candle series for indicator calculation.\n- `Volume` – order volume used when entering the market."
+   },
+   "747": {
+    "id": 747,
+    "name": "EMA Shift Parallel",
+    "family": "trend",
+    "overview": "This strategy trades when a shifted fast EMA crosses a slow EMA. Long and short sides can be enabled separately. Each side supports optional stop-loss and trailing stop based on percentage levels.\n\n## Parameters\n- Candle Type\n- Enable long\n- Fast EMA long\n- Slow EMA long\n- Down shift factor\n- Long stop-loss %\n- Long trailing activation %\n- Long trailing offset %\n- Close long on signal\n- Enable short\n- Fast EMA short\n- Slow EMA short\n- Up shift factor\n- Short stop-loss %\n- Short trailing activation %\n- Short trailing offset %\n- Close short on signal\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Enable long\n- Fast EMA long\n- Slow EMA long\n- Down shift factor\n- Long stop-loss %\n- Long trailing activation %\n- Long trailing offset %\n- Close long on signal\n- Enable short\n- Fast EMA short\n- Slow EMA short\n- Up shift factor\n- Short stop-loss %\n- Short trailing activation %\n- Short trailing offset %\n- Close short on signal"
+   },
+   "3151": {
+    "id": 3151,
+    "name": "EMA LWMA RSI",
+    "family": "trend",
+    "overview": "The **EMA LWMA RSI Strategy** reproduces the MetaTrader expert advisor \"EMA LWMA RSI\" in StockSharp. It compares two moving averages that use the same applied price and optionally a forward shift, while a Relative Strength Index filter confirms the momentum. The algorithm only reacts to newly finished candles from the configured timeframe and trades a single net position: it closes any opposite exposure before opening a new order in the signalled direction. Stop-loss and take-profit distances are configured in pips and automatically scaled to the instrument's tick size.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | `1h TimeFrame` | Candle series processed by the strategy. |\n| `StopLossPips` | `int` | `150` | Stop-loss distance in pips. `0` disables the stop. |\n| `TakeProfitPips` | `int` | `150` | Take-profit distance in pips. `0` disables the target. |\n| `EmaPeriod` | `int` | `28` | Period of the exponential moving average. |\n| `LwmaPeriod` | `int` | `8` | Period of the linear weighted moving average. |\n| `MaShift` | `int` | `0` | Forward shift (bars) applied to both moving averages. |\n| `RsiPeriod` | `int` | `14` | Averaging period of the RSI. |\n| `MaAppliedPrice` | `AppliedPriceType` | `Weighted` | Applied price forwarded to EMA and LWMA. |\n| `RsiAppliedPrice` | `AppliedPriceType` | `Weighted` | Applied price used by the RSI. |"
+   },
+   "2918": {
+    "id": 2918,
+    "name": "SilverTrend ColorJFatl Digit MMRec",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor `Exp_SilverTrend_ColorJFatl_Digit_MMRec`. It recreates the dual-block architecture where two independent logic modules manage their own virtual position sizes and combine them into the final strategy position:\n\n- **SilverTrend block** – reads candle colors produced by the SilverTrend indicator to detect when price crosses adaptive channel borders.\n- **ColorJFatl block** – calculates a filtered FATL (Fast Adaptive Trend Line) using the published weight table and an EMA-based smoother that emulates the Jurik moving average used in MetaTrader.\n\nBoth modules can open long and short trades independently, close opposite exposure on new signals, and apply their own stop-loss and take-profit distances. The final position of the strategy equals the sum of the virtual positions handled by the two blocks.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n| --- | --- | --- |\n| SilverTrend | `Silver Candle Type` | Candle subscription used for the SilverTrend indicator. |\n| SilverTrend | `SSP` | Length of the rolling high/low range. |\n| SilverTrend | `Risk` | Channel contraction factor (original `Risk` input). |\n| SilverTrend | `Signal Bar` | Bar shift used for the signal (0 = current closed bar, 1 = previous bar, etc.). |\n| SilverTrend | `Allow Silver Long/Short` | Enable entries for each direction. |\n| SilverTrend | `Close Silver Long/Short` | Allow automatic closing of the opposite position. |\n| SilverTrend | `Silver Volume` | Volume for trades opened by the SilverTrend block. |\n| SilverTrend | `Silver SL/TP` | Stop-loss and take-profit distances in points. |\n| ColorJFatl | `Color Candle Type` | Candle subscription used for the FATL calculations. |\n| ColorJFatl | `JMA Length` | Length of the EMA smoother that emulates JMA. |\n| ColorJFatl | `JMA Phase` | Preserved for completeness (no direct influence inside StockSharp). |\n| ColorJFatl | `Applied Price` | Source price (close, median, typical, trend-follow, etc.). |\n| ColorJFatl | `Digits` | Decimal precision applied to the FATL value. |\n| ColorJFatl | `Color Signal Bar` | Bar shift used for FATL signals. |\n| ColorJFatl | `Allow/Close` toggles | Enable entries and auto exits for each direction. |\n| ColorJFatl | `Color Volume` | Volume for trades opened by the ColorJFatl block. |\n| ColorJFatl | `Color SL/TP` | Stop-loss and take-profit distances in points for the block. |"
+   }
+  }
+ }
+}

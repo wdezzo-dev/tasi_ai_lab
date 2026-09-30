@@ -1,0 +1,98 @@
+{
+ "batch_128": {
+  "strategy_ids": [
+   1333,
+   4014,
+   2748,
+   1373,
+   1617,
+   54,
+   787,
+   1116,
+   3652,
+   769
+  ],
+  "docs": {
+   "1333": {
+    "id": 1333,
+    "name": "SPY TLT",
+    "family": "trend",
+    "overview": "The strategy buys the main security when the TLT price crosses above its SMA and exits when TLT closes below the SMA. Trading is allowed only within the specified time window.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: TLT closes above its SMA within the time window.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - TLT closes below its SMA.\n- **Stops**: None.\n- **Default Values**:\n  - `Start Time` = 2014-01-01\n  - `End Time` = 2099-01-01\n  - `TLT Symbol` = TLT\n  - `SMA Length` = 20\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: TLT closes above its SMA within the time window.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - TLT closes below its SMA.\n- **Stops**: None.\n- **Default Values**:\n  - `Start Time` = 2014-01-01\n  - `End Time` = 2099-01-01\n  - `TLT Symbol` = TLT\n  - `SMA Length` = 20\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "4014": {
+    "id": 4014,
+    "name": "Brandy v1.2 Strategy (C#)",
+    "family": "trend",
+    "overview": "The **Brandy v1.2 Strategy** is a direct conversion of the MetaTrader 4 expert advisor \"Brandy_v1_2.mq4\" into the StockSharp high-level strategy framework. The system evaluates a pair of displaced simple moving averages (SMAs) calculated on the closing price of the configured candle series. New positions are opened only when both the long-term and short-term SMAs show synchronized momentum in the same direction, while existing trades are managed using slope reversals, fixed stop-loss levels, and an optional trailing stop module.\n\nThe original MQL script executed exactly once per completed bar. This port processes finished StockSharp candles in the same fashion, ensuring that all trading decisions are based on closed data without relying on partially formed bars.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `LongPeriod` | 70 | Length of the primary SMA (`p1` in MQL). Must be > 0. |\n| `LongShift` | 5 | Backward shift applied to the long SMA comparison (`s1`). Can be zero. |\n| `ShortPeriod` | 20 | Length of the confirmation SMA (`p2`). Must be > 0. |\n| `ShortShift` | 5 | Backward shift for the short SMA (`s2`). Can be zero. |\n| `StopLossPoints` | 50 | Fixed stop distance in price steps (`sl`). Set to 0 to disable the hard stop. |\n| `TrailingStopPoints` | 150 | Trailing distance in price steps (`ts`). Trailing activates only when the value is ≥ 100, mirroring the original threshold. |\n| `Volume` | 0.1 | Order volume used for entries (`lots`). |\n| `CandleType` | 15-minute time frame | Candle series processed by the strategy (user configurable). |\n\n### Price step dependency\nBoth stop parameters operate in instrument points. The helper method converts them to absolute price deltas via `Security.PriceStep`. If the data source does not supply `PriceStep`, the strategy falls back to `0.0001` so the logic continues to work, albeit with an approximate conversion. Always verify the symbol metadata in StockSharp before live usage."
+   },
+   "2748": {
+    "id": 2748,
+    "name": "ColorJFatl Digit TM Plus",
+    "family": "trend",
+    "overview": "The ColorJFatl Digit TM Plus strategy is a direct port of the MetaTrader 5\nexpert advisor *Exp_ColorJFatl_Digit_Tm_Plus*. It trades slope reversals of a\nFast Adaptive Trend Line (FATL) that is smoothed with a Jurik Moving Average\n(JMA). The original indicator publishes three colors (up, flat, down). The\nstrategy reacts when the color on the latest finished bar changes and aligns\nthe position with the new slope.\n\nThe StockSharp implementation keeps the high-level behaviour of the MQL\nversion: orders are generated on closed candles, optional time-based exits are\navailable, and the lot sizing input is represented by the `TradeVolume`\nparameter.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Quantity used for market entries. |\n| `StopLossPoints` | Protective stop distance in price steps. Set to `0` to disable. |\n| `TakeProfitPoints` | Profit target distance in price steps. Set to `0` to disable. |\n| `EnableBuyEntries` / `EnableSellEntries` | Enable or disable long/short entries. |\n| `EnableBuyExits` / `EnableSellExits` | Enable or disable slope-based exits. |\n| `UseTimeExit` | Enables the timed exit logic. |\n| `HoldingMinutes` | Holding period in minutes when the timed exit is active. |\n| `CandleType` | Time frame used for calculations (default 4 hours). |\n| `JmaLength` | Jurik Moving Average smoothing length applied to the FATL output. |\n| `AppliedPrices` | Price source for the digital filter (close, open, median, Demark, etc.). |\n| `RoundingDigits` | Number of digits used when rounding the smoothed line. |\n| `SignalBar` | Offset of the finished bar used to evaluate the indicator state. |"
+   },
+   "1373": {
+    "id": 1373,
+    "name": "Supertrend AT v1.0",
+    "family": "trend",
+    "overview": "A Supertrend-based strategy that enters a long position when the Supertrend flips from down to up and a short position when it flips from up to down. Position size is calculated from risk per trade, and exits use stop-loss and take-profit levels derived from the previous Supertrend.\n\n## Details\n\n- **Entry Criteria**: Supertrend direction change.\n- **Long/Short**: Long and Short.\n- **Exit Criteria**: Target or stop hit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SupertrendLength` = 10\n  - `SupertrendMultiplier` = 3m\n  - `RiskPerTrade` = 2m\n  - `RewardRatio` = 3m\n  - `CommissionPercent` = 0.05m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long & Short\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Supertrend direction change.\n- **Long/Short**: Long and Short.\n- **Exit Criteria**: Target or stop hit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SupertrendLength` = 10\n  - `SupertrendMultiplier` = 3m\n  - `RiskPerTrade` = 2m\n  - `RewardRatio` = 3m\n  - `CommissionPercent` = 0.05m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long & Short\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1617": {
+    "id": 1617,
+    "name": "Ultimate T3 Fibonacci BTC Scalping",
+    "family": "trend",
+    "overview": "This strategy applies two Tilson T3 moving averages to capture short-term BTC moves. A crossover between the Fibonacci-tuned and standard T3 lines generates long or short entries. Optional TP/SL management and closing on opposite signals are supported.\n\nTesting indicates an average annual return of about 38%. It works best on BTC pairs with low latency.\n\nThe strategy buys when the fast T3 crosses above the slow T3 and sells on the opposite cross. Positions can be closed on reverse signals, or by percentage take profit and stop loss levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast T3 crosses above slow T3.\n  - **Short**: Fast T3 crosses below slow T3.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover or TP/SL if enabled.\n- **Stops**: Optional percentage-based.\n- **Filters**:\n  - None.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast T3 crosses above slow T3.\n  - **Short**: Fast T3 crosses below slow T3.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover or TP/SL if enabled.\n- **Stops**: Optional percentage-based.\n- **Filters**:\n  - None.",
+    "parameters": ""
+   },
+   "54": {
+    "id": 54,
+    "name": "Cumulative Delta Breakout",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 49%. It performs best in the crypto market.\n\nA break of cumulative delta often precedes price follow-through. The strategy closes trades when delta crosses back through zero or a stop-loss level.\n\n## Details\n\n- **Entry Criteria**: Cumulative delta exceeds highest or lowest value in lookback.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Delta crosses zero or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Cumulative Delta\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Cumulative delta exceeds highest or lowest value in lookback.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Delta crosses zero or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Cumulative Delta\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "787": {
+    "id": 787,
+    "name": "Fibonacci Swing Trading Bot",
+    "family": "breakout",
+    "overview": "Strategy using Fibonacci retracement levels to trade swing moves.\n\nThis bot calculates 0.618 and 0.786 retracement levels from the last 50-bar range and opens positions when candles break above or below these levels. Risk management is handled through configurable stop loss and risk/reward parameters.\n\n## Details\n\n- **Entry Criteria**: Price action with Fibonacci levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes, percent based.\n- **Default Values**:\n  - `FiboLevel1` = 0.618\n  - `FiboLevel2` = 0.786\n  - `RiskRewardRatio` = 2\n  - `StopLossPercent` = 1\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Swing\n  - Direction: Both\n  - Indicators: Fibonacci, Donchian\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price action with Fibonacci levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes, percent based.\n- **Default Values**:\n  - `FiboLevel1` = 0.618\n  - `FiboLevel2` = 0.786\n  - `RiskRewardRatio` = 2\n  - `StopLossPercent` = 1\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Swing\n  - Direction: Both\n  - Indicators: Fibonacci, Donchian\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: 4h\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1116": {
+    "id": 1116,
+    "name": "Neon Momentum Waves",
+    "family": "momentum",
+    "overview": "Neon Momentum Waves Strategy uses MACD histogram crossings to trade in both directions. The strategy goes long when the histogram crosses above the entry level (default zero) and goes short when it crosses below. Positions are closed when the histogram reaches configured exit levels.\n\n## Details\n\n- **Entry Criteria**: MACD histogram crosses entry level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Histogram crosses long/short exit levels.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 20\n  - `EntryLevel` = 0\n  - `LongExitLevel` = 11\n  - `ShortExitLevel` = -9\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: MACD histogram crosses entry level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Histogram crosses long/short exit levels.\n- **Stops**: No.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 20\n  - `EntryLevel` = 0\n  - `LongExitLevel` = 11\n  - `ShortExitLevel` = -9\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3652": {
+    "id": 3652,
+    "name": "Close on Profit or Loss in Account Currency",
+    "family": "volatility",
+    "overview": "This strategy reproduces the MetaTrader expert advisor *Close_on_PROFIT_or_LOSS_inAccont_Currency*. It continuously monitors the portfolio equity that the strategy is attached to and, once a configured profit target or drawdown floor is reached, it liquidates every open position and cancels all pending orders managed by the strategy. The class relies on StockSharp's high level API: a candle subscription provides the heartbeat, `CancelActiveOrders()` removes working orders, and `ClosePosition()` flattens the exposure through market orders.\n\n## How it works\n\n1. The strategy keeps polling the current equity (`Portfolio.CurrentValue`) whenever a heartbeat candle closes.\n2. If the equity is greater than or equal to **Positive Closure**, the strategy sends a full close request.\n3. If the equity is less than or equal to **Negative Closure**, the same liquidation routine is executed to cap the losses.\n4. During liquidation the strategy cancels every pending order, sends market orders to close all active positions, and finally stops itself (mirroring the `ExpertRemove()` call from the original EA).\n\n> **Important:** set the thresholds in account currency. To emulate the original behaviour, choose a **Positive Closure** value above the current equity and a **Negative Closure** value below it; otherwise the exit will be triggered immediately on start.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `PositiveClosureInAccountCurrency` | Equity level that triggers a full liquidation when exceeded. | `0` |\n| `NegativeClosureInAccountCurrency` | Equity floor that forces liquidation when reached. | `0` |\n| `CandleType` | Timeframe used for the heartbeat candles that drive the equity checks. Reduce it for faster reactions. | `1 minute` |\n\n## Notes\n\n- `StartProtection()` is activated on start to copy the original safety behaviour.\n- The strategy only interacts with positions and orders that it manages; attach it to the portfolio that holds the trade",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `PositiveClosureInAccountCurrency` | Equity level that triggers a full liquidation when exceeded. | `0` |\n| `NegativeClosureInAccountCurrency` | Equity floor that forces liquidation when reached. | `0` |\n| `CandleType` | Timeframe used for the heartbeat candles that drive the equity checks. Reduce it for faster reactions. | `1 minute` |"
+   },
+   "769": {
+    "id": 769,
+    "name": "RSI CCI Williams %R",
+    "family": "mean_reversion",
+    "overview": "This strategy combines RSI, CCI, and Williams %R to capture reversal opportunities. It buys when all three indicators reach oversold levels and sells when they all reach overbought levels. Each trade uses percentage-based take profit and stop loss protection.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: `RSI < RSI oversold` && `CCI < CCI oversold` && `Williams %R < Williams oversold`\n  - **Short**: `RSI > RSI overbought` && `CCI > CCI overbought` && `Williams %R > Williams overbought`\n- **Exit Conditions**: Positions exit via take profit or stop loss.\n- **Type**: Reversal\n- **Indicators**: RSI, CCI, Williams %R\n- **Timeframe**: 45 minutes (default)\n- **Stops**: Percentage-based take profit and stop loss\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: `RSI < RSI oversold` && `CCI < CCI oversold` && `Williams %R < Williams oversold`\n  - **Short**: `RSI > RSI overbought` && `CCI > CCI overbought` && `Williams %R > Williams overbought`\n- **Exit Conditions**: Positions exit via take profit or stop loss.\n- **Type**: Reversal\n- **Indicators**: RSI, CCI, Williams %R\n- **Timeframe**: 45 minutes (default)\n- **Stops**: Percentage-based take profit and stop loss",
+    "parameters": ""
+   }
+  }
+ }
+}

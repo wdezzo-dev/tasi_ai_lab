@@ -1,0 +1,98 @@
+{
+ "batch_354": {
+  "strategy_ids": [
+   2731,
+   2956,
+   2392,
+   2245,
+   1106,
+   31,
+   2911,
+   1267,
+   2411,
+   4215
+  ],
+  "docs": {
+   "2731": {
+    "id": 2731,
+    "name": "Dual Lot Step Hedge",
+    "family": "trend",
+    "overview": "The **Dual Lot Step Hedge Strategy** is a C# port of the MetaTrader 5 expert advisors *\"x1 lot from high to low\"* and *\"x1 lot from low to high\"* (folder `MQL/19543`). The original robots immediately open a hedged basket of buy and sell positions, cycle the order volume after every new entry, and close the entire basket once a fixed profit target is reached. This implementation reproduces that behaviour on top of the StockSharp high-level API while exposing clean parameters and detailed state management.\n\nTwo operating modes are available:\n\n- **HighToLow** – starts with the maximum lot multiplier, opens the first hedged basket with the largest volume, and then decreases to the next lot step after the first entries.\n- **LowToHigh** – begins with the minimal lot step, increases the lot size after every new entry until the configured multiplier is reached, and then keeps trading at that size.\n\nThe strategy keeps both buy and sell legs alive simultaneously, manages stop-loss and take-profit levels per leg, and monitors the portfolio equity to enforce a basket-wide profit target.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `LotMultiplier` | Maximum lot multiplier expressed in minimal volume steps (default `10`). |\n| `StopLossPips` | Stop-loss distance in pips for each leg (default `50`). Set to `0` to disable. |\n| `TakeProfitPips` | Take-profit distance in pips for each leg (default `150`). Set to `0` to disable. |\n| `MinProfit` | Basket profit target in account currency. Once the equity gain exceeds this value all positions are closed (default `27`). |\n| `ScalingMode` | Lot stepping behaviour. `HighToLow` mirrors the “x1 lot from high to low” EA, `LowToHigh` mirrors “x1 lot from low to high”. |\n\nThe strategy automatically derives the minimal volume step from `Security.VolumeStep` and computes pip value using the security price step (with the traditional 4/5-digit forex adjustment)."
+   },
+   "2956": {
+    "id": 2956,
+    "name": "Exp XWAMI MMRec",
+    "family": "trend",
+    "overview": "## Summary\n\nThe strategy replicates the MetaTrader expert advisor **Exp_XWAMI_MMRec**, combining the custom XWAMI momentum indicator with a money-management \"recounter\". Momentum is measured as the difference between the current price and the price `Period` bars ago. That difference is fed through four configurable smoothing stages; the third and fourth stages form the `Up` and `Down` buffers of the original indicator. Crossings between the two buffers drive position reversals.\n\nEach stage can emulate several smoothing algorithms: simple/ exponential/ smoothed/ linear weighted moving averages, Jurik JJMA/JurX, Tillson T3, VIDYA (approximated with EMA), and Kaufman's AMA. The strategy works with a single aggregated position and supports both long and short trades. Risk is reduced after consecutive losses by comparing recent trade results against the `BuyTotalTrigger`/`SellTotalTrigger` windows and counting losses relative to `BuyLossTrigger`/`SellLossTrigger`.\n\nProtective stops follow the MetaTrader implementation: `StopLossPoints` and `TakeProfitPoints` are measured in symbol points (`Security.PriceStep`). When a stop or target is touched inside the signal timeframe, the position is closed immediately and the trade result enters the money-management history.\n\n## Parameters\n\n| StockSharp property | Default | Original input | Description |\n| --- | --- | --- | --- |\n| `CandleType` | H1 time frame | `InpInd_Timeframe` | Timeframe used to build candles for the indicator. |\n| `Period` | 1 | `iPeriod` | Distance (in bars) between the current price and the comparison price inside the momentum calculation. |\n| `Method1` / `Length1` / `Phase1` | `T3`, `4`, `15` | `XMethod1`, `XLength1`, `XPhase1` | Smoothing method, length, and phase for stage 1. Phase is only used by Jurik/JurX/T3. |\n| `Method2` / `Length2` / `Phase2` | `Jjma`, `13`, `15` | `XMethod2`, `XLength2`, `XPhase2` | Settings for the second smoothing stage. |\n| `Method3` / `Length3` / `Phase3` | `Jjma`, `13`, `15` |",
+    "details": "",
+    "parameters": "| StockSharp property | Default | Original input | Description |\n| --- | --- | --- | --- |\n| `CandleType` | H1 time frame | `InpInd_Timeframe` | Timeframe used to build candles for the indicator. |\n| `Period` | 1 | `iPeriod` | Distance (in bars) between the current price and the comparison price inside the momentum calculation. |\n| `Method1` / `Length1` / `Phase1` | `T3`, `4`, `15` | `XMethod1`, `XLength1`, `XPhase1` | Smoothing method, length, and phase for stage 1. Phase is only used by Jurik/JurX/T3. |\n| `Method2` / `Length2` / `Phase2` | `Jjma`, `13`, `15` | `XMethod2`, `XLength2`, `XPhase2` | Settings for the second smoothing stage. |\n| `Method3` / `Length3` / `Phase3` | `Jjma`, `13`, `15` | `XMethod3`, `XLength3`, `XPhase3` | Settings for the third smoothing stage (indicator `Up` buffer). |\n| `Method4` / `Length4` / `Phase4` | `Jjma`, `4`, `15` | `XMethod4`, `XLength4`, `XPhase4` | Settings for the fourth smoothing stage (indicator `Down` buffer). |\n| `AppliedPrice` | `Close` | `IPC` | Price source forwarded into the momentum calculation. All MetaTrader price options are reproduced, including both TrendFollow flavours and the Demark price. |\n| `SignalBar` | 1 | `SignalBar` | Index of the historical candle used to evaluate crossings (`0` = most recent finished bar). |\n| `AllowBuyOpen` / `AllowSellOpen` | `true` | `BuyPosOpen`, `SellPosOpen` | Enables long or short entries respectively. |\n| `AllowBuyClose` / `AllowSellClose` | `true` | `BuyPosClose`, `SellPosClose` | Enables forced exits when the opposite signal appears. |\n| `NormalVolume` | `0.1` | `MM` | Default lot/volume size used after profitable or neutral series. |\n| `ReducedVolume` | `0.01` | `SmallMM_` | Reduced lot applied after too many losses. |\n| `BuyTotalTrigger` / `BuyLossTrigger` | `5` / `3` | `BuyTotalMMTriger`, `BuyLossMMTriger` | Number of recent long trades inspected and maximum losses inside that window before reducing the long volume. |\n| `SellTotalTrigger` / `SellLossTrigger` | `5` / `3` | `SellTotalMMTriger`, `SellLossMMTriger` | Same logic for short positions. |\n| `StopLossPoints` | `1000` | `StopLoss_` | Stop-loss distance in points. |\n| `TakeProfitPoints` | `2000` | `TakeProfit_` | Take-profit distance in points. |"
+   },
+   "2392": {
+    "id": 2392,
+    "name": "MTC Combo v2",
+    "family": "trend",
+    "overview": "Converted from MetaTrader script \"MTC Combo v2 (barabashkakvn's edition)\".\n\n## Logic\n- Uses slope of a moving average to determine basic trend.\n- Optional perceptron filter calculates weighted sum of recent open-price differences over configurable lags.\n- `Pass` parameter selects which perceptron branches are used:\n  - 4: require perceptron3 > 0 and perceptron2 > 0 for long; perceptron3 <= 0 and perceptron1 < 0 for short.\n  - 3: use perceptron2 > 0 for long.\n  - 2: use perceptron1 < 0 for short.\n  - other values: trade based only on MA slope.\n\nStop loss and take profit levels are taken from `Sl*` and `Tp*` parameters.\n\n## Parameters\n- `MaPeriod` – moving average length.\n- `P2`, `P3`, `P4` – lags for perceptrons.\n- `Pass` – decision mode.\n- `Sl1`/`Tp1`, `Sl2`/`Tp2`, `Sl3`/`Tp3` – stop and target for each branch.\n- `CandleType` – candle series to process.\n\n## Notes\nThe strategy holds a single position at a time and closes it when stop loss or take profit is reached.\n\n## Disclaimer\nFor educational use only. No investment advice.\n",
+    "details": "",
+    "parameters": "- `MaPeriod` – moving average length.\n- `P2`, `P3`, `P4` – lags for perceptrons.\n- `Pass` – decision mode.\n- `Sl1`/`Tp1`, `Sl2`/`Tp2`, `Sl3`/`Tp3` – stop and target for each branch.\n- `CandleType` – candle series to process."
+   },
+   "2245": {
+    "id": 2245,
+    "name": "Color J2JMA StdDev",
+    "family": "trend",
+    "overview": "This strategy calculates the slope of a Jurik Moving Average (JMA) and compares it with the standard deviation of recent slopes. The idea is to capture strong directional moves when the slope exceeds a multiple of its recent volatility.\n\nA new long position is opened when the JMA slope rises above the high threshold (K2 × standard deviation). A new short position is opened when the slope drops below the negative high threshold. Existing positions are closed when the slope crosses the opposite low threshold (K1 × standard deviation). Stop loss and take profit levels are applied in points from the entry price.\n\nParameters:\n- **JMA Length** – period of the Jurik moving average.\n- **StdDev Period** – number of recent slopes used for standard deviation.\n- **K1** – multiplier for low threshold used to close positions.\n- **K2** – multiplier for high threshold used to open positions.\n- **Candle Type** – timeframe of candles for calculations.\n- **Stop Loss** – protective stop in points.\n- **Take Profit** – profit target in points.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1106": {
+    "id": 1106,
+    "name": "MultiLayer Awesome Oscillator Saucer",
+    "family": "trend",
+    "overview": "Implements a bullish multi-layer strategy based on the Awesome Oscillator saucer pattern and fractal trend detection. The strategy counts consecutive saucer signals and places up to five layered buy stop orders above price. Positions are closed when the trend reverses.\n\n## Parameters\n- **EMA Length** – period of the EMA filter.\n- **Candle Type** – type of candles.\n- **Trade Start** – start of trading period.\n- **Trade Stop** – end of trading period.\n",
+    "details": "",
+    "parameters": "- **EMA Length** – period of the EMA filter.\n- **Candle Type** – type of candles.\n- **Trade Start** – start of trading period.\n- **Trade Stop** – end of trading period."
+   },
+   "31": {
+    "id": 31,
+    "name": "Keltner Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 130%. It performs best in the stocks market.\n\nKeltner Reversion fades pushes outside the Keltner Channel. Entries bet on a return toward the middle band, closing trades once price re-enters the channel or the stop is hit.\n\nThe channel width expands and contracts with volatility, allowing the system to catch extreme moves while giving trades room to develop. Stops are typically based on ATR multiples.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on RSI, ATR, Keltner.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `StopLossAtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, ATR, Keltner\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on RSI, ATR, Keltner.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `StopLossAtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: RSI, ATR, Keltner\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2911": {
+    "id": 2911,
+    "name": "Martingail Expert",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 5 **MartingailExpert.mq5** expert adviser.\n- Uses a stochastic oscillator crossover with configurable %K, %D and slowing parameters to open positions.\n- Implements a martingale-style grid with both averaging and breakout entries that scale volume geometrically.\n- Designed for netted portfolios – the strategy maintains a single aggregated long or short position.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `0.03` | Base lot size for the initial order and profit-based add-ons. |\n| `Multiplier` | `1.6` | Martingale multiplier for averaging entries. |\n| `StepPips` | `25` | Pip distance that triggers averaging orders against the trend. |\n| `ProfitPips` | `9` | Pip distance used for both profit exits and breakout add-ons. |\n| `KPeriod` | `5` | Lookback period of the stochastic %K calculation. |\n| `DPeriod` | `3` | Smoothing period for the stochastic %D line. |\n| `Slowing` | `3` | Smoothing applied to the %K line (slow stochastic). |\n| `BuyLevel` | `20` | Minimum %D value required to allow long entries. |\n| `SellLevel` | `55` | Maximum %D value required to allow short entries. |\n| `CandleType` | `5 minute` time frame | Timeframe used to build candles and indicators. |"
+   },
+   "1267": {
+    "id": 1267,
+    "name": "RSI Divergence Strategy - AliferCrypto",
+    "family": "trend",
+    "overview": "Strategy based on RSI divergences with optional zone and trend filters. Stop loss and take profit can be calculated from swings or ATR with dynamic or static updates.\n\n## Logic\n- **Entry**\n  - Bullish divergence: price makes lower low while RSI makes higher low.\n  - Bearish divergence: price makes higher high while RSI makes lower high.\n  - Optional RSI zone filter requires prior oversold/overbought state.\n  - Optional trend filter uses moving average direction.\n- **Exit**\n  - SL/TP from recent swing or ATR.\n  - Levels may be locked at entry or recalculated each bar.\n\n## Indicators\n- Relative Strength Index\n- Moving Average\n- Average True Range\n- Highest/Lowest\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2411": {
+    "id": 2411,
+    "name": "Exp Fishing",
+    "family": "trend",
+    "overview": "This strategy enters a position when the completed candle's close differs from its open by at least **Price Step**. If the difference is positive, it buys; if negative, it sells.\n\nAfter opening a position, every additional move of **Price Step** in the trade's favor triggers an additional market order in the same direction up to **Max Orders**. Protective stop-loss and take-profit are applied for every position using absolute price distances.\n\n## Parameters\n\n- **Price Step** – minimum price move (in absolute units) required to open or add to a position.  \n- **Max Orders** – maximum number of market orders allowed in one direction.  \n- **Stop Loss** – distance from entry price where a protective stop is placed.  \n- **Take Profit** – distance from entry price where a profit target is placed.  \n- **Candle Type** – candle timeframe used for calculations (default 1 minute).\n\n## Trading Logic\n\n1. Wait for a finished candle.\n2. If no position is open:\n   - Buy if `Close - Open >= Price Step`.\n   - Sell if `Open - Close >= Price Step`.\n3. When a position exists:\n   - If price advances by `Price Step` from last entry, add another order in the same direction.\n   - Stop adding orders once the number reaches **Max Orders**.\n4. Stop-loss and take-profit are managed automatically for each order.\n\nThe strategy is adapted from the MQL5 expert \"Exp Fishing\" and demonstrates a simple grid-style trend-following approach.\n",
+    "details": "",
+    "parameters": "- **Price Step** – minimum price move (in absolute units) required to open or add to a position.  \n- **Max Orders** – maximum number of market orders allowed in one direction.  \n- **Stop Loss** – distance from entry price where a protective stop is placed.  \n- **Take Profit** – distance from entry price where a profit target is placed.  \n- **Candle Type** – candle timeframe used for calculations (default 1 minute)."
+   },
+   "4215": {
+    "id": 4215,
+    "name": "Flat 001a Range",
+    "family": "trend",
+    "overview": "Flat 001a is a scalping system designed for the EURUSD hourly chart. It scans the most recent three hourly candles and measures the distance between the highest high and the lowest low. When the range of this three-candle window stays within a configurable number of points, the strategy anticipates that price will remain trapped inside the flat. It then looks to fade short-term excursions into the upper or lower quarter of the channel and immediately attaches protective orders.\n\nThe original MQL4 expert adviser traded only EURUSD on H1 and rejected trading if the symbol or timeframe was incorrect. This port keeps the same defaults (EURUSD, 60-minute candles) and reproduces all entry, stop-loss, take-profit, and trailing-stop calculations in StockSharp.",
+    "details": "",
+    "parameters": "| Group | Name | Description | Default |\n| --- | --- | --- | --- |\n| General | `CandleType` | Candle type used for calculations. Should be set to a 60-minute timeframe to match the original system. | `TimeFrame(60m)` |\n| General | `SecurityCode` | Expected security code. Leave empty to trade any instrument. | `EURUSD` |\n| Range Filter | `DiffMinPoints` | Minimum three-candle range in points required to trade. | `18` |\n| Range Filter | `DiffMaxPoints` | Maximum three-candle range in points allowed to trade. | `28` |\n| Trading Window | `EnableTimeFilter` | Enables or disables the hour filter. | `true` |\n| Trading Window | `OpenHour` | Starting hour (0–23) for the trading window. The strategy also allows the immediate next hour. | `0` |\n| Risk Management | `TakeProfitPoints` | Take-profit distance expressed in points. Set to zero to disable. | `8` |\n| Risk Management | `TrailingStopPoints` | Trailing-stop distance expressed in points. Set to zero to disable trailing. | `6` |"
+   }
+  }
+ }
+}

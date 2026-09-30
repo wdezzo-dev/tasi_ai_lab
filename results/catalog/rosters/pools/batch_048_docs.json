@@ -1,0 +1,98 @@
+{
+ "batch_048": {
+  "strategy_ids": [
+   4130,
+   3817,
+   2285,
+   2208,
+   3858,
+   1739,
+   720,
+   3409,
+   3937,
+   3500
+  ],
+  "docs": {
+   "4130": {
+    "id": 4130,
+    "name": "ADX Simple Trend",
+    "family": "trend",
+    "overview": "The **ADX Simple Trend Strategy** is a direct port of the classic MetaTrader expert advisor \"ADX Simple\". It follows the direction of the Average Directional Index (ADX) by comparing the positive and negative directional movement indicators (DI+ and DI-) and requiring the ADX main line to rise before opening any trade. The StockSharp version keeps the minimalist nature of the original system while adapting it to high-level API patterns and risk controls.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `AdxPeriod` | `int` | 25 | Lookback length for ADX, DI+ and DI- computations. |\n| `CandleType` | `DataType` | 15-minute time frame | Candle subscription used to drive indicator calculations. |"
+   },
+   "3817": {
+    "id": 3817,
+    "name": "ASCV Pivot Breakout",
+    "family": "trend",
+    "overview": "The ASCV Pivot Breakout strategy is a high level StockSharp port of the MetaTrader 4 expert advisor \"ASCV\" (file `Avpb.mq4`). The original robot combines two custom indicators (ASCTrend1sig and BrainTrend1Sig), a standard deviation filter, daily pivot levels and intraday volume acceleration to trade breakout continuation setups inside a restricted trading window. Because the proprietary custom indicators are not available in StockSharp, the conversion recreates their behaviour through a blend of moving averages, stochastic momentum and daily pivot analytics while preserving the management rules of the EA.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Timeframe for indicator calculations and signal processing. | 15 minute candles |\n| `StartHour` / `EndHour` | Inclusive hour boundaries of the trading session. | 2 / 20 |\n| `FastMaLength` | Period of the fast SMA trend filter. | 10 |\n| `SlowMaLength` | Period of the slow SMA trend filter. | 40 |\n| `StdDevLength` | Lookback length of the standard deviation volatility filter. | 10 |\n| `StdDevThreshold` | Minimum standard deviation required to trade. | 0.0005 |\n| `VolumeDeltaThreshold` | Minimum difference between current and previous candle volume. | 30 |\n| `StochasticKPeriod` / `StochasticDPeriod` / `StochasticSlowing` | Periods of the stochastic oscillator. | 5 / 3 / 3 |\n| `StochasticExitDelta` | Absolute `%K-%D` spread that triggers momentum exits. | 5 |\n| `TrailingStopSteps` | Distance of the trailing stop in price steps. | 30 |\n| `MinPivotDistanceSteps` | Minimal distance (in steps) required for pivot based targets. | 50 |\n| `StopFallbackSteps` | Stop distance when no pivot support/resistance is far enough. | 33 |\n| `TakeProfitBufferSteps` | Fallback take profit distance in price steps. | 50 |\n| `OrderVolume` | Volume for every market order. | 1 |\n\nAll distances are defined in instrument price steps to ensure compatibility with the exchange specifications."
+   },
+   "2285": {
+    "id": 2285,
+    "name": "Volume Weighted MA Slope",
+    "family": "trend",
+    "overview": "The **Volume Weighted MA Slope** strategy analyzes the direction of the Volume Weighted Moving Average (VWMA). The system enters a long position when the VWMA rises for two consecutive bars and opens a short position when the VWMA declines for two bars. Existing positions are closed once the indicator slope reverses.\n\nThis approach attempts to follow emerging trends by using volume-adjusted price averages, filtering out moves that occur on low volume.\n\n## Details\n\n- **Entry Criteria**: VWMA rising for two bars (long) or falling for two bars (short).\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite VWMA slope.\n- **Stops**: Yes (configurable, default 1% stop loss / 2% take profit).\n- **Default Values**:\n  - `VwmaPeriod` = 12\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: VWMA rising for two bars (long) or falling for two bars (short).\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite VWMA slope.\n- **Stops**: Yes (configurable, default 1% stop loss / 2% take profit).\n- **Default Values**:\n  - `VwmaPeriod` = 12\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2208": {
+    "id": 2208,
+    "name": "Hedge Average",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"Hedge Average\" MetaTrader expert. It compares simple moving averages of open and close prices across two time periods.\n\n## Trading Logic\n\n- Calculate SMA of the open and close price for `Period1` and `Period2`.\n- If the long-period open average is above its close average **and** the short-period open average is below its close average, a long position is opened.\n- If the long-period open average is below its close average **and** the short-period open average is above its close average, a short position is opened.\n- Trading is allowed only between `StartHour` and `EndHour`.\n- Optional stop-loss and take-profit are set in absolute price units. Trailing stop moves the protective stop along with price when enabled.\n\n## Parameters\n\n- `Period1` – period for the fast averages.\n- `Period2` – period for the slow averages.\n- `StartHour` – hour of day when trading becomes active.\n- `EndHour` – hour of day when trading stops.\n- `CandleType` – candle timeframe used for calculations.\n- `TakeProfit` – take profit distance in price units.\n- `StopLoss` – stop loss distance in price units.\n- `UseTrailing` – enable trailing stop based on stop-loss distance.\n\n## Notes\n\nThe strategy uses a single position approach and does not replicate money-based profit target from the original MQL version.\n",
+    "details": "",
+    "parameters": "- `Period1` – period for the fast averages.\n- `Period2` – period for the slow averages.\n- `StartHour` – hour of day when trading becomes active.\n- `EndHour` – hour of day when trading stops.\n- `CandleType` – candle timeframe used for calculations.\n- `TakeProfit` – take profit distance in price units.\n- `StopLoss` – stop loss distance in price units.\n- `UseTrailing` – enable trailing stop based on stop-loss distance."
+   },
+   "3858": {
+    "id": 3858,
+    "name": "Trend Scalper Strategy (API/3858)",
+    "family": "trend",
+    "overview": "The **TrendScalperStrategy** is a C# conversion of the MetaTrader 4 expert advisor `Currencyprofits_01_1.mq4`. The original robot is a lightweight trend-following scalper that combines a short-term EMA/SMA crossover filter with breakout entries around the most recent swing highs and lows. The StockSharp port keeps the same decision rules while embracing the framework's high-level candle subscription and indicator pipeline.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | 15-minute time frame | Candle series used for indicator calculations and signals. |\n| `FastLength` | 6 | Period of the fast EMA. |\n| `SlowLength` | 12 | Period of the slow SMA. |\n| `BreakoutWindow` | 6 | Number of candles inspected for the highest high / lowest low breakout filter. |\n| `FixedVolume` | 0.1 lots | Volume when money management is disabled or fallback is required. |\n| `MoneyManagementMode` | 0 | Selects between fixed, fractional, or rounded lot sizing. |\n| `MoneyManagementRisk` | 40 | Risk factor multiplier used in balance-based lot sizing. |\n| `StopLossPoints` | 50 | Stop-loss distance in price points (converted to absolute price before calling `StartProtection`). |"
+   },
+   "1739": {
+    "id": 1739,
+    "name": "Channel Scalper",
+    "family": "breakout",
+    "overview": "An ATR based channel breakout scalping system. For each candle the midpoint is calculated as the average of high and low. Upper and lower bands are built by adding and subtracting the Average True Range multiplied by a factor. When the close breaks above the previous upper band a long position is opened. A break below the lower band triggers a short position. Bands trail in the trade direction and serve as dynamic stops; a cross of the opposite band reverses the position.\n\n## Details\n\n- **Entry Criteria**:\n  - **Buy**: Closing price crosses above the prior upper band.\n  - **Sell**: Closing price crosses below the prior lower band.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal when price crosses the opposite band.\n- **Stops**: Trailing channel bands act as stops.\n- **Filters**: None.\n\n## Parameters\n\n- **ATR Period** – number of bars used for ATR calculation.\n- **ATR Multiplier** – factor applied to ATR for band distance.\n- **Candle Type** – timeframe of input candles.\n",
+    "details": "- **Entry Criteria**:\n  - **Buy**: Closing price crosses above the prior upper band.\n  - **Sell**: Closing price crosses below the prior lower band.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal when price crosses the opposite band.\n- **Stops**: Trailing channel bands act as stops.\n- **Filters**: None.",
+    "parameters": "- **ATR Period** – number of bars used for ATR calculation.\n- **ATR Multiplier** – factor applied to ATR for band distance.\n- **Candle Type** – timeframe of input candles."
+   },
+   "720": {
+    "id": 720,
+    "name": "E9 Shark-32 Pattern",
+    "family": "breakout",
+    "overview": "This strategy identifies the Shark-32 pattern on three consecutive candles and trades breakouts above the pattern high or below the pattern low. Positions are closed at mirrored target levels or fixed stop losses.\n\n## Parameters\n- Candle Type\n- Long Stop Loss (%)\n- Short Stop Loss (%)\n\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Long Stop Loss (%)\n- Short Stop Loss (%)"
+   },
+   "3409": {
+    "id": 3409,
+    "name": "Potential Entries",
+    "family": "momentum",
+    "overview": "The **Potential Entries Strategy** replicates the logic of the original `EA_PotentialEntries.mq5` expert advisor. It analyses pairs of the most recent finished candles and issues trades when specific two-candle reversal or momentum patterns appear. The strategy works in one direction at a time (bullish or bearish), selectable through the `Pattern Side` parameter. Protective stop levels are recalculated on every entry to mirror the original MetaTrader stop placement at the extreme of the analysed candle pair.\n\nThe implementation uses StockSharp's high-level API: it subscribes to the configured candle type, processes the stream inside `ProcessCandle`, opens positions with `BuyMarket`/`SellMarket`, and closes trades through market exits when the internally tracked stop price is breached. Charts render the candle series together with the strategy trades for quick visual inspection.",
+    "details": "",
+    "parameters": ""
+   },
+   "3937": {
+    "id": 3937,
+    "name": "VQ EA",
+    "family": "volatility",
+    "overview": "- Conversion of the MetaTrader expert \"VQ_EA\" that trades using the Volatility Quality (VQ) indicator.\n- The StockSharp version approximates the VQ line with a smoothed median price to keep the logic within the high-level API.\n- Positions are opened on direction changes of the smoothed line and managed with optional protective orders.",
+    "details": "",
+    "parameters": "- `Length` – base smoothing period of the median price. Default: 5.\n- `Smoothing` – secondary smoothing period. Default: 1 (disabled).\n- `FilterPoints` – minimal move in points required to confirm that the slope changed. Default: 5.\n- `StopLossPoints` – protective stop-loss in points. Default: 60 (0 disables it).\n- `TakeProfitPoints` – protective take-profit in points. Default: 0 (disabled).\n- `UseTrailing` – enable or disable trailing stops. Default: false.\n- `TrailingStopPoints` – trailing distance in points. Default: 0 (ignored when `UseTrailing` is false).\n- `CandleType` – timeframe used for calculations. Default: 1-hour candles.\n- `Volume` – inherited from `Strategy.Volume`, defaults to 1 contract and is used for every fresh entry."
+   },
+   "3500": {
+    "id": 3500,
+    "name": "Zone Recovery Hedge",
+    "family": "mean_reversion",
+    "overview": "The **Zone Recovery Hedge Strategy** is a StockSharp port of the MetaTrader expert advisor *Zone Recovery Hedge V1*. The algorithm alternates buy and sell positions around an anchor price so that a new order is placed whenever price crosses the configured recovery zone. The sequence expands position volume following a martingale schedule until either the floating profit target or the optional loss protection is reached.\n\n## Strategy logic\n\n1. **Entry filter** – When *RSI Multi-Timeframe* mode is selected the strategy inspects a configurable list of RSI readings (from M1 up to MN1) and requires that each enabled timeframe leaves an overbought/oversold area simultaneously. Crossing from oversold generates a buy cycle, while crossing from overbought starts a sell cycle. In *Manual* mode the helper methods `StartManualMarketCycle` and `StartManualPendingCycle` can be called to begin a new sequence without automatic signals.\n2. **Initial trade** – The first trade uses either the fixed lot size or a risk-based size derived from portfolio equity and the planned stop distance. When ATR sizing is active the stop distance and zone width are derived from the daily ATR; otherwise broker points are used.\n3. **Recovery grid** – If price travels against the active direction by the recovery zone distance, the strategy opens the opposite side with an increased volume (custom lot ladder, multiplier, or additive step). The cycle keeps alternating directions around the original anchor price, building volume until the profit target is hit or the maximum number of trades is reached.\n4. **Profit control** – The target is evaluated in account currency, using either the base take-profit distance or the dedicated recovery take-profit (with optional ATR fractions). Commissions can be simulated through the *Test Commission* parameter. When the floating profit exceeds the target plus costs the entire cycle is closed.\n5. **Risk guard** – If `MaxTrades` is non-zero and `SetMaxLoss` is enabled, re",
+    "details": "",
+    "parameters": "| Group | Parameter | Description |\n| --- | --- | --- |\n| General | `CandleType` | Primary timeframe that drives the entry logic. |\n| General | `Mode` | `Manual` disables signals, `RsiMultiTimeframe` activates the RSI filter. |\n| Signals | `RsiPeriod`, `OverboughtLevel`, `OversoldLevel` | RSI calculation period and thresholds. |\n| Signals | `UseM1Timeframe` … `UseMonthlyTimeframe` | Enable/disable the RSI confirmations for the corresponding timeframe. |\n| Signals | `TradeOnBarOpen` | Use the previous bar as the confirmation bar (original EA behaviour). |\n| Recovery | `RecoveryZoneSize`, `TakeProfitPoints` | Zone width and base take-profit when ATR is disabled. |\n| Recovery | `UseAtr`, `AtrPeriod`, `AtrZoneFraction`, `AtrTakeProfitFraction`, `AtrRecoveryFraction`, `AtrCandleType` | ATR based sizing settings. |\n| Recovery | `UseRecoveryTakeProfit`, `RecoveryTakeProfitPoints` | Dedicated take-profit distance when the cycle is already in recovery. |\n| Risk | `MaxTrades`, `SetMaxLoss`, `MaxLoss` | Limit the number of trades and define a money-based loss guard. |\n| Risk | `TestCommission` | Estimated commission (in money) applied per trade volume when evaluating the profit target. |\n| Money Management | `RiskPercent`, `InitialLotSize`, `LotMultiplier`, `LotAddition`, `CustomLotSize1` … `CustomLotSize10` | Controls how volumes are generated for each step in the cycle. |\n| Timer | `UseTimer`, `StartHour`, `StartMinute`, `EndHour`, `EndMinute`, `UseLocalTime` | Restrict trading to a daily time window. |\n| Manual | `PendingPrice` | Reference price used by `StartManualPendingCycle`. |"
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2036,
+      "name": "Ergodic Ticks Volume Indicator",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(roc(close,1), 25), 13), ema(ema(ema(roc(close,1), 25), 13), 7))",
+      "exit_long": "crossbelow(ema(ema(roc(close,1), 25), 13), ema(ema(ema(roc(close,1), 25), 13), 7))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The True Strength Index is approximated by the double-smoothed one-bar rate of change and its documented EMA signal line by a third smoothing, so the documented cross above/below logic is kept. Short Length 25, Long Length 13 and Signal Length 7 are explicit fallbacks because the parameters are listed without values, and the short leg is omitted."
+    },
+    {
+      "id": 2953,
+      "name": "Freeman",
+      "family": "trend",
+      "entry_long": "roc(rsi(close,14),1) > 0 and bars_since(rsi(close,14) < 30) < 5 and roc(ema(close,10),1) > 0",
+      "exit_long": "rsi(close,14) > 70 or roc(ema(close,10),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "One RSI teacher block is translated: an oversold reading (RsiSellLevel 30) on a recent bar turning higher while the fast MA (FirstMaPeriod 10) rises. Every period and level is a fallback since none are documented, and the separate hourly MA/RSI filter, second teacher, ATR stop/target factors, pip trailing, pyramiding, LockCoefficient, session hours and Friday switch are not expressible."
+    },
+    {
+      "id": 2315,
+      "name": "Limits Martin",
+      "family": "trend",
+      "entry_long": "roc(close,1) <= -0.5",
+      "exit_long": "roc(close,1) >= 0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only market-derived element is the pending buy limit placed a Step below the last close, expressed as a one-bar dip of about 0.5% because Step, Stop Loss and Take Profit have no documented values. The paired sell limit, Use Martingale / Use MegaLot sizing, Loss Limit reset and Volume are order-book logic the single-position long engine cannot hold."
+    },
+    {
+      "id": 293,
+      "name": "Volume Slope Mean Reversion",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(volume_ratio(volume, 20) * roc(close, 1), 20), -2)",
+      "exit_long": "zscore(volume_ratio(volume, 20) * roc(close, 1), 20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented volume swing band (VolumeMaPeriod 20, LookbackPeriod 20, DeviationMultiplier 2.0) is applied to a volume-flow z-score, and the long entry is the documented cross back toward the mean from below with the exit at the mean itself. StopLossPercent 2.0 is documented, while the short leg and 5-minute timeframe are dropped."
+    },
+    {
+      "id": 3488,
+      "name": "MACD Divergence RSI",
+      "family": "trend",
+      "entry_long": "low <= donchian_low(low,20) and roc(rsi(close,14),3) > 0 and rsi(close,14) < 50",
+      "exit_long": "high >= donchian_high(high,20) and roc(rsi(close,14),3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish MACD divergence is approximated by a fresh 20-bar low with a rising three-bar RSI change, and the documented RSI filter becomes the requirement that RSI(14) stays under its midline. All RSI periods, thresholds and the bullish fast/slow EMA lengths are undocumented fallbacks, and the pip-based BullishStopLossPips/TakeProfitPips and volume settings are not percent fields."
+    },
+    {
+      "id": 2148,
+      "name": "Buy Sell Grid",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy always holds one long and one short grid level and re-opens the pair with geometrically larger volume when one side reaches TakeProfitPoints, so its direction comes from the hedge state rather than any market signal; the never-true close<0 guard is used. InitialVolume, VolumeMultiplier and MaxTrades need simultaneous positions."
+    },
+    {
+      "id": 2683,
+      "name": "Trade EA Template for News",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a template whose documented behaviour is to trade only while flat inside a news blackout derived from an external economic calendar; no market-derived entry condition exists in the docs, so the never-true close<0 guard avoids inventing one. The per-impact minute windows, NFP flag, timezone offset and the 100-point brackets are calendar and point settings."
+    },
+    {
+      "id": 3575,
+      "name": "RSI Alert",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,30), 20)",
+      "exit_long": "crossabove(rsi(close,30), 80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RsiPeriod 30 with OversoldLevel 20 and OverboughtLevel 80 is used exactly: the long side is the deep-oversold cross and the overbought cross exits. The alert notifications, the volume-adding reversal of an existing position and the 1-minute candle default are outside the DSL."
+    },
+    {
+      "id": 1850,
+      "name": "Combo Right",
+      "family": "volume",
+      "entry_long": "zscore(close,20) > 0 and roc(close,3) > 0",
+      "exit_long": "zscore(close,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a 20-period z-score scaled to the documented CCI scale, with positive values favouring longs, and the buy perceptron's view of shifted price differences is approximated by short-term momentum. CciPeriod, the perceptron weights (x12, x22, ...), Pass mode, Shift and the tick-based TakeProfit1/StopLoss1 are not reproducible."
+    },
+    {
+      "id": 2136,
+      "name": "Coin Flip",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The direction is chosen at random on every new candle with no technical filter, and risk is handled by a martingale Volume multiplier, so no deterministic long signal exists and the never-true close<0 guard is used. MaxVolume, TakeProfit, StopLoss, TrailingStart and TrailingStop are price-step position-management settings."
+    }
+  ]
+}

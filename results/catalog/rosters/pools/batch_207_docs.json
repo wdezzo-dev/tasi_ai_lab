@@ -1,0 +1,98 @@
+{
+ "batch_207": {
+  "strategy_ids": [
+   614,
+   2994,
+   4218,
+   2105,
+   3898,
+   4045,
+   894,
+   678,
+   813,
+   1266
+  ],
+  "docs": {
+   "614": {
+    "id": 614,
+    "name": "Chandelier Exit with 200 EMA Filter",
+    "family": "trend",
+    "overview": "This strategy uses ATR-based Chandelier Exit levels to determine market direction. Trades are taken only when price crosses the direction level and aligns with a 200-period EMA trend filter.\n\n## Parameters\n- Candle Type\n- ATR period\n- ATR multiplier\n- Use close price for extremums\n- EMA length\n",
+    "details": "",
+    "parameters": "- Candle Type\n- ATR period\n- ATR multiplier\n- Use close price for extremums\n- EMA length"
+   },
+   "2994": {
+    "id": 2994,
+    "name": "RAVI + Awesome Oscillator",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 5 expert advisor \"Ravi AO (barabashkakvn's edition)\" to the StockSharp high-level API.\n- Combines the Range Action Verification Index (RAVI) oscillator with the Awesome Oscillator (AO) to detect synchronized bullish and bearish momentum shifts.\n- Works on any timeframe and instrument supported by StockSharp; all numeric settings are expressed in pips to stay close to the original implementation.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle timeframe or data type to subscribe to. |\n| `StopLossPips` | Protective stop-loss distance in pips. `0` disables the stop. |\n| `TakeProfitPips` | Take-profit distance in pips. `0` disables the take profit. |\n| `TrailingStopPips` | Base trailing-stop distance in pips. `0` disables trailing. |\n| `TrailingStepPips` | Minimal additional profit (in pips) required before the trailing stop is tightened. Must be > 0 when trailing is enabled. |\n| `FastMethod` / `FastLength` | Smoothing method and length of the fast RAVI moving average. |\n| `SlowMethod` / `SlowLength` | Smoothing method and length of the slow RAVI moving average. |\n| `AppliedPrices` | Price formula used by both RAVI averages (close, open, high, low, median, typical, weighted, simple, quarter, trend-follow #1/#2, Demark). |\n| `AoShortPeriod` / `AoLongPeriod` | Fast and slow periods of the Awesome Oscillator. |"
+   },
+   "4218": {
+    "id": 4218,
+    "name": "4218 RSI MA",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the original MetaTrader expert advisor located in `MQL/9925`. It recreates the RSI_MA momentum oscillator by combining a classic RSI with the slope of an exponential moving average built on the weighted price `(High + Low + 2 * Close) / 4`. Signals are generated on completed candles only, keeping the behaviour identical to the source implementation.\n\nThe script is designed for daily EURUSD candles (D1 timeframe) and opens a single position at a time. Nevertheless, any instrument with a meaningful price step can be used as long as the candle type is configured accordingly.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `RsiPeriod` | RSI and EMA length.|\n| `OversoldActivationLevel` | Threshold that confirms a long setup after an oversold extreme. |\n| `OversoldExtremeLevel` | Extreme that must be reached before longs are allowed. |\n| `OverboughtActivationLevel` | Threshold that confirms a short setup after an overbought extreme. |\n| `OverboughtExtremeLevel` | Extreme that must be reached before shorts are allowed. |\n| `StopLossPips` | Distance for the protective stop-loss. Enable/disable via `UseStopLoss`. |\n| `TakeProfitPips` | Distance for the profit target. Enable/disable via `UseTakeProfit`. |\n| `TrailingStopPips` | Distance for the trailing stop. Enable/disable via `UseTrailingStop`. |\n| `UseStopLoss` | Activates the stop-loss management. |\n| `UseTakeProfit` | Activates the take-profit management. |\n| `UseTrailingStop` | Activates trailing stop updates. |\n| `UseMoneyManagement` | Enables position sizing based on `RiskPercent`. |\n| `RiskPercent` | Portfolio percentage risked per trade when money management is active. |\n| `TradeVolume` | Fixed volume used when money management is disabled. |\n| `CandleType` | Data type of candles processed by the strategy (default Daily). |"
+   },
+   "2105": {
+    "id": 2105,
+    "name": "Ha MaZi",
+    "family": "trend",
+    "overview": "Combines Heikin Ashi candles, an EMA filter, and ZigZag pivot confirmation. A long trade is opened when a bullish Heikin Ashi candle forms at a new ZigZag low above the EMA. Shorts appear on a bearish candle at a new ZigZag high below the EMA. Positions are closed by fixed stop loss or take profit.\n\n## Details\n- **Entry Criteria**: ZigZag pivot with Heikin Ashi direction and EMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Fixed stop and target.\n- **Default Values**:\n  - `MaPeriod` = 40\n  - `ZigzagLength` = 13\n  - `StopLoss` = 70\n  - `TakeProfit` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Heikin Ashi, EMA, ZigZag\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: ZigZag pivot with Heikin Ashi direction and EMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Fixed stop and target.\n- **Default Values**:\n  - `MaPeriod` = 40\n  - `ZigzagLength` = 13\n  - `StopLoss` = 70\n  - `TakeProfit` = 200\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Heikin Ashi, EMA, ZigZag\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3898": {
+    "id": 3898,
+    "name": "T3MA(MTC)",
+    "family": "trend",
+    "overview": "Converted from the MetaTrader 4 expert advisor **T3MA(MTC).mq4** (directory `MQL/7904`). The original robot trades signals from the \"T3MA-ALARM\" indicator: it builds a double-smoothed exponential moving average and places an order whenever the slope of that curve flips from falling to rising or vice versa. The StockSharp port mirrors the same logic with idiomatic high-level APIs.\n\n## Trading idea\n\n1. Build a first EMA using the selected candle type and period.\n2. Smooth that series with a second EMA of the same period.\n3. Compare the smoothed value with the previous one (optionally shifted by `MaShift`).\n4. When the slope changes direction, the strategy records a signal. Orders are executed after the configured `CalculationBarOffset` delay, reproducing the `CalculationBarIndex` parameter of the EA.\n5. Each signal uses the bar's low (for a long entry) or high (for a short entry) as a unique marker to avoid duplicate trades, just like the `LastOrder` variable in MetaTrader.\n\n## Porting details\n\n- Uses two `ExponentialMovingAverage` instances to emulate the T3MA-ALARM smoothing chain.\n- Maintains a tiny queue of recent smoothed values to support the `MaShift` lookback.\n- Signals are stored in a FIFO queue and executed after the requested number of finished candles.\n- Protective orders are managed through `StartProtection` with distances expressed in price steps, matching MetaTrader points.\n- The `AllowMultiplePositions` flag reproduces the `MultiPositions` input: when disabled, the strategy waits until the net position is flat before acting on a new signal.\n\n## Parameters\n\n- `MaPeriod` – EMA length used for both smoothing passes (default: 4).\n- `MaShift` – number of bars to shift the smoothed series before comparing its slope (default: 0).\n- `CalculationBarOffset` – delay (in finished candles) between detecting a signal and sending the order (default: 1).\n- `TradeVolume` – base order volume in lots (default: 1).\n- `UseStopLoss` / `StopLossPoints` – enable and distance ",
+    "details": "",
+    "parameters": "- `MaPeriod` – EMA length used for both smoothing passes (default: 4).\n- `MaShift` – number of bars to shift the smoothed series before comparing its slope (default: 0).\n- `CalculationBarOffset` – delay (in finished candles) between detecting a signal and sending the order (default: 1).\n- `TradeVolume` – base order volume in lots (default: 1).\n- `UseStopLoss` / `StopLossPoints` – enable and distance of the stop loss in price steps (default: enabled, 40 steps).\n- `UseTakeProfit` / `TakeProfitPoints` – enable and distance of the take profit in price steps (default: enabled, 11 steps).\n- `AllowMultiplePositions` – allow stacking positions even when an opposite one is open (default: enabled).\n- `CandleType` – timeframe or data type used to feed the indicator chain (default: 5-minute candles)."
+   },
+   "4045": {
+    "id": 4045,
+    "name": "Backbone Basket Strategy (StockSharp)",
+    "family": "volatility",
+    "overview": "The **Backbone Basket Strategy** ports the original MetaTrader 4 \"Backbone.mq4\" expert advisor to the StockSharp high level API. The system collects bid/ask extremes to determine the initial trading direction and then alternates between long and short baskets. Each basket is built gradually, adding one market order per completed candle until either the configured `MaxTrades` count is reached or protective orders close the position. Risk control is retained through a fractional risk model that scales the trade volume by the account value and stop-loss distance.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute time frame | Candle interval used to trigger new decisions. |\n| `MaxRisk` | 0.5 | Fraction of the portfolio considered when sizing the next order. Must be positive. |\n| `MaxTrades` | 10 | Maximum number of trades that can be accumulated in the current basket. |\n| `TakeProfitPoints` | 170 | Take-profit distance measured in price steps. Set to `0` to disable. |\n| `StopLossPoints` | 40 | Stop-loss distance measured in price steps. Required for trailing and position sizing. |\n| `TrailingStopPoints` | 300 | Trailing-stop distance in price steps. Set to `0` to keep a static stop. |"
+   },
+   "894": {
+    "id": 894,
+    "name": "HSV and HSL Gradient Tools",
+    "family": "other",
+    "overview": "Library of color utilities converted from a TradingView script. Provides helpers for HSV and HSL conversions, color inversion and gradient generation.\n\n## Details\n\n- Functions:\n  - Convert between RGB and HSV/HSL.\n  - Generate gradients based on control values.\n  - Ease functions for smooth transitions.\n- Purpose: Visual colour calculations.\n- Trade logic: None.\n",
+    "details": "- Functions:\n  - Convert between RGB and HSV/HSL.\n  - Generate gradients based on control values.\n  - Ease functions for smooth transitions.\n- Purpose: Visual colour calculations.\n- Trade logic: None.",
+    "parameters": ""
+   },
+   "678": {
+    "id": 678,
+    "name": "Divergence For Many Indicators",
+    "family": "other",
+    "overview": "Detects bullish and bearish divergences between price and RSI and MACD histogram. When the number of divergences reaches the specified threshold, the strategy enters a trade in the opposite direction.\n\n## Parameters\n- `RsiPeriod` – period for RSI calculation.\n- `MacdFastPeriod` – fast period for MACD.\n- `MacdSlowPeriod` – slow period for MACD.\n- `MacdSignalPeriod` – signal period for MACD.\n- `MinDivergence` – minimum indicators confirming divergence.\n- `CandleType` – candle type for subscription.\n",
+    "details": "",
+    "parameters": "- `RsiPeriod` – period for RSI calculation.\n- `MacdFastPeriod` – fast period for MACD.\n- `MacdSlowPeriod` – slow period for MACD.\n- `MacdSignalPeriod` – signal period for MACD.\n- `MinDivergence` – minimum indicators confirming divergence.\n- `CandleType` – candle type for subscription."
+   },
+   "813": {
+    "id": 813,
+    "name": "Friday Bond Short",
+    "family": "other",
+    "overview": "This time-based strategy opens a short position on a specified day and hour in Eastern Time and closes it on another day and hour. By default, it sells on Friday at 13:00 ET and buys back on Monday at 13:00 ET.\n\n## Details\n\n- **Entry Criteria:** Short on configured day and hour (ET).\n- **Exit Criteria:** Close short on configured day and hour (ET).\n- **Long/Short:** Short only.\n- **Indicators:** None.\n- **Stops:** None.\n- **Timeframe:** 1 hour candles by default.\n- **Category:** Time-based.\n- **Complexity:** Low.\n",
+    "details": "- **Entry Criteria:** Short on configured day and hour (ET).\n- **Exit Criteria:** Close short on configured day and hour (ET).\n- **Long/Short:** Short only.\n- **Indicators:** None.\n- **Stops:** None.\n- **Timeframe:** 1 hour candles by default.\n- **Category:** Time-based.\n- **Complexity:** Low.",
+    "parameters": ""
+   },
+   "1266": {
+    "id": 1266,
+    "name": "RSI Cyclic Smoothed",
+    "family": "other",
+    "overview": "Strategy based on the cyclic smoothed RSI indicator. It calculates dynamic percentile bands and trades reversals when the oscillator crosses them.\n\n## Details\n\n- **Entry Criteria**: CRSI crossing above the lower band or below the upper band.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band cross.\n- **Stops**: Yes.\n- **Default Values**:\n  - `DominantCycleLength` = 20\n  - `Vibration` = 10\n  - `Leveling` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: CRSI crossing above the lower band or below the upper band.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band cross.\n- **Stops**: Yes.\n- **Default Values**:\n  - `DominantCycleLength` = 20\n  - `Vibration` = 10\n  - `Leveling` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

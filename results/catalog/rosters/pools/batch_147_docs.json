@@ -1,0 +1,98 @@
+{
+ "batch_147": {
+  "strategy_ids": [
+   103,
+   3340,
+   1079,
+   1535,
+   2948,
+   3716,
+   3757,
+   3039,
+   2925,
+   2347
+  ],
+  "docs": {
+   "103": {
+    "id": 103,
+    "name": "Dark Pool Prints",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 46%. It performs best in the stocks market.\n\nThe strategy enters in the same direction as heavy dark pool buying or selling, expecting follow-through when the rest of the market reacts.\n\nA small percent stop keeps risk contained and positions close if the anticipated momentum fails to appear.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3340": {
+    "id": 3340,
+    "name": "Expert Alligator",
+    "family": "trend",
+    "overview": "The **Expert Alligator Strategy** is a faithful StockSharp port of MetaTrader 5's built-in expert advisor `Expert_Alligator.mq5`. The original expert drives its trading decisions from Bill Williams' Alligator indicator, which consists of three smoothed moving averages shifted into the future: the jaw (blue), the teeth (red), and the lips (green). By monitoring how these lines contract and expand the EA identifies fresh crossovers and waits for the \"mouth\" to open before another trade can be taken. This C# conversion recreates the same workflow with StockSharp's high-level strategy API and indicator suite.\n\n## Trading logic\n\n1. **Indicator preparation**\n   - Build three smoothed moving averages of the median price using the classic Alligator lengths (13, 8, and 5) and apply the standard forward shifts (8, 5, and 3 bars respectively).\n   - Store a rolling history of each shifted line so that past and future offsets used by the MetaTrader EA (e.g. `LipsTeethDiff(-2)`) can be evaluated safely.\n\n2. **Entry conditions**\n   - *Long trades*: trigger when the lips-teeth and teeth-jaw spreads have been shrinking for three consecutive shifted bars while remaining above zero. This reproduces the EA's requirement that the green line crosses downward through the red, confirming an upward mouth opening.\n   - *Short trades*: mirror the long logic with spreads tightening below zero, indicating the lips crossing upward through the teeth and jaw.\n   - After a trade is opened the strategy raises an internal `crossed` flag that blocks additional entries until the three Alligator spreads widen by at least the configured **Cross Measure** distance.\n\n3. **Exit conditions**\n   - *Long positions* close when the lips-teeth spread flips negative on the most recent shifted value while staying positive on the two older values (`-1`, `0`, `1` indexes in the original EA).\n   - *Short positions* exit when the same sequence occurs in the opposite direction.\n\n## Parameters\n\n| Name | Description | Def",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Order Volume` | Trade size in lots or contracts passed to `BuyMarket`/`SellMarket`. | `0.1` |\n| `Candle Type` | Time frame for the candle subscription. | `1 Hour` |\n| `Jaw Period` | Smoothed moving average length for the jaw line. | `13` |\n| `Jaw Shift` | Forward displacement (in bars) of the jaw line. | `8` |\n| `Teeth Period` | Smoothed moving average length for the teeth line. | `8` |\n| `Teeth Shift` | Forward displacement (in bars) of the teeth line. | `5` |\n| `Lips Period` | Smoothed moving average length for the lips line. | `5` |\n| `Lips Shift` | Forward displacement (in bars) of the lips line. | `3` |\n| `Cross Measure` | Minimum spread (in MetaTrader points) that must develop after a crossover before another trade can fire. | `5` |"
+   },
+   "1079": {
+    "id": 1079,
+    "name": "Moving Average Entanglement",
+    "family": "trend",
+    "overview": "This strategy compares a fast and a slow moving average. A position is opened when the absolute difference between the averages exceeds an ATR-based dead zone.\n\n## Parameters\n- Fast MA\n- Slow MA\n- ATR Length\n- Volatility Period\n- Dead Zone %\n- Deviation Multiplier\n- MA Type\n- Candle Type\n",
+    "details": "",
+    "parameters": "- Fast MA\n- Slow MA\n- ATR Length\n- Volatility Period\n- Dead Zone %\n- Deviation Multiplier\n- MA Type\n- Candle Type"
+   },
+   "1535": {
+    "id": 1535,
+    "name": "Volume Block Order Analyzer",
+    "family": "trend",
+    "overview": "Simplified strategy based on the TradingView script **\"Volume Block Order Analyzer\"**. It measures how large volume spikes impact price direction and accumulates this effect over time. When the cumulative impact crosses user-defined thresholds, the strategy enters trades and protects them with a trailing stop.\n\n## Details\n\n- **Entry**: Cumulative impact above or below threshold.\n- **Exit**: Trailing stop based on percentage from entry.\n- **Long/Short**: Both.\n- **Indicators**: SMA.\n- **Timeframe**: Any.\n\nThis port focuses on the core idea; many visual features of the original script are omitted.\n",
+    "details": "- **Entry**: Cumulative impact above or below threshold.\n- **Exit**: Trailing stop based on percentage from entry.\n- **Long/Short**: Both.\n- **Indicators**: SMA.\n- **Timeframe**: Any.\n\nThis port focuses on the core idea; many visual features of the original script are omitted.",
+    "parameters": ""
+   },
+   "2948": {
+    "id": 2948,
+    "name": "Exp RSIOMA V2",
+    "family": "trend",
+    "overview": "Exp RSIOMA V2 is a conversion of the original MetaTrader 5 expert advisor that trades on the RSIOMA oscillator (Relative Strength Index of Moving Average). The strategy reproduces the same ideas inside the StockSharp high level API: price data are smoothed, converted into a momentum series and fed into an RSI style accumulator. Trading decisions are taken when the oscillator changes direction or crosses predefined zones.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `OrderVolume` | Default order volume used by market orders. | `1` |\n| `CandleType` | Candle data series processed by the strategy. | `4 hour` timeframe |\n| `EnableLongEntries` / `EnableShortEntries` | Allow opening new long/short positions. | `true` |\n| `EnableLongExits` / `EnableShortExits` | Allow closing existing long/short positions. | `true` |\n| `Mode` | Trading logic (Breakdown, Twist or CloudTwist). | `Breakdown` |\n| `PriceSmoothing` | Moving average applied to the price before RSIOMA. | `Exponential` |\n| `RsiomaLength` | RSIOMA averaging period. | `14` |\n| `MomentumPeriod` | Lag between samples when computing momentum. | `1` |\n| `AppliedPrice` | Candle price used for the oscillator (close, open, median, DeMark, etc.). | `Close` |\n| `MainTrendLong` / `MainTrendShort` | RSIOMA levels that define overbought/oversold zones. | `60` / `40` |\n| `SignalBar` | Number of closed bars back that should be analysed. | `1` |"
+   },
+   "3716": {
+    "id": 3716,
+    "name": "MP Candlestick",
+    "family": "momentum",
+    "overview": "The **MP Candlestick Strategy** is a conversion of the MetaTrader 5 Expert Advisor `mp candlestick.mq5` into the StockSharp high-level strategy framework. The system evaluates the direction of completed candles and opens trades in the same direction while applying strict risk management. It supports both fixed stop-loss distances expressed in MetaTrader pips and adaptive stop-loss placement derived from the Average True Range (ATR).",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `RiskPercent` | 1 | Percent of portfolio equity allocated as maximum loss for a single trade. |\n| `RiskRewardRatio` | 1.5 | Multiplier applied to the initial risk distance to define the take-profit target. |\n| `MaxMarginUsage` | 30 | Upper bound for margin consumption expressed as a percentage of equity. |\n| `StopLossPips` | 50 | Fixed stop-loss size in MetaTrader pips when ATR is disabled. |\n| `UseAutoSl` | true | Enables ATR (length 14) stop-loss sizing with multiplier 1.5. |\n| `CandleType` | 1-hour time frame | Candle series used for signals and ATR calculation. |"
+   },
+   "3757": {
+    "id": 3757,
+    "name": "Cloudzs Trade 2",
+    "family": "volatility",
+    "overview": "The **Cloudzs Trade 2 Strategy** is a StockSharp port of the MetaTrader 4 expert advisor `cloudzs_trade_2`. The original robot combines stochastic oscillator reversals with a double-fractal confirmation filter and uses aggressive trailing logic to protect open positions. This C# version recreates the signal flow and the trade management rules while exposing the parameters as `StrategyParam` objects so they can be optimised or adjusted from the StockSharp UI.\n\nThe strategy watches a single candle series (configurable timeframe) and evaluates two independent conditions:\n\n1. **Stochastic reversal** – triggers when the %D line leaves an extreme zone (>= 80 for sells, <= 20 for buys) while confirming that %D crossed the %K line on the previous candle, closely matching the original MQL logic.\n2. **Double fractal confirmation** – waits until two consecutive fractal signals of the same type appear (two upper fractals for sells or two lower fractals for buys).\n\nIf either condition generates a buy or sell request, the strategy enters in that direction (provided no trade is active and the previous exit was on a different day). When already in a trade, the same conditions can be used to exit early if `CloseOnOpposite` is enabled.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `LotSplitter` | Coefficient used to approximate trade volume from the current account value. | `0.1` |\n| `MaxVolume` | Upper bound for the calculated volume (0 disables the cap). | `0` |\n| `TakeProfitOffset` | Fixed take-profit distance in absolute price units. | `0` |\n| `TrailingStopOffset` | Trailing stop distance in price units. | `0.01` |\n| `StopLossOffset` | Fixed stop-loss distance in price units. | `0.05` |\n| `MinProfitOffset` | Minimum profit to keep after a favourable excursion once `ProfitPointsOffset` was reached. | `0` |\n| `ProfitPointsOffset` | Required favourable move before `MinProfitOffset` is enforced. | `0` |\n| `%K Period` / `%D Period` / `Slowing` | Stochastic oscillator configuration. | `8 / 8 / 4` |\n| `Method` | Original MT4 stochastic method identifier (informational, not used because StockSharp exposes a single implementation). | `3` |\n| `PriceMode` | Original MT4 price mode identifier (informational only). | `1` |\n| `UseStochasticCondition` | Enable stochastic based signal generation. | `true` |\n| `UseFractalCondition` | Enable fractal based signal generation. | `true` |\n| `CloseOnOpposite` | Close the active position when the opposite signal appears. | `true` |\n| `CandleType` | Timeframe/data type used for calculations. | `15-minute time frame` |"
+   },
+   "3039": {
+    "id": 3039,
+    "name": "OHLC Stochastic",
+    "family": "mean_reversion",
+    "overview": "Momentum-following strategy that uses the classic %K/%D stochastic oscillator on OHLC candles.\nThe algorithm reacts to crossovers in oversold/overbought zones and protects open trades with a configurable trailing stop measured in price steps.\n\n## Details\n\n- **Core Idea**: exploit the shift in momentum when stochastic %K crosses %D at extreme levels.\n- **Entry Criteria**:\n  - **Long**:\n    - %K crosses above %D and at least one of the lines is below the `LevelDown` threshold.\n    - If a short position exists it is closed and reversed to long.\n  - **Short**:\n    - %K crosses below %D and at least one of the lines is above the `LevelUp` threshold.\n    - If a long position exists it is closed and reversed to short.\n- **Exit Criteria**:\n  - Trailing stop is hit (based on `TrailingStopSteps` distance and `TrailingStepSteps` improvement requirement).\n  - Opposite entry signal appears, triggering a reversal.\n- **Trailing Logic**:\n  - Distance and step are multiplied by the security `PriceStep` to convert pips/steps into absolute prices.\n  - Stop only advances after the trade moves beyond `TrailingStopSteps + TrailingStepSteps` from the entry price.\n  - Separate trailing logic for long and short sides.\n- **Indicators**:\n  - [StochasticOscillator](https://doc.stocksharp.com/en/html/T_StockSharp_Algo_Indicators_StochasticOscillator.htm) with adjustable `KPeriod`, `DPeriod`, and `Slowing`.\n- **Long/Short**: Both.\n- **Stops**: Trailing stop only (no fixed SL/TP orders).\n- **Position Sizing**: Uses the strategy `Volume` parameter; reversals send `Volume + |Position|` to flip direction.\n- **Default Parameters**:\n  - `CandleType` = `TimeSpan.FromHours(12).TimeFrame()`\n  - `KPeriod` = 5\n  - `DPeriod` = 3\n  - `Slowing` = 3\n  - `LevelUp` = 70\n  - `LevelDown` = 30\n  - `TrailingStopSteps` = 5 (price steps)\n  - `TrailingStepSteps` = 2 (price steps)\n- **Visualization**:\n  - Draws OHLC candles, stochastic indicator, and trade markers when charts are available.\n\n## Usage Notes\n\n1. Configure",
+    "details": "- **Core Idea**: exploit the shift in momentum when stochastic %K crosses %D at extreme levels.\n- **Entry Criteria**:\n  - **Long**:\n    - %K crosses above %D and at least one of the lines is below the `LevelDown` threshold.\n    - If a short position exists it is closed and reversed to long.\n  - **Short**:\n    - %K crosses below %D and at least one of the lines is above the `LevelUp` threshold.\n    - If a long position exists it is closed and reversed to short.\n- **Exit Criteria**:\n  - Trailing stop is hit (based on `TrailingStopSteps` distance and `TrailingStepSteps` improvement requirement).\n  - Opposite entry signal appears, triggering a reversal.\n- **Trailing Logic**:\n  - Distance and step are multiplied by the security `PriceStep` to convert pips/steps into absolute prices.\n  - Stop only advances after the trade moves beyond `TrailingStopSteps + TrailingStepSteps` from the entry price.\n  - Separate trailing logic for long and short sides.\n- **Indicators**:\n  - [StochasticOscillator](https://doc.stocksharp.com/en/html/T_StockSharp_Algo_Indicators_StochasticOscillator.htm) with adjustable `KPeriod`, `DPeriod`, and `Slowing`.\n- **Long/Short**: Both.\n- **Stops**: Trailing stop only (no fixed SL/TP orders).\n- **Position Sizing**: Uses the strategy `Volume` parameter; reversals send `Volume + |Position|` to flip direction.\n- **Default Parameters**:\n  - `CandleType` = `TimeSpan.FromHours(12).TimeFrame()`\n  - `KPeriod` = 5\n  - `DPeriod` = 3\n  - `Slowing` = 3\n  - `LevelUp` = 70\n  - `LevelDown` = 30\n  - `TrailingStopSteps` = 5 (price steps)\n  - `TrailingStepSteps` = 2 (price steps)\n- **Visualization**:\n  - Draws OHLC candles, stochastic indicator, and trade markers when charts are available.",
+    "parameters": ""
+   },
+   "2925": {
+    "id": 2925,
+    "name": "Twenty 200 Pips",
+    "family": "volume",
+    "overview": "The strategy replicates the original **20/200 pips** MQL5 expert. It examines hourly candles and\ncompares two historical open prices (`Open[t1]` and `Open[t2]`). When the difference between these\nopens exceeds a configurable delta during a specific hour, the strategy enters a single trade for the\nsession and relies on fixed take-profit and stop-loss levels.",
+    "details": "",
+    "parameters": "- `TakeProfit` – distance in price points for the take-profit order (default 200 points).\n- `StopLoss` – distance in price points for the stop-loss order (default 2000 points).\n- `TradeHour` – hour of the day when the entry check is performed (default 18).\n- `FirstOffset` – index of the older open price (maps to `Open[t1]` in the MQL script, default 7).\n- `SecondOffset` – index of the more recent open price (`Open[t2]`, default 2).\n- `DeltaPoints` – minimum difference in points between the two opens to trigger a trade (default 70).\n- `Volume` – order size used for market entries (default 0.1).\n- `CandleType` – timeframe used for calculations (default 1-hour candles)."
+   },
+   "2347": {
+    "id": 2347,
+    "name": "Renko Chart From Ticks",
+    "family": "volume",
+    "overview": "Generates Renko bricks directly from ticks and trades when brick direction changes. Demonstrates building non-time-based candles using the high level StockSharp API.\n\n## Details\n\n- **Entry Criteria**:\n  - When a new finished brick reverses direction, enter in direction of the new brick.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse position on opposite brick direction.\n- **Stops**: No.\n- **Default Values**:\n  - `BrickSize` = 10\n  - `Volume` = 1\n- **Filters**:\n  - Category: Renko\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Tick-based\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - When a new finished brick reverses direction, enter in direction of the new brick.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse position on opposite brick direction.\n- **Stops**: No.\n- **Default Values**:\n  - `BrickSize` = 10\n  - `Volume` = 1\n- **Filters**:\n  - Category: Renko\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Tick-based\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

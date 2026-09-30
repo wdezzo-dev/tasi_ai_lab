@@ -1,0 +1,112 @@
+{
+  "strategy_id": 823,
+  "ticker": "3080",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 823,
+    "name": "Futures Engulfing Candle Size",
+    "family": "pattern",
+    "entry_long": "close > open and high - low > atr(high,low,close,14)",
+    "exit_long": "close < open and high - low > atr(high,low,close,10)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 25-tick candle-range threshold is replaced by a range larger than ATR(14) (14 is a fallback, no ATR period is documented) with direction from the candle body, as documented. The 07:00-09:15 session window and the 50/40 tick take-profit and stop-loss are tick or time based and are not percent fields."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8312,
+      "engine_win_ret": 99.38271088776922,
+      "alpha": 99.04599973271897,
+      "benchmark_ret": 0.3367111550502555,
+      "trades": 620,
+      "win_rate": 0.482258064516129,
+      "sharpe": 0.8196627988938525,
+      "max_drawdown": -0.3541330748458339,
+      "profit_factor": 1.7302916088123008
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.07407794091246522,
+      "alpha": 0.34705930737209256,
+      "benchmark_ret": -0.27298136645962734,
+      "trades": 33,
+      "win_rate": 0.48484848484848486,
+      "sharpe": 0.3797719533706307,
+      "max_drawdown": -0.18512469357715833,
+      "profit_factor": 1.1671450052573076
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.2572835386059338,
+      "alpha": 0.25980031712942364,
+      "benchmark_ret": -0.00251677852348986,
+      "trades": 11,
+      "win_rate": 0.8181818181818182,
+      "sharpe": 2.2458025864400644,
+      "max_drawdown": -0.05160774524547873,
+      "profit_factor": 9.267868437725385
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8312,
+      "engine_win_ret": 3.500867813194983,
+      "alpha": 3.1641566581447274,
+      "benchmark_ret": 0.3367111550502555,
+      "trades": 620,
+      "win_rate": 0.41935483870967744,
+      "sharpe": 0.332873688728138,
+      "max_drawdown": -0.4743345186854141,
+      "profit_factor": 1.1799043362952328
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.0898061208518327,
+      "alpha": 0.18317524560779463,
+      "benchmark_ret": -0.27298136645962734,
+      "trades": 33,
+      "win_rate": 0.3939393939393939,
+      "sharpe": -0.28718644668622273,
+      "max_drawdown": -0.24265755126204258,
+      "profit_factor": 0.8194718888968165
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.19325393255381762,
+      "alpha": 0.19577071107730748,
+      "benchmark_ret": -0.00251677852348986,
+      "trades": 11,
+      "win_rate": 0.6363636363636364,
+      "sharpe": 1.7421684224445213,
+      "max_drawdown": -0.06118295485114855,
+      "profit_factor": 5.609309632460713
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

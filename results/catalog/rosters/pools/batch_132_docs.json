@@ -1,0 +1,98 @@
+{
+ "batch_132": {
+  "strategy_ids": [
+   1183,
+   626,
+   629,
+   203,
+   3400,
+   4227,
+   597,
+   3623,
+   4163,
+   1809
+  ],
+  "docs": {
+   "1183": {
+    "id": 1183,
+    "name": "PresentTrend RMI Synergy",
+    "family": "trend",
+    "overview": "PresentTrend RMI Synergy combines an RSI-based momentum filter with a SuperTrend-style ATR trailing stop. Entries occur when momentum exceeds thresholds and price is aligned with trend. The stop dynamically trails price using a moving average and ATR band.\n\nBacktests show stable performance on trending markets like crypto.\n\n## Details\n\n- **Entry Criteria**: RMI above 60 with price above moving average for longs; RMI below 40 with price below moving average for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RmiPeriod` = 21\n  - `SuperTrendLength` = 5\n  - `SuperTrendMultiplier` = 4.0m\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, ATR, SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: RMI above 60 with price above moving average for longs; RMI below 40 with price below moving average for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RmiPeriod` = 21\n  - `SuperTrendLength` = 5\n  - `SuperTrendMultiplier` = 4.0m\n  - `Direction` = TradeDirection.Both\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, ATR, SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "626": {
+    "id": 626,
+    "name": "Combo 2/20 EMA Bandpass Filter",
+    "family": "trend",
+    "overview": "This strategy combines a fast and slow EMA crossover with a bandpass filter. Long positions are opened when the fast EMA is above the slow EMA and the bandpass value breaks above the sell zone. Short positions are opened when the fast EMA is below the slow EMA and the bandpass value falls below the buy zone. Positions are closed if signals disappear or before the start date.\n\nTesting indicates an average annual return of around 47%. It performs best in the crypto market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Fast EMA > Slow EMA and bandpass > sell zone\n  - **Short**: Fast EMA < Slow EMA and bandpass < buy zone\n- **Long/Short**: Both sides\n- **Exit Criteria**: Close position when signals disappear\n- **Stops**: No\n- **Default Values**:\n  - `FastEmaLength` = 2\n  - `SlowEmaLength` = 20\n  - `BpfLength` = 20\n  - `BpfDelta` = 0.5m\n  - `BpfSellZone` = 5m\n  - `BpfBuyZone` = -5m\n  - `StartDate` = new DateTimeOffset(2005, 1, 1, 0, 0, 0, TimeSpan.Zero)\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA Bandpass Filter\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA > Slow EMA and bandpass > sell zone\n  - **Short**: Fast EMA < Slow EMA and bandpass < buy zone\n- **Long/Short**: Both sides\n- **Exit Criteria**: Close position when signals disappear\n- **Stops**: No\n- **Default Values**:\n  - `FastEmaLength` = 2\n  - `SlowEmaLength` = 20\n  - `BpfLength` = 20\n  - `BpfDelta` = 0.5m\n  - `BpfSellZone` = 5m\n  - `BpfBuyZone` = -5m\n  - `StartDate` = new DateTimeOffset(2005, 1, 1, 0, 0, 0, TimeSpan.Zero)\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA Bandpass Filter\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "629": {
+    "id": 629,
+    "name": "Commitment of Trader R",
+    "family": "trend",
+    "overview": "This strategy uses the Williams %R indicator to detect overbought and oversold conditions. A simple moving average acts as an optional trend filter.\n\nA long trade is opened when Williams %R rises above the upper threshold and the closing price is above the SMA. A short trade is opened when Williams %R falls below the lower threshold and price is below the SMA. Positions are closed when the oscillator leaves the signal zone.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: %R > upper threshold and (price > SMA if enabled)\n  - **Short**: %R < lower threshold and (price < SMA if enabled)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: %R < upper threshold\n  - **Short**: %R > lower threshold\n- **Stops**: No\n- **Default Values**:\n  - `WilliamsPeriod` = 252\n  - `UpperThreshold` = -10\n  - `LowerThreshold` = -90\n  - `SmaEnabled` = true\n  - `SmaLength` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Williams %R, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: %R > upper threshold and (price > SMA if enabled)\n  - **Short**: %R < lower threshold and (price < SMA if enabled)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: %R < upper threshold\n  - **Short**: %R > lower threshold\n- **Stops**: No\n- **Default Values**:\n  - `WilliamsPeriod` = 252\n  - `UpperThreshold` = -10\n  - `LowerThreshold` = -90\n  - `SmaEnabled` = true\n  - `SmaLength` = 200\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Williams %R, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "203": {
+    "id": 203,
+    "name": "Keltner Williams R",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 46%. It performs best in the stocks market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price < lower Keltner band && Williams %R < -80 (oversold at lower band)\n  - **Short**: Price > upper Keltner band && Williams %R > -20 (overbought at upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price returns to middle band\n  - **Short**: Exit short position when price returns to middle band\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `KeltnerMultiplier` = 2m\n  - `AtrPeriod` = 14\n  - `WilliamsRPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Keltner Williams R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price < lower Keltner band && Williams %R < -80 (oversold at lower band)\n  - **Short**: Price > upper Keltner band && Williams %R > -20 (overbought at upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price returns to middle band\n  - **Short**: Exit short position when price returns to middle band\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `KeltnerMultiplier` = 2m\n  - `AtrPeriod` = 14\n  - `WilliamsRPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Keltner Williams R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3400": {
+    "id": 3400,
+    "name": "Expert ADC PL Stoch",
+    "family": "trend",
+    "overview": "The **Expert ADC PL Stoch Strategy** is a candlestick pattern strategy converted from the original MQL5 expert advisor *Expert_ADC_PL_Stoch*. It looks for bullish Piercing Line and bearish Dark Cloud Cover formations on finished candles and confirms the signals with the %D line of a Stochastic Oscillator. The method is trend-following when the market retraces into an established move and requires the oscillator to be in extreme zones before opening positions. Position exits are based on Stochastic crossovers out of extreme areas, mirroring the vote-based exit logic of the source system.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `CandleType` | Time frame of candles used for pattern detection. | 1 hour |\n| `StochasticLength` | Base length for the Stochastic oscillator. | 47 |\n| `StochasticKPeriod` | Smoothing length for the %K line. | 9 |\n| `StochasticDPeriod` | Smoothing length for the %D line. | 13 |\n| `StochasticSlow` | Additional slowing factor applied to the oscillator. | 3 |\n| `AverageBodyPeriod` | Number of candles used to measure the reference body size and close average. | 5 |\n| `LongEntryThreshold` | Maximum %D value allowed before entering long trades. | 30 |\n| `ShortEntryThreshold` | Minimum %D value required before entering short trades. | 70 |\n| `ExitLowerThreshold` | Lower boundary used for exit crossovers. | 20 |\n| `ExitUpperThreshold` | Upper boundary used for exit crossovers. | 80 |"
+   },
+   "4227": {
+    "id": 4227,
+    "name": "Daily STP Entry Frame Strategy (StockSharp)",
+    "family": "breakout",
+    "overview": "The **Daily STP Entry Frame Strategy** replicates the behaviour of the original MetaTrader expert advisor \"Daily STP Entry Frame\" using the StockSharp high level API. The system prepares breakout stop orders at the start of each new trading day. Entry prices are derived from the previous day's high and low, with additional filters to ensure the market is positioned near these extremes before arming orders. The logic is tailored for Forex-style instruments where \"base points\" correspond to one tenth of a pip for five-digit quotes.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Time-frame used to fetch the reference candles (daily by default). |\n| `StopLossPoints` | Stop-loss distance in base points. |\n| `TakeProfitPoints` | Take-profit distance in base points. |\n| `TrailingSlope` | Portion of profit retained during trailing; ≥ 1 disables the feature. |\n| `SideFilter` | -1 short only, 0 both directions, 1 long only. |\n| `ThresholdPoints` | Minimum gap between current price and the previous extreme required to arm a stop. |\n| `SpreadPoints` | Additional offset (half used above/below the extreme) to compensate for spread. |\n| `SlippagePoints` | Safety buffer added to the minimum stop distance check. |\n| `NoNewOrdersHour` | Hour (platform time) to cancel pending orders on regular days. |\n| `NoNewOrdersHourFriday` | Friday-specific cancellation hour. |\n| `EarliestOrderHour` | Earliest hour of the day when new orders can be created. |\n| `DayFilter` | 6 for all days or 0-5 to trade Sunday through Friday only. |\n| `CloseAfterSeconds` | Optional time-based exit (0 disables). |\n| `PercentOfProfit` | Fraction of accumulated profit used to scale the position size. |\n| `MinVolume` / `MaxVolume` | Hard bounds for the calculated volume. |\n| `MaximumDrawdownPercent` | Drawdown threshold that blocks new orders. |"
+   },
+   "597": {
+    "id": 597,
+    "name": "Bollinger Breakout Direction",
+    "family": "breakout",
+    "overview": "Trades Bollinger Band breakouts filtered by RSI. Direction can be long, short, or both. Uses fixed stop loss and take profit based on risk/reward ratio.\n\n## Details\n\n- **Data**: Price candles.\n- **Entry**: Long when close is above upper band and RSI above midline; short when close below lower band and RSI below midline.\n- **Exit**: Stop loss and take profit from risk/reward.\n- **Instruments**: Any instruments.\n- **Risk**: Configurable stop and take levels.\n",
+    "details": "- **Data**: Price candles.\n- **Entry**: Long when close is above upper band and RSI above midline; short when close below lower band and RSI below midline.\n- **Exit**: Stop loss and take profit from risk/reward.\n- **Instruments**: Any instruments.\n- **Risk**: Configurable stop and take levels.",
+    "parameters": ""
+   },
+   "3623": {
+    "id": 3623,
+    "name": "Matrix Machine Learning",
+    "family": "momentum",
+    "overview": "Matrix Machine Learning is a neural-network-based approach originally published for MetaTrader 5 inside the \"MQL5Book\" educational project. The expert script collects a window of tick prices, converts consecutive price differences into a binary sequence, and trains a Hopfield recurrent neural network. The trained network is evaluated on an in-sample segment, validated on an out-of-sample segment, and finally used to infer the direction of the next movements. Positions are opened when the first element of the forecasted binary vector shows a bullish (`+1`) or bearish (`-1`) direction.\n\nThis C# version ports the original logic to the StockSharp high-level API and replaces tick processing with finished candles to ensure stable cross-platform behaviour. Every candle close updates the binary price pattern, retrains the Hopfield network, evaluates historical accuracy, and produces an online forecast for the upcoming steps.",
+    "details": "",
+    "parameters": "- **History Depth** – number of recent candle closes stored for the Hopfield network. Must be larger than `ForwardDepth` and at least `PredictorLength + ForecastLength + 1`.\n- **Forward Depth** – size of the validation window reserved for forward checks. Requires at least `ForecastLength + 1` closes.\n- **Predictor Length** – length of the binary input vector used by the neural network.\n- **Forecast Length** – number of future steps predicted by the network output vector.\n- **Candle Type** – StockSharp `DataType` describing the candle series requested from the connector.\n- **Debug Log** – when enabled, prints detailed intermediate vectors, sample comparisons, and online forecasts."
+   },
+   "4163": {
+    "id": 4163,
+    "name": "Parabolic SAR Bug 2",
+    "family": "volatility",
+    "overview": "The **Parabolic SAR Bug 2 Strategy** is the StockSharp high-level conversion of the MetaTrader expert advisor `pSAR_bug2` from the folder `MQL/9503`. The original EA reacts to the very first Parabolic SAR dot that appears on the opposite side of the price. When the dot flips below the close, the system closes any short trades and immediately opens a long position; when the dot jumps above the close, the logic mirrors the behaviour on the short side. Protective stop-loss and take-profit levels are calculated in raw price points, exactly like in MetaTrader where the values are multiplied by the instrument `Point` size.\n\nThe StockSharp port keeps the same intent while leveraging the framework's high-level API. It subscribes to finished candles, binds a Parabolic SAR indicator with configurable acceleration parameters, monitors dot reversals, and sends market orders sized to both flatten the previous exposure and establish the new trade.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TradeVolume` | `0.1` | Base order volume in lots. The same value is assigned to the internal `Strategy.Volume` property. |\n| `StopLossPoints` | `90` | Stop-loss distance in price points. The distance is multiplied by the instrument price step to obtain the actual price offset. |\n| `TakeProfitPoints` | `20` | Take-profit distance in price points converted through the instrument price step. |\n| `SarStep` | `0.001` | Initial acceleration factor for the Parabolic SAR indicator. |\n| `SarMaximum` | `0.2` | Maximum acceleration factor for the Parabolic SAR indicator. |\n| `CandleType` | `15m time-frame` | Candle type used for calculations and signal evaluation. |"
+   },
+   "1809": {
+    "id": 1809,
+    "name": "Lucky Jump",
+    "family": "mean_reversion",
+    "overview": "The Lucky Jump strategy is a short-term mean reversion system that reacts to sudden price jumps on the best bid and ask. When the ask price jumps upward by a specified number of points compared to the previous quote, the strategy opens a short position expecting a pullback. Conversely, when the bid price drops by the same amount, it enters long. Positions are closed either at the first favorable tick or when the loss exceeds a predefined limit.\n\nThis approach attempts to capture quick corrections after aggressive market moves. It operates purely on Level1 quote data and does not rely on candles or indicators.\n\n## Details\n\n- **Entry Criteria**:\n  - **Short**: `Ask(t) - Ask(t-1) >= Shift * PriceStep`.\n  - **Long**: `Bid(t-1) - Bid(t) >= Shift * PriceStep`.\n- **Exit Criteria**:\n  - Close position as soon as it becomes profitable.\n  - Close if loss exceeds `Limit * PriceStep`.\n- **Stops**: implicit stop based on `Limit` parameter.\n- **Default Values**:\n  - `Shift` = 30 points.\n  - `Limit` = 180 points.\n  - `Volume` = 1.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Ultra short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n\n",
+    "details": "- **Entry Criteria**:\n  - **Short**: `Ask(t) - Ask(t-1) >= Shift * PriceStep`.\n  - **Long**: `Bid(t-1) - Bid(t) >= Shift * PriceStep`.\n- **Exit Criteria**:\n  - Close position as soon as it becomes profitable.\n  - Close if loss exceeds `Limit * PriceStep`.\n- **Stops**: implicit stop based on `Limit` parameter.\n- **Default Values**:\n  - `Shift` = 30 points.\n  - `Limit` = 180 points.\n  - `Volume` = 1.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Ultra short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

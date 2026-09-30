@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2432,
+      "name": "GO Risk Managed",
+      "family": "trend",
+      "entry_long": "sma(close, 20) - sma(open, 20) + sma(high, 20) - sma(open, 20) + sma(low, 20) - sma(open, 20) + sma(close, 20) - sma(low, 20) + sma(close, 20) - sma(high, 20) > 0",
+      "exit_long": "sma(close, 20) - sma(open, 20) + sma(high, 20) - sma(open, 20) + sma(low, 20) - sma(open, 20) + sma(close, 20) - sma(low, 20) + sma(close, 20) - sma(high, 20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented GO oscillator is reproduced term by term with SMA(20) of open, high, low and close, so a positive GO opens the long and a negative GO closes it. MA Type/MA Period have no documented values so SMA(20) is a fallback, the Volume multiplier is dropped, and Risk %, Max Positions, and the short side are not representable."
+    },
+    {
+      "id": 3284,
+      "name": "Consolidation Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 5) and ema(close, 10) > ema(close, 30) and bars_since(atr(high, low, close, 10) < 0.9 * atr(high, low, close, 40)) < 5 and roc(close, 14) > 0 and macd(close, 12, 26) > macd_signal(close, 12, 26, 9)",
+      "exit_long": "close < ema(close, 10) or macd(close, 12, 26) < macd_signal(close, 12, 26, 9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two typical-price LWMAs are approximated by EMA(10)/EMA(30) on close, the overlapping-bar consolidation by a 10-vs-40 ATR squeeze inside the last five bars, the momentum-above-100 filter by ROC(14)>0, and the separate-timeframe MACD by MACD(12,26,9) on this series. Pip take-profit/stop-loss, TradeVolume, and the short side are not percentage/DSL fields."
+    },
+    {
+      "id": 37,
+      "name": "VIX Trigger",
+      "family": "trend",
+      "entry_long": "roc(atr(high, low, close, 14), 1) > 0 and close < sma(close, 20)",
+      "exit_long": "roc(atr(high, low, close, 14), 1) < 0 or close > sma(close, 20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The external VIX is replaced by rising realized volatility, ROC(ATR(14),1)>0, so a volatility spike with price under the documented MAPeriod 20 average buys the recovery and falling volatility or a return above the average exits. The documented StopLossPercent 2.0 is retained; the 5-minute timeframe and short side are not represented."
+    },
+    {
+      "id": 223,
+      "name": "Momentum Divergence",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low, 2) and roc(rsi(close, 14), 1) > 0",
+      "exit_long": "crossbelow(rsi(close, 14), 50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A fresh two-bar low with the documented MomentumPeriod 14 oscillator rising rather than making a new low is the bullish divergence, and momentum falling back through its midpoint is the documented close. The fixed stop has no documented percentage so it stays null, and MaPeriod 20, the 5-minute timeframe, and the short side are dropped."
+    },
+    {
+      "id": 1771,
+      "name": "X Trader V2",
+      "family": "trend",
+      "entry_long": "crossbelow(sma(close, 10), sma(close, 20))",
+      "exit_long": "crossabove(sma(close, 10), sma(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system is explicitly contrarian, so a downward SMA crossover is the long trigger and the upward crossover closes, using SMA(10)/SMA(20) as documented fallbacks because Ma1Period and Ma2Period have no values. TakeProfitTicks/StopLossTicks are tick distances, not percentages, and the short side is omitted."
+    },
+    {
+      "id": 3386,
+      "name": "Manual Trading Lightweight Utility",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Every panel button (order type, buy/sell volume, attached stop and target) is a strategy parameter and the port states it produces no autonomous signals, so the impossible negative-price guard avoids inventing an entry. Order supervision and manual volume adjustment are not roster fields."
+    },
+    {
+      "id": 2238,
+      "name": "NRTR Extr",
+      "family": "volatility",
+      "entry_long": "crossabove(close, ema(close, 20)) and close > ema(close, 20)",
+      "exit_long": "crossbelow(close, ema(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ATR-derived NRTR trailing line is unavailable, so an EMA(20) trailing level is used and its upward cross as the reversal buy signal, with Period 20 an explicit fallback because no range period is documented. Digits Shift, the point-based stop/target, the draw-candles visualisation, and the short side are omitted."
+    },
+    {
+      "id": 3456,
+      "name": "Candlestick Stochastic Confirmation",
+      "family": "mean_reversion",
+      "entry_long": "sma(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 3) < 30 and close > open",
+      "exit_long": "sma(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 3) < 20 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The seven bullish/bearish named formations are approximated by candle direction, and %D by a 14/3 stochastic %K smoothed with SMA(3); the documented oversold 30, exit boundary 20 and the mirror close below 20 are kept while %K 33 / %D 37 / slowing 30 are reduced for daily bars. The 12-bar average-body pattern filter and STO_LOWHIGH setting are dropped, and the stochastic denominator can be zero in a flat window."
+    },
+    {
+      "id": 1724,
+      "name": "Pure Martingale",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are an explicit random buy-or-sell decision with no market-derived trigger, so the impossible negative-price guard prevents fabricating a deterministic signal. Volume/stop doubling, the reset after a win, and the virtual stop/target are not expressible in a long-only roster."
+    },
+    {
+      "id": 2052,
+      "name": "Negative Spread",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The trigger is BestAsk < BestBid on order-book events, and the source explicitly ignores candles and indicators, so no bar-level entry exists and the impossible negative-price guard avoids inventing one. The immediate flat close, tick-level execution, and 5000-pip safeguards are not roster fields."
+    }
+  ]
+}

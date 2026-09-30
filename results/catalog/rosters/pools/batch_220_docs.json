@@ -1,0 +1,98 @@
+{
+ "batch_220": {
+  "strategy_ids": [
+   2802,
+   164,
+   1351,
+   3309,
+   522,
+   956,
+   1069,
+   974,
+   1500,
+   948
+  ],
+  "docs": {
+   "2802": {
+    "id": 2802,
+    "name": "Zone Recovery Area",
+    "family": "trend",
+    "overview": "The **Zone Recovery Area Strategy** is a direct conversion of the MetaTrader expert advisor \"Zone Recovery Area\" (package `MQL/20266`). It recreates the original hedging logic on top of the StockSharp high-level API and adds exhaustive parameterization so the behaviour can be tuned without touching the code. The strategy combines a trend filter with an alternating buy/sell recovery grid: once a primary trade is opened, additional positions are stacked whenever price leaves or re-enters the predefined zone, creating a hedged basket that aims to recover floating drawdowns.\n\nCore characteristics:\n- Uses a fast/slow simple moving average crossover together with a monthly MACD filter to define the trading bias.\n- Implements the zone recovery technique: the first trade establishes a base price, and alternating hedge orders are fired whenever the market crosses the zone boundary or returns to the base level.\n- Provides money-based, percentage-based, and trailing profit controls to exit the basket once sufficient profit has been locked in.\n- Allows both multiplicative (martingale-style) and additive position sizing for each recovery step.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | 30-minute candles | Timeframe for entries and recovery monitoring. |\n| `MonthlyCandleType` | 30-day candles | Higher timeframe used to build the MACD trend filter. |\n| `FastMaLength` | 20 | Period of the fast SMA. |\n| `SlowMaLength` | 200 | Period of the slow SMA. |\n| `TakeProfitPips` | 150 | Distance from the base price to close the entire basket in profit. |\n| `ZoneRecoveryPips` | 50 | Half-width of the hedging zone around the base price. |\n| `InitialVolume` | 1 | Volume of the first trade in each cycle. |\n| `UseVolumeMultiplier` | true | If enabled, each new hedge multiplies the previous volume. |\n| `VolumeMultiplier` | 2 | Factor applied to the previous volume when `UseVolumeMultiplier` is true. |\n| `VolumeIncrement` | 0.5 | Additive volume increase when `UseVolumeMultiplier` is false. |\n| `MaxTrades` | 6 | Maximum number of trades per recovery cycle (including the initial one). |\n| `UseMoneyTakeProfit` | false | Enable money-based take profit. |\n| `MoneyTakeProfit` | 40 | Profit target in account currency. |\n| `UsePercentTakeProfit` | false | Enable percentage-based take profit. |\n| `PercentTakeProfit` | 5 | Profit target as a percentage of portfolio value. |\n| `EnableTrailing` | true | Enable trailing profit protection. |\n| `TrailingStartProfit` | 40 | Profit threshold required before trailing becomes active. |\n| `TrailingDrawdown` | 10 | Allowed profit giveback once trailing is active. |\n\n> **Pip Conversion:** `TakeProfitPips` and `ZoneRecoveryPips` are converted into price offsets using the security price step. Ensure the traded instrument provides correct `PriceStep` and `StepPrice` values."
+   },
+   "164": {
+    "id": 164,
+    "name": "Ma Williams R",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 79%. It performs best in the stocks market.\n\nThe moving average shows the prevailing trend direction. Williams %R looks for overbought or oversold points relative to that trend.\n\nFits swing traders waiting for pullbacks toward the average. Stop-loss distance comes from ATR.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > MA && WilliamsR < WilliamsROversold`\n  - Short: `Close < MA && WilliamsR > WilliamsROverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Williams %R returns to middle\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `WilliamsRPeriod` = 14\n  - `WilliamsROversold` = -80m\n  - `WilliamsROverbought` = -20m\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Moving Average, Williams %R, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > MA && WilliamsR < WilliamsROversold`\n  - Short: `Close < MA && WilliamsR > WilliamsROverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Williams %R returns to middle\n- **Stops**: Percent-based using `StopLoss`\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `MaType` = MovingAverageTypeEnum.Simple\n  - `WilliamsRPeriod` = 14\n  - `WilliamsROversold` = -80m\n  - `WilliamsROverbought` = -20m\n  - `StopLoss` = new Unit(2, UnitTypes.Percent)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Moving Average, Williams %R, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1351": {
+    "id": 1351,
+    "name": "Gaussian Anomaly Derivative",
+    "family": "trend",
+    "overview": "Uses a moving average of price anomaly `1 - (high + low) / (2 * close)` and its smoothed derivative.\nTrades long when the derivative exceeds its positive threshold and short when it drops below the negative threshold.\n\n## Details\n\n- **Entry Criteria**: anomaly or its derivative crosses threshold\n- **Long/Short**: Configurable\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `UseSma` = true\n  - `MaPeriod` = 3\n  - `DerivativeMaPeriod` = 2\n  - `ThresholdCoeff` = 1.0\n  - `DerivativeThresholdCoeff` = 1.0\n  - `StartBarCount` = 600\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: anomaly or its derivative crosses threshold\n- **Long/Short**: Configurable\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `UseSma` = true\n  - `MaPeriod` = 3\n  - `DerivativeMaPeriod` = 2\n  - `ThresholdCoeff` = 1.0\n  - `DerivativeThresholdCoeff` = 1.0\n  - `StartBarCount` = 600\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3309": {
+    "id": 3309,
+    "name": "Reversals With Pin Bars",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader expert advisor **\"Reversals With Pin Bars\"**. The original EA searches for\nlong-tailed rejection candles (pin bars) and confirms them with a momentum filter, a higher timeframe\nlinear weighted moving average (LWMA) trend check, and a MACD direction filter. The port keeps this multi-timeframe\nstructure, relies exclusively on StockSharp indicators, and exposes the most important risk controls as parameters.\n\nThe implementation focuses on the high-level StockSharp API: candles from the primary timeframe drive entries, while\nadditional subscriptions feed higher timeframe indicators. Risk management is expressed in pips and supports optional\ntrailing-stop and break-even automation.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `TradeVolume` | Volume used for each new entry, aligned to the instrument step. |\n| `MaxTrades` | Maximum number of same-direction entries (aggregated volume limit). |\n| `StopLossPips` | Stop-loss distance in pips. |\n| `TakeProfitPips` | Take-profit distance in pips. |\n| `EnableTrailing` / `TrailingStopPips` | Enable and configure the trailing-stop distance. |\n| `EnableBreakEven` / `BreakEvenTriggerPips` / `BreakEvenOffsetPips` | Break-even activation and buffer settings. |\n| `FastMaPeriod` / `SlowMaPeriod` | Lengths of the higher timeframe LWMAs. |\n| `MomentumPeriod` / `MomentumThreshold` | Momentum length and minimum absolute distance from 100. |\n| `MacdFastPeriod` / `MacdSlowPeriod` / `MacdSignalPeriod` | MACD configuration for the long-term filter. |\n| `CandleType` | Primary candle series for pin bar detection. |\n| `HigherCandleType` | Candle series used for LWMAs and momentum. |\n| `MacdCandleType` | Candle series used for MACD. |"
+   },
+   "522": {
+    "id": 522,
+    "name": "Anomalous Holonomy Field Theory",
+    "family": "trend",
+    "overview": "This strategy combines EMA, RSI, MACD, ATR, rate of change and VWAP distance into a composite signal. Long positions are opened when the signal exceeds a user-defined threshold, while short positions are opened when it falls below the negative threshold. An ATR-based stop protects open trades.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: signal ≥ threshold.\n  - **Short**: signal ≤ −threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR stop.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `SignalThreshold` = 2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: signal ≥ threshold.\n  - **Short**: signal ≤ −threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR stop.\n- **Stops**: Yes, ATR-based.\n- **Default Values**:\n  - `SignalThreshold` = 2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   },
+   "956": {
+    "id": 956,
+    "name": "Khaled Tamim's Avellaneda-Stoikov",
+    "family": "other",
+    "overview": "Implements the Avellaneda-Stoikov market making model. The strategy computes bid and ask quotes from the last two closes and places market orders when price deviates beyond configurable margins.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `close < bidQuote - M`\n  - **Short**: `close > askQuote + M`\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Gamma` = 2\n  - `Sigma` = 8\n  - `T` = 0.0833\n  - `K` = 5\n  - `M` = 0.5\n  - `Fee` = 0\n- **Filters**:\n  - Category: Market making\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `close < bidQuote - M`\n  - **Short**: `close > askQuote + M`\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Gamma` = 2\n  - `Sigma` = 8\n  - `T` = 0.0833\n  - `K` = 5\n  - `M` = 0.5\n  - `Fee` = 0\n- **Filters**:\n  - Category: Market making\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1069": {
+    "id": 1069,
+    "name": "Monte Carlo Simulation - Random Walk",
+    "family": "other",
+    "overview": "This sample strategy performs a Monte Carlo simulation of future price paths using historical log returns. It does not place trades but demonstrates how to generate random walks and estimate future max and min price levels.\n\n## Details\n\n- **Entry Criteria**: none, this strategy does not trade.\n- **Long/Short**: none.\n- **Exit Criteria**: not applicable.\n- **Stops**: none.\n- **Default Values**:\n  - `NumberOfBarsToPredict` = 50.\n  - `NumberOfSimulations` = 500.\n  - `DataLength` = 2000.\n  - `KeepPastMinMaxLevels` = false.\n- **Filters**: not applicable.\n- **Complexity**: medium.\n- **Timeframe**: configurable.\n\n",
+    "details": "- **Entry Criteria**: none, this strategy does not trade.\n- **Long/Short**: none.\n- **Exit Criteria**: not applicable.\n- **Stops**: none.\n- **Default Values**:\n  - `NumberOfBarsToPredict` = 50.\n  - `NumberOfSimulations` = 500.\n  - `DataLength` = 2000.\n  - `KeepPastMinMaxLevels` = false.\n- **Filters**: not applicable.\n- **Complexity**: medium.\n- **Timeframe**: configurable.",
+    "parameters": ""
+   },
+   "974": {
+    "id": 974,
+    "name": "Linear Correlation Oscillator",
+    "family": "other",
+    "overview": "The Linear Correlation Oscillator strategy measures the correlation between price and time over a rolling window. The strategy goes long when the oscillator crosses above zero and goes short when it crosses below zero.\n\n## Details\n\n- **Entry Criteria**:\n  - Oscillator crosses above zero → **Long**.\n  - Oscillator crosses below zero → **Short**.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite zero cross.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 14\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Linear Correlation\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Oscillator crosses above zero → **Long**.\n  - Oscillator crosses below zero → **Short**.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite zero cross.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 14\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Linear Correlation\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1500": {
+    "id": 1500,
+    "name": "Tutorial - Adding sessions to strategies",
+    "family": "other",
+    "overview": "RSI-based strategy that trades only during a configurable session. Long when RSI crosses above the lower level, short when it crosses below the upper level. Positions are closed when the market leaves the session.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "948": {
+    "id": 948,
+    "name": "The Price Radio",
+    "family": "other",
+    "overview": "This strategy implements John Ehlers' Price Radio indicator. It enters long when the price derivative exceeds both amplitude and frequency thresholds, and enters short when it falls below their negative values.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: derivative greater than amplitude and frequency.\n  - **Short**: derivative less than negative amplitude and negative frequency.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: derivative greater than amplitude and frequency.\n  - **Short**: derivative less than negative amplitude and negative frequency.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

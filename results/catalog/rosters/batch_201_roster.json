@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2225,
+      "name": "NonLagDot",
+      "family": "trend",
+      "entry_long": "crossabove(roc(sma(close,10),1),0)",
+      "exit_long": "crossbelow(roc(sma(close,10),1),0)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "NonLagDot is approximated by SMA(10); a long is the documented down-to-up turn of that average's slope and the opposite turn exits. Length=10 and StopLossPercent=1m are the documented values; the 1-hour candle type is not selectable here."
+    },
+    {
+      "id": 3117,
+      "name": "Lego EA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20)) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20)) or rsi(close,14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only parameter names are given, so the fast/slow MA crossover plus a directional filter is the retained core of the toggle-based Lego stack. CCI, stochastic, Accelerator, DeMarker and Awesome filters have no documented thresholds, and pip stops, MA shift and martingale lot recovery are not DSL fields."
+    },
+    {
+      "id": 3235,
+      "name": "Three Breaky",
+      "family": "trend",
+      "entry_long": "close > open and high - low > 4 * atr(high,low,close,72)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Module 1 (ATR expansion) is translated on the current bar because shifted candles are unavailable; documented multipliers 4 and 72 are kept. Ichimoku span flips and the 20-candle max-body rule are not expressible, and the shared Parabolic SAR exit is approximated by the EMA(20) close; pip stops are dropped."
+    },
+    {
+      "id": 1021,
+      "name": "Market Slayer",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,20)) and close > sma(close,50)",
+      "exit_long": "crossbelow(ema(close,10),ema(close,20)) or close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ShortLength=10 and LongLength=20 are documented; the weighted averages are approximated by EMAs and the 4-hour SSL confirmation by a rising SMA(50) trend filter. Optional TakeProfitValue=20 / StopLossValue=50 are disabled by default and are pip-based, so both stops are null."
+    },
+    {
+      "id": 1960,
+      "name": "Trendline Alert",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The manually drawn Upper/Lower lines carry no values, so resistance and support are approximated by the prior 20-bar extremes. Breakout Points, StartHour/EndHour gating and the trailing stop in points are not expressible in the DSL."
+    },
+    {
+      "id": 3483,
+      "name": "Volume Calculator",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy places no orders and only logs computed risk metrics from user-entered stop/target prices and Max Loss %, so there is no market-derived entry signal. The impossible negative-price guard is used instead of inventing one."
+    },
+    {
+      "id": 890,
+      "name": "Stochastic Exit Alerts",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,5),rsi(close,14)) and rsi(close,14) < 40",
+      "exit_long": "crossbelow(rsi(close,5),rsi(close,14)) or rsi(close,14) > 60",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic %K/%D is approximated by fast RSI(5) versus slow RSI(14) because no stochastic is whitelisted, with 30/70-style zones standing in for the oversold area. Only parameter names are documented, so the periods and zone levels are chosen defaults; tick-based stops are dropped."
+    },
+    {
+      "id": 2258,
+      "name": "SAR Automated",
+      "family": "other",
+      "entry_long": "close > sma(close,20) and roc(sma(close,20),1) > 0",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by price position versus a 20-bar average plus a positive slope, since SarStep/SarMax cannot be reproduced. StopLoss, TakeProfit and TrailingStop are documented only as price-unit parameters with no values, so both percentage fields are null."
+    },
+    {
+      "id": 118,
+      "name": "Turnaround Tuesday",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a calendar effect: buy Tuesday's open after a down Monday on 15-minute bars, which the DSL cannot express without date fields. The documented 2% stop is left null because the never-true guard produces no positions."
+    },
+    {
+      "id": 1416,
+      "name": "The 950 Bar",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a schedule-only EA that trades the direction of the 9:50 AM New York five-minute candle and uses no indicators, so no single-symbol market signal exists in the DSL. TargetTicks=150 / StopTicks=200 are tick offsets, not percentages, so both stop fields are null."
+    }
+  ]
+}

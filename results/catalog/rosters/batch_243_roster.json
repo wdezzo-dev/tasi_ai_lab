@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1980,
+      "name": "Adaptive Market Level",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,10))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fractal/pivot/zigzag structure is approximated with prior-bar Donchian extremes because explicit pivot state is unavailable in the DSL."
+    },
+    {
+      "id": 3240,
+      "name": "Exp Blau HLM",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1326,
+      "name": "Sniper Trade Pro",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 496,
+      "name": "Adaptive Trend Flow",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,2,7),macd_signal(close,2,7,2))",
+      "exit_long": "crossbelow(macd(close,2,7),macd_signal(close,2,7,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 1122,
+      "name": "Nova Futures PRO SAFE v6",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 3314,
+      "name": "Head and Shoulders",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,26),macd_signal(close,6,26,9))",
+      "exit_long": "crossbelow(macd(close,6,26),macd_signal(close,6,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 22,
+      "name": "ADX DI",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 3274,
+      "name": "Trend Line By Angle",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3026,
+      "name": "EA Close",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 3-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 1730,
+      "name": "BBands Stop",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    }
+  ]
+}

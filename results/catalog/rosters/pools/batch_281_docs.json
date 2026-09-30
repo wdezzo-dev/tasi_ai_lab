@@ -1,0 +1,98 @@
+{
+ "batch_281": {
+  "strategy_ids": [
+   20,
+   3316,
+   3311,
+   1313,
+   2692,
+   658,
+   1864,
+   550,
+   1933,
+   1339
+  ],
+  "docs": {
+   "20": {
+    "id": 20,
+    "name": "Momentum Percentage",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 97%. It performs best in the crypto market.\n\nMomentum Percentage tracks percent change in price. Trades trigger when momentum exceeds positive or negative levels and exit on the counter signal or a volatility stop.\n\nBy measuring returns over a set lookback, the system adapts to different markets. The volatility stop ensures large adverse moves exit quickly.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on MA, Momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MomentumPeriod` = 10\n  - `ThresholdPercent` = 5m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Momentum\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on MA, Momentum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MomentumPeriod` = 10\n  - `ThresholdPercent` = 5m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, Momentum\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3316": {
+    "id": 3316,
+    "name": "Crossover 2 EMA",
+    "family": "trend",
+    "overview": "The strategy replicates the MetaTrader \"Crossover_2EMA\" expert advisor by trading the relationship between a fast and a slow exponential moving average (EMA) calculated from close prices. When the fast EMA rises above the slow EMA, the algorithm goes long. When it falls back below, the algorithm reverses into a short position. The approach always keeps the position aligned with the current fast/slow trend state and therefore works as a fully reversible system.\n\n## Trading Logic\n1. Subscribe to the configured candle series and calculate two EMAs with user-defined periods.\n2. Track the spread between the fast and slow EMA values on every finished candle.\n3. Detect an upward crossover when the spread moves from non-positive to positive. Close any short exposure and open a long position with the configured trade volume.\n4. Detect a downward crossover when the spread moves from non-negative to negative. Close any long exposure and open a short position with the configured trade volume.\n5. Orders are issued with market executions to ensure immediate reaction to the crossover. The volume is automatically increased when reversing so that the existing position is flattened before opening a new one.\n\n## Risk Management\n- The strategy invokes `StartProtection()` on launch so that StockSharp's standard protective mechanisms can be configured (for example, drawdown protection, trading schedule limits, or circuit breakers).\n- Position reversals use a single combined market order, reducing latency compared to sequential exit and re-entry.\n\n## Parameters\n- **Candle Type** – Data series used for the EMA calculations.\n- **Fast EMA Period** – Period of the fast EMA. Must be lower than the slow EMA period.\n- **Slow EMA Period** – Period of the slow EMA. Must be greater than the fast EMA period.\n\n## Additional Notes\n- Both EMAs must be fully formed before trading begins, preventing premature signals.\n- The default configuration uses 12/24-period EMAs on one-minute candles, mirroring the",
+    "details": "",
+    "parameters": "- **Candle Type** – Data series used for the EMA calculations.\n- **Fast EMA Period** – Period of the fast EMA. Must be lower than the slow EMA period.\n- **Slow EMA Period** – Period of the slow EMA. Must be greater than the fast EMA period."
+   },
+   "3311": {
+    "id": 3311,
+    "name": "Triple Top Triple Bottom",
+    "family": "trend",
+    "overview": "The **Triple Top Triple Bottom Strategy** is a port of the MetaTrader Expert Advisor with the same name. The original system\ncombines several confirmation layers (trend direction, momentum strength and a MACD filter) before entering the market. This\nStockSharp implementation keeps the same core ideas while exposing the important thresholds as strategy parameters.\n\n## Core Logic\n\n1. **Trend filter** – two linear weighted moving averages (LWMA) calculated on the typical price (H+L+C)/3 define the trading\ndirection. The fast LWMA must be above the slow LWMA to allow long trades and below the slow LWMA to permit short trades.\n2. **Momentum confirmation** – the built-in momentum indicator with a configurable lookback length must deviate from the neutral\n   100 level by at least the user-defined threshold within the latest three completed candles. The EA required the same behaviour\n   by analysing the previous momentum values and we mirror this validation to avoid entries in flat markets.\n3. **MACD filter** – a classic 12/26/9 MACD signal line filter prevents fading a strong trend. The strategy only buys when the\n   MACD line is above the signal line and sells when it is below.\n4. **Risk management** – market orders are protected with both stop-loss and take-profit targets measured in absolute price units.\n   The parameters are optional; setting them to zero disables the respective order. The code also closes the position if the\n   opposite risk threshold is reached during candle processing.\n\n## Parameters\n\n- **Entry Candle** – `DataType` that defines the timeframe of the working candles.\n- **Fast LWMA / Slow LWMA** – lengths of the fast and slow trend filters.\n- **Momentum Period / Momentum Threshold** – lookback for the momentum indicator and the minimal deviation from 100 that confirms\n  a trade idea.\n- **Stop Loss / Take Profit** – protective distances in absolute price units; they are also sent as native protective orders via\n  `SetStopLoss` and `SetTakeProfit` so th",
+    "details": "",
+    "parameters": "- **Entry Candle** – `DataType` that defines the timeframe of the working candles.\n- **Fast LWMA / Slow LWMA** – lengths of the fast and slow trend filters.\n- **Momentum Period / Momentum Threshold** – lookback for the momentum indicator and the minimal deviation from 100 that confirms\n  a trade idea.\n- **Stop Loss / Take Profit** – protective distances in absolute price units; they are also sent as native protective orders via\n  `SetStopLoss` and `SetTakeProfit` so that risk control is enforced even if the strategy session stops."
+   },
+   "1313": {
+    "id": 1313,
+    "name": "SMA Directional Matrix LuxAlgo",
+    "family": "trend",
+    "overview": "Recreates the SMA Directional Matrix indicator from LuxAlgo. For each bar it compares the current close with past closes over a configurable range and logs up or down arrows in a matrix layout.\n\n## Parameters\n- Candle Type\n- Min Lookback\n- Max Lookback\n- Columns\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Min Lookback\n- Max Lookback\n- Columns"
+   },
+   "2692": {
+    "id": 2692,
+    "name": "2692 MACD Stochastic",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 5 system \"MACD Stochastic\". It combines a classic MACD crossover with an optional stochastic confirmation filter and trades only during three configurable intraday sessions. Each position uses pip-based risk controls with optional trailing stop logic that can move the stop toward break-even once the trade has reached a specified profit.",
+    "details": "",
+    "parameters": "- **MacdFastPeriod, MacdSlowPeriod, MacdSignalPeriod** – MACD configuration.\n- **UseStochastic** – enables the stochastic confirmation filter.\n- **StochasticBarsToCheck, StochasticLength, StochasticKPeriod, StochasticDPeriod** – stochastic oscillator settings.\n- **Volume** – trade size in lots.\n- **StopLossPips, TakeProfitPips** – pip distances for initial exits.\n- **TrailingStopPips, TrailingStepPips** – trailing stop configuration.\n- **NoLossStopPips, WhenSetNoLossStopPips** – break-even and activation thresholds for the trailing logic.\n- **MaxPositions** – retained for compatibility; StockSharp works with net positions, so the strategy keeps only one open position at a time.\n- **Session1/2/3 Start-End** – intraday windows when trading is allowed. Set both start and end to `00:00` to disable a window.\n- **CandleType** – candle series used for signal generation."
+   },
+   "658": {
+    "id": 658,
+    "name": "Daily Supertrend Ema Crossover Rsi Filter",
+    "family": "trend",
+    "overview": "Strategy trading EMA crossovers only when Supertrend confirms the direction and RSI is favorable. Uses ATR-based stop loss and take profit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Fast EMA` crosses above `Slow EMA`, Supertrend uptrend, `RSI < RsiOverbought`\n  - Short: `Fast EMA` crosses below `Slow EMA`, Supertrend downtrend, `RSI > RsiOversold`\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `FastEmaLength` = 3\n  - `SlowEmaLength` = 6\n  - `AtrLength` = 3\n  - `StopLossMultiplier` = 2.5m\n  - `TakeProfitMultiplier` = 4m\n  - `RsiLength` = 10\n  - `RsiOverbought` = 65m\n  - `RsiOversold` = 30m\n  - `SupertrendMultiplier` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, Supertrend, RSI, ATR\n  - Stops: ATR multiples\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Fast EMA` crosses above `Slow EMA`, Supertrend uptrend, `RSI < RsiOverbought`\n  - Short: `Fast EMA` crosses below `Slow EMA`, Supertrend downtrend, `RSI > RsiOversold`\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `FastEmaLength` = 3\n  - `SlowEmaLength` = 6\n  - `AtrLength` = 3\n  - `StopLossMultiplier` = 2.5m\n  - `TakeProfitMultiplier` = 4m\n  - `RsiLength` = 10\n  - `RsiOverbought` = 65m\n  - `RsiOversold` = 30m\n  - `SupertrendMultiplier` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, Supertrend, RSI, ATR\n  - Stops: ATR multiples\n  - Complexity: Intermediate\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1864": {
+    "id": 1864,
+    "name": "Simple Bars",
+    "family": "trend",
+    "overview": "The Simple Bars strategy replicates the behavior of the original MQL5 expert `Exp_SimpleBars`. It uses the *SimpleBars* indicator to determine the current trend by comparing the latest candle with recent highs and lows. When the indicator detects a change in trend, the strategy executes a trade at the open of the next bar.\n\n## Details\n\n- **Entry Criteria**\n  - **Long**: Indicator signal from previous bar equals *buy*.\n  - **Short**: Indicator signal from previous bar equals *sell*.\n- **Long/Short**: Both directions are traded.\n- **Exit Criteria**\n  - Position is reversed when opposite signal appears.\n- **Stops**: None.\n- **Default Values**\n  - `Period` = 6 bars.\n  - `UseClose` = `true` (closing price is used for comparison).\n  - `CandleType` = 6-hour candles.\n- **Filters**\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Custom.\n  - Stops: No.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.\n\n",
+    "details": "- **Entry Criteria**\n  - **Long**: Indicator signal from previous bar equals *buy*.\n  - **Short**: Indicator signal from previous bar equals *sell*.\n- **Long/Short**: Both directions are traded.\n- **Exit Criteria**\n  - Position is reversed when opposite signal appears.\n- **Stops**: None.\n- **Default Values**\n  - `Period` = 6 bars.\n  - `UseClose` = `true` (closing price is used for comparison).\n  - `CandleType` = 6-hour candles.\n- **Filters**\n  - Category: Trend following.\n  - Direction: Both.\n  - Indicators: Custom.\n  - Stops: No.\n  - Complexity: Medium.\n  - Timeframe: Medium-term.\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Medium.",
+    "parameters": ""
+   },
+   "550": {
+    "id": 550,
+    "name": "Bayesian BBSMA Oscillator",
+    "family": "trend",
+    "overview": "The strategy estimates the probability of the next candle breaking up or down using a Bayesian model built from Bollinger Bands and a simple moving average. Optional confirmation from Bill Williams' Accelerator and Alligator indicators can filter signals. When the probability of an upward break rises above the threshold, a long trade is opened. A high probability of a downward break triggers a short.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when the prime or upward probability crosses above `LowerThreshold` (default 15%) and, if enabled, Bill Williams confirmation is bullish.\n  - Short when the prime or downward probability crosses above the threshold and, if enabled, Bill Williams confirmation is bearish.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `BbSmaPeriod` = 20\n  - `BbStdDevMult` = 2.5\n  - `AoFast` = 5\n  - `AoSlow` = 34\n  - `AcFast` = 5\n  - `SmaPeriod` = 20\n  - `BayesPeriod` = 20\n  - `LowerThreshold` = 15\n  - `UseBwConfirmation` = false\n  - `JawLength` = 13\n- **Filters**:\n  - Category: Probabilistic trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA, Awesome Oscillator, Accelerator Oscillator, Alligator\n  - Stops: No\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long when the prime or upward probability crosses above `LowerThreshold` (default 15%) and, if enabled, Bill Williams confirmation is bullish.\n  - Short when the prime or downward probability crosses above the threshold and, if enabled, Bill Williams confirmation is bearish.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `BbSmaPeriod` = 20\n  - `BbStdDevMult` = 2.5\n  - `AoFast` = 5\n  - `AoSlow` = 34\n  - `AcFast` = 5\n  - `SmaPeriod` = 20\n  - `BayesPeriod` = 20\n  - `LowerThreshold` = 15\n  - `UseBwConfirmation` = false\n  - `JawLength` = 13\n- **Filters**:\n  - Category: Probabilistic trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands, SMA, Awesome Oscillator, Accelerator Oscillator, Alligator\n  - Stops: No\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1933": {
+    "id": 1933,
+    "name": "Simple MA ADX EA",
+    "family": "trend",
+    "overview": "Strategy combining an EMA with the Average Directional Index to confirm trend strength.\n\nIt buys when the EMA is rising, the previous close is above the EMA, ADX exceeds a threshold and +DI is greater than -DI. It sells when the opposite conditions appear. Stop-loss and take-profit levels manage risk.\n\n## Details\n\n- **Entry Criteria**: EMA direction, price vs EMA, ADX, +DI/-DI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protection orders.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 8\n  - `MaPeriod` = 8\n  - `AdxThreshold` = 22m\n  - `StopLoss` = 30m\n  - `TakeProfit` = 100m\n  - `Volume` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: EMA direction, price vs EMA, ADX, +DI/-DI.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or protection orders.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 8\n  - `MaPeriod` = 8\n  - `AdxThreshold` = 22m\n  - `StopLoss` = 30m\n  - `TakeProfit` = 100m\n  - `Volume` = 0.1m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1339": {
+    "id": 1339,
+    "name": "Stochastic Heat Map",
+    "family": "trend",
+    "overview": "The Stochastic Heat Map strategy averages a set of stochastic oscillators with rising periods.\nThe combined reading is smoothed again to form a fast and a slow line.\nTrades go long when the fast line crosses above the slow line and go short on the opposite cross.\n\n## Details\n\n- **Entry Criteria**: fast/slow crossover\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `Increment` = 10\n  - `SmoothFast` = 2\n  - `SmoothSlow` = 21\n  - `PlotNumber` = 28\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: fast/slow crossover\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `Increment` = 10\n  - `SmoothFast` = 2\n  - `SmoothSlow` = 21\n  - `PlotNumber` = 28\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

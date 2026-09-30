@@ -1,0 +1,98 @@
+{
+ "batch_227": {
+  "strategy_ids": [
+   3046,
+   3347,
+   631,
+   781,
+   1417,
+   657,
+   2263,
+   1584,
+   862,
+   2160
+  ],
+  "docs": {
+   "3046": {
+    "id": 3046,
+    "name": "Exp X2MA Candle MM Recovery",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert **Exp_X2MACandle_MMRec**. It observes the colour of a doubly smoothed candle, produced by the original X2MA custom indicator, to decide when to open or close positions. The StockSharp version recreates the dual smoothing pipeline and keeps a lightweight money management layer that cuts the trading volume after a configurable number of recent losses.\n\nThe algorithm processes completed candles only. It subscribes to a configurable timeframe, applies two chained moving averages to the candle OHLC values, derives a synthetic candle colour (green, grey or red) and uses colour transitions with a user-selectable bar shift to trigger actions. Long trades are opened when the colour changes from bullish to anything else. Short trades follow the symmetric condition. Position exits are aligned with the same colour checks and can be enabled or disabled separately for each side.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Timeframe of the candles used for smoothing and trading. |\n| `FirstMethod`, `FirstLength`, `FirstPhase` | Primary smoothing method, length and Jurik phase. |\n| `SecondMethod`, `SecondLength`, `SecondPhase` | Secondary smoothing method, length and Jurik phase. |\n| `GapPoints` | Body flattening threshold in price steps. |\n| `SignalBar` | Shift (0 = latest finished candle) used when reading the colour buffers. |\n| `AllowLongEntry` / `AllowShortEntry` | Enable opening long or short positions. |\n| `AllowLongExit` / `AllowShortExit` | Enable closing long or short positions. |\n| `NormalVolume` | Standard order size (lots, shares, contracts). |\n| `ReducedVolume` | Order size used after the configured number of losses. |\n| `HistoryDepth` | Number of recent trades inspected for losses (0 disables history tracking). |\n| `LossTrigger` | Loss count that activates the reduced volume (0 disables the switch). |"
+   },
+   "3347": {
+    "id": 3347,
+    "name": "Martingale Smart",
+    "family": "trend",
+    "overview": "Martingale Smart is a conversion of the MetaTrader expert advisor \"Martingale Smart\". The strategy keeps only one open position at a time and switches between two different entry filters after every losing cycle:\n\n1. **Primary filter** – crossover between two simple moving averages combined with the direction of a higher time frame MACD histogram. This is the default entry mode.\n2. **Secondary filter** – moving average envelopes. When the floating loss of the previous cycle is negative the strategy toggles to this filter. Another loss switches back to the primary filter.\n\nThe martingale component increases the volume of the next trade after a losing cycle. You can either multiply the last volume (classic martingale) or add a fixed increment.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `UseMoneyTakeProfit` | Enable the fixed monetary take profit rule. |\n| `MoneyTakeProfit` | Floating profit target in the account currency. |\n| `UsePercentTakeProfit` | Enable the percentage-based take profit. |\n| `PercentTakeProfit` | Floating profit target as % of portfolio value. |\n| `EnableMoneyTrailing` | Enable profit trailing in money. |\n| `MoneyTrailingTarget` | Profit level that enables the trailing block. |\n| `MoneyTrailingDrawdown` | Maximum allowed profit give-back once trailing is active. |\n| `UseBreakEven` | Move the stop-loss to break-even after the configured distance. |\n| `BreakEvenTriggerPips` | Profit distance in pips required before the stop moves. |\n| `BreakEvenOffsetPips` | Additional pips added to the break-even stop. |\n| `MartingaleMultiplier` | Multiplication factor applied after a losing cycle. |\n| `InitialVolume` | Volume used for the first order of every cycle. |\n| `UseDoubleVolume` | If true, multiply volume; otherwise apply `LotIncrement`. |\n| `LotIncrement` | Fixed lot increment used when doubling is disabled. |\n| `TrailingStopPips` | Distance of the classic trailing stop in pips. |\n| `StopLossPips` | Initial stop-loss distance in pips. |\n| `TakeProfitPips` | Initial take-profit distance in pips. |\n| `FastMaPeriod` | Period of the fast moving average. |\n| `SlowMaPeriod` | Period of the slow moving average. |\n| `EnvelopePeriod` | Period of the envelope moving average. |\n| `EnvelopeDeviation` | Envelope width in percent. |\n| `MacdFastLength` | Fast EMA length inside the MACD. |\n| `MacdSlowLength` | Slow EMA length inside the MACD. |\n| `MacdSignalLength` | Signal EMA length inside the MACD. |\n| `CandleType` | Main signal timeframe. |\n| `MacdTimeFrame` | Timeframe for the MACD candles. |"
+   },
+   "631": {
+    "id": 631,
+    "name": "Consecutive Bars Above Below EMA Buy The Dip",
+    "family": "trend",
+    "overview": "Strategy buys after several consecutive closes below a moving average and exits when price closes above the previous high.\n\n## Details\n\n- **Entry**: Buy when N consecutive bars close below SMA or EMA.\n- **Exit**: Close position when close price exceeds previous candle high.\n- **Indicators**: SMA or EMA.\n",
+    "details": "- **Entry**: Buy when N consecutive bars close below SMA or EMA.\n- **Exit**: Close position when close price exceeds previous candle high.\n- **Indicators**: SMA or EMA.",
+    "parameters": ""
+   },
+   "781": {
+    "id": 781,
+    "name": "Fibonacci & Bollinger Bands",
+    "family": "trend",
+    "overview": "The strategy buys when the price closes below the lower Bollinger Band while remaining above the 61.8% Fibonacci extension from the last swing high and low. The position is closed when the price reaches the upper band or the previous swing high.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1417": {
+    "id": 1417,
+    "name": "Bar Counter Trend Reversal",
+    "family": "trend",
+    "overview": "Looks for several consecutive rising or falling bars and takes counter-trend trades when price reaches channel extremes.\n\n## Details\n\n- **Entry Criteria**: series of rises or falls with optional volume and channel confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `NoOfRises` = 3\n  - `NoOfFalls` = 3\n  - `ChannelLength` = 20\n  - `ChannelMultiplier` = 2\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Keltner Channel or Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: series of rises or falls with optional volume and channel confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `NoOfRises` = 3\n  - `NoOfFalls` = 3\n  - `ChannelLength` = 20\n  - `ChannelMultiplier` = 2\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Keltner Channel or Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "657": {
+    "id": 657,
+    "name": "Daily Play Ace Spectrum",
+    "family": "other",
+    "overview": "Strategy that reproduces the TradingView \"Day Play Ace Spectrum\" study by drawing lines between past open prices. It contains no trading rules and is intended for visualization only.\n\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2263": {
+    "id": 2263,
+    "name": "CCI Woodies",
+    "family": "other",
+    "overview": "This strategy trades based on the crossover of two Commodity Channel Index (CCI) lines derived from the Woodies CCI method. A fast CCI and a slow CCI are calculated on the specified timeframe. When the fast line crosses below the slow line, a long position is opened and any short position is closed. When the fast line crosses above the slow line, a short position is opened and any long position is closed.",
+    "details": "",
+    "parameters": "- **FastPeriod** – length of the fast CCI indicator.\n- **SlowPeriod** – length of the slow CCI indicator.\n- **CandleType** – timeframe of candles used for calculations.\n- **InvertSignals** – if enabled, buy and sell rules are swapped.\n- **TakeProfitPoints** – profit target in price points.\n- **StopLossPoints** – loss limit in price points."
+   },
+   "1584": {
+    "id": 1584,
+    "name": "Ehlers SwamiCharts RSI",
+    "family": "other",
+    "overview": "Averages RSI values from periods 2–48 to build a color map. Long when average color is green, short when red.\n\n## Details\n\n- **Entry Criteria**: Average color green (`Color1Avg` == 255 and `Color2Avg` > `LongColor`) for long; red (`Color1Avg` > `ShortColor` and `Color2Avg` == 255) for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `LongColor` = 50\n  - `ShortColor` = 50\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Average color green (`Color1Avg` == 255 and `Color2Avg` > `LongColor`) for long; red (`Color1Avg` > `ShortColor` and `Color2Avg` == 255) for short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `LongColor` = 50\n  - `ShortColor` = 50\n  - `CandleType` = 5 minutes\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "862": {
+    "id": 862,
+    "name": "Grid TLong V1",
+    "family": "other",
+    "overview": "Grid-based strategy that continuously maintains a position. It re-enters positions when profit or loss reaches a fixed percent step.\n\n## Details\n\n- **Entry Criteria**: Always stay in the market; restart positions at grid steps.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or re-entry after reaching the percent step.\n- **Stops**: No.\n- **Default Values**:\n  - `Percent` = 1\n  - `UseLimitOrders` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Always stay in the market; restart positions at grid steps.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or re-entry after reaching the percent step.\n- **Stops**: No.\n- **Default Values**:\n  - `Percent` = 1\n  - `UseLimitOrders` = false\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Grid\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2160": {
+    "id": 2160,
+    "name": "ColorMETRO Stochastic",
+    "family": "other",
+    "overview": "This strategy is a C# port of the MQL5 expert **exp_colormetro_stochastic.mq5**. It replaces the original ColorMETRO Stochastic indicator with the built-in `StochasticOscillator` from StockSharp and trades on crossover events.\n\n## Logic\n- Subscribes to 8-hour candles by default (configurable).\n- Calculates the Stochastic oscillator with parameters:\n  - %K period (`KPeriod`)\n  - %D period (`DPeriod`)\n  - Additional smoothing (`Slowing`)\n- Stores previous %K and %D values to detect crossovers.\n- **Buy** when %K crosses above %D.\n- **Sell** when %K crosses below %D.\n- Applies a simple 2% stop-loss and take-profit via `StartProtection`.\n\n## Parameters\n| Name | Description |\n|------|-------------|\n| `KPeriod` | Lookback for %K line (default 5). |\n| `DPeriod` | Smoothing period for %D line (default 3). |\n| `Slowing` | Additional smoothing value (default 3). |\n| `CandleType` | Timeframe of candles, default 8 hours. |\n\n## Notes\nThe original MQL version used a custom ColorMETRO Stochastic indicator with fast and slow step lines. This port approximates its signals using the standard Stochastic oscillator.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `KPeriod` | Lookback for %K line (default 5). |\n| `DPeriod` | Smoothing period for %D line (default 3). |\n| `Slowing` | Additional smoothing value (default 3). |\n| `CandleType` | Timeframe of candles, default 8 hours. |"
+   }
+  }
+ }
+}

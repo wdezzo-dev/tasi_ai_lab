@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 165,
+      "name": "Vwap Cci",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close,20) and rsi(close,20) < 30",
+      "exit_long": "crossabove(close,sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "VWAP and CCI are unavailable; SMA(20) and RSI(20)<30 are explicit value/oversold proxies for the documented long condition. The cross back above the value proxy exits, and the documented 2% stop is retained; the short side is omitted."
+    },
+    {
+      "id": 476,
+      "name": "3Commas Bot",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,21),ema(close,50))",
+      "exit_long": "crossbelow(ema(close,21),ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA 21/50 crossover is preserved exactly for the long side, with the opposite crossover as exit. ATR 14 stop, optional R:R target, and ATR trailing management have no percentage values in the source."
+    },
+    {
+      "id": 1117,
+      "name": "New Intraday High With Weak Bar",
+      "family": "breakout",
+      "entry_long": "high >= donchian_high_prev(high,10) and (close - low) / (high - low) < 0.15",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 10-bar highest test and 0.15 weak-bar ratio are retained using the prior-bar Donchian high and prior-bar high exit. The no-position condition is handled by the simulator; intraday time and short side are unsupported."
+    },
+    {
+      "id": 1206,
+      "name": "PVT Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close * volume_ratio(volume,20),20),ema(ema(close * volume_ratio(volume,20),20),20))",
+      "exit_long": "crossbelow(ema(close * volume_ratio(volume,20),20),ema(ema(close * volume_ratio(volume,20),20),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "PVT is unavailable, so normalized volume-weighted price with two EMA(20) layers is an explicit crossover proxy; volume_ratio avoids raw-volume scale dependence. The documented EMA length is retained and the opposite cross exits; no stops are specified."
+    },
+    {
+      "id": 1884,
+      "name": "Kloss",
+      "family": "trend",
+      "entry_long": "zscore(close,20) < 0 and roc(close,5) < 0 and close > ema(close,20)",
+      "exit_long": "zscore(close,20) > 0 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI and Stochastic are unavailable; negative z-score and five-bar ROC proxy their downside readings, while EMA(20) stands in for shifted WMA. Opposite oscillator/trend conditions exit; point-based stop/target and shift control are not percentage fields."
+    },
+    {
+      "id": 3148,
+      "name": "Gold Dust",
+      "family": "trend",
+      "entry_long": "crossbelow(close,ema(close,20))",
+      "exit_long": "crossabove(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The perceptron formula and LWMA are unavailable; the documented MaPeriod 20 is represented by EMA(20), with a downside cross as the negative-output long proxy and the upside cross as its exit. Pip stop/trailing, multiple perceptrons, and sizing are unsupported."
+    },
+    {
+      "id": 3335,
+      "name": "Double Channel EA",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,14)",
+      "exit_long": "low < donchian_low_prev(low,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom DoubleChannel indicator and arrow rules are unavailable; a break above the prior 14-bar high is the documented-period long breakout proxy, with a prior 14-bar low break as exit. Stacking, schedule, and point-based risk controls are unsupported."
+    },
+    {
+      "id": 3680,
+      "name": "Neural Network ATR",
+      "family": "momentum",
+      "entry_long": "close > open and roc(close,5) > 0 and volume_ratio(volume,20) > 1 and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "roc(close,5) < 0 or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The neural score and feature normalization are unavailable; bullish momentum, normalized volume expansion, and ATR expansion are explicit proxies for the documented input features. No default percentage risk values are supplied; spread, learning, and risk-management controls are unsupported."
+    },
+    {
+      "id": 3868,
+      "name": "Cross MA ATR Notification",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,4),sma(close,12))",
+      "exit_long": "crossbelow(sma(close,4),sma(close,12))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA 4/12 crossover is retained exactly, with the opposite crossover as exit. ATR 6 is a stop calculation input in the source, but the ATR stop is not a percentage field; notifications and risk sizing are omitted."
+    },
+    {
+      "id": 4108,
+      "name": "Rubberbands Safety Net",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The original alternating minute-cycle, hedged orders, and cash-based safety net are stateful and unavailable; bullish/bearish candles are an explicit long-side price-action proxy. Cash thresholds, averaging, session controls, and manual switches cannot be expressed in this DSL."
+    }
+  ]
+}

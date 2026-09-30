@@ -1,0 +1,98 @@
+{
+ "batch_190": {
+  "strategy_ids": [
+   2087,
+   3333,
+   2044,
+   878,
+   1685,
+   3761,
+   4169,
+   410,
+   978,
+   1929
+  ],
+  "docs": {
+   "2087": {
+    "id": 2087,
+    "name": "Exp Multitrend Signal KVN",
+    "family": "trend",
+    "overview": "This strategy implements the MultiTrend Signal KVN concept. It builds an adaptive price channel using the Average Directional Index (ADX) to determine the lookback window. When price closes above the channel, the strategy opens a long position. When price closes below the channel, it opens a short position.\n\nThe channel width is defined by parameter **K** as a percentage of the swing between recent highs and lows. **KPeriod** sets the base number of bars used for calculations, while the ADX value scales the actual window. **KStop** multiplies the average range and is added to breakout trades to determine stop distance.\n\nThe strategy is designed for both long and short trading and uses the 4-hour timeframe by default. No explicit stop-loss or take-profit is provided; protection can be enabled through the platform.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close price breaks above the upper adaptive band.\n  - **Short**: Close price breaks below the lower adaptive band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Reverse signal in the opposite direction.\n- **Stops**: Optional via strategy protection.\n- **Default Values**:\n  - `K` = 48\n  - `KStop` = 0.5\n  - `KPeriod` = 150\n  - `AdxPeriod` = 14\n  - `Candle Type` = 4-hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ADX, SMA, Max/Min\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close price breaks above the upper adaptive band.\n  - **Short**: Close price breaks below the lower adaptive band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Reverse signal in the opposite direction.\n- **Stops**: Optional via strategy protection.\n- **Default Values**:\n  - `K` = 48\n  - `KStop` = 0.5\n  - `KPeriod` = 150\n  - `AdxPeriod` = 14\n  - `Candle Type` = 4-hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ADX, SMA, Max/Min\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "3333": {
+    "id": 3333,
+    "name": "Grid Rebalance",
+    "family": "trend",
+    "overview": "The Grid Rebalance Strategy is a high-level StockSharp port of the Mission Automate \"Grid\" expert advisor. The strategy alternates between long and short grid cycles and always keeps a ladder of limit orders in the active direction. Once the aggregate position reaches a common take-profit level the cycle is closed, all pending orders are removed, and the next cycle starts in the opposite direction.\n\n## How it works\n1. **Cycle start** – When there are no positions or pending orders, the strategy opens a market position in the direction defined by `FirstTradeSide` using `StartVolume` lots.\n2. **Placing the grid** – After every filled order in the active direction the algorithm places a new limit order at a distance of `GridStepPoints` (converted to price by the instrument `PriceStep`). The volume of the next order equals the volume of the latest filled order multiplied by `LotMultiplier`.\n3. **Average-based take-profit** – For every filled order the weighted average entry price is recalculated. The take-profit for the whole basket is set to the average price plus/minus `TargetPoints` (also converted via `PriceStep`). Candle highs and lows are used to model the broker-side trigger behaviour.\n4. **Cycle completion** – When the take-profit level is reached the strategy closes the entire position with a market order, cancels remaining pending orders, remembers the direction of the finished cycle and flips the direction for the next one.\n\n## Parameters\n- `FirstTradeSide` – direction of the first cycle (`Buy` or `Sell`). Every completed cycle automatically flips the direction.\n- `StartVolume` – lot size of the initial market order in each cycle.\n- `LotMultiplier` – multiplier applied to the most recent filled order volume when preparing the next grid level. Values greater than one create a martingale-like progression.\n- `GridStepPoints` – distance between grid levels expressed in points. The strategy multiplies it by `Security.PriceStep` to obtain the absolute price differe",
+    "details": "",
+    "parameters": "- `FirstTradeSide` – direction of the first cycle (`Buy` or `Sell`). Every completed cycle automatically flips the direction.\n- `StartVolume` – lot size of the initial market order in each cycle.\n- `LotMultiplier` – multiplier applied to the most recent filled order volume when preparing the next grid level. Values greater than one create a martingale-like progression.\n- `GridStepPoints` – distance between grid levels expressed in points. The strategy multiplies it by `Security.PriceStep` to obtain the absolute price difference.\n- `TargetPoints` – take-profit distance from the weighted average entry price, measured in points.\n- `CandleType` – candle series used to monitor price extremes for triggering exits."
+   },
+   "2044": {
+    "id": 2044,
+    "name": "Corrected Average Breakout",
+    "family": "trend",
+    "overview": "This strategy trades breakouts relative to a **Corrected Average** moving average. The indicator smooths the price using a moving average and adjusts the smoothing factor based on the standard deviation of price changes.\n\nWhen the price closes above the corrected average by a specified number of points and then pulls back to the breakout level, the strategy opens a long position. The opposite logic is used for short trades. Stop-loss and take-profit are applied in absolute price points.\n\n## Parameters\n\n- `Candle Type` – timeframe of candles used for calculations.\n- `Length` – period for the moving average and standard deviation.\n- `MA Type` – type of moving average (SMA, EMA, SMMA, LWMA).\n- `Level Points` – breakout distance from the corrected average in price steps.\n- `Stop Loss Points` – stop-loss distance from entry price in price steps.\n- `Take Profit Points` – take-profit distance from entry price in price steps.\n- `Enable Long` – allow opening long positions.\n- `Enable Short` – allow opening short positions.\n\n## Trading Logic\n\n1. Calculate the moving average and standard deviation.\n2. Build the corrected average using previous values and the ratio of variance to smooth sudden jumps.\n3. Detect breakouts when the previous bar closes beyond the corrected average plus or minus the configured level.\n4. After a breakout, wait for the next bar to return to the breakout level and open a position in the direction of the breakout.\n5. Close opposite positions when a new breakout signal appears.\n6. Apply stop-loss and take-profit protections.\n\n## Notes\n\nThis strategy is a conversion from the MQL script *Exp_CorrectedAverage.mq5*. It is intended for educational purposes and requires further testing before use in live trading.\n",
+    "details": "",
+    "parameters": "- `Candle Type` – timeframe of candles used for calculations.\n- `Length` – period for the moving average and standard deviation.\n- `MA Type` – type of moving average (SMA, EMA, SMMA, LWMA).\n- `Level Points` – breakout distance from the corrected average in price steps.\n- `Stop Loss Points` – stop-loss distance from entry price in price steps.\n- `Take Profit Points` – take-profit distance from entry price in price steps.\n- `Enable Long` – allow opening long positions.\n- `Enable Short` – allow opening short positions."
+   },
+   "878": {
+    "id": 878,
+    "name": "Hierarchical + K-Means Clustering",
+    "family": "trend",
+    "overview": "This strategy applies volatility clustering to a SuperTrend system. Average True Range (ATR) values are grouped into three clusters to determine market regime, while the SuperTrend direction triggers entries. An optional moving average and ADX filter confirm trend strength. Positions can be closed early when the bull/bear volume ratio moves toward balance.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: SuperTrend turns bullish && cluster trend > 0 && filters pass.\n  - **Short**: SuperTrend turns bearish && cluster trend < 0 && filters pass.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Volume balance or opposite signal.\n- **Stops**: Volume-based only.\n- **Default Values**:\n  - `ATR Length` = 11.\n  - `SuperTrend Factor` = 3.\n  - `Training Data Length` = 200.\n  - `Moving Average Length` = 50.\n  - `Trend Strength Period` = 14.\n  - `Trend Strength Threshold` = 20.\n  - `Volume Ratio Threshold` = 0.9.\n  - `Delay Bars` = 4.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: SuperTrend turns bullish && cluster trend > 0 && filters pass.\n  - **Short**: SuperTrend turns bearish && cluster trend < 0 && filters pass.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Volume balance or opposite signal.\n- **Stops**: Volume-based only.\n- **Default Values**:\n  - `ATR Length` = 11.\n  - `SuperTrend Factor` = 3.\n  - `Training Data Length` = 200.\n  - `Moving Average Length` = 50.\n  - `Trend Strength Period` = 14.\n  - `Trend Strength Threshold` = 20.\n  - `Volume Ratio Threshold` = 0.9.\n  - `Delay Bars` = 4.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1685": {
+    "id": 1685,
+    "name": "Trade Channel",
+    "family": "trend",
+    "overview": "The **Trade Channel Strategy** trades breakouts and pullbacks around a Donchian price channel. When the upper band remains unchanged and price hits it or closes below it but above the pivot, a long position is opened. The opposite logic is used for short entries. A stop loss is placed beyond the opposite band by the ATR value. An optional trailing stop can tighten the stop as the trade moves in profit.\n\n## Parameters\n\n- `ChannelPeriod` — length of the Donchian channel.\n- `AtrPeriod` — ATR period for stop-loss calculation.\n- `Trailing` — trailing stop distance in price units (0 disables trailing).\n- `CandleType` — candle type used for calculations.\n",
+    "details": "",
+    "parameters": "- `ChannelPeriod` — length of the Donchian channel.\n- `AtrPeriod` — ATR period for stop-loss calculation.\n- `Trailing` — trailing stop distance in price units (0 disables trailing).\n- `CandleType` — candle type used for calculations."
+   },
+   "3761": {
+    "id": 3761,
+    "name": "e-TurboFx Momentum",
+    "family": "momentum",
+    "overview": "The **e-TurboFx Momentum Strategy** is a direct port of the original MetaTrader 4 expert advisor \"e-TurboFx\". The system scans the most recent finished candles and looks for directional stretches where the candle bodies keep expanding. Consecutive bearish candles with growing body size signal a potential capitulation that can be faded with a long entry, whereas consecutive bullish candles with expanding bodies hint at an overextended rally that may be sold short. The StockSharp implementation keeps the logic event-driven through candle subscriptions and automatically attaches optional stop-loss and take-profit protection.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `DepthAnalysis` | Number of consecutive finished candles required in one direction with expanding bodies before opening a trade. | `3` |\n| `TakeProfitSteps` | Take-profit distance measured in exchange price steps (ticks). Set to `0` to disable the take profit. | `120` |\n| `StopLossSteps` | Stop-loss distance measured in exchange price steps (ticks). Set to `0` to disable the stop loss. | `70` |\n| `TradeVolume` | Volume sent with each market order. Changing this parameter also updates the base `Strategy.Volume`. | `0.1` |\n| `CandleType` | Candle data type (time frame) subscribed for the analysis. | `1 hour` |\n\nAll numeric parameters expose optimization metadata so that the strategy can be tuned in StockSharp optimizers if desired."
+   },
+   "4169": {
+    "id": 4169,
+    "name": "TrailingStopFrCn",
+    "family": "volatility",
+    "overview": "`TrailingStopFrCnStrategy` is a StockSharp port of the MetaTrader expert advisor **TrailingStopFrCn.mq4**. The original script manages stop-loss levels for existing positions using a mix of fixed trailing distances, Bill Williams fractals, or recent candle highs/lows. This port keeps the same flexibility while integrating with the high-level StockSharp API: the strategy subscribes to candles and Level 1 quotes, monitors the current net position, and automatically updates a protective stop order.\n\nUnlike an entry strategy, TrailingStopFrCn focuses solely on risk management. It does not open new positions. Instead, it tracks the existing position of `Strategy.Security`, cancels obsolete stop orders when the position flips, and sends a single aggregated stop order that follows the logic of the MetaTrader advisor.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `OnlyProfit` | Move the stop-loss only when the new level secures profit relative to the average entry price. Mirrors the `OnlyProfit` flag from MQL. |\n| `OnlyWithoutLoss` | Stop trailing once the active stop-loss is at or beyond the entry price. This replicates `OnlyWithoutLoss` from the original advisor. |\n| `TrailingStopPips` | Fixed trailing distance expressed in pips. Set to zero to activate fractal or candle trailing. |\n| `MinStopDistancePips` | Minimal distance (in pips) between market price and stop-loss. Use it to emulate the broker `MODE_STOPLEVEL` restriction. |\n| `TrailingMode` | Chooses the trailing source when `TrailingStopPips = 0`. Options: `Fractals` (Bill Williams five-bar fractals) or `Candles` (recent lows/highs). |\n| `CandleType` | Candle data type used to build fractals or to search for swing points. The default is one-hour time frame. |"
+   },
+   "410": {
+    "id": 410,
+    "name": "WTI Brent Spread",
+    "family": "mean_reversion",
+    "overview": "The trade targets the price differential between WTI and Brent crude oil. When the spread deviates from historical norms, the system bets on mean reversion by longing one grade and shorting the other.\n\nPositions roll with the front‑month futures and are closed when the spread converges.\n\n## Details\n\n- **Data**: Front‑month WTI and Brent futures prices.\n- **Entry**: Long cheaper grade and short expensive when spread > threshold.\n- **Exit**: Close when spread returns to average or at contract roll.\n- **Instruments**: Crude oil futures.\n- **Risk**: Dollar‑neutral with stop on spread widening.\n\n",
+    "details": "- **Data**: Front‑month WTI and Brent futures prices.\n- **Entry**: Long cheaper grade and short expensive when spread > threshold.\n- **Exit**: Close when spread returns to average or at contract roll.\n- **Instruments**: Crude oil futures.\n- **Risk**: Dollar‑neutral with stop on spread widening.",
+    "parameters": ""
+   },
+   "978": {
+    "id": 978,
+    "name": "Linear Regression All Data",
+    "family": "other",
+    "overview": "This strategy calculates a linear regression line using all available bars and plots it on the chart.\nIt also logs slope, intercept and correlation coefficients.\n\n## Details\n\n- **Entry Criteria**: None.\n- **Long/Short**: None.\n- **Exit Criteria**: None.\n- **Stops**: No.\n- **Default Values**:\n  - `MaxBarsBack` = 5000.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Utility\n  - Direction: None\n  - Indicators: Linear Regression\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None.\n- **Long/Short**: None.\n- **Exit Criteria**: None.\n- **Stops**: No.\n- **Default Values**:\n  - `MaxBarsBack` = 5000.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Utility\n  - Direction: None\n  - Indicators: Linear Regression\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1929": {
+    "id": 1929,
+    "name": "Trailing Stop",
+    "family": "other",
+    "overview": "This strategy implements the trailing stop logic from the original MQL script `TRAILING.mq4`. It manages an existing open position and closes it when the market moves to a specified profit target or hits a stop loss. When the trailing parameter is enabled, the stop level follows the price to lock in profits.",
+    "details": "",
+    "parameters": "- **TakeProfit** – profit distance from the entry price in absolute price units.\n- **StopLoss** – maximum adverse distance allowed from the entry price.\n- **Trailing** – distance used for dynamic trailing of the stop level.\n- **CandleType** – candle series used to obtain price updates."
+   }
+  }
+ }
+}

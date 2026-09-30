@@ -1,0 +1,98 @@
+{
+ "batch_072": {
+  "strategy_ids": [
+   3278,
+   2083,
+   707,
+   2144,
+   3231,
+   2944,
+   4037,
+   2041,
+   2790,
+   529
+  ],
+  "docs": {
+   "3278": {
+    "id": 3278,
+    "name": "Eliot Waves",
+    "family": "trend",
+    "overview": "The Eliot Waves strategy replicates the behaviour of the MetaTrader expert advisor \"Eliot Waves\" using the StockSharp high-level API. The algorithm combines trend detection through two linear weighted moving averages with momentum confirmation and volatility based exits. All calculations are performed on finished candles from a configurable timeframe to mirror the deterministic execution of the original robot.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Volume used for each position step. | 0.1 |\n| `CandleType` | Candle timeframe employed for all indicators. | 15-minute candles |\n| `FastMaPeriod` / `SlowMaPeriod` | Periods of the fast and slow linear weighted moving averages. | 6 / 85 |\n| `MomentumPeriod` | Momentum lookback used in the confirmation block. | 14 |\n| `MomentumThreshold` | Minimum deviation from 100 required to enable trading. | 0.3 |\n| `StopLossPips` / `TakeProfitPips` | Stop-loss and take-profit distances expressed in pips. | 20 / 50 |\n| `EnableTrailing` / `TrailingStopPips` | Toggle and distance for the trailing stop feature. | true / 40 |\n| `EnableBreakEven`, `BreakEvenTriggerPips`, `BreakEvenOffsetPips` | Break-even activation switch, trigger and offset in pips. | true, 30, 30 |\n| `MaxPositions` | Maximum number of volume steps allowed. | 10 |\n| `EnableExitStrategy` | Forces the strategy to flat the position when enabled. | false |"
+   },
+   "2083": {
+    "id": 2083,
+    "name": "Volatile Action",
+    "family": "trend",
+    "overview": "This strategy combines a short-term volatility breakout with Bill Williams' **Alligator** trend filter calculated on the 4-hour timeframe.\n\n## Trading Rules\n- **Long entry** when:\n  - The 1-period ATR is greater than *Volatility Coef* times the ATR with period *ATR Period*.\n  - The candle is bullish and sets a new 24-bar high.\n  - Alligator lines are aligned up (Lips > Teeth > Jaw) and both the open and close are above the Teeth line.\n- **Short entry** when the above conditions are mirrored in the opposite direction.\n\nOn entry the strategy sets stop-loss and take-profit levels at multiples of the 1-period ATR:\n- Stop-loss = entry price ± *Stop Coef* × ATR(1)\n- Take-profit = entry price ± *Profit Coef* × ATR(1)\n\n## Parameters\n- **Volatility Coef** – multiplier comparing fast ATR to slow ATR.\n- **ATR Period** – period of the slow ATR.\n- **Stop Coef** – ATR multiplier for stop-loss.\n- **Profit Coef** – ATR multiplier for take-profit.\n- **Candle Type** – timeframe for the main analysis (Alligator uses 4H candles).\n",
+    "details": "",
+    "parameters": "- **Volatility Coef** – multiplier comparing fast ATR to slow ATR.\n- **ATR Period** – period of the slow ATR.\n- **Stop Coef** – ATR multiplier for stop-loss.\n- **Profit Coef** – ATR multiplier for take-profit.\n- **Candle Type** – timeframe for the main analysis (Alligator uses 4H candles)."
+   },
+   "707": {
+    "id": 707,
+    "name": "Dual MACD",
+    "family": "trend",
+    "overview": "Strategy that combines two MACD indicators. The slower MACD crossing zero enters trades when the faster MACD histogram aligns. The position closes when the fast MACD turns against it or the stop/take profit triggers.\n\nTesting indicates an average annual return of about 65%. It performs best in the stocks market.\n\n## Details\n\n- **Entry Criteria**: Slow MACD histogram crossing zero with fast MACD confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Fast MACD reversal or stop/target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Macd1FastLength` = 34\n  - `Macd1SlowLength` = 144\n  - `Macd1SignalLength` = 9\n  - `Macd2FastLength` = 100\n  - `Macd2SlowLength` = 200\n  - `Macd2SignalLength` = 50\n  - `StopLossPercent` = 1.0m\n  - `TakeProfitPercent` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Slow MACD histogram crossing zero with fast MACD confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Fast MACD reversal or stop/target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Macd1FastLength` = 34\n  - `Macd1SlowLength` = 144\n  - `Macd1SignalLength` = 9\n  - `Macd2FastLength` = 100\n  - `Macd2SlowLength` = 200\n  - `Macd2SignalLength` = 50\n  - `StopLossPercent` = 1.0m\n  - `TakeProfitPercent` = 1.5m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2144": {
+    "id": 2144,
+    "name": "PA Oscillator",
+    "family": "trend",
+    "overview": "This strategy is a port of the MQL5 expert **Exp_PA_Oscillator.mq5**. It applies two exponential moving averages (EMAs) to the candle close prices and analyses the derivative of their difference.\n\n## Logic\n\n1. Calculate fast and slow EMAs.\n2. Compute the difference between them and track its change from the previous value.\n3. Determine a color code for the derivative:\n   - **0** – derivative is positive and MACD is rising.\n   - **1** – derivative is zero.\n   - **2** – derivative is negative and MACD is falling.\n4. Use the colors of the two last finished candles to generate signals:\n   - Two bars ago had color `0` and the previous bar changed away from `0` → open long and close short positions.\n   - Two bars ago had color `2` and the previous bar changed away from `2` → open short and close long positions.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `FastLength` | Length of the fast EMA. |\n| `SlowLength` | Length of the slow EMA. |\n| `BuyPosOpen` | Enable opening long positions. |\n| `SellPosOpen` | Enable opening short positions. |\n| `BuyPosClose` | Enable closing long positions. |\n| `SellPosClose` | Enable closing short positions. |\n| `CandleType` | Candle timeframe used for calculations. |\n\n## Notes\n\n- Only finished candles are processed.\n- Market orders are used for entries and exits.\n- This implementation focuses on clarity and educational purposes rather than profitability.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `FastLength` | Length of the fast EMA. |\n| `SlowLength` | Length of the slow EMA. |\n| `BuyPosOpen` | Enable opening long positions. |\n| `SellPosOpen` | Enable opening short positions. |\n| `BuyPosClose` | Enable closing long positions. |\n| `SellPosClose` | Enable closing short positions. |\n| `CandleType` | Candle timeframe used for calculations. |"
+   },
+   "3231": {
+    "id": 3231,
+    "name": "Exp Cronex Chaikin",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader expert advisor **Exp_CronexChaikin.mq5** to the StockSharp high-level API. The original robot rebuilds the Chaikin oscillator from accumulation/distribution values, smooths it twice with Cronex \"XMA\" filters, and trades crossovers between the fast and slow lines. The StockSharp version reproduces the same logic while exposing each stage as configurable parameters.\n\n## Trading logic\n\n1. Subscribe to the configured candle series (`CandleType`).\n2. Recalculate the accumulation/distribution (AD) line for every finished candle using the selected `VolumeSource` (tick or real volume).\n3. Apply the Chaikin oscillator by smoothing the AD line with two moving averages (`ChaikinFastPeriod`, `ChaikinSlowPeriod`, `ChaikinMethod`) and taking their difference.\n4. Smooth the resulting oscillator twice using the Cronex filters controlled by `SmoothingMethod`, `FastPeriod`, `SlowPeriod`, and `Phase`. These two smoothed values correspond to the \"fast\" and \"signal\" lines in the original indicator.\n5. Look back `SignalBar` completed candles and compare both Cronex lines on that bar and on the previous one.\n6. When the fast line is above the slow line, the strategy optionally closes short positions and, if `BuyOpenEnabled` is true, opens a long position if a fresh upward cross was detected on the lookback bar.\n7. When the fast line is below the slow line, the opposite actions are executed for short trades, controlled by `SellOpenEnabled` and `BuyCloseEnabled`.\n8. Whenever a new position is opened, stop-loss and take-profit orders (expressed in points) are recalculated with `StopLoss` and `TakeProfit`.\n\nOnly a single net position is maintained. If the signal direction changes, the strategy combines the volume required to close the current position with the new trade size to mimic MetaTrader's netting behaviour.\n\n## Indicators and smoothing options\n\n- **Chaikin oscillator**: Built by applying the selected `ChaikinMethod` moving average type to the accumul",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Data type of the candles used to compute the indicator. Default is a four-hour timeframe. |\n| `ChaikinMethod` | Moving-average method used inside the Chaikin oscillator. |\n| `ChaikinFastPeriod` / `ChaikinSlowPeriod` | Fast and slow periods applied to the accumulation/distribution line. |\n| `SmoothingMethod` | Cronex smoothing algorithm applied to the Chaikin oscillator values. |\n| `FastPeriod` / `SlowPeriod` | Lengths of the fast and slow Cronex lines. |\n| `Phase` | Phase parameter for Jurik-based smoothers (range -100 to +100). |\n| `VolumeSource` | Selects tick or real volume when calculating the accumulation/distribution line. |\n| `SignalBar` | Number of completed bars back that must contain the crossover signal. |\n| `BuyOpenEnabled` / `SellOpenEnabled` | Enable or disable opening of long or short trades. |\n| `BuyCloseEnabled` / `SellCloseEnabled` | Allow closing the opposite position when an inverse signal appears. |\n| `TakeProfit` / `StopLoss` | Profit target and protective stop distances in instrument points applied after each entry. |\n| `Volume` | Standard StockSharp position size (acts as the lot size in the original expert). |"
+   },
+   "2944": {
+    "id": 2944,
+    "name": "Exp Rj SlidingRangeRj Digit System Tm Plus",
+    "family": "breakout",
+    "overview": "This StockSharp strategy is a port of the MetaTrader expert advisor `Exp_Rj_SlidingRangeRj_Digit_System_Tm_Plus`. It recreates the original trading logic based on the custom **Rj_SlidingRangeRj_Digit** channel indicator and preserves the configurable trade management options. The strategy monitors finished candles on a configurable timeframe, detects breakouts beyond the channel, and reacts to those events with delayed entries, optional timed exits, and price-based stop/target management.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle type (timeframe) used for signal detection. | 8-hour candles |\n| `EnableBuyEntries` / `EnableSellEntries` | Allow long/short breakout entries. | `true` |\n| `EnableBuyExits` / `EnableSellExits` | Allow indicator-based exits for longs/shorts. | `true` |\n| `UseTimeExit` | Close trades after a fixed holding time. | `true` |\n| `ExitMinutes` | Holding time limit in minutes. | `1920` |\n| `UpCalcPeriodRange`, `UpCalcPeriodShift`, `UpDigit` | Parameters of the upper channel band. | `5`, `0`, `2` |\n| `DnCalcPeriodRange`, `DnCalcPeriodShift`, `DnDigit` | Parameters of the lower channel band. | `5`, `0`, `2` |\n| `SignalBar` | Bar offset used for evaluating breakout signals. | `1` |\n| `StopLossPoints`, `TakeProfitPoints` | Stop-loss / take-profit in price points (converted with `PriceStep`). | `1000`, `2000` |\n\nSet the strategy `Volume` property to control position sizing. The stop-loss and take-profit parameters are optional; set them to `0` to disable either protection level."
+   },
+   "4037": {
+    "id": 4037,
+    "name": "ACB1",
+    "family": "breakout",
+    "overview": "The **ACB1 Strategy** is the StockSharp port of the MetaTrader expert advisor distributed as `MQL/8586/ACB1.MQ4`. The original system trades the EURUSD pair and waits for strong daily breakouts before entering the market. This conversion reproduces the same decision process with StockSharp high level primitives:\n\n- Daily candles (`SignalCandleType`) define the breakout direction and provide the stop and take-profit anchors.\n- H4 candles (`TrailCandleType`) determine the trailing distance that is multiplied by `TrailFactor`.\n- Orders are executed at market once the breakout conditions are satisfied and the strategy keeps only one net position, mirroring the `OrdersTotal()` checks in the MQL code.\n- Stop-loss and take-profit are managed internally: the strategy watches best bid/ask prices and closes the position with market orders when the virtual protective levels are breached.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `SignalCandleType` | Daily | Candle type used for breakout detection. |\n| `TrailCandleType` | 4 hours | Candle type that supplies the trailing stop distance. |\n| `TakeFactor` | 0.8 | Multiplier applied to the daily range to compute take-profit. |\n| `TrailFactor` | 10 | Multiplier applied to the trailing range when updating the stop. |\n| `RiskFraction` | 0.05 | Fraction of portfolio equity risked on each trade (5 %). |\n| `MaxVolume` | 5 | Hard cap for the final order volume. |\n| `MinStopDistancePoints` | 0 | Minimal stop/take distance expressed in price points; set it to the broker `MODE_STOPLEVEL`. |\n| `CooldownSeconds` | 5 | Minimum delay between consecutive trade actions. |"
+   },
+   "2041": {
+    "id": 2041,
+    "name": "RSI EA",
+    "family": "momentum",
+    "overview": "This strategy emulates a classic RSI expert advisor. It trades when the Relative Strength Index crosses predefined levels and manages risk with stop loss, take profit and optional trailing stop.\n\n## Strategy Logic\n- Calculate RSI using the configurable `RsiPeriod`.\n- **Long entry** when RSI rises above `BuyLevel` and no long position exists.\n- **Short entry** when RSI falls below `SellLevel` and no short position exists.\n- When `CloseBySignal` is enabled, an opposite cross closes the existing position.\n- Positions can be protected with `StopLoss`, `TakeProfit` and `TrailingStop` measured in price units.\n- Works on candle data defined by `CandleType`.\n\n## Parameters\n- `OpenBuy` – enable long entries.\n- `OpenSell` – enable short entries.\n- `CloseBySignal` – close by opposite RSI signal.\n- `StopLoss` – loss in price units.\n- `TakeProfit` – profit in price units.\n- `TrailingStop` – trailing distance in price units.\n- `RsiPeriod` – RSI calculation length.\n- `BuyLevel` – RSI threshold for long signals.\n- `SellLevel` – RSI threshold for short signals.\n- `CandleType` – candle timeframe or type to subscribe.\n\nThe default trade volume is controlled by the strategy `Volume` property.\n",
+    "details": "",
+    "parameters": "- `OpenBuy` – enable long entries.\n- `OpenSell` – enable short entries.\n- `CloseBySignal` – close by opposite RSI signal.\n- `StopLoss` – loss in price units.\n- `TakeProfit` – profit in price units.\n- `TrailingStop` – trailing distance in price units.\n- `RsiPeriod` – RSI calculation length.\n- `BuyLevel` – RSI threshold for long signals.\n- `SellLevel` – RSI threshold for short signals.\n- `CandleType` – candle timeframe or type to subscribe.\n\nThe default trade volume is controlled by the strategy `Volume` property."
+   },
+   "2790": {
+    "id": 2790,
+    "name": "Alexav SpeedUp M1",
+    "family": "volatility",
+    "overview": "- Conversion of the \"Alexav SpeedUp M1\" MetaTrader 5 expert advisor to the StockSharp high-level API.\n- Designed for fast markets on the 1-minute timeframe (default) and reacts to unusually large candle bodies.\n- Opens a single net position in the direction of the strong candle body and manages it with fixed stop-loss, take-profit, and a stepped trailing stop.\n- Uses pip-based inputs that are automatically converted to price distances according to the instrument's tick size and decimal precision.",
+    "details": "",
+    "parameters": "- `OrderVolume` – trade size in lots (default `0.1`).\n- `StopLossPips` – stop-loss distance in pips (default `30`).\n- `TakeProfitPips` – take-profit distance in pips (default `90`).\n- `TrailingStopPips` – trailing stop distance in pips (default `10`).\n- `TrailingStepPips` – minimum favorable move before the trailing stop is updated (default `5`). Must be greater than zero when the trailing stop is enabled.\n- `MinimumBodySizePips` – minimum body size (in pips) required to trigger a trade (default `100`).\n- `CandleType` – timeframe for candles (default `1 Minute`)."
+   },
+   "529": {
+    "id": 529,
+    "name": "Arsi Vwap Atr",
+    "family": "mean_reversion",
+    "overview": "Adaptive RSI strategy where overbought and oversold levels expand or contract based on ATR or the deviation from VWAP. Positions are opened on RSI crossovers of the adaptive levels and closed when RSI returns to the mid-zone.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `RSI` crosses above adaptive oversold line\n  - Short: `RSI` crosses below adaptive overbought line\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - RSI crosses back through 50 or opposite adaptive line\n- **Stops**: Percent-based using `StopLossPercent` and `RiskReward`\n- **Default Values**:\n  - `RsiLength` = 14\n  - `BaseK` = 1m\n  - `RiskPercent` = 2m\n  - `StopLossPercent` = 2.5m\n  - `RiskReward` = 2m\n  - `SourceOb` = ATR\n  - `SourceOs` = ATR\n  - `AtrLengthOb` = 14\n  - `AtrLengthOs` = 14\n  - `ObMultiplier` = 10m\n  - `OsMultiplier` = 10m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, ATR, VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `RSI` crosses above adaptive oversold line\n  - Short: `RSI` crosses below adaptive overbought line\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - RSI crosses back through 50 or opposite adaptive line\n- **Stops**: Percent-based using `StopLossPercent` and `RiskReward`\n- **Default Values**:\n  - `RsiLength` = 14\n  - `BaseK` = 1m\n  - `RiskPercent` = 2m\n  - `StopLossPercent` = 2.5m\n  - `RiskReward` = 2m\n  - `SourceOb` = ATR\n  - `SourceOs` = ATR\n  - `AtrLengthOb` = 14\n  - `AtrLengthOs` = 14\n  - `ObMultiplier` = 10m\n  - `OsMultiplier` = 10m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, ATR, VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

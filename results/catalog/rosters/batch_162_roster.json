@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 455,
+      "name": "Golden Ratio Cubes",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 34) + 0.618 * (donchian_high_prev(high, 34) - donchian_low_prev(low, 34))",
+      "exit_long": "close < donchian_high_prev(high, 34) + 0.618 * (donchian_high_prev(high, 34) - donchian_low_prev(low, 34))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Lookback 34 range is extended by the golden-ratio 0.618 cube above the prior high and a close beyond it buys; failure to hold that extension is the opposite-signal exit. Phi 1.618 is mapped to its 0.618 reciprocal extension to keep the breakout reachable, and the multiple sub-extensions and short side are dropped."
+    },
+    {
+      "id": 3687,
+      "name": "Smart Trend Follower",
+      "family": "trend",
+      "entry_long": "crossbelow(close, sma(close, 20)) and rsi(close, 14) > 30",
+      "exit_long": "crossabove(close, sma(close, 20)) or rsi(close, 14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default CrossMa engine is a contrarian moving-average crossover, here SMA(20) with an RSI(14) stochastic-style confirmation; both MA periods are explicit fallbacks because none are documented. The Trend mode, martingale Multiplier 2, LayerDistancePips 200 basket scaling, and the shared basket take-profit/stop-loss in pips are not expressible."
+    },
+    {
+      "id": 3031,
+      "name": "Color Schaff JCCX Trend Cycle MMRec Duplex",
+      "family": "trend",
+      "entry_long": "crossabove(ema(macd(close, 23, 50), 8), 0) and close > ema(close, 8)",
+      "exit_long": "crossbelow(ema(macd(close, 23, 50), 8), 0) or close < ema(close, 8)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Jurik/JCCX is unavailable, so the long stack's documented 23/50 fast-slow pair smoothed by LongSmoothLength 8 is approximated by MACD(23,50) under an EMA(8) with the cycle signed by zero. The short duplex stack, per-side timeframe/price-source parameters, LongPhase 100, and the MMRec loss-based size reduction are omitted; no stops are documented."
+    },
+    {
+      "id": 1378,
+      "name": "Supertrend Long-Only for QQQ",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close, 32) + 4.35 * atr(high, low, close, 32))",
+      "exit_long": "crossbelow(close, ema(close, 32) - 4.35 * atr(high, low, close, 32))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Supertrend line is rebuilt as EMA(32) plus/minus the documented Multiplier 4.35 ATR(32) band, so a cross above the upper band is the long entry and a cross below the lower band the exit. The 1995-2050 date filter and daily candle binding are not DSL features; no stops are documented."
+    },
+    {
+      "id": 1914,
+      "name": "RMACD Reversal",
+      "family": "trend",
+      "entry_long": "crossbelow(macd(close, 12, 26) - macd_signal(close, 12, 26, 9), 0)",
+      "exit_long": "crossabove(macd(close, 12, 26) - macd_signal(close, 12, 26, 9), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MACD histogram is the MACD line minus its signal line, and the documented Breakdown mode (histogram crossing below zero buys, above zero reverses) is used because the mode selector default is not stated. MacdTwist, SignalTwist, and MacdDisposition variants are dropped and the 12/26/9 lengths are standard fallbacks; no stops are documented."
+    },
+    {
+      "id": 1034,
+      "name": "Max Gain",
+      "family": "momentum",
+      "entry_long": "(high - donchian_low_prev(low, 30)) / donchian_low_prev(low, 30) * 100 > (donchian_high_prev(high, 30) - low) / donchian_high_prev(high, 30) * 100",
+      "exit_long": "(high - donchian_low_prev(low, 30)) / donchian_low_prev(low, 30) * 100 < (donchian_high_prev(high, 30) - low) / donchian_high_prev(high, 30) * 100",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Potential gain from the PeriodLength 30 low and potential loss from the 30-bar high are compared as percentages, buying when gain dominates and exiting on the reverse signal. The 'adjusted' loss factor has no documented value so it is left at 1.0, and both ratios would only break on a zero price extreme."
+    },
+    {
+      "id": 3247,
+      "name": "Personal Assistant MNS",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is a manual hotkey helper (PressBuy/PressSell/PressCloseAll, volume buttons, break-even emulation) that only logs per-candle metrics and never derives a market signal, so the impossible negative-price guard prevents fabricating an entry. Pip-based protection, logging, and demo-mode signals are not roster fields."
+    },
+    {
+      "id": 1570,
+      "name": "Z-Score Normalized VIX",
+      "family": "mean_reversion",
+      "entry_long": "(zscore(atr(high, low, close, 14), 6) + zscore(std(close - open, 6), 6)) / 2 < -1",
+      "exit_long": "(zscore(atr(high, low, close, 14), 6) + zscore(std(close - open, 6), 6)) / 2 > -1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VIX, VIX3M, VIX9D and VVIX are external series, so the averaged volatility sentiment is rebuilt from two tradable proxies at the documented ZScoreLength 6: ATR(14) and the dispersion of the candle body, averaged and compared with the Threshold 1. The per-index UseVix toggles and daily candle binding are dropped."
+    },
+    {
+      "id": 1836,
+      "name": "Gap Fill",
+      "family": "volume",
+      "entry_long": "open < close / (1 + roc(close, 1) / 100) - 0.25 * atr(high, low, close, 14)",
+      "exit_long": "close > close / (1 + roc(close, 1) / 100) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The previous close is reconstructed as close/(1+roc(close,1)/100); a down-gap wider than 0.25 ATR(14) (the MinGapSize 1 step plus spread proxy) buys the reversal and recovering the previous close is the gap-fill exit. The 15-minute timeframe, the resting limit at the prior candle extreme, spread sizing, and fixed volume are not representable."
+    },
+    {
+      "id": 2451,
+      "name": "Ten Pips",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy opens a long and a short at the same instant with symmetric price-unit take-profits, stops and trailing, so it has no market-derived directional entry and the impossible negative-price guard avoids inventing one. Fixed-volume re-opening, trailing updates, and the pip distances are not DSL or percentage fields."
+    }
+  ]
+}

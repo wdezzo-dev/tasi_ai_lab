@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 939,
+      "name": "IU EMA Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(high,100))",
+      "exit_long": "crossbelow(close,ema(low,100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(100) is applied to high and low to represent the source channels exactly in form. Previous-extreme stops and the 2R target are price-state rules, so their absence is not a numeric percentage setting."
+    },
+    {
+      "id": 1108,
+      "name": "MVO - MA Signal",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and close > open",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA 9/21 and a bullish regular candle are explicit fallbacks for Heikin-Ashi moving-average signals because no parameters are supplied. MFI extremes, ATR protection, break-even, and trailing are not retained."
+    },
+    {
+      "id": 2556,
+      "name": "Currencyprofits High-Low Channel",
+      "family": "trend",
+      "entry_long": "ema(close,32) > ema(close,86) and low <= donchian_low_prev(low,6)",
+      "exit_long": "ema(close,32) < ema(close,86)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast/slow EMA 32/86 and the previous six-bar low retest are retained with EMA as the default MA type. The fast/slow trend reversal exits; the 170-point stop and risk percentage are not percentage fields."
+    },
+    {
+      "id": 1018,
+      "name": "Manadi Buy Sell EMA MACD RSI",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) >= 40 and rsi(close,14) <= 70",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": 0.015,
+      "take_profit_pct": 0.03,
+      "notes": "EMA 9/21, MACD 12/26/9, and the documented long RSI band 40-70 are exact. The numeric source percentages 0.015 and 0.03 are retained verbatim in the percentage fields."
+    },
+    {
+      "id": 2459,
+      "name": "SilverTrend Signal ReOpen",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21))",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA 9/21 direction is a fallback for the SilverTrend flip, with the inverse cross closing. Re-entry pyramiding and absolute 1000/2000-point protection cannot be represented in a single-position percentage roster."
+    },
+    {
+      "id": 2478,
+      "name": "WOC 0.1.2 Momentum",
+      "family": "breakout",
+      "entry_long": "roc(close,3) > 1",
+      "exit_long": "roc(close,3) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A three-bar move above 1% is an explicit bar-based proxy for the Level1 ask streak because no defaults are supplied. Tick sequence timing, auto lot sizing, stop ticks, and trailing are unsupported."
+    },
+    {
+      "id": 3635,
+      "name": "Martingale Breakout",
+      "family": "breakout",
+      "entry_long": "high - low > 3 * sma(high - low,10) and close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The current range exceeding three times its ten-bar average and a bullish close retain the documented breakout core. Recovery sizing, account-percentage PnL thresholds, and 50-point targets are unsupported."
+    },
+    {
+      "id": 2267,
+      "name": "ROC2 VG",
+      "family": "momentum",
+      "entry_long": "crossbelow(roc(close,8),roc(close,14))",
+      "exit_long": "crossabove(roc(close,8),roc(close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 8/14 Momentum lines are approximated by percentage ROC(close,n), and the opposite cross exits. Indicator-type variants, inversion, and short-side reversal handling are omitted."
+    },
+    {
+      "id": 2643,
+      "name": "Get Rich or Die Trying GBP",
+      "family": "volatility",
+      "entry_long": "roc(close,18) > 0.2 and close < open",
+      "exit_long": "roc(close,18) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Eighteen-bar positive momentum plus a current bearish candle approximates fading the stronger recent count. Session clocks, cooldown, candle counting, and all pip targets/stops are unavailable."
+    },
+    {
+      "id": 1602,
+      "name": "Internal Bar Strength IBS Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is short-only while this catalog is long-direction, so no long signal is fabricated and an impossible negative-price guard records that limitation. The 0.9/0.3 IBS thresholds remain short-only rules."
+    }
+  ]
+}

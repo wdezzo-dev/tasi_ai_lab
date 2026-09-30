@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3938,
+  "ticker": "4164",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3938,
+    "name": "GPF TCPivotLimit",
+    "family": "volatility",
+    "entry_long": "low < donchian_low_prev(low,1) and close > donchian_low_prev(low,1)",
+    "exit_long": "close < donchian_low_prev(low,1)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "P, R1-R3 and S1-S3 are rebuilt from the previous day's high, low and close, but the shifted prior close is unavailable, so the 20-bar prior extremes stand in: a probe of the prior low closing back above it is the documented support-rejection long. TrailingPoints 30, session-close liquidation, dynamic volume after losses and the target-mode selection are not expressible."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-03-22",
+        "2024-07-31"
+      ],
+      "bars_in_window": 583,
+      "engine_win_ret": 0.25523117248331273,
+      "alpha": 0.3698978391499793,
+      "benchmark_ret": -0.11466666666666658,
+      "trades": 58,
+      "win_rate": 0.5,
+      "sharpe": 0.6186225561940387,
+      "max_drawdown": -0.16496658460825075,
+      "profit_factor": 1.3907365252543167
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.09197469979869377,
+      "alpha": 0.18614080172106306,
+      "benchmark_ret": -0.27811550151975684,
+      "trades": 42,
+      "win_rate": 0.30952380952380953,
+      "sharpe": -0.3357589415787114,
+      "max_drawdown": -0.12325975504317555,
+      "profit_factor": 0.729004909032699
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.11550032366254692,
+      "alpha": 0.15438057249613946,
+      "benchmark_ret": -0.038880248833592534,
+      "trades": 20,
+      "win_rate": 0.4,
+      "sharpe": 1.092138366286589,
+      "max_drawdown": -0.08663429779669496,
+      "profit_factor": 2.0495539671414567
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-03-22",
+        "2024-07-31"
+      ],
+      "bars_in_window": 583,
+      "engine_win_ret": -0.06382003996362617,
+      "alpha": 0.05084662670304041,
+      "benchmark_ret": -0.11466666666666658,
+      "trades": 58,
+      "win_rate": 0.3620689655172414,
+      "sharpe": -0.050643101263247774,
+      "max_drawdown": -0.28552470051760437,
+      "profit_factor": 0.9120008552486315
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.2629049421785067,
+      "alpha": 0.015210559341250152,
+      "benchmark_ret": -0.27811550151975684,
+      "trades": 42,
+      "win_rate": 0.21428571428571427,
+      "sharpe": -1.1793179404581584,
+      "max_drawdown": -0.2629049421785067,
+      "profit_factor": 0.4125848922202259
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.009149052875180086,
+      "alpha": 0.04802930170877262,
+      "benchmark_ret": -0.038880248833592534,
+      "trades": 20,
+      "win_rate": 0.3,
+      "sharpe": 0.15846635490708078,
+      "max_drawdown": -0.14664483527369654,
+      "profit_factor": 1.0529681189960856
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1100,
+      "name": "Multi-TF AI SuperTrend with ADX",
+      "family": "trend",
+      "entry_long": "ema(close,10) > ema(close,20) and roc(close,5) > 0 and adx(high,low,close,14) > 25",
+      "exit_long": "ema(close,10) < ema(close,20) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend bands and WMA are outside the DSL, so dual-SuperTrend alignment with price WMAs is approximated by EMA(10) above EMA(20) plus positive 5-bar momentum as a +DI/-DI proxy, gated by an ADX(14) strength filter of 25/20 (threshold not documented). The SuperTrend ATR trailing stop and the multi-timeframe combination are dropped."
+    },
+    {
+      "id": 3361,
+      "name": "X MAN",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and sma(close,20) > sma(close,50) and roc(close,10) > 0 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < sma(close,50) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fast/slow LWMA breakouts are approximated by SMA(20)/SMA(50) since no periods are documented, the higher-timeframe momentum filter becomes a positive 10-bar ROC, and the monthly MACD confirmation is evaluated on the traded series. DistancePoints and the optional point-based take-profit/stop-loss are dropped."
+    },
+    {
+      "id": 2219,
+      "name": "Fibo Candles Trend",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high(high,10) - 0.236 * (donchian_high(high,10) - donchian_low(low,10)))",
+      "exit_long": "crossbelow(close,donchian_high(high,10) - 0.236 * (donchian_high(high,10) - donchian_low(low,10)))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish candle colour is a close inside the top 23.6% of the 10-bar high/low range, so its flip is a cross of that Fibo level. The documented 1000/2000-point stop and target are absolute point distances, not percentages, so both fields stay null."
+    },
+    {
+      "id": 1399,
+      "name": "MADH Moving Average Difference, Hann",
+      "family": "trend",
+      "entry_long": "sma(close,8) > sma(close,27)",
+      "exit_long": "sma(close,8) < sma(close,27)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ehlers' Hann-windowed cycle estimator cannot be reproduced, so the sign of the documented short (8) versus dominant-cycle (27) moving-average difference is used directly for the long state and its reversal for the exit. No stops are documented."
+    },
+    {
+      "id": 3784,
+      "name": "Simple MACD EA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,100),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,100),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast EMA(100) crossing the user-defined MACD level EMA translates directly, with 30 chosen as the undocumented slow length. The derived MACD Level+1 signal EMA, the point-based trailing stop with its update cap, and the adaptive wait cycles are not DSL features."
+    },
+    {
+      "id": 1113,
+      "name": "Nasdaq Day and Night Breakdown",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented as an analysis/visualisation panel with no entry, no exit and no direction, comparing Nasdaq futures and index pre-market versus regular-session differences across two symbols. The never-true guard is used rather than inventing a signal."
+    },
+    {
+      "id": 922,
+      "name": "Indicator Test with Conditions Table",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A configurable condition-table testbed whose levels and comparison expressions are supplied by the operator (the only documented defaults are the > and < operators), so nothing market-derived can be derived without inventing thresholds. The never-true guard records that."
+    },
+    {
+      "id": 1032,
+      "name": "Mawreez' RSI Divergence Detector",
+      "family": "other",
+      "entry_long": "low < donchian_low_prev(low,20) and roc(rsi(close,14),1) > 0",
+      "exit_long": "high > donchian_high_prev(high,20) and roc(rsi(close,14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented lower-low / higher-RSI-low divergence becomes a 20-bar prior low with a rising one-bar RSI, exiting on the mirrored bearish divergence. The docs list only parameter names, so RSI 14 and a 20-bar minimum/maximum divergence window are stated defaults."
+    },
+    {
+      "id": 1350,
+      "name": "Fibonacci Levels with High/Low Criteria AYNET",
+      "family": "other",
+      "entry_long": "close > donchian_low_prev(low,20) and close > donchian_high(high,20) - 0.618 * (donchian_high(high,20) - donchian_low(low,20))",
+      "exit_long": "close < donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long rule needs a close above both the previous lowest low and the Fibonacci level, here the 61.8% retracement of a 20-bar Donchian range; the level and lookback are stated defaults because the docs name no values and the higher-timeframe candle is unavailable. The mirrored high/low rule is used as the exit."
+    },
+    {
+      "id": 625,
+      "name": "Color",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is the luminance of a hard-coded colour (#f23645), a constant that never changes with the market, so no price-derived entry exists; it is a demo of the signal plumbing. The never-true guard is used instead of fabricating one."
+    }
+  ]
+}

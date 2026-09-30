@@ -1,0 +1,98 @@
+{
+ "batch_341": {
+  "strategy_ids": [
+   87,
+   3957,
+   1175,
+   1521,
+   71,
+   936,
+   1366,
+   2776,
+   3841,
+   337
+  ],
+  "docs": {
+   "87": {
+    "id": 87,
+    "name": "Parabolic SAR Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 148%. It performs best in the forex market.\n\nA running Parabolic SAR value is maintained for each candle. If the indicator moves from above price to below, a long position is opened. If it flips from below to above, a short trade is executed. The method does not use an explicit profit target and typically relies on discretionary exit or trailing stops outside the sample code.\n\nBecause SAR reacts quickly, false signals can occur in ranging markets, so it's best used when price makes decisive swings.\n\n## Details\n\n- **Entry Criteria**: Parabolic SAR switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Manual or external stop.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `InitialAcceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `CandleType` = 15 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Parabolic SAR switches sides relative to price.\n- **Long/Short**: Both.\n- **Exit Criteria**: Manual or external stop.\n- **Stops**: Not defined.\n- **Default Values**:\n  - `InitialAcceleration` = 0.02\n  - `MaxAcceleration` = 0.2\n  - `CandleType` = 15 minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3957": {
+    "id": 3957,
+    "name": "MasterMind 2",
+    "family": "trend",
+    "overview": "MasterMind 2 is a conversion of the \"TheMasterMind2\" MQL4 expert advisor. The strategy waits for extreme values on the Stochastic Oscillator and Williams %R indicators to detect exhaustion points. When both indicators show extreme oversold conditions it opens a long position, and when they both show extreme overbought conditions it opens a short position. The logic operates on fully closed candles only, mimicking the original Expert Advisor behaviour.",
+    "details": "",
+    "parameters": "- `Trade Volume` – contract volume submitted with each market order.\n- `Stochastic Period`, `Stochastic %K`, `Stochastic %D` – parameters of the Stochastic Oscillator.\n- `Williams %R Period` – lookback period for the Williams %R calculation.\n- `Stop Loss`, `Take Profit` – protective distances in price points.\n- `Trailing Stop`, `Trailing Step` – control dynamic stop management.\n- `Break Even` – distance in points required to lock in the entry price.\n- `Candle Type` – timeframe or custom candle type used in calculations."
+   },
+   "1175": {
+    "id": 1175,
+    "name": "Post Open Long ATR Stop Loss Take Profit",
+    "family": "trend",
+    "overview": "The strategy enters a long position during market open after a breakout from resistance while price stays near the Bollinger basis. It uses EMA, RSI, ADX and ATR filters and exits via ATR-based stop loss and take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Breakout above recent resistance within market open, price near Bollinger middle band, RSI above threshold, ADX above threshold, short-term trend up and no pullback.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - ATR stop loss or take profit reached.\n- **Stops**:\n  - ATR-based stop loss and take profit.\n- **Default Values**:\n  - `BB Length` = 14\n  - `BB Mult` = 1.5\n  - `EMA Length` = 10\n  - `EMA Long Length` = 200\n  - `RSI Length` = 7\n  - `RSI Threshold` = 30\n  - `ADX Length` = 7\n  - `ADX Threshold` = 10\n  - `ATR Length` = 14\n  - `ATR SL Mult` = 2.0\n  - `ATR TP Mult` = 4.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Bollinger Bands, EMA, RSI, ADX, ATR\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Breakout above recent resistance within market open, price near Bollinger middle band, RSI above threshold, ADX above threshold, short-term trend up and no pullback.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - ATR stop loss or take profit reached.\n- **Stops**:\n  - ATR-based stop loss and take profit.\n- **Default Values**:\n  - `BB Length` = 14\n  - `BB Mult` = 1.5\n  - `EMA Length` = 10\n  - `EMA Long Length` = 200\n  - `RSI Length` = 7\n  - `RSI Threshold` = 30\n  - `ADX Length` = 7\n  - `ADX Threshold` = 10\n  - `ATR Length` = 14\n  - `ATR SL Mult` = 2.0\n  - `ATR TP Mult` = 4.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Bollinger Bands, EMA, RSI, ADX, ATR\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1521": {
+    "id": 1521,
+    "name": "Vegas Tunnel",
+    "family": "trend",
+    "overview": "Uses four EMAs to define a tunnel and optional ATR based stops.\nOpens long when price and fast EMA are above slow and tunnel EMAs, short when below.\n\n## Details\n\n- **Entry Criteria**: alignment of EMAs with price relative to tunnel\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss or take profit\n- **Stops**: ATR or EMA based\n- **Default Values**:\n  - `RiskRewardRatio` = 2\n  - `UseAtr` = true\n  - `AtrLength` = 14\n  - `AtrMult` = 1.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: alignment of EMAs with price relative to tunnel\n- **Long/Short**: Both\n- **Exit Criteria**: stop loss or take profit\n- **Stops**: ATR or EMA based\n- **Default Values**:\n  - `RiskRewardRatio` = 2\n  - `UseAtr` = true\n  - `AtrLength` = 14\n  - `AtrMult` = 1.5\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "71": {
+    "id": 71,
+    "name": "Evening Star Pattern",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 100%. It performs best in the forex market.\n\nThe algorithm watches sequences of three candles. When the pattern forms, it enters short with a stop above the small middle candle's high. Positions exit once price drops beneath the confirmation candle's low or if the stop is triggered.\n\nSince the setup anticipates a quick reversal from overbought conditions, trades typically aim for short, momentum-driven moves lower.\n\n## Details\n\n- **Entry Criteria**: Three-candle Evening Star pattern.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Price below confirmation bar low or stop-loss.\n- **Stops**: Yes, above middle candle high.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Three-candle Evening Star pattern.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Price below confirmation bar low or stop-loss.\n- **Stops**: Yes, above middle candle high.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "936": {
+    "id": 936,
+    "name": "IU Big Body Bar",
+    "family": "trend",
+    "overview": "This strategy enters when the body of the current candle is several times larger than the average body size of the last 20 candles. A big bullish candle opens a long position, while a big bearish candle opens a short one. Positions are protected with an ATR-based trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: body > average body * BigBodyThreshold and close > open.\n  - **Short**: body > average body * BigBodyThreshold and close < open.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: Trailing stop using ATR * AtrFactor.\n- **Default Values**:\n  - `BigBodyThreshold` = 4\n  - `AtrLength` = 14\n  - `AtrFactor` = 2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: body > average body * BigBodyThreshold and close > open.\n  - **Short**: body > average body * BigBodyThreshold and close < open.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: Trailing stop using ATR * AtrFactor.\n- **Default Values**:\n  - `BigBodyThreshold` = 4\n  - `AtrLength` = 14\n  - `AtrFactor` = 2\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: SMA, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1366": {
+    "id": 1366,
+    "name": "Supertrade RVI Long-Only",
+    "family": "trend",
+    "overview": "Uses Relative Volatility Index crossing above 20 to open long trades. Stop loss and take profit are set from risk percent and reward ratio.\n\n## Details\n\n- **Entry Criteria**: RVI crosses above threshold\n- **Long/Short**: Long\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `RviLength` = 10\n  - `EmaLength` = 14\n  - `RviThreshold` = 20\n  - `RiskPercent` = 1\n  - `RewardRatio` = 3\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: StdDev, EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: RVI crosses above threshold\n- **Long/Short**: Long\n- **Exit Criteria**: Stop loss or take profit\n- **Stops**: Yes\n- **Default Values**:\n  - `RviLength` = 10\n  - `EmaLength` = 14\n  - `RviThreshold` = 20\n  - `RiskPercent` = 1\n  - `RewardRatio` = 3\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: StdDev, EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2776": {
+    "id": 2776,
+    "name": "CH2010 Structure Multi-Timeframe Breakout",
+    "family": "trend",
+    "overview": "This strategy replicates the behaviour of the original **ch2010structure.mq5** expert by tracking multiple forex pairs on two timeframes. Each instrument monitors the daily candle to determine a directional bias and then watches 30-minute candles to look for breakouts beyond the prior daily range. Market positions are opened when the breakout aligns with the daily trend and closed using protective stop-loss and take-profit levels.\n\n## Core Logic\n\n1. **Daily bias detection**  \n   * The strategy subscribes to daily candles for USDCHF, GBPUSD, AUDUSD, USDJPY and EURGBP.  \n   * When a daily candle finishes the close/open relationship defines the bias: bullish, bearish or neutral.  \n   * The daily high, low and close are stored together with the session date so intraday logic can confirm it is trading the same session.\n\n2. **Intraday breakout execution**  \n   * 30-minute candles are evaluated once they close.  \n   * If the close is above the previous daily high plus a configurable buffer and the bias is not bearish, a long trade is triggered.  \n   * If the close is below the previous daily low minus the buffer and the bias is not bullish, a short trade is triggered.  \n   * Only one long and one short breakout can be activated per instrument each day to avoid over-trading.\n\n3. **Risk management inspired by the original helper functions**  \n   * Volumes are clamped between `MinTradeVolume` and `MaxTradeVolume` and the aggregated position across all instruments is restricted by `MaxAggregateVolume`.  \n   * Each filled position immediately calculates absolute stop-loss and take-profit levels using percentage offsets from the entry price.  \n   * Positions are closed via market orders as soon as the stop or target is reached; repeated exit orders are prevented by the `ExitInProgress` flag.\n\n4. **State tracking**  \n   * For every instrument the strategy tracks its own daily levels, last known position, entry side, exit orders and breakout flags in an `InstrumentContext`.  \n   *",
+    "details": "",
+    "parameters": ""
+   },
+   "3841": {
+    "id": 3841,
+    "name": "FrBestExp02 Maloma Mod",
+    "family": "trend",
+    "overview": "This strategy is a C# port of the MetaTrader 4 expert `Frbestexp02_1_maloma_mod.mq4`. It combines OsMA momentum, fractal reversals, tick volume confirmation and a rolling daily pivot filter to fade exhausted moves on the M15 timeframe.\n\n## Trading logic\n\n- **Session pivot** – a rolling pivot point is computed from the highest high, lowest low and the oldest close inside a configurable window (96 candles by default, equal to one trading day on M15). Only trades that agree with the pivot bias are allowed: shorts above the pivot and longs below it.\n- **Fractal pattern** – the strategy waits for a confirmed Bill Williams fractal three candles back. Down fractals (swing lows) enable shorts, while up fractals (swing highs) enable longs.\n- **OsMA histogram** – a MACD histogram (fast 12, slow 26, signal 9 by default) must be sloping further into negative territory for shorts and higher into positive territory for longs. The previous histogram reading also has to be on the same side of zero.\n- **Volume filter** – the volume of the previous finished candle must exceed a configurable threshold and be larger than the volume two candles ago. This reproduces the tick volume spike requirement from the original expert.\n- **Order timing** – trades are throttled by a minimum interval (20 seconds by default) between entries.\n- **Risk management** – configurable stop-loss, take-profit and optional trailing stop are expressed in points and converted to instrument prices. Protective orders are updated with the built-in `SetStopLoss`/`SetTakeProfit` helpers.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Order volume used for every entry. | 1 |\n| `StopLossPoints` | Stop-loss distance in instrument points. | 1000 |\n| `TakeProfitPoints` | Take-profit distance in instrument points. | 1000 |\n| `TrailingStopPoints` | Optional trailing stop distance in points (0 disables trailing). | 0 |\n| `VolumeThreshold` | Minimum previous candle volume required to enable a",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Order volume used for every entry. | 1 |\n| `StopLossPoints` | Stop-loss distance in instrument points. | 1000 |\n| `TakeProfitPoints` | Take-profit distance in instrument points. | 1000 |\n| `TrailingStopPoints` | Optional trailing stop distance in points (0 disables trailing). | 0 |\n| `VolumeThreshold` | Minimum previous candle volume required to enable a signal. | 50 |\n| `OsmaFastPeriod` / `OsmaSlowPeriod` / `OsmaSignalPeriod` | MACD parameters used to compute the OsMA histogram. | 12 / 26 / 9 |\n| `PivotWindow` | Number of finished candles included in the pivot calculation. | 96 |\n| `MinTradeIntervalSeconds` | Minimum number of seconds between new entries. | 20 |\n| `CandleType` | Primary timeframe (defaults to 15-minute candles). | M15 |"
+   },
+   "337": {
+    "id": 337,
+    "name": "Adaptive RSI Volume Filter",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 106%. It performs best in the stocks market.\n\nSignals trigger when its indicators confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like MinRsiPeriod, MaxRsiPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `MinRsiPeriod = 10`\n  - `MaxRsiPeriod = 20`\n  - `AtrPeriod = 14`\n  - `VolumeLookback = 20`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `MinRsiPeriod = 10`\n  - `MaxRsiPeriod = 20`\n  - `AtrPeriod = 14`\n  - `VolumeLookback = 20`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

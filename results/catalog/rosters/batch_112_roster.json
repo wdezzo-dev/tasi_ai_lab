@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3422,
+      "name": "Bullish & Bearish Harami Stochastic",
+      "family": "trend",
+      "entry_long": "high <= donchian_high_prev(high,1) and low >= donchian_low_prev(low,1) and close > open and rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) < 20 or rsi(close,14) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The harami is expressed as an inside bullish body (current range within the prior bar) with the documented OversoldLevel 30 confirmation and the 20/80 ExitLower/ExitUpper thresholds close the trade. Stochastic %K/%D and the 47/9/13 smoothings are unavailable, so RSI(14) stands in for %D and the MovingAveragePeriod=5 body filter is not represented."
+    },
+    {
+      "id": 3585,
+      "name": "Grid Trading at Volatile Market",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,50) and close > open and close > sma(close,50)",
+      "exit_long": "close < sma(close,50) or low < donchian_low_prev(low,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The higher-timeframe Donchian boundary is approximated by a 50-bar channel (SlowMaLength=50 filter retained) and the engulfing confirmation by a bullish close at the boundary. GridMultiplier averaging, TakeProfitFactor and MaxDrawdownFraction are portfolio-level controls on a single net position."
+    },
+    {
+      "id": 1443,
+      "name": "Tomas Ratio Strategy with Multi-Timeframe Analysis",
+      "family": "trend",
+      "entry_long": "close > ema(close,720) and zscore(close,168) > 1",
+      "exit_long": "crossbelow(close, ema(close,720))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weighted multi-timeframe gain/loss ratio is approximated by a one-standard-deviation deviation over the documented DeviationLength=168 above the documented EMA(720), and the close-points-exceed-buy-points exit is replaced by losing the trend anchor. PointsTarget=100 and the multi-timeframe accumulation are not single-series fields."
+    },
+    {
+      "id": 4208,
+      "name": "Take Profit Breakout",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,4) and roc(open,4) > 0",
+      "exit_long": "low < donchian_low_prev(low,4)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Strictly rising highs over the four Shift candles become a close above the prior four-bar high and rising opens become a positive four-bar open return, which is the documented long momentum sequence. TrailingStopPoints, partial 50% closes, the account equity target and risk-percent sizing are execution and account fields; StopLossPoints=0 disables the stop."
+    },
+    {
+      "id": 363,
+      "name": "Currency Momentum Factor",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The factor ranks a cross-section of currency pairs by 252-day momentum and rebalances monthly, which yields no single-instrument market signal, and the sample is documented as lacking a real momentum calculation. Universe, K, MinTradeUsd and the monthly schedule are portfolio/calendar constructs."
+    },
+    {
+      "id": 1514,
+      "name": "US 30 Daily Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "On daily bars the prior bar is the previous session, so a close above its high is exactly the documented single long breakout and the mirrored low close exits. TakeProfitPips/StopLossPips of 50 are pip distances and cannot be expressed as percentage fields; the once-per-day rule is inherent to the daily series."
+    },
+    {
+      "id": 2502,
+      "name": "21-Hour Session Breakout",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are pending stop orders bracketing the quote at the 08:00 and 22:00 session starts with positions force-closed at 21:00/23:00, so the logic is purely clock- and quote-based with no market-derived signal to translate. StepPoints, TakeProfitPoints, Volume and the hourly schedule are not DSL fields."
+    },
+    {
+      "id": 1837,
+      "name": "Bill Williams Wise Man 2",
+      "family": "momentum",
+      "entry_long": "(sma(close,5) - sma(close,34)) > 0 and roc(sma(close,5) - sma(close,34), 3) < 0",
+      "exit_long": "roc(sma(close,5) - sma(close,34), 3) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Awesome Oscillator is approximated with SMA(5)-SMA(34) on close, with the documented three-lower-bars-after-a-peak replaced by a negative three-bar change while AO stays above zero, and the mirror trough signal reverses the long. Peak/trough confirmation and the 4-hour timeframe are not available on one series; the docs specify no stops."
+    },
+    {
+      "id": 3096,
+      "name": "Alligator Simple",
+      "family": "volatility",
+      "entry_long": "ema(close,5) > ema(close,8) and ema(close,8) > ema(close,13) and roc(ema(close,5),1) > 0 and roc(ema(close,13),1) > 0",
+      "exit_long": "ema(close,5) < ema(close,8) or ema(close,8) < ema(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMMA lips/teeth/jaw are approximated by EMA(5)/EMA(8)/EMA(13) with the documented lengths, and the entry requires the lines stacked and expanding upward; the jaw/EMA crossover exit mirrors the documented flip. The 8/5/3 forward shifts, the previous-bar read and the 100-pip stop, target and trailing are unavailable."
+    },
+    {
+      "id": 782,
+      "name": "Fibonacci TP SL",
+      "family": "mean_reversion",
+      "entry_long": "close <= donchian_high(high,100) - 0.382 * (donchian_high(high,100) - donchian_low(low,100)) and close >= donchian_high(high,100) - 0.786 * (donchian_high(high,100) - donchian_low(low,100))",
+      "exit_long": "close >= donchian_high(high,100) - 0.236 * (donchian_high(high,100) - donchian_low(low,100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": 4.0,
+      "notes": "The documented 38.2/78.6 percent entry band is rebuilt from the Lookback=100 high/low range and the exit is the 23.6 percent retracement as a mean-reversion completion. The documented Take Profit % of 4 is applied as the percentage target; the ATR(14) x1.5 stop, the 10-bar trade gap and the 15% weekly cap are not percentage fields."
+    }
+  ]
+}

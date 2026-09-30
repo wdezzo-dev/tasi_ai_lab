@@ -1,0 +1,84 @@
+{
+  "strategy_id": 3263,
+  "ticker": "1835",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3263,
+    "name": "Explosion Range Expansion",
+    "family": "breakout",
+    "entry_long": "(high - low) > 1 * (donchian_high_prev(high,1) - donchian_low_prev(low,1.5)) and close > open",
+    "exit_long": "close < open and (high - low) > 1.5 * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The current candle range is compared with the previous candle's high-low and the up-body direction gives the long; 1.5x is an explicit default for the undocumented Range Ratio. Lot caps, pause seconds, hour window, one-trade-per-day and point-based stop/target/trailing are scheduling and price-scale fields."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 276,
+      "engine_win_ret": 0.07235370062781055,
+      "alpha": 0.24158446985857973,
+      "benchmark_ret": -0.16923076923076918,
+      "trades": 15,
+      "win_rate": 0.4666666666666667,
+      "sharpe": 0.368891776563567,
+      "max_drawdown": -0.2829060598929287,
+      "profit_factor": 1.238022167299381
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.06861605783782299,
+      "alpha": 0.2547600870082879,
+      "benchmark_ret": -0.1861440291704649,
+      "trades": 11,
+      "win_rate": 0.6363636363636364,
+      "sharpe": 0.587805545750006,
+      "max_drawdown": -0.08098126851412435,
+      "profit_factor": 1.9265880832589617
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 276,
+      "engine_win_ret": -0.005351240456801798,
+      "alpha": 0.1638795287739674,
+      "benchmark_ret": -0.16923076923076918,
+      "trades": 15,
+      "win_rate": 0.4666666666666667,
+      "sharpe": 0.1271064398937199,
+      "max_drawdown": -0.30641146768261374,
+      "profit_factor": 0.983951070786377
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.013867523710390905,
+      "alpha": 0.20001155288085581,
+      "benchmark_ret": -0.1861440291704649,
+      "trades": 11,
+      "win_rate": 0.6363636363636364,
+      "sharpe": 0.19575916905216292,
+      "max_drawdown": -0.11043649218648177,
+      "profit_factor": 1.2166651710628669
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

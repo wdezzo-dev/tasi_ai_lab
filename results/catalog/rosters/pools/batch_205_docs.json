@@ -1,0 +1,98 @@
+{
+ "batch_205": {
+  "strategy_ids": [
+   2630,
+   1530,
+   1894,
+   2161,
+   896,
+   4226,
+   2343,
+   1299,
+   117,
+   1331
+  ],
+  "docs": {
+   "2630": {
+    "id": 2630,
+    "name": "XROC2 VG X2",
+    "family": "trend",
+    "overview": "The XROC2 VG X2 strategy is a multi-timeframe system that combines two smoothed rate-of-change streams. The higher timeframe acts as a directional filter while the lower timeframe produces concrete entry and exit signals. The original MetaTrader 5 expert advisor relied on the custom XROC2_VG indicator with flexible smoothing options and a money management module. The StockSharp port keeps the signal logic intact and exposes the key parameters as strategy inputs.\n\nThe strategy subscribes to two candle series:\n- **Higher timeframe** (default 6 hours) – establishes the prevailing trend direction.\n- **Lower timeframe** (default 30 minutes) – generates entries and exits by monitoring how the two smoothed ROC lines cross.\n\nBoth streams share the same rate-of-change calculation mode but use individual smoothing settings. By default the strategy applies Jurik moving averages, mimicking the MQL version. Advanced smoothing types that are not directly supported by StockSharp (JurX, ParMA, T3, VIDYA, AMA with phase control) fall back to the closest available moving average implementation.",
+    "details": "",
+    "parameters": "- `HigherCandleType` – candle type for the trend filter (default 6-hour time frame).\n- `LowerCandleType` – candle type for signal generation (default 30-minute time frame).\n- `HigherSignalBar` – how many closed bars to shift when reading higher timeframe values (default 1).\n- `LowerSignalBar` – how many closed bars to shift when reading lower timeframe values (default 1).\n- `HigherRocMode` / `LowerRocMode` – rate-of-change calculation variant (`Momentum`, `RateOfChange`, `RateOfChangePercent`, `RateOfChangeRatio`, `RateOfChangeRatioPercent`).\n- `HigherFastPeriod`, `HigherFastMethod`, `HigherFastLength`, `HigherFastPhase` – fast ROC settings for the higher timeframe.\n- `HigherSlowPeriod`, `HigherSlowMethod`, `HigherSlowLength`, `HigherSlowPhase` – slow ROC settings for the higher timeframe.\n- `LowerFastPeriod`, `LowerFastMethod`, `LowerFastLength`, `LowerFastPhase` – fast ROC settings for the lower timeframe.\n- `LowerSlowPeriod`, `LowerSlowMethod`, `LowerSlowLength`, `LowerSlowPhase` – slow ROC settings for the lower timeframe.\n- `AllowBuyOpen`, `AllowSellOpen` – enable or disable opening longs and shorts.\n- `CloseBuyOnTrendFlip`, `CloseSellOnTrendFlip` – force exits when the higher timeframe changes direction.\n- `CloseBuyOnLower`, `CloseSellOnLower` – exit when the lower timeframe cross goes against the position."
+   },
+   "1530": {
+    "id": 1530,
+    "name": "Volatility Bias Model",
+    "family": "trend",
+    "overview": "Counts bullish vs bearish closes over a window and trades in the direction of the dominant bias when volatility is sufficient. Uses ATR targets and exits after a maximum number of bars.\n\n## Details\n- **Entry Criteria**: Bias ratio above `BiasThreshold` for long or below `1 - BiasThreshold` for short with range above `RangeMin`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop, take profit, or `MaxBars` reached.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BiasWindow` = 10\n  - `BiasThreshold` = 0.6\n  - `RangeMin` = 0.05\n  - `RiskReward` = 2\n  - `MaxBars` = 20\n  - `AtrLength` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Bias ratio above `BiasThreshold` for long or below `1 - BiasThreshold` for short with range above `RangeMin`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop, take profit, or `MaxBars` reached.\n- **Stops**: Yes.\n- **Default Values**:\n  - `BiasWindow` = 10\n  - `BiasThreshold` = 0.6\n  - `RangeMin` = 0.05\n  - `RiskReward` = 2\n  - `MaxBars` = 20\n  - `AtrLength` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Both\n  - Indicators: ATR, SMA, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1894": {
+    "id": 1894,
+    "name": "Liquidex Keltner",
+    "family": "trend",
+    "overview": "The **Liquidex Keltner** strategy trades breakouts of Keltner Channels with a moving average trend filter.\nTrades are allowed only during specified hours and can optionally be confirmed by RSI direction.\nStop-loss and take-profit are managed using fixed percentages.\n\n## Details\n- **Entry Criteria**:\n  - Price crosses above the upper Keltner band and closes above the moving average.\n  - Price crosses below the lower Keltner band and closes below the moving average.\n  - Candle body must exceed `RangeFilter`.\n  - When `UseRsiFilter` is enabled, RSI must be above 50 for longs and below 50 for shorts.\n  - Current time must be between `EntryHourFrom` and `EntryHourTo`, and before `FridayEndHour` on Fridays.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Yes, percentage-based via `StartProtection`.\n- **Default Values**:\n  - `MaPeriod = 7`\n  - `RangeFilter = 10m`\n  - `StopLoss = 1m`\n  - `TakeProfit = 2m`\n  - `UseKeltnerFilter = true`\n  - `KeltnerPeriod = 6`\n  - `KeltnerMultiplier = 1m`\n  - `UseRsiFilter = false`\n  - `RsiPeriod = 14`\n  - `EntryHourFrom = 2`\n  - `EntryHourTo = 24`\n  - `FridayEndHour = 22`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA, Keltner, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price crosses above the upper Keltner band and closes above the moving average.\n  - Price crosses below the lower Keltner band and closes below the moving average.\n  - Candle body must exceed `RangeFilter`.\n  - When `UseRsiFilter` is enabled, RSI must be above 50 for longs and below 50 for shorts.\n  - Current time must be between `EntryHourFrom` and `EntryHourTo`, and before `FridayEndHour` on Fridays.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit.\n- **Stops**: Yes, percentage-based via `StartProtection`.\n- **Default Values**:\n  - `MaPeriod = 7`\n  - `RangeFilter = 10m`\n  - `StopLoss = 1m`\n  - `TakeProfit = 2m`\n  - `UseKeltnerFilter = true`\n  - `KeltnerPeriod = 6`\n  - `KeltnerMultiplier = 1m`\n  - `UseRsiFilter = false`\n  - `RsiPeriod = 14`\n  - `EntryHourFrom = 2`\n  - `EntryHourTo = 24`\n  - `FridayEndHour = 22`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA, Keltner, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2161": {
+    "id": 2161,
+    "name": "Forex Fraus Slogger",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader envelope reversal system.\n\n## Logic\n\n- Calculate a 1-period SMA as the base price.\n- Upper and lower envelopes are set at `EnvelopePercent` percent from the base.\n- When price closes above the upper band and then returns below, enter a short position.\n- When price closes below the lower band and then returns above, enter a long position.\n- Positions are protected by a trailing stop.\n\n## Parameters\n\n- `EnvelopePercent` – percentage offset for envelopes (default 0.1).\n- `TrailingStop` – trailing stop distance in price units (default 0.001).\n- `TrailingStep` – minimum price move required to advance the trailing stop (default 0.0001).\n- `ProfitTrailing` – enable trailing only after position becomes profitable.\n- `UseTimeFilter` – trade only during specified hours.\n- `StartHour` – start of the trading window.\n- `StopHour` – end of the trading window.\n- `CandleType` – candle timeframe used for calculations.\n\n## Notes\n\n- The strategy uses market orders via `BuyMarket` and `SellMarket`.\n- The trailing stop exits the position when price crosses the stop level.\n",
+    "details": "",
+    "parameters": "- `EnvelopePercent` – percentage offset for envelopes (default 0.1).\n- `TrailingStop` – trailing stop distance in price units (default 0.001).\n- `TrailingStep` – minimum price move required to advance the trailing stop (default 0.0001).\n- `ProfitTrailing` – enable trailing only after position becomes profitable.\n- `UseTimeFilter` – trade only during specified hours.\n- `StartHour` – start of the trading window.\n- `StopHour` – end of the trading window.\n- `CandleType` – candle timeframe used for calculations."
+   },
+   "896": {
+    "id": 896,
+    "name": "Hulk Grid Algorithm V2",
+    "family": "trend",
+    "overview": "Grid trading strategy that places ten layered buy limit orders around a user-defined mid price. Orders increase in size closer to the mid level. The strategy exits all positions and cancels remaining orders when price hits a stop-loss below the lowest grid or a take-profit above the upper grid.\n\n## Details\n\n- **Entry Criteria**: Grid of ten limit buy orders from the lowest to highest level.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Stop-loss under lowest grid or take-profit above upper grid.\n- **Stops**: Percentage-based stop-loss and take-profit.\n- **Default Values**:\n  - `MidPrice` = 0\n  - `StopLossPercent` = 2.0\n  - `TakeProfitPercent` = 2.0\n  - `GridStep` = 200\n  - `Lot` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Grid\n  - Direction: Long\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Grid of ten limit buy orders from the lowest to highest level.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Stop-loss under lowest grid or take-profit above upper grid.\n- **Stops**: Percentage-based stop-loss and take-profit.\n- **Default Values**:\n  - `MidPrice` = 0\n  - `StopLossPercent` = 2.0\n  - `TakeProfitPercent` = 2.0\n  - `GridStep` = 200\n  - `Lot` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Grid\n  - Direction: Long\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4226": {
+    "id": 4226,
+    "name": "Viva Las Vegas",
+    "family": "volatility",
+    "overview": "Viva Las Vegas is a playful money-management expert that randomly buys or sells the attached instrument and then lets one of five staking systems decide the size of the next wager. The StockSharp port keeps the original MetaTrader behaviour by:\n- Choosing a trade direction through a pseudo-random coin toss on every new attempt.\n- Immediately placing symmetrical stop-loss and take-profit protections expressed in pips.\n- Updating the progression sequence as soon as the previous position is closed and opening a fresh position right away.\n\nThe strategy therefore stays constantly exposed (one open position at a time) and showcases how several classic betting systems behave inside StockSharp’s trading framework.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `StopTakePips` | `int` | `50` | Distance (in pips) applied to both stop-loss and take-profit orders via `StartProtection`. |\n| `BaseVolume` | `decimal` | `1` | Anchor lot size fed into the money-management progression. |\n| `MoneyManagement` | `MoneyManagementMode` | `Martingale` | Staking algorithm controlling how the next order size is calculated. |\n| `Seed` | `int` | `0` | Pseudo-random generator seed. A value of zero switches to a time-dependent seed so every run differs. |"
+   },
+   "2343": {
+    "id": 2343,
+    "name": "Night Scalper",
+    "family": "mean_reversion",
+    "overview": "This strategy trades around the evening session using Bollinger Bands. It opens positions only after a specified start hour when the band width is narrow and price breaks outside the bands.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: after `Start Hour`, price closes below the lower Bollinger Band and the band width is less than `Range Threshold`.\n  - **Short**: after `Start Hour`, price closes above the upper Bollinger Band and the band width is less than `Range Threshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed if the time falls before `Start Hour` of the next day.\n  - Protective stop loss and take profit managed by `StartProtection`.\n- **Stops**: Uses `StartProtection` with fixed stop-loss and take-profit offsets.\n- **Default Values**:\n  - `BB Period` = 40\n  - `BB Deviation` = 1\n  - `Range Threshold` = 450\n  - `Stop Loss` = 370\n  - `Take Profit` = 20\n  - `Start Hour` = 19\n  - `Candle Type` = 1h\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Short-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: after `Start Hour`, price closes below the lower Bollinger Band and the band width is less than `Range Threshold`.\n  - **Short**: after `Start Hour`, price closes above the upper Bollinger Band and the band width is less than `Range Threshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed if the time falls before `Start Hour` of the next day.\n  - Protective stop loss and take profit managed by `StartProtection`.\n- **Stops**: Uses `StartProtection` with fixed stop-loss and take-profit offsets.\n- **Default Values**:\n  - `BB Period` = 40\n  - `BB Deviation` = 1\n  - `Range Threshold` = 450\n  - `Stop Loss` = 370\n  - `Take Profit` = 20\n  - `Start Hour` = 19\n  - `Candle Type` = 1h\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Short-term",
+    "parameters": ""
+   },
+   "1299": {
+    "id": 1299,
+    "name": "Signal Tester",
+    "family": "other",
+    "overview": "This strategy alternates between a long position and flat on each completed candle. It buys when no position is open and sells on the next candle to close. Use it to verify signal delivery without relying on indicators.\n\n",
+    "details": "",
+    "parameters": ""
+   },
+   "117": {
+    "id": 117,
+    "name": "Month of Year Effect",
+    "family": "other",
+    "overview": "Testing indicates an average annual return of about 88%. It performs best in the stocks market.\n\nThe system goes long or short at the beginning of each month based on those historical averages, exiting by month-end.\n\nStops are used to protect capital if the usual seasonal behavior fails to appear.\n\n## Details\n\n- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: calendar effect triggers\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Seasonality\n  - Direction: Both\n  - Indicators: Seasonality\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1331": {
+    "id": 1331,
+    "name": "Speedometer Toolbox",
+    "family": "other",
+    "overview": "Draws an RSI-based speedometer gauge for visualization only.\n\n## Details\n\n- **Entry Criteria**: None, visualization only.\n- **Long/Short**: None.\n- **Exit Criteria**: Not applicable.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n  - `RsiLength` = 14\n  - `Radius` = 20\n- **Filters**:\n  - Category: Visualization\n  - Direction: None\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: None\n",
+    "details": "- **Entry Criteria**: None, visualization only.\n- **Long/Short**: None.\n- **Exit Criteria**: Not applicable.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n  - `RsiLength` = 14\n  - `Radius` = 20\n- **Filters**:\n  - Category: Visualization\n  - Direction: None\n  - Indicators: RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: None",
+    "parameters": ""
+   }
+  }
+ }
+}

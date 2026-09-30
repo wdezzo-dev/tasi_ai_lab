@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1145,
+  "ticker": "2381",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1145,
+    "name": "Order Block Finder",
+    "family": "other",
+    "entry_long": "crossabove(close, sma(close,3)) and roc(close,1) > 1",
+    "exit_long": "crossbelow(close, sma(close,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A bullish order block becomes a close reclaiming the short average after a run of down candles, with the confirming impulse scaled by 1 percent; Relevant Periods, Min Percent Move and Use Whole Range carry no values, so 3 bars and 1 percent are fallbacks. Open-based block boundaries and higher-timeframe confirmation are not represented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-11-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 429,
+      "engine_win_ret": 0.8977793223814285,
+      "alpha": 0.8441207857960626,
+      "benchmark_ret": 0.0536585365853659,
+      "trades": 47,
+      "win_rate": 0.6170212765957447,
+      "sharpe": 1.9406764763631035,
+      "max_drawdown": -0.2266299970887634,
+      "profit_factor": 2.072787500008523
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.4715044681435845,
+      "alpha": 0.7012236569111351,
+      "benchmark_ret": -0.2297191887675506,
+      "trades": 40,
+      "win_rate": 0.625,
+      "sharpe": 1.6042536995810612,
+      "max_drawdown": -0.06437799149331824,
+      "profit_factor": 3.1855150267137886
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.4379683950286861,
+      "alpha": 0.49549715941087724,
+      "benchmark_ret": -0.05752876438219112,
+      "trades": 17,
+      "win_rate": 0.7058823529411765,
+      "sharpe": 2.4092674491854904,
+      "max_drawdown": -0.08480097391479069,
+      "profit_factor": 5.642802751002188
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-11-07",
+        "2024-07-31"
+      ],
+      "bars_in_window": 429,
+      "engine_win_ret": 0.5006890768732981,
+      "alpha": 0.4470305402879322,
+      "benchmark_ret": 0.0536585365853659,
+      "trades": 47,
+      "win_rate": 0.5531914893617021,
+      "sharpe": 1.2511012173870248,
+      "max_drawdown": -0.26859815047023683,
+      "profit_factor": 1.5939179221050264
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.2016868455408547,
+      "alpha": 0.4314060343084053,
+      "benchmark_ret": -0.2297191887675506,
+      "trades": 40,
+      "win_rate": 0.525,
+      "sharpe": 0.796796032805813,
+      "max_drawdown": -0.09893657204792705,
+      "profit_factor": 1.738784748343666
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.32457603548488123,
+      "alpha": 0.38210479986707235,
+      "benchmark_ret": -0.05752876438219112,
+      "trades": 17,
+      "win_rate": 0.5882352941176471,
+      "sharpe": 1.8658897779418007,
+      "max_drawdown": -0.08496506213366972,
+      "profit_factor": 3.5800963093271663
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

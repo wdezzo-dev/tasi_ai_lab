@@ -1,0 +1,98 @@
+{
+ "batch_245": {
+  "strategy_ids": [
+   2092,
+   208,
+   1826,
+   2469,
+   4175,
+   461,
+   2485,
+   1016,
+   1717,
+   1513
+  ],
+  "docs": {
+   "2092": {
+    "id": 2092,
+    "name": "TEMA Custom Slope",
+    "family": "trend",
+    "overview": "Reversal strategy using slope changes of a Triple Exponential Moving Average (TEMA). The indicator is calculated on the specified timeframe and the strategy reacts to direction shifts.\n\n## How It Works\n\n- **Entry Criteria**:\n  - **Long**: TEMA was falling and turns upward.\n  - **Short**: TEMA was rising and turns downward.\n- **Exit Criteria**: reverse signal closes the existing position.\n- **Indicators**: Triple Exponential Moving Average.\n\n## Key Parameters\n\n- `TemaLength` – Number of bars for the TEMA calculation.\n- `CandleType` – Timeframe of candles used for analysis.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "208": {
+    "id": 208,
+    "name": "Stochastic Keltner",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 61%. It performs best in the crypto market.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Stoch %K < 20 && Price < Keltner lower band (oversold at lower band)\n  - **Short**: Stoch %K > 80 && Price > Keltner upper band (overbought at upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price returns to middle band\n  - **Short**: Exit short position when price returns to middle band\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `EmaPeriod` = 20\n  - `KeltnerMultiplier` = 2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Stochastic Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Stoch %K < 20 && Price < Keltner lower band (oversold at lower band)\n  - **Short**: Stoch %K > 80 && Price > Keltner upper band (overbought at upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit long position when price returns to middle band\n  - **Short**: Exit short position when price returns to middle band\n- **Stops**: Yes.\n- **Default Values**:\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `EmaPeriod` = 20\n  - `KeltnerMultiplier` = 2m\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mixed\n  - Direction: Both\n  - Indicators: Stochastic Keltner\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1826": {
+    "id": 1826,
+    "name": "MACD vs Signal",
+    "family": "trend",
+    "overview": "Strategy based on MACD line crossing the signal line.\n\nEnters long when the MACD line crosses above the signal line.\nEnters short when the MACD line crosses below the signal line.\nOptionally applies stop loss, take profit and trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `MACD crosses above Signal`\n  - Short: `MACD crosses below Signal`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite MACD crossover\n  - Risk management rules (stop loss, trailing stop, take profit)\n- **Stops**: Stop loss, take profit, trailing stop (optional)\n- **Default Values**:\n  - `FastPeriod` = 12\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `StopLoss` = 50 points\n  - `TakeProfit` = 999 points\n  - `TrailingStop` = 0 points (disabled)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Stop loss / Take profit / Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `MACD crosses above Signal`\n  - Short: `MACD crosses below Signal`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite MACD crossover\n  - Risk management rules (stop loss, trailing stop, take profit)\n- **Stops**: Stop loss, take profit, trailing stop (optional)\n- **Default Values**:\n  - `FastPeriod` = 12\n  - `SlowPeriod` = 26\n  - `SignalPeriod` = 9\n  - `StopLoss` = 50 points\n  - `TakeProfit` = 999 points\n  - `TrailingStop` = 0 points (disabled)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Stop loss / Take profit / Trailing\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2469": {
+    "id": 2469,
+    "name": "Macd Cci Lotfy",
+    "family": "trend",
+    "overview": "Strategy combining Moving Average Convergence Divergence (MACD) and Commodity Channel Index (CCI) with a scaling factor.\nA position is opened when both indicators cross extreme thresholds in the same direction.\n\nThe MACD value is multiplied by a coefficient to align the scale with CCI, allowing direct comparison with the same threshold.\nThe approach aims to capture overbought and oversold reversals.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `CCI < -Threshold` and `MACD * MacdCoefficient < -Threshold`\n  - Short: `CCI > Threshold` and `MACD * MacdCoefficient > Threshold`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal triggers reverse position\n- **Stops**: None\n- **Default Values**:\n  - `CciPeriod` = 8\n  - `FastPeriod` = 13\n  - `SlowPeriod` = 33\n  - `MacdCoefficient` = 86000\n  - `Threshold` = 85\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, CCI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `CCI < -Threshold` and `MACD * MacdCoefficient < -Threshold`\n  - Short: `CCI > Threshold` and `MACD * MacdCoefficient > Threshold`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal triggers reverse position\n- **Stops**: None\n- **Default Values**:\n  - `CciPeriod` = 8\n  - `FastPeriod` = 13\n  - `SlowPeriod` = 33\n  - `MacdCoefficient` = 86000\n  - `Threshold` = 85\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, CCI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4175": {
+    "id": 4175,
+    "name": "My System",
+    "family": "trend",
+    "overview": "The **My System Strategy** is a StockSharp port of the MetaTrader 4 expert advisor `MySystem.mq4` (directory `MQL/9601`). The original script evaluates the Bulls Power and Bears Power indicators, combines their values into a composite momentum signal, and opens reversal-style positions when momentum flips sign. This C# version reproduces the core decision process, adds explicit risk management state, and exposes every tunable constant through strategy parameters for optimization.\n\nUnlike the MQL implementation, which directly queried `iBullsPower`/`iBearsPower` with different applied prices on each bar, the StockSharp edition feeds both indicators from the configured candle series and tracks the previous composite value internally. The translation keeps the default 15-minute timeframe, the same take-profit/stop-loss distances, and the trailing exit conditions specified in the source code.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `TakeProfitPoints` | Distance to the take-profit level expressed in price steps. | `86` | Mirrors the `TakeProfit` input. Set to `0` to disable the profit target. |\n| `StopLossPoints` | Distance to the stop-loss level expressed in price steps. | `60` | Mirrors the `StopLoss` input. Set to `0` to disable the protective stop. |\n| `TrailingStopPoints` | Distance used by the trailing exit condition (price steps). | `10` | When zero the trailing logic is bypassed. |\n| `OrderVolume` | Volume submitted on every new entry. | `8.3` | Matches the `Lots` parameter in the EA. |\n| `PowerPeriod` | Period applied to both Bulls Power and Bears Power indicators. | `13` | Replicates the original period. |\n| `CandleType` | Candle series that drives the indicator calculations. | `15m` | Change to port the strategy to another timeframe. |\n\nAll parameters are declared via `Param()` to support UI binding and optimization sweeps."
+   },
+   "461": {
+    "id": 461,
+    "name": "EMA MACD RSI",
+    "family": "trend",
+    "overview": "Strategy combining trend filter with EMA, MACD crossovers, and RSI levels.\n\nIt buys when fast EMA is above slow EMA, MACD crosses above its signal line, and RSI is between RsiBuyLevel and 70. It sells when fast EMA is below slow EMA, MACD crosses below its signal line, and RSI is between 30 and RsiSellLevel.\n\n## Details\n\n- **Entry Criteria**: Trend filter with EMA, MACD crossover, RSI level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastEmaLength` = 50\n  - `SlowEmaLength` = 200\n  - `RsiLength` = 14\n  - `RsiBuyLevel` = 45m\n  - `RsiSellLevel` = 55m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Trend filter with EMA, MACD crossover, RSI level.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `FastEmaLength` = 50\n  - `SlowEmaLength` = 200\n  - `RsiLength` = 14\n  - `RsiBuyLevel` = 45m\n  - `RsiSellLevel` = 55m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2485": {
+    "id": 2485,
+    "name": "Hercules A.T.C. 2006",
+    "family": "trend",
+    "overview": "Hercules A.T.C. 2006 is a high time frame trend-following strategy that recreates the\nMetaTrader expert advisor published in 2006. The StockSharp version listens to completed\ncandles on the primary time frame, watches for a bullish/bearish crossover between a fast\nEMA(1) and a slow SMA(72), and opens trades only when additional filters confirm the\nbreakout. The strategy splits its position into two tranches with independent take-profit\nlevels and trails the stop once price advances.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TriggerPips` | 38 | Offset in pips added/subtracted to the crossover price before triggering an order. |\n| `TrailingStopPips` | 90 | Trailing stop distance in pips (0 disables trailing). |\n| `TakeProfit1Pips` | 210 | First take-profit distance in pips for scaling out half of the position. |\n| `TakeProfit2Pips` | 280 | Final take-profit distance in pips used to close the remaining position. |\n| `FastMaPeriod` | 1 | Length of the fast EMA used in the crossover detector. |\n| `SlowMaPeriod` | 72 | Length of the slow SMA baseline. |\n| `StopLossLookback` | 4 | Number of completed candles used to pull the initial stop price. |\n| `HighLowHours` | 10 | Size of the rolling window (in hours) used for the breakout filter. |\n| `BlackoutHours` | 144 | Cooldown period (in hours) after a trade closes before a new entry is allowed. |\n| `RsiLength` | 10 | RSI length on the higher time frame filter. |\n| `RsiUpper` | 55 | Minimum RSI value required to allow long entries. |\n| `RsiLower` | 45 | Maximum RSI value allowed before short entries are blocked. |\n| `DailyEnvelopePeriod` | 24 | SMA length for the daily envelope filter. |\n| `DailyEnvelopeDeviation` | 0.99 | Daily envelope deviation in percent. |\n| `H4EnvelopePeriod` | 96 | SMA length for the four-hour envelope filter. |\n| `H4EnvelopeDeviation` | 0.1 | Four-hour envelope deviation in percent. |\n| `CandleType` | 1 hour | Primary working candle type. |\n| `RsiTimeFrame` | 1 hour | Candle type used for the RSI filter. |\n| `DailyEnvelopeTimeFrame` | 1 day | Candle type used for the daily envelope. |\n| `H4EnvelopeTimeFrame` | 4 hours | Candle type used for the four-hour envelope. |"
+   },
+   "1016": {
+    "id": 1016,
+    "name": "Machine Learning SuperTrend TP SL",
+    "family": "trend",
+    "overview": "Strategy based on SuperTrend indicator with trailing take profit and stop loss.\n\nThe stop and profit levels follow the SuperTrend line, aiming to capture sustained moves while locking in gains as momentum fades.\n\n## Details\n\n- **Entry Criteria**: Price crossing the SuperTrend line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or hitting trailing take profit/stop loss.\n- **Stops**: Yes, trailing by SuperTrend.\n- **Default Values**:\n  - `AtrPeriod` = 4\n  - `AtrFactor` = 2.94m\n  - `StopLossMultiplier` = 0.0025m\n  - `TakeProfitMultiplier` = 0.022m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing the SuperTrend line.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or hitting trailing take profit/stop loss.\n- **Stops**: Yes, trailing by SuperTrend.\n- **Default Values**:\n  - `AtrPeriod` = 4\n  - `AtrFactor` = 2.94m\n  - `StopLossMultiplier` = 0.0025m\n  - `TakeProfitMultiplier` = 0.022m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, SuperTrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1717": {
+    "id": 1717,
+    "name": "Exp X2MA",
+    "family": "trend",
+    "overview": "The Exp X2MA Strategy trades turning points of a double smoothed moving average.\nPrice is first smoothed with a simple moving average and then with a Jurik moving average.\nWhen the smoothed line forms a local minimum the strategy buys and closes shorts.\nWhen it forms a local maximum the strategy sells and closes longs.\nOptional fixed stop loss and take profit protect open positions.\n\n## Details\n- **Data**: Price candles (default 4-hour).\n- **Entry Criteria**:\n  - **Long**: Previous X2MA value is lower than the older one and current value turns up.\n  - **Short**: Previous X2MA value is higher than the older one and current value turns down.\n- **Exit Criteria**: Opposite extreme, stop loss or take profit.\n- **Stops**: Fixed stop loss and take profit in points.\n- **Default Values**:\n  - `FirstMaLength` = 12\n  - `SecondMaLength` = 5\n  - `StopLossPoints` = 1000\n  - `TakeProfitPoints` = 2000\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Long & Short\n  - Indicators: SMA, JurikMovingAverage\n  - Stops: Yes\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles (default 4-hour).\n- **Entry Criteria**:\n  - **Long**: Previous X2MA value is lower than the older one and current value turns up.\n  - **Short**: Previous X2MA value is higher than the older one and current value turns down.\n- **Exit Criteria**: Opposite extreme, stop loss or take profit.\n- **Stops**: Fixed stop loss and take profit in points.\n- **Default Values**:\n  - `FirstMaLength` = 12\n  - `SecondMaLength` = 5\n  - `StopLossPoints` = 1000\n  - `TakeProfitPoints` = 2000\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Long & Short\n  - Indicators: SMA, JurikMovingAverage\n  - Stops: Yes\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1513": {
+    "id": 1513,
+    "name": "Uptrick X PineIndicators: Z-Score Flow",
+    "family": "trend",
+    "overview": "A trend-following strategy using z-score, EMA, and RSI filters.\n\n## Details\n\n- **Entry Criteria**: Z-score crosses buy/sell thresholds with trend and RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal based on selected mode\n- **Stops**: No\n- **Default Values**:\n  - `ZScorePeriod` = 100\n  - `EmaTrendLen` = 50\n  - `RsiLen` = 14\n  - `RsiEmaLen` = 8\n  - `ZBuyLevel` = -2\n  - `ZSellLevel` = 2\n  - `CooldownBars` = 10\n  - `SlopeIndex` = 30\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA, RSI, StandardDeviation\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Z-score crosses buy/sell thresholds with trend and RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal based on selected mode\n- **Stops**: No\n- **Default Values**:\n  - `ZScorePeriod` = 100\n  - `EmaTrendLen` = 50\n  - `RsiLen` = 14\n  - `RsiEmaLen` = 8\n  - `ZBuyLevel` = -2\n  - `ZSellLevel` = 2\n  - `CooldownBars` = 10\n  - `SlopeIndex` = 30\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA, RSI, StandardDeviation\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

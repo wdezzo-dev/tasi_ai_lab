@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2961,
+      "name": "XAng Zad C TM MM Rec",
+      "family": "trend",
+      "entry_long": "crossabove(close, bb_upper(close, 20))",
+      "exit_long": "crossbelow(close, bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom adaptive envelope is approximated by Bollinger bands and the documented bullish channel crossover becomes a break above the upper line, since the doc's upper-falls-below-lower wording is self-contradictory. The trading window, loss-recounter sizing and price-step stops are dropped."
+    },
+    {
+      "id": 3754,
+      "name": "OSF Countertrend",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close, 14), 50) and bars_since(crossabove(rsi(close, 14), 50)) >= 5",
+      "exit_long": "crossabove(rsi(close, 14), 50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The averaged overbought/oversold oscillator is approximated by RSI(14) around the documented 50 equilibrium level, and CooldownBars 5 is enforced with bars_since. TakeProfitPoints 150 is a point value, not a percentage, and volume-per-point sizing is not a DSL field."
+    },
+    {
+      "id": 3734,
+      "name": "MarsiEaStrategy",
+      "family": "trend",
+      "entry_long": "close > sma(close, 10) and rsi(close, 14) < 40",
+      "exit_long": "crossbelow(close, sma(close, 10)) or rsi(close, 14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The SMA trend filter with oversold RSI confirmation for longs is kept, using MaPeriod 10, RsiPeriod 14 and an oversold level of 40 as explicit defaults because the parameters carry no values. Single-position behaviour matches the engine; equity-percent sizing and pip protection are not expressible."
+    },
+    {
+      "id": 1923,
+      "name": "RoNz Rapid-Fire",
+      "family": "trend",
+      "entry_long": "close > ema(close, 20) and high > donchian_high_prev(high, 5)",
+      "exit_long": "close < ema(close, 20) or low < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule (close above the moving average with Parabolic SAR flipping below price) is approximated by price above EMA(20) plus a fresh five-bar high. MaPeriod has no documented value; averaging, tick-based stops and trailing are unavailable."
+    },
+    {
+      "id": 1498,
+      "name": "Turtle Trader",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high, 20) or close > donchian_high_prev(high, 55)",
+      "exit_long": "close < donchian_low_prev(low, 10) or low < close - 1.5 * atr(high, low, close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented S1 20-bar and S2 55-bar Donchian breakouts drive the long entry and S1LongExit 10 the exit, with the 1.5x ATR(20) stop written as a close-relative volatility exit. Pyramid additions and RiskPercent sizing are not expressible."
+    },
+    {
+      "id": 3471,
+      "name": "AddOn Trailing Stop",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Docs state the strategy does not open positions and only adjusts trailing stops for an existing net position, so there is no entry signal to translate. A never-true guard is used; the pip-based trailing start/step are order-management values."
+    },
+    {
+      "id": 3417,
+      "name": "Engulfing MFI Confirmation",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(close, open) and rsi(close, 37) < 40 and volume_ratio(volume, 37) >= 1",
+      "exit_long": "crossbelow(rsi(close, 37), 70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "crossabove(close, open) proxies the bullish engulfing (previous candle bearish, current bullish). MFI is unavailable, so the documented period 37 and 40/60/30/70 levels are applied to RSI(37) with volume_ratio(37) as the volume confirmation; strict engulfing bounds need prior-bar access."
+    },
+    {
+      "id": 1593,
+      "name": "External Level",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Docs list no entry, exit or direction; it only draws support/resistance lines when an external source equals 1 or -1, so no market-derived signal exists. A never-true guard avoids inventing one."
+    },
+    {
+      "id": 668,
+      "name": "Debug Console",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a message-queue debugging console for strategy execution with no indicators, entries or exits. A never-true guard is used so the roster carries no fabricated signal."
+    },
+    {
+      "id": 425,
+      "name": "Grid Bot",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The grid reacts to absolute BTC-specific levels (45000-48000, 10 levels) and needs grid-position state, so no single-symbol market signal survives the translation. A never-true guard is used and the levels are not carried over."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1334,
+      "name": "Squeeze Momentum Indicator",
+      "family": "trend",
+      "entry_long": "bb_upper(close,20,2) > ema(close,20) + 1.5 * atr(high,low,close,20) and roc(close,1) > 0 and close > ema(close,100)",
+      "exit_long": "roc(close,1) < 0 or close < ema(close,100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) is compared with an EMA(20) plus 1.5-ATR(20) Keltner proxy, while positive ROC and EMA(100) alignment represent momentum. Linear-regression momentum and squeeze-color state are unavailable."
+    },
+    {
+      "id": 1483,
+      "name": "Triangular Hull Moving Average",
+      "family": "trend",
+      "entry_long": "crossabove(roc(ema(close,40),2),0)",
+      "exit_long": "crossbelow(roc(ema(close,40),2),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(40) and its two-bar ROC provide a transparent proxy for the documented two-bar-lag HMA comparison. HMA itself, direction filters, and short entries are not representable."
+    },
+    {
+      "id": 2163,
+      "name": "RSI MA Trend",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30 and sma(close,10) > sma(close,30)",
+      "exit_long": "rsi(close,14) > 50 or sma(close,10) < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Because only parameter names are supplied, RSI(14), buy/sell levels 30/70, and SMA(10)/SMA(30) are explicit fallbacks; the long rule and neutral/trend-loss exit are retained. Short entries and exact optimized values are omitted."
+    },
+    {
+      "id": 1546,
+      "name": "VQZL Z-Score",
+      "family": "trend",
+      "entry_long": "zscore(close,100) > 1.64",
+      "exit_long": "zscore(close,100) < -1.64",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented threshold 1.64 and 100-bar z-score are directly represented; the opposite threshold supplies the long exit. The separate 15-bar price smoothing and short branch are omitted."
+    },
+    {
+      "id": 3399,
+      "name": "Basket Close Utility",
+      "family": "trend",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The utility has no natural signal; the documented optional test buy is represented by a bullish candle and a bearish candle exits. Portfolio-wide PnL thresholds, optional test orders, and multi-instrument flattening are unsupported."
+    },
+    {
+      "id": 1074,
+      "name": "Monthly Returns",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior two-bar extrema are a practical proxy for the documented pivot highs and lows; the opposite range break exits. Pivot confirmation bars, monthly accounting, and the short side are not expressible in the DSL."
+    },
+    {
+      "id": 4143,
+      "name": "MACD Sample 1010",
+      "family": "breakout",
+      "entry_long": "close < bb_lower(close,4,2)",
+      "exit_long": "crossabove(close,bb_mid(close,4))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source's contrarian lower-band close is translated as a long entry with Bollinger(4,2), and a middle-band recross is a reversion exit. The three-pip band buffer, pip profit/loss, lot scaling, and opposite sell side are unsupported."
+    },
+    {
+      "id": 2091,
+      "name": "Robust EA Template",
+      "family": "momentum",
+      "entry_long": "zscore(close,20) < -1.5 and rsi(close,14) < 25",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so a strongly negative z-score(20) approximates the negative CCI ranges while retaining the documented RSI(14)<25 condition. CCI/period defaults, pip stops, and the short branch are omitted."
+    },
+    {
+      "id": 3289,
+      "name": "Pending Stop Grid",
+      "family": "volatility",
+      "entry_long": "high > donchian_high_prev(high,10)",
+      "exit_long": "low < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior ten-bar range break is a stateless proxy for the two pending stop ladders; the mirrored low break exits. Ladder spacing, volume multiplication, pending-order state, and point-based protection are unsupported."
+    },
+    {
+      "id": 288,
+      "name": "CCI Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(zscore(close,20),-2) and roc(zscore(close,20),1) > 0",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI and its slope lookback are unavailable; a cross above the -2 z-score boundary with a rising normalized value proxies the reversal entry, and normalization at zero exits. The documented 2% stop is retained; short and exact slope settings are omitted."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_122": {
+  "strategy_ids": [
+   3989,
+   1036,
+   75,
+   2443,
+   2425,
+   943,
+   3501,
+   3112,
+   3462,
+   1888
+  ],
+  "docs": {
+   "3989": {
+    "id": 3989,
+    "name": "Cyberia Trader Adaptive",
+    "family": "trend",
+    "overview": "The **Cyberia Trader Adaptive Strategy** is a C# port of the classic MetaTrader \"CyberiaTrader\" expert advisor. The\nstrategy rebuilds the original probability driven core in StockSharp and augments it with optional technical filters.\nIt continuously analyses price swings to measure the odds of reversals and then optionally confirms the signal with EMA,\nMACD, CCI, ADX or fractal filters before sending orders.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle series used for calculations. |\n| `AutoSelectPeriod` | Enables the adaptive search over `MaxPeriod` to find the best sampling window. |\n| `InitialPeriod` | Fallback probability period when auto selection is disabled. |\n| `MaxPeriod` | Maximum period considered during the adaptive search (default 23 like the EA). |\n| `HistoryMultiplier` | Number of samples per period used in the statistics (default 5). |\n| `SpreadFilter` | Minimum move (in price units) required to treat a probability as \"successful\". |\n| `EnableCyberiaLogic` | Toggles the original decision tree that compares probability averages. |\n| `EnableMa`, `EnableMacd`, `EnableCci`, `EnableAdx`, `EnableFractals`, `EnableReversalDetector` | Enable individual filters. |\n| `MaPeriod` | EMA length for the moving-average filter. |\n| `MacdFast`, `MacdSlow`, `MacdSignal` | MACD configuration. |\n| `CciPeriod` | Commodity Channel Index length. |\n| `AdxPeriod` | Average Directional Index length. |\n| `FractalDepth` | Odd number of candles analysed to detect the most recent fractal swing. |\n| `ReversalIndex` | Multiplier used by the reversal detector. |\n| `BlockBuy`, `BlockSell` | Hard switches that stop opening trades in the given direction. |\n| `TakeProfitPoints`, `StopLossPoints` | Optional absolute take-profit and stop-loss distances. |"
+   },
+   "1036": {
+    "id": 1036,
+    "name": "Max Profit Min Loss Options",
+    "family": "trend",
+    "overview": "This strategy combines fast and slow moving averages with RSI, MACD and a volume filter. It enters long when trend and momentum conditions align and uses a stop loss and trailing profit for exits.\n\n## Details\n\n- **Entry criteria**:\n  - **Long**: fast MA > slow MA, MACD crosses above signal, RSI > oversold with rising pattern, volume above average.\n  - **Short**: fast MA < slow MA, MACD crosses below signal, RSI < overbought with falling pattern, volume above average.\n- **Exit**: opposite signal or stop-loss/trailing profit.\n- **Stops**: percent stop loss and trailing profit.\n- **Default values**:\n  - Fast MA length = 9\n  - Slow MA length = 21\n  - RSI length = 14\n  - Volume SMA length = 20\n  - Stop loss = 1%\n  - Trailing profit = 4%\n- **Indicators**: MA, RSI, MACD, Volume SMA\n- **Timeframe**: 5-minute candles by default\n",
+    "details": "- **Entry criteria**:\n  - **Long**: fast MA > slow MA, MACD crosses above signal, RSI > oversold with rising pattern, volume above average.\n  - **Short**: fast MA < slow MA, MACD crosses below signal, RSI < overbought with falling pattern, volume above average.\n- **Exit**: opposite signal or stop-loss/trailing profit.\n- **Stops**: percent stop loss and trailing profit.\n- **Default values**:\n  - Fast MA length = 9\n  - Slow MA length = 21\n  - RSI length = 14\n  - Volume SMA length = 20\n  - Stop loss = 1%\n  - Trailing profit = 4%\n- **Indicators**: MA, RSI, MACD, Volume SMA\n- **Timeframe**: 5-minute candles by default",
+    "parameters": ""
+   },
+   "75": {
+    "id": 75,
+    "name": "OBV Divergence",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 112%. It performs best in the forex market.\n\nFor each candle OBV is updated and compared with the prior reading. A bullish signal emerges if price makes a lower low while OBV prints a higher low. A bearish signal occurs when price rallies to a higher high but OBV lags. A moving average provides an exit point, while a percentage stop keeps losses controlled.\n\nThe approach attempts to capture mean reversion following volume exhaustion and often holds trades only until price crosses back over the average line.\n\n## Details\n\n- **Entry Criteria**: Price/OBV divergence.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing moving average or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `DivergencePeriod` = 5\n  - `MAPeriod` = 20\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: OBV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price/OBV divergence.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing moving average or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `DivergencePeriod` = 5\n  - `MAPeriod` = 20\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Divergence\n  - Direction: Both\n  - Indicators: OBV, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2443": {
+    "id": 2443,
+    "name": "Escape",
+    "family": "trend",
+    "overview": "This strategy trades based on simple moving averages of candle open prices. It compares the most recent 5-minute close with two moving averages calculated on the open price:\n\n- **Fast SMA (4 periods)** – used as threshold for short entries.\n- **Slow SMA (5 periods)** – used as threshold for long entries.\n\n## How it works\n\n1. On each finished 5-minute candle the strategy updates two SMAs of the candle open price.\n2. If there is no active position:\n   - Enter **long** when the latest close is below the slow SMA.\n   - Enter **short** when the latest close is above the fast SMA.\n3. After entering a position the strategy sets fixed stop-loss and take-profit levels measured in price units.\n4. Position is closed when either take-profit or stop-loss is reached.\n\nThe logic uses high level StockSharp API and is intended for educational purposes.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `FastLength` | Period of the fast SMA. | `4` |\n| `SlowLength` | Period of the slow SMA. | `5` |\n| `TakeProfitLong` | Take profit distance for long trades in price units. | `25` |\n| `TakeProfitShort` | Take profit distance for short trades in price units. | `26` |\n| `StopLossLong` | Stop loss distance for long trades in price units. | `25` |\n| `StopLossShort` | Stop loss distance for short trades in price units. | `3` |\n| `CandleType` | Candle type used for analysis. | `TimeFrame(5m)` |\n\nAll parameters can be optimized via the StockSharp optimizer.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `FastLength` | Period of the fast SMA. | `4` |\n| `SlowLength` | Period of the slow SMA. | `5` |\n| `TakeProfitLong` | Take profit distance for long trades in price units. | `25` |\n| `TakeProfitShort` | Take profit distance for short trades in price units. | `26` |\n| `StopLossLong` | Stop loss distance for long trades in price units. | `25` |\n| `StopLossShort` | Stop loss distance for short trades in price units. | `3` |\n| `CandleType` | Candle type used for analysis. | `TimeFrame(5m)` |\n\nAll parameters can be optimized via the StockSharp optimizer."
+   },
+   "2425": {
+    "id": 2425,
+    "name": "Adaptive CG Oscillator X2",
+    "family": "trend",
+    "overview": "Uses the Adaptive CG Oscillator on two different timeframes.\nThe higher timeframe defines the prevailing trend while the lower timeframe\nhandles actual entries and exits based on oscillator crossovers.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: oscillator crosses below its signal line while global trend is up\n  - Short: oscillator crosses above its signal line while global trend is down\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal or explicit close flags\n- **Stops**: No\n- **Default Values**:\n  - `TrendAlpha` = 0.07m\n  - `SignalAlpha` = 0.07m\n  - `TrendCandleType` = TimeSpan.FromHours(6).TimeFrame()\n  - `SignalCandleType` = TimeSpan.FromMinutes(30).TimeFrame()\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Adaptive CG Oscillator\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: oscillator crosses below its signal line while global trend is up\n  - Short: oscillator crosses above its signal line while global trend is down\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal or explicit close flags\n- **Stops**: No\n- **Default Values**:\n  - `TrendAlpha` = 0.07m\n  - `SignalAlpha` = 0.07m\n  - `TrendCandleType` = TimeSpan.FromHours(6).TimeFrame()\n  - `SignalCandleType` = TimeSpan.FromMinutes(30).TimeFrame()\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: Adaptive CG Oscillator\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "943": {
+    "id": 943,
+    "name": "IU Opening Range Breakout",
+    "family": "breakout",
+    "overview": "The IU Opening Range Breakout strategy monitors the high and low of the first bar of each session and trades breakouts in either direction. Stops use the previous bar's extreme and targets are derived from a configurable risk-to-reward ratio. All positions are closed at a user-defined end time.\n\n## Details\n\n- **Entry Criteria**:\n  - Go long when the close crosses above the first bar's high.\n  - Go short when the close crosses below the first bar's low.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop at the previous bar's low/high.\n  - Target based on risk-to-reward ratio.\n  - Close all positions at `EndTime`.\n- **Stops**: Yes\n- **Default Values**:\n  - `RiskReward` = 2.0\n  - `MaxTrades` = 2\n  - `EndTime` = 15:00\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Go long when the close crosses above the first bar's high.\n  - Go short when the close crosses below the first bar's low.\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop at the previous bar's low/high.\n  - Target based on risk-to-reward ratio.\n  - Close all positions at `EndTime`.\n- **Stops**: Yes\n- **Default Values**:\n  - `RiskReward` = 2.0\n  - `MaxTrades` = 2\n  - `EndTime` = 15:00\n  - `CandleType` = 1 minute\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3501": {
+    "id": 3501,
+    "name": "EA OBJPROP Chart ID",
+    "family": "breakout",
+    "overview": "The **EA OBJPROP Chart ID Strategy** recreates the chart-focused behavior of the original MetaTrader 5 example by displaying Donchian Channel envelopes on three synchronized timeframes. The primary chart hosts the trading timeframe while two auxiliary panels visualize the H4 and Daily context. This setup mirrors the original Expert Advisor that stacked multiple charts and indicators in a single workspace for visual analysis.",
+    "details": "",
+    "parameters": "| Parameter | Description | Category | Default |\n|-----------|-------------|----------|---------|\n| `ChannelLength` | Length of the Donchian Channel used across all subscribed timeframes. | Indicators | 22 |\n| `PrimaryCandleType` | Main timeframe used for trading and as the top chart panel. | General | 30-minute candles |\n| `H4CandleType` | Auxiliary H4 timeframe displayed in a secondary panel. | General | 4-hour candles |\n| `DailyCandleType` | Auxiliary Daily timeframe displayed in a tertiary panel. | General | 1-day candles |\n\nAll parameters are available through StockSharp parameter UI, support optimization, and may be fine-tuned without changing the code."
+   },
+   "3112": {
+    "id": 3112,
+    "name": "Exp Fine Tuning MA Candle",
+    "family": "momentum",
+    "overview": "- Converted from the MetaTrader 5 expert `Exp_FineTuningMACandle.mq5` that trades on the colour of the *Fine Tuning MA Candle* indicator.\n- Designed for StockSharp's high-level API: subscribes to a single candle series, derives indicator values through `BindEx`, and routes all orders via the `Strategy` helpers.\n- Implements the same entry permissions and conditional closes as the original expert while respecting StockSharp's asynchronous execution model.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle data type/timeframe used for indicator calculations. |\n| `Length` | Number of candles processed by the indicator's weighted window. |\n| `Rank1`, `Rank2`, `Rank3` | Power coefficients that shape the three weighting stages. |\n| `Shift1`, `Shift2`, `Shift3` | Blend factors (0–1) that mix the weighting stages with a flat component. |\n| `GapPoints` | Maximum difference between synthetic open and close that is suppressed by copying the previous close. Expressed in price steps. |\n| `SignalBar` | How many closed candles to skip before reading the indicator colour. `1` means “use the latest completed candle”. |\n| `BuyPosOpen` / `SellPosOpen` | Allow opening long/short positions. |\n| `BuyPosClose` / `SellPosClose` | Allow closing long/short positions when the opposite colour appears. |\n| `StopLossPoints` | Distance from the fill price to the protective stop. Set to `0` to disable. |\n| `TakeProfitPoints` | Distance from the fill price to the profit target. Set to `0` to disable. |\n| `PriceShiftPoints` | Vertical shift applied to the synthetic candles, expressed in price steps. |"
+   },
+   "3462": {
+    "id": 3462,
+    "name": "Spread Data Collector",
+    "family": "volatility",
+    "overview": "The **Spread Data Collector Strategy** is a StockSharp port of the MetaTrader 5 utility \"Spread data collector\" (MQL entry 33314). The original expert advisor does not place orders; instead, it listens to the bid/ask stream and counts how many ticks fall inside predefined spread ranges. Whenever the trading year changes or the expert stops, it prints a statistical summary. This C# version reproduces the same behaviour using the high-level `SubscribeLevel1()` API and exposes the range thresholds as configurable parameters.",
+    "details": "",
+    "parameters": "All inputs are expressed in **points** (MetaTrader terminology). The actual price distance is calculated as `points × Security.PriceStep`.\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `FirstBucketPoints` | 10 | Upper limit of the first spread bucket. Spreads strictly below this limit are counted in the first category. |\n| `SecondBucketPoints` | 20 | Upper limit of the second spread bucket. Spreads in `[FirstBucketPoints, SecondBucketPoints)` are counted here. |\n| `ThirdBucketPoints` | 30 | Upper limit of the third spread bucket. Spreads in `[SecondBucketPoints, ThirdBucketPoints)` increase this counter. |\n| `FourthBucketPoints` | 40 | Upper limit of the fourth spread bucket. Spreads in `[ThirdBucketPoints, FourthBucketPoints)` are recorded here. |\n| `FifthBucketPoints` | 50 | Upper limit of the fifth spread bucket. Spreads in `[FourthBucketPoints, FifthBucketPoints)` increase this counter. |\n\nAll thresholds must be strictly increasing. Attempting to start the strategy with invalid or non-positive `Security.PriceStep` values results in a runtime exception, which protects the user from inconsistent statistics."
+   },
+   "1888": {
+    "id": 1888,
+    "name": "Genie Stoch RSI",
+    "family": "mean_reversion",
+    "overview": "This strategy trades using a combination of the Relative Strength Index (RSI) and the Stochastic Oscillator.\nIt waits for the market to reach oversold or overbought zones and then looks for a cross between the Stochastic main\nline and its signal line to confirm the reversal. A trailing stop and a fixed take profit are applied for risk\nmanagement.\n\n## Logic\n\n1. Subscribe to candles of the selected timeframe.\n2. Calculate RSI with a configurable period.\n3. Calculate Stochastic Oscillator with configurable %K, %D and slowing periods.\n4. For a long entry:\n   - RSI is below the oversold level.\n   - %K is below the Stochastic oversold level.\n   - Previous %K is below previous %D and current %K crosses above current %D.\n5. For a short entry:\n   - RSI is above the overbought level.\n   - %K is above the Stochastic overbought level.\n   - Previous %K is above previous %D and current %K crosses below current %D.\n6. Position size is taken from the strategy `Volume` property. Existing positions are reversed when an opposite signal\n   appears.\n7. `StartProtection` enables a trailing stop and take profit measured in price points.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `RsiPeriod` | RSI calculation length. |\n| `KPeriod` | Stochastic %K period. |\n| `DPeriod` | Stochastic %D period. |\n| `Slowing` | Stochastic slowing value. |\n| `RsiOverbought` | RSI level considered overbought. |\n| `RsiOversold` | RSI level considered oversold. |\n| `StochOverbought` | Stochastic level considered overbought. |\n| `StochOversold` | Stochastic level considered oversold. |\n| `TakeProfit` | Take profit distance in price points. |\n| `TrailingStop` | Trailing stop distance in price points. |\n| `CandleType` | Candle type and timeframe to analyze. |\n\n## Notes\n\nThe strategy processes only finished candles and ignores any signal until all indicators are fully formed.\nIt is intended as an educational example and should be tested thoroughly before live trading.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `RsiPeriod` | RSI calculation length. |\n| `KPeriod` | Stochastic %K period. |\n| `DPeriod` | Stochastic %D period. |\n| `Slowing` | Stochastic slowing value. |\n| `RsiOverbought` | RSI level considered overbought. |\n| `RsiOversold` | RSI level considered oversold. |\n| `StochOverbought` | Stochastic level considered overbought. |\n| `StochOversold` | Stochastic level considered oversold. |\n| `TakeProfit` | Take profit distance in price points. |\n| `TrailingStop` | Trailing stop distance in price points. |\n| `CandleType` | Candle type and timeframe to analyze. |"
+   }
+  }
+ }
+}

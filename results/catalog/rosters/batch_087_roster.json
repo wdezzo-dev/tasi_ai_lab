@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1562,
+      "name": "XAU/USD ADX Bollinger",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2) and adx(high,low,close,14) > 25",
+      "exit_long": "close < bb_mid(close,20) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) and ADX(14)>25 provide explicit fallback filters for the undocumented band/strength settings. The gold-specific symbol, opposite-band side, and any unlisted exit parameters are not represented."
+    },
+    {
+      "id": 1384,
+      "name": "Supertrend Target Stop",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,14) + 3 * atr(high,low,close,14))",
+      "exit_long": "crossbelow(close,ema(close,14) + 3 * atr(high,low,close,14))",
+      "stop_loss_pct": 0.01,
+      "take_profit_pct": 0.01,
+      "notes": "EMA(14) plus 3 ATR(14) is a SuperTrend-line proxy, with the documented fixed 0.01% stop and target retained. The exact SuperTrend state, ATR multiplier implementation, and opposite side are approximated."
+    },
+    {
+      "id": 990,
+      "name": "Long and Short with Multi Indicators",
+      "family": "trend",
+      "entry_long": "rsi(close,5) > 44 and rsi(close,5) < 70 and roc(close,4) > 0 and close > sma(close,24)",
+      "exit_long": "roc(close,4) < 0 or close < sma(close,24)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(5) range, ROC(4), and SMA(24) retain the documented long momentum conditions. TEMA, bearish MA-duration filtering, and the ATR(14) trailing stop are not directly expressible; the short branch is omitted."
+    },
+    {
+      "id": 167,
+      "name": "Keltner Rsi",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) - 2 * atr(high,low,close,14) and rsi(close,14) < 30",
+      "exit_long": "crossabove(close,ema(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "EMA(20) plus/minus 2 ATR(14) approximates Keltner bands and preserves the lower-band/RSI(14)<30 long setup. The explicit 2% stop is retained; the exact channel and short branch are not modeled."
+    },
+    {
+      "id": 3915,
+      "name": "TRAYLERv",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This legacy trade manager explicitly does not open positions, so the impossible guard preserves that behavior. Fractal stop/target maintenance, pending-order cleanup, and manual-position state are outside the indicator DSL."
+    },
+    {
+      "id": 2862,
+      "name": "AIS2 Trading Robot",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and adx(high,low,close,14) > 20",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break with ADX(14)>20 approximates the primary-timeframe directional breakout. Secondary-timeframe trailing, range factors, portfolio budgets, and tick buffers cannot be represented."
+    },
+    {
+      "id": 944,
+      "name": "IU Range Trading",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and high - low <= 1.75 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 10-bar high break while the bar stays within 1.75 ATR(14) approximates the narrow-range breakout condition. The ATR target factor 2.0 is dynamic, and trailing-stop state cannot be encoded."
+    },
+    {
+      "id": 3432,
+      "name": "DreamBot",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,13),0) and adx(high,low,close,14) > 20",
+      "exit_long": "crossbelow(roc(close,13),0) or adx(high,low,close,14) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(13) zero-line direction and ADX(14)>20 approximate the Force Index bullish threshold and momentum confirmation. Force Index smoothing, explicit point stops/targets, and trailing-start state are not available."
+    },
+    {
+      "id": 1893,
+      "name": "EA Template",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The latest completed candle body supplies the documented non-reversed long/short direction, with the opposite body as the signal exit. Reverse mode, spread gate, money management, and point protection require unsupported state."
+    },
+    {
+      "id": 3388,
+      "name": "CBC_WS_RSI",
+      "family": "mean_reversion",
+      "entry_long": "close > open and roc(close,1) > 0 and roc(close,2) > 0 and rsi(close,37) < 40",
+      "exit_long": "crossabove(rsi(close,37),70) or crossbelow(rsi(close,37),30)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Three bullish ROC steps approximate Three White Soldiers while RSI(37)<40 retains the long confirmation ceiling. The documented 1% stop and 2% target are retained; exact candlestick detection and short permissions are omitted."
+    }
+  ]
+}

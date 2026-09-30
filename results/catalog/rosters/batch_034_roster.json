@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3256,
+      "name": "FiboChannel Line",
+      "family": "trend",
+      "entry_long": "ema(close,6) > ema(close,85) and roc(close,14) > 0.3 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,6) < ema(close,85) or roc(close,14) < 0 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "EMA(6)/EMA(85) proxy the documented LWMA stack, ROC(14)>0.3 approximates the momentum threshold, and MACD(12,26,9) is retained. The documented 1% stop and 2% target are kept; channel slope, higher timeframe, and equity controls are omitted."
+    },
+    {
+      "id": 3478,
+      "name": "Dual Stoploss",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a stop-management utility that explicitly opens no positions and requires broker stop levels and existing orders. An impossible negative-price guard avoids fabricating a long entry."
+    },
+    {
+      "id": 1465,
+      "name": "Trend Following KNN",
+      "family": "trend",
+      "entry_long": "roc(close,20) > 0 and close > sma(close,50)",
+      "exit_long": "roc(close,20) < 0 or close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(20)>0 is the permitted proxy for positive average price change, and the documented SMA(50) filter is retained. The inverse change/MA condition exits; the short side and machine-learning label are omitted."
+    },
+    {
+      "id": 3973,
+      "name": "DeMark Lines",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,2) and close > sma(close,21)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior two-bar high break above SMA(21) is a rolling trendline-breakout proxy; the prior low break exits. Validated DeMark pivots, trendline slopes, pip buffers, and alerts are unavailable."
+    },
+    {
+      "id": 1324,
+      "name": "Smoothed Heiken-Ashi",
+      "family": "trend",
+      "entry_long": "close > open and close > ema(close,40) and roc(close,1) > 0",
+      "exit_long": "close < open and roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish candle above EMA(40) with positive one-bar ROC proxies a smoothed bullish Heiken-Ashi body expanding. The custom HA candle and previous-body comparison are unavailable, while the bearish body serves as exit."
+    },
+    {
+      "id": 938,
+      "name": "IU Break of Any Session",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break is a rolling session-range breakout proxy, with the opposite low break as exit. Session clocks, entry-bar stop, risk/reward, and scheduled closing are not expressible."
+    },
+    {
+      "id": 925,
+      "name": "Inside Candle",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1) and low > donchian_low_prev(low,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Breaking above the prior candle high while holding above its low is the bullish breakout proxy for an inside-candle mother range. The mother-candle state, configurable risk/reward, and opposite breakout are unavailable."
+    },
+    {
+      "id": 2316,
+      "name": "Polarized Fractal Efficiency",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(close,2),0) and roc(close,1) > roc(close,2)",
+      "exit_long": "crossbelow(roc(close,1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "PFE is unavailable, so a positive two-bar ROC cross with one-bar acceleration proxies the documented three-bar efficiency reversal. The short branch, configurable PFE period, and point-based protection are omitted."
+    },
+    {
+      "id": 3960,
+      "name": "Pendulum Swing",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rolling range breakout is a stateless proxy for the pending buy/sell-stop swing; the opposite range break exits. Dynamic daily range, martingale levels, equity targets, and pip management are unsupported."
+    },
+    {
+      "id": 198,
+      "name": "Vwap Macd",
+      "family": "mean_reversion",
+      "entry_long": "close > sma(close,20) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or crossbelow(close,sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "SMA(20) is the explicit value-line proxy for VWAP, with documented MACD(12,26,9) alignment; the opposite MACD or value cross exits. The documented 2% stop is retained, while VWAP and ATR-based risk are unavailable."
+    }
+  ]
+}

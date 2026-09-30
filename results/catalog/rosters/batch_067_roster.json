@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3786,
+      "name": "Martingail Expert",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 50 and close > ema(close,20)",
+      "exit_long": "rsi(close,14) < 50 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) and EMA(20) are explicit fallbacks for the undocumented Stochastic timing levels and trend confirmation. Geometric ladders, point spacing/targets, and loss-dependent volume cannot be represented in the stateless one-position simulator."
+    },
+    {
+      "id": 3554,
+      "name": "iVIDyA Simple",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,12))",
+      "exit_long": "crossbelow(close,ema(close,12))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12) is a static proxy for momentum-adaptive VIDYA, preserving its documented base period while dropping the CMO adaptation. The one-bar shift, 150/460-point protection, and intraday timeframe cannot be expressed."
+    },
+    {
+      "id": 113,
+      "name": "Bullish Abandoned Baby",
+      "family": "trend",
+      "entry_long": "close > open and close > donchian_high_prev(high,2) and close - low >= 0.5 * atr(high,low,close,14)",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A full bullish candle breaking the prior two-bar high approximates the third-candle gap and doji reversal; the ATR body filter is a fallback. Exact three-candle gap/doji geometry and opposite-pattern handling are unavailable, while 2% is documented."
+    },
+    {
+      "id": 1372,
+      "name": "Supertrend And MACD",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,200) and close > ema(close,20) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or close < ema(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20/200) is an explicit SuperTrend direction proxy and MACD(12,26,9) retains the documented confirmation/exit. ATR(10) factor 3 and ten-bar highest/lowest trailing stops are not fixed percentage fields."
+    },
+    {
+      "id": 1734,
+      "name": "MACD Cross AUDUSD D1",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The standard MACD(12,26,9) bullish cross and bearish exit are retained; the docs do not give indicator lengths. The 06:00-14:00 gate, 40-pip stop, and 3R pip target cannot be represented as fixed percentage exits."
+    },
+    {
+      "id": 2814,
+      "name": "Maximus vX Lite",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,40) and atr(high,low,close,14) < sma(atr(high,low,close,14),20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 40-bar high break with ATR(14) below its 20-bar mean approximates the consolidation-zone breakout; lengths are fallbacks where the source defaults concern point offsets. Dynamic boxes, point targets, pyramiding, risk sizing, and profit lock are unsupported."
+    },
+    {
+      "id": 1110,
+      "name": "Narrow Range",
+      "family": "breakout",
+      "entry_long": "high - low < sma(high - low,4) and close > donchian_high_prev(high,4)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Current range below its four-bar mean approximates narrowness relative to the Length=4 reference, and a prior four-bar high break is the long trigger. The documented 0.35 stop applies to reference range rather than entry price, so it is not a fixed percentage field."
+    },
+    {
+      "id": 1880,
+      "name": "Genie Pivot",
+      "family": "momentum",
+      "entry_long": "roc(close,7) < 0 and low < donchian_low_prev(low,7) and close > open",
+      "exit_long": "roc(close,7) > 0 or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Seven-bar negative momentum, a new seven-bar low, and a bullish close approximate the decreasing-lows Genie Pivot. Exact higher-low/prior-high structure, point target/trailing, and loss-based volume reduction are unavailable."
+    },
+    {
+      "id": 2672,
+      "name": "Open Two Pending Orders",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,10) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close above the prior ten-bar high with average volume proxies the buy-stop leg; ten bars and volume threshold are fallbacks. Simultaneous pending orders, cancellation, margin sizing, and 100/300-point protection plus trailing are unsupported."
+    },
+    {
+      "id": 2363,
+      "name": "Rock Trader Neuro",
+      "family": "mean_reversion",
+      "entry_long": "zscore(bb_upper(close,20,2) - bb_lower(close,20,2),7) < 0 and close < bb_mid(close,20)",
+      "exit_long": "zscore(bb_upper(close,20,2) - bb_lower(close,20,2),7) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Below-average normalized Bollinger width below the middle band proxies a negative neuron output; Bollinger(20,2) and seven observations preserve its feature window. Fixed seven-neuron weights/tanh and 30/100-point protection are not DSL features."
+    }
+  ]
+}

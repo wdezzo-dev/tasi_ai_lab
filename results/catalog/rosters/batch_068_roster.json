@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1093,
+      "name": "Multi-Factor",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) < 70 and close > sma(close,50) and sma(close,50) > sma(close,200)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or close < sma(close,50) or sma(close,50) < sma(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented MACD(12,26,9), RSI(14), and SMA(50/200) long filters are exact, with factor failure as exit. ATR(14) 2x/3x stops and targets are dynamic and cannot be encoded as fixed percentages."
+    },
+    {
+      "id": 3506,
+      "name": "Sample Check Pending Order",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior ten-bar high break is a fallback for the continuously refreshed buy-stop; no values are documented for the source's levels. Bid/ask pending orders, margin checks, expiration, and point stop/target are outside the candle DSL."
+    },
+    {
+      "id": 3805,
+      "name": "Triple SMA Crossover",
+      "family": "trend",
+      "entry_long": "sma(close,5) > sma(close,20) > sma(close,50) and sma(close,5) - sma(close,20) > 0.1 * std(close,20)",
+      "exit_long": "crossbelow(sma(close,5),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(5/20/50) ordering is an explicit fallback because the docs provide only names; a spread above 0.1 standard deviation proxies the unspecified SMA-spread filter. The bearish fast/medium cross exits, and no stops are documented."
+    },
+    {
+      "id": 356,
+      "name": "Bitcoin Intraday Seasonality",
+      "family": "trend",
+      "entry_long": "close < open and roc(close,4) < 0",
+      "exit_long": "close > open or roc(close,4) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Four-bar negative momentum approximates the documented UTC 00:00-03:59 holding window on the available daily bars. Exact clock hours, minimum USD sizing, hourly data, and Bitcoin-specific selection cannot be represented."
+    },
+    {
+      "id": 1094,
+      "name": "Multi Indicator Swing",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and volume_ratio(volume,20) > 1 and close > ema(close,20) and close > open",
+      "exit_long": "adx(high,low,close,14) < 25 or close < ema(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "EMA(20) is a SuperTrend-direction proxy, while documented ADX(14)>25 and above-average volume supply confirmation. PSAR and volume delta are unavailable; StopLossPercent=2 and TakeProfitPercent=4 are retained exactly."
+    },
+    {
+      "id": 601,
+      "name": "Captain Backtest Model",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and close > open",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A retracement confirmed by a bullish close above the prior ten-bar high approximates the morning-bias entry; ten bars are a fallback. Session windows, morning-range state, and the 25/75-point risk-reward exits are unavailable."
+    },
+    {
+      "id": 3236,
+      "name": "2DLimits",
+      "family": "breakout",
+      "entry_long": "roc(close,2) > 0 and close > donchian_high_prev(high,2)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Positive two-bar momentum approximates a rising daily stair-step, and a break above the prior daily high is the long stop-order trigger. Exact last-two-day OHLC state, midpoint stop, range target, and bid/ask arming are unavailable."
+    },
+    {
+      "id": 1245,
+      "name": "Resampling Reverse Engineering Bands",
+      "family": "momentum",
+      "entry_long": "crossbelow(close,bb_lower(close,20,2))",
+      "exit_long": "crossabove(close,bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) low/mid bands proxy the reverse-engineered RSI price levels; 20 bars and deviation 2 are fallbacks. The actual RRSI thresholds, resampled RSI state, and opposite upper-band exit are not directly available; no stops are documented."
+    },
+    {
+      "id": 3442,
+      "name": "Specific Day & Time Orders",
+      "family": "volatility",
+      "entry_long": "close > 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first valid positive-price bar approximates one scheduled long market order, with an impossible negative-price exit. Timestamps, stop/limit placement, pending expiry, sizing, trailing, break-even, and point protection require unsupported time/order state."
+    },
+    {
+      "id": 3724,
+      "name": "RM Stochastic Band",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 20 and close < bb_lower(close,20,2)",
+      "exit_long": "rsi(close,14) > 80 or close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) at the documented 20/80 levels plus Bollinger(20,2) extremes proxy agreement across the three stochastic timeframes. Actual stochastic lines, multi-timeframe aggregation, margin/spread filters, and ATR(14) 1.5x/3x protection are unsupported."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_248": {
+  "strategy_ids": [
+   342,
+   4178,
+   3412,
+   3833,
+   2431,
+   3770,
+   3305,
+   4048,
+   3299,
+   2770
+  ],
+  "docs": {
+   "342": {
+    "id": 342,
+    "name": "Donchian Sentiment Spike",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 115%. It performs best in the stocks market.\n\nSignals trigger when Donchian confirms trend changes on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like DonchianPeriod, SentimentPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `DonchianPeriod = 20`\n  - `SentimentPeriod = 20`\n  - `SentimentMultiplier = 2m`\n  - `StopLoss = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Donchian, Spike\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `DonchianPeriod = 20`\n  - `SentimentPeriod = 20`\n  - `SentimentMultiplier = 2m`\n  - `StopLoss = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Donchian, Spike\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4178": {
+    "id": 4178,
+    "name": "MARE5.1 Shift Crossover",
+    "family": "trend",
+    "overview": "The MARE5.1 strategy is a C# port of the MetaTrader 4 expert advisor `MARE5_1.mq4`. The original robot traded on M1 data and relied on a pair of simple moving averages evaluated at three different historical offsets to detect regime changes. This StockSharp implementation reproduces the behaviour with configurable parameters, attaches MetaTrader-style protective orders, and exposes a detailed trading window filter.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `TradeVolume` | Lot size for market entries. | `7.8` | Rounded according to exchange rules by the StockSharp connector. |\n| `FastPeriod` | Period of the fast simple moving average. | `13` | Controls how quickly the strategy reacts to price changes. |\n| `SlowPeriod` | Period of the slow simple moving average. | `55` | Provides the longer-term trend reference. |\n| `MovingAverageShift` | Forward shift applied to both moving averages. | `2` | Matches the `ma_shift` parameter of the MQL `iMA` function. |\n| `StopLossPoints` | Protective stop distance in MetaTrader points. | `80` | Converted to an absolute offset through the instrument `PriceStep`. |\n| `TakeProfitPoints` | Profit target distance in MetaTrader points. | `110` | Set to `0` to disable the take-profit. |\n| `TimeOpenHour` | Beginning of the allowed trading window (hour, 0–23). | `8` | Evaluated against the candle close time. |\n| `TimeCloseHour` | End of the allowed trading window (hour, 0–23). | `14` | Can be lower than `TimeOpenHour` to span midnight. |\n| `CandleType` | Timeframe used for candle subscription. | `1 minute` | Any other `TimeFrame()` value may be provided. |"
+   },
+   "3412": {
+    "id": 3412,
+    "name": "Range Breakout Weekly",
+    "family": "trend",
+    "overview": "The **Range Breakout Weekly Strategy** is a StockSharp high-level API conversion of the MetaTrader 5 expert advisor `RangeBreakout.mq5`. The system prepares breakout levels once per week using a configurable weekday and hour, then opens a single trade when price breaks above or below the calculated range. Martingale-style position sizing and loss-compensation logic mirror the original script, while the implementation leverages StockSharp subscriptions for candles, Level 1 quotes, and indicator binding.\n\n## Trading Logic\n\n1. **Weekly preparation window.** At the close of the specified hourly candle on the configured weekday, the strategy records the candle's close as the reference price and transitions from *Standby* to *Setup* phase.\n2. **Range calculation.**\n   - The primary range is derived from a 20-period daily Average True Range (ATR). The ATR value is multiplied by `ATR Percentage` and normalised to the instrument's tick size.\n   - If ATR data is missing, the algorithm falls back to multiplying the current ask price by `Price Percentage`.\n3. **Protective levels.**\n   - Upper and lower breakout triggers are placed one range above and below the reference close.\n   - Take-profit and stop-loss offsets are computed as percentages of the range. When compensation is active after a loss, the take-profit is replaced by the accumulated compensation offset and the stop-loss is widened by the same amount, just like the MetaTrader logic.\n4. **Execution.**\n   - While in *Setup*, the strategy listens to Level 1 quotes. A break above the upper trigger enters a long position; a drop below the lower trigger opens a short position. Orders are sent as market orders with tick-aligned price checks.\n   - Once a position is active (*Trade* phase), Level 1 quotes are continuously monitored. Hitting the protective stop or target closes the position with a market order.\n5. **Martingale recovery.**\n   - After a losing exit, the next trade size doubles and the loss offset is added to the ",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Trading Day` | Monday | Weekday used to measure the breakout reference candle. Weekend selections are automatically remapped to Monday, matching the original warning behaviour. |\n| `Start Hour` | 0 | Hour (0-23) whose closing candle serves as the reference. Optimisable to cover various session openings. |\n| `Price Percentage` | 1.0 | Fallback percentage of the ask price used to compute the range when ATR data is missing. |\n| `ATR Percentage` | 100 | Multiplier applied to the daily ATR value to obtain the breakout range. |\n| `Take Profit Percentage` | 100 | Percentage of the range added beyond the entry to define the take-profit price. Overridden by the compensation buffer after consecutive losses. |\n| `Stop Loss Percentage` | 100 | Percentage of the range subtracted from the entry to set the stop-loss price. The compensation buffer widens this distance after losses. |\n| `Base Volume` | 0.1 | Initial trading volume before martingale scaling. The value is automatically rounded to the instrument's volume step and clamped by minimum/maximum constraints. |\n| `ATR Period` | 20 | Number of daily candles supplied to the ATR indicator. |\n| `Hour Candle Type` | 1-hour time frame | Candle subscription used for detecting the preparation window. |\n| `ATR Candle Type` | 1-day time frame | Candle subscription that feeds the ATR indicator. |"
+   },
+   "3833": {
+    "id": 3833,
+    "name": "ENewsLuckyw",
+    "family": "trend",
+    "overview": "The **ENewsLuckyw Strategy** is a time-based breakout system converted from the MetaTrader expert advisor *e-News-Lucky$*. At a scheduled time it submits buy-stop and sell-stop orders around the current price, continuously recenters them while both orders are active, and performs position management that mimics the original MQL logic. Protective exits, optional trailing, and an end-of-day cleanup complete the workflow.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Volume` | Order volume in lots used for both stop orders. |\n| `StopLossPips` | Protective stop distance. Zero disables the stop. |\n| `TakeProfitPips` | Optional take-profit distance. Zero disables the target. |\n| `DistancePips` | Offset from the current price for the breakout stop orders. |\n| `UseTrailing` | Enables stop trailing once the position is open. |\n| `ProfitTrailing` | Requires unrealized profit to exceed the trailing distance before moving the stop. |\n| `TrailingStopPips` | Distance between price and the trailing stop. |\n| `TrailingStepPips` | Minimal improvement needed before the trailing stop is updated again. |\n| `SetOrdersTime` | Time of day when the straddle is placed. |\n| `DeleteOrdersTime` | Time of day for cancelling orders and closing positions. |\n| `CandleType` | Candle subscription used for time tracking and order maintenance. |"
+   },
+   "2431": {
+    "id": 2431,
+    "name": "Expert MACD EURUSD 1 Hour",
+    "family": "trend",
+    "overview": "This strategy is a C# translation of the MetaTrader 5 expert advisor **Expert MACD EURUSD 1 Hour**. It trades on one-hour candles using the MACD indicator with short, long, and signal periods of **5 / 15 / 3**. The strategy looks for a strong momentum shift where the MACD main line crosses above or below the zero level while the signal line confirms the move. A trailing stop is used to protect open positions, and trades are closed when the MACD slope turns against the current position.",
+    "details": "",
+    "parameters": "- `FastLength` – fast EMA period for MACD (default: 5).\n- `SlowLength` – slow EMA period for MACD (default: 15).\n- `SignalLength` – signal line period for MACD (default: 3).\n- `TrailingPoints` – trailing stop distance in price points (default: 25).\n- `CandleType` – timeframe of candles (default: 1 hour).\n- Strategy `Volume` property controls the order size."
+   },
+   "3770": {
+    "id": 3770,
+    "name": "Vlado Williams %R Threshold",
+    "family": "trend",
+    "overview": "The **Vlado Williams %R Threshold Strategy** is a direct conversion of the MetaTrader 4 expert advisor `Vlado_www_forex-instruments_info.mq4`. The original robot trades a single Williams %R oscillator and flips its market exposure whenever the indicator crosses a user-defined level. This StockSharp port reproduces the same regime-switching behaviour while exposing each tunable value as a strategy parameter for optimisation and UI control.\n\n### Key Concepts\n- Trades the direction of the Williams %R oscillator relative to a threshold (default `-50`).\n- Holds at most one market position at a time and reverses only after the previous trade is closed.\n- Optional risk-based position sizing that mimics the MetaTrader money management formula `AccountFreeMargin * MaximumRisk / price`.\n- Works with any candle timeframe through the `CandleType` parameter (default 15-minute bars).",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | 15-minute timeframe | Timeframe for both signal calculation and order triggers. |\n| `WprLength` | `int` | 100 | Lookback period of the Williams %R oscillator. |\n| `WprLevel` | `decimal` | `-50` | Threshold separating bullish and bearish regimes. |\n| `UseRiskMoneyManagement` | `bool` | `false` | Toggles risk-based position sizing. |\n| `MaximumRiskPercent` | `decimal` | `10` | Percentage of portfolio equity deployed per trade when risk management is on. |\n\n> **Tip:** Combine the strategy with `StartProtection()` or external risk controls if you need automatic stop-loss handling. The original EA also relied on manual supervision and did not define hard stops."
+   },
+   "3305": {
+    "id": 3305,
+    "name": "MA Crossover ADX",
+    "family": "trend",
+    "overview": "The **MA Crossover ADX** strategy is a direct port of the MetaTrader expert advisor `MA_Crossover_ADX`. It combines the slope of an exponential moving average (EMA) with confirmation from the Average Directional Index (ADX) to participate only in trending environments. The StockSharp implementation processes completed candles from a configurable timeframe and synchronizes EMA and ADX updates before issuing signals. Protective stop loss and take profit distances are automatically attached to every new position using the strategy's point-based risk parameters.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `AdxPeriod` | 33 | Number of bars used when calculating ADX. |\n| `AdxThreshold` | 22 | Minimum ADX main line value required to validate a trend. |\n| `EmaPeriod` | 39 | Length of the EMA used for slope detection. |\n| `StopLossPoints` | 400 | Stop loss distance measured in instrument points (multiplied by `PriceStep`). |\n| `TakeProfitPoints` | 900 | Take profit distance measured in instrument points. |\n| `TradeVolume` | 0.1 | Volume submitted with each new market order. |\n| `CandleType` | 1-hour time frame | Candle type powering all indicator calculations. |"
+   },
+   "4048": {
+    "id": 4048,
+    "name": "Burg Extrapolator Forecast",
+    "family": "trend",
+    "overview": "The Burg Extrapolator Strategy is a StockSharp port of the MetaTrader 4 expert advisor \"Burg Extrapolator\". The original system fits a Burg autoregressive (AR) model to a sliding window of open prices (or their momentum/ROC transforms) and projects a path of future prices. Trading decisions are derived from the most extreme forecast values: if the predicted excursion in one direction is large enough the strategy either stacks new positions or liquidates exposure in the opposite direction. The conversion keeps the same modelling blocks while mapping position management and money management to StockSharp primitives.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 30-minute candles | Primary timeframe processed by the strategy. |\n| `MaxRisk` | 0.5 | Risk multiplier used when stacking multiple trades. |\n| `MaxTrades` | 5 | Maximum number of simultaneous trades per direction. |\n| `MinProfit` | 160 | Minimum predicted profit (in points) required to open new trades. |\n| `MaxLoss` | 130 | Maximum tolerated forecasted loss (in points) before closing trades. |\n| `TakeProfit` | 0 | Optional fixed take-profit distance in points (0 disables it). |\n| `StopLoss` | 180 | Optional fixed stop-loss distance in points (0 disables it). |\n| `TrailingStop` | 10 | Trailing stop distance in points, active only when `StopLoss > 0`. |\n| `PastBars` | 200 | Number of historical candles used by the Burg model. |\n| `ModelOrder` | 0.37 | Fraction of `PastBars` converted into the Burg order. |\n| `UseMomentum` | true | Apply logarithmic momentum transform to input data. |\n| `UseRateOfChange` | false | Apply percentage rate of change (ignored when momentum is enabled). |\n\nAll parameters are `StrategyParam<T>` instances and can be optimised or adjusted in the StockSharp Designer."
+   },
+   "3299": {
+    "id": 3299,
+    "name": "JB",
+    "family": "trend",
+    "overview": "## Summary\n\nThe JB strategy originates from an fxDreema expert advisor that combines long-term trend filters, momentum confirmation and volatility breakouts:\n\n- **Trend filter:** require the previous candle close to stay above (long) or below (short) a 100-period simple moving average.\n- **Momentum filter:** confirm direction with a 100-period Force Index (positive for longs, negative for shorts).\n- **Volatility trigger:** enter when the previous close pierces the corresponding Bollinger Band (20-period, 2.0 deviation).\n- **Position management:** increase the order volume with a martingale-style multiplier after a losing cycle and reset to the base size after profitable cycles.\n- **Exit rule:** close all open positions once the average unrealized profit per contract reaches a configurable money target.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `SmaPeriod` | Length of the SMA trend filter. Default: 100. |\n| `ForcePeriod` | Length of the Force Index indicator. Default: 100. |\n| `BollingerPeriod` | Bollinger Bands length. Default: 20. |\n| `BollingerDeviation` | Standard deviation multiplier for Bollinger Bands. Default: 2.0. |\n| `BaseVolume` | Initial order volume before martingale adjustments. Default: 0.1. |\n| `LossMultiplier` | Multiplier applied to the next order volume after a losing cycle. Default: 1.55. |\n| `AverageProfitTarget` | Average unrealized profit per contract required to close all positions. Default: 2.8. |\n| `CandleType` | Candle type used for calculations (defaults to 1-minute time frame). |\n\n## Signals\n\n### Long entry\n1. Previous candle close is below or equal to the lower Bollinger Band.\n2. Previous close is greater than the 100-period SMA (trend pointing up).\n3. Force Index value is positive.\n\n### Short entry\n1. Previous candle close is above or equal to the upper Bollinger Band.\n2. Previous close is lower than the 100-period SMA (trend pointing down).\n3. Force Index value is negative.\n\n### Exits\n- When the average unrealized profit p",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `SmaPeriod` | Length of the SMA trend filter. Default: 100. |\n| `ForcePeriod` | Length of the Force Index indicator. Default: 100. |\n| `BollingerPeriod` | Bollinger Bands length. Default: 20. |\n| `BollingerDeviation` | Standard deviation multiplier for Bollinger Bands. Default: 2.0. |\n| `BaseVolume` | Initial order volume before martingale adjustments. Default: 0.1. |\n| `LossMultiplier` | Multiplier applied to the next order volume after a losing cycle. Default: 1.55. |\n| `AverageProfitTarget` | Average unrealized profit per contract required to close all positions. Default: 2.8. |\n| `CandleType` | Candle type used for calculations (defaults to 1-minute time frame). |"
+   },
+   "2770": {
+    "id": 2770,
+    "name": "Trend Me Leave Me",
+    "family": "trend",
+    "overview": "The **Trend Me Leave Me** strategy is a direct port of the classic MQL5 expert advisor by Yury Reshetov. It patiently waits for\nperiods of quiet price action, joins the prevailing direction indicated by the Parabolic SAR, and alternates the trade direction\nafter profitable exits. When a trade is stopped out, the strategy will attempt the same direction again, recreating the original\n\"trend me, leave me\" behaviour. This C# implementation uses the StockSharp high-level API and keeps the full decision flow of the\nsource system while exposing every numeric input as a configurable parameter.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `StopLossPips` | Distance in pips between the entry price and the protective stop. | `50` |\n| `TakeProfitPips` | Distance in pips between the entry price and the target. | `180` |\n| `BreakevenPips` | Move the stop to entry after this many pips of favourable movement. | `5` |\n| `AdxPeriod` | Smoothing period for the ADX filter. | `14` |\n| `AdxQuietLevel` | Maximum ADX reading that still qualifies as a quiet market. | `20` |\n| `SarStep` | Parabolic SAR acceleration step. | `0.02` |\n| `SarMax` | Parabolic SAR maximum acceleration factor. | `0.2` |\n| `CandleType` | Time frame used for calculations. | `1h` candles |"
+   }
+  }
+ }
+}

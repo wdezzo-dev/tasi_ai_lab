@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 339,
+      "name": "MACD Sentiment Filter",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and close > ema(close,20)",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD crossover translated to the local DSL with documented/default fast, slow, and signal periods; unsupported execution/state details are omitted."
+    },
+    {
+      "id": 52,
+      "name": "Volume Divergence",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1182,
+      "name": "PresentTrend",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 4136,
+      "name": "For Max V2",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 219,
+      "name": "Statistical Arbitrage",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1651,
+      "name": "Godbot",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 1123,
+      "name": "NQ Phantom Scalper Pro",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1928,
+      "name": "Exp TrendValue",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2094,
+      "name": "RSI Stochastic MA",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 3818,
+      "name": "Bago EA Classic",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,5)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 5-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_046": {
+  "strategy_ids": [
+   578,
+   3177,
+   3891,
+   2906,
+   539,
+   4188,
+   2071,
+   2561,
+   3838,
+   1103
+  ],
+  "docs": {
+   "578": {
+    "id": 578,
+    "name": "Bitcoin Momentum",
+    "family": "trend",
+    "overview": "Momentum strategy for Bitcoin that trades only when price is above a higher timeframe EMA and avoids caution conditions. An ATR-based trailing stop protects gains.\n\n## Details\n\n- **Entry Criteria**: Price above weekly EMA and no caution condition.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price below trailing stop or weekly EMA.\n- **Stops**: ATR-based trailing stop.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `HigherCandleType` = TimeSpan.FromDays(7)\n  - `EmaLength` = 20\n  - `AtrLength` = 5\n  - `TrailStopLookback` = 7\n  - `TrailStopMultiplier` = 0.2m\n  - `StartTime` = 2000-01-01\n  - `EndTime` = 2099-01-01\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: EMA, ATR, Highest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price above weekly EMA and no caution condition.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price below trailing stop or weekly EMA.\n- **Stops**: ATR-based trailing stop.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `HigherCandleType` = TimeSpan.FromDays(7)\n  - `EmaLength` = 20\n  - `AtrLength` = 5\n  - `TrailStopLookback` = 7\n  - `TrailStopMultiplier` = 0.2m\n  - `StartTime` = 2000-01-01\n  - `EndTime` = 2099-01-01\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: EMA, ATR, Highest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3177": {
+    "id": 3177,
+    "name": "iMA iStochastic Custom",
+    "family": "trend",
+    "overview": "The strategy replicates the MetaTrader expert **\"iMA iStochastic Custom\"** inside the StockSharp framework. It combines a moving-average envelope with a stochastic oscillator filter. Trading takes place on the finished candles of the selected timeframe (`CandleType`). All comments below use the same nomenclature as the original advisor.\n\nKey components:\n\n1. **Moving-average envelope** – the base moving average is shifted by `LevelUpPips` and `LevelDownPips` (expressed in pips) to build resistance and support bands. The averaging method matches MetaTrader options: Simple, Exponential, Smoothed (SMMA) and Linear Weighted (LWMA).\n2. **Stochastic oscillator** – %K, %D and smoothing lengths follow the original parameters. Two thresholds (`StochasticLevel1` and `StochasticLevel2`) validate overbought/oversold conditions.\n3. **Money management** – the original `lot`/`risk` selector is preserved through the `ManagementMode` parameter. In `FixedLot` mode the order size equals `VolumeValue`. In `RiskPercent` mode the strategy risks the configured percentage of portfolio equity against the stop-loss distance, reproducing the behaviour of `CMoneyFixedMargin`.\n4. **Protections** – stop-loss, take-profit and trailing distances are entered in pips. Trailing updates on completed candles, mirroring the MQL logic while remaining compatible with StockSharp’s event model.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Timeframe used for calculations. |\n| `StopLossPips`, `TakeProfitPips` | Protective distances in pips. |\n| `TrailingStopPips`, `TrailingStepPips` | Trailing activation and step (pips). Set zero to disable. |\n| `ManagementMode`, `VolumeValue` | Fixed lot or risk percentage sizing. |\n| `MaPeriod`, `MaShift`, `MaMethod` | Moving average length, bar shift and method (SMA/EMA/SMMA/LWMA). |\n| `LevelUpPips`, `LevelDownPips` | Upper/lower envelope offsets in pips. Negative values are allowed for the lower band. |\n| `StochasticKPeriod`, `StochasticDPeriod`, `StochasticSlowing` | Oscillator configuration. |\n| `StochasticLevel1`, `StochasticLevel2` | Confirmation levels for buy/sell checks. |\n| `ReverseSignals` | Invert the direction of all trades. |"
+   },
+   "3891": {
+    "id": 3891,
+    "name": "SilverTrend V3 JTPO",
+    "family": "trend",
+    "overview": "SilverTrend V3 is a trend-following strategy translated from the original MetaTrader 4 implementation. It evaluates the SilverTrend indicator together with the J_TPO statistical filter to identify new directional swings. The strategy trades a single instrument at a time and enforces a Friday evening flat rule to avoid holding risk over the weekend.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Volume` | Order size in lots. | `1` |\n| `TrailingStopPoints` | Trailing stop distance in price points. `0` disables trailing. | `0` |\n| `TakeProfitPoints` | Take profit distance in price points. `0` disables the take profit. | `0` |\n| `InitialStopPoints` | Initial stop loss distance in price points. `0` disables the protective stop. | `0` |\n| `FridayCutoffHour` | Hour (exchange time) after which new trades on Friday are disallowed. | `16` |\n| `CandleType` | Candle type or timeframe used for analysis. | `1h` candles |"
+   },
+   "2906": {
+    "id": 2906,
+    "name": "BykovTrend + ColorX2MA",
+    "family": "trend",
+    "overview": "- **Market bias**: Works on any instrument that supports candlestick data. The default timeframe for both blocks is 4 hours (H4), mirroring the original Expert Advisor.\n- **Indicators**:\n  - *BykovTrend V2*: Uses Williams %R to color candles according to the prevailing trend.\n  - *ColorX2MA*: Applies two consecutive moving averages to a configurable price source and classifies the slope direction.\n- **Signals**: Entries and exits are generated separately by each block. The final position is the sum of all executed trades.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **BykovTrend Candle** | Data type (timeframe) for the BykovTrend calculation. |\n| **Williams %R Period** | Lookback for Williams %R. |\n| **Risk Offset** | Shifts the Williams %R thresholds (`33 - Risk`). Larger values tighten bullish thresholds and loosen bearish ones. |\n| **Signal Bar** | Delay (number of completed candles) before acting on a BykovTrend color. |\n| **Allow Long/Short Entries** | Enable or disable BykovTrend-driven entries. |\n| **Allow Long/Short Exits** | Enable or disable BykovTrend-driven exits. |\n| **ColorX2MA Candle** | Data type (timeframe) for the ColorX2MA block. |\n| **First/Second MA Method** | Smoothing method for each stage (SMA, EMA, SMMA, LWMA, Jurik). |\n| **First/Second MA Length** | Period length for each smoothing stage. |\n| **First/Second MA Phase** | Compatibility parameter retained from the original EA; current implementation keeps it for documentation but Jurik smoothing uses its internal defaults. |\n| **Applied Price** | Price source for ColorX2MA (close, open, high, low, median, typical, weighted, simple, quarted, trend-follow variations, DeMark). |\n| **Color Signal Bar** | Delay before acting on ColorX2MA colors. |\n| **Allow Long/Short Entries/Exits** | Enable or disable ColorX2MA-driven actions. |"
+   },
+   "539": {
+    "id": 539,
+    "name": "Autonomous 5-Minute Robot",
+    "family": "trend",
+    "overview": "The Autonomous 5-Minute Robot strategy trades on a 5-minute timeframe.\nIt goes long when price is trending up and buying pressure exceeds selling pressure,\nand goes short on the opposite conditions.\n\n## Details\n\n- **Entry Criteria**: Uptrend (close above 50-period SMA and above the close 6 bars ago) with buy volume greater than sell volume.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: 3% stop loss and 29% take profit from entry price.\n- **Default Values**:\n  - `MaLength` = 50\n  - `VolumeLength` = 10\n  - `StopLossPercent` = 3\n  - `TakeProfitPercent` = 29\n  - `CandleType` = 5m\n",
+    "details": "- **Entry Criteria**: Uptrend (close above 50-period SMA and above the close 6 bars ago) with buy volume greater than sell volume.\n- **Exit Criteria**: Reverse position on opposite signal.\n- **Stops**: 3% stop loss and 29% take profit from entry price.\n- **Default Values**:\n  - `MaLength` = 50\n  - `VolumeLength` = 10\n  - `StopLossPercent` = 3\n  - `TakeProfitPercent` = 29\n  - `CandleType` = 5m",
+    "parameters": ""
+   },
+   "4188": {
+    "id": 4188,
+    "name": "Early Bird Range Breakout",
+    "family": "breakout",
+    "overview": "Early Bird Range Breakout is a C# port of the MetaTrader 4 expert advisor `earlyBird1`. The system tracks the high and low of a configurable pre-market range, applies a 14-period RSI filter to decide the trade bias, and enters on the first breakout once the regular session opens. It preserves the original expert advisor's single-trade-per-direction constraint, volatility-controlled trailing logic, and daily closing discipline.",
+    "details": "",
+    "parameters": "* **Auto Trading** – master enable switch for automated entries.\n* **Allow Hedging** – enables reversing into the opposite direction even when a position is already open.\n* **Trade Direction** – limits the strategy to long only (`1`), short only (`2`), or both directions (`0`).\n* **Volume** – order volume for market entries.\n* **Take Profit (pips)** – maximum distance for the profit target; the effective distance is capped by the stop-loss and the range width.\n* **Stop Loss (pips)** – fixed protective stop distance in pips.\n* **Trailing Trigger (pips)** – minimum favourable excursion required before the trailing logic can adjust the stop and take-profit.\n* **Trailing Risk** – multiplier applied to the 16-period average candle range when assessing whether volatility is high enough to trail.\n* **Entry Buffer (pips)** – pip offset applied to the range boundaries when calculating breakout levels.\n* **Session Start Hour / Minute** – start of the active trading window (chart time before DST adjustment).\n* **Session End Hour** – end of the trading window for new positions.\n* **Closing Hour** – hour after which positions are forced to break even or closed.\n* **Range Start Hour / Range End Hour** – hours that define the pre-session range used for breakouts.\n* **Summer Time Start / Winter Time Start** – day-of-year markers used to switch between one- and two-hour offsets, imitating the `Sommerzeit/Winterzeit` logic.\n* **RSI Length** – number of periods for the RSI filter (default 14).\n* **Candle Type** – primary timeframe that drives calculations (defaults to 15-minute candles)."
+   },
+   "2071": {
+    "id": 2071,
+    "name": "Daily Breakpoint",
+    "family": "breakout",
+    "overview": "This strategy trades breakouts from the daily open. At the beginning of each new day the opening price is stored. When the price moves away from this level by a user defined number of points, and the previous bar is within a configurable size range, the strategy enters in the breakout direction.\n\n## Entry logic\n\n- If the previous bar is bullish and price rises above the daily open by **Break Point** points, a long position is opened.\n- If the previous bar is bearish and price falls below the daily open by **Break Point** points, a short position is opened.\n- Previous bar size must be between **Last Bar Min** and **Last Bar Max** points.\n- Breakout level must lie within the previous bar body.\n\n## Risk management\n\n- Optional **Take Profit** and **Stop Loss** are measured in points from the entry price.\n- A trailing stop can be enabled with **Trailing Start**, **Trailing Stop** and **Trailing Step** parameters. When price moves in favour by *Trailing Start* the stop is set at *Trailing Stop* points from the entry and then trails by *Trailing Step* increments.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| Candle Type | Timeframe of processed candles. |\n| Break Point | Distance from daily open to trigger a trade (points). |\n| Last Bar Min | Minimum size of the previous bar (points). |\n| Last Bar Max | Maximum size of the previous bar (points). |\n| Trailing Start | Price move to start trailing stop (points). |\n| Trailing Stop | Initial trailing distance (points). |\n| Trailing Step | Step to move trailing stop (points). |\n| Take Profit | Take profit distance (points). |\n| Stop Loss | Stop loss distance (points). |\n\n## Notes\n\nThe strategy operates on finished candles only and uses market orders for entries and exits. It stores internal variables for previous bar data and trailing stop level.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| Candle Type | Timeframe of processed candles. |\n| Break Point | Distance from daily open to trigger a trade (points). |\n| Last Bar Min | Minimum size of the previous bar (points). |\n| Last Bar Max | Maximum size of the previous bar (points). |\n| Trailing Start | Price move to start trailing stop (points). |\n| Trailing Stop | Initial trailing distance (points). |\n| Trailing Step | Step to move trailing stop (points). |\n| Take Profit | Take profit distance (points). |\n| Stop Loss | Stop loss distance (points). |"
+   },
+   "2561": {
+    "id": 2561,
+    "name": "Three Candles Reversal",
+    "family": "momentum",
+    "overview": "This strategy is a faithful StockSharp port of the MQL5 expert advisor `Exp_ThreeCandles`. It looks for a classic three-candle reversal:\n\n1. Two consecutive candles in one direction.\n2. A third candle that flips the direction and closes beyond the middle bar.\n3. Optional volume confirmation unless the oldest bar in the pattern is exceptionally large.\n\nWhen a bullish configuration appears the algorithm closes short exposure and can enter a long position. A bearish configuration does the opposite. Protective stop-loss and take-profit levels are applied using the current instrument price step.\n\n## Pattern detection\n\nThe strategy keeps a rolling window of the most recent `SignalBar + 3` finished candles. On every new bar it checks the candle at `SignalBar` offset (default: 1 bar back) and the three older candles:\n\n- **Bullish reversal** (potential long):\n  - The two older candles (`SignalBar + 3` and `SignalBar + 2`) are bearish.\n  - The middle candle closes above the low of the oldest bar.\n  - The most recent candle before the signal (`SignalBar + 1`) is bullish and closes above the open of the middle bar.\n- **Bearish reversal** (potential short):\n  - Mirror logic of the bullish case.\n\nA volume filter mirrors the original indicator. The filter is skipped when `MaxBarSize` (in price steps) is exceeded by the oldest candle range or when `VolumeFilter` is set to `None`. Otherwise the reversal must satisfy `older volume < middle volume` **OR** `recent volume > middle volume` **OR** `recent volume > oldest volume`. Tick and real volume are mapped to the candle's aggregated volume because StockSharp does not distinguish the two in the high level candle stream.\n\n## Trade management\n\n- If `AllowSellExit` is enabled, a bullish pattern immediately covers any short position before considering a long entry. `AllowBuyExit` behaves the same for longs on bearish patterns.\n- New positions are only opened when the current position is flat and the corresponding `Allow*Entry` flag is tru",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | 4 hour time frame | Candle series processed by the strategy. |\n| `SignalBar` | 1 | How many bars back the signal is evaluated. Must be ≥ 0. |\n| `MaxBarSize` | 300 | If the oldest bar range (converted with `PriceStep`) exceeds this value the volume filter is skipped. Set to 0 to always skip. |\n| `VolumeFilter` | `Tick` | Volume mode (`Tick`, `Real`, or `None`). Both `Tick` and `Real` use `TotalVolume` from candles. |\n| `AllowBuyEntry` | `true` | Enable long entries on bullish patterns. |\n| `AllowSellEntry` | `true` | Enable short entries on bearish patterns. |\n| `AllowBuyExit` | `true` | Allow closing long positions on bearish patterns. |\n| `AllowSellExit` | `true` | Allow closing short positions on bullish patterns. |\n| `StopLossPips` | 1000 | Stop-loss distance in price steps (0 disables). |\n| `TakeProfitPips` | 2000 | Take-profit distance in price steps (0 disables). |"
+   },
+   "3838": {
+    "id": 3838,
+    "name": "FitFul 13 Time Gated",
+    "family": "volatility",
+    "overview": "The **FitFul 13 Time Gated Strategy** is a StockSharp port of the MetaTrader 4 expert advisor \"FitFul_13\". The strategy builds a weekly pivot ladder (PP, R0.5, R1, R1.5, R2, R2.5, R3 and the corresponding support levels) using the previous week's high, low and close. Trade decisions are taken on the primary timeframe (default 1 hour) and are optionally confirmed by a faster timeframe (default 15 minutes). New positions are allowed only at specific intraday minutes to mimic the original EA behaviour.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `PrimaryCandleType` | Timeframe used for the main pivot cross checks. |\n| `ConfirmationCandleType` | Faster timeframe that validates pivot reactions. |\n| `Volume` | Net market order volume. |\n| `MaxNetPositions` | Maximum exposure measured in multiples of `Volume`. |\n| `OffsetPoints` | Price-point distance applied to stops and targets around each pivot. |\n| `TrailingStopPoints` | Trailing stop distance in price points. |\n| `CloseAfter` | Maximum holding time for profitable positions. |\n| `CloseHour`, `CloseMinuteFrom`, `CloseMinuteTo` | Friday time window for forced exits. |\n| `EntryMinute0..3` | Allowed minutes (within every hour) for opening new positions. |"
+   },
+   "1103": {
+    "id": 1103,
+    "name": "Multi-Timeframe RSI Grid Strategy with Arrows",
+    "family": "mean_reversion",
+    "overview": "This strategy trades when RSI on the current timeframe and two higher timeframes reach overbought or oversold levels. The first position is opened when all RSIs align, then additional positions are added using an ATR based grid with an increasing lot multiplier. The strategy targets a daily profit percentage, resets each day, and closes on reverse signals or drawdown.\n\n## Parameters\n- Candle Type\n- RSI Length\n- Oversold Level\n- Overbought Level\n- Higher Timeframe 1\n- Higher Timeframe 2\n- Grid Multiplication Factor\n- Lot Multiplication Factor\n- Maximum Grid Levels\n- Daily Profit Target %\n- ATR Length\n",
+    "details": "",
+    "parameters": "- Candle Type\n- RSI Length\n- Oversold Level\n- Overbought Level\n- Higher Timeframe 1\n- Higher Timeframe 2\n- Grid Multiplication Factor\n- Lot Multiplication Factor\n- Maximum Grid Levels\n- Daily Profit Target %\n- ATR Length"
+   }
+  }
+ }
+}

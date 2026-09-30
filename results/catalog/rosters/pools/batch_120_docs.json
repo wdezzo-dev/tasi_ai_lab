@@ -1,0 +1,98 @@
+{
+ "batch_120": {
+  "strategy_ids": [
+   2307,
+   527,
+   1072,
+   64,
+   3068,
+   1179,
+   2184,
+   3588,
+   3787,
+   174
+  ],
+  "docs": {
+   "2307": {
+    "id": 2307,
+    "name": "Trend Continuation",
+    "family": "trend",
+    "overview": "This strategy identifies continuation of the prevailing trend using a pair of exponential moving averages on price data. A long position is opened when the fast EMA crosses above the slow EMA, signaling upward continuation. A short position is opened when the fast EMA crosses below the slow EMA.\n\n## Parameters\n- **Fast EMA Length** – period for the fast EMA (default: 20).\n- **Candle Type** – timeframe of candles (default: 4-hour).\n- **Stop Loss** – protective stop loss applied via `StartProtection` (default: 1000).\n- **Take Profit** – profit target applied via `StartProtection` (default: 2000).\n\n## How It Works\n1. On start the strategy subscribes to the selected candle series and creates two EMA indicators.\n2. Each finished candle is processed to detect crossovers between the fast and slow EMAs.\n3. A crossover from below to above opens a long position and closes any short one. The opposite crossover opens a short position and closes any long.\n4. Risk management is handled through the built-in stop loss and take profit parameters.\n\nThis example is a simplified conversion of the original MQL `Exp_TrendContinuation` expert.\n",
+    "details": "",
+    "parameters": "- **Fast EMA Length** – period for the fast EMA (default: 20).\n- **Candle Type** – timeframe of candles (default: 4-hour).\n- **Stop Loss** – protective stop loss applied via `StartProtection` (default: 1000).\n- **Take Profit** – profit target applied via `StartProtection` (default: 2000)."
+   },
+   "527": {
+    "id": 527,
+    "name": "Arpeet MACD",
+    "family": "trend",
+    "overview": "The Arpeet MACD strategy trades MACD crossovers with a zero-line filter. A long signal appears when the MACD line crosses above the signal line while remaining below zero. A short signal occurs when the MACD crosses below the signal line above zero.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MACD crosses above signal and MACD < 0.\n  - **Short**: MACD crosses below signal and MACD > 0.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n- **Filters**:\n  - Category: Indicator\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD crosses above signal and MACD < 0.\n  - **Short**: MACD crosses below signal and MACD > 0.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n- **Filters**:\n  - Category: Indicator\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1072": {
+    "id": 1072,
+    "name": "Monthly Performance Table",
+    "family": "trend",
+    "overview": "Trades when ADX lies between +DI and -DI and both differences from ADX exceed configurable thresholds.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when |+DI - ADX| ≥ `LongDifference` and |-DI - ADX| ≥ `LongDifference` with ADX between +DI and -DI.\n  - Short when |+DI - ADX| ≥ `ShortDifference` and |-DI - ADX| ≥ `ShortDifference` with ADX between -DI and +DI.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14\n  - `LongDifference` = 10\n  - `ShortDifference` = 10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, DMI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long when |+DI - ADX| ≥ `LongDifference` and |-DI - ADX| ≥ `LongDifference` with ADX between +DI and -DI.\n  - Short when |+DI - ADX| ≥ `ShortDifference` and |-DI - ADX| ≥ `ShortDifference` with ADX between -DI and +DI.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 14\n  - `LongDifference` = 10\n  - `ShortDifference` = 10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, DMI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "64": {
+    "id": 64,
+    "name": "Bearish Engulfing Pattern",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 79%. It performs best in the stocks market.\n\nThe algorithm stores each candle in sequence. If the new bar closes lower than it opens and its body engulfs the previous bullish bar, a short sale is executed. The stop-loss is positioned above the pattern high to limit exposure.\n\nPositions are typically managed using the protective stop, although the trader may exit manually if conditions change. Requiring an uptrend helps avoid false signals during choppy markets.\n\n## Details\n\n- **Entry Criteria**: Bearish candle engulfs prior bullish bar, optional uptrend present.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Stop-loss or discretionary.\n- **Stops**: Yes, above pattern high.\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLossPercent` = 1\n  - `RequireUptrend` = true\n  - `UptrendBars` = 3\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Bearish candle engulfs prior bullish bar, optional uptrend present.\n- **Long/Short**: Short only.\n- **Exit Criteria**: Stop-loss or discretionary.\n- **Stops**: Yes, above pattern high.\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLossPercent` = 1\n  - `RequireUptrend` = true\n  - `UptrendBars` = 3\n- **Filters**:\n  - Category: Pattern\n  - Direction: Short\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3068": {
+    "id": 3068,
+    "name": "Exp TimeZone Pivots Open System Tm Plus",
+    "family": "trend",
+    "overview": "This strategy is a high level StockSharp port of the **Exp_TimeZonePivotsOpenSystem_Tm_Plus** expert advisor. It recreates the proprietary *TimeZonePivotsOpenSystem* indicator that projects two breakout zones around the daily session open and trades the pullbacks that follow a breakout. Every component from the original script—signal delay, time filter, asymmetric exit logic and the money-management presets—was mapped to explicit parameters so the behaviour stays consistent with the MQL5 implementation.\n\n## Trading logic\n\n1. At the configured `StartHour` the strategy records the session open price. Two dynamic levels are then drawn at `OffsetPoints` (in points) above and below that anchor.\n2. Whenever a finished candle closes **above** the upper level the strategy:\n   - Schedules a long entry to be executed on the next candle (respecting the `SignalBar` delay) only if the current bar is no longer above the band.\n   - Closes any open short position immediately if `SellPosClose` is enabled.\n3. Whenever a finished candle closes **below** the lower level the strategy:\n   - Schedules a short entry for the next candle provided the current bar is no longer below the band.\n   - Closes any open long position immediately if `BuyPosClose` is enabled.\n4. Entries are executed on the first update of the next candle thanks to `TryExecutePendingEntries`. This matches the original expert that delays the order until the new bar begins.\n\nThe signal delay parameter `SignalBar` reproduces the original `CopyBuffer` shift. A value of `0` reacts to the most recent closed bar, while `1` waits an extra bar before acting, giving additional confirmation.\n\n## Order management\n\n* **Stop-loss / take-profit** – The distances are set in points (`StopLossPoints`, `TakeProfitPoints`) and converted to price using the instrument’s step. Both levels are monitored using candle extremes so intrabar touches trigger an exit.\n* **Time based exit** – When `TimeTrade` is true the position is force-closed after",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `MoneyManagement` | Base coefficient used to size the position depending on `MoneyMode`. | `0.1` |\n| `MoneyMode` | Position sizing model (`Lot`, `Balance`, `FreeMargin`, `LossBalance`, `LossFreeMargin`). | `Lot` |\n| `StopLossPoints` | Stop-loss distance expressed in points from the fill price. | `1000` |\n| `TakeProfitPoints` | Take-profit distance expressed in points from the fill price. | `2000` |\n| `DeviationPoints` | Informational parameter kept from the expert (slippage setting in points). | `10` |\n| `BuyPosOpen` / `SellPosOpen` | Enable or disable long and short entries. | `true` |\n| `BuyPosClose` / `SellPosClose` | Allow the opposite breakout to force-close positions. | `true` |\n| `TimeTrade` | Enable the maximum holding time filter. | `true` |\n| `HoldingMinutes` | Maximum position lifetime in minutes. | `720` |\n| `OffsetPoints` | Distance of the pivot bands from the session open in points. | `200` |\n| `SignalBar` | Number of bars to delay signal evaluation (0 = last closed bar). | `1` |\n| `CandleType` | Main timeframe used to calculate the indicator. | `TimeSpan.FromHours(1).TimeFrame()` |\n| `StartHour` | Hour of the day (0-23) that defines the session open price. | `0` |"
+   },
+   "1179": {
+    "id": 1179,
+    "name": "PowerZone",
+    "family": "breakout",
+    "overview": "This strategy identifies \"PowerZone\" order blocks created by a bearish candle followed by consecutive bullish candles (and vice versa). A breakout above the bull zone triggers a long trade, while a breakdown below the bear zone opens a short. Targets and stops are based on the zone's range.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Bearish candle `Periods+1` bars ago followed by `Periods` bullish candles and price breaking above the zone high.\n  - **Short**: Bullish candle `Periods+1` bars ago followed by `Periods` bearish candles and price breaking below the zone low.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit and stop loss multiples of the zone range.\n- **Indicators**: None.\n- **Default Values**:\n  - `Periods` = 5\n  - `Threshold` = 0\n  - `UseWicks` = false\n  - `Take Profit Factor` = 1.5\n  - `Stop Loss Factor` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Bearish candle `Periods+1` bars ago followed by `Periods` bullish candles and price breaking above the zone high.\n  - **Short**: Bullish candle `Periods+1` bars ago followed by `Periods` bearish candles and price breaking below the zone low.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit and stop loss multiples of the zone range.\n- **Indicators**: None.\n- **Default Values**:\n  - `Periods` = 5\n  - `Threshold` = 0\n  - `UseWicks` = false\n  - `Take Profit Factor` = 1.5\n  - `Stop Loss Factor` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "2184": {
+    "id": 2184,
+    "name": "Order Example",
+    "family": "breakout",
+    "overview": "Breakout strategy converted from the MQL5 sample `OrderExample.mq5`.\nIt enters trades when price breaks above recent highs or below recent lows.\n\nThe strategy uses the `Highest` and `Lowest` indicators to track breakout levels over a configurable window.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close` breaks above highest high of `Lookback` candles\n  - Short: `Close` breaks below lowest low of `Lookback` candles\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite breakout\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 26\n  - `CandleType` = `TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close` breaks above highest high of `Lookback` candles\n  - Short: `Close` breaks below lowest low of `Lookback` candles\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite breakout\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 26\n  - `CandleType` = `TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3588": {
+    "id": 3588,
+    "name": "Pause Trading On Consecutive Loss",
+    "family": "momentum",
+    "overview": "The **Pause Trading On Consecutive Loss Strategy** reproduces the risk control logic of the MetaTrader 4 expert advisor *\"Pause Trading On Consecutive Loss\"*. The original script monitored the most recent closed trades, counted how many of them ended with a negative profit, and suspended new orders when the losing streak exceeded a user-defined limit within a short time window. The StockSharp port keeps that behaviour while wrapping it around a minimal momentum entry model so the pause mechanism can be evaluated inside the standalone strategy.\n\n## How it works\n\n1. The strategy subscribes to time-frame candles specified by `CandleType`. Whenever a finished candle arrives, the closing price is compared to the previous close. If it increased, the strategy attempts a long entry; if it decreased, a short entry is considered. Positions exit whenever a bullish position faces a bearish candle (close below open) or a bearish position faces a bullish candle (close above open).\n2. After every closed position the realised profit of the strategy is inspected. Losing results enqueue their closing timestamp in an internal FIFO list that only stores consecutive losses. Profitable or breakeven exits wipe the list, just as the MQL loop aborted once it encountered a non-losing deal.\n3. When the list reaches `ConsecutiveLosses` items, the strategy checks whether the time difference between the oldest and the newest loss is within `WithinMinutes`. If it is, trading is paused until `PauseMinutes` elapse from the last closing time. During the pause no new market orders are submitted, but the existing position management continues operating so the book can flatten naturally.\n4. Once the pause expires, the list of losses is cleared and trading resumes automatically. The behaviour mimics the original `CheckLastNLossDifference` and `lastOrderCloseTime` functions without relying on a persistent order history scan.\n\nThe implementation uses StockSharp's high-level candle subscriptions (`Subscrib",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 5-minute time frame | Candle aggregation used for the simple momentum entries. |\n| `OrderVolume` | `0.1` | Volume (in lots/contracts) sent with each entry and exit order. |\n| `ConsecutiveLosses` | `3` | Number of back-to-back losing positions required before new trades are paused. |\n| `WithinMinutes` | `20` | Maximum number of minutes allowed between the first and the last loss in the streak. A value of zero disables the window check. |\n| `PauseMinutes` | `20` | Duration of the trading suspension after the loss streak is detected. |"
+   },
+   "3787": {
+    "id": 3787,
+    "name": "Semilong WWW Forex Instruments Info",
+    "family": "volatility",
+    "overview": "This strategy replicates the behaviour of the \"Semilong\" MetaTrader expert. It monitors the distance between the current bid price and two historical closing prices that are separated by configurable shifts. When the current market trades far enough below (or above) the older close while the older close has also moved away from an even older reference, the strategy opens a long (or short) position. Position management mirrors the original script with configurable take profit, stop loss, optional trailing stop, and an auto-lot module that reduces size after consecutive losses.",
+    "details": "",
+    "parameters": ""
+   },
+   "174": {
+    "id": 174,
+    "name": "Macd Vwap",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 109%. It performs best in the crypto market.\n\nMACD momentum is gauged relative to the VWAP line. Long trades look for MACD strength below VWAP, whereas shorts take form above it.\n\nIdeal for intraday momentum players using volume-weighted references. ATR-based stops manage risk.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `MACD > Signal && Close > VWAP`\n  - Short: `MACD < Signal && Close < VWAP`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `MACD > Signal && Close > VWAP`\n  - Short: `MACD < Signal && Close < VWAP`\n- **Long/Short**: Both\n- **Exit Criteria**: MACD cross opposite\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: MACD, VWAP\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

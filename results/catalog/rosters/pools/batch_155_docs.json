@@ -1,0 +1,98 @@
+{
+ "batch_155": {
+  "strategy_ids": [
+   3810,
+   970,
+   2639,
+   4007,
+   3762,
+   2702,
+   2984,
+   2162,
+   3099,
+   1979
+  ],
+  "docs": {
+   "3810": {
+    "id": 3810,
+    "name": "Alexav D1 Profit GBPUSD",
+    "family": "trend",
+    "overview": "Alexav D1 Profit GBPUSD is a daily breakout system converted from the MetaTrader 4 expert advisor *Alexav_d1_profit_gbpusd.mq4*. The strategy operates on daily candles of GBP/USD and evaluates the completed session once per day (Tuesday through Friday). Momentum confirmation is provided by RSI and MACD while volatility-adjusted stops and staggered profit targets are derived from ATR.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Primary candle series, daily by default. | 1 day |\n| `MaPeriod` | Period of the EMA applied to highs/lows. | 6 |\n| `RsiPeriod` | RSI period for momentum filter. | 10 |\n| `AtrPeriod` | ATR period for stop/target sizing. | 28 |\n| `AtrStopMultiplier` | ATR multiple for stops. | 1.6 |\n| `AtrTargetMultiplier` | Base ATR multiple for targets. | 1.0 |\n| `RsiUpperLevel` | RSI threshold confirming bullish momentum. | 60 |\n| `RsiUpperLimit` | RSI cap that blocks new longs. | 80 |\n| `RsiLowerLevel` | RSI threshold confirming bearish momentum. | 39 |\n| `RsiLowerLimit` | RSI floor that blocks new shorts. | 25 |\n| `FastMaPeriod` | Fast EMA period for MACD. | 5 |\n| `SlowMaPeriod` | Slow EMA period for MACD. | 24 |\n| `SignalMaPeriod` | Signal EMA period for MACD. | 14 |\n| `MacdDiffBuy` | Minimum MACD acceleration for longs. | 0.5 |\n| `MacdDiffSell` | Minimum MACD acceleration for shorts. | 0.15 |\n\nSet the strategy `Volume` to the desired lot size per order before starting the strategy."
+   },
+   "970": {
+    "id": 970,
+    "name": "Larry Connors RSI 3",
+    "family": "trend",
+    "overview": "Mean reversion strategy based on Larry Connors' RSI rules.\n\nThe strategy buys when price is above the 200-period SMA and the 2-period RSI has dropped three days in a row from above a trigger level into oversold territory. Positions exit when RSI rises above the overbought level.\n\n## Details\n\n- **Entry Criteria**: Close above SMA and 2-period RSI dropping three days from above trigger into oversold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: RSI above overbought level.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiPeriod` = 2\n  - `SmaPeriod` = 200\n  - `DropTrigger` = 60m\n  - `OversoldLevel` = 10m\n  - `OverboughtLevel` = 70m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low\n",
+    "details": "- **Entry Criteria**: Close above SMA and 2-period RSI dropping three days from above trigger into oversold.\n- **Long/Short**: Long only.\n- **Exit Criteria**: RSI above overbought level.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiPeriod` = 2\n  - `SmaPeriod` = 200\n  - `DropTrigger` = 60m\n  - `OversoldLevel` = 10m\n  - `OverboughtLevel` = 70m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: RSI, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Low",
+    "parameters": ""
+   },
+   "2639": {
+    "id": 2639,
+    "name": "Expert RSI Stochastic MA",
+    "family": "trend",
+    "overview": "The **Expert RSI Stochastic MA Strategy** is a conversion of the MetaTrader 5 expert advisor `Expert_RSI_Stochastic_MA.mq5`. The C# implementation leverages StockSharp's high-level strategy API while reproducing the original logic: a trend filter based on a configurable moving average, momentum confirmation from RSI, and a dual-line Stochastic oscillator for precise timing. Protective behaviour replicates the source algorithm with an optional fixed loss threshold and a Stochastic-driven trailing exit.",
+    "details": "",
+    "parameters": ""
+   },
+   "4007": {
+    "id": 4007,
+    "name": "Swetten",
+    "family": "trend",
+    "overview": "Swetten is a neural-network driven breakout strategy that was originally distributed for MetaTrader 4. It evaluates the spread between a long-term 233-period simple moving average and ten faster moving averages calculated on one-minute candles. The spreads are fed into a radial basis network that produces a bullish or bearish activation level. When the activation is positive the strategy enters long, when it is negative it enters short.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle series used for calculations. | 1-minute time frame |\n| `TradeVolume` | Base order volume in lots. | 0.1 |\n| `SlowPeriod` | Period of the baseline simple moving average. | 233 |\n| `TakeProfitPoints` | Profit target distance in price steps. | 150 |\n| `StopLossPoints` | Stop-loss distance in price steps. | 40 |"
+   },
+   "3762": {
+    "id": 3762,
+    "name": "Mc Valute Cloud",
+    "family": "trend",
+    "overview": "This folder contains the StockSharp port of the MetaTrader expert advisor \"Mc_valute\". The original robot combined a short\nexponential moving average (EMA) with three smoothed moving averages, an Ichimoku cloud filter and multiple MACD instances while\nscaling into the trend. The StockSharp implementation keeps the core trend confirmation stack but simplifies position management\nto a single exposure in each direction so that the logic fits naturally into the high-level API.\n\n## Trading logic\n\n1. **Price filter EMA** – the `FilterMaLength` EMA must sit above (for longs) or below (for shorts) the two smoothed moving\n   averages (`BlueMaLength` and `LimeMaLength`). The smoothed averages emulate the \"blue\" and \"lime\" lines from the MT4 template.\n2. **Ichimoku cloud confirmation** – the EMA also has to be outside of the cloud. Long trades require the filter EMA above both\n   Senkou spans while short trades demand that it remains below the cloud bottom.\n3. **MACD momentum check** – the main MACD line has to be above its signal line for long entries and below it for short entries.\n   Only the first MACD set from the original EA is kept because the remaining copies were disabled in the final MQL version.\n4. **Single-position management** – whenever a new signal appears the strategy offsets any existing opposite position and opens a\n   fresh trade with the configured `Volume`. Protective orders are updated immediately after the market order is sent.\n5. **Candle-by-candle evaluation** – all indicators operate on the timeframe defined by `CandleType`. Trading decisions are taken\n   only on finished candles to mirror the MT4 `start()` handler which processed closed bars.\n\n## Risk management\n\n- `TakeProfit` and `StopLoss` are measured in price points. After each entry the helper `SetTakeProfit` and `SetStopLoss`\n  functions are called using the expected resulting position size, which mirrors the MT4 behaviour where stops were applied per\n  ticket.\n- The original expert advisor py",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Volume` | Base trade size used by the high-level `BuyMarket`/`SellMarket` calls. |\n| `CandleType` | Primary candle series driving the indicators and trade logic. |\n| `FilterMaLength` | Length of the EMA trend filter. |\n| `BlueMaLength`, `LimeMaLength` | Lengths of the two smoothed moving averages acting as the directional band. |\n| `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` | EMA lengths for the MACD confirmation. |\n| `TenkanLength`, `KijunLength`, `SenkouLength` | Ichimoku Kinko Hyo settings for the cloud filter. |\n| `TakeProfit`, `StopLoss` | Protective distances expressed in price points. |"
+   },
+   "2702": {
+    "id": 2702,
+    "name": "JS Chaos",
+    "family": "momentum",
+    "overview": "The JS Chaos strategy replicates the behaviour of the original MetaTrader expert advisor \"JS-Chaos\" using the StockSharp high-level API. The strategy builds break-out entries around Bill Williams' Alligator structure and fractal levels, combines Awesome Oscillator and Acceleration/Deceleration confirmation, and manages open exposure with trailing stops, breakeven logic, and a rich time filter.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `UseTime` | Enables the time filter. |\n| `OpenHour` / `CloseHour` | Hour boundaries for trading (0-23). |\n| `BaseVolume` | Base order volume, used to size the two staged entries (2× for the primary, 1× for the secondary). |\n| `IndentingPips` | Offset added/subtracted from fractal levels before placing stop orders (expressed in pips). |\n| `Fibo1` / `Fibo2` | Fibonacci-style multipliers applied to the distance between the lips and the fractal for the take-profit targets. |\n| `UseClosePositions` | Closes opposite positions when the lips cross the previous candle open. |\n| `UseTrailing` | Enables the MA/oscillator-based trailing stop. |\n| `UseBreakeven` | Activates breakeven management for the secondary position. |\n| `BreakevenPlusPips` | Extra pips added on top of the entry price when moving the stop to breakeven. |\n| `CandleType` | Time-frame of the candles processed by the strategy. |"
+   },
+   "2984": {
+    "id": 2984,
+    "name": "Gordago EA",
+    "family": "volatility",
+    "overview": "A port of the historical \"Gordago EA\" MetaTrader 5 expert advisor. The strategy trades the base timeframe (default M3) while reading MACD signals from a higher intraday chart and a stochastic filter from an hourly chart. It preserves the original stop/take parameters and trailing logic, but uses the StockSharp high-level API for data subscriptions and order management.\n\n## Strategy Logic\n\n- **Market data**\n  - Main execution candles: configurable, default three-minute candles.\n  - MACD candles: configurable, default twelve-minute candles.\n  - Stochastic candles: configurable, default one-hour candles.\n- **Indicators**\n  - MACD (fast 12, slow 26, signal 9) computed on the MACD timeframe.\n  - Stochastic oscillator (length 5, %K smoothing 3, %D 3) computed on the stochastic timeframe.\n- **Entry conditions**\n  - **Buy**: current MACD value above the previous one, previous MACD below zero, stochastic %K below the buy threshold (default 37) and rising compared to the prior value.\n  - **Sell**: current MACD value below the previous one, previous MACD above zero, stochastic %K above the sell threshold (default 96) and falling compared to the prior value.\n- **Order placement**\n  - Order volume is fixed; switching direction automatically offsets any opposite position before opening a new one.\n  - Separate stop-loss/take-profit distances exist for long and short trades (defaults: 40/70 pips for long, 10/40 pips for short).\n- **Exits**\n  - Protective stop-loss and take-profit levels are checked on every finished base candle.\n  - A trailing stop activates when price advances beyond the configured trailing distance plus trailing step; once triggered it keeps ratcheting toward the market by the trailing distance.\n  - Trailing can introduce a protective stop even when the original stop was disabled, mirroring the source EA.\n\n## Parameters\n\n- `OrderVolume` – trade volume in lots.\n- `StopLossBuyPips` / `TakeProfitBuyPips` – long-side stop-loss and take-profit distances (in pips).\n- `",
+    "details": "",
+    "parameters": "- `OrderVolume` – trade volume in lots.\n- `StopLossBuyPips` / `TakeProfitBuyPips` – long-side stop-loss and take-profit distances (in pips).\n- `StopLossSellPips` / `TakeProfitSellPips` – short-side stop-loss and take-profit distances (in pips).\n- `TrailingStopPips` – trailing distance in pips; set to zero to disable trailing.\n- `TrailingStepPips` – minimum additional profit (in pips) before the trailing stop can advance.\n- `StochasticBuyLevel` / `StochasticSellLevel` – oscillator thresholds for long and short entries.\n- `CandleType` – working timeframe for execution logic.\n- `MacdCandleType` – timeframe used to feed the MACD indicator.\n- `StochasticCandleType` – timeframe used to feed the stochastic oscillator.\n- `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` – MACD periods.\n- `StochasticLength`, `StochasticSignalPeriod`, `StochasticSmoothing` – stochastic oscillator periods."
+   },
+   "2162": {
+    "id": 2162,
+    "name": "CCI Normalized Reversal",
+    "family": "mean_reversion",
+    "overview": "The indicator is calculated on 8-hour candles with a configurable period. Two threshold levels define overbought and oversold areas. When the CCI crosses back inside these bounds after reaching an extreme, the strategy enters a position in the opposite direction, expecting a mean reversion.",
+    "details": "",
+    "parameters": "- `CciPeriod` – lookback period for the CCI.\n- `HighLevel` – upper CCI threshold considered overbought.\n- `MiddleLevel` – middle threshold used to exit positions.\n- `LowLevel` – lower CCI threshold considered oversold.\n- `CandleType` – candle series used for calculations (default 8 hours)."
+   },
+   "3099": {
+    "id": 3099,
+    "name": "Hedge Any Positions",
+    "family": "volume",
+    "overview": "The **Hedge Any Positions Strategy** is a direct conversion of the original *Hedge any positions (barabashkakvn's edition)* MQL5 expert. The StockSharp version keeps the core idea intact: it monitors every open leg created by the strategy and, once a leg loses a defined number of pips, immediately opens an opposite position with an amplified lot size. The implementation relies on the high-level StockSharp API, so hedge orders are placed through market orders and position tracking is handled internally without custom order-routing code.\n\nThe strategy can optionally place an initial trade when it starts. Afterwards it simply reacts to adverse price moves and builds a ladder of hedging trades, marking each leg as hedged so the same position cannot trigger multiple opposite entries.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Timeframe used to evaluate price movements and trigger hedges. | 1-minute candles |\n| `LosingPips` | Number of pips the price must move against a leg before a hedge is opened. | 5 |\n| `LotCoefficient` | Multiplier applied to the original volume when submitting the hedge order. | 2.0 |\n| `AutoPlaceInitialTrade` | When enabled the strategy sends the first trade automatically on start. | Disabled |\n| `InitialVolume` | Order size used by the optional initial trade. Rounded to the instrument volume step. | 0.10 |\n| `InitialDirection` | Side (buy or sell) used for the optional initial trade. | Buy |\n\n> **Note:** Set the `Strategy.Volume` property to the base order size you want the strategy to use. The parameters above only control hedging-specific behaviour."
+   },
+   "1979": {
+    "id": 1979,
+    "name": "Grid Trading",
+    "family": "volume",
+    "overview": "This strategy implements a basic grid trading system. It places buy stop and sell stop orders at fixed price intervals defined by `GridStep`. Each executed order uses a fixed take profit distance. A global profit target closes all positions and resets the grid. Optionally, the volume of new orders increases following a martingale scheme.\n\n## Details\n\n- **Entry Criteria:**\n  - Buy stop one step above the last price.\n  - Sell stop one step below the last price.\n- **Long/Short:** Both.\n- **Exit Criteria:**\n  - Each position closes at the fixed take profit.\n  - When total profit exceeds `ProfitTarget` all orders and positions are closed.\n- **Stops:** Take profit only.\n- **Filters:** None.\n",
+    "details": "- **Entry Criteria:**\n  - Buy stop one step above the last price.\n  - Sell stop one step below the last price.\n- **Long/Short:** Both.\n- **Exit Criteria:**\n  - Each position closes at the fixed take profit.\n  - When total profit exceeds `ProfitTarget` all orders and positions are closed.\n- **Stops:** Take profit only.\n- **Filters:** None.",
+    "parameters": ""
+   }
+  }
+ }
+}

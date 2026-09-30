@@ -1,0 +1,98 @@
+{
+ "batch_103": {
+  "strategy_ids": [
+   534,
+   520,
+   3538,
+   2023,
+   1892,
+   3765,
+   2435,
+   1941,
+   1622,
+   575
+  ],
+  "docs": {
+   "534": {
+    "id": 534,
+    "name": "Pearson's R Oscillator",
+    "family": "trend",
+    "overview": "The Pearson's R Oscillator strategy dynamically searches for the period where price best fits a linear regression channel using the Pearson correlation coefficient. When the correlation reaches the specified positive or negative threshold, the strategy forms a regression channel and trades breakouts.\n\nPositions are opened when price crosses the channel boundaries and can be closed on midline crosses. The approach adapts to market conditions by automatically adjusting the lookback window to the strongest correlation.\n\n## Details\n\n- **Entry Criteria**:\n  - Price crosses above the upper regression line → **Long**.\n  - Price crosses below the lower regression line → **Short**.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Midline cross in the opposite direction.\n- **Stops**: None.\n- **Default Values**:\n  - `MinPeriod` = 48\n  - `MaxPeriod` = 360\n  - `Step` = 12\n  - `IdealPositive` = 0.85\n  - `IdealNegative` = -0.85\n  - `Deviations` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Pearson's R, Linear Regression\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Price crosses above the upper regression line → **Long**.\n  - Price crosses below the lower regression line → **Short**.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Midline cross in the opposite direction.\n- **Stops**: None.\n- **Default Values**:\n  - `MinPeriod` = 48\n  - `MaxPeriod` = 360\n  - `Step` = 12\n  - `IdealPositive` = 0.85\n  - `IdealNegative` = -0.85\n  - `Deviations` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Pearson's R, Linear Regression\n  - Stops: None\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "520": {
+    "id": 520,
+    "name": "Altcoin Index Correlation",
+    "family": "trend",
+    "overview": "The strategy compares EMA trends on the traded instrument and a reference index. It opens long when both fast EMAs are above their slow EMAs, and short when both are below. Optional inverse logic allows trading against the index trend or skipping the index completely.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA above slow EMA on both instruments (or opposite if inverse).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover condition.\n- **Stops**: None.\n- **Default Values**:\n  - `FastEmaLength` = 47\n  - `SlowEmaLength` = 50\n  - `IndexFastEmaLength` = 47\n  - `IndexSlowEmaLength` = 50\n  - `SkipIndexReference` = false\n  - `InverseSignal` = false\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA above slow EMA on both instruments (or opposite if inverse).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite crossover condition.\n- **Stops**: None.\n- **Default Values**:\n  - `FastEmaLength` = 47\n  - `SlowEmaLength` = 50\n  - `IndexFastEmaLength` = 47\n  - `IndexSlowEmaLength` = 50\n  - `SkipIndexReference` = false\n  - `InverseSignal` = false\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3538": {
+    "id": 3538,
+    "name": "MA on Momentum Min Profit",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader 5 expert advisor **MA on Momentum Min Profit.mq5** by trading the crossover between a Momentum indicator and a moving average that is calculated on top of the momentum series. A bullish signal appears when momentum crosses above its average while the previous bar kept momentum below the neutral 100 level. A bearish signal is generated when momentum crosses below the average with the previous bar above 100. The implementation keeps the original money based equity stop and the fixed take-profit distance measured in points.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | `TimeSpan.FromMinutes(5).TimeFrame()` | Candles used to compute momentum. |\n| `MomentumPeriod` | `int` | `14` | Lookback period of the Momentum indicator. |\n| `MomentumMovingAveragePeriod` | `int` | `6` | Length of the moving average applied to momentum. |\n| `MomentumMovingAverageType` | `MomentumMovingAverageType` | `Smoothed` | Moving average algorithm (Simple, Exponential, Smoothed, Weighted). |\n| `ReverseSignals` | `bool` | `false` | Mirror MetaTrader buy/sell signals. |\n| `CloseOpposite` | `bool` | `true` | Close the opposite exposure before opening a new position. |\n| `OnlyOnePosition` | `bool` | `true` | Keep a single net position. |\n| `UseCurrentCandle` | `bool` | `false` | Evaluate signals on the current forming candle instead of the closed bar. |\n| `StopLossMoney` | `decimal` | `15` | Equity drawdown allowed before closing all trades. |\n| `TakeProfitPoints` | `decimal` | `460` | Profit target in instrument points (multiplied by `PriceStep`). |\n| `MomentumReference` | `decimal` | `100` | Neutral momentum level copied from the MQL strategy. |"
+   },
+   "2023": {
+    "id": 2023,
+    "name": "ColorXdinMA",
+    "family": "trend",
+    "overview": "ColorXdinMA Strategy implements the XdinMA indicator, calculated as `ma_main * 2 - ma_plus`, where both components are simple moving averages with different lengths. The strategy monitors the slope of this line and opens positions when the slope changes direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `MainLength` | Period of the main moving average. | 10 |\n| `PlusLength` | Period of the additional moving average. | 20 |\n| `CandleType` | Timeframe of candles used for calculation. | 6 hours |"
+   },
+   "1892": {
+    "id": 1892,
+    "name": "Auto Pending By RSI",
+    "family": "trend",
+    "overview": "This strategy places pending limit orders after the Relative Strength Index (RSI) stays in extreme zones for several consecutive candles.\n\nWhen the RSI remains below the oversold level for `MatchCount` candles, a buy limit order is registered below the candle close by `PendingOffset` price points. When the RSI stays above the overbought level for the same number of candles, a sell limit order is placed above the close by the same offset.\n\n## Parameters\n- `RsiPeriod` – RSI calculation period.\n- `RsiOverbought` – level that defines the overbought zone.\n- `RsiOversold` – level that defines the oversold zone.\n- `PendingOffset` – distance from close price to place pending orders (price points).\n- `MatchCount` – number of consecutive candles required before placing orders.\n- `CandleType` – candle timeframe used for analysis.\n\nDefault values emulate the original MQL script and use 4‑hour candles.\n",
+    "details": "",
+    "parameters": "- `RsiPeriod` – RSI calculation period.\n- `RsiOverbought` – level that defines the overbought zone.\n- `RsiOversold` – level that defines the oversold zone.\n- `PendingOffset` – distance from close price to place pending orders (price points).\n- `MatchCount` – number of consecutive candles required before placing orders.\n- `CandleType` – candle timeframe used for analysis.\n\nDefault values emulate the original MQL script and use 4‑hour candles."
+   },
+   "3765": {
+    "id": 3765,
+    "name": "Lucky Code",
+    "family": "breakout",
+    "overview": "Lucky Code is a short-term breakout scalper converted from the original MetaTrader \"Lucky_code\" expert advisor. The strategy watches the spread extremes and reacts when the best ask jumps above or the best bid falls below the previous quote by a configurable distance. All trades are closed aggressively: profits are taken immediately once price ticks favorably, while losses are cut when an adverse excursion breaches a protective limit.\n\n## Data and execution\n\n- **Market data**: requires a steady stream of Level 1 quotes to read the latest best bid and ask values.\n- **Order types**: uses market orders for every entry and exit to mirror the tick-based execution of the MQL version.\n- **Position mode**: supports both netting and hedging accounts. Multiple fills accumulate into a single net position that is managed as a block.\n\n## Parameters\n\n- **Shift points** – minimum number of points (pips) between consecutive quotes that unlocks a new entry. Higher values reduce trade frequency and noise sensitivity.\n- **Limit points** – maximum adverse distance allowed before positions are force-closed. The value is converted into price units with the instrument tick size.\n\n## Trading logic\n\n1. **Initialization**\n   - Converts point-based parameters into real price offsets using the security tick size.\n   - Subscribes to Level 1 data and resets the internal buffers for the last seen bid and ask.\n2. **Entry rules**\n   - When the best ask advances by at least the configured shift above the previous ask, the strategy opens a short position (matching the original EA behavior that sells after upward spikes).\n   - When the best bid drops by at least the same shift under the previous bid, the strategy opens a long position to capture the rebound.\n3. **Volume sizing**\n   - Starts from the strategy `Volume` property.\n   - If the portfolio value is available, the size is increased to `round(Equity / 10,000, 1)` lots, emulating the MetaTrader margin-based sizing.\n4. **Exit rules**\n   - Long ex",
+    "details": "",
+    "parameters": "- **Shift points** – minimum number of points (pips) between consecutive quotes that unlocks a new entry. Higher values reduce trade frequency and noise sensitivity.\n- **Limit points** – maximum adverse distance allowed before positions are force-closed. The value is converted into price units with the instrument tick size."
+   },
+   "2435": {
+    "id": 2435,
+    "name": "H4L4 Breakout",
+    "family": "breakout",
+    "overview": "Daily breakout strategy that calculates H4 and L4 levels from the previous day's high, low, and close.\nA sell limit is placed at H4 and a buy limit at L4 at the start of each day.\nAll open positions and pending orders are cleared before new orders are submitted.\nProtective stop loss and take profit are applied using tick-based distances.\n\n## Details\n\n- **Entry Criteria**: Sell limit at H4 and buy limit at L4 derived from the previous day's candle.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TakeProfit` = 57\n  - `StopLoss` = 7\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Sell limit at H4 and buy limit at L4 derived from the previous day's candle.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop loss or take profit.\n- **Stops**: Yes.\n- **Default Values**:\n  - `TakeProfit` = 57\n  - `StopLoss` = 7\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1941": {
+    "id": 1941,
+    "name": "MPM Momentum",
+    "family": "momentum",
+    "overview": "This strategy is a simplified conversion of the original MQL expert `mpm-1_8.mq4`.\nIt waits for a sequence of progressive candles and then opens a position in the\nsame direction. Average True Range is used to evaluate candle size and to trail\nstops.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `ProgressiveCandles` | Number of consecutive candles required to trigger a trade. |\n| `ProgressiveSize` | Minimal candle body relative to ATR to count as progressive. |\n| `StopRatio` | Ratio of ATR used to trail the stop level. |\n| `AtrPeriod` | Period of the Average True Range indicator. |\n| `CandleType` | Type of candles used by the strategy. |\n| `ProfitPerLot` | Profit target per lot. |\n| `BreakEvenPerLot` | Profit required to exit at breakeven. |\n| `LossPerLot` | Maximum loss tolerated per lot. |\n\n## Logic\n\n1. On each finished candle the body size is compared with ATR.\n2. A bullish or bearish counter is incremented when the body exceeds the\n   `ProgressiveSize` threshold.\n3. After `ProgressiveCandles` are seen in one direction a market order is sent.\n4. The stop level is trailed by `StopRatio` of ATR.\n5. Positions are closed when the stop is hit or when profit/loss targets are\n   reached.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `ProgressiveCandles` | Number of consecutive candles required to trigger a trade. |\n| `ProgressiveSize` | Minimal candle body relative to ATR to count as progressive. |\n| `StopRatio` | Ratio of ATR used to trail the stop level. |\n| `AtrPeriod` | Period of the Average True Range indicator. |\n| `CandleType` | Type of candles used by the strategy. |\n| `ProfitPerLot` | Profit target per lot. |\n| `BreakEvenPerLot` | Profit required to exit at breakeven. |\n| `LossPerLot` | Maximum loss tolerated per lot. |"
+   },
+   "1622": {
+    "id": 1622,
+    "name": "TPSL Insert",
+    "family": "volatility",
+    "overview": "This strategy is a StockSharp translation of the MetaTrader 4 script **TPSL-Insert.mq4**. It does not generate entry or exit signals. Its only purpose is to attach take-profit and stop-loss orders to existing positions.\n\n## How It Works\n\n1. At start, the strategy reads `TakeProfitPips` and `StopLossPips` parameters.\n2. The values are converted from pips to price using the security's `PriceStep`.\n3. `StartProtection` is called to place protective orders.\n   - If a position already exists, protective orders are sent immediately.\n   - Future positions opened by the strategy will be protected automatically.\n\nThis behavior is useful when positions are opened manually or by external systems and you need to insert risk limits quickly.\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `TakeProfitPips` | Take-profit distance in pips. | `35` |\n| `StopLossPips` | Stop-loss distance in pips. | `100` |\n\n## Notes\n\n- The strategy does not subscribe to market data and contains no trade logic.\n- `StartProtection` handles creation and cancellation of protective orders.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `TakeProfitPips` | Take-profit distance in pips. | `35` |\n| `StopLossPips` | Stop-loss distance in pips. | `100` |"
+   },
+   "575": {
+    "id": 575,
+    "name": "Bitcoin Futures vs Spot Tri-Frame",
+    "family": "mean_reversion",
+    "overview": "Trades the spread between Bitcoin futures and spot markets across three timeframes. The strategy enters long when the spread's Z-score exceeds the long threshold on all timeframes and enters short when it falls below the short threshold. Positions can be closed after a specified holding period with optional take profit and stop loss in percent of entry price.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

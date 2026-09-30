@@ -1,0 +1,98 @@
+{
+ "batch_303": {
+  "strategy_ids": [
+   1097,
+   3242,
+   1528,
+   1014,
+   794,
+   1485,
+   3535,
+   466,
+   3028,
+   1099
+  ],
+  "docs": {
+   "1097": {
+    "id": 1097,
+    "name": "Multi-Step FlexiMA",
+    "family": "trend",
+    "overview": "Uses a variable-length moving average oscillator with a SuperTrend filter and multi-step take profit.\n\n- **Long** when price is above the SuperTrend line and the oscillator is positive.\n- **Short** when price is below the SuperTrend line and the oscillator is negative.\n- **Partial exits** at three take-profit levels.\n- **Close** remaining position when the opposite condition appears.\n\n**Indicators**: Variable-length SMA oscillator, SuperTrend\n**Stops**: multi-step take profit only\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3242": {
+    "id": 3242,
+    "name": "Day Trading Trend Pullback",
+    "family": "trend",
+    "overview": "Day Trading Strategy is a trend-following system that enters on pullbacks inside an established direction. The original expert advisor (MQL entry `MQL/24298/Day Trading.mq4`) mixes a 100-period EMA trend filter with momentum and a higher timeframe MACD confirmation. The StockSharp port keeps the same idea while exposing every important input as a strategy parameter.\n\nThe strategy operates on a single instrument and a configurable candle type. It never places pending orders – all trades are executed at market once the conditions on the latest finished candle are satisfied. Protective stop-loss and take-profit levels are attached immediately after the entry.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Volume` | Base order size. The value is normalized to the instrument volume step. | `1` |\n| `CandleType` | Working timeframe. | `TimeSpan.FromMinutes(15).TimeFrame()` |\n| `MacdCandleType` | Timeframe used by the MACD confirmation. | `TimeSpan.FromDays(30).TimeFrame()` |\n| `TrendConfirmationCount` | Number of candles that must stay on the correct side of the 100 EMA. Mirrors the `Count` input in the EA. | `10` |\n| `MomentumPeriod` | Momentum indicator period. | `14` |\n| `MomentumThreshold` | Minimum absolute distance of momentum from 100 to allow entries. | `0.3` |\n| `StopLossPips` | Stop-loss distance in pips. | `20` |\n| `TakeProfitPips` | Take-profit distance in pips. | `50` |\n| `MaxPositions` | Maximum number of base lots that can be accumulated in one direction. | `10` |"
+   },
+   "1528": {
+    "id": 1528,
+    "name": "VIX Spike",
+    "family": "trend",
+    "overview": "Buys when the VIX index spikes above its moving average by a multiple of standard deviation and closes after a fixed number of bars.\n\n## Details\n\n- **Entry Criteria**: VIX > mean + StdDevMultiplier * standard deviation.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Exit after `ExitPeriods` bars.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StdDevLength` = 15\n  - `StdDevMultiplier` = 2\n  - `ExitPeriods` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `VixSecurity` = \"CBOE:VIX\"\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: SMA, StdDev\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: VIX > mean + StdDevMultiplier * standard deviation.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Exit after `ExitPeriods` bars.\n- **Stops**: Yes.\n- **Default Values**:\n  - `StdDevLength` = 15\n  - `StdDevMultiplier` = 2\n  - `ExitPeriods` = 10\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `VixSecurity` = \"CBOE:VIX\"\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: SMA, StdDev\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1014": {
+    "id": 1014,
+    "name": "MACD with 1D Stochastic Confirmation Reversal",
+    "family": "trend",
+    "overview": "Strategy that buys on MACD line crossing above signal with confirmation from daily Stochastic oscillator. The trade is closed when price hits an ATR-based stop loss or falls below a trailing EMA take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `MACD crosses above Signal && DailyK > DailyD && DailyK < 80`\n- **Long/Short**: Long only\n- **Stops**: ATR stop loss and trailing EMA take profit\n- **Default Values**:\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `TrailingEmaLength` = 20\n  - `StopLossAtrMultiplier` = 3.25m\n  - `TrailingActivationAtrMultiplier` = 4.25m\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: MACD, Stochastic, ATR, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `MACD crosses above Signal && DailyK > DailyD && DailyK < 80`\n- **Long/Short**: Long only\n- **Stops**: ATR stop loss and trailing EMA take profit\n- **Default Values**:\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `TrailingEmaLength` = 20\n  - `StopLossAtrMultiplier` = 3.25m\n  - `TrailingActivationAtrMultiplier` = 4.25m\n  - `CandleType` = TimeSpan.FromHours(1).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: MACD, Stochastic, ATR, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "794": {
+    "id": 794,
+    "name": "Fine-Tune Inputs Fourier Smoothed Hybrid Volume Spread Analysis",
+    "family": "trend",
+    "overview": "This strategy combines smoothed volume with EMA of open and close prices to analyze volume spread. It enters long when both the volume spread and its moving average are positive, and short when both are negative. An optional parameter allows closing positions when no signal is present.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: `vd > 0` and `vdma > 0`\n  - **Short**: `vd < 0` and `vdma < 0`\n- **Exit Conditions**: Optionally close position when signals are neutral.\n- **Type**: Trend-following\n- **Indicators**: EMA\n- **Timeframe**: 1 minute (default)\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: `vd > 0` and `vdma > 0`\n  - **Short**: `vd < 0` and `vdma < 0`\n- **Exit Conditions**: Optionally close position when signals are neutral.\n- **Type**: Trend-following\n- **Indicators**: EMA\n- **Timeframe**: 1 minute (default)",
+    "parameters": ""
+   },
+   "1485": {
+    "id": 1485,
+    "name": "Triple CCI MFI Confirmed",
+    "family": "trend",
+    "overview": "This strategy enters long when the fast CCI crosses above zero while the middle and slow CCI remain positive, price is above EMA and MFI exceeds 50. Profit is trailed by EMA after an ATR based activation.\n\nTesting shows moderate performance; it works best during trending markets.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Fast CCI crosses above 0, middle CCI > 0, slow CCI > 0, MFI > 50, close above EMA\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: Close below trailing EMA after activation or low hits ATR stop\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLossAtrMultiplier` = 1.75\n  - `TrailingActivationMultiplier` = 2.25\n  - `FastCciPeriod` = 14\n  - `MiddleCciPeriod` = 25\n  - `SlowCciPeriod` = 50\n  - `MfiLength` = 14\n  - `EmaLength` = 50\n  - `TrailingEmaLength` = 20\n  - `AtrPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: CCI, MFI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast CCI crosses above 0, middle CCI > 0, slow CCI > 0, MFI > 50, close above EMA\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - **Long**: Close below trailing EMA after activation or low hits ATR stop\n- **Stops**: Yes.\n- **Default Values**:\n  - `StopLossAtrMultiplier` = 1.75\n  - `TrailingActivationMultiplier` = 2.25\n  - `FastCciPeriod` = 14\n  - `MiddleCciPeriod` = 25\n  - `SlowCciPeriod` = 50\n  - `MfiLength` = 14\n  - `EmaLength` = 50\n  - `TrailingEmaLength` = 20\n  - `AtrPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: CCI, MFI, EMA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3535": {
+    "id": 3535,
+    "name": "DeMarker Gaining Position Volume",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor *\"DeMarker gaining position volume\"*. It uses the DeMarker oscillator to detect oversold and overbought extremes, gradually accumulating exposure when the market stays in a stretched condition. The implementation operates on completed candles and ensures that only one signal per bar is processed.\n\nThe C# version focuses on the core discretionary logic of the original script while adopting the high-level StockSharp API. Order management, volume growth, and optional reversal behaviour are available via strategy parameters, allowing the algorithm to be adapted to different markets and timeframes.",
+    "details": "",
+    "parameters": "- **DeMarker Period** – number of candles used by the DeMarker indicator.\n- **Upper Level** – oscillator threshold that prepares short exposure (default `0.7`).\n- **Lower Level** – oscillator threshold that prepares long exposure (default `0.3`).\n- **Trade Volume** – market order volume submitted on every signal.\n- **Only One Position** – when enabled, the strategy flattens before opening a new trade so that net exposure never mixes longs and shorts.\n- **Reverse Signals** – swaps buy and sell triggers, turning the strategy into a contrarian or trend-following version.\n- **Candle Type** – timeframe of the candles used for the indicator and signal evaluation."
+   },
+   "466": {
+    "id": 466,
+    "name": "MA + BB + SuperTrend",
+    "family": "trend",
+    "overview": "The strategy combines a moving average crossover with SuperTrend confirmation\nand uses Bollinger Bands for exits. A long position is opened when the signal\nMA crosses above the basis MA and price is above the SuperTrend line. Shorts\nare opened on the opposite cross under a bearish SuperTrend. Positions are\nclosed either when price touches the far Bollinger Band or when price crosses\nthe SuperTrend in the opposite direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Signal MA crosses basis MA in direction of SuperTrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Touch of opposite Bollinger Band or SuperTrend flip.\n- **Stops**: SuperTrend acts as trailing stop.\n- **Default Values**:\n  - MA signal length = 89, MA ratio = 1.08.\n  - BB length = 30, BB width = 3.\n  - SuperTrend period = 20, SuperTrend factor = 4.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, Bollinger Bands, SuperTrend\n  - Stops: SuperTrend\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Signal MA crosses basis MA in direction of SuperTrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Touch of opposite Bollinger Band or SuperTrend flip.\n- **Stops**: SuperTrend acts as trailing stop.\n- **Default Values**:\n  - MA signal length = 89, MA ratio = 1.08.\n  - BB length = 30, BB width = 3.\n  - SuperTrend period = 20, SuperTrend factor = 4.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MA, Bollinger Bands, SuperTrend\n  - Stops: SuperTrend\n  - Complexity: Moderate\n  - Timeframe: Short/medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3028": {
+    "id": 3028,
+    "name": "Previous Candle Breakdown",
+    "family": "trend",
+    "overview": "This strategy reproduces the \"Previous Candle Breakdown\" MetaTrader expert advisor. It waits for the price to break above or below the previous reference candle with a configurable indent measured in price steps. The implementation relies on high-level StockSharp APIs with candle subscriptions for level calculations and tick subscriptions for execution decisions.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Reference timeframe used to calculate breakout levels. |\n| `IndentSteps` | Offset above/below the previous candle high/low expressed in price steps. |\n| `FastMaPeriod` / `FastMaShift` | Fast moving average length and optional forward shift (bars). |\n| `SlowMaPeriod` / `SlowMaShift` | Slow moving average length and optional forward shift (bars). |\n| `StopLossSteps` | Stop loss distance in price steps. |\n| `TakeProfitSteps` | Take profit distance in price steps. |\n| `TrailingStopSteps` | Trailing stop distance (0 disables trailing). |\n| `TrailingStepSteps` | Minimal gain required before the trailing stop is advanced. Must be > 0 when trailing is used. |\n| `ProfitClose` | Floating profit target that closes all positions. |\n| `MaxNetPosition` | Maximum absolute net position allowed. |\n| `StartTime` / `EndTime` | Trading window boundaries. |"
+   },
+   "1099": {
+    "id": 1099,
+    "name": "Multi-Step Vegas SuperTrend",
+    "family": "trend",
+    "overview": "Combines a volatility-adjusted SuperTrend with a Vegas channel.\nOpens long when price is above the trend and short when below.\nOptional multi-step take profits close portions of the position at increasing targets.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

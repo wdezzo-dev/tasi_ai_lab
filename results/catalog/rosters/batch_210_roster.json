@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1200,
+      "name": "Bollinger Bands with Trailing Stop",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 3104,
+      "name": "MA MACD Position Averaging",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3528,
+      "name": "MA Grid",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,48)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,48))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 48-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 2104,
+      "name": "Color Zerolag DeMarker",
+      "family": "trend",
+      "entry_long": "rsi(close,8) > 30 and close > ema(close,10)",
+      "exit_long": "rsi(close,8) < 70 or close < ema(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 8 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1683,
+      "name": "Parabolic SAR Alert",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,10))",
+      "exit_long": "crossbelow(close,ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by a moving-average crossover because SAR is not available in the local DSL."
+    },
+    {
+      "id": 1676,
+      "name": "My Line Order",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 1300,
+      "name": "Silver Midnight Candle Color",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 1029,
+      "name": "MathStatisticsKernelFunctions",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 620,
+      "name": "Cleaner Screeners Library",
+      "family": "other",
+      "entry_long": "rsi(close,14) > 30",
+      "exit_long": "rsi(close,14) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 389,
+      "name": "Payday Anomaly",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    }
+  ]
+}

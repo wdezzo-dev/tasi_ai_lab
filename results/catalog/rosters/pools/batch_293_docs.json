@@ -1,0 +1,98 @@
+{
+ "batch_293": {
+  "strategy_ids": [
+   3373,
+   471,
+   1317,
+   1494,
+   2830,
+   1254,
+   745,
+   2395,
+   2819,
+   2022
+  ],
+  "docs": {
+   "3373": {
+    "id": 3373,
+    "name": "MelBar Take325",
+    "family": "trend",
+    "overview": "The MelBar Take325 strategy is a direct conversion of the Expert Advisor Studio system \"MelBar™Take325%™ 5.5Y NZD-USD\". It trades both directions on NZD/USD using a combination of tick volume breakouts, a swing filter based on a 12-period simple moving average, and a 14-period RSI exit filter. The StockSharp port keeps the original risk parameters of a 16-pip stop loss and a 45-pip take profit, expressed in pip distances from the entry price.\n\nThe strategy starts by waiting for an increase in tick volume, defined as a breakout above the configured volume threshold. When volume expands, it checks whether the simple moving average formed a local turning point two bars earlier. A local maximum in the SMA opens a long trade, while a local minimum opens a short trade. Only one direction can be taken at a time, and conflicting signals are ignored to avoid flip-flopping on the same bar.\n\nOpen positions are actively managed. Stop-loss and take-profit levels are enforced every time a candle closes, making the behaviour similar to the MetaTrader version. Additionally, the 14-period RSI is used to force exits: long trades close when RSI crosses down through the configured level (default 80), and short trades close when RSI crosses up through the symmetric level (default 20). The high/low of the processed candle is compared with the entry price to trigger stop-loss and take-profit exits.\n\n## Details\n\n- **Entry Criteria**:\n  - **Volume filter**: tick volume two bars ago must be below the threshold while the previous bar exceeds it.\n  - **Long**: SMA (length 12) has a local peak two bars ago (`SMA[t-3] < SMA[t-2]` and `SMA[t-2] > SMA[t-1]`).\n  - **Short**: SMA has a local trough (`SMA[t-3] > SMA[t-2]` and `SMA[t-2] < SMA[t-1]`).\n- **Exit Criteria**:\n  - **Stop-loss**: 16 pips from entry, evaluated on candle closes.\n  - **Take-profit**: 45 pips from entry, evaluated on candle closes.\n  - **Long RSI exit**: RSI crosses downward through 80 (`RSI[t-3] > 80` and `RSI[t-2] < 80`).\n  - ",
+    "details": "- **Entry Criteria**:\n  - **Volume filter**: tick volume two bars ago must be below the threshold while the previous bar exceeds it.\n  - **Long**: SMA (length 12) has a local peak two bars ago (`SMA[t-3] < SMA[t-2]` and `SMA[t-2] > SMA[t-1]`).\n  - **Short**: SMA has a local trough (`SMA[t-3] > SMA[t-2]` and `SMA[t-2] < SMA[t-1]`).\n- **Exit Criteria**:\n  - **Stop-loss**: 16 pips from entry, evaluated on candle closes.\n  - **Take-profit**: 45 pips from entry, evaluated on candle closes.\n  - **Long RSI exit**: RSI crosses downward through 80 (`RSI[t-3] > 80` and `RSI[t-2] < 80`).\n  - **Short RSI exit**: RSI crosses upward through 20 (`RSI[t-3] < 20` and `RSI[t-2] > 20`).\n- **Default Parameters**:\n  - Entry volume = 0.1 lots.\n  - Volume threshold = 1000 tick volume units.\n  - SMA period = 12.\n  - RSI period = 14.\n  - RSI level = 80 (short exit uses 100 - level).\n  - Candle timeframe = 30 minutes.\n- **Market**: Designed for NZD/USD but can be applied to other FX pairs.\n- **Style**: Momentum breakout with mean-reversion exits.\n- **Stops**: Fixed stop-loss and take-profit; no trailing stop in the original code.\n- **Complexity**: Moderate; combines multiple filters but no position scaling.\n- **Risk**: Medium, as the stop is tighter than the take-profit but both are fixed distances.",
+    "parameters": ""
+   },
+   "471": {
+    "id": 471,
+    "name": "3-Bar Low",
+    "family": "trend",
+    "overview": "The 3-Bar Low strategy buys when the closing price falls below the previous three-bar lowest close and exits when price closes above the previous seven-bar highest close. An optional EMA filter can require the price to stay above a long-term average before entries are allowed.\n\n## Details\n\n- **Entry Criteria**:\n  - Closing price is below the previous three-bar lowest close.\n  - Optional: closing price is above the EMA when the filter is enabled.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Closing price is above the previous seven-bar highest close.\n- **Stops**: None.\n- **Default Values**:\n  - `MaPeriod` = 200\n  - `LowestLength` = 3\n  - `HighestLength` = 7\n  - `UseEmaFilter` = false\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: EMA, Highest/Lowest\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Closing price is below the previous three-bar lowest close.\n  - Optional: closing price is above the EMA when the filter is enabled.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Closing price is above the previous seven-bar highest close.\n- **Stops**: None.\n- **Default Values**:\n  - `MaPeriod` = 200\n  - `LowestLength` = 3\n  - `HighestLength` = 7\n  - `UseEmaFilter` = false\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long\n  - Indicators: EMA, Highest/Lowest\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1317": {
+    "id": 1317,
+    "name": "Smart Money Concept Strategy - Uncle Sam",
+    "family": "trend",
+    "overview": "This breakout strategy monitors recent swing highs and lows. A long trade is opened when price closes above the latest pivot high, while a short trade is opened when price closes below the latest pivot low. An optional moving average filter can be enabled to trade only with the prevailing trend.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses above the most recent pivot high (and above the MA if enabled).\n  - **Short**: Close crosses below the most recent pivot low (and below the MA if enabled).\n- **Long/Short**: Both.\n- **Indicators**: Pivot detection, Moving Average (optional).\n- **Timeframe**: Configurable.\n- **Complexity**: Medium.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses above the most recent pivot high (and above the MA if enabled).\n  - **Short**: Close crosses below the most recent pivot low (and below the MA if enabled).\n- **Long/Short**: Both.\n- **Indicators**: Pivot detection, Moving Average (optional).\n- **Timeframe**: Configurable.\n- **Complexity**: Medium.",
+    "parameters": ""
+   },
+   "1494": {
+    "id": 1494,
+    "name": "Tuga Supertrend",
+    "family": "trend",
+    "overview": "Tuga Supertrend is a long-only strategy based on the SuperTrend indicator. It enters a long position when the SuperTrend direction flips downward and exits when the direction turns upward.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: SuperTrend direction changes from up to down within the date window.\n- **Exit Criteria**: SuperTrend direction changes from down to up.\n- **Stops**: None.\n- **Default Values**:\n  - `StartDate` = 2018-01-01\n  - `EndDate` = 2069-12-31\n  - `AtrPeriod` = 10\n  - `Factor` = 3.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SuperTrend, ATR\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: SuperTrend direction changes from up to down within the date window.\n- **Exit Criteria**: SuperTrend direction changes from down to up.\n- **Stops**: None.\n- **Default Values**:\n  - `StartDate` = 2018-01-01\n  - `EndDate` = 2069-12-31\n  - `AtrPeriod` = 10\n  - `Factor` = 3.0\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SuperTrend, ATR\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2830": {
+    "id": 2830,
+    "name": "BSS Triple EMA Separation",
+    "family": "trend",
+    "overview": "The **BSS Triple EMA Separation Strategy** is a StockSharp port of the MetaTrader 5 expert advisor \"BSS 1_0\" (MQL ID 20591). The approach monitors three moving averages with increasing lookback windows and waits for them to fan out by at least a configurable distance. When the fast, medium and slow averages are properly separated, the strategy enters in the direction of the trend while respecting a cooldown between fills and a cap on the total position size.\n\nThis implementation keeps the core behaviour of the original robot while exposing the configuration through StockSharp `StrategyParam` objects. All comments and documentation are written in English as requested.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | 0.1 | Volume used for each entry order. The net position is limited to `OrderVolume * MaxPositions`. |\n| `MaxPositions` | 2 | Maximum number of lots (per direction) that can be held simultaneously. |\n| `MinimumDistance` | 0.0005 | Minimum price gap required between neighbouring moving averages. Choose a value appropriate for the instrument (for a 5-digit FX pair, 0.0005 equals 5 pips). |\n| `MinimumPauseSeconds` | 600 | Cooldown in seconds between new entries. Closing trades does not reset the timer; only entries do. |\n| `FirstMaPeriod` | 5 | Period of the fastest moving average. Must be strictly less than `SecondMaPeriod`. |\n| `FirstMaMethod` | Exponential | Smoothing method used for the fast moving average (Simple, Exponential, Smoothed, LinearWeighted). |\n| `SecondMaPeriod` | 25 | Period of the medium moving average. Must be strictly less than `ThirdMaPeriod`. |\n| `SecondMaMethod` | Exponential | Smoothing method used for the medium moving average. |\n| `ThirdMaPeriod` | 125 | Period of the slow moving average. |\n| `ThirdMaMethod` | Exponential | Smoothing method used for the slow moving average. |\n| `CandleType` | 1-minute time frame | Candle data source used for indicator calculations and signal evaluation. |"
+   },
+   "1254": {
+    "id": 1254,
+    "name": "Risk Management and Positionsize - MACD example",
+    "family": "trend",
+    "overview": "The **Risk Management and Positionsize - MACD example** strategy demonstrates dynamic position sizing based on current equity. It relies on MACD crossovers from a higher timeframe combined with a moving average trend filter.\n\n## Details\n- **Entry Criteria**: MACD line crosses above/below signal line with trend confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite MACD crossover.\n- **Stops**: None.\n- **Default Values**:\n  - `InitialBalance = 10000m`\n  - `LeverageEquity = true`\n  - `MarginFactor = -0.5m`\n  - `Quantity = 3.5m`\n  - `MacdMaType = MovingAverageTypeEnum.EMA`\n  - `FastMaLength = 11`\n  - `SlowMaLength = 26`\n  - `SignalMaLength = 9`\n  - `MacdTimeFrame = TimeSpan.FromMinutes(30)`\n  - `TrendMaType = MovingAverageTypeEnum.EMA`\n  - `TrendMaLength = 55`\n  - `TrendTimeFrame = TimeSpan.FromDays(1)`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, Moving Average\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD line crosses above/below signal line with trend confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite MACD crossover.\n- **Stops**: None.\n- **Default Values**:\n  - `InitialBalance = 10000m`\n  - `LeverageEquity = true`\n  - `MarginFactor = -0.5m`\n  - `Quantity = 3.5m`\n  - `MacdMaType = MovingAverageTypeEnum.EMA`\n  - `FastMaLength = 11`\n  - `SlowMaLength = 26`\n  - `SignalMaLength = 9`\n  - `MacdTimeFrame = TimeSpan.FromMinutes(30)`\n  - `TrendMaType = MovingAverageTypeEnum.EMA`\n  - `TrendMaLength = 55`\n  - `TrendTimeFrame = TimeSpan.FromDays(1)`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, Moving Average\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "745": {
+    "id": 745,
+    "name": "EMA RSI Trend Reversal",
+    "family": "trend",
+    "overview": "Strategy that enters long on EMA crossover with RSI confirmation and exits when the opposite crossover occurs with RSI below the level. Uses percent-based take profit and stop loss.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `FastEMA crosses above SlowEMA && RSI > RsiLevel`\n- **Long/Short**: Long only\n- **Stops**: Percent take profit and stop loss\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `RsiLength` = 14\n  - `RsiLevel` = 50m\n  - `TakeProfitPercent` = 2m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA, RSI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `FastEMA crosses above SlowEMA && RSI > RsiLevel`\n- **Long/Short**: Long only\n- **Stops**: Percent take profit and stop loss\n- **Default Values**:\n  - `FastLength` = 9\n  - `SlowLength` = 21\n  - `RsiLength` = 14\n  - `RsiLevel` = 50m\n  - `TakeProfitPercent` = 2m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: EMA, RSI\n  - Stops: Yes\n  - Complexity: Beginner\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2395": {
+    "id": 2395,
+    "name": "2MA Bunny Cross Expert",
+    "family": "trend",
+    "overview": "The **2MA Bunny Cross Expert** strategy trades the crossover of two simple moving averages. A long trade is opened when the fast average moves above the slow one, while a short trade is opened when the fast average drops below the slow one. Any opposite position is closed before a new one is opened.\n\n## Details\n\n- **Purpose**: trend following via moving average crossover\n- **Trading**: long and short\n- **Indicators**: fast and slow Simple Moving Average\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `FastLength` = 5\n  - `SlowLength` = 20\n",
+    "details": "- **Purpose**: trend following via moving average crossover\n- **Trading**: long and short\n- **Indicators**: fast and slow Simple Moving Average\n- **Stops**: none\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `FastLength` = 5\n  - `SlowLength` = 20",
+    "parameters": ""
+   },
+   "2819": {
+    "id": 2819,
+    "name": "Small Inside Bar",
+    "family": "trend",
+    "overview": "The Small Inside Bar Strategy searches for a compact inside bar pattern followed by a momentum shift between two consecutive candles. The original MetaTrader 5 expert was translated to StockSharp high-level API and now operates on completed candles only. The approach is designed for traders who prefer breakout-style entries triggered by compressed volatility phases.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | 1 hour time frame | Candle subscription used for pattern detection. |\n| `RangeRatioThreshold` | 2.0 | Minimum mother-to-inside range ratio. |\n| `EnableLong` | true | Allow bullish trades. |\n| `EnableShort` | true | Allow bearish trades. |\n| `ReverseSignals` | false | Swap long and short pattern directions. |\n| `OpenMode` | SwingWithRefill | Controls how existing exposure is handled on a new signal. |"
+   },
+   "2022": {
+    "id": 2022,
+    "name": "Color XXDPO",
+    "family": "trend",
+    "overview": "Strategy using a double smoothed Detrended Price Oscillator to capture slope reversals.\n\n## Details\n- **Entry Criteria**: Upward slope with current value rising opens long; downward slope with current value falling opens short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite slope change closes positions.\n- **Stops**: None.\n- **Default Values**: First MA Length 21, Second MA Length 5, Candle Timeframe 6 hours.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**: Upward slope with current value rising opens long; downward slope with current value falling opens short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite slope change closes positions.\n- **Stops**: None.\n- **Default Values**: First MA Length 21, Second MA Length 5, Candle Timeframe 6 hours.\n- **Filters**: None.",
+    "parameters": ""
+   }
+  }
+ }
+}

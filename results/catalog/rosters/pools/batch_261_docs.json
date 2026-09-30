@@ -1,0 +1,98 @@
+{
+ "batch_261": {
+  "strategy_ids": [
+   2349,
+   1371,
+   3476,
+   2010,
+   2992,
+   1974,
+   802,
+   3091,
+   1414,
+   3743
+  ],
+  "docs": {
+   "2349": {
+    "id": 2349,
+    "name": "Candle Trend",
+    "family": "trend",
+    "overview": "This strategy opens positions based on the direction of consecutive candles.\nA long position is opened after a specified number of bullish candles appears in a row, while a short position is opened after the same number of bearish candles.\nExisting positions can be closed when the opposite signal occurs.",
+    "details": "",
+    "parameters": "- **Candle Type**: Timeframe of candles used for analysis.\n- **Trend Candles**: Number of consecutive candles in one direction required to trigger an action.\n- **Take Profit %**: Optional take profit expressed as a percentage of entry price.\n- **Stop Loss %**: Optional stop loss expressed as a percentage of entry price.\n- **Enable Long Entry**: Allow opening long positions.\n- **Enable Short Entry**: Allow opening short positions.\n- **Enable Long Exit**: Allow closing long positions on opposite signal.\n- **Enable Short Exit**: Allow closing short positions on opposite signal."
+   },
+   "1371": {
+    "id": 1371,
+    "name": "SuperTrend AI Oscillator",
+    "family": "trend",
+    "overview": "SuperTrend AI Oscillator combines a SuperTrend trailing stop with a custom oscillator filter.\nThe strategy trades on SuperTrend reversals confirmed by the oscillator.\nPositions are managed by a trailing stop and optional risk-reward target.\n\n## Details\n\n- **Entry Criteria**: SuperTrend flip with oscillator > 50 for long or < 50 for short\n- **Long/Short**: Both\n- **Exit Criteria**: Trailing stop or risk-reward take profit\n- **Stops**: Trailing stop\n- **Default Values**:\n  - `AtrLength` = 10\n  - `Factor` = 1\n  - `RiskReward` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Stochastic\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: SuperTrend flip with oscillator > 50 for long or < 50 for short\n- **Long/Short**: Both\n- **Exit Criteria**: Trailing stop or risk-reward take profit\n- **Stops**: Trailing stop\n- **Default Values**:\n  - `AtrLength` = 10\n  - `Factor` = 1\n  - `RiskReward` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Stochastic\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3476": {
+    "id": 3476,
+    "name": "Averaging By Signal",
+    "family": "trend",
+    "overview": "The **Averaging By Signal Strategy** ports the MetaTrader expert `AveragingBySignal.mq4` to the StockSharp high-level API. The original advisor combined a moving-average crossover entry filter with Martingale-style averaging, a shared basket take-profit, and an optional trailing stop that only activates for the very first order. This C# version recreates the same building blocks while adapting them to StockSharp's netting execution model and indicator framework.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-hour time frame | Primary timeframe for indicator calculations. |\n| `InitialVolume` | `decimal` | `0.1` | Base lot size for the first order in a basket. |\n| `LotSizing` | `LotSizingMode` | `Multiplier` | Choose between fixed lots or geometric scaling. |\n| `Multiplier` | `decimal` | `2` | Lot multiplier applied to every extra layer when `LotSizing` = `Multiplier`. |\n| `FastPeriod` | `int` | `28` | Lookback of the fast moving average. |\n| `FastMethod` | `MovingAverageMethod` | `LinearWeighted` | Moving-average method for the fast line. |\n| `SlowPeriod` | `int` | `50` | Lookback of the slow moving average. |\n| `SlowMethod` | `MovingAverageMethod` | `Smoothed` | Moving-average method for the slow line. |\n| `TakeProfitPips` | `int` | `15` | Shared take-profit distance for the entire basket (0 disables). |\n| `AveragingBySignal` | `bool` | `true` | Require a fresh signal before adding new layers. |\n| `LayerDistancePips` | `decimal` | `10` | Minimal adverse move (in pips) before averaging. |\n| `MaxLayers` | `int` | `10` | Maximum simultaneous orders per direction, including the initial one. |\n| `EnableTrailing` | `bool` | `false` | Enable the trailing stop for single-order baskets. |\n| `TrailingStartPips` | `decimal` | `10` | Floating profit required before trailing starts. |\n| `TrailingStepPips` | `decimal` | `1` | Additional progress needed to move the trailing stop. |"
+   },
+   "2010": {
+    "id": 2010,
+    "name": "ColorMaRsi Trigger",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the original MQL5 expert `exp_colormarsi-trigger.mq5`. It compares fast and slow EMAs and fast and slow RSI values. The combined signal takes values -1, 0 or +1. A position is opened when the previous signal has the opposite sign to the current one.\n\n## How it works\n\n- When the signal turns from positive to zero or negative, a long position is opened and any short position is closed.\n- When the signal turns from negative to zero or positive, a short position is opened and any long position is closed.\n\n## Parameters\n\n- **Fast EMA** – period for the fast exponential moving average.\n- **Slow EMA** – period for the slow exponential moving average.\n- **Fast RSI** – period for the fast RSI.\n- **Slow RSI** – period for the slow RSI.\n- **Candle Type** – timeframe of the candles used for calculation.\n\n## Indicators\n\n- Exponential Moving Average (fast and slow)\n- Relative Strength Index (fast and slow)\n\nOnly finished candles are processed. Orders are placed using `BuyMarket` and `SellMarket`.\n",
+    "details": "",
+    "parameters": "- **Fast EMA** – period for the fast exponential moving average.\n- **Slow EMA** – period for the slow exponential moving average.\n- **Fast RSI** – period for the fast RSI.\n- **Slow RSI** – period for the slow RSI.\n- **Candle Type** – timeframe of the candles used for calculation."
+   },
+   "2992": {
+    "id": 2992,
+    "name": "XCCI Histogram Vol",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor `Exp_XCCI_Histogram_Vol`. It reproduces the color-coded logic of the custom \"XCCI Histogram Vol\" indicator: a Commodity Channel Index (CCI) multiplied by volume, smoothed by a selectable moving average, and compared to dynamic thresholds. The implementation follows the high level API guidelines, processes closed candles only, and keeps the original dual-position structure by exposing separate volumes for the primary and secondary entries.",
+    "details": "",
+    "parameters": "- **CciPeriod** – length of the Commodity Channel Index.\n- **MaLength** – length applied to both smoothing moving averages.\n- **HighLevel2 / HighLevel1 / LowLevel1 / LowLevel2** – multipliers applied to the smoothed volume to create adaptive thresholds.\n- **SignalBarOffset** – number of closed candles to wait before acting on a zone (0 = last closed candle, 1 = previous candle, etc.).\n- **Smoothing** – moving average type used for smoothing (subset of the original options: SMA, EMA, SMMA, WMA, Hull MA, VWMA).\n- **AllowLongEntries / AllowShortEntries / AllowLongExits / AllowShortExits** – enable or disable each side independently.\n- **PrimaryEntryVolume / SecondaryEntryVolume** – volumes for the two entry tiers (used for both long and short trades).\n- **UseStopLoss / StopLossPoints** – optional absolute stop-loss.\n- **UseTakeProfit / TakeProfitPoints** – optional absolute take-profit.\n- **CandleType** – timeframe (or any other candle data type) requested from the connector."
+   },
+   "1974": {
+    "id": 1974,
+    "name": "Jpalonso Modoki",
+    "family": "trend",
+    "overview": "The Jpalonso Modoki strategy trades a price channel built from a simple moving average.\nUpper and lower envelopes are calculated by applying a percentage deviation to the moving average.\nThe system goes long when price touches the lower band or when it stays in the upper half of the channel.\nIt goes short in the opposite situations. Fixed take profit and stop loss protect the position.\n\n## Details\n\n- **Entry Criteria**: Price below lower envelope or between middle and upper band for longs; price above upper envelope or between middle and lower band for shorts.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Yes, take profit and stop loss in points.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `SmaPeriod` = 200\n  - `Deviation` = 0.35%\n  - `TakeProfit` = 127 points\n  - `StopLoss` = 77 points\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: SMA, Envelopes\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price below lower envelope or between middle and upper band for longs; price above upper envelope or between middle and lower band for shorts.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Yes, take profit and stop loss in points.\n- **Default Values**:\n  - `CandleType` = 1 minute\n  - `SmaPeriod` = 200\n  - `Deviation` = 0.35%\n  - `TakeProfit` = 127 points\n  - `StopLoss` = 77 points\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: SMA, Envelopes\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "802": {
+    "id": 802,
+    "name": "FlexiMA x FlexiST",
+    "family": "trend",
+    "overview": "Combines a simple moving average with a SuperTrend filter.\n\n- **Long** when price is above both indicators.\n- **Short** when price is below both.\n- **Close** positions when the opposite condition appears.\n\n**Indicators**: SMA, SuperTrend\n**Stops**: none\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3091": {
+    "id": 3091,
+    "name": "Extreme EA (StockSharp Conversion)",
+    "family": "trend",
+    "overview": "The **Extreme EA** strategy is a trend-following Expert Advisor originally written for MetaTrader. It combines two moving averages with a Commodity Channel Index (CCI) filter and an adaptive money-management module. This port keeps the trading logic intact while exposing all important knobs through StockSharp's high-level API. The strategy operates on finished candles only and is compatible with multiple timeframes by running the moving averages and CCI on independent candle subscriptions.\n\n## Strategy Overview\n\n1. **Trend filter:** Two moving averages are calculated on the configurable `MaCandleType`. The fast average tracks short-term momentum while the slow average defines the dominant trend slope. The strategy checks the slope of the slow average using the previous two values to mimic the original `CopyBuffer` array offsets from the MQL code.\n2. **Momentum filter:** The CCI is evaluated on its own timeframe (`CciCandleType`) and price source. The latest completed value is cached and reused until a new CCI candle appears, which matches the behaviour of the MetaTrader buffers.\n3. **Entry rules:**\n   - Enter long when the slow MA is rising, the fast MA is rising, and the CCI drops below the lower level.\n   - Enter short when the slow MA is falling, the fast MA is falling, and the CCI climbs above the upper level.\n4. **Exit rules:**\n   - Close all longs if the slow MA stops rising.\n   - Close all shorts if the slow MA stops falling.\n\n## Risk Management\n\n- **MaximumRisk** controls the target position size based on current portfolio equity and the latest price. If the computed volume is zero or the portfolio values are unavailable, the strategy falls back to the configured `Volume` or the exchange minimum.\n- **DecreaseFactor** reduces the calculated volume after two or more consecutive losing trades. The reduction mirrors the original formula `lot = lot - lot * losses / DecreaseFactor`.\n- **HistoryDays** caps how long a loss streak is remembered. If a closing trade ha",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `MaximumRisk` | `decimal` | `0.05` | Fraction of equity used to size each new trade. |\n| `DecreaseFactor` | `decimal` | `6` | Loss-streak reduction factor. Set to `0` to disable. |\n| `HistoryDays` | `int` | `60` | Number of days preserved when counting consecutive losses. |\n| `MaxPositions` | `int` | `3` | Maximum simultaneous entries per direction. |\n| `FastMaPeriod` | `int` | `15` | Period for the fast moving average. |\n| `SlowMaPeriod` | `int` | `75` | Period for the slow moving average. |\n| `CciPeriod` | `int` | `12` | Lookback length for the CCI. |\n| `CciUpperLevel` | `decimal` | `50` | Upper CCI threshold used for shorts. |\n| `CciLowerLevel` | `decimal` | `-50` | Lower CCI threshold used for longs. |\n| `MaCandleType` | `DataType` | `15m` | Timeframe for both moving averages and execution. |\n| `CciCandleType` | `DataType` | `30m` | Timeframe for the CCI filter. |\n| `MaMethod` | `MaMethod` | `Exponential` | Smoothing method (Simple, Exponential, Smoothed, LinearWeighted). |\n| `MaPriceMode` | `AppliedPriceMode` | `Median` | Price input for the moving averages. |\n| `CciPriceMode` | `AppliedPriceMode` | `Typical` | Price input for the CCI. |"
+   },
+   "1414": {
+    "id": 1414,
+    "name": "TF Segmented Linear Regression",
+    "family": "trend",
+    "overview": "Strategy applies a linear regression channel within each time segment. A long position opens when price crosses above the upper band and a short when it crosses below the lower band.\n\n## Details\n- **Entry Criteria**: Price crossing regression channel.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `Segment` = TimeSpan.FromDays(1)\n  - `Multiplier` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing regression channel.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `Segment` = TimeSpan.FromDays(1)\n  - `Multiplier` = 2\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Linear Regression\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3743": {
+    "id": 3743,
+    "name": "Build Your Grid",
+    "family": "trend",
+    "overview": "The **Build Your Grid Strategy** is a direct conversion of the MetaTrader expert advisor \"BuildYourGridEA\". It keeps two indepen\ndent ladders of market positions on the long and short side, adds new layers when price advances by a configurable number of pip\ns and optionally increases the traded volume geometrically or exponentially. The basket can be closed when a combined profit targ\net is reached, when a maximum loss measured in pips is exceeded, or by issuing hedge orders whenever the floating drawdown breac\nhes a percentage of the account balance.\n\n## How it works\n\n1. **Initial entries.** Depending on *Order Placement*, the strategy opens the first buy, sell or both market orders as soon as the spread condition allows it.\n2. **Grid expansion.** Additional orders are triggered either with the trend or against it. The distance to the next layer is measured in pips, optionally multiplied by the number of already open orders or by a power of two.\n3. **Volume progression.** Order size follows the selected lot progression rule (static, geometric, or exponential) and can be capped by *Max Multiplier* relative to the first entry.\n4. **Profit taking.** The entire basket is closed once the aggregate floating PnL exceeds the target expressed either in pips or in account currency.\n5. **Loss protection.** When the cumulative loss crosses the configured pip threshold, the strategy closes either the oldest ticket on each side or the whole basket depending on the *Loss Handling* mode.\n6. **Hedging.** If the floating drawdown reaches *Hedge Threshold (%)*, a balancing order sized by the volume difference and the *Hedge Multiplier* is submitted to freeze exposure.\n\n## Parameters\n\n| Parameter | Description |\n| --- | --- |\n| `Order Placement` | Which directions are allowed for opening new layers (both, long only, short only). |\n| `Grid Direction` | Whether additional orders follow the trend or fade the movement. |\n| `Grid Step (pips)` | Base distance in pips to the next layer befor",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `Order Placement` | Which directions are allowed for opening new layers (both, long only, short only). |\n| `Grid Direction` | Whether additional orders follow the trend or fade the movement. |\n| `Grid Step (pips)` | Base distance in pips to the next layer before multipliers are applied. |\n| `Step Progression` | Static distance, geometric growth (× count), or exponential growth (× 2^(n-1)). |\n| `Close Target` | Type of profit target (pips or account currency). |\n| `Target (pips)` / `Target (currency)` | Threshold that must be exceeded to close the basket in profit. |\n| `Loss Handling` | Action when the pip drawdown limit is hit (do nothing, close the first tickets, or close all). |\n| `Loss (pips)` | Maximum tolerated combined loss before protection engages. |\n| `Use Hedge` | Enables hedge orders to balance net exposure during deep drawdowns. |\n| `Hedge Threshold (%)` | Percentage of the account balance used as a trigger for hedging. |\n| `Hedge Multiplier` | Multiplier applied to the volume difference when issuing the hedge order. |\n| `Auto Volume` / `Risk Factor` | Balance driven position sizing. Volume = Balance × RiskFactor / 100000. |\n| `Manual Volume` | Fixed lot size when automatic sizing is disabled. |\n| `Lot Progression` | Static, geometric, or exponential scaling for consecutive orders. |\n| `Max Multiplier` | Caps the lot size to `firstLot × MaxMultiplier`. |\n| `Max Orders` | Maximum number of simultaneous open positions (0 = unlimited). |\n| `Max Spread` | Blocks new trades while the spread in pips is above the threshold (0 = ignore). |\n| `Use Completed Bar` / `Candle Type` | Evaluate signals only once per completed candle of the selected type. |"
+   }
+  }
+ }
+}

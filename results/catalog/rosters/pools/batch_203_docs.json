@@ -1,0 +1,98 @@
+{
+ "batch_203": {
+  "strategy_ids": [
+   2140,
+   3014,
+   3929,
+   318,
+   4060,
+   3040,
+   80,
+   565,
+   1758,
+   545
+  ],
+  "docs": {
+   "2140": {
+    "id": 2140,
+    "name": "Volatility Quality",
+    "family": "trend",
+    "overview": "A sample strategy demonstrating how to trade using the direction changes of a smoothed median price. The original MQL expert used the *Volatility Quality* indicator; this implementation approximates it with a simple moving average of the median price.\n\n## Strategy Logic\n- Calculate the median price of each candle `(High + Low) / 2`.\n- Smooth the median price with a Simple Moving Average (SMA).\n- Determine the indicator color: rising values are treated as **up** (color 0) and falling values as **down** (color 1).\n- When the color switches from up to down, the strategy closes any short position and opens a long position.\n- When the color switches from down to up, the strategy closes any long position and opens a short position.\n- Basic risk management is applied via fixed stop loss and take profit levels.\n\n## Parameters\n| Name | Description |\n|------|-------------|\n| `Length` | Smoothing period for the SMA applied to median price. |\n| `Candle Type` | Timeframe of candles used for calculations. |\n\n## Disclaimer\nThis example is provided for educational purposes. It simplifies the original algorithm and may behave differently from the MQL version. Use at your own risk.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Length` | Smoothing period for the SMA applied to median price. |\n| `Candle Type` | Timeframe of candles used for calculations. |"
+   },
+   "3014": {
+    "id": 3014,
+    "name": "ASCV BrainTrend Signal",
+    "family": "trend",
+    "overview": "The **ASCV BrainTrend Signal Strategy** is a conversion of the MetaTrader expert that trades on BrainTrend1 indicator signals. The StockSharp version relies on high-level indicator bindings to combine the Average True Range (ATR), Stochastic Oscillator, and Jurik Moving Average (JMA) in order to detect momentum reversals and place trades with optional protective stops.\n\n## Core Idea\n\n1. Calculate ATR to measure current volatility and define a dynamic confirmation band.\n2. Smooth closing prices with a Jurik Moving Average and compare the current value with the value two bars back.\n3. When the smoothed difference is larger than `ATR / 2.3`, update the state of the BrainTrend logic:\n   - `%K` of the Stochastic Oscillator below **47** toggles the system into a potential short setup.\n   - `%K` above **53** toggles the system into a potential long setup.\n4. A signal from the previous bar is executed on the next completed candle. Signals can be flipped with the **Reverse Signals** parameter.\n5. Stop-loss, take-profit, and trailing-stop levels are defined in pips (multiples of the instrument price step).\n\n## Entry and Exit Rules\n\n- **Long entry**: Previous bar issued a buy signal and the strategy is not already long. The order size equals `Volume + abs(current position)`, so shorts are covered before opening the new long.\n- **Short entry**: Previous bar issued a sell signal and the strategy is not already short.\n- **Stop-loss**: Placed at `entry price ± StopLossPips * price step`. If the price trades beyond the stop level inside the next candle, the position is closed at market.\n- **Take-profit**: Optional take profit at `entry price ± TakeProfitPips * price step`.\n- **Trailing-stop**: Enabled when both `TrailingStopPips` and `TrailingStepPips` are greater than zero. After the price moves `TrailingStopPips + TrailingStepPips` in favor of the trade, the stop is trailed behind the move by `TrailingStopPips`.\n\n## Parameters\n\n| Parameter | Description | Default |\n|-----------|-",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `AtrPeriod` | ATR averaging period for volatility estimation. | 14 |\n| `StochasticPeriod` | Base period for the Stochastic Oscillator. | 12 |\n| `JmaLength` | Jurik Moving Average smoothing length. | 7 |\n| `StopLossPips` | Stop-loss distance in pips (price steps). | 15 |\n| `TakeProfitPips` | Take-profit distance in pips. | 46 |\n| `TrailingStopPips` | Trailing stop distance in pips. | 0 (disabled) |\n| `TrailingStepPips` | Minimum favorable move required before trailing. | 5 |\n| `ReverseSignals` | Invert buy/sell signals. | false |\n| `CandleType` | Working timeframe, defaults to 15-minute candles. | 15m |"
+   },
+   "3929": {
+    "id": 3929,
+    "name": "Forex Profit System",
+    "family": "trend",
+    "overview": "The strategy reproduces the classic MetaTrader expert advisor \"Forex Profit System\" inside the StockSharp high-level API. It uses\nthree exponential moving averages (EMA 10, 25 and 50) on the candle median price combined with a Parabolic SAR filter. The\ncombination detects short-lived momentum bursts that appear after the fast average crosses the slow trend line while the Parabolic\nSAR already flipped to the same side as price.\n\n## Trading Logic\n\n1. **Indicator stack**\n   - Median price derived from the finished candle drives all indicators so that results match the original MetaTrader \"PRICE_MEDIAN\"\n     input.\n   - Fast EMA (length 10) reacts quickly to short-term momentum shifts.\n   - Medium EMA (length 25) and slow EMA (length 50) define the directional bias.\n   - Parabolic SAR with step 0.02 and maximum 0.2 confirms that price already broke to the new side of the trend.\n2. **Long entry**\n   - EMA(10) is greater than both EMA(25) and EMA(50).\n   - EMA(10) was below EMA(50) on the previous closed candle (cross-up confirmation).\n   - Parabolic SAR value is below the candle close, meaning the dots switched to bullish mode.\n   - No open position exists and the strategy is allowed to trade (online + permissions).\n3. **Short entry**\n   - EMA(10) is lower than both EMA(25) and EMA(50).\n   - EMA(10) was above EMA(50) on the previous closed candle (cross-down confirmation).\n   - Parabolic SAR is above the candle close.\n4. **Exit management**\n   - Hard stop-loss and take-profit are applied immediately after entry with asymmetric settings for long and short trades.\n   - A trailing stop is armed once price moves far enough in favor of the position. The stop is pulled to `current price -/+ trailing`\n     distance depending on the direction.\n   - Early exit occurs when EMA(10) reverses direction (drops below its previous value for longs or rises above for shorts) and the\n     open profit exceeds a minimum trigger distance.\n\n## Default Parameter Values\n\n| Parameter | Default | ",
+    "details": "",
+    "parameters": ""
+   },
+   "318": {
+    "id": 318,
+    "name": "Williams R Momentum",
+    "family": "trend",
+    "overview": "Signals trigger when Williams confirms momentum shifts on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like WilliamsRPeriod, MomentumPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `WilliamsRPeriod = 14`\n  - `MomentumPeriod = 14`\n  - `WilliamsROversold = -80m`\n  - `WilliamsROverbought = -20m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Williams, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `WilliamsRPeriod = 14`\n  - `MomentumPeriod = 14`\n  - `WilliamsROversold = -80m`\n  - `WilliamsROverbought = -20m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Williams, R\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4060": {
+    "id": 4060,
+    "name": "Multi Time-Frame Regression",
+    "family": "trend",
+    "overview": "A multi-timeframe strategy that combines linear regression channels on M1, M5, and H1 candles. The regression slope from the H1 channel defines the dominant trend, while the M5 and M1 channels provide precise entry locations near support and resistance.\n\n## Trading logic\n\n- **Data feeds**: nine timeframes of standard candles (M1, M5, M15, M30, H1, H4, D1, W1, MN1).\n- **Indicators**: each feed is processed by a linear regression channel of configurable length. The channel provides a center line and symmetric upper/lower bands based on the maximum deviation of recent closes.\n- **Trend filter**: the strategy only considers short trades when the H1 channel slope is negative and long trades when it is positive.\n- **Entry**:\n  - **Short** – the latest M5 high and M1 high both pierce their upper channel bands while the H1 slope is negative.\n  - **Long** – the latest M5 low and M1 low both reach their lower channel bands while the H1 slope is positive.\n- **Order handling**: entries are executed with market orders using the configured volume. Stop-loss and take-profit targets are derived from the M5 channel half-width and center line respectively.\n- **Exit**: positions are closed on the M1 candles when the price hits the protective stop or the center line target.\n- **Position management**: at most one market position is open at any time.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `EnableTrading` | Allows the strategy to place orders when enabled. |\n| `BarsToCount` | Number of bars used in every regression channel (default 50). |\n| `Volume` | Market order volume in lots. |\n\n## Notes\n\n- Longer regression windows provide smoother channel slopes but slower reactions.\n- The multi-timeframe slope display is useful for monitoring alignment across higher intervals even though only the H1 slope gates entries.\n- Protective levels are recalculated each time a new M5 candle forms; frequent recalibration keeps risk tightly coupled to the current channel geometry.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `EnableTrading` | Allows the strategy to place orders when enabled. |\n| `BarsToCount` | Number of bars used in every regression channel (default 50). |\n| `Volume` | Market order volume in lots. |"
+   },
+   "3040": {
+    "id": 3040,
+    "name": "Exp Skyscraper Fix Duplex",
+    "family": "volatility",
+    "overview": "Exp Skyscraper Fix Duplex is a port of the MQL5 expert advisor *Exp_Skyscraper_Fix_Duplex*. The strategy runs the Skyscraper Fix channel on the long and short sides independently, allowing every side to use its own timeframe, ATR window and sensitivity. Long and short trades can therefore react to different market regimes while sharing the same execution logic inside StockSharp.",
+    "details": "",
+    "parameters": "- `TradeVolume` – order size for market entries.\n- `EnableLongEntries` / `EnableLongExits` – toggles for long-side trading.\n- `LongCandleType` – candle series used for the long indicator.\n- `LongLength`, `LongKv`, `LongPercentage`, `LongMode`, `LongSignalBar` – Skyscraper Fix settings for the long side.\n- `EnableShortEntries` / `EnableShortExits` – toggles for short-side trading.\n- `ShortCandleType` – candle series used for the short indicator.\n- `ShortLength`, `ShortKv`, `ShortPercentage`, `ShortMode`, `ShortSignalBar` – Skyscraper Fix settings for the short side."
+   },
+   "80": {
+    "id": 80,
+    "name": "Pivot Point Reversal",
+    "family": "mean_reversion",
+    "overview": "Testing indicates an average annual return of about 127%. It performs best in the stocks market.\n\nWhen price approaches support level S1 and forms a bullish candle, a long entry is taken. If price tests resistance level R1 and prints a bearish candle, a short is opened. Trades exit upon reaching the central pivot or if the protective stop is hit.\n\nThe method resets at the start of each trading day with new pivot calculations, making it well suited for sessions with clear intraday ranges.\n\n## Details\n\n- **Entry Criteria**: Bullish candle near S1 or bearish candle near R1.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing the central pivot or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Pivot Points\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Bullish candle near S1 or bearish candle near R1.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price crossing the central pivot or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Pivot Points\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "565": {
+    "id": 565,
+    "name": "Bias And Sentiment Strength",
+    "family": "trend",
+    "overview": "This strategy aggregates multiple momentum and volume indicators (MACD, RSI, Stochastic, Awesome Oscillator, Alligator averages and volume bias) into a single bias value. A long position is opened when the combined bias is above zero and a short position when it is below zero.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Combined bias > 0.\n  - **Short**: Combined bias < 0.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: Stop-loss percentage via `StopLossPercent`.\n- **Default Values**:\n  - MACD fast 12, slow 26, signal 9.\n  - RSI period 14.\n  - Stochastic periods 21/14/14.\n  - Awesome Oscillator periods 5/34.\n  - Volume bias length 30.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Combined bias > 0.\n  - **Short**: Combined bias < 0.\n- **Long/Short**: Both.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: Stop-loss percentage via `StopLossPercent`.\n- **Default Values**:\n  - MACD fast 12, slow 26, signal 9.\n  - RSI period 14.\n  - Stochastic periods 21/14/14.\n  - Awesome Oscillator periods 5/34.\n  - Volume bias length 30.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term",
+    "parameters": ""
+   },
+   "1758": {
+    "id": 1758,
+    "name": "Autostop Cyriac",
+    "family": "other",
+    "overview": "This utility strategy automatically attaches a take profit and stop loss to each trade while it is active. It does not create entries or exits itself and can be combined with manual trading or other strategies.\n\n## Details\n\n- **Entry Criteria**: None. Positions are opened manually or by external logic.\n- **Long/Short**: Both long and short positions are supported.\n- **Exit Criteria**: Positions are closed by the attached take profit or stop loss.\n- **Stops**: Yes. Absolute price offsets for both take profit and stop loss via `StartProtection`.\n- **Filters**: None.\n\nThe strategy exposes two parameters:\n\n- `TakeProfit` – distance to the take profit in price units.\n- `StopLoss` – distance to the stop loss in price units.\n",
+    "details": "- **Entry Criteria**: None. Positions are opened manually or by external logic.\n- **Long/Short**: Both long and short positions are supported.\n- **Exit Criteria**: Positions are closed by the attached take profit or stop loss.\n- **Stops**: Yes. Absolute price offsets for both take profit and stop loss via `StartProtection`.\n- **Filters**: None.\n\nThe strategy exposes two parameters:\n\n- `TakeProfit` – distance to the take profit in price units.\n- `StopLoss` – distance to the stop loss in price units.",
+    "parameters": ""
+   },
+   "545": {
+    "id": 545,
+    "name": "Backward Number of Bars",
+    "family": "other",
+    "overview": "This strategy keeps a long position only during the most recent bars counted back from the current time. It demonstrates how to restrict trading to a moving historical window.\n\n## Details\n\n- **Entry Criteria**: Candle time is within the last *N* bars from the start time.\n- **Exit Criteria**: Candle time falls outside this window.\n- **Long/Short**: Long only.\n- **Stops**: None.\n- **Default Values**:\n  - `Bar count` = 50\n  - `Candle type` = 1-minute candles\n- **Filters**:\n  - Category: Time based\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: Candle time is within the last *N* bars from the start time.\n- **Exit Criteria**: Candle time falls outside this window.\n- **Long/Short**: Long only.\n- **Stops**: None.\n- **Default Values**:\n  - `Bar count` = 50\n  - `Candle type` = 1-minute candles\n- **Filters**:\n  - Category: Time based\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_131": {
+  "strategy_ids": [
+   1286,
+   1261,
+   1904,
+   93,
+   853,
+   1901,
+   2757,
+   546,
+   3919,
+   2547
+  ],
+  "docs": {
+   "1286": {
+    "id": 1286,
+    "name": "S4 IBS Mean Rev 3candleExit",
+    "family": "trend",
+    "overview": "The strategy buys when the previous candle's Internal Bar Strength (IBS) is below a threshold, expecting mean reversion. It exits when price closes above the entry or after three candles if the trade remains losing.\n\n## Details\n\n- **Entry Criteria**: previous IBS <= threshold\n- **Long/Short**: Long only\n- **Exit Criteria**: close above entry price or after 3 candles if still below entry; force exit after end time\n- **Stops**: No\n- **Default Values**:\n  - `IbsThreshold` = 0.25\n  - `StartTime` = 2024-01-01 05:00:00 UTC\n  - `EndTime` = 2024-12-31 00:00:00 UTC\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: previous IBS <= threshold\n- **Long/Short**: Long only\n- **Exit Criteria**: close above entry price or after 3 candles if still below entry; force exit after end time\n- **Stops**: No\n- **Default Values**:\n  - `IbsThreshold` = 0.25\n  - `StartTime` = 2024-01-01 05:00:00 UTC\n  - `EndTime` = 2024-12-31 00:00:00 UTC\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1261": {
+    "id": 1261,
+    "name": "Rsi Stochastic Wma",
+    "family": "trend",
+    "overview": "Strategy combining RSI, Stochastic Oscillator and a Weighted Moving Average (WMA).\nBuys when RSI is oversold, %K crosses above %D and price is above WMA.\nSells short when RSI is overbought, %K crosses below %D and price is below WMA.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `RSI < 30 && %K crosses above %D && Close > WMA`\n  - Short: `RSI > 70 && %K crosses below %D && Close < WMA`\n- **Long/Short**: Both\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `StochK` = 14\n  - `StochD` = 3\n  - `WmaLength` = 21\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RSI, Stochastic, WMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `RSI < 30 && %K crosses above %D && Close > WMA`\n  - Short: `RSI > 70 && %K crosses below %D && Close < WMA`\n- **Long/Short**: Both\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `StochK` = 14\n  - `StochD` = 3\n  - `WmaLength` = 21\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RSI, Stochastic, WMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1904": {
+    "id": 1904,
+    "name": "Bleris",
+    "family": "trend",
+    "overview": "The Bleris strategy analyzes the trend of recent price extremes to open trades in the direction of the prevailing trend.\nThe price series is split into three segments of length `SignalBarSample` and the highest highs and lowest lows of these segments are compared.\n\n- **Indicators**: Highest, Lowest\n- **Parameters**:\n  - `SignalBarSample` – number of candles per segment.\n  - `CounterTrend` – reverse the trading direction.\n  - `Lots` – order volume.\n  - `CandleType` – timeframe of the candles.\n  - `AnotherOrderPips` – minimum distance in pips before another order of the same type is opened.",
+    "details": "",
+    "parameters": ""
+   },
+   "93": {
+    "id": 93,
+    "name": "Stochastic Hook Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 166%. It performs best in the stocks market.\n\nThe system enters long when %K turns up from below twenty as price presses a new low.\nIt sells short when the oscillator hooks down from above eighty during a final push higher.\n\nPositions use a small percent stop and close when the stochastic hooks the other way or the stop is reached.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Stochastic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "853": {
+    "id": 853,
+    "name": "Golden Cross VWMA & EMA",
+    "family": "trend",
+    "overview": "The strategy goes long when the volume-weighted moving average crosses above the 4-hour exponential moving average and goes short on the opposite crossover.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1901": {
+    "id": 1901,
+    "name": "Coensio Swing Trader V06",
+    "family": "breakout",
+    "overview": "This strategy replicates the breakout logic of the original Coensio Swing Trader. It uses the Donchian Channel to define dynamic support and resistance. A trade is opened when price breaks above the upper band or below the lower band by a configurable threshold.\n\n## Details\n\n- **Entry**:\n  - **Long**: Close price breaks above the Donchian upper band + `Entry Threshold` pips.\n  - **Short**: Close price breaks below the Donchian lower band - `Entry Threshold` pips.\n- **Exits**:\n  - Fixed `Stop Loss` and `Take Profit` in pips measured from the entry price.\n  - Optional move to break-even after `Break Even` pips of profit.\n  - Optional trailing stop that follows price by `Trailing Step` pips after break-even.\n- **Stops**: Stop-loss, take-profit, break-even, trailing stop.\n- **Default Values**:\n  - `Channel Period` = 20\n  - `Entry Threshold` = 15 pips\n  - `Stop Loss` = 50 pips\n  - `Take Profit` = 80 pips\n  - `Break Even` = 25 pips\n  - `Trailing Step` = 5 pips\n  - `Enable Trailing` = false\n  - `Candle Type` = 15 minute candles\n",
+    "details": "- **Entry**:\n  - **Long**: Close price breaks above the Donchian upper band + `Entry Threshold` pips.\n  - **Short**: Close price breaks below the Donchian lower band - `Entry Threshold` pips.\n- **Exits**:\n  - Fixed `Stop Loss` and `Take Profit` in pips measured from the entry price.\n  - Optional move to break-even after `Break Even` pips of profit.\n  - Optional trailing stop that follows price by `Trailing Step` pips after break-even.\n- **Stops**: Stop-loss, take-profit, break-even, trailing stop.\n- **Default Values**:\n  - `Channel Period` = 20\n  - `Entry Threshold` = 15 pips\n  - `Stop Loss` = 50 pips\n  - `Take Profit` = 80 pips\n  - `Break Even` = 25 pips\n  - `Trailing Step` = 5 pips\n  - `Enable Trailing` = false\n  - `Candle Type` = 15 minute candles",
+    "parameters": ""
+   },
+   "2757": {
+    "id": 2757,
+    "name": "Price Extreme",
+    "family": "breakout",
+    "overview": "The **Price Extreme Strategy** replicates the MetaTrader expert adviser `Price_Extreme_Strategy` using the StockSharp high-level API. The system monitors a sliding channel derived from the highest high and lowest low over a configurable number of completed candles. Breakout signals are generated whenever the selected reference candle closes above the upper boundary or below the lower boundary. The logic can optionally be inverted to transform breakout conditions into fade entries.\n\nThis conversion keeps the trading workflow event-driven. Orders are submitted immediately after the close of each finished candle, matching the behaviour of the original MQL algorithm that reacted on the opening tick of the next bar.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Group |\n|-----------|-------------|---------|-------|\n| `LevelLength` | Number of completed candles considered when computing the extreme channel. | 5 | Indicator |\n| `SignalShift` | Index of the closed candle used for breakout validation (1 = last closed candle). | 1 | Indicator |\n| `EnableLong` | Allows buying when `true`. | `true` | Trading |\n| `EnableShort` | Allows selling when `true`. | `true` | Trading |\n| `ReverseSignals` | Inverts breakout reactions (buy on breakdown, sell on breakout). | `false` | Trading |\n| `OrderVolume` | Volume sent with each market order. Must be greater than zero. | 1 | Trading |\n| `StopLossPoints` | Stop-loss distance measured in price steps. A value of `0` disables the stop. | 0 | Risk |\n| `TakeProfitPoints` | Take-profit distance measured in price steps. A value of `0` disables the target. | 0 | Risk |\n| `CandleType` | Primary timeframe for data subscription. | 5-minute candles | Data |\n\nAll parameters use `StrategyParam<T>` with UI metadata so they can be optimized or modified from the Designer."
+   },
+   "546": {
+    "id": 546,
+    "name": "Balance of Power",
+    "family": "momentum",
+    "overview": "The Balance of Power strategy evaluates the strength of bulls versus bears within each candle by comparing the close to the trading range. When this value crosses above a positive threshold, it indicates strong buying pressure.\n\nThe strategy enters a long position when Balance of Power crosses above the defined `Threshold` and exits when it drops below the negative threshold.\n\n## Details\n\n- **Entry Criteria**:\n  - Balance of Power crosses above `Threshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Balance of Power crosses below `-Threshold`.\n- **Stops**: None.\n- **Default Values**:\n  - `Threshold` = 0.8\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Balance of Power\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Balance of Power crosses above `Threshold`.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Balance of Power crosses below `-Threshold`.\n- **Stops**: None.\n- **Default Values**:\n  - `Threshold` = 0.8\n- **Filters**:\n  - Category: Momentum\n  - Direction: Long\n  - Indicators: Balance of Power\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3919": {
+    "id": 3919,
+    "name": "Et4 MTC v1 Strategy (StockSharp Conversion)",
+    "family": "volatility",
+    "overview": "- **Origin**: MetaTrader 4 expert advisor `et4_MTC_v1.mq4` from the GlobeInvestFund collection.\n- **Purpose**: Provide a StockSharp-native template that mirrors the original advisor's money-management helpers and timing safeguards while leaving trade entry/exit logic open for further development.\n- **Trading Style**: Skeleton strategy – no automatic entries are generated by default. The class focuses on enforcing timing restrictions and replicating the parameter interface of the MQL4 script so it can serve as a foundation for custom rules.",
+    "details": "",
+    "parameters": ""
+   },
+   "2547": {
+    "id": 2547,
+    "name": "UmnickTrader",
+    "family": "mean_reversion",
+    "overview": "Adaptive mean-reversion system converted from the original UmnickTrader MQL5 expert advisor. The strategy works with a single\nposition at a time, alternating between long and short bias depending on the outcome of the previous trade. It evaluates price\nmovement using the average of open, high, low and close prices and only takes action once that average has shifted by at least\nthe configured `StopBase` distance.\n\n## Core Logic\n\n- For every finished candle the average price `(O + H + L + C) / 4` is calculated.\n- Signals are processed only when the absolute difference between the current average and the previously processed average is\ngreater than or equal to `StopBase`. This mimics the original EA behaviour of waiting for a sufficiently large move.\n- When no position is open the strategy computes adaptive take-profit and stop-loss distances using two circular buffers that\nstore the most recent eight profit and loss excursions.\n- After a profitable trade the maximum favourable excursion observed while the position was open is saved to the profit buffer\n(minus a spread padding), while the loss buffer receives `StopBase + 7 * Spread`.\n- After a losing trade the profit buffer is reset to `StopBase - 3 * Spread`, the loss buffer is updated with the recorded drawdown\nplus a spread padding, and the trading direction is flipped so the next setup trades the opposite side.\n\n## Trade Management\n\n- The default distance for both the take-profit and stop-loss is `StopBase`. If the accumulated profit or loss buffer exceeds\n`StopBase / 2`, their respective averages replace the default distance to widen or tighten the exit levels adaptively.\n- Market orders are used for entries. The expected take-profit and stop-loss prices are stored and managed by the strategy itself,\nso positions are closed when candle highs or lows touch the corresponding levels.\n- While a position is active the highest favourable move and deepest drawdown are tracked using intrabar extremes. These statistics\nfee",
+    "details": "",
+    "parameters": "- `StopBase` – base distance (in price units) required to treat a move as significant and the default TP/SL distance. Default:\n  `0.017`.\n- `TradeVolume` – volume for market orders. Default: `0.1`.\n- `Spread` – spread compensation applied when updating the adaptive buffers. Default: `0.0005`.\n- `CandleType` – candle subscription used to evaluate averages. Default: `TimeSpan.FromMinutes(5).TimeFrame()`."
+   }
+  }
+ }
+}

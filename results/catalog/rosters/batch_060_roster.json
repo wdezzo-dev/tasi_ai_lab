@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1473,
+      "name": "TrendGuard Flag Finder",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,7) and close > ema(close,10)",
+      "exit_long": "close < donchian_low_prev(low,7)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish flag breakout becomes a close above the prior 7-bar consolidation high (MaxFlagLength 7) with SuperTrend confirmation proxied by close above EMA(10) matching the documented SuperTrend Length 10, and the bearish flag break is the exit. MaxFlagDepth, MinFlagLength, pole lengths and the SuperTrend Factor 4 ATR scaling are not separable in the DSL, and the docs state no stops."
+    },
+    {
+      "id": 1403,
+      "name": "Volume Confirmation For A Trend System",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 30 and sma((high+low+close)/3,13) - sma((high+low+close)/3,26) > sma(sma((high+low+close)/3,13) - sma((high+low+close)/3,26),9) and (sma((high+low+close)/3,5) - sma((high+low+close)/3,25)) * volume_ratio(volume,20) > 0",
+      "exit_long": "(sma((high+low+close)/3,5) - sma((high+low+close)/3,25)) * volume_ratio(volume,20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented lengths are used: ADX 14 with a 30 threshold, TTI 13/26 with a 9-bar signal, and VPCI 5/25 weighted by the volume ratio so its sign follows the volume-confirmed price spread. The exit is the documented VPCI < 0, and the doc states no stops."
+    },
+    {
+      "id": 433,
+      "name": "MACD Long",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and bars_since(rsi(close,14) <= 30) < 6",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented RSI(14) oversold 30 and MACD 12/26/9 are used, with the RSI extreme required within the five bars before the MACD up-cross (the \"then\" sequencing, since shifted comparisons are unavailable). The opposite crossover is the documented exit and the optional stop is left to the engine's risk controls."
+    },
+    {
+      "id": 577,
+      "name": "Bitcoin Liquidity Breakout",
+      "family": "trend",
+      "entry_long": "volume > sma(volume,20) * 1.3 and roc(close,1) > 1.5 and sma(close,9) > sma(close,21) and rsi(close,14) < 65 and atr(high,low,close,14) > sma(atr(high,low,close,14),10)",
+      "exit_long": "crossbelow(sma(close,9),sma(close,21)) or rsi(close,14) > 70",
+      "stop_loss_pct": 0.5,
+      "take_profit_pct": 7.0,
+      "notes": "Every documented filter is literal: LiquidityThreshold 1.3 on LiquidityPeriod 20 volume, PriceChangeThreshold 1.5, FastMa 9 over SlowMa 21, RsiPeriod 14 below 65 and ATR(14) above its 10-period average. The documented StopLossPercent 0.5 and TakeProfitPercent 7 are set as percentage fields, and the 1-hour timeframe is fixed here."
+    },
+    {
+      "id": 1003,
+      "name": "MA Crossover Demand Supply Zones SLTP",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,9),sma(close,21)) and close < donchian_low(low,50) * 1.05",
+      "exit_long": "crossbelow(sma(close,9),sma(close,21))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "The documented ShortMaLength 9 / LongMaLength 21 crossover is gated by proximity to the ZoneLookback 50 demand area; the ZoneStrength 2 touch count has no DSL form, so a 5% band around the 50-bar low stands in for \"near the zone\". StopLossPercent 1 and TakeProfitPercent 2 are the documented percentage exits, and the opposite crossover is kept as a signal-based fallback exit."
+    },
+    {
+      "id": 947,
+      "name": "John Bob Trading Bot",
+      "family": "breakout",
+      "entry_long": "crossabove(close,donchian_low_prev(low,50)) or low > donchian_low_prev(low,2) and close > donchian_high_prev(high,2)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented long triggers are kept: a cross back above the 50-bar low level and a bullish fair-value-gap style displacement approximated by a candle opening below the prior two-bar low and closing above its high. The five scaled entries, the five take-profit levels and the AtrMultiplier 2 stop are multi-order and position features, so no percentage stop is set."
+    },
+    {
+      "id": 3829,
+      "name": "Donchain Counter-Channel System",
+      "family": "breakout",
+      "entry_long": "roc(donchian_low(low,20),3) > 0",
+      "exit_long": "roc(donchian_high(high,20),3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 20-period Donchian lower band turning upward (sellers failing to make new lows) is captured by a positive 3-bar change in that band, and the upper band turning down is the mirrored exit, consistent with the original's opposite-band protective logic. The one-order-per-24-hours rule is inherent in the single-position engine, and no percentages are documented."
+    },
+    {
+      "id": 3141,
+      "name": "RSI EA v2",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule (RSI rising above the buy level after being below it on the previous candle) is exactly crossabove(rsi, buy level), and the CloseBySignal exit on the sell level is the mirror cross. RsiPeriod and the buy/sell levels have no documented values, so 14 with 30/70 are explicit defaults; pip stops, trailing and the trading window are pip and clock features."
+    },
+    {
+      "id": 3995,
+      "name": "ZigZag EvgeTrofi 1",
+      "family": "volatility",
+      "entry_long": "high > donchian_high_prev(high,17)",
+      "exit_long": "low < donchian_low_prev(low,17)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ZigZag Depth 17 swing detection is approximated by a new 17-bar high as the long signal (and the new 17-bar low as the exit), following the original's swing-high-is-long mapping. Deviation 7 points, Backstep 5, and the Urgency window of two bars after a pivot cannot be expressed without pivots and shifts."
+    },
+    {
+      "id": 3324,
+      "name": "RSI Levels",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fully documented thresholds are used: RsiPeriod 14 with OversoldLevel 30 and OverboughtLevel 70, entering long on the oversold cross and closing on the overbought cross. RiskPercent 2 sizes positions rather than setting a price stop, and StopLossPoints 500 / TakeProfitPoints 1000 are price-point distances, so both percentage fields stay null."
+    }
+  ]
+}

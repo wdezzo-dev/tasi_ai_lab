@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1578,
+      "name": "Zero-lag Volatility-Breakout EMA Trend",
+      "family": "trend",
+      "entry_long": "crossabove(2 * ema(close,200) - ema(ema(close,200),200),bb_upper(2 * ema(close,200) - ema(ema(close,200),200),20,2)) and roc(ema(close,200),20) > 0",
+      "exit_long": "crossbelow(close,bb_mid(2 * ema(close,200) - ema(ema(close,200),200),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Zero-lag EMA difference is approximated by 2*EMA(200)-EMA(EMA(200),200) and its StdMultiplier=2 band; a rising 20-bar ROC of the same EMA is the documented slope filter. The 5-minute timeframe and binary/stop controls are unavailable, and the documented optional mid-band cross is expressed as price crossing the Dif mid line."
+    },
+    {
+      "id": 2109,
+      "name": "RD Trend Trigger",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,15),0) and roc(close,15) > -50",
+      "exit_long": "crossbelow(roc(close,15),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Default Twist mode (oscillator turns up) is mapped to a ROC(15) zero-cross with the documented LowLevel=-50 guard. The custom RD-T3 regression oscillator, T3Length/T3VolumeFactor and 4-hour candle are not expressible, so ROC of close is an explicit substitute."
+    },
+    {
+      "id": 737,
+      "name": "EMA Crossover Short Focus Trailing Stop",
+      "family": "trend",
+      "entry_long": "ema(close,13) > ema(close,33)",
+      "exit_long": "ema(close,13) < ema(close,33)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Directly uses the documented 13/33 EMA relationship for the long side (25 EMA only governs the short exit). TrailDistance 10 and TrailOffset 2 are point distances with no percentage equivalent, so no stop is set."
+    },
+    {
+      "id": 1077,
+      "name": "Moving Average Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,9),sma(close,21))",
+      "exit_long": "crossbelow(sma(close,9),sma(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented ShortLength 9 and LongLength 21 SMA cross, with the opposite cross as the reversal exit. The 1-minute CandleType is not configurable here and the docs state no stops."
+    },
+    {
+      "id": 2442,
+      "name": "Fractal WPR",
+      "family": "trend",
+      "entry_long": "crossbelow(-100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),-70)",
+      "exit_long": "crossabove(-100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),-30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is rebuilt as the close's position in the 14-bar Donchian range, scaled x-100, with the documented HighLevel -30 / LowLevel -70 crossings (Direct mode). WprPeriod has no documented value so 14 is an explicit default; tick-based StopLossTicks/TakeProfitTicks and the fractal/position-permission switches are not percentage fields."
+    },
+    {
+      "id": 3185,
+      "name": "Breakdown Catcher",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Virtual levels are the previous bar's high/low, so a piercing high is the upside breakout and the pierced low is the exit; IndentPips 0 means no shift. StopLossPips 30, TakeProfitPips 90 and the 30-pip trailing stop are absolute pip distances and are not expressible as percentage fields."
+    },
+    {
+      "id": 3946,
+      "name": "Monday Typical Breakout",
+      "family": "breakout",
+      "entry_long": "close > (high + low + close) / 3 and close > open",
+      "exit_long": "close < (high + low + close) / 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long trigger (session open above the previous bar's typical price) is translated as close above the bar's (high+low+close)/3 with a positive body, and the mirror cross exits. Monday/OpenHour 9 gating, equity lot scaling, and the 50/20 price-point stop and target are not representable."
+    },
+    {
+      "id": 684,
+      "name": "Dominance Tagcloud",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document describes a crypto-dominance tag-cloud visualisation with explicitly no entry, exit or direction logic, so the impossible negative-price guard avoids fabricating a signal. Random box placement and multi-symbol drawing have no DSL equivalent."
+    },
+    {
+      "id": 3793,
+      "name": "Pedro Mod",
+      "family": "volatility",
+      "entry_long": "roc(close,1) < -1",
+      "exit_long": "roc(close,1) > 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The contrarian first entry (price must move Gap away from the reference before buying) is represented by a 1% one-bar drop against the previous close, with the mirrored 1% rise as the exit; 1% is an explicit default because no Gap value is documented. Basket averaging via ReEntryGap, MaxTrades caps, pip stops and the hour window are not single-signal fields."
+    },
+    {
+      "id": 3218,
+      "name": "BuySellStopButtons",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA only trades on manual BuyRequest/SellRequest/CloseRequest button presses and the one-minute bar is a pure heartbeat, so no deterministic entry exists and the impossible negative-price guard is used. Money/percent take-profit, equity trailing lock, break-even and pip trailing are portfolio or percent fields the engine cannot express here."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3283,
+      "name": "Simple 2 MA I",
+      "family": "trend",
+      "entry_long": "ema((high + low + close) / 3, 6) > ema((high + low + close) / 3, 85) and roc(close, 14) > 0.3 and macd(close, 12, 26) > macd_signal(close, 12, 26, 9)",
+      "exit_long": "crossbelow(ema((high + low + close) / 3, 6), ema((high + low + close) / 3, 85)) or roc(close, 14) < -0.3 or crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented LWMA(6)/LWMA(85) on typical price are approximated by EMAs, with the documented ROC(14) threshold 0.3 and MACD 12/26/9 direction filter kept. Stops, targets, break-even and candle trailing are documented in raw points, not percentages, so they are left null."
+    },
+    {
+      "id": 2890,
+      "name": "Blau TVI Timed Reversal",
+      "family": "trend",
+      "entry_long": "roc(ema(close - open, 8), 1) > 0 and roc(ema(close - open, 8), 2) > 0",
+      "exit_long": "roc(ema(close - open, 8), 1) < 0 and roc(ema(close - open, 8), 2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "TVI is 100*(Up-Down)/(Up+Down) where Up/Down derive from (volume +/- close-open)/2, so its sign and slope are the smoothed (close-open); a doubly smoothed ROC proxy captures the documented two-bar rising/falling slope reversal. The three smoothing lengths have no documented values (8 used), and the session window plus point-based stops are unavailable."
+    },
+    {
+      "id": 25,
+      "name": "Stochastic RSI Cross",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close, 14), sma(rsi(close, 14), 3)) and rsi(close, 14) < 40",
+      "exit_long": "crossbelow(rsi(close, 14), sma(rsi(close, 14), 3)) or rsi(close, 14) > 60",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "StochRSI %K/%D are approximated by RSI(14) and its SMA(3) with a near-oversold filter, using the documented RsiPeriod 14 / KPeriod 3. The documented StopLossPercent of 2 is applied; no take-profit value is documented."
+    },
+    {
+      "id": 3550,
+      "name": "AMA Trader 2",
+      "family": "trend",
+      "entry_long": "close > ema(close, 10) and rsi(close, 14) < 40",
+      "exit_long": "crossbelow(close, ema(close, 10)) or rsi(close, 14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Kaufman AMA trend filter is approximated by EMA(10); the long rule keeps the documented close-above-AMA plus an RSI oversold dip. RsiLength, AmaLength and RsiLevelDown have no documented values (14, 10 and 40 used), and fixed-lot averaging, position counts, trailing stops and the time window cannot be expressed."
+    },
+    {
+      "id": 1772,
+      "name": "PSAR Trader v2",
+      "family": "trend",
+      "entry_long": "close > ema(close, 10) and high > donchian_high_prev(high, 5)",
+      "exit_long": "close < ema(close, 10) or low < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not in the DSL, so the SAR flip is approximated by price holding above EMA(10) while making a fresh five-bar high (mirrored on exit). The StartHour/EndHour window and price-unit stop/target are dropped."
+    },
+    {
+      "id": 2913,
+      "name": "TakeProfitTimeGuardStrategy",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documentation states the strategy never opens positions and only flattens exposure when the account profit target or schedule is met, so there is no single-symbol market-derived entry to translate. A never-true guard is used instead of inventing a signal; the profit target and time window are not DSL fields."
+    },
+    {
+      "id": 1172,
+      "name": "Polynomial Regression Bands Channel",
+      "family": "mean_reversion",
+      "entry_long": "close < sma(close, 100) - 2 * std(close, 100)",
+      "exit_long": "close > sma(close, 100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The degree-2 regression line and its residual bands are approximated by SMA(100) and 2 standard deviations, keeping the documented Length 100 and multiplier 2. Docs state no stops, and the opposite-signal exit is represented by the regression line."
+    },
+    {
+      "id": 1358,
+      "name": "Streak-Based Trading",
+      "family": "other",
+      "entry_long": "bars_since(close > open) >= 8 and close < open",
+      "exit_long": "bars_since(close < open) >= 7",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A long entry follows the documented 8-candle losing streak (eight consecutive bearish candles with the documented TradeDirection=Long), and the exit fires after the documented 7-candle hold. Doji body filtering has no DSL equivalent and the intraday timeframe is not modelled."
+    },
+    {
+      "id": 1020,
+      "name": "Market EKG",
+      "family": "other",
+      "entry_long": "close < sma(close, 3)",
+      "exit_long": "close > sma(close, 3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule buys when the average of the two older closes exceeds the latest close; SMA(3) of the close is the available rolling proxy for that two-bar average. No parameters, exits or stops beyond the mirrored comparison are documented."
+    },
+    {
+      "id": 1000,
+      "name": "Lunar Calendar Day Crypto Trading",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are keyed to the 12th day of a lunar month and exits to the 26th, which is a calendar feature with no market-derived signal in the DSL. A never-true guard prevents fabricating one; the preloaded lunar tables are not accessible here."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2150,
+      "name": "Laguerre ROC",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,14),70)",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The four-stage Laguerre filter is not in the DSL, so the bounded 0-1 oscillator it produces is represented by RSI(14) and the documented rules are kept structurally: a drop out of the overbought zone opens the long and a drop below the neutral 0.5 midpoint closes it. Period, Gamma and the Up/Down level values are not documented so 14 and 70/30 are explicit defaults, the short branch is dropped, and no stops are documented."
+    },
+    {
+      "id": 2749,
+      "name": "Galactic Explosion",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system accumulates an expanding grid of orders on one side of a long-term moving average and liquidates the whole basket at a fixed money profit, so the long-term MA only sets a side bias and there is no single market-derived entry rule to translate. Marked non-trading; the session hours, skip-candle distance rules, Indent After 8th and Minimal Profit basket close are multi-order mechanics."
+    },
+    {
+      "id": 257,
+      "name": "Keltner Channel Width Breakout",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) + 2 * atr(high, low, close, 14)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Keltner channel is rebuilt exactly from the documented EMAPeriod=20, ATRPeriod=14 and ATRMultiplier=2.0, so the long entry is the upper-band pierce and the exit is the documented reversion to the average. The duplicate AvgPeriod/Multiplier leg, the short branch and the StopMultiplier=2 ATR-based stop are dropped, so both stop fields are null."
+    },
+    {
+      "id": 1488,
+      "name": "Triple MA HTF Strategy - Dynamic Smoothing",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,21), sma(close,21)) and sma(close,50) > sma(close,21)",
+      "exit_long": "crossbelow(ema(close,21), sma(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 15/60/240-minute higher timeframes with proportional smoothing cannot be subscribed in a single-series DSL, so the documented Length1=21 and Length2=21 become two differently smoothed 21-period averages and Length3=50 supplies the confirmation leg. The short branch is dropped and the docs state no stops."
+    },
+    {
+      "id": 1038,
+      "name": "McGinley Dynamic (Improved)",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,14))",
+      "exit_long": "crossbelow(close, ema(close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "McGinley Dynamic (modern, original or custom k=0.5 exponent 4) has no DSL equivalent, so the adaptive line is approximated by an EMA using the documented Period=14, and the documented cross-above entry and cross-below exit are kept. The unconstrained variant, the EMA reference line and the short branch are dropped, and no stops are documented."
+    },
+    {
+      "id": 3019,
+      "name": "TradeXpert Manual Trading Panel",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states explicitly that the strategy does not generate trading signals: every action is a manual parameter request (EntryAction, PendingAction, ClosePositionRequest, ReversePositionRequest). Marked non-trading; pending-order prices/offsets and price-based protective levels are manual instructions rather than signals."
+    },
+    {
+      "id": 3238,
+      "name": "JK Synchro",
+      "family": "volatility",
+      "entry_long": "roc(close,18) > 0 and close > open",
+      "exit_long": "roc(close,18) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Counting bullish versus bearish candles over the documented AnalysisPeriod=18 is not expressible, so net 18-bar direction plus a currently rising candle stands in for the dominant direction. The StartHour=3/EndHour=6 window, the 540-second cooldown, MaxPositions and the 50/150/15 pip stop, take-profit and trailing distances are unsupported, so both stop fields are null."
+    },
+    {
+      "id": 2703,
+      "name": "Self-Optimizing RSI or MFI Trader v3",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The sliding 144-bar in-sample search for the most profitable thresholds cannot run inside a signal expression, so fixed RSI(14) levels of 30 and 50 stand in for the chosen best thresholds and the direction is not optimised (TradeReverse dropped). The MFI option, aggressive entries, ATR/point targets, breakeven step and dynamic sizing are unsupported, so both stop fields are null."
+    },
+    {
+      "id": 2024,
+      "name": "Exp Martin V2",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doc states there are no indicators or filters: direction and volume for each trade are decided from the previous deal's result, starting from a fixed Start Type, with an exponential factor up to Limit multiplications. That is a money-management state machine with no market-derived entry signal, so it is marked non-trading; the fixed point stop and target are not percentages."
+    },
+    {
+      "id": 1705,
+      "name": "Sophia 1_1",
+      "family": "volume",
+      "entry_long": "close < open and low < donchian_low_prev(low,4)",
+      "exit_long": "close > sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the first grid order is expressible: four consecutive falling candles are approximated by a down close making a fresh four-bar low. The martingale ladder (Pip Step, Lot Exponent, Max Trades), the price-step Take Profit/Stop Loss and the Trail Start/Trail Stop trailing are multi-order mechanics the engine cannot hold, so a mean-reversion exit stands in and both stop fields are null."
+    }
+  ]
+}

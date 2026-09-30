@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 259,
+      "name": "Ichimoku Cloud Width Breakout",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The band derived from recent data with the deviation multiplier is rendered with the documented AvgPeriod 20 and Multiplier 2.0, so piercing its upper edge enters long and the fall back to the mean exits; the Ichimoku Tenkan 9 / Kijun 26 / Senkou B 52 construction itself is not available. StopLoss 2.0 is applied as the documented stop; no take-profit is documented."
+    },
+    {
+      "id": 3940,
+      "name": "Pipsover 8167",
+      "family": "trend",
+      "entry_long": "ema(sma(close * volume,20) / sma(volume,20),3) > ema(sma(close * volume,20) / sma(volume,20),10) and close > sma(close,20)",
+      "exit_long": "ema(sma(close * volume,20) / sma(volume,20),3) < ema(sma(close * volume,20) / sma(volume,20),10) or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ADL line is cumulative and cannot be expressed, so the volume-weighted average price stands in for it, keeping the documented ChaikinFastLength 3 / ChaikinSlowLength 10 EMA pair and the MaLength 20 pullback condition. The absolute OpenLevel 55 / CloseLevel 90 thresholds and the 70/140-point brackets are not translatable."
+    },
+    {
+      "id": 424,
+      "name": "Full Candle",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and close > open and (close - low) / close <= 0.05",
+      "exit_long": "close < ema(close,10) or close < open",
+      "stop_loss_pct": 1.8,
+      "take_profit_pct": 1.2,
+      "notes": "The documented full-candle rule is kept: a bullish close above EmaLength 10 with the breakout-side shadow within ShadowPercent 5 of price, mirrored on exit. The documented SLPercent 1.8 and TPPercent 1.2 are applied directly."
+    },
+    {
+      "id": 1531,
+      "name": "Volatility Capture RSI-Bollinger",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_upper(close,50,2.7183)) and sma(rsi(close,10),5) > 55",
+      "exit_long": "crossbelow(close,bb_lower(close,50,2.7183))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented BollingerLength 50 with the Multiplier 2.7183 band and the optional RSI filter as RsiPeriod 10 smoothed by RsiSmaPeriod 5 against BoughtRangeLevel 55, with the opposite trailing band as exit. The adaptive (self-adjusting) band update and the Direction switch are not expressible; docs state no stops."
+    },
+    {
+      "id": 2964,
+      "name": "1H EUR/USD MACD Swing",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and macd(close,12,26) < 0 and roc(macd(close,12,26),1) > 0 and close > donchian_high_prev(high,1)",
+      "exit_long": "ema(close,20) < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long setup is preserved: fast MA above slow MA, a MACD main line turning up while still below zero (the two three-bar swing forms need a shifted MACD, so a rising one-bar MACD change stands in) and a close above the previous candle high. MA lengths and MACD lengths are not visible in the docs (20/50 and 12/26/9 are fallbacks) and the pip stop, target and stepwise trailing are not percentages."
+    },
+    {
+      "id": 3955,
+      "name": "She Kanskigor Daily",
+      "family": "breakout",
+      "entry_long": "close > open and close > donchian_high_prev(high,2)",
+      "exit_long": "close < ema(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The previous daily candle's direction sets the bias, so a bullish session closing above the prior two-bar high is the long and a short EMA loss closes. The once-per-day 00:05 five-minute entry window and the 35/55 price-step take-profit and stop are not expressible."
+    },
+    {
+      "id": 2507,
+      "name": "Previous Candle Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Implements the documented logic literally: the previous candle's high and low are the stored triggers and trades happen only at candle close, so the one-bar Donchian break and its mirror are used. Stop Loss and Take Profit are documented in absolute price units defaulting to 0 (disabled), hence null."
+    },
+    {
+      "id": 709,
+      "name": "Dual RSI Differential",
+      "family": "momentum",
+      "entry_long": "crossbelow(rsi(close,42) - rsi(close,21),5)",
+      "exit_long": "crossabove(rsi(close,42) - rsi(close,21),5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented differential rule is used verbatim with ShortRsiPeriod 21, LongRsiPeriod 42 and RsiDiffLevel 5: long when the spread falls below the level and exit on the opposite threshold. Condition is None so TakeProfitPerc 15 and StopLossPerc 10 stay unused, and the five-day holding timer needs a date field."
+    },
+    {
+      "id": 4151,
+      "name": "Nevalyashka Direction",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA re-enters in the opposite direction purely from position state after each stop/target close, with no price-derived condition, so the never-true guard is used instead of fabricating a signal. The 50-pip stop and target, the InitialDirection switch and volume reuse are order-management settings."
+    },
+    {
+      "id": 239,
+      "name": "Williams R Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < sma(rsi(close,14),20) - 2 * std(rsi(close,14),20)",
+      "exit_long": "rsi(close,14) > sma(rsi(close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is approximated by RSI(14), and the documented band is exact in form: average minus/plus DeviationMultiplier 2 standard deviations over AveragePeriod 20, with the return to the average as exit. Docs mention a percent stop-loss but give no value, so protection is null."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_224": {
+  "strategy_ids": [
+   568,
+   1156,
+   2510,
+   140,
+   1931,
+   1504,
+   360,
+   401,
+   2090,
+   3460
+  ],
+  "docs": {
+   "568": {
+    "id": 568,
+    "name": "Big Mover Catcher",
+    "family": "trend",
+    "overview": "This strategy enters long when the price closes above the upper Bollinger Band and all enabled filters confirm the move. It can also go short when the price closes below the lower band. Filters include RSI, ADX, ATR, EMA trend direction and MACD. A fixed percent stop loss is applied, positions are closed when price returns to the middle band, and an optional force take profit exits on unusually large candles.\n\n## Details\n- **Entry Criteria:**\n  - **Long:** close > upper Bollinger Band and all active filters pass.\n  - **Short:** close < lower Bollinger Band and all active filters pass.\n- **Long/Short:** Both (configurable).\n- **Exit Criteria:**\n  - Price crosses the middle Bollinger Band.\n  - Optional force take profit on large candles.\n- **Stops:** Fixed percent stop loss.\n- **Default Values:** Bollinger length = 40, stop loss = 2%, force TP threshold = 5%.\n- **Filters:** RSI (14), ADX (28), ATR (14), EMA (350), MACD (12,26,9).\n",
+    "details": "- **Entry Criteria:**\n  - **Long:** close > upper Bollinger Band and all active filters pass.\n  - **Short:** close < lower Bollinger Band and all active filters pass.\n- **Long/Short:** Both (configurable).\n- **Exit Criteria:**\n  - Price crosses the middle Bollinger Band.\n  - Optional force take profit on large candles.\n- **Stops:** Fixed percent stop loss.\n- **Default Values:** Bollinger length = 40, stop loss = 2%, force TP threshold = 5%.\n- **Filters:** RSI (14), ADX (28), ATR (14), EMA (350), MACD (12,26,9).",
+    "parameters": ""
+   },
+   "1156": {
+    "id": 1156,
+    "name": "Parabolic SAR Early Buy MA Exit",
+    "family": "trend",
+    "overview": "This strategy trades Parabolic SAR reversals and exits long positions early when SAR flips above price and the close is below an N-period moving average.\n\n## Details\n\n- **Entry Criteria**:\n  - Price crossing Parabolic SAR.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - For long positions: SAR above price and close below MA (`MaPeriod`).\n  - For short positions: opposite SAR crossover (handled by entry logic).\n- **Stops**: None.\n- **Default Values**:\n  - `SarStart` = 0.02\n  - `SarIncrement` = 0.02\n  - `SarMax` = 0.2\n  - `MaPeriod` = 11\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Parabolic SAR, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Price crossing Parabolic SAR.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - For long positions: SAR above price and close below MA (`MaPeriod`).\n  - For short positions: opposite SAR crossover (handled by entry logic).\n- **Stops**: None.\n- **Default Values**:\n  - `SarStart` = 0.02\n  - `SarIncrement` = 0.02\n  - `SarMax` = 0.2\n  - `MaPeriod` = 11\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: Parabolic SAR, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2510": {
+    "id": 2510,
+    "name": "Bull vs Medved",
+    "family": "trend",
+    "overview": "Bull vs Medved is a limit-order breakout strategy originally published for MetaTrader 5. It watches the last three completed candles and only allows trades during six five-minute windows spread evenly through the day. When a specific bullish or bearish candle sequence appears, the strategy places a pending limit order offset from the current spread and protects the position with symmetrical stop-loss and take-profit targets.\n\n## Trading Logic\n\n1. **Trading windows** – orders are evaluated only if the current time of day is within one of the six configurable windows (00:05, 04:05, 08:05, 12:05, 16:05, 20:05 by default) and within the configured duration (5 minutes by default). Leaving the window resets the one-order-per-window guard.\n2. **Required candle data** – the strategy waits for three finished candles before generating any signals. Calculations always use the three most recent completed candles.\n3. **Bullish setups**:\n   - **Regular bull**: the candle three periods ago closes above the open of the second candle, the second candle has at least a 1-pip bullish body, and the most recent candle has a bullish body larger than the configured `CandleSizePips` threshold.\n   - **Bad bull filter**: if all three candles have large bullish bodies, the signal is ignored to avoid parabolic moves.\n   - **Cool bull**: after a strong bearish pullback (second candle closes at least 2 pips below its open), the most recent candle must engulf the pullback and print at least 40% of the normal `CandleSizePips` body. Either a regular bull (without the bad-bull filter) or a cool bull pattern triggers a long setup.\n   - On a valid long signal the strategy places a **buy limit** order below the best ask by `IndentUpPips` (converted to instrument price units).\n4. **Bearish setup**:\n   - If the most recent candle has a bearish body larger than `CandleSizePips`, the strategy places a **sell limit** order above the best bid by `IndentDownPips`.\n5. **Risk management** – once a position is op",
+    "details": "",
+    "parameters": "- `OrderVolume` – trade volume for limit orders.\n- `CandleSizePips` – minimum bullish/bearish body size for the latest candle.\n- `StopLossPips` – protective stop distance from entry price.\n- `TakeProfitPips` – profit target distance from entry price.\n- `IndentUpPips` – buy limit offset below the best ask.\n- `IndentDownPips` – sell limit offset above the best bid.\n- `EntryWindowMinutes` – duration of each allowed trading window.\n- `CandleType` – candle timeframe used to evaluate patterns.\n- `StartTime0` … `StartTime5` – start times for the six trading windows."
+   },
+   "140": {
+    "id": 140,
+    "name": "VWAP RSI",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 157%. It performs best in the crypto market.\n\nThe expectation is that price will revert back toward VWAP once momentum cools.\n\nA percent stop guards against trends that continue to drive price away from VWAP.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: VWAP, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: VWAP, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1931": {
+    "id": 1931,
+    "name": "SVM Trader",
+    "family": "trend",
+    "overview": "SVM Trader Strategy demonstrates how a combination of classic technical indicators can approximate the behavior of a support vector machine (SVM) model for generating trading signals. The original MQL example trained two separate SVMs for buy and sell decisions. In this StockSharp conversion, we emulate the decision process with a simple scoring system derived from seven indicators:\n\n- **Bears Power** and **Bulls Power** – measure the balance between sellers and buyers.\n- **Average True Range (ATR)** – captures current volatility.\n- **Momentum** – checks price acceleration.\n- **Moving Average Convergence Divergence (MACD)** – identifies trend direction.\n- **Stochastic Oscillator** – detects overbought and oversold levels.\n- **Force Index** – combines price movement and volume.\n\nEach indicator contributes to a cumulative score. When the score exceeds a threshold, the strategy opens a long position; when the score falls below the opposite threshold, a short position is opened. This setup mirrors the classification step of the original SVM approach while keeping the implementation lightweight and transparent.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `CandleType` | Candle timeframe used for calculations. |\n| `Volume` | Order volume for new trades. |\n| `TakeProfit` | Distance for take-profit in absolute price units. |\n| `StopLoss` | Distance for stop-loss in absolute price units. |\n| `RiskExposure` | Maximum cumulative position volume allowed. |"
+   },
+   "1504": {
+    "id": 1504,
+    "name": "Ultimate Oscillator Trading",
+    "family": "other",
+    "overview": "This strategy buys when the Ultimate Oscillator falls below a threshold and exits when price closes above the prior high.\n\n## Details\n\n- **Entry**: oscillator below the buy level.\n- **Exit**: close above previous high.\n- **Indicators**: Ultimate Oscillator.\n- **Stops**: none.\n",
+    "details": "- **Entry**: oscillator below the buy level.\n- **Exit**: close above previous high.\n- **Indicators**: Ultimate Oscillator.\n- **Stops**: none.",
+    "parameters": ""
+   },
+   "360": {
+    "id": 360,
+    "name": "Country Value Factor",
+    "family": "other",
+    "overview": "The Country Value Factor strategy ranks equity markets by the Shiller CAPE ratio. Countries with the lowest CAPE are considered cheap and are bought, while expensive markets are avoided. The approach exploits the tendency for undervalued markets to outperform over time.\n\nEvery month the strategy redistributes capital equally among the cheapest countries from a user supplied universe. Positions are sized by portfolio value and only executed when the trade exceeds a minimum USD amount.\n\n## Details\n\n- **Universe**: Collection of country equity ETFs.\n- **Signal**: Buy the countries with the lowest CAPE ratios.\n- **Rebalance**: First trading day of each month.\n- **Positioning**: Long only.\n- **Parameters**:\n  - `Universe` – securities representing each country.\n  - `MinTradeUsd` – minimum dollar amount per order.\n  - `CandleType` – time frame of candles (default: 1 day).\n- **Note**: The sample code contains placeholder logic and should be extended with real factor calculations.\n",
+    "details": "- **Universe**: Collection of country equity ETFs.\n- **Signal**: Buy the countries with the lowest CAPE ratios.\n- **Rebalance**: First trading day of each month.\n- **Positioning**: Long only.\n- **Parameters**:\n  - `Universe` – securities representing each country.\n  - `MinTradeUsd` – minimum dollar amount per order.\n  - `CandleType` – time frame of candles (default: 1 day).\n- **Note**: The sample code contains placeholder logic and should be extended with real factor calculations.",
+    "parameters": ""
+   },
+   "401": {
+    "id": 401,
+    "name": "Soccer Clubs Arbitrage",
+    "family": "other",
+    "overview": "This strategy seeks arbitrage opportunities between soccer club fan tokens traded on multiple venues. By watching price spreads and funding rate imbalances, it opens offsetting long and short positions to lock in mispricings.\n\nA trade triggers when the spread between exchanges exceeds a threshold. Positions are hedged and exited when prices converge or a protective stop is reached.\n\n## Details\n\n- **Data**: Fan token prices and funding rates.\n- **Entry**: Open opposite positions when spread > X%.\n- **Exit**: Close when spread < Y% or at time stop.\n- **Instruments**: Exchange‑listed fan tokens.\n- **Risk**: Fixed‑percent stop to guard against slippage.\n\n",
+    "details": "- **Data**: Fan token prices and funding rates.\n- **Entry**: Open opposite positions when spread > X%.\n- **Exit**: Close when spread < Y% or at time stop.\n- **Instruments**: Exchange‑listed fan tokens.\n- **Risk**: Fixed‑percent stop to guard against slippage.",
+    "parameters": ""
+   },
+   "2090": {
+    "id": 2090,
+    "name": "Instant Execution",
+    "family": "other",
+    "overview": "This strategy immediately enters a single position on the first completed candle and manages it with simple profit and risk rules. The position direction is selectable through parameters. Once a trade is opened the algorithm tracks profit and loss and can trail the price to protect gains.\n\nThe logic reproduces the behaviour of the original MQL script that allowed instant execution of market orders with optional take-profit, stop-loss and trailing stop values.\n\n## Details\n\n- **Entry Criteria**: opens a market position on the first finished candle after start. Direction is defined by the `Direction` parameter.\n- **Long/Short**: Both sides supported.\n- **Exit Criteria**:\n  - Take profit reached.\n  - Stop loss reached.\n  - Trailing stop activated and price hits the trailing level.\n- **Stops**: Take profit, stop loss and trailing stop are available.\n- **Default Values**:\n  - `TakeProfit` = 70 price units.\n  - `StopLoss` = 0 (disabled).\n  - `TrailingStart` = 5 price units.\n  - `TrailingSize` = 5 price units.\n- **Filters**:\n  - Category: Utility\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: opens a market position on the first finished candle after start. Direction is defined by the `Direction` parameter.\n- **Long/Short**: Both sides supported.\n- **Exit Criteria**:\n  - Take profit reached.\n  - Stop loss reached.\n  - Trailing stop activated and price hits the trailing level.\n- **Stops**: Take profit, stop loss and trailing stop are available.\n- **Default Values**:\n  - `TakeProfit` = 70 price units.\n  - `StopLoss` = 0 (disabled).\n  - `TrailingStart` = 5 price units.\n  - `TrailingSize` = 5 price units.\n- **Filters**:\n  - Category: Utility\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3460": {
+    "id": 3460,
+    "name": "Spread Informer",
+    "family": "other",
+    "overview": "Collects detailed statistics for the bid-ask spread of the selected instrument and notifies when the spread breaks a configurable limit. The strategy continuously listens to Level1 updates, tracks maximum, minimum, and average spread in points, and logs a summary once it stops. It is useful for researching liquidity conditions before running latency-sensitive systems or optimizing trading windows in the Strategy Tester.\n\n## Details\n\n- **Data Source**: Level1 best bid and best ask quotes.\n- **Statistics Captured**:\n  - Start and end timestamps of the observation period.\n  - Maximum spread and the time when it occurred.\n  - Minimum spread and the time when it occurred.\n  - Average spread calculated across all observed Level1 samples.\n- **Alerts**:\n  - Optional alert when the spread (in points) rises above the configured `MaxSpreadPoints` threshold.\n  - Alert frequency is limited by `AlertIntervalSeconds` to avoid spamming the log.\n  - Alerts are only triggered when the spread crosses the threshold from below.\n- **Logging**:\n  - Real-time alerts are written through `LogInfo`.\n  - Final statistics summary is emitted during `OnStopped`.\n- **Default Values**:\n  - `MaxSpreadPoints` = 0 (alerts disabled).\n  - `AlertIntervalSeconds` = 0 (no throttling).\n\n## Parameters\n\n| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `MaxSpreadPoints` | Maximum allowed spread in points. Set to 0 to disable alerts. | 0 | Points are calculated using the instrument price step. |\n| `AlertIntervalSeconds` | Minimum time between consecutive alerts. | 0 | Prevents duplicate alerts when the spread stays wide. |\n\n## Usage Notes\n\n1. Attach the strategy to an instrument and ensure Level1 data is available.\n2. Configure `MaxSpreadPoints` according to the acceptable spread for the instrument.\n3. Optionally increase `AlertIntervalSeconds` to suppress repeated notifications during volatile periods.\n4. Stop the strategy to review the logged statistics in the terminal output.\n",
+    "details": "- **Data Source**: Level1 best bid and best ask quotes.\n- **Statistics Captured**:\n  - Start and end timestamps of the observation period.\n  - Maximum spread and the time when it occurred.\n  - Minimum spread and the time when it occurred.\n  - Average spread calculated across all observed Level1 samples.\n- **Alerts**:\n  - Optional alert when the spread (in points) rises above the configured `MaxSpreadPoints` threshold.\n  - Alert frequency is limited by `AlertIntervalSeconds` to avoid spamming the log.\n  - Alerts are only triggered when the spread crosses the threshold from below.\n- **Logging**:\n  - Real-time alerts are written through `LogInfo`.\n  - Final statistics summary is emitted during `OnStopped`.\n- **Default Values**:\n  - `MaxSpreadPoints` = 0 (alerts disabled).\n  - `AlertIntervalSeconds` = 0 (no throttling).",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `MaxSpreadPoints` | Maximum allowed spread in points. Set to 0 to disable alerts. | 0 | Points are calculated using the instrument price step. |\n| `AlertIntervalSeconds` | Minimum time between consecutive alerts. | 0 | Prevents duplicate alerts when the spread stays wide. |"
+   }
+  }
+ }
+}

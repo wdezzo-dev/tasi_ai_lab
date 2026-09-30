@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1796,
+      "name": "Straddle News",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 3745,
+      "name": "TradePad Sample",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 14-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 324,
+      "name": "Keltner Kalman Filter",
+      "family": "trend",
+      "entry_long": "close > (ema(close,20) + 2 * atr(high,low,close,20))",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner channel translated as EMA +/- ATR envelope; exact platform channel state is unsupported."
+    },
+    {
+      "id": 3056,
+      "name": "BARS Alligator",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,13)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 13-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 107,
+      "name": "Upthrust Reversal",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 124,
+      "name": "Pre-Holiday Strength",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": 2,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 357,
+      "name": "Book to Market Value",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 1988,
+      "name": "Super Take",
+      "family": "other",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fallback OHLCV translation used because the source strategy relies on unsupported proprietary/stateful features; no unsupported indicator or external data was fabricated."
+    },
+    {
+      "id": 367,
+      "name": "Earnings Announcement Premium",
+      "family": "other",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price-action candle direction translated directly from OHLC fields; unsupported intrabar/order details are omitted."
+    },
+    {
+      "id": 1921,
+      "name": "Trailing Stop EA",
+      "family": "other",
+      "entry_long": "close > ema(close,30)",
+      "exit_long": "close < ema(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fallback OHLCV translation used because the source strategy relies on unsupported proprietary/stateful features; no unsupported indicator or external data was fabricated."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_249": {
+  "strategy_ids": [
+   789,
+   3037,
+   4044,
+   3794,
+   3789,
+   314,
+   197,
+   3553,
+   2142,
+   1460
+  ],
+  "docs": {
+   "789": {
+    "id": 789,
+    "name": "Fibonacci Trend Reversal",
+    "family": "trend",
+    "overview": "Strategy builds a Fibonacci channel using recent highs and lows. A position is opened when price crosses the 50% level in the breakout direction. Risk control relies on ATR based stop loss and risk reward take profits with optional partial exit.\n\n## Parameters\n- **Candle Type** — candle series.\n- **Sensitivity** — base sensitivity for channel calculation.\n- **ATR Period** — ATR length for stop loss.\n- **ATR Multiplier** — ATR factor for stop loss.\n- **Risk Reward** — take profit multiple of risk.\n- **Use Partial TP** — close half position at first target.\n- **Trade Direction** — allowed trade direction.\n",
+    "details": "",
+    "parameters": "- **Candle Type** — candle series.\n- **Sensitivity** — base sensitivity for channel calculation.\n- **ATR Period** — ATR length for stop loss.\n- **ATR Multiplier** — ATR factor for stop loss.\n- **Risk Reward** — take profit multiple of risk.\n- **Use Partial TP** — close half position at first target.\n- **Trade Direction** — allowed trade direction."
+   },
+   "3037": {
+    "id": 3037,
+    "name": "Pinbar Reversal",
+    "family": "trend",
+    "overview": "Converted from the original MQL expert advisor `PINBAR.mq4` (folder `MQL/22269`). The strategy detects pin bar reversals on the primary timeframe and confirms them with higher timeframe momentum and MACD filters. It reproduces the spirit of the source system while using StockSharp high-level API features.\n\n## Trading Logic\n\n- **Primary timeframe** – configurable candle type used to identify price action patterns.\n- **Higher timeframe** – configurable candle type used to confirm momentum and MACD trend bias.\n- **Pin bar detection** – a bar is accepted when the real body is small relative to the full range and one wick dominates the candle (configurable body and wick ratios).\n- **Trend filter** – fast EMA must be above (or below) the slow EMA for long (or short) setups, mirroring the LWMA filters from the original code.\n- **Momentum confirmation** – momentum on the higher timeframe must be above (long) or below (short) a configurable threshold for at least one of the last three higher-timeframe bars.\n- **MACD confirmation** – the MACD value must be above its signal line for long trades and below the signal line for shorts, matching the monthly MACD confirmation used in the MQL expert.\n- **Fractal confirmation** – the strategy maintains a rolling five-bar window and requires the presence of the latest bullish/bearish fractal before accepting a new trade, similar to the `FindFractals()` gate in the source.\n- **Risk management** – configurable stop-loss, take-profit, break-even trigger/offset and trailing stop logic track the open position. The trade is exited when any level is touched or when the trailing level is breached.\n\n## Entry Rules\n\n### Long Setup\n1. Latest candle on the primary timeframe forms a bullish pin bar (long lower wick, small body).\n2. Fast EMA > slow EMA.\n3. Latest higher timeframe momentum (or one of the two previous values) is above the threshold.\n4. Higher timeframe MACD is above its signal line.\n5. A bullish fractal has been detected recently and ",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Primary timeframe for pattern detection. |\n| `TrendCandleType` | 1-hour candles | Higher timeframe for momentum/MACD filters. |\n| `FastMaLength` | 6 | Fast EMA length (replaces fast LWMA). |\n| `SlowMaLength` | 85 | Slow EMA length (replaces slow LWMA). |\n| `MomentumLength` | 14 | Momentum indicator length on higher timeframe. |\n| `MomentumThreshold` | 0.1 | Minimum absolute momentum value for confirmation. |\n| `MacdFastLength` | 12 | MACD fast EMA length. |\n| `MacdSlowLength` | 26 | MACD slow EMA length. |\n| `MacdSignalLength` | 9 | MACD signal EMA length. |\n| `BodyToRangeRatio` | 0.3 | Maximum body size relative to candle range. |\n| `WickRatio` | 0.6 | Minimum dominant wick ratio defining a pin bar. |\n| `StopLossPercent` | 2 | Protective stop size in percent. |\n| `TakeProfitPercent` | 4 | Profit target size in percent. |\n| `BreakEvenTriggerPercent` | 1.5 | Profit required to move the stop to break-even. |\n| `BreakEvenOffsetPercent` | 0.2 | Additional offset added to the break-even stop. |\n| `TrailingActivationPercent` | 2.5 | Profit threshold for enabling trailing stop. |\n| `TrailingDistancePercent` | 1 | Distance of the trailing stop once activated. |"
+   },
+   "4044": {
+    "id": 4044,
+    "name": "EMA Cross Trailing",
+    "family": "trend",
+    "overview": "This strategy is the StockSharp conversion of the MetaTrader 4 expert advisor located at `MQL/8606/EMA_CROSS_2.mq4`. It preserves the original idea of tracking the relationship between a slow and a fast exponential moving average and opening a single market position when a crossover occurs. Protective exits (take profit, stop loss and trailing stop) are handled through the high-level `StartProtection` helper so the behaviour mirrors the MetaTrader implementation while using StockSharp best practices.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TakeProfitPips` | Distance in pips (price steps) used for the protective take profit. Default: 20. |\n| `StopLossPips` | Distance in pips used for the protective stop loss. Default: 30. |\n| `TrailingStopPips` | Trailing distance in pips. Set to `0` to disable trailing. Default: 50. |\n| `OrderVolume` | Lot size of the market entries before alignment. Default: 2. |\n| `FastEmaLength` | Period of the fast EMA applied to closing prices. Default: 5. |\n| `SlowEmaLength` | Period of the slow EMA applied to closing prices. Default: 60. |\n| `CandleType` | Time-frame for candle building. Default: 15 minutes. |"
+   },
+   "3794": {
+    "id": 3794,
+    "name": "OverHedge V2 Grid",
+    "family": "trend",
+    "overview": "OverHedge V2 is a hedged grid system that alternates long and short positions while increasing trade size after each fill. The strategy analyses the relationship between a fast and a slow exponential moving average (EMA) to decide the dominant direction for the next cycle. Once a cycle starts, the algorithm places market orders whenever price reaches predefined tunnel levels around the starting quote. The grid expands symmetrically so that every new leg offsets the floating loss of the previous one. The cycle ends when the aggregate open profit exceeds a configurable target or when the trader manually requests a shutdown.\n\nThe implementation keeps separate tallies for long and short exposure and uses live Level 1 prices to trigger new hedges. Trade volume grows geometrically according to the chosen multiplier, which reproduces the martingale-style risk from the original MetaTrader expert advisor. Because orders are executed at market, the system automatically adapts to liquidity conditions while keeping the grid spacing expressed in points.\n\n## How it works\n\n1. **Direction filter** – The strategy calculates two EMAs on completed candles. When the fast EMA is above the slow EMA, the next cycle starts from a long bias; otherwise it starts from a short bias.\n2. **Cycle initialisation** – At the beginning of a cycle, the algorithm records the current bid price and derives two tunnel boundaries separated by the configured width and the live spread. The first order follows the EMA bias, and the opposite leg is staged at the tunnel distance.\n3. **Grid expansion** – If price continues against the latest entry, additional market orders are triggered alternately (buy, sell, buy, …). Each new leg multiplies the previous volume by the hedge multiplier, allowing the overall position to recover faster on a reversal.\n4. **Profit harvesting** – The cycle constantly monitors unrealised profit using the best bid/ask prices. When the target value is reached, or if the operator toggles",
+    "details": "",
+    "parameters": ""
+   },
+   "3789": {
+    "id": 3789,
+    "name": "RSI Trader Aligned Averages",
+    "family": "trend",
+    "overview": "## Summary\nThis strategy reproduces the \"RSI trader\" MetaTrader Expert Advisor. It aligns two trend filters – price moving averages and smoothed RSI averages – to enter in the direction of the dominant trend and exits when the filters diverge (sideways regime). The StockSharp port works on any instrument with candle data support and defaults to hourly candles as in the original description.\n\n## How it works\n1. Calculate RSI with the period specified by **RSI Period** (default 14).\n2. Smooth the RSI stream with two simple moving averages: a short one (**Short RSI MA**) and a long one (**Long RSI MA**).\n3. Smooth closing prices with two moving averages: a short simple MA (**Short Price MA**) and a long linear-weighted MA (**Long Price MA**).\n4. Generate signals on finished candles only:\n   - **Long** – both short averages (price and RSI) are above their long counterparts.\n   - **Short** – both short averages are below their long counterparts.\n   - **Sideways** – the averages disagree (one indicates uptrend and the other downtrend). When this occurs any open position is closed.\n5. Orders are issued with `BuyMarket` / `SellMarket`. Opposite positions are flattened before entering a new direction.\n\n## Parameters\n| Name | Description | Default | Optimizable |\n| --- | --- | --- | --- |\n| `RSI Period` | RSI calculation length. | 14 | Yes (7…28, step 1) |\n| `Short Price MA` | Length of the short simple moving average of price. | 9 | Yes (5…20, step 1) |\n| `Long Price MA` | Length of the long linear-weighted moving average of price. | 45 | Yes (30…90, step 5) |\n| `Short RSI MA` | Length of the short smoothing average applied to RSI. | 9 | Yes (5…20, step 1) |\n| `Long RSI MA` | Length of the long smoothing average applied to RSI. | 45 | Yes (30…90, step 5) |\n| `Candle Type` | Data type used for candles. Defaults to 1-hour timeframe. | H1 | No |\n\n## Notes\n- Trading is only performed when all indicators are formed.\n- The original EA used lots and slippage settings. StockSharp us",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimizable |\n| --- | --- | --- | --- |\n| `RSI Period` | RSI calculation length. | 14 | Yes (7…28, step 1) |\n| `Short Price MA` | Length of the short simple moving average of price. | 9 | Yes (5…20, step 1) |\n| `Long Price MA` | Length of the long linear-weighted moving average of price. | 45 | Yes (30…90, step 5) |\n| `Short RSI MA` | Length of the short smoothing average applied to RSI. | 9 | Yes (5…20, step 1) |\n| `Long RSI MA` | Length of the long smoothing average applied to RSI. | 45 | Yes (30…90, step 5) |\n| `Candle Type` | Data type used for candles. Defaults to 1-hour timeframe. | H1 | No |"
+   },
+   "314": {
+    "id": 314,
+    "name": "Parabolic SAR Volatility Expansion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 49%. It performs best in the crypto market.\n\nSignals trigger when Parabolic confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like SarAf, SarMaxAf. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SarAf = 0.02m`\n  - `SarMaxAf = 0.2m`\n  - `AtrPeriod = 14`\n  - `VolatilityExpansionFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SarAf = 0.02m`\n  - `SarMaxAf = 0.2m`\n  - `AtrPeriod = 14`\n  - `VolatilityExpansionFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "197": {
+    "id": 197,
+    "name": "Hull Ma Adx",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 178%. It performs best in the stocks market.\n\nHull MA shows the trend, while ADX confirms its intensity. Entries follow the Hull slope when ADX indicates strength.\n\nEffective for traders who focus on smooth trends with confirmation. ATR stops keep losses under control.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `HullMA turning up && ADX > 25`\n  - Short: `HullMA turning down && ADX > 25`\n- **Long/Short**: Both\n- **Exit Criteria**: Hull MA reversal\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `AdxPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `HullMA turning up && ADX > 25`\n  - Short: `HullMA turning down && ADX > 25`\n- **Long/Short**: Both\n- **Exit Criteria**: Hull MA reversal\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `HmaPeriod` = 9\n  - `AdxPeriod` = 14\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Hull MA, Moving Average, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3553": {
+    "id": 3553,
+    "name": "OsMA Four Colors Arrow",
+    "family": "trend",
+    "overview": "This strategy recreates the behaviour of the MetaTrader expert advisor \"OsMA Four Colors Arrow\" inside the StockSharp framework. The original EA reacts to the coloured arrows produced by the accompanying indicator whenever the OsMA (MACD histogram) changes phase. In the StockSharp version the same behaviour is modelled by monitoring zero-crossings of the MACD histogram: a bullish cross (histogram moves from negative to positive) triggers long entries, while a bearish cross triggers short entries. Optional reverse mode turns the logic upside down for hedging or mean-reversion tests.\n\nThe template works with finished candles only and can enforce a daily trading session similar to the time filter offered by the MQL version. Built-in money management includes configurable trade volume, a cap on the number of aggregated positions, and automated stop-loss / take-profit / trailing protection expressed in pips.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `CandleType` | Timeframe used for calculations and signal generation. |\n| `FastPeriod` / `SlowPeriod` / `SignalPeriod` | EMA lengths for the MACD histogram (OsMA). |\n| `StopLossPips` / `TakeProfitPips` | Risk targets in pips. Set to zero to disable. |\n| `TrailingActivatePips` | Profit (in pips) required before the trailing stop can move. |\n| `TrailingStopPips` | Trailing distance in pips. Zero disables the trailing module. |\n| `TrailingStepPips` | Extra pips that must be gained before tightening the trailing stop again. |\n| `MaxPositions` | Maximum aggregated position units (`TradeVolume` multiples). Zero means unlimited. |\n| `ReverseSignals` | Invert entry direction (buy ↔ sell). |\n| `DirectionMode` | Restrict signals to long-only, short-only, or both. |\n| `CloseOppositePositions` | Close any opposite exposure before acting on the new signal. |\n| `OnlyOnePosition` | If `true`, prevents adding to an already open position in the same direction. |\n| `UseTimeControl` | Enable the intraday trading session filter. |\n| `StartHour`, `StartMinute`, `EndHour`, `EndMinute` | Session boundaries (end can be earlier than start to cover overnight sessions). |\n| `TradeVolume` | Order volume in lots. |"
+   },
+   "2142": {
+    "id": 2142,
+    "name": "Color Bulls",
+    "family": "trend",
+    "overview": "This strategy is a port of the MetaTrader expert `Exp_ColorBulls`. It relies on the Color Bulls indicator, which calculates the difference between the candle's high price and a moving average. The resulting value is smoothed by another moving average and displayed as a histogram with different colors for rising and falling values.\n\nThe strategy reacts to color changes of this histogram:\n\n- When the indicator switches from rising (green) to falling (magenta), a long position is opened.\n- When the indicator switches from falling to rising, a short position is opened.\n- Opposite positions are closed automatically before entering new ones.\n\nOnly completed candles are processed and market orders are used for entries and exits.",
+    "details": "",
+    "parameters": "- **Fast MA Length** – period of the moving average applied to high prices.\n- **Smooth Length** – period of the moving average used to smooth the bulls value.\n- **Candle Type** – timeframe of candles used for calculations."
+   },
+   "1460": {
+    "id": 1460,
+    "name": "Trend Following MM3 High Low",
+    "family": "trend",
+    "overview": "Uses a 3-period simple moving average of highs and lows. A long trade opens when price closes above the SMA of highs and exits when price falls below the SMA of lows.\n\n## Details\n\n- **Entry Criteria**: Close > SMA(high).\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close < SMA(low).\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close > SMA(high).\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close < SMA(low).\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 3\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

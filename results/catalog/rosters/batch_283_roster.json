@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2180,
+      "name": "FrakTrak XonaX",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 671,
+      "name": "Delta SMA 1-Year High Low",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,30) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Volume confirmation translated with volume/SMA(volume,20) plus an OHLCV trend filter."
+    },
+    {
+      "id": 3200,
+      "name": "1H Bollinger Bands",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,26),macd_signal(close,6,26,9))",
+      "exit_long": "crossbelow(macd(close,6,26),macd_signal(close,6,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3052,
+      "name": "Trend Finder",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,85),macd_signal(close,6,85,9))",
+      "exit_long": "crossbelow(macd(close,6,85),macd_signal(close,6,85,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2571,
+      "name": "MACD AO Pattern",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2020,
+      "name": "Color Schaff WPR Trend Cycle",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 3265,
+      "name": "Gann Grid",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,6,85),macd_signal(close,6,85,9))",
+      "exit_long": "crossbelow(macd(close,6,85),macd_signal(close,6,85,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 1503,
+      "name": "Ultimate Balance",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 3821,
+      "name": "Blockbuster Bollinger Breakout",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 3593,
+      "name": "Aussie Surfer Ltd",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,5,2.5)",
+      "exit_long": "close < bb_mid(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 5 and deviation 2.5; trailing/point-based protection not representable unless expressed as percentage fields."
+    }
+  ]
+}

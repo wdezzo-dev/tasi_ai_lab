@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3509,
+  "ticker": "4300",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3509,
+    "name": "OpenPendingorderAfterPositionGetStopLoss",
+    "family": "breakout",
+    "entry_long": "crossabove(21 * (close - donchian_low(low,21)) / (donchian_high(high,95.0) - donchian_low(low,10)),sma(95.0 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The stochastic %K slope turning up is rebuilt as the 14-bar range-position line crossing its 3-period average (KPeriod 14 / DPeriod 3 are explicit defaults) and the downward turn exits. Pending stop placement above market, per-direction position caps, point-based protection and reinstalling orders after a stop-out are order-book features."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2007-12-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4139,
+      "engine_win_ret": 0.13728223223017189,
+      "alpha": 0.7795070968093765,
+      "benchmark_ret": -0.6422248645792046,
+      "trades": 6,
+      "win_rate": 0.8333333333333334,
+      "sharpe": 0.5882754992428566,
+      "max_drawdown": -0.012575805238213666,
+      "profit_factor": 40.610844445160815
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.09656318898978977,
+      "alpha": -0.08592939261258414,
+      "benchmark_ret": 0.18249258160237392,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 1.176673754721872,
+      "max_drawdown": -0.0211685766312244,
+      "profit_factor": 9.394825473977154
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.17405063291139244,
+      "benchmark_ret": 0.17405063291139244,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2007-12-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4139,
+      "engine_win_ret": 0.10381632197264401,
+      "alpha": 0.7460411865518486,
+      "benchmark_ret": -0.6422248645792046,
+      "trades": 6,
+      "win_rate": 0.5,
+      "sharpe": 0.45215423493668255,
+      "max_drawdown": -0.01817603093186282,
+      "profit_factor": 9.242330721277
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.08036577939685818,
+      "alpha": -0.10212680220551573,
+      "benchmark_ret": 0.18249258160237392,
+      "trades": 3,
+      "win_rate": 0.6666666666666666,
+      "sharpe": 0.9814537194031931,
+      "max_drawdown": -0.02486490143599518,
+      "profit_factor": 5.769424939015988
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": -0.17405063291139244,
+      "benchmark_ret": 0.17405063291139244,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

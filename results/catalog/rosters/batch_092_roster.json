@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2756,
+      "name": "VR-ZVER v2",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and ema(close,21) > ema(close,50) and rsi(close,14) < 30",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA 9/21/50 and RSI(14) below 30 are explicit fallbacks because numeric defaults are absent; stochastic is omitted. Pip stops, targets, break-even, trailing, sizing, and time-frame settings are unsupported."
+    },
+    {
+      "id": 1164,
+      "name": "Phase Cross Strategy with Zone",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20) + 0.5,ema(close,20) - 0.5)",
+      "exit_long": "crossbelow(sma(close,20) + 0.5,ema(close,20) - 0.5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented length 20 and absolute offset 0.5 are applied directly to the SMA and EMA. The inverse crossover closes the long, and no stops are documented."
+    },
+    {
+      "id": 4075,
+      "name": "Stairs",
+      "family": "trend",
+      "entry_long": "close > sma(close,20)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar trend line is an explicit proxy for the pending symmetric grid, since order state, price-step conversion, basket PnL, and liquidation are unavailable. ChannelSteps and profit thresholds remain in unsupported point or portfolio units."
+    },
+    {
+      "id": 3865,
+      "name": "AK47 A1",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,2) and ema((high + low) / 2,5) > ema((high + low) / 2,8) and ema((high + low) / 2,8) > ema((high + low) / 2,13) and rsi(close,13) >= 50",
+      "exit_long": "ema((high + low) / 2,5) < ema((high + low) / 2,8) or close < ema((high + low) / 2,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Unshifted median-price EMA 13/8/5 replaces the Alligator, a two-bar fresh low replaces its fractal, and RSI(13) replaces DeMarker. Williams %R, point gaps, trailing, and the disabled/source stop are unsupported."
+    },
+    {
+      "id": 3978,
+      "name": "Moving Average Position System",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma(close,240))",
+      "exit_long": "crossbelow(close,sma(close,240))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(240) retains the documented default lookback and close crossings, with the inverse cross as exit. Optional MA type/shift, martingale sizing, and point-based protection cannot be represented."
+    },
+    {
+      "id": 3799,
+      "name": "MultiBreakout V001k",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high approximates the completed reference session and stacked stop entries. Session clocks, staged partial targets, break-even, and moving trailing logic are unavailable."
+    },
+    {
+      "id": 4063,
+      "name": "Locker Hedging Grid",
+      "family": "breakout",
+      "entry_long": "close > sma(close,20)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20) is an explicit cycle proxy for the initial long and subsequent flattening. The alternating rescue grid, floating-profit threshold, volumes, and price-step spacing require portfolio and order state."
+    },
+    {
+      "id": 2319,
+      "name": "PPO Cloud",
+      "family": "momentum",
+      "entry_long": "crossabove((ema(close,12) - ema(close,26)) / ema(close,26),ema((ema(close,12) - ema(close,26)) / ema(close,26),9))",
+      "exit_long": "crossbelow((ema(close,12) - ema(close,26)) / ema(close,26),ema((ema(close,12) - ema(close,26)) / ema(close,26),9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "PPO is expressed exactly as fast-minus-slow EMA divided by slow EMA, with its EMA(9) signal. The documented 12/26/9 crossovers are retained and no stops are specified."
+    },
+    {
+      "id": 4187,
+      "name": "Ten Points 3 v005",
+      "family": "volatility",
+      "entry_long": "roc(macd(close,12,26),5) > 0",
+      "exit_long": "roc(macd(close,12,26),5) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Five-bar MACD slope uses standard 12/26 settings as a fallback because the parameter table has no lengths. Martingale baskets, adverse-distance adds, equity locks, clocks, and pip protection are not representable."
+    },
+    {
+      "id": 967,
+      "name": "Larry Conners Vix Reversal II",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,25),61)",
+      "exit_long": "crossabove(rsi(close,25),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Local close RSI(25) substitutes for the unavailable VIX series and retains the documented 61 trigger. An RSI(50) recross is the exit proxy; the 7-to-12-day holding timer is unsupported."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 271,
+      "name": "MACD Slope Breakout",
+      "family": "trend",
+      "entry_long": "roc(macd(close,12,26),20) > sma(roc(macd(close,12,26),20),20) + 2 * std(roc(macd(close,12,26),20),20)",
+      "exit_long": "roc(macd(close,12,26),20) < sma(roc(macd(close,12,26),20),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented MACD 12/26/9 line is differenced over SlopePeriod 20 to form a slope, which must exceed its own 20-bar mean by the BreakoutMultiplier 2.0 standard deviations; exit is reversion to that mean. The documented StopLossPercent 2.0 is the one protection that maps to a percentage field, and the 5-minute timeframe is not configurable here."
+    },
+    {
+      "id": 2262,
+      "name": "Directed Movement",
+      "family": "trend",
+      "entry_long": "crossbelow(sma(rsi(close,14),3),sma(sma(rsi(close,14),3),6))",
+      "exit_long": "crossabove(sma(rsi(close,14),3),sma(sma(rsi(close,14),3),6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The twice-smoothed RSI is rebuilt as an RSI(14) smoothed once by SMA(3) and again by SMA(6), and the documented contrarian buy on a downward cross of the fast line is used literally. RsiPeriod, FirstMaLength and SecondMaLength have no documented values so 14/3/6 are explicit defaults, and StopLossPercent/TakeProfitPercent are also undocumented so no percentage is set."
+    },
+    {
+      "id": 1869,
+      "name": "Bollinger Breakout Momentum",
+      "family": "trend",
+      "entry_long": "(bb_upper(close,18,2) - bb_lower(close,18,2)) / bb_mid(close,18) > 0.0015 and macd(close,12,26) > 0 and rsi(close,14) > 50 and ema(close,21) > bb_mid(close,18) and close > bb_upper(close,18,2)",
+      "exit_long": "close < bb_mid(close,18)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented BollingerLength 18, deviation 2 and BreakoutFactor 0.0015 (applied to relative band width) are kept, with MACD>0, RSI>50, an EMA above the middle band and a close beyond the upper band; the previous-bar version of that close is approximated by the current one. The trailing middle-band stop becomes the exit and the 100-pip take profit is not a percentage field."
+    },
+    {
+      "id": 1965,
+      "name": "Forex Profit Boost",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,7),sma(close,21))",
+      "exit_long": "crossabove(ema(close,7),sma(close,21))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented FastPeriod 7 (EMA) and SlowPeriod 21 (SMA) are used, and the reversal rule means the long is entered when the fast EMA crosses below the slow SMA. The 1000/2000 price-point stop and target are absolute distances and are left null."
+    },
+    {
+      "id": 1391,
+      "name": "Swing High Low Pivots Strategy [LV]",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,3) and close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A long limit at a confirmed pivot low becomes price touching the prior 3-bar low (pivot length 3 is an explicit default) with the moving-average filter permitting longs; the filter crossing back is the exit. Fixed stop and the two take-profit targets are tick distances, and pending-order placement plus the double-entry switch are order features."
+    },
+    {
+      "id": 3160,
+      "name": "Cidomo",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,15) * 1.001",
+      "exit_long": "low < donchian_low_prev(low,15) * 0.999",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented BarsCount 15 channel becomes a prior 15-bar high/low, with the 3-pip IndentPips approximated by a 0.1% offset and the mirrored break as the exit. StopLossPips/TakeProfitPips 50, the 35/5 stepped trail, the +/-30-second order window and both money-management modes are pip, clock and position features."
+    },
+    {
+      "id": 3801,
+      "name": "Order Stabilization",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1) * 1.002",
+      "exit_long": "close < sma(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The paired stop orders around the current price are represented by a break above the prior bar's high with the OrderDistancePoints 20 buffer approximated as 0.2%, and the stabilisation exit by price falling back under its 5-period mean. StabilizationPoints 25, AbsoluteFixation 30, ProfitThreshold -2 and the 20-minute order expiry are point or currency values."
+    },
+    {
+      "id": 2836,
+      "name": "Amstell Grid",
+      "family": "momentum",
+      "entry_long": "close <= sma(close,20) * 0.99",
+      "exit_long": "crossabove(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The engine cannot run a hedged two-sided grid, so the long ladder is approximated as successive buys at a level about 1% below the mean (a percentage stand-in for StepPips 15) closing on the return to that mean, which is the virtual TakeProfitPips 50 objective. Separate long/short stacks, per-entry virtual targets and last-deal-price bookkeeping are position state."
+    },
+    {
+      "id": 2933,
+      "name": "Breakdown Pending Stop",
+      "family": "volatility",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Pending stop orders around the previous session range become breaks of the prior bar's high and low, with Min Distance treated as zero. Stop-loss, take-profit, trailing and trailing-step values are all tick distances, and the per-session order refresh needs a clock."
+    },
+    {
+      "id": 397,
+      "name": "Short-Term Reversal Stocks",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,5) < -8",
+      "exit_long": "roc(close,5) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented one-week loser ranking has no cross-section in a single series, so a large negative 5-day return stands in for being bought as a laggard, with the exit when the week turns positive. -8% is an explicit default, the few-day holding period is not fixed, and the optional volatility stop has no documented value."
+    }
+  ]
+}

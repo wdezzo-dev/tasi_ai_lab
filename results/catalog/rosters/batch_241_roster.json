@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 152,
+      "name": "Supertrend Rsi",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10) - 3 * atr(high,low,close,14) and rsi(close,14) < 30",
+      "exit_long": "close < donchian_high_prev(high,10) - 3 * atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Supertrend line is rebuilt as the 10-bar high minus 3x ATR(14) from the documented SupertrendPeriod=10 and Multiplier=3.0, with RSI(14)<30 and the flip exit as documented. The Supertrend trailing stop is an indicator line rather than a percentage stop and the 5-minute candle type is unavailable."
+    },
+    {
+      "id": 3005,
+      "name": "TP SL Trailing",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy generates no entries and only installs/trails protective stop and take-profit on existing positions, so no single-symbol market signal exists and the never-true negative-price guard is used. Pip distances, trailing step, and the OnlyZeroValues flag are order-management fields."
+    },
+    {
+      "id": 761,
+      "name": "Entry Fragger",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,1) < 0 and roc(close,2) < 0 and close > ema(close,50) + std(close,50) / 4",
+      "exit_long": "close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two consecutive down closes (redCount>=2 with the documented accuracy of 2) below EMA(50) followed by a green bar closing above EMA(50)+stdev/4. The stdev window is an explicit fallback, the short leg and reverse flag are omitted, and no stops are documented."
+    },
+    {
+      "id": 1035,
+      "name": "Max Pain",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,70) > 1 and roc(close,1) > 2.9",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Volume above its LookbackPeriod=70 average and a price change above 0.029 (2.9% in the documented percent form). The VIX filter has no price-series equivalent, the 8-bar HoldPeriods exit is approximated by a momentum reversal, and the 2.4x volatility stop is not a fixed percentage."
+    },
+    {
+      "id": 376,
+      "name": "Lexical Density Filings",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The factor is computed from regulatory-filing text (lexical density) and a cross-sectional quintile sort with a February/May/August/November rebalance, so no single-symbol market-derived entry exists and the impossible guard is used. The docs also state no stop-losses are used."
+    },
+    {
+      "id": 2981,
+      "name": "Slow Stochastic Mode",
+      "family": "trend",
+      "entry_long": "crossabove(2 * (sma(close,3) - donchian_low(low,5)), donchian_high(high,5) - donchian_low(low,5))",
+      "exit_long": "crossbelow(2 * (sma(close,3) - donchian_low(low,5)), donchian_high(high,5) - donchian_low(low,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is unavailable, so %K(5) is written division-free as 2*(smoothed close - low)/(high - low) with Slowing=3 applied to the close and the documented Breakdown 50-level cross. The Twist default mode, Jurik-style phase, SignalBar offset and 1000/2000-point stops cannot be expressed."
+    },
+    {
+      "id": 3312,
+      "name": "Awesome Oscillator Trader",
+      "family": "trend",
+      "entry_long": "sma((high + low) / 2,5) - sma((high + low) / 2,34) < 0 and (sma((high + low) / 2,5) - sma((high + low) / 2,34)) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5) > 0 and (bb_upper(close,20) - bb_lower(close,20)) < sma(bb_upper(close,20) - bb_lower(close,20),50)",
+      "exit_long": "sma((high + low) / 2,5) > sma((high + low) / 2,34) and (sma((high + low) / 2,5) - sma((high + low) / 2,34)) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Awesome Oscillator 5/34 on median price with its histogram, requiring the histogram to flip up while the AO is still negative inside a Bollinger-width squeeze. The four-bar pattern count, stochastic oversold cross, ATR(3) stop/target, trailing and the profit filter are not expressible; no percentage values are documented."
+    },
+    {
+      "id": 1745,
+      "name": "Charles EMA RSI",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,18), ema(close,60)) and rsi(close,14) > 55",
+      "exit_long": "crossbelow(ema(close,18), ema(close,60)) or rsi(close,14) < 45",
+      "stop_loss_pct": 0.8,
+      "take_profit_pct": 2.0,
+      "notes": "Fast EMA(18) crossing above slow EMA(60) with RSI(14)>55, all documented. The 0.008 stop and 0.02 target are StockSharp fractions, entered as 0.8%/2.0%; TrailStart/TrailOffset trailing (0.006/0.003) has no DSL field."
+    },
+    {
+      "id": 225,
+      "name": "Kalman Filter Trend",
+      "family": "trend",
+      "entry_long": "close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A Kalman filter is not available, so its estimate is proxied by a smooth EMA(20) with the documented enter-above/exit-below relationship; the 20-bar length is an explicit fallback. The 0.01/0.1 process and measurement noise and the ATR stop are not expressible as percentage fields."
+    },
+    {
+      "id": 2373,
+      "name": "Trigger Line",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), ema(close,40))",
+      "exit_long": "crossbelow(sma(close,10), ema(close,40))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weighted trend line and least-squares MA are not in the DSL, so a short SMA(10) is crossed with a longer EMA(40) standing in for LSMA; both lengths are explicit fallbacks because only parameter names are documented. The short leg mirrors the same cross."
+    }
+  ]
+}

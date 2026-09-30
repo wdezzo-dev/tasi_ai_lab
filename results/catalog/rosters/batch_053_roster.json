@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3269,
+      "name": "Cycle Lines",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-line crossover trading with the documented 12/26/9 periods; the opposite cross closes the long as in the original. All protective parameters (StopLoss, TakeProfit, TrailingOffset, BreakEvenTrigger) default to 0, so no percentage protection is applied."
+    },
+    {
+      "id": 3211,
+      "name": "MA Trend 2",
+      "family": "trend",
+      "entry_long": "crossabove(close,sma((high+low+close)/3,12))",
+      "exit_long": "crossbelow(close,sma((high+low+close)/3,12))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaPrice=Weighted is rebuilt as (high+low+close)/3 with the documented MaPeriod 12; linear weighting is approximated by a simple average and the MaShift 3 lag cannot be expressed, so next-bar execution partly covers it. Pip-based 50/140 stop and target, step trailing and risk-percent sizing are not percentage fields."
+    },
+    {
+      "id": 3993,
+      "name": "CCI MA v1.5",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(close,20),0)",
+      "exit_long": "crossbelow(zscore(close,20),2) or crossbelow(zscore(close,20),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI has no DSL function, so it is proxied by zscore(close,20): crossing its own zero line equals the documented CCI/SMA cross, and the supervisory CCI's +100 exit maps to a +2 z-score drop as the same relative extremity. CciPeriod, MaPeriod and SignalCciPeriod have no documented values so 20 is an explicit default, and pip stops are not percentages."
+    },
+    {
+      "id": 1666,
+      "name": "AI Grid",
+      "family": "trend",
+      "entry_long": "close <= sma(close,20) * 0.98",
+      "exit_long": "crossabove(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The engine has no multi-order grid, so the first long grid level is approximated as a 2% discount to SMA(20) (2% standing in for the 50-point GridSize with 10 steps) and the fixed-distance take profit as mean reversion to that anchor. Layered averaging orders, AllowLong/AllowShort switches and the 1-minute timeframe are not single-signal fields."
+    },
+    {
+      "id": 1470,
+      "name": "Trend Trader-Remastered",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not in the DSL, so its flip is approximated by price clearing the prior 5-bar high with the mirrored low as the flip back; the documented Start 0.02 / Increment 0.02 / Max 0.2 acceleration is not representable. The doc states no additional stops."
+    },
+    {
+      "id": 3913,
+      "name": "FX-CHAOS Scalp MT4",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5) and sma((high+low)/2,5) - sma((high+low)/2,34) > 0",
+      "exit_long": "close < donchian_low_prev(low,5) or sma((high+low)/2,5) - sma((high+low)/2,34) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The five-candle fractal ZigZag levels become a 5-bar Donchian breakout and the Awesome Oscillator filter is rebuilt as the 5/34 difference of median-price SMAs, those lengths being an explicit fallback. The 2*Point breakout buffer is treated as zero, and the hourly/daily split plus point stops are not expressible here."
+    },
+    {
+      "id": 4181,
+      "name": "Nevalyashka Breakdown Level",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,5)",
+      "exit_long": "low < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 04:00-09:00 opening range is approximated by the prior 5 bars' high/low, whose break gives the long and whose opposite violation exits. Martingale recovery after a stop-out, half-target break-even, forced close at 23:30 and the daily entry block need position state and a clock."
+    },
+    {
+      "id": 2781,
+      "name": "Open Time Two",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is purely a two-session time schedule with per-session direction and forced-close windows and documents no market-derived signal, so the impossible negative-price guard avoids fabricating one. Session clock windows and risk parameters cannot be expressed as price series."
+    },
+    {
+      "id": 3769,
+      "name": "Volume Trader V2",
+      "family": "volatility",
+      "entry_long": "crossabove(volume_ratio(volume,20),1)",
+      "exit_long": "crossbelow(volume_ratio(volume,20),1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rising-volume bias (Volume[1] < Volume[2] gives a long) is approximated by volume crossing above its own average, with 20 an explicit default since no lookback is documented; equal volumes, the 8-20 hour filter and one-action-per-candle rules are not series logic. No stops are documented."
+    },
+    {
+      "id": 1742,
+      "name": "RSI Trader V1",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) > 30 and bars_since(rsi(close,14) <= 30) < 4",
+      "exit_long": "rsi(close,14) < 70 and bars_since(rsi(close,14) >= 70) < 4",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI rising above BuyPoint with the prior two candles below is encoded as RSI now above 30 while the last sub-30 reading was within 3 bars; the mirrored rule exits. RsiPeriod, BuyPoint and SellPoint have no documented values so 14 with 30/70 is an explicit default, and the hour filter plus price-unit stop/target are not representable."
+    }
+  ]
+}

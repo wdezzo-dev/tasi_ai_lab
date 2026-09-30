@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2974,
+      "name": "DLMv FX Fish Grid",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(close, 10), sma(zscore(close, 10), 9)) and zscore(close, 10) > 0",
+      "exit_long": "crossbelow(zscore(close, 10), sma(zscore(close, 10), 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Fisher Transform of price is a bounded monotonic function of its normalized input, so z-score of price stands in for it, with CalculatePeriod 10 and MaPeriod 9 as fallbacks since neither has a documented value; the cross of the smoothed oscillator on the positive side of zero is the documented long entry. Grid DistancePips, Friday and TimeLiveSeconds limits are not signals."
+    },
+    {
+      "id": 3366,
+      "name": "Cross Strategy (MQL 27596 Conversion)",
+      "family": "trend",
+      "entry_long": "crossabove(open, ema(close, 200))",
+      "exit_long": "crossbelow(open, ema(close, 200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA Length 200 cross is measured on bar opens as specified, with the mirror cross exiting. Take Profit 200 and Stop Loss 100 are instrument price steps rather than percentages, so both protection fields stay null, and the volume-plus-position reversal sizing is a portfolio module."
+    },
+    {
+      "id": 378,
+      "name": "Momentum Asset Growth",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy screens the universe on an asset-growth fundamental, then ranks survivors on 252-day momentum and rebalances monthly, so it produces no single-instrument market signal; the impossible negative-price guard avoids fabricating one. MomLook, SkipMonths, decile/quintile buckets, January skip and MinTradeUsd are cross-sectional and calendar fields."
+    },
+    {
+      "id": 442,
+      "name": "RSI + EMA Trend",
+      "family": "trend",
+      "entry_long": "rsi(close, 14) < 30 and ema(close, 150) > ema(close, 600)",
+      "exit_long": "rsi(close, 14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented values are used: RSI(14) below the oversold 30 with EMA(150) above EMA(600) enters long, and leaving the extreme zone above 70 exits as documented. The short side is outside this long-only roster and the docs state no stops are built in."
+    },
+    {
+      "id": 1984,
+      "name": "Blau TVI",
+      "family": "trend",
+      "entry_long": "roc(ema(sma(volume * (close - open) / (high - low + 0.0001), 5), 9), 1) > 0 and bars_since(roc(ema(sma(volume * (close - open) / (high - low + 0.0001), 5), 9), 1) < 0) <= 2",
+      "exit_long": "roc(ema(sma(volume * (close - open) / (high - low + 0.0001), 5), 9), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The True Volume Index is proxied by tick volume times signed in-bar strength smoothed with SMA(5) and EMA(9) in place of the undocumented Length1-3 EMAs, and its documented upward turn after a decline enters while the turn down closes. Optional point-based stop/target, the allow-buy/sell flags and the 4-hour default are configuration fields."
+    },
+    {
+      "id": 962,
+      "name": "LANZ Strategy 3.0",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 20)",
+      "exit_long": "close < donchian_high_prev(high, 20) - 0.382 * (donchian_high_prev(high, 20) - donchian_low_prev(low, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Asian range is approximated by a 20-bar prior range because the 01:15-02:15 decision window needs time fields, and the 38% retracement serves as the Fibonacci target the source leaves to optimisation. The 08:00 cancel, 15:45 close and order flipping are session-clock modules; Fibonacci multipliers are not numerically documented."
+    },
+    {
+      "id": 2299,
+      "name": "PChannel System",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high, 20) and close < donchian_high_prev(high, 20)",
+      "exit_long": "close < donchian_low_prev(low, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented delayed confirmation - piercing the channel and closing back inside it - is expressed in one bar because shifted channel values are unavailable, with Period 20 and Shift 1 as fallbacks. The absolute StopLoss and TakeProfit distances have no documented values and cannot be percentage fields."
+    },
+    {
+      "id": 892,
+      "name": "How to Use Leverage and Margin",
+      "family": "momentum",
+      "entry_long": "crossabove(ema(100 * (close - donchian_low(low, 13)) / (donchian_high(high, 13) - donchian_low(low, 13) + 0.0001), 4), sma(ema(100 * (close - donchian_low(low, 13)) / (donchian_high(high, 13) - donchian_low(low, 13) + 0.0001), 4), 3)) and ema(100 * (close - donchian_low(low, 13)) / (donchian_high(high, 13) - donchian_low(low, 13) + 0.0001), 4) < 80",
+      "exit_long": "crossbelow(ema(100 * (close - donchian_low(low, 13)) / (donchian_high(high, 13) - donchian_low(low, 13) + 0.0001), 4), sma(ema(100 * (close - donchian_low(low, 13)) / (donchian_high(high, 13) - donchian_low(low, 13) + 0.0001), 4), 3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "%K is rebuilt as the fast stochastic over the documented period 13 with the documented %K smoothing 4 and %D smoothing 3, and the entry requires the cross below 80; the opposite crossover is the documented exit. Take Profit Ticks 100 is a tick distance, not a percentage, and the epsilon guards a zero-width range."
+    },
+    {
+      "id": 719,
+      "name": "Dynamic Volatility Differential Model",
+      "family": "volatility",
+      "entry_long": "zscore(std(roc(close, 1), 5), 20) > 3",
+      "exit_long": "zscore(std(roc(close, 1), 5), 20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The external implied-volatility security (TVC:VIX) is unavailable, so the spread is replaced by the deviation of documented Length=5 realized volatility from its own mean, and the documented 7.1-sigma threshold is relaxed to 3 sigma because a single-series proxy never reaches 7.1. The zero-crossing exit matches the documented rule; the docs specify no stops."
+    },
+    {
+      "id": 1084,
+      "name": "MTF Oscillator Framework",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close, 14) < 30 and rsi(close, 21) < 30",
+      "exit_long": "rsi(close, 14) > 70 and rsi(close, 21) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The second candle type cannot be loaded in this single-series engine, so a fast RSI(14) and a slower RSI(21) stand in for the two timeframes while keeping the documented both-oversold entry and both-overbought exit. RSI Length, Overbought and Oversold are listed without values, so 14/70/30 are fallbacks."
+    }
+  ]
+}

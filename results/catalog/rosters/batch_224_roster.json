@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 568,
+      "name": "Big Mover Catcher",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,40,2) and rsi(close,14) > 50 and adx(high,low,close,28) > 20 and close > ema(close,350) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "crossbelow(close, bb_mid(close,40))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Documented Bollinger length 40, RSI 14, ADX 28, EMA 350 and MACD 12/26/9 are all applied as bullish confirmations, and the exit is the documented return to the middle band. The 2 percent fixed stop is used; the 5 percent force take-profit is a large-candle trigger rather than a target, and the ATR filter direction is unspecified in the docs so it is dropped."
+    },
+    {
+      "id": 1156,
+      "name": "Parabolic SAR Early Buy MA Exit",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,10))",
+      "exit_long": "crossbelow(close, ema(close,10)) and close < sma(close,11)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is proxied by an EMA(10) because the DSL has no SAR, and the documented early exit keeps the documented MaPeriod 11 so a SAR flip plus a close below the 11-period average closes the long. The documented 0.02/0.02/0.2 SAR step settings have no DSL equivalent and no stops are documented."
+    },
+    {
+      "id": 2510,
+      "name": "Bull vs Medved",
+      "family": "trend",
+      "entry_long": "close > open and close - open > atr(high,low,close,14)",
+      "exit_long": "close < open and open - close > atr(high,low,close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The latest candle must print a bullish body larger than the CandleSizePips threshold; since that value is undocumented the body is scaled by ATR(14) rather than an invented pip figure. The six trading windows, the three-candle regular/cool bull patterns, the bad-bull filter and the buy-limit indents need clock and shifted-bar data and are dropped, as are the pip stop distances."
+    },
+    {
+      "id": 140,
+      "name": "VWAP RSI",
+      "family": "trend",
+      "entry_long": "close < sma(close*volume,20)/sma(volume,20) and rsi(close,14) < 40",
+      "exit_long": "close > sma(close*volume,20)/sma(volume,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Anchored intraday VWAP is unavailable, so it is approximated by a 20-bar volume-weighted average price built from close times volume divided by volume. Reverting to that average while RSI is cool gives the entry, the documented 2 percent stop is kept, and the 15-minute context and any RSI parameter values are fallbacks."
+    },
+    {
+      "id": 1931,
+      "name": "SVM Trader",
+      "family": "trend",
+      "entry_long": "(close > open) * 1 + (roc(close,10) > 0) * 1 + (macd(close,12,26) > macd_signal(close,12,26,9)) * 1 + (rsi(close,5) > sma(rsi(close,5),3)) * 1 + (roc(close,1) * volume_ratio(volume,20) > 0) * 1 >= 3",
+      "exit_long": "(close > open) * 1 + (roc(close,10) > 0) * 1 + (macd(close,12,26) > macd_signal(close,12,26,9)) * 1 + (rsi(close,5) > sma(rsi(close,5),3)) * 1 + (roc(close,1) * volume_ratio(volume,20) > 0) * 1 <= 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Five of the seven documented modules are proxied - candle body for bulls versus bears power, ROC for momentum and the force index scaled by volume, MACD, and an RSI/MA pair for the stochastic - and the documented rule of at least three bullish conditions to enter and two or fewer to exit is kept. Bearish power, ATR and the absolute price stop and target are not representable."
+    },
+    {
+      "id": 1504,
+      "name": "Ultimate Oscillator Trading",
+      "family": "other",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Ultimate Oscillator is not in the DSL, so oversold buying pressure is proxied by RSI(14) below 30; the buy level has no documented value so 30 is a fallback. The documented exit, a close above the prior high, is exact and the docs state there are no stops."
+    },
+    {
+      "id": 360,
+      "name": "Country Value Factor",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented signal is a monthly buy of the cheapest country ETFs by Shiller CAPE, and the docs note the sample contains placeholder logic only. CAPE data and the cross-sectional universe are outside the DSL, so no signal is fabricated."
+    },
+    {
+      "id": 401,
+      "name": "Soccer Clubs Arbitrage",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a cross-venue arbitrage and hedging engine that opens offsetting long and short legs when a fan-token spread exceeds a threshold. It needs multiple venues, funding rates and paired positions, so there is no single-symbol long signal to translate."
+    },
+    {
+      "id": 2090,
+      "name": "Instant Execution",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "It opens a market position on the first finished candle with a parameter-selected direction and then only manages profit, stop and trailing rules in price units. There is no market-derived entry signal, so the guard prevents inventing one."
+    },
+    {
+      "id": 3460,
+      "name": "Spread Informer",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a Level1 bid-ask spread statistics and alerting utility that only logs maximum, minimum and average spread and never places an order. MaxSpreadPoints 0 and AlertIntervalSeconds 0 are documentation parameters, not signals."
+    }
+  ]
+}

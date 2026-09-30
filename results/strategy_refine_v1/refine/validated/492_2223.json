@@ -1,0 +1,112 @@
+{
+  "strategy_id": 492,
+  "ticker": "2223",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 492,
+    "name": "Adaptive KDJ (MTF)",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,14),ema(rsi(close,7),8)) and rsi(close,9) < sma(rsi(close,9),40)",
+    "exit_long": "crossbelow(rsi(close,9),ema(rsi(close,9),5))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(9), its EMA(5), and SMA(40) proxy the three-timeframe K/D/J blend and adaptive trend level using documented lengths. Actual KDJ and multi-timeframe aggregation are unavailable; the opposite K/D cross exits and no stops are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-12-28",
+        "2024-07-31"
+      ],
+      "bars_in_window": 393,
+      "engine_win_ret": 0.6131325521474604,
+      "alpha": 0.24471149951588145,
+      "benchmark_ret": 0.368421052631579,
+      "trades": 16,
+      "win_rate": 0.625,
+      "sharpe": 2.57844763383659,
+      "max_drawdown": -0.0681392827818258,
+      "profit_factor": 6.171668720431281
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.05636100404570343,
+      "alpha": 0.20174084780614832,
+      "benchmark_ret": -0.25810185185185175,
+      "trades": 15,
+      "win_rate": 0.4,
+      "sharpe": -0.321818034609221,
+      "max_drawdown": -0.12288110551972276,
+      "profit_factor": 0.7160886623599182
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.3943835717121569,
+      "alpha": -0.0008197650970194204,
+      "benchmark_ret": 0.3952033368091763,
+      "trades": 9,
+      "win_rate": 0.7777777777777778,
+      "sharpe": 2.757861119659812,
+      "max_drawdown": -0.1474927162906503,
+      "profit_factor": 11.382430870776394
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-12-28",
+        "2024-07-31"
+      ],
+      "bars_in_window": 393,
+      "engine_win_ret": 0.48999940129755015,
+      "alpha": 0.12157834866597117,
+      "benchmark_ret": 0.368421052631579,
+      "trades": 16,
+      "win_rate": 0.5625,
+      "sharpe": 2.127673319159933,
+      "max_drawdown": -0.08679557698717189,
+      "profit_factor": 4.136040731825879
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.12492370647593487,
+      "alpha": 0.13317814537591688,
+      "benchmark_ret": -0.25810185185185175,
+      "trades": 15,
+      "win_rate": 0.26666666666666666,
+      "sharpe": -0.7838312817031364,
+      "max_drawdown": -0.17438791847955015,
+      "profit_factor": 0.4734966005116865
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.3369911020145375,
+      "alpha": -0.05821223479463877,
+      "benchmark_ret": 0.3952033368091763,
+      "trades": 9,
+      "win_rate": 0.7777777777777778,
+      "sharpe": 2.397658859143424,
+      "max_drawdown": -0.15205333258561715,
+      "profit_factor": 7.712391926780114
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

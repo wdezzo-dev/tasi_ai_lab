@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 103,
+      "name": "Dark Pool Prints",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 2 and close > open",
+      "exit_long": "volume_ratio(volume,20) < 1 or close < open",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The docs give no formula for the indicator signal, so heavy buying is approximated by an extreme volume_ratio baseline of 2 with a positive bar, with 20 as an explicit fallback window; off-exchange print data does not exist in OHLCV. The documented StopLoss 2% is applied, the opposite/volume-failure condition is the exit, and the 15-minute CandleType is not selectable."
+    },
+    {
+      "id": 3340,
+      "name": "Expert Alligator",
+      "family": "trend",
+      "entry_long": "crossbelow(sma((high+low)/2,5), sma((high+low)/2,8)) and sma((high+low)/2,8) > sma((high+low)/2,13)",
+      "exit_long": "sma((high+low)/2,5) < sma((high+low)/2,8) and sma((high+low)/2,8) < sma((high+low)/2,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented Lips 5 / Teeth 8 / Jaw 13 smoothed averages of median price are used as SMAs and the long rule follows the source: lips crossing under teeth while teeth stay above the jaw. The 8/5/3 forward shifts, the three-bar spread-contraction history and the Cross Measure 5 point re-arm gate all need shifted bars and are dropped, and the exit is the documented closed downward mouth; no stops are documented."
+    },
+    {
+      "id": 1079,
+      "name": "Moving Average Entanglement",
+      "family": "trend",
+      "entry_long": "sma(close,10) - sma(close,50) > 1.5 * atr(high,low,close,14) and sma(close,10) > sma(close,50) * 1.01",
+      "exit_long": "sma(close,10) <= sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only parameter names are supplied, so Fast/Slow 10/50, ATR Length 14, Volatility Period 20, a 1% Dead Zone and a 1.5 Deviation Multiplier are explicit fallbacks: the long side requires the average spread to exceed both the ATR-scaled dead zone and the percentage band, and re-entanglement through the slow average exits. MA Type and CandleType cannot be selected and no stops are documented."
+    },
+    {
+      "id": 1535,
+      "name": "Volume Block Order Analyzer",
+      "family": "trend",
+      "entry_long": "sma((volume_ratio(volume,20) - 1) * roc(close,1), 20) > 0.5",
+      "exit_long": "sma((volume_ratio(volume,20) - 1) * roc(close,1), 20) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The cumulative impact of volume spikes on price direction is approximated by the documented SMA of spike size times one-bar price change, with 20 bars and the 0.5 threshold as explicit fallbacks since no values are given. The percentage trailing stop has no documented value, the TradingView visual features are omitted and no stop or target percentage can be set."
+    },
+    {
+      "id": 2948,
+      "name": "Exp RSIOMA V2",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(ema(close,14),14), 40)",
+      "exit_long": "crossbelow(rsi(ema(close,14),14), 40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSIOMA is approximated as RSI(RsiomaLength 14) of an EMA(14) close, matching the documented Exponential PriceSmoothing, and the long side uses the documented MainTrendShort 40 level crossing with the opposite cross as exit. The Breakdown/Twist/CloudTwist mode switch, MomentumPeriod 1 lag, SignalBar offset, AppliedPrice variants and the 4-hour CandleType are not expressible."
+    },
+    {
+      "id": 3716,
+      "name": "MP Candlestick",
+      "family": "momentum",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only documented signal is trading in the direction of the completed candle, so a bullish body is the long entry and a bearish body the exit. The adaptive ATR(14) stop with 1.5 multiplier, the 50 pip fixed stop, the 1.5 RiskRewardRatio target, RiskPercent 1 sizing and the 30% margin cap are risk-sizing or pip features rather than fixed percentages."
+    },
+    {
+      "id": 3757,
+      "name": "Cloudzs Trade 2",
+      "family": "volatility",
+      "entry_long": "crossabove(sma(100 * (close - donchian_low(low,8)) / (donchian_high(high,8) - donchian_low(low,8)),4), 100 * (close - donchian_low(low,8)) / (donchian_high(high,8) - donchian_low(low,8))) or (low < donchian_low_prev(low,5) and bars_since(low < donchian_low_prev(low,5)) < 6)",
+      "exit_long": "crossbelow(sma(100 * (close - donchian_low(low,8)) / (donchian_high(high,8) - donchian_low(low,8)),4), 100 * (close - donchian_low(low,8)) / (donchian_high(high,8) - donchian_low(low,8))) or (high > donchian_high_prev(high,5) and bars_since(high > donchian_high_prev(high,5)) < 6)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented stochastic settings (%K Period 8, %D Period 8, Slowing 4) are rebuilt as the 8-bar range position with a 4-bar SMA and the <=20/>=80 zones drive the reversal cross; the doc's double-fractal alternative is approximated by two 5-bar lower/upper fractals inside six bars since the doc allows either condition to fire. The aggressive trailing uses absolute price offsets (0.01/0.05) and LotSplitter sizing, so no fixed percentage applies."
+    },
+    {
+      "id": 3039,
+      "name": "OHLC Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3)) and (100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)) < 30 or sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3) < 30)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3)) and (100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)) > 70 or sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3) > 70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented values are used: %K is the 5-bar range position (KPeriod 5), %D its 3-bar SMA (DPeriod 3, Slowing 3), and the long requires the cross above with at least one line under LevelDown 30. Protection is a trailing stop in price steps (5/2) which cannot be a fixed percentage, so the mirrored LevelUp 70 reversal closes the position; the 12-hour CandleType and reversal sizing are not selectable."
+    },
+    {
+      "id": 2925,
+      "name": "Twenty 200 Pips",
+      "family": "volume",
+      "entry_long": "roc(open,2) - roc(open,7) > 0.7",
+      "exit_long": "roc(open,2) - roc(open,7) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented comparison of Open[t1] with default offset 7 against Open[t2] with offset 2 is expressed as the spread of the two 7- and 2-bar return series, and the 70-point DeltaPoints threshold is converted to 0.7% as an explicit fallback because price points are instrument-specific. TradeHour 18 and the 200/2000 point take-profit and stop-loss are clock and price-distance features, so the reversed open spread closes the single session trade instead."
+    },
+    {
+      "id": 2347,
+      "name": "Renko Chart From Ticks",
+      "family": "volume",
+      "entry_long": "crossabove(close, donchian_high_prev(high,10))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tick-built Renko bricks have no DSL equivalent, so a brick direction change is approximated by a fresh ten-bar extreme with 10 taken from the documented BrickSize, and the documented reverse-on-opposite-brick rule becomes the mirrored low break. Volume, the tick timeframe and no-stop configuration are unchanged."
+    }
+  ]
+}

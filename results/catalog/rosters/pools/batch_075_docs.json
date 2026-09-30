@@ -1,0 +1,98 @@
+{
+ "batch_075": {
+  "strategy_ids": [
+   2632,
+   3907,
+   3450,
+   3225,
+   1013,
+   1177,
+   3774,
+   3902,
+   4174,
+   632
+  ],
+  "docs": {
+   "2632": {
+    "id": 2632,
+    "name": "EMA Crossover Trailing",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MQL5 expert advisor **\"Intersection 2 iMA\"**. It operates on two exponential moving averages (EMAs) and reacts to crossovers that occur on fully formed candles. The original expert was designed for MetaTrader 5 and managed trade volume dynamically; in this conversion the order size is controlled by a configurable parameter while preserving the crossover and trailing logic.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `FastPeriod` | Length of the fast EMA. | 4 |\n| `SlowPeriod` | Length of the slow EMA. | 18 |\n| `TrailingStopPoints` | Distance between market price and trailing stop in price steps (points). A value of `0` disables trailing. | 20 |\n| `TrailingStepPoints` | Minimal progress in price steps before the trailing stop is moved forward. | 5 |\n| `CandleType` | Candle data series used for calculations (time frame). | 15-minute candles |\n| `TradeVolume` | Order size for market entries. | 1 |"
+   },
+   "3907": {
+    "id": 3907,
+    "name": "Money Rain Recovery",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 4 expert advisor **MoneyRain.mq4** to the StockSharp high-level API.\n- Trades on the close of finished candles using a DeMarker oscillator filter.\n- Keeps the original fixed stop-loss / take-profit exits and the volume-recovery block that increases the next order size after a loss sequence.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `DeMarkerPeriod` | Length of the DeMarker oscillator. | `10` | Must be greater than zero. |\n| `TakeProfitPoints` | Distance to the take-profit in price steps. | `50` | Converted by multiplying with `Security.PriceStep`. |\n| `StopLossPoints` | Distance to the stop-loss in price steps. | `50` | Must stay positive so the recovery formula remains valid. |\n| `BaseVolume` | Baseline order volume. | `1` | Normalized to instrument limits before submission. |\n| `LossesLimit` | Maximum consecutive losing trades allowed. | `1 000 000` | When reached, entries are paused until the strategy is reset. |\n| `FastOptimization` | Disable recovery sizing during optimizer runs. | `true` | Keeps the model lightweight for bulk tests. |\n| `Threshold` | DeMarker threshold separating buy and sell signals. | `0.5` | Matching the MT4 constant from the source code. |\n| `CandleType` | Candle data series used for signals. | `1h` | Change for other timeframes or custom aggregations. |"
+   },
+   "3450": {
+    "id": 3450,
+    "name": "Simplest DeMarker",
+    "family": "trend",
+    "overview": "The Simplest DeMarker Strategy reproduces the logic of the original MetaTrader expert advisor. It tracks the DeMarker oscillator to detect when price momentum leaves overbought or oversold zones. When the oscillator crosses back inside the neutral range, the strategy opens a position in the direction of the expected reversal while managing risk via configurable stop-loss and take-profit distances.",
+    "details": "",
+    "parameters": "- **Volume** – order size in lots/contracts.\n- **DeMarker Period** – period of the DeMarker oscillator.\n- **Overbought Level** – upper DeMarker threshold that defines overbought conditions.\n- **Oversold Level** – lower DeMarker threshold that defines oversold conditions.\n- **Trade On Bar Open** – if enabled, entries are executed on the next bar open rather than immediately.\n- **Stop Loss Points** – protective stop-loss distance expressed in price points.\n- **Take Profit Points** – profit target distance expressed in price points.\n- **Candle Type** – candle type (timeframe) used for indicator calculations."
+   },
+   "3225": {
+    "id": 3225,
+    "name": "Exp Cronex AO",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader expert advisor **Exp_CronexAO** to the StockSharp high-level API. The original robot trades crosses between the two lines of the Cronex Awesome Oscillator (AO). The StockSharp version subscribes to a configurable candle series, computes the AO, smooths it twice with moving averages to reproduce the Cronex lines, and opens or closes positions when the fast line crosses the slow line.\n\n## Trading logic\n\n1. Build the Awesome Oscillator from the selected candles.\n2. Smooth the oscillator twice with simple moving averages. The first smoothing creates the \"fast\" Cronex line, the second smoothing produces the \"signal\" line.\n3. Look back `SignalBar` completed candles and compare the Cronex lines on that bar and on the previous one.\n4. A **buy** signal appears when the fast line is above the slow line and performed an upward cross on the lookback bar. The strategy optionally closes any short position and, if allowed, opens a long market order.\n5. A **sell** signal mirrors the previous rule: the fast line must be below the slow line and must have crossed downward on the lookback bar. The strategy optionally closes any long position and, if allowed, opens a short market order.\n6. Stop-loss and take-profit levels, expressed in instrument points, are attached to the resulting position whenever a new trade is opened.\n\nOnly one net position is maintained. When the direction changes, the strategy combines the volume required to close the opposite position with the new trade volume to emulate MetaTrader's netting mode.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Data type of the candles used for the Cronex AO calculations. The default is an 8-hour time frame. |\n| `FastPeriod` | Length of the first smoothing applied to the Awesome Oscillator. |\n| `SlowPeriod` | Length of the second smoothing applied to the fast line. |\n| `SignalBar` | Number of completed bars back that must contain the cross signal. The s",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Data type of the candles used for the Cronex AO calculations. The default is an 8-hour time frame. |\n| `FastPeriod` | Length of the first smoothing applied to the Awesome Oscillator. |\n| `SlowPeriod` | Length of the second smoothing applied to the fast line. |\n| `SignalBar` | Number of completed bars back that must contain the cross signal. The strategy also inspects the following bar to confirm the direction. |\n| `BuyOpenEnabled` / `SellOpenEnabled` | Enable or disable opening of long or short positions. |\n| `BuyCloseEnabled` / `SellCloseEnabled` | Control whether opposite positions may be closed when an inverse signal appears. |\n| `TakeProfit` | Profit target in points, applied after every new entry if greater than zero. |\n| `StopLoss` | Protective stop in points, also applied after every new entry if greater than zero. |"
+   },
+   "1013": {
+    "id": 1013,
+    "name": "MACD Volume XAUUSD",
+    "family": "trend",
+    "overview": "15-minute strategy for XAUUSD combining MACD zero-line cross with a volume oscillator filter and fixed risk parameters.\n\n## Details\n\n- **Entry Criteria**: MACD crossing the zero line with positive volume oscillator and volume comparison.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit levels.\n- **Stops**: Fixed stop-loss and take-profit multiplier.\n- **Default Values**:\n  - `ShortLength` = 5\n  - `LongLength` = 8\n  - `FastLength` = 16\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Leverage` = 1.0\n  - `StopLoss` = 10100\n  - `TakeProfitMultiplier` = 1.1\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: MACD, EMA, Volume\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD crossing the zero line with positive volume oscillator and volume comparison.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Stop-loss or take-profit levels.\n- **Stops**: Fixed stop-loss and take-profit multiplier.\n- **Default Values**:\n  - `ShortLength` = 5\n  - `LongLength` = 8\n  - `FastLength` = 16\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `Leverage` = 1.0\n  - `StopLoss` = 10100\n  - `TakeProfitMultiplier` = 1.1\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: MACD, EMA, Volume\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1177": {
+    "id": 1177,
+    "name": "PowerHouse SwiftEdge AI v2.10",
+    "family": "breakout",
+    "overview": "Pivot-based breakout strategy with momentum filter and simple risk management.\nLong entry occurs when price breaks the recent pivot high with sufficient momentum and minimum distance from previous signal.\nShort entry triggers on a break of the pivot low with negative momentum.\nPositions use take-profit and stop-loss specified in points.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3774": {
+    "id": 3774,
+    "name": "Time-Based Range Breakout",
+    "family": "breakout",
+    "overview": "This strategy is a direct port of the MetaTrader 4 expert advisor `Tttttt_www_forex-instruments_info.mq4`. It builds intraday breakout levels once per day at a configurable time. Whenever price closes beyond those levels, the strategy opens a position in the breakout direction. Exits are managed by dynamic profit and loss distances that are derived from an average of historical day ranges.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CheckHour` | Hour (0-23) when the daily range snapshot is taken. | `8` |\n| `CheckMinute` | Minute (0-59) when the snapshot is taken. | `0` |\n| `DaysToCheck` | Number of historical days used for averaging. | `7` |\n| `CheckMode` | `1` = use daily high/low range, `2` = use absolute difference between consecutive check-time closes. | `1` |\n| `ProfitFactor` | Divides the averaged value to obtain the profit target distance. | `2` |\n| `LossFactor` | Divides the averaged value to obtain the loss distance. | `2` |\n| `OffsetFactor` | Divides the averaged value to obtain the breakout offset around high/low. | `2` |\n| `CloseMode` | `1` = keep positions overnight, `2` = flatten when the calendar day changes. | `1` |\n| `TradesPerDay` | Maximum number of entries allowed per day. | `1` |\n| `CandleType` | Candle series used for all calculations (defaults to 15-minute candles). | `15m` time frame |\n\nAll parameters are created through `Strategy.Param` so they support optimization out of the box."
+   },
+   "3902": {
+    "id": 3902,
+    "name": "Auto KDJ",
+    "family": "momentum",
+    "overview": "The Auto KDJ strategy is a direct conversion of the MetaTrader 4 expert advisor `AutoKdj.mq4` created by *senlin ge*. The system trades a single symbol and evaluates the smoothed stochastic oscillator known as **KDJ** (also called %K, %D, %J). The StockSharp implementation recreates the same indicator logic and the money-management options exposed in the original expert advisor, while leveraging the high-level API features such as candle subscriptions, indicator binding, and automatic protective orders.\n\nKDJ is built on top of the stochastic oscillator. It first computes a Raw Stochastic Value (RSV), smooths it into the %K line, smooths %K again into the %D line, and uses their difference (referred to as *KDC* in the source code) to detect shifts in momentum. Auto KDJ opens at most one market position at a time and immediately applies the requested stop-loss / take-profit protections.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Optimization |\n|-----------|-------------|---------|--------------|\n| **Candle Type** | Data type / timeframe of input candles. | 15-minute time frame | – |\n| **KDJ Length** | Lookback period for RSV calculation. | 30 | 10 → 60 step 5 |\n| **Smooth %K** | Smoothing applied to the %K line. | 3 | 1 → 10 step 1 |\n| **Smooth %D** | Smoothing applied to the %D line. | 6 | 1 → 15 step 1 |\n| **Stop Loss (pips)** | Distance for the protective stop. | 100 | 0 → 300 step 10 |\n| **Take Profit (pips)** | Distance for the protective take-profit. | 200 | 0 → 400 step 10 |\n| **Enable Stop Loss** | Toggle for the stop-loss leg. | Enabled | – |\n| **Enable Take Profit** | Toggle for the take-profit leg. | Enabled | – |\n| **Base Volume** | Minimal volume before risk adjustment. | 0.1 | – |\n| **Maximum Risk** | Fraction of equity allocated per trade. | 0.4 | 0.0 → 1.0 step 0.1 |\n| **Decrease Factor** | Volume reduction after loss streaks. | 0.3 | 0.0 → 5.0 step 0.5 |\n| **Leverage** | Account leverage used in the margin model. | 100 | 10 → 500 step 10 |"
+   },
+   "4174": {
+    "id": 4174,
+    "name": "Stoch Levels",
+    "family": "volatility",
+    "overview": "The **Stoch Levels Strategy** is a direct conversion of the MetaTrader 4 expert advisor `Stoch.mq4`. The original script relies on daily session boundaries, calculates custom price levels from the previous candle and places two pending orders for the upcoming session. This C# version keeps the same trading idea and implements it with StockSharp's high-level strategy API.\n\nThe strategy computes a synthetic trading range by expanding the previous candle's high/low spread by a configurable multiplier (default `1.1`). It then positions:\n\n- A **sell limit** order above the prior close at half of the expanded range.\n- A **buy limit** order below the prior close at half of the expanded range.\n\nWhenever a pending order is filled, the strategy immediately attaches bracket exits (stop-loss and take-profit) using the distances defined in price steps. All outstanding exposure and pending orders are cleared at the beginning of every new trading day, mirroring the midnight reset block from the MQL script.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `TakeProfitPoints` | Take-profit distance measured in price steps. | `20` | Equivalent to `TakeProfit` input in the MQL script. Set to `0` to disable the take-profit order. |\n| `StopLossPoints` | Stop-loss distance measured in price steps. | `40` | Equivalent to `StopLoss` input in the MQL script. Set to `0` to disable the stop-loss order. |\n| `RangeMultiplier` | Multiplier applied to the previous candle range (`High - Low`). | `1.1` | Matches the hard-coded `1.1` expansion factor in MQL. |\n| `OrderVolume` | Volume for each pending order. | `1` | Mirrors the `Lots` parameter. |\n| `CandleType` | Candle series that defines the trading session. | `Daily` | Customize if the strategy should operate on other timeframes. |\n\nAll parameters are configured via `Param()` to support optimization and UI binding."
+   },
+   "632": {
+    "id": 632,
+    "name": "Consecutive Bearish Candle",
+    "family": "mean_reversion",
+    "overview": "Enters long after a run of bearish candles and exits when price breaks above the previous high.\n\nThis mean reversion approach buys after excessive downside pressure, seeking a rebound once sellers are exhausted.\n\n## Details\n\n- **Entry Criteria**: `N` consecutive bearish candles within the time window.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close above previous high.\n- **Stops**: No.\n- **Default Values**:\n  - `Lookback` = 3\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `StartTime` = 2014-01-01\n  - `EndTime` = 2099-01-01\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: `N` consecutive bearish candles within the time window.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close above previous high.\n- **Stops**: No.\n- **Default Values**:\n  - `Lookback` = 3\n  - `CandleType` = TimeSpan.FromDays(1)\n  - `StartTime` = 2014-01-01\n  - `EndTime` = 2099-01-01\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Long\n  - Indicators: Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

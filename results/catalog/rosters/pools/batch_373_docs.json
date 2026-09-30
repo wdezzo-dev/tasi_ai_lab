@@ -1,0 +1,98 @@
+{
+ "batch_373": {
+  "strategy_ids": [
+   2032,
+   3746,
+   1639,
+   3505,
+   1825,
+   3984,
+   2345,
+   3118,
+   1566,
+   3145
+  ],
+  "docs": {
+   "2032": {
+    "id": 2032,
+    "name": "Previous High Low Breakout",
+    "family": "trend",
+    "overview": "Breakout strategy that monitors the previous candle's high and low on a chosen timeframe. A long position is opened when the new candle closes above the prior high, while a short position is opened when the close falls below the prior low. A trailing stop and fixed take profit manage risk and lock in gains.\n\nThe method aims to capture strong directional moves after consolidation. Trailing stops keep risk tight as price moves in the favorable direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > PreviousHigh`\n  - Short: `Close < PreviousLow`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**: Absolute with trailing using `StopLoss` and `TakeProfit`\n- **Default Values**:\n  - `StopLoss` = 50m\n  - `TakeProfit` = 1000m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes (trailing)\n  - Complexity: Beginner\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > PreviousHigh`\n  - Short: `Close < PreviousLow`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Stop loss or take profit\n- **Stops**: Absolute with trailing using `StopLoss` and `TakeProfit`\n- **Default Values**:\n  - `StopLoss` = 50m\n  - `TakeProfit` = 1000m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes (trailing)\n  - Complexity: Beginner\n  - Timeframe: Long-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3746": {
+    "id": 3746,
+    "name": "Exp TrendMagic",
+    "family": "trend",
+    "overview": "The Exp TrendMagic strategy is a direct port of the MetaTrader 5 expert advisor \"Exp_TrendMagic\". It monitors the color changes of the TrendMagic indicator, which combines a Commodity Channel Index (CCI) with an Average True Range (ATR) channel. When the indicator switches color, the strategy closes positions from the opposite side and optionally opens a new trade in the direction of the fresh trend.\n\nThe conversion keeps the original money management options, configurable signal offset (`Signal Bar`), and the same permission toggles for entering or exiting long and short trades.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Money Management` | Fraction of capital used for sizing (negative values become fixed volume). |\n| `Margin Mode` | Conversion mode for money management into volume. |\n| `Stop Loss` | Protective stop distance in price points. |\n| `Take Profit` | Profit target in price points. |\n| `Deviation` | Reserved for compatibility with the MT5 input (not used directly). |\n| `Allow Buy Entry` / `Allow Sell Entry` | Toggle long/short entries. |\n| `Allow Buy Exit` / `Allow Sell Exit` | Toggle closing short/long trades. |\n| `Candle Type` | Main timeframe used for indicators and signal evaluation. |\n| `CCI Period` / `CCI Price` | CCI length and applied price source. |\n| `ATR Period` | ATR length. |\n| `Signal Bar` | Index of the finished bar used for signals (0 = current, 1 = previous, etc.). |"
+   },
+   "1639": {
+    "id": 1639,
+    "name": "EMA WPR Trend",
+    "family": "trend",
+    "overview": "Strategy combining an EMA trend filter with Williams %R signals. Buys at oversold levels and sells at overbought levels. A retracement threshold prevents consecutive entries. Optional exits close trades on opposite Williams %R extremes or after several unprofitable bars.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Williams %R <= -100 and EMA trend up\n  - Short: Williams %R >= 0 and EMA trend down\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Williams %R crosses opposite extreme when `UseWprExit` is enabled\n  - Position stays unprofitable for `MaxUnprofitBars` bars when `UseUnprofitExit` is enabled\n- **Stops**: No\n- **Default Values**:\n  - `WprPeriod` = 46\n  - `WprRetracement` = 30\n  - `EmaPeriod` = 144\n  - `BarsInTrend` = 1\n  - `MaxUnprofitBars` = 5\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: EMA, Williams %R\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Williams %R <= -100 and EMA trend up\n  - Short: Williams %R >= 0 and EMA trend down\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Williams %R crosses opposite extreme when `UseWprExit` is enabled\n  - Position stays unprofitable for `MaxUnprofitBars` bars when `UseUnprofitExit` is enabled\n- **Stops**: No\n- **Default Values**:\n  - `WprPeriod` = 46\n  - `WprRetracement` = 30\n  - `EmaPeriod` = 144\n  - `BarsInTrend` = 1\n  - `MaxUnprofitBars` = 5\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: EMA, Williams %R\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3505": {
+    "id": 3505,
+    "name": "SampleTrailingstop MT5",
+    "family": "trend",
+    "overview": "The **SampleTrailingstopMt5Strategy** reproduces the behaviour of the MetaTrader 5 expert advisor `SampleTrailingstop-MT5.mq5` using StockSharp's high level API. The strategy constantly maintains paired breakout stop orders, protects filled positions with dedicated exit orders and applies a trailing stop once the trade becomes profitable. All calculations rely on the instrument price step so that the logic matches the original \"points\"-based implementation.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Fixed order volume (lots or contracts) used for both breakout stop orders. |\n| `TakeProfitPoints` | Distance in instrument points for the profit target. Set to zero to disable the take-profit. |\n| `StopLossPoints` | Distance in points for the protective stop-loss. |\n| `TrailingStopPoints` | Trailing distance in points applied once the position is in profit. Zero disables trailing. |"
+   },
+   "1825": {
+    "id": 1825,
+    "name": "Simulator",
+    "family": "trend",
+    "overview": "Strategy trading EMA crossovers with optional stop loss and take profit. It buys when the fast EMA crosses above the slow EMA and sells when the fast EMA crosses below the slow EMA. Opposite signals or price targets close positions.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: fast EMA crosses above slow EMA\n  - Short: fast EMA crosses below slow EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite EMA crossover\n  - Long: price reaches take profit or stop loss\n  - Short: price reaches take profit or stop loss\n- **Stops**: Fixed price offsets\n- **Default Values**:\n  - `FastPeriod` = 13\n  - `SlowPeriod` = 50\n  - `StopLoss` = 0.005m\n  - `TakeProfit` = 0.005m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend-Following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: fast EMA crosses above slow EMA\n  - Short: fast EMA crosses below slow EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Opposite EMA crossover\n  - Long: price reaches take profit or stop loss\n  - Short: price reaches take profit or stop loss\n- **Stops**: Fixed price offsets\n- **Default Values**:\n  - `FastPeriod` = 13\n  - `SlowPeriod` = 50\n  - `StopLoss` = 0.005m\n  - `TakeProfit` = 0.005m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend-Following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3984": {
+    "id": 3984,
+    "name": "Twenty Pips Price Channel",
+    "family": "trend",
+    "overview": "The Twenty Pips Price Channel Strategy is a conversion of the original MetaTrader expert advisor *20 pips* that combines a Donchian-style price channel with short-term moving-average filters. The algorithm opens trades only when the current candle opens opposite to the previous one, filters direction with moving averages calculated on typical prices, and manages exits through a fixed twenty-pip target supported by a dynamic channel-based trailing stop.\n\nThe StockSharp version keeps the spirit of the original approach while adapting order management to the high-level API. Market orders are used for entries and exits, profit targets are monitored internally, and stop levels are emulated with price-channel conditions.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Primary timeframe used for calculations. | 1 hour candles |\n| `ChannelPeriod` | Lookback period for the Donchian-style channel. | 20 |\n| `SlowMaPeriod` | Length of the slow moving average filter. | 20 |\n| `TakeProfitPips` | Distance in pips for the fixed profit target. | 20 |\n| `TrailingOffsetPips` | Offset used when tightening the stop to the previous extreme. | 10 |\n| `RecoveryMultiplier` | Volume multiplier applied after a loss. | 2 |\n| `Volume` | Base trading volume before recovery scaling. | 0.1 |"
+   },
+   "2345": {
+    "id": 2345,
+    "name": "JSatl Digit System",
+    "family": "trend",
+    "overview": "This example demonstrates a simplified port of the MQL5 \"JSatl Digit System\" expert advisor to StockSharp.\n\nThe strategy uses the Jurik Moving Average (JMA) to create a digital trend state:\n\n- When the close price is above the JMA, the state becomes **up**.\n- When the close price is below the JMA, the state becomes **down**.\n\nIf the state changes to up, short positions can be closed and/or a long position can be opened depending on the parameters. When the state changes to down, long positions can be closed and/or a short position can be opened.\n\n**Parameters**\n\n- `JmaLength` – JMA period.\n- `CandleType` – candle series used for calculations.\n- `StopLossPercent` – protective stop loss in percent.\n- `TakeProfitPercent` – protective take profit in percent.\n- `BuyPosOpen`, `SellPosOpen`, `BuyPosClose`, `SellPosClose` – enable or disable actions for corresponding signals.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3118": {
+    "id": 3118,
+    "name": "GlamTrader",
+    "family": "trend",
+    "overview": "The **GlamTrader Strategy** is a StockSharp high-level API conversion of the MetaTrader expert advisor `GlamTrader.mq5`. The original robot blends a shifted moving average with the Laguerre RSI oscillator and the Awesome Oscillator to filter momentum before opening a single market position. The port preserves the exact decision tree and money-management rules while adapting order execution, charting, and risk controls to StockSharp conventions.\n\n## How the strategy works\n\n1. Subscribe to the candle series defined by `CandleType` (M15 by default). The selected timeframe feeds every indicator.\n2. Build a configurable moving average on the chosen `AppliedPrice` source and shift it by `MaShift` bars to reproduce the displaced buffer used in MetaTrader.\n3. Recreate the Laguerre RSI filter internally using the four-stage recursive filter (`LaguerreGamma` controls the smoothing factor). The value remains in the `[0;1]` range like the original custom indicator.\n4. Calculate the Awesome Oscillator with standard 5/34 simple averages of the median price and store the current and previous readings for slope detection.\n5. Only when no position is open:\n   - **Long entry** – moving average above the current close, Laguerre RSI above `0.15`, and Awesome Oscillator rising versus the previous bar.\n   - **Short entry** – moving average below the current close, Laguerre RSI below `0.75`, and Awesome Oscillator falling versus the previous bar.\n6. On entry the strategy converts stop-loss/take-profit distances from pips into price offsets using the instrument tick size. Distances are adjusted for 3- or 5-digit quotes exactly like `Point * 10` in MQL.\n7. While a position is active the algorithm mirrors the original trailing routine: once price advances more than `TrailingStopPips + TrailingStepPips`, the stop is trailed to `TrailingStopPips` behind (or above) the market. Exits are executed when the candle range touches the trailing stop or the take-profit price.\n\n## Entry and exit logic\n\n",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | `TimeSpan.FromMinutes(15).TimeFrame()` | Timeframe used for indicator calculations and decision making. |\n| `TradeVolume` | `decimal` | `1` | Volume used for market orders. |\n| `StopLossBuyPips` | `decimal` | `50` | Stop-loss distance in pips for long entries. |\n| `TakeProfitBuyPips` | `decimal` | `50` | Take-profit distance in pips for long entries. |\n| `StopLossSellPips` | `decimal` | `50` | Stop-loss distance in pips for short entries. |\n| `TakeProfitSellPips` | `decimal` | `50` | Take-profit distance in pips for short entries. |\n| `TrailingStopPips` | `decimal` | `5` | Trailing stop distance in pips. Set to zero to disable trailing. |\n| `TrailingStepPips` | `decimal` | `15` | Additional profit (in pips) required before the trailing stop can move. |\n| `MaPeriod` | `int` | `14` | Moving average lookback length. |\n| `MaShift` | `int` | `1` | Positive displacement applied to the moving average. |\n| `MaMethod` | `MaMethod` | `LinearWeighted` | Moving average type (simple, exponential, smoothed, or linear weighted). |\n| `AppliedPrice` | `AppliedPrice` | `Weighted` | Price source used for both the moving average and Laguerre filter. |\n| `LaguerreGamma` | `decimal` | `0.7` | Laguerre smoothing coefficient (0–1 range). |"
+   },
+   "1566": {
+    "id": 1566,
+    "name": "XRP AI 15-m Adaptive v3.1",
+    "family": "trend",
+    "overview": "This strategy trades XRP on 15-minute candles using a higher time frame trend filter. It selects between small pull-backs, medium volume flushes, or large momentum bursts and applies ATR-based stops, targets, trailing stop and a time-based exit.\n\n## Parameters\n- **Risk Mult** – ATR multiplier for initial stop.\n- **Small TP** – ATR multiplier for take profit when a small pull-back is chosen.\n- **Med TP** – ATR multiplier for take profit when a medium volume flush is chosen.\n- **Large TP** – ATR multiplier for take profit when a large momentum burst is chosen.\n- **Volume Mult** – multiplier of SMA-20 volume to detect spikes.\n- **Trail Percent** – trailing stop percent of ATR from the highest price.\n- **Trail Arm** – open gain in ATR multiples before trailing activates.\n- **Max Bars** – maximum number of 15-minute bars to hold a position.\n- **Candle Type** – candle type used for main calculations.\n- **Trend Candle Type** – candle type used for trend filter.\n",
+    "details": "",
+    "parameters": "- **Risk Mult** – ATR multiplier for initial stop.\n- **Small TP** – ATR multiplier for take profit when a small pull-back is chosen.\n- **Med TP** – ATR multiplier for take profit when a medium volume flush is chosen.\n- **Large TP** – ATR multiplier for take profit when a large momentum burst is chosen.\n- **Volume Mult** – multiplier of SMA-20 volume to detect spikes.\n- **Trail Percent** – trailing stop percent of ATR from the highest price.\n- **Trail Arm** – open gain in ATR multiples before trailing activates.\n- **Max Bars** – maximum number of 15-minute bars to hold a position.\n- **Candle Type** – candle type used for main calculations.\n- **Trend Candle Type** – candle type used for trend filter."
+   },
+   "3145": {
+    "id": 3145,
+    "name": "Day Trading PAMXA",
+    "family": "trend",
+    "overview": "The **Day Trading PAMXA** strategy reproduces the MetaTrader 5 expert advisor that combines Bill Williams' Awesome Oscillator momentum reversals with a stochastic filter. The StockSharp port keeps the original multi-timeframe design:\n\n- The main decision loop runs on the **Signal Candles** timeframe (default 1 hour).\n- The Awesome Oscillator is evaluated on a separate **AO Candles** timeframe (default 1 day) to obtain higher time-frame momentum.\n- The stochastic oscillator uses its own **Stochastic Candles** timeframe (default 1 hour) so that %K/%D levels are aligned with the original settings.\n\nThe strategy holds at most one position at a time. Whenever a bullish setup appears it first covers any active shorts before entering long, and vice versa for bearish setups.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Stop Loss` | Stop-loss distance in pips. Zero disables the protective stop.\n| `Take Profit` | Take-profit distance in pips. Zero disables the profit target.\n| `Trailing Stop` | Trailing stop activation distance in pips. Zero disables trailing.\n| `Trailing Step` | Additional pips required before the trailing stop advances. Must be positive when trailing is enabled.\n| `Money Mode` | Selects between `FixedVolume` and `RiskPercent` sizing.\n| `Money Value` | Interpreted as lot size when using fixed volume, or as risk percentage when using risk-based sizing.\n| `Order Volume` | Base volume used when `Money Mode` is `FixedVolume`.\n| `Stochastic %K` | Lookback length for the stochastic %K calculation.\n| `Stochastic %D` | Smoothing length for the stochastic %D line.\n| `Stochastic Slow` | Final smoothing factor applied to the stochastic oscillator.\n| `Level Up` | Upper stochastic threshold that enables short entries.\n| `Level Down` | Lower stochastic threshold that enables long entries.\n| `Signal Candles` | Timeframe that drives the main trading loop.\n| `Stochastic Candles` | Timeframe feeding the stochastic oscillator.\n| `AO Candles` | Timeframe feeding the Awesome Oscillator.\n| `AO Fast` / `AO Slow` | Periods for the internal moving averages of the Awesome Oscillator."
+   }
+  }
+ }
+}

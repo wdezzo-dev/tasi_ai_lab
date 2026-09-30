@@ -1,0 +1,98 @@
+{
+ "batch_221": {
+  "strategy_ids": [
+   311,
+   1660,
+   691,
+   1845,
+   2081,
+   395,
+   1703,
+   385,
+   2135,
+   1109
+  ],
+  "docs": {
+   "311": {
+    "id": 311,
+    "name": "Keltner RSI Divergence",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 40%. It performs best in the crypto market.\n\nSignals trigger when Keltner confirms divergence setups on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like EmaPeriod, AtrPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2.0m`\n  - `RsiPeriod = 14`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2.0m`\n  - `RsiPeriod = 14`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Divergence\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1660": {
+    "id": 1660,
+    "name": "Live Alligator",
+    "family": "trend",
+    "overview": "This strategy trades trend reversals using a dynamic Alligator configuration and several EMA filters.\nIt opens a new position when the Alligator lines switch direction and five EMAs confirm the move.\nAn optional trading-hours filter limits entries to a chosen session.\nThe open position is closed when price crosses a trailing smoothed moving average.\n\n- **Entry Criteria**\n  - Alligator lips above jaws with teeth below jaws and previous bar lips below jaws -> open long after a bearish trend.\n  - Alligator lips below jaws with teeth above jaws and previous bar lips above jaws -> open short after a bullish trend.\n  - Five EMAs on close, weighted, typical, median and open prices must be strictly ordered in the direction of the trend.\n- **Exit Criteria**\n  - Price crosses the trailing SMMA based on `TrailPeriod`.\n  - Optional stop-loss applied at trade open.\n- **Indicators Used**\n  - Smoothed Moving Averages for Alligator lines and trailing stop.\n  - Exponential Moving Averages on different price types.\n\nParameters allow configuring Alligator base period, EMA confirmation period, trailing period, stop-loss and trading hours window.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "691": {
+    "id": 691,
+    "name": "Double AI Super Trend Trading",
+    "family": "trend",
+    "overview": "This strategy uses two SuperTrend indicators combined with weighted moving averages to confirm trend direction. Long trades open when both SuperTrends are bullish and price WMAs stay above their corresponding SuperTrend WMAs. Short trades occur on the opposite conditions. Positions are managed with an ATR-based trailing stop from the first SuperTrend.\n\n- **Long**: Both SuperTrends bullish and price WMAs above SuperTrend WMAs.\n- **Short**: Both SuperTrends bearish and price WMAs below SuperTrend WMAs.\n- **Indicators**: SuperTrend, WMA, ATR.\n- **Stops**: Trailing stop based on first SuperTrend.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1845": {
+    "id": 1845,
+    "name": "TSI DeMarker",
+    "family": "trend",
+    "overview": "Strategy that calculates the True Strength Index on top of the DeMarker oscillator.\nA long position is opened when the TSI crosses above its moving average signal line.\nA short position is opened when the TSI crosses below the signal line.\n\nThe approach combines momentum and overbought/oversold analysis.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `TSI crosses above signal`\n  - Short: `TSI crosses below signal`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromHours(8).TimeFrame()\n  - `DemarkerPeriod` = 25\n  - `ShortLength` = 5\n  - `LongLength` = 8\n  - `SignalLength` = 20\n- **Filters**:\n  - Category: Oscillator crossover\n  - Direction: Both\n  - Indicators: TSI, DeMarker\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `TSI crosses above signal`\n  - Short: `TSI crosses below signal`\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromHours(8).TimeFrame()\n  - `DemarkerPeriod` = 25\n  - `ShortLength` = 5\n  - `LongLength` = 8\n  - `SignalLength` = 20\n- **Filters**:\n  - Category: Oscillator crossover\n  - Direction: Both\n  - Indicators: TSI, DeMarker\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2081": {
+    "id": 2081,
+    "name": "EF Distance Reversal",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp adaptation of the MetaTrader \"Exp_EF_distance\" expert advisor. It replaces the original EF Distance and Flat-Trend indicators with a simple moving average (SMA) and an Average True Range (ATR) filter to detect market turning points. The algorithm watches three consecutive SMA values and identifies local minima or maxima. A long position is opened when the SMA forms a local bottom and volatility exceeds the threshold. A short position is opened on the opposite pattern. Positions are closed on opposite signals or when stop-loss or take-profit levels are hit.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `SMA(t-1) < SMA(t-2)` and `SMA(t) > SMA(t-1)` and `ATR(t) ≥ AtrThreshold`.\n  - **Short**: `SMA(t-1) > SMA(t-2)` and `SMA(t) < SMA(t-1)` and `ATR(t) ≥ AtrThreshold`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal in the opposite direction.\n  - Stop-loss or take-profit reached.\n- **Indicators**:\n  - Simple Moving Average (SMA) – approximation of EF Distance.\n  - Average True Range (ATR) – volatility filter.\n- **Default Values**:\n  - `SMA period` = 10.\n  - `ATR period` = 20.\n  - `ATR threshold` = 1.\n  - `StopLoss` = 100.\n  - `TakeProfit` = 200.\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Two\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Configurable\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (uses turning points)\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `SMA(t-1) < SMA(t-2)` and `SMA(t) > SMA(t-1)` and `ATR(t) ≥ AtrThreshold`.\n  - **Short**: `SMA(t-1) > SMA(t-2)` and `SMA(t) < SMA(t-1)` and `ATR(t) ≥ AtrThreshold`.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Reverse signal in the opposite direction.\n  - Stop-loss or take-profit reached.\n- **Indicators**:\n  - Simple Moving Average (SMA) – approximation of EF Distance.\n  - Average True Range (ATR) – volatility filter.\n- **Default Values**:\n  - `SMA period` = 10.\n  - `ATR period` = 20.\n  - `ATR threshold` = 1.\n  - `StopLoss` = 100.\n  - `TakeProfit` = 200.\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Two\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Configurable\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes (uses turning points)\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "395": {
+    "id": 395,
+    "name": "Short Interest Effect",
+    "family": "other",
+    "overview": "The **Short Interest Effect** strategy uses short interest levels to predict stock performance. Securities with low days-to-cover tend to outperform those heavily shorted. At a monthly interval, stocks are sorted by short interest and the portfolio buys the lowest group while shorting the highest.\n\n## Details\n- **Entry Criteria**: Monthly ranking by short interest ratio or days-to-cover.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly ranking by short interest ratio or days-to-cover.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Monthly rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1703": {
+    "id": 1703,
+    "name": "VR MARS",
+    "family": "other",
+    "overview": "This sample demonstrates a simplified port of the manual trading panel **VR---MARS-EN** from MQL4 to StockSharp.\n\nThe original script provided five predefined lot sizes and buttons to send buy or sell orders. It also displayed multiple labels with trading statistics. In this C# version the visual panel is removed while the core idea of selecting one of the five lot sizes and executing a market order is preserved.\n\n## Parameters\n\n- `Lot1` – size of the first lot.\n- `Lot2` – size of the second lot.\n- `Lot3` – size of the third lot.\n- `Lot4` – size of the fourth lot.\n- `Lot5` – size of the fifth lot.\n- `SelectedLot` – number from 1 to 5 specifying which lot size will be used.\n- `Buy` – when `true` a market buy order is sent on strategy start.\n- `Sell` – when `true` a market sell order is sent on strategy start.\n\nOnly one of the direction flags should be enabled at a time. When the strategy starts it activates position protection and sends the corresponding market order using high level helper methods.\n\n## Notes\n\nThis strategy is intended for educational purposes and does not implement any trading logic beyond immediate order execution.\n",
+    "details": "",
+    "parameters": "- `Lot1` – size of the first lot.\n- `Lot2` – size of the second lot.\n- `Lot3` – size of the third lot.\n- `Lot4` – size of the fourth lot.\n- `Lot5` – size of the fifth lot.\n- `SelectedLot` – number from 1 to 5 specifying which lot size will be used.\n- `Buy` – when `true` a market buy order is sent on strategy start.\n- `Sell` – when `true` a market sell order is sent on strategy start.\n\nOnly one of the direction flags should be enabled at a time. When the strategy starts it activates position protection and sends the corresponding market order using high level helper methods."
+   },
+   "385": {
+    "id": 385,
+    "name": "Overnight Sentiment Anomaly",
+    "family": "other",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis strategy trades an equity ETF only overnight when an external sentiment indicator signals extreme optimism. At the close the ETF is bought if the indicator exceeds a threshold and is sold the next morning, targeting the overnight drift associated with positive sentiment.\n\nIntraday data is not used; the algorithm reacts to end-of-day sentiment values and places market orders at the close and next day's open.\n\n## Details\n\n- **Instrument**: equity ETF and sentiment data series.\n- **Signal**: sentiment value above configurable `Threshold`.\n- **Holding period**: market close to next day open.\n- **Positioning**: long when sentiment high, otherwise flat.\n- **Risk control**: order skipped when trade value below `MinTradeUsd`.\n",
+    "details": "- **Instrument**: equity ETF and sentiment data series.\n- **Signal**: sentiment value above configurable `Threshold`.\n- **Holding period**: market close to next day open.\n- **Positioning**: long when sentiment high, otherwise flat.\n- **Risk control**: order skipped when trade value below `MinTradeUsd`.",
+    "parameters": ""
+   },
+   "2135": {
+    "id": 2135,
+    "name": "Breakeven Trailing Stop",
+    "family": "other",
+    "overview": "Strategy that demonstrates how to move the stop-loss to breakeven and then trail it as price advances.\nThe strategy enters a long position and manages it in two phases:\n1. After the price gains `BreakevenPlus` points, the stop is moved to `BreakevenStep` points beyond the entry.\n2. When price continues in profit by `TrailingPlus` points above the stop, the stop trails the price by `TrailingStep` points.\n\nThe logic is symmetric for short positions if one is opened manually.\n\n## Details\n\n- **Entry Criteria**: Opens a long position on the first finished candle.\n- **Long/Short**: Both (example uses long).\n- **Exit Criteria**: Price crosses trailing stop.\n- **Stops**: Breakeven and trailing stop.\n- **Default Values**:\n  - `BreakevenPlus` = 5\n  - `BreakevenStep` = 2\n  - `TrailingPlus` = 3\n  - `TrailingStep` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Stop management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Breakeven, trailing\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Opens a long position on the first finished candle.\n- **Long/Short**: Both (example uses long).\n- **Exit Criteria**: Price crosses trailing stop.\n- **Stops**: Breakeven and trailing stop.\n- **Default Values**:\n  - `BreakevenPlus` = 5\n  - `BreakevenStep` = 2\n  - `TrailingPlus` = 3\n  - `TrailingStep` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Stop management\n  - Direction: Both\n  - Indicators: None\n  - Stops: Breakeven, trailing\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1109": {
+    "id": 1109,
+    "name": "Nadaraya-Watson Envelope",
+    "family": "other",
+    "overview": "Builds Nadaraya-Watson kernel regression envelopes in log scale. Goes long when price crosses above the lower envelope and optionally goes short when price crosses below the upper envelope.\n\n## Details\n\n- **Entry Criteria**:\n  - Long when close crosses above the lower envelope.\n  - Short when close crosses below the upper envelope (in Long/Short mode).\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite envelope cross.\n- **Stops**: No.\n- **Default Values**:\n  - `LookbackWindow` = 8\n  - `RelativeWeighting` = 8\n  - `StartRegressionBar` = 25\n  - `StrategyType` = Long Only\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Envelope\n  - Direction: Configurable\n  - Indicators: Nadaraya-Watson\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long when close crosses above the lower envelope.\n  - Short when close crosses below the upper envelope (in Long/Short mode).\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite envelope cross.\n- **Stops**: No.\n- **Default Values**:\n  - `LookbackWindow` = 8\n  - `RelativeWeighting` = 8\n  - `StartRegressionBar` = 25\n  - `StrategyType` = Long Only\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Envelope\n  - Direction: Configurable\n  - Indicators: Nadaraya-Watson\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_056": {
+  "strategy_ids": [
+   3092,
+   776,
+   273,
+   2626,
+   1202,
+   3374,
+   459,
+   3396,
+   3296,
+   422
+  ],
+  "docs": {
+   "3092": {
+    "id": 3092,
+    "name": "FxNode Safe Tunnel",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor *FxNode - Safe Tunnel*. The system uses a ZigZag-based trend channel: the most recent swing highs are connected to form a resistance line while swing lows create a support line. A position is opened when the market price touches one of the channel boundaries within a configurable tolerance and all safety checks pass.\n\nThe conversion follows the original workflow but adapts it to the high-level StockSharp API:\n\n- Candle subscription drives the logic. Only fully formed candles are processed.\n- A `Highest`/`Lowest` pair emulates the ZigZag detector used to draw the tunnel trendlines.\n- An `AverageTrueRange` indicator provides the volatility-based stop anchor that the MQL version produced with `ATRCheck() * 10`.\n- Level1 quotes are monitored so the strategy can enforce a maximum spread before allowing new trades.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `CandleType` | 30 minute candles | Primary timeframe for analysis and trading. |\n| `TrendPreference` | Both | Choose long-only, short-only or symmetric trading. |\n| `TakeProfitPips` | 800 | Maximum take-profit distance in pips (0 disables the limit). |\n| `MaxStopLossPips` | 200 | Maximum stop-loss distance in pips (0 disables the limit). |\n| `FixedTakeProfitPips` | 0 | Early exit distance expressed in pips. |\n| `TouchDistanceBuyPips` | 20 | Long entries require the ask price to stay within this buffer above the lower trendline. |\n| `TouchDistanceSellPips` | 20 | Short entries mirror the buffer requirement near the upper trendline. |\n| `TrailingStopPips` | 50 | Trail distance applied after the trade becomes profitable. |\n| `StaticVolume` | 1 | Fallback order volume when risk-based sizing is not possible. |\n| `MinVolume` / `MaxVolume` | 0.02 / 10 | Bounds for the final order volume. |\n| `MaxSpreadPips` | 15 | Maximum allowed spread in pips for new entries. |\n| `RiskPercentage` | 30 | Portfolio percentage risked per trade. Set to 0 to always use `StaticVolume`. |\n| `MaxOpenPositions` | 1 | Maximum net exposure (in multiples of the current order volume). |\n| `UseTimeFilter` | true | Enables the trading window. |\n| `SessionStart` / `SessionEnd` | 00:00 / 06:00 | Trading window. When the start is later than the end the window wraps through midnight. |\n| `CloseBeforeWeekend` | true | Close any position after 23:50 on Friday. |\n| `AtrPeriod` | 14 | ATR lookback used for the stop calculation. |\n| `ZigZagDepth` | 5 | ZigZag lookback depth. |\n| `ZigZagDeviationPips` | 3 | Minimum distance between consecutive pivots (in pips). |\n| `ZigZagBackstep` | 1 | Bars between eligible pivots. |\n| `ZigZagHistory` | 10 | Number of stored pivots for trendline projection. |"
+   },
+   "776": {
+    "id": 776,
+    "name": "Extrapolated Pivot Connector",
+    "family": "trend",
+    "overview": "Connects recent pivot highs and lows to build support and resistance lines. A long signal occurs when price closes above the resistance line, while a short signal fires when price drops below the support line.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses above resistance line.\n  - **Short**: Close crosses below support line.\n- **Exit Criteria**:\n  - Opposite signal or position reversal.\n- **Indicators**:\n  - Pivot-based support/resistance lines.\n- **Stops**: None.\n- **Default Values**:\n  - `PivotLength` = 100\n  - `HighStart` = 1\n  - `HighEnd` = 0\n  - `LowStart` = 1\n  - `LowEnd` = 0\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: pivot lines\n  - Stops: none\n  - Complexity: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses above resistance line.\n  - **Short**: Close crosses below support line.\n- **Exit Criteria**:\n  - Opposite signal or position reversal.\n- **Indicators**:\n  - Pivot-based support/resistance lines.\n- **Stops**: None.\n- **Default Values**:\n  - `PivotLength` = 100\n  - `HighStart` = 1\n  - `HighEnd` = 0\n  - `LowStart` = 1\n  - `LowEnd` = 0\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: pivot lines\n  - Stops: none\n  - Complexity: Low",
+    "parameters": ""
+   },
+   "273": {
+    "id": 273,
+    "name": "ATR Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 148%. It performs best in the forex market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `AtrPeriod` = 14.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossAtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossAtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2626": {
+    "id": 2626,
+    "name": "Bullish & Bearish Engulfing",
+    "family": "trend",
+    "overview": "This strategy replicates the classic bullish and bearish engulfing candlestick setup that was originally implemented in MetaTrader for the \"Bullish and Bearish Engulfing\" expert advisor. The StockSharp port evaluates completed candles on a configurable timeframe, optionally skips a number of recent bars, and reacts when an engulfing pattern meets a minimum distance filter. The logic is designed for discretionary traders who want to automate an established price action pattern while keeping control over direction, volume, and how existing positions are handled.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `CandleType` | Timeframe (StockSharp `DataType`) used for signal detection. | 1-hour time frame | Adjustable to any supported candle type. |\n| `Shift` | Number of completed candles to skip before evaluating the pattern. | 1 | Setting 1 analyses the latest closed bar, higher values look further back. |\n| `DistanceInPips` | Minimum pip distance that the engulfing candle must exceed relative to the previous one. | 0 | Converted to price using the instrument price step; useful to filter small-bodied candles. |\n| `CloseOppositePositions` | Whether to close an existing opposite position when a new signal fires. | `true` | Disabling skips the trade if the current exposure conflicts with the signal. |\n| `BullishSide` | Order side executed on a bullish engulfing signal. | `Buy` | Can be flipped to `Sell` for contrarian behaviour. |\n| `BearishSide` | Order side executed on a bearish engulfing signal. | `Sell` | Can be flipped to `Buy` to trade counter-trend setups. |\n| `Volume` | Base order size. | 1 | The order volume is increased by `abs(Position)` when closing the opposite side. |"
+   },
+   "1202": {
+    "id": 1202,
+    "name": "PulseWave",
+    "family": "trend",
+    "overview": "Strategy using VWAP, MACD crossover and RSI filter.\n\nThe strategy buys when price is above VWAP, MACD crosses above its signal line and RSI is below the overbought threshold. It exits when price falls below VWAP, MACD crosses below the signal line and RSI is above the oversold threshold.\n\n## Details\n\n- **Entry Criteria**: Price above VWAP, MACD crossover up, RSI below overbought.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price below VWAP, MACD crossover down, RSI above oversold.\n- **Stops**: No.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiPeriod` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: VWAP, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price above VWAP, MACD crossover up, RSI below overbought.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Price below VWAP, MACD crossover down, RSI above oversold.\n- **Stops**: No.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiPeriod` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: VWAP, MACD, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3374": {
+    "id": 3374,
+    "name": "MelBar EuroSwiss",
+    "family": "breakout",
+    "overview": "The MelBar EuroSwiss strategy reproduces the logic of the \"MelBar EuroSwiss M30 500 1.85x 2Y\" expert advisor. It combines Bollinger Band breakout entries with an exit filter based on the Relative Vigor Index (RVI). The default template is tuned for the EUR/CHF pair on the M30 timeframe, but the parameters can be optimized for other symbols.\n\nAt the start of each finished candle the strategy reads the Bollinger Bands and the RVI values calculated on closing prices. New positions are opened when the current bar opens beyond the envelope while the previous bar opened back inside the channel. This behaviour imitates the gap-style breakout logic of the original MQL5 robot. Long trades use the lower band as the trigger, while short trades react to the upper band. Existing positions are closed when the delayed RVI crosses above or below an absolute level, indicating momentum exhaustion in the direction of the trade. Optional protective orders are set using fixed pip distances.\n\nThe default volume is 0.2 lots, but the `TradeVolume` parameter allows fine control over the position size. Both stop loss and take profit are expressed in pips and converted to price offsets through the configurable `PipSize` parameter. The same pip size is reused to arm the protection module at start-up. All calculations rely on finished candles to avoid look-ahead bias.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Current candle open < previous lower Bollinger band AND previous candle open > lower band from two candles ago.\n  - **Short**: Current candle open > previous upper Bollinger band AND previous candle open < upper band from two candles ago.\n- **Exit Criteria**:\n  - **Long**: Close when historic RVI value exceeds +`RviLevel`.\n  - **Short**: Close when historic RVI value falls below -`RviLevel`.\n- **Stops**: Optional fixed stop loss and take profit distances in pips.\n- **Indicators**: Bollinger Bands (period `BollingerPeriod`, deviation `BollingerDeviation`) and Relative Vigor Index (`Rv",
+    "details": "- **Entry Criteria**:\n  - **Long**: Current candle open < previous lower Bollinger band AND previous candle open > lower band from two candles ago.\n  - **Short**: Current candle open > previous upper Bollinger band AND previous candle open < upper band from two candles ago.\n- **Exit Criteria**:\n  - **Long**: Close when historic RVI value exceeds +`RviLevel`.\n  - **Short**: Close when historic RVI value falls below -`RviLevel`.\n- **Stops**: Optional fixed stop loss and take profit distances in pips.\n- **Indicators**: Bollinger Bands (period `BollingerPeriod`, deviation `BollingerDeviation`) and Relative Vigor Index (`RviPeriod`).\n- **Default Values**:\n  - `TradeVolume` = 0.2 lots\n  - `BollingerPeriod` = 18\n  - `BollingerDeviation` = 2.75\n  - `RviPeriod` = 15\n  - `RviLevel` = 0.30\n  - `StopLossPips` = 13\n  - `TakeProfitPips` = 61\n  - `PipSize` = 0.0001\n  - `CandleType` = TimeSpan.FromMinutes(30)\n- **Other Notes**:\n  - Category: Breakout reversal\n  - Direction: Both long and short\n  - Timeframe: Intraday (M30 by default)\n  - Risk Level: Medium due to fixed pip-based risk controls\n  - Trailing stop: Not enabled by default (can be implemented externally)\n\nThe provided parameters mirror the original configuration and serve as a solid starting point for walk-forward tests or optimization runs in StockSharp.",
+    "parameters": ""
+   },
+   "459": {
+    "id": 459,
+    "name": "One-Two-Three Reversal",
+    "family": "trend",
+    "overview": "The One-Two-Three Reversal strategy looks for a bullish 1-2-3 pattern in price action. A long position is opened when today's low is below yesterday's, yesterday's low is below the low three bars ago, the low two bars ago is below the low four bars ago, and the high two bars ago is below the high three bars ago. The trade is closed after a defined number of bars or when price closes above a moving average.\n\n## Details\n\n- **Entry Criteria:**\n  - Current low < previous low.\n  - Previous low < low three bars ago.\n  - Low two bars ago < low four bars ago.\n  - High two bars ago < high three bars ago.\n- **Long/Short:** Long only.\n- **Exit Criteria:**\n  - Hold for `DaysToHold` bars or close crosses above moving average.\n- **Stops:** None.\n- **Default Values:**\n  - `DaysToHold` = 7\n  - `MaLength` = 200\n- **Filters:**\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: Price action, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:**\n  - Current low < previous low.\n  - Previous low < low three bars ago.\n  - Low two bars ago < low four bars ago.\n  - High two bars ago < high three bars ago.\n- **Long/Short:** Long only.\n- **Exit Criteria:**\n  - Hold for `DaysToHold` bars or close crosses above moving average.\n- **Stops:** None.\n- **Default Values:**\n  - `DaysToHold` = 7\n  - `MaLength` = 200\n- **Filters:**\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: Price action, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3396": {
+    "id": 3396,
+    "name": "CCI Expert",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp conversion of the original MetaTrader \"CCI-Expert\" robot. It uses the Commodity Channel Index (CCI) indicator on a single time frame and keeps the logic strictly sequential: the strategy waits for three completed candles before deciding to open or close a position.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `FixedVolume` | Fixed order size. Set to zero to activate risk-based sizing. | 0.1 |\n| `RiskPercent` | Percentage of current portfolio value used to size orders when `FixedVolume` is zero. | 0 |\n| `TakeProfitPoints` | Take-profit distance measured in price points. | 150 |\n| `StopLossPoints` | Stop-loss distance measured in price points. | 600 |\n| `MaxSpreadPoints` | Maximum allowed spread (in price points). Zero disables the filter. | 30 |\n| `CciPeriod` | Lookback period of the CCI indicator. | 14 |\n| `CandleType` | Time frame of the candles processed by the strategy. | 15-minute candles |"
+   },
+   "3296": {
+    "id": 3296,
+    "name": "ProfitLossTrailStrategy",
+    "family": "volatility",
+    "overview": "ProfitLossTrailStrategy is a risk-management helper converted from the MetaTrader expert advisor **ProfitLossTrailEA v2.30**. The strategy does not generate entries on its own. Instead, it supervises the currently open position on the configured security and automatically applies protective exits:\n\n- initial stop-loss and take-profit levels;\n- trailing stop management with optional activation distance and trailing step control;\n- break-even protection with a configurable profit trigger and offset;\n- ability to remove existing protective levels when the trader wants to manage them manually.\n\nThe behaviour closely matches the original EA's \"basket\" management mode: all orders of the same direction are treated as a single position and the protective levels are recalculated whenever exposure changes.",
+    "details": "",
+    "parameters": ""
+   },
+   "422": {
+    "id": 422,
+    "name": "Exceeded Candle",
+    "family": "mean_reversion",
+    "overview": "This pattern-based approach searches for bullish engulfing candles that exceed the prior bar while price is still below the middle Bollinger Band. The idea is that a strong reversal within a pullback may propel price back toward the upper band. The strategy only trades long and cancels entries when three consecutive bearish candles appear.\n\nWhenever price tags the upper Bollinger Band the position is closed, capturing the quick rebound. The method suits short timeframes where volatility bands capture mean-reversion swings.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: previous candle red, current candle green and closes above previous open, `Close < MiddleBand`, no three consecutive red candles\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - **Long**: `Close > UpperBand`\n- **Stops**: None\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long only\n  - Indicators: Bollinger Bands, price action\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: previous candle red, current candle green and closes above previous open, `Close < MiddleBand`, no three consecutive red candles\n- **Long/Short**: Long only\n- **Exit Criteria**:\n  - **Long**: `Close > UpperBand`\n- **Stops**: None\n- **Default Values**:\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long only\n  - Indicators: Bollinger Bands, price action\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

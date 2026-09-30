@@ -1,0 +1,98 @@
+{
+ "batch_054": {
+  "strategy_ids": [
+   1112,
+   880,
+   3115,
+   1007,
+   3010,
+   463,
+   1633,
+   2578,
+   636,
+   2181
+  ],
+  "docs": {
+   "1112": {
+    "id": 1112,
+    "name": "NASDAQ 100 Peak Hours",
+    "family": "trend",
+    "overview": "The strategy trades NASDAQ 100 only during the first two and last hours of the session. It uses EMA trend confirmation, RSI, ATR and VWAP filters with ATR based trailing and break-even stops.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price above short EMA, short EMA above long EMA, both EMAs rising, RSI above 50 and price above VWAP during peak session hours.\n  - **Short**: Opposite conditions.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - ATR based trailing stop or break-even stop.\n  - Time based exit after configurable number of bars or EMA trend reversal.\n- **Stops**: ATR trailing with break-even.\n- **Default Values**:\n  - `Long EMA` = 21\n  - `Short EMA` = 9\n  - `RSI` = 14\n  - `ATR` = 14\n  - `Trail ATR Mult` = 1.5\n  - `Initial SL Mult` = 0.5\n  - `Break-even ATR Mult` = 1.5\n  - `Time Exit Bars` = 20\n- **Filters**:\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR, VWAP\n  - Stops: Trailing\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price above short EMA, short EMA above long EMA, both EMAs rising, RSI above 50 and price above VWAP during peak session hours.\n  - **Short**: Opposite conditions.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - ATR based trailing stop or break-even stop.\n  - Time based exit after configurable number of bars or EMA trend reversal.\n- **Stops**: ATR trailing with break-even.\n- **Default Values**:\n  - `Long EMA` = 21\n  - `Short EMA` = 9\n  - `RSI` = 14\n  - `ATR` = 14\n  - `Trail ATR Mult` = 1.5\n  - `Initial SL Mult` = 0.5\n  - `Break-even ATR Mult` = 1.5\n  - `Time Exit Bars` = 20\n- **Filters**:\n  - Category: Intraday\n  - Direction: Both\n  - Indicators: EMA, RSI, ATR, VWAP\n  - Stops: Trailing\n  - Complexity: Advanced\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "880": {
+    "id": 880,
+    "name": "High Yield Spread Strategy with SMA Filter",
+    "family": "trend",
+    "overview": "This strategy trades based on the level of the high yield credit spread or the VIX index. When the selected spread moves beyond a threshold and price is on the proper side of a simple moving average, the strategy opens a position in the chosen direction.\n\nPositions are held for a fixed number of candles before being closed. The strategy operates on daily candles only.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: spread > threshold and (price > SMA if filter enabled)\n  - **Short**: spread < threshold and (price < SMA if filter enabled)\n- **Long/Short**: one side at a time (parameter)\n- **Exit Criteria**: position closed after holding period\n- **Stops**: No\n- **Default Values**:\n  - `Basis` = HighYieldSpread\n  - `Threshold` = 5\n  - `IsLong` = true\n  - `HoldingPeriod` = 5\n  - `UseSmaFilter` = true\n  - `SmaLength` = 50\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Spread\n  - Direction: Configurable\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: spread > threshold and (price > SMA if filter enabled)\n  - **Short**: spread < threshold and (price < SMA if filter enabled)\n- **Long/Short**: one side at a time (parameter)\n- **Exit Criteria**: position closed after holding period\n- **Stops**: No\n- **Default Values**:\n  - `Basis` = HighYieldSpread\n  - `Threshold` = 5\n  - `IsLong` = true\n  - `HoldingPeriod` = 5\n  - `UseSmaFilter` = true\n  - `SmaLength` = 50\n  - `CandleType` = 1 day\n- **Filters**:\n  - Category: Spread\n  - Direction: Configurable\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3115": {
+    "id": 3115,
+    "name": "Precipice",
+    "family": "trend",
+    "overview": "The Precipice strategy is a direct conversion of the MetaTrader expert advisor *Precipice (barabashkakvn's edition)*. The system does not analyse market structure or use indicators; instead it waits for the previous position to close and then flips a coin to decide whether to enter long or short. If the trader enables both directions, every finished candle has a 50% chance of spawning a new position provided the account is currently flat. Optional protective orders mirror the MetaTrader behaviour by attaching the same stop-loss and take-profit distance in \"pips\" to every trade.\n\nThe StockSharp implementation keeps the random nature of the original code and mirrors its money-management settings. It automatically converts the MetaTrader pip distance into the instrument's native price step so the stop-loss and take-profit remain symmetrical regardless of the number of decimal places used by the security.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute time frame | Primary timeframe processed by the strategy. |\n| `TradeVolume` | `decimal` | `1` | Order size used for every market entry. |\n| `StopLossTakeProfitPips` | `int` | `100` | Distance (in MetaTrader pips) between the entry price and both protective orders. Set to `0` to disable stop-loss and take-profit placement. |\n| `UseBuy` | `bool` | `true` | Enable random long entries. |\n| `UseSell` | `bool` | `true` | Enable random short entries. |"
+   },
+   "1007": {
+    "id": 1007,
+    "name": "MACD Aggressive Scalp Simple",
+    "family": "trend",
+    "overview": "Implements a scalping strategy using the MACD histogram with a 50‑period EMA filter.\n\n- Goes long when the MACD histogram crosses above zero and price is above the EMA.\n- Goes short when the histogram crosses below zero and price is below the EMA.\n- Closes positions when histogram momentum reverses.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3010": {
+    "id": 3010,
+    "name": "Daydream Channel Breakout",
+    "family": "trend",
+    "overview": "Daydream Channel Breakout is a direct conversion of the original MetaTrader \"Daydream\" expert advisor into the StockSharp high-level strategy framework. The logic trades against extreme moves: when price pierces the lower Donchian channel band the algorithm buys expecting a rebound, and when price extends above the upper band it opens short exposure. All exits are handled through a \"virtual\" take profit expressed in pips, so no native exchange orders remain in the book.\n\n## Strategy Logic\n\n- Build a Donchian channel from the previous `ChannelPeriod` completed candles (the current bar is excluded, matching the MT5 implementation).\n- Enter **long** when the closing price drops below the prior lower band. Existing short exposure is flattened implicitly because the order volume adds the absolute position size.\n- Enter **short** when the closing price breaks above the prior upper band. Existing long exposure is closed in the same way.\n- Only one entry per candle is allowed. After a trade is sent, the strategy waits for the next bar open to generate a new signal.\n- Every open position is monitored for a virtual profit target. When unrealized profit exceeds `TakeProfitPips` (converted to price distance through the pip size heuristic) the position is closed at market.\n\n## Parameters\n\n| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `OrderVolume` | Lot size sent with every new trade. The actual order amount also includes the absolute value of the opposite position to flatten before reversing. | `0.1` | Matches the MT5 default lot size. |\n| `TakeProfitPips` | Virtual take profit distance expressed in pips. | `50` | The pip size is derived from `Security.PriceStep`; 3- or 5-digit instruments are automatically multiplied by 10. |\n| `ChannelPeriod` | Number of completed candles used to compute the Donchian channel. | `25` | Uses the same lookback as the original EA. |\n| `CandleType` | Candle type subscribed for calculations. | `TimeSpan.FromHours(1).TimeFrame",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| --- | --- | --- | --- |\n| `OrderVolume` | Lot size sent with every new trade. The actual order amount also includes the absolute value of the opposite position to flatten before reversing. | `0.1` | Matches the MT5 default lot size. |\n| `TakeProfitPips` | Virtual take profit distance expressed in pips. | `50` | The pip size is derived from `Security.PriceStep`; 3- or 5-digit instruments are automatically multiplied by 10. |\n| `ChannelPeriod` | Number of completed candles used to compute the Donchian channel. | `25` | Uses the same lookback as the original EA. |\n| `CandleType` | Candle type subscribed for calculations. | `TimeSpan.FromHours(1).TimeFrame()` | Can be changed to any StockSharp candle type. |"
+   },
+   "463": {
+    "id": 463,
+    "name": "2:45 AM Candle Breakout",
+    "family": "breakout",
+    "overview": "This intraday strategy monitors the 2:45 AM candle and trades breakouts of its high or low within the next few bars. When price exceeds the candle's high, it enters a long position; when price falls below the candle's low, it opens a short position. Positions are closed at the end of the observation window if no opposite breakout occurs.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price breaks above the high of the 2:45 AM candle within the next `LookForwardBars` candles.\n  - **Short**: Price breaks below the low of the 2:45 AM candle within the next `LookForwardBars` candles.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - End of the observation window or opposite breakout.\n- **Stops**: None.\n- **Default Values**:\n  - `TargetHour` = 2\n  - `TargetMinute` = 45\n  - `LookForwardBars` = 2\n  - `CandleType` = 45-minute candles\n- **Filters**:\n  - Category: Time-based breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price breaks above the high of the 2:45 AM candle within the next `LookForwardBars` candles.\n  - **Short**: Price breaks below the low of the 2:45 AM candle within the next `LookForwardBars` candles.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - End of the observation window or opposite breakout.\n- **Stops**: None.\n- **Default Values**:\n  - `TargetHour` = 2\n  - `TargetMinute` = 45\n  - `LookForwardBars` = 2\n  - `CandleType` = 45-minute candles\n- **Filters**:\n  - Category: Time-based breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Intraday\n  - Seasonality: Yes\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1633": {
+    "id": 1633,
+    "name": "Breakdown Level Day",
+    "family": "breakout",
+    "overview": "This strategy places pending stop orders above and below the intraday range at a specified time of day. It aims to capture breakouts when price moves beyond the early session high or low. Optional stop loss, take profit, break-even and trailing stop rules manage the open position.\n\n## Details\n\n- **Entry**: At `OrderTime` a buy stop is placed above the day's high plus `Delta` ticks and a sell stop below the day's low minus `Delta` ticks.\n- **Exit**: Stop-loss and take-profit orders are placed together with the breakout order. Break-even and trailing stop can update the protective stop.\n- **Indicators**: None.\n- **Timeframe**: Default 1-minute candles.\n- **Risk**: Position size is taken from the strategy `Volume` property.\n\n## Parameters\n\n- `OrderTime` — time of day when pending orders are submitted.\n- `Delta` — distance from range boundaries in ticks.\n- `StopLoss` — protective stop distance in ticks.\n- `TakeProfit` — profit target distance in ticks.\n- `BreakEven` — move stop to entry after this profit in ticks.\n- `Trailing` — trailing stop distance in ticks.\n- `CandleType` — candle type used for calculations.\n",
+    "details": "- **Entry**: At `OrderTime` a buy stop is placed above the day's high plus `Delta` ticks and a sell stop below the day's low minus `Delta` ticks.\n- **Exit**: Stop-loss and take-profit orders are placed together with the breakout order. Break-even and trailing stop can update the protective stop.\n- **Indicators**: None.\n- **Timeframe**: Default 1-minute candles.\n- **Risk**: Position size is taken from the strategy `Volume` property.",
+    "parameters": "- `OrderTime` — time of day when pending orders are submitted.\n- `Delta` — distance from range boundaries in ticks.\n- `StopLoss` — protective stop distance in ticks.\n- `TakeProfit` — profit target distance in ticks.\n- `BreakEven` — move stop to entry after this profit in ticks.\n- `Trailing` — trailing stop distance in ticks.\n- `CandleType` — candle type used for calculations."
+   },
+   "2578": {
+    "id": 2578,
+    "name": "Trade on Qualified RSI",
+    "family": "momentum",
+    "overview": "This strategy reproduces the MetaTrader \"Trade on qualified RSI\" expert advisor using StockSharp's high-level API. It behaves as a contrarian system: it interprets extended Relative Strength Index (RSI) readings as exhaustion and opens a position against the prevailing move after the momentum persists for several candles. Trailing stops are managed in price steps so that the stop follows the trade only when price moves in the trade's favor.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `RsiPeriod` | Lookback length for the RSI indicator. | 28 |\n| `UpperThreshold` | RSI level that qualifies a short setup. | 55 |\n| `LowerThreshold` | RSI level that qualifies a long setup. | 45 |\n| `CountBars` | How many previous bars must stay beyond the threshold (`CountBars + 1` consecutive bars in total). | 5 |\n| `StopLossPoints` | Stop distance expressed in price steps. The actual price offset equals `StopLossPoints * PriceStep`. | 21 |\n| `TradeVolume` | Volume submitted with each entry order. | 1 |\n| `CandleType` | Candle subscription used for indicator calculations. | 15-minute candles |\n\nAll parameters can be optimized. The thresholds allow decimal values, so fine-grained tuning of the RSI boundaries is possible."
+   },
+   "636": {
+    "id": 636,
+    "name": "Correlation Arrays",
+    "family": "volatility",
+    "overview": "This strategy computes a rolling correlation matrix for up to six securities. It logs correlation levels using configurable thresholds to help evaluate relationships between assets. The strategy is analysis-only and does not place trades.\n\n## Details\n- **Entry Criteria**: None (analysis only)\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `LookbackPeriod` = 100\n  - `PositiveWeak` = 0.3\n  - `PositiveMedium` = 0.5\n  - `PositiveStrong` = 0.7\n  - `NegativeWeak` = -0.3\n  - `NegativeMedium` = -0.5\n  - `NegativeStrong` = -0.7\n- **Filters**:\n  - Category: Statistical analysis\n  - Direction: None\n  - Indicators: Correlation\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: None (analysis only)\n- **Long/Short**: None\n- **Exit Criteria**: None\n- **Stops**: None\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `LookbackPeriod` = 100\n  - `PositiveWeak` = 0.3\n  - `PositiveMedium` = 0.5\n  - `PositiveStrong` = 0.7\n  - `NegativeWeak` = -0.3\n  - `NegativeMedium` = -0.5\n  - `NegativeStrong` = -0.7\n- **Filters**:\n  - Category: Statistical analysis\n  - Direction: None\n  - Indicators: Correlation\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "2181": {
+    "id": 2181,
+    "name": "RSI Bollinger Bands",
+    "family": "mean_reversion",
+    "overview": "Strategy combining the Relative Strength Index (RSI) with Bollinger Bands. A long position opens when RSI is below the oversold threshold and the close price is under the lower Bollinger band. A short position opens when RSI is above the overbought threshold and the close price is above the upper Bollinger band. Positions reverse on opposite signals.\n\n## Details\n\n- **Entry Criteria**: RSI below `RsiOversold` and close price below lower band for buy; RSI above `RsiOverbought` and close price above upper band for sell.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `RsiPeriod` = 20\n  - `BollingerPeriod` = 20\n  - `BollingerWidth` = 2\n  - `RsiOversold` = 30\n  - `RsiOverbought` = 70\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI, Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 15 minutes\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: RSI below `RsiOversold` and close price below lower band for buy; RSI above `RsiOverbought` and close price above upper band for sell.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(15)\n  - `RsiPeriod` = 20\n  - `BollingerPeriod` = 20\n  - `BollingerWidth` = 2\n  - `RsiOversold` = 30\n  - `RsiOverbought` = 70\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RSI, Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 15 minutes\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,84 @@
+{
+  "strategy_id": 1791,
+  "ticker": "4264",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1791,
+    "name": "Stoch TP TS V3103",
+    "family": "other",
+    "entry_long": "crossabove(rsi(close,20.0), sma(rsi(close,85.0),6)) and rsi(close,5) > 20.0 and rsi(close,5) < 85.0",
+    "exit_long": "crossbelow(rsi(close,5), sma(rsi(close,5),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The stochastic is approximated by RSI(5) with an SMA(3) percent-D line, and the documented 20 to 80 range is kept as the band the cross must occur inside. The fixed minute of each hour, the initial stop, the three-times take-profit and the trailing switch are not expressible in the DSL."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 140,
+      "engine_win_ret": 0.031047454961620202,
+      "alpha": 0.18952093490987376,
+      "benchmark_ret": -0.15847347994825356,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": 0.6139042084647098,
+      "max_drawdown": -0.05708159056319473,
+      "profit_factor": 20.332680686026723
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.17966230387366167,
+      "alpha": 0.16934532971412464,
+      "benchmark_ret": -0.3490076335877863,
+      "trades": 9,
+      "win_rate": 0.3333333333333333,
+      "sharpe": -2.1206026957055624,
+      "max_drawdown": -0.1824493614197179,
+      "profit_factor": 0.05787607743369975
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 140,
+      "engine_win_ret": 0.01825506604156324,
+      "alpha": 0.1767285459898168,
+      "benchmark_ret": -0.15847347994825356,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": 0.37978153171270784,
+      "max_drawdown": -0.06191507590087919,
+      "profit_factor": 6.1020426022774545
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.21426786174626677,
+      "alpha": 0.13473977184151953,
+      "benchmark_ret": -0.3490076335877863,
+      "trades": 9,
+      "win_rate": 0.2222222222222222,
+      "sharpe": -2.4834814719090392,
+      "max_drawdown": -0.21426786174626677,
+      "profit_factor": 0.008332409376410218
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

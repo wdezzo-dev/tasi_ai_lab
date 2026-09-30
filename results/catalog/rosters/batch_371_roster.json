@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3105,
+      "name": "One Minute Scalper",
+      "family": "trend",
+      "entry_long": "crossabove((macd(close,12,26) - macd_signal(close,12,26,9)), atr(high,low,close,14))",
+      "exit_long": "crossbelow((macd(close,12,26) - macd_signal(close,12,26,9)), -atr(high,low,close,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3933,
+      "name": "Pending Limit Grid Strategy (MQL/8147 Conversion)",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 1389,
+      "name": "Swing FX Pro Panel v1",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 230,
+      "name": "Delta Neutral Arbitrage",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1107,
+      "name": "Mutanabby AI Algo Pro",
+      "family": "trend",
+      "entry_long": "rsi(close,10) > 30",
+      "exit_long": "rsi(close,10) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 10 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 1201,
+      "name": "Pullback Pro Dow",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 2046,
+      "name": "Forecast Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2870,
+      "name": "Binario",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    },
+    {
+      "id": 3846,
+      "name": "Graal Fractal Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,14)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 14-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1318,
+      "name": "Smart Money Pivot",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1134,
+      "name": "Omega Galsky",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,8),ema(close,21)) and close > ema(close,89)",
+      "exit_long": "crossbelow(ema(close,8),ema(close,21)) or close < ema(close,89)",
+      "stop_loss_pct": 0.1,
+      "take_profit_pct": 0.25,
+      "notes": "The documented EMA(8/21/89) crossover and price confirmation are exact. Decimal SlPercentage=0.001 and TpPercentage=0.0025 are represented as 0.1% and 0.25%; break-even and intraday timing are unavailable."
+    },
+    {
+      "id": 2699,
+      "name": "Color JFATL Digit Duplex",
+      "family": "trend",
+      "entry_long": "roc(ema(close,20),1) > 0 and close > ema(close,20)",
+      "exit_long": "roc(ema(close,20),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A positive EMA(20) slope above price is an explicit bullish JFATL-color proxy; EMA(20) is a fallback because no period is documented. FATL/Jurik color codes, applied-price and digit controls, and unsupplied point protection are unavailable."
+    },
+    {
+      "id": 2050,
+      "name": "VininI Trend LRMA",
+      "family": "trend",
+      "entry_long": "crossabove(zscore(close,13),0) and roc(close,13) > 0",
+      "exit_long": "crossbelow(zscore(close,13),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Z-score(13) replaces the unavailable linear-regression moving average, with zero substituting the instrument-specific +10/-10 breakdown levels. The Twist mode, 4-hour timeframe, and opposite-signal exit are approximated; no stops are documented."
+    },
+    {
+      "id": 954,
+      "name": "Keltner Channel Golden Cross",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) + 2 * atr(high,low,close,14) and ema(close,20) > ema(close,50)",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keltner is approximated by EMA(20) plus/minus 2 ATR(14), and EMA(20)>EMA(50) is the golden-cross confirmation; all lengths are fallbacks because none are documented. ATR-based stop and target cannot be encoded as fixed percentages."
+    },
+    {
+      "id": 3032,
+      "name": "Color Schaff JJRSX MMRec Duplex",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26) - macd_signal(close,12,26,9),0)",
+      "exit_long": "crossbelow(macd(close,12,26) - macd_signal(close,12,26,9),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) histogram zero crosses are a fallback proxy for the unavailable Schaff/JJRSX cycle; no source periods are supplied. JJRSX smoothing, historical signal bars, and loss-count money-management scaling cannot be represented in the stateless long-only DSL."
+    },
+    {
+      "id": 931,
+      "name": "Intraday Volume Swings",
+      "family": "breakout",
+      "entry_long": "volume_ratio(volume,20) > 1.2 and close > donchian_high_prev(close,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A volume-confirmed close above the prior five-bar high proxies entry into the current/previous high swing region. The daily-region definition, RegionMustClose clock semantics, and opposite short region are unavailable; 1.2 is an explicit volume threshold fallback."
+    },
+    {
+      "id": 3162,
+      "name": "Hoop Master",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2) and volume_ratio(volume,20) > 1.2",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close above the prior two-bar high with above-average volume is a stateless breakout-order proxy. Pending-order recycling, doubling/martingale size, pip indentation, and unspecified stop/target/trailing distances are not DSL fields."
+    },
+    {
+      "id": 3054,
+      "name": "Exp Fisher CG Oscillator",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,9),ema(rsi(close,9),3))",
+      "exit_long": "crossbelow(rsi(close,9),ema(rsi(close,9),3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(9) crossing its EMA(3) is an explicit bounded-oscillator/trigger-line proxy for Fisher CG; these lengths are fallbacks because none are supplied. Fisher transformation, SignalBar, position sizing, and unsupplied price-step protection are unavailable."
+    },
+    {
+      "id": 3614,
+      "name": "AK-47 Scalper",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source manages a short sell-stop only, so no long entry is fabricated in this long-direction catalog. Spread, clock, portfolio sizing, pending-order updates, and pip-based protection require unsupported quote/time/order-state features."
+    },
+    {
+      "id": 3945,
+      "name": "Kloss MQL/8186",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 40 and close > open",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<40 with a bullish close proxies the oversold CCI/Stochastic and shifted-price reversal; the oscillator thresholds are normalized fallbacks. Exact CCI, Stochastic, five-bar shift, and 48/152-point protection are unavailable."
+    }
+  ]
+}

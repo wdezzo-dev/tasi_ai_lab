@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2853,
+      "name": "Alli Heik",
+      "family": "trend",
+      "entry_long": "crossbelow(roc(ema(close,5),1),sma(roc(ema(close,5),1),5))",
+      "exit_long": "crossabove(roc(ema(close,5),1),sma(roc(ema(close,5),1),5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC of EMA(5) versus its SMA(5) is a fallback for the smoothed Heiken-Ashi oscillator and signal; all lengths are fallbacks because none are documented. The docs' counterintuitive below-signal long rule is retained; pip stops, target, reverse mode, and trailing are unavailable."
+    },
+    {
+      "id": 1616,
+      "name": "Yuri Garcia Smart Money",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,20) and low < open and close - low >= 0.5 * atr(high,low,close,14) and volume_ratio(volume,20) > ema(volume_ratio(volume,20),5)",
+      "exit_long": "close > ema(close,20) or high > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar support zone, long lower wick, and rising normalized volume proxy the high-volume order-block and wick-pullback rules. Four-hour aggregation, cumulative delta, and ATR-multiple risk-reward exits are not available in the single-series DSL."
+    },
+    {
+      "id": 650,
+      "name": "CVD Divergence",
+      "family": "trend",
+      "entry_long": "ema(close,20) > ema(close,50) and rsi(close,14) > 50 and macd(close,12,26) > macd_signal(close,12,26,9) and volume_ratio(volume,20) >= 1.5",
+      "exit_long": "ema(close,20) < ema(close,50) or rsi(close,14) < 50 or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20/50) replaces HMA, while the documented RSI(14), MACD(12,26,9), and 1.5x volume confirmation are retained. CVD divergence/continuation and its 14/5 swing lengths cannot be represented; no stops are documented."
+    },
+    {
+      "id": 137,
+      "name": "Bollinger RSI",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2) and rsi(close,14) < 30",
+      "exit_long": "close >= bb_mid(close,20) or rsi(close,14) >= 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) oversold plus RSI(14)<30 implements the counter-trend long entry, with band re-entry or RSI recovery exiting. Bollinger/RSI lengths are explicit fallbacks because the docs omit them; 2% is the documented stop."
+    },
+    {
+      "id": 492,
+      "name": "Adaptive KDJ (MTF)",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,9),ema(rsi(close,9),5)) and rsi(close,9) < sma(rsi(close,9),40)",
+      "exit_long": "crossbelow(rsi(close,9),ema(rsi(close,9),5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(9), its EMA(5), and SMA(40) proxy the three-timeframe K/D/J blend and adaptive trend level using documented lengths. Actual KDJ and multi-timeframe aggregation are unavailable; the opposite K/D cross exits and no stops are documented."
+    },
+    {
+      "id": 3560,
+      "name": "SR Breakout",
+      "family": "breakout",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The source is explicitly an H1/H4 Donchian alert logger and places no orders, so the impossible guard preserves zero trading. Its 26-bar channels can be expressed on one timeframe, but the two subscriptions and logging behavior are outside the roster DSL."
+    },
+    {
+      "id": 915,
+      "name": "ICT NY Kill Zone Auto Trading",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5) and low < open and close - low >= 0.5 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,20) or low < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A five-bar high break with a rejection wick approximates a fair-value-gap/order-block long setup. Kill-zone time and exact multi-candle gap/order-block geometry are unavailable; documented 30/60 point protection is not a percentage."
+    },
+    {
+      "id": 3219,
+      "name": "Exp Cronex MFI",
+      "family": "momentum",
+      "entry_long": "crossbelow(ema(rsi(close,25),14),ema(rsi(close,25),25))",
+      "exit_long": "crossabove(ema(rsi(close,25),14),ema(rsi(close,25),25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two EMAs of RSI(25) retain the documented 14/25 smoothing lengths and the source's contrarian crossover direction. MFI volume flow, SignalShift, and the 4-hour timeframe are unsupported; no stops are specified."
+    },
+    {
+      "id": 3694,
+      "name": "Trailing Stop Trigger Manager",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This utility only trails externally opened positions and explicitly opens no trades, so no signal is fabricated. Magic-number filtering, bid/ask updates, trigger state, and 1000/1500-point trailing distances require order and quote fields unavailable in the DSL."
+    },
+    {
+      "id": 1496,
+      "name": "Turn of the Month Strategy on Steroids",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,2) < 0 and close < open",
+      "exit_long": "rsi(close,2) > 65",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(2)<0 with a down close preserves the two-day decline; RSI(2)>65 is the exact exit. Day 25 seasonality cannot be expressed without a date field, and the docs specify no stops."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_102": {
+  "strategy_ids": [
+   3349,
+   3379,
+   384,
+   1406,
+   1911,
+   1055,
+   2789,
+   3790,
+   1216,
+   1049
+  ],
+  "docs": {
+   "3349": {
+    "id": 3349,
+    "name": "N Trades Per Set Martingale",
+    "family": "trend",
+    "overview": "This strategy is a direct conversion of the MetaTrader expert advisor \"N trades per set martingale + Close and reset on equity increase\". It keeps the market direction simple—only long trades are taken—but actively manages position sizing through a martingale cascade and an equity-based reset. A new trade is opened immediately after the previous one closes, keeping the strategy constantly engaged in the market.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Trades Per Set` | Number of sequential trades that form one martingale cycle. |\n| `Stop Loss (pips)` | Stop-loss distance measured in price steps of the instrument. Set to zero to disable. |\n| `Take Profit (pips)` | Take-profit distance measured in price steps. Set to zero to disable. |\n| `Scale Factor` | Multiplier applied to the trade volume after a fully losing set. Values below 1 are automatically clamped to 1. |\n| `Equity Divisor` | Divides account equity to derive the base lot size after a fully winning set or an equity reset. |\n| `Equity Increase` | Amount of equity growth that triggers the global reset. Set to zero to disable the equity-based exit. |"
+   },
+   "3379": {
+    "id": 3379,
+    "name": "No Nonsense Tester",
+    "family": "trend",
+    "overview": "The **No Nonsense Tester Strategy** is a StockSharp port of the MQL4 \"NoNonsenseTester\" expert advisor. The implementation focuses on the core NNFX workflow that validates a trend baseline, waits for two confirmation indicators, checks volatility using ATR and supervises trades with strict exit logic. The strategy is designed for multi-parameter experimentation and therefore exposes all important thresholds through `StrategyParam` objects so they can be optimized inside StockSharp.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `BaselineLength` | Period of the EMA baseline. |\n| `ConfirmationRsiLength` | Length of the RSI confirmation indicator. |\n| `ConfirmationRsiThreshold` | RSI level separating bullish and bearish confirmations. |\n| `ConfirmationCciLength` | Length of the CCI confirmation indicator. |\n| `ConfirmationCciThreshold` | Minimal absolute CCI magnitude to accept a signal. |\n| `AtrPeriod` | ATR lookback period. |\n| `AtrEntryMultiplier` | Optional ATR multiplier that scales the traded volume. |\n| `AtrTakeProfitMultiplier` | ATR multiplier for the take profit level. |\n| `AtrStopLossMultiplier` | ATR multiplier for the stop loss level. |\n| `AtrTrailingMultiplier` | ATR multiplier used for dynamic trailing. Set to `0` to disable. |\n| `AtrMinimum` | Minimum ATR value required before opening trades. |\n| `ExitRsiLength` | Length of the exit RSI overlay. |\n| `ExitRsiUpperLevel` | RSI level that forces short exits. |\n| `ExitRsiLowerLevel` | RSI level that forces long exits. |\n| `CandleType` | Candle type (time-frame) used for calculations. |"
+   },
+   "384": {
+    "id": 384,
+    "name": "Option Expiration Week",
+    "family": "trend",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis Python strategy buys and holds an equity ETF only during option-expiration week. Starting on the Monday prior to the third Friday of each month the ETF is bought, and the position is closed at Friday's close. The idea exploits short-term strength often observed during expiration week.\n\nOutside of this window the portfolio remains in cash. Daily candles are used and trades are sent as market orders once per day.\n\n## Details\n\n- **Instrument**: single equity ETF.\n- **Signal**: calendar rule for the week ending on the third Friday.\n- **Holding period**: Monday open to Friday close of expiration week.\n- **Positioning**: fully invested during the window, flat otherwise.\n- **Risk control**: trade skipped when order value below `MinTradeUsd`.\n",
+    "details": "- **Instrument**: single equity ETF.\n- **Signal**: calendar rule for the week ending on the third Friday.\n- **Holding period**: Monday open to Friday close of expiration week.\n- **Positioning**: fully invested during the window, flat otherwise.\n- **Risk control**: trade skipped when order value below `MinTradeUsd`.",
+    "parameters": ""
+   },
+   "1406": {
+    "id": 1406,
+    "name": "Technical Rank",
+    "family": "trend",
+    "overview": "Strategy computes a composite technical rank from moving averages, rate of change, PPO slope and RSI. Long positions open when the rank exceeds an upper threshold, shorts when it falls below a lower threshold.\n\n## Details\n\n- **Entry Criteria**: rank > UpperThreshold → long; rank < LowerThreshold → short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `UpperThreshold` = 70\n  - `LowerThreshold` = 30\n  - `CandleType` = 1-minute candles\n",
+    "details": "- **Entry Criteria**: rank > UpperThreshold → long; rank < LowerThreshold → short.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `UpperThreshold` = 70\n  - `LowerThreshold` = 30\n  - `CandleType` = 1-minute candles",
+    "parameters": ""
+   },
+   "1911": {
+    "id": 1911,
+    "name": "Exp MAMA",
+    "family": "trend",
+    "overview": "This strategy trades using the MESA Adaptive Moving Average (MAMA) indicator.\n\nThe indicator produces two lines:\n\n- **MAMA** – the adaptive moving average.\n- **FAMA** – a following average used as a signal line.\n\nTrading logic:\n\n1. When MAMA crosses below FAMA the strategy closes short positions and opens a new long position.\n2. When MAMA crosses above FAMA the strategy closes long positions and opens a new short position.\n\n## Parameters\n\n- `FastLimit` – fast alpha limit used by the adaptive factor.\n- `SlowLimit` – slow alpha limit used by the adaptive factor.\n- `CandleType` – timeframe for incoming candles.\n- `BuyOpen` / `SellOpen` – allow opening long or short positions.\n- `BuyClose` / `SellClose` – allow closing long or short positions.\n\nThe strategy operates on finished candles and uses market orders for entry and exit.\n",
+    "details": "",
+    "parameters": "- `FastLimit` – fast alpha limit used by the adaptive factor.\n- `SlowLimit` – slow alpha limit used by the adaptive factor.\n- `CandleType` – timeframe for incoming candles.\n- `BuyOpen` / `SellOpen` – allow opening long or short positions.\n- `BuyClose` / `SellClose` – allow closing long or short positions.\n\nThe strategy operates on finished candles and uses market orders for entry and exit."
+   },
+   "1055": {
+    "id": 1055,
+    "name": "MM Fibonacci",
+    "family": "breakout",
+    "overview": "This strategy calculates Murrey Math Fibonacci levels and trades breakouts. It buys when price breaks above the 100% level in an upward context and sells when price drops below the 0% level in a downward context. Positions are closed when price crosses the 50% level against the trade.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price closes above the 100% level while the most recent extreme was a high.\n  - **Short**: Price closes below the 0% level while the most recent extreme was a low.\n- **Exit Criteria**:\n  - **Long**: Price falls below the 50% level.\n  - **Short**: Price rises above the 50% level.\n- **Indicators**: Highest, Lowest.\n- **Long/Short**: Both.\n- **Stops**: No.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price closes above the 100% level while the most recent extreme was a high.\n  - **Short**: Price closes below the 0% level while the most recent extreme was a low.\n- **Exit Criteria**:\n  - **Long**: Price falls below the 50% level.\n  - **Short**: Price rises above the 50% level.\n- **Indicators**: Highest, Lowest.\n- **Long/Short**: Both.\n- **Stops**: No.",
+    "parameters": ""
+   },
+   "2789": {
+    "id": 2789,
+    "name": "Hans123 Trader",
+    "family": "breakout",
+    "overview": "Hans123 Trader is a breakout system converted from the original MetaTrader 5 expert advisor *Hans123_Trader*. The strategy scans a rolling price range and places pending stop orders during a configurable intraday window. Protective stops, profit targets, and trailing rules mirror the MQL5 logic so the StockSharp port behaves like the source robot.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Order size for breakout entries. | `0.1` |\n| `RangeLength` | Number of candles in the breakout channel. | `80` |\n| `StopLossPips` | Stop-loss distance in pips (0 disables the stop). | `50` |\n| `TakeProfitPips` | Take-profit distance in pips (0 disables the target). | `50` |\n| `TrailingStopPips` | Trailing stop distance in pips (0 disables trailing). | `10` |\n| `TrailingStepPips` | Additional pips required before the trailing stop updates. Must be positive when trailing is enabled. | `5` |\n| `StartHour` | Inclusive hour of day (UTC) when breakout orders start. | `6` |\n| `EndHour` | Exclusive hour of day (UTC) when breakout orders stop. | `10` |\n| `CandleType` | Working candle data type and timeframe. | `1 hour` candles |"
+   },
+   "3790": {
+    "id": 3790,
+    "name": "RPM5 BullsBearsEyes",
+    "family": "momentum",
+    "overview": "The **RPM5 BullsBearsEyes Strategy** is a C# port of the MetaTrader 4 expert *Rpm5_mt4v1*. The advisor rebuilt the custom BullsBearsEyes oscillator from Bulls Power and Bears Power readings and opened a single position that followed the prevailing bias. This StockSharp version reproduces the same behaviour using the high-level API while keeping the original risk parameters, trailing logic, and signal thresholds.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Bulls/Bears Period` | 13 | Averaging period for the Bulls Power and Bears Power indicators. |\n| `Gamma` | 0.5 | Four-stage IIR smoothing ratio for the BullsBearsEyes oscillator. |\n| `Threshold` | 0.5 | Divider between bullish (> threshold) and bearish (< threshold) zones. |\n| `ATR Period` | 5 | Lookback used for the ATR-based trailing stop. |\n| `ATR Multiplier` | 1.5 | Multiplier applied to ATR when deriving the trailing distance. |\n| `Stop Loss (pips)` | 25 | Protective stop distance, converted from pips to price. |\n| `Take Profit (pips)` | 150 | Profit target distance, converted from pips to price. |\n| `Trade Volume` | 1 | Market order volume used for every new position. |\n| `Candle Type` | 5 minute candles | Timeframe processed by the strategy. |"
+   },
+   "1216": {
+    "id": 1216,
+    "name": "Random ATR Strategy - Bybit",
+    "family": "volatility",
+    "overview": "This strategy generates a deterministic random signal based on recent price ranges and the current date. It enters long when the signal is 1 and short when it is 0. Risk management uses ATR-based stop loss and take profit levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: random signal equals 1.\n  - **Short**: random signal equals 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: stop loss or take profit.\n- **Stops**: `SlAtrRatio * ATR` for stop loss, take profit at `SlAtrRatio * TpSlRatio * ATR`.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `SlAtrRatio` = 3\n  - `TpSlRatio` = 1\n- **Filters**: none.\n- **Complexity**: simple.\n- **Timeframe**: configurable.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: random signal equals 1.\n  - **Short**: random signal equals 0.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: stop loss or take profit.\n- **Stops**: `SlAtrRatio * ATR` for stop loss, take profit at `SlAtrRatio * TpSlRatio * ATR`.\n- **Default Values**:\n  - `AtrLength` = 14\n  - `SlAtrRatio` = 3\n  - `TpSlRatio` = 1\n- **Filters**: none.\n- **Complexity**: simple.\n- **Timeframe**: configurable.",
+    "parameters": ""
+   },
+   "1049": {
+    "id": 1049,
+    "name": "MFI Strategy with Oversold Zone Exit and Averaging",
+    "family": "mean_reversion",
+    "overview": "The strategy waits for the Money Flow Index (MFI) to enter the oversold zone. Once MFI rises above the oversold level, it places a limit buy order a fixed percentage below the current close. If the order is not filled within a specified number of bars, it is canceled. Stop-loss and take-profit are applied via StartProtection.\n\n## Details\n\n- **Entry Criteria**:\n  - MFI climbs above `MfiOversoldLevel` after being below it; place limit buy at `LongEntryPercentage` below close.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Position closed by take-profit or stop-loss (`ExitGainPercentage`, `StopLossPercentage`).\n- **Stops**: Yes, via StartProtection.\n- **Default Values**:\n  - `MfiPeriod` = 14\n  - `MfiOversoldLevel` = 20\n  - `LongEntryPercentage` = 0.1\n  - `StopLossPercentage` = 1\n  - `ExitGainPercentage` = 1\n  - `CancelAfterBars` = 5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: MFI\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - MFI climbs above `MfiOversoldLevel` after being below it; place limit buy at `LongEntryPercentage` below close.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Position closed by take-profit or stop-loss (`ExitGainPercentage`, `StopLossPercentage`).\n- **Stops**: Yes, via StartProtection.\n- **Default Values**:\n  - `MfiPeriod` = 14\n  - `MfiOversoldLevel` = 20\n  - `LongEntryPercentage` = 0.1\n  - `StopLossPercentage` = 1\n  - `ExitGainPercentage` = 1\n  - `CancelAfterBars` = 5\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Long\n  - Indicators: MFI\n  - Stops: Yes\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

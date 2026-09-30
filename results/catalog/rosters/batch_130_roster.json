@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2516,
+      "name": "Trend Catcher Breakout",
+      "family": "trend",
+      "entry_long": "ema(close,50) > ema(close,200) and crossabove(ema(close,25),ema(close,50))",
+      "exit_long": "crossbelow(ema(close,25),ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three documented EMAs are used directly: SlowMaPeriod 200 as the trend filter, FastMaPeriod 50 and the FastFilterPeriod 25 trigger, with the trigger cross and the CloseOnOppositeSignal exit. Parabolic SAR (SarStep/SarMax) is not in the DSL, the weekday toggles and the dynamic MinStopLoss/MaxStopLoss AutoStopLoss and AutoTakeProfit bounds have no documented numbers, so the stop fields are null."
+    },
+    {
+      "id": 3239,
+      "name": "Exp XPVT",
+      "family": "trend",
+      "entry_long": "crossbelow(sma(roc(close,1) / 100 * volume,20),sma(sma(roc(close,1) / 100 * volume,20),10))",
+      "exit_long": "crossabove(sma(roc(close,1) / 100 * volume,20),sma(sma(roc(close,1) / 100 * volume,20),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "PVT accumulates volume-weighted price changes, and since a cumulative sum is not available it is approximated by a 20-bar average of the same quantity; the documented long rule is a cross of that raw line below its smoothed variant, with the opposite cross as exit. The smoothing length 10 is a fallback and the Signal Bar shift, applied-price and volume-source options plus the price-step stops are not expressible."
+    },
+    {
+      "id": 2798,
+      "name": "Improve MA & RSI Hedge",
+      "family": "trend",
+      "entry_long": "ema(close,21) > ema(close,8) and rsi(close,21) <= 30",
+      "exit_long": "ema(close,21) < ema(close,8) or rsi(close,21) >= 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the primary leg can be translated: the documented slow/fast SMMA 21/8 (SMMA approximated by EMA) with RSI(21) at or below Oversold 30, per the documentation defaults. The hedge security leg, the monetary combined-profit target and its forced liquidation are not expressible, so a mirrored MA/RSI exit is used instead, and the docs apply no stop."
+    },
+    {
+      "id": 3632,
+      "name": "Moving Average Crossover Spread",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,21),ema(close,84))",
+      "exit_long": "crossbelow(ema(close,21),ema(close,84))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastPeriod 21 and SlowPeriod 84 EMAs are used and crossabove/crossbelow already encode the shift-1 versus shift-2 comparison from the original iMA calls. The MaxSpreadPoints guard needs Level1 bid/ask data and the stop mirrored around the previous slow EMA value is a price level, so the stop fields are null."
+    },
+    {
+      "id": 3819,
+      "name": "Bollinger Band Pending Stops",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented sample only brackets price with three layered buy stops and three sell stops while it sits inside the bands, so entries happen at resting order prices rather than from a market-derived signal, and the per-layer take profits are price steps. Marked with a never-true guard."
+    },
+    {
+      "id": 2134,
+      "name": "Divergence Expert",
+      "family": "breakout",
+      "entry_long": "close < donchian_low_prev(close,5) and rsi(close,14) > donchian_low_prev(rsi(close,14),5)",
+      "exit_long": "close > donchian_high_prev(close,5) and rsi(close,14) < donchian_high_prev(rsi(close,14),5)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Bullish divergence is expressed as price taking a new 5-bar closing low while RSI(14) holds above its own 5-bar low, and the exit is the mirrored bearish divergence. RsiPeriod 14 and StopLossPercent 2.0 come straight from the docs; the divergence lookback is an explicit fallback because none is documented."
+    },
+    {
+      "id": 2972,
+      "name": "RSI Expert Breakout",
+      "family": "breakout",
+      "entry_long": "crossabove(rsi(close,14),20)",
+      "exit_long": "crossbelow(rsi(close,14),60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented RsiPeriod 14 with RsiLowerLevel 20 (bullish reversal) and RsiUpperLevel 60 (bearish reversal) are used as threshold breaks, so the long trades the break back above oversold and exits on the break back below 60. Because that exit level is rarely reached the position is held for long stretches, and TakeProfitPips 60 / StopLossPips 0 / TrailingStopPips 15 are pip distances, so the stop fields are null."
+    },
+    {
+      "id": 2370,
+      "name": "MFI Slowdown",
+      "family": "momentum",
+      "entry_long": "rsi(close,2) >= 90 and roc(rsi(close,2),1) < 1 and roc(rsi(close,2),1) > -1",
+      "exit_long": "rsi(close,2) <= 10",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Money Flow Index is not in the DSL, so RSI stands in as the flow proxy at the documented MfiPeriod 2; the upward signal is UpperThreshold 90 with the SeekSlowdown check expressed as a one-bar change inside +/-1, and the documented LowerThreshold 10 closes the long. The documented StopLossPercent 1 and TakeProfitPercent 2 are applied directly."
+    },
+    {
+      "id": 4011,
+      "name": "Ilan 1.4 Basket Grid",
+      "family": "volatility",
+      "entry_long": "roc(close,1) > 0",
+      "exit_long": "roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the documented basket seed survives translation, the direction of the last two completed candles, so the long side is a rising close; the DSL cannot hold a basket of averaging orders. The Pip Step ladder, weighted-average entry, geometric/recovery sizing, basket Take Profit, trailing, emergency stop and max-life blocks are all not expressible, so the exit is the mirror candle."
+    },
+    {
+      "id": 2203,
+      "name": "RVI Histogram Reversal",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(sma((close - open) / (high - low),5),0.25)",
+      "exit_long": "crossabove(sma((close - open) / (high - low),5),-0.25)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Relative Vigor Index is rebuilt as the smoothed body-to-range ratio, and the contrarian long entry is its fall back through the high level, with the mirror rise through the low level closing the position. RviPeriod 5 and the +/-0.25 thresholds are explicit fallbacks since none are documented; a zero-range bar makes the ratio infinite, which simply fails the comparison."
+    }
+  ]
+}

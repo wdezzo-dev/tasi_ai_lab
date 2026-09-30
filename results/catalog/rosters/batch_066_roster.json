@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2717,
+      "name": "Daily BreakPoint",
+      "family": "trend",
+      "entry_long": "close > open * 1.02 and close - open >= 0.5 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 2% move from the current bar open and a body of at least half ATR(14) proxy the separate daily-open and body-size rules; 2% is an explicit fallback because pips are unsupplied. The daily stream, pips stops, trailing step, and session state are unavailable."
+    },
+    {
+      "id": 700,
+      "name": "Aurora Divergence",
+      "family": "trend",
+      "entry_long": "roc(close,20) < 0 and roc(volume,20) > 0 and zscore(close,20) > -2 and zscore(close,20) < 2 and close > ema(close,50)",
+      "exit_long": "roc(close,20) > 0 or close < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Falling 20-bar price with rising 20-bar volume approximates price/OBV divergence, while z-score(20) and EMA(50) supply normalization and trend filters. All lengths are fallbacks; higher-timeframe regression, cooldown, ATR-risk, and hold-time state cannot be reproduced."
+    },
+    {
+      "id": 160,
+      "name": "Adx Volume",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and volume_ratio(volume,20) > 1 and close > open",
+      "exit_long": "adx(high,low,close,14) < 25",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX(14)>25, above-average 20-bar volume, and a bullish candle translate the documented long-side strength proxy. The source does not state its direction rule; ATR-based absolute protection is not a fixed percentage."
+    },
+    {
+      "id": 437,
+      "name": "Multi-Timeframe Bollinger Bands",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_upper(close,20,2)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The disabled-by-default single-timeframe Bollinger(20,2) lower/upper extremes approximate the primary and higher-timeframe pierces. The optional EMA(200) filter is omitted; 2% is the documented stop value."
+    },
+    {
+      "id": 2454,
+      "name": "Exp RSIOMA",
+      "family": "trend",
+      "entry_long": "rsi(sma(close,14),14) > -20 and rsi(sma(close,14),14) <= 20 and roc(rsi(sma(close,14),14),1) > 0",
+      "exit_long": "rsi(sma(close,14),14) > 20 or roc(rsi(sma(close,14),14),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) of SMA(14) proxies RSIOMA; recovery within the documented -20/+20 channel drives a Breakdown-style long state, with the opposite slope or upper threshold exiting. The 21-period signal smoother and other selectable modes are omitted; no stops are documented."
+    },
+    {
+      "id": 1437,
+      "name": "Time",
+      "family": "breakout",
+      "entry_long": "high > open",
+      "exit_long": "high <= open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The default zero-tick condition reduces to high>open, and its failure exits. The 20-second persistence, intrabar updates, and reset-on-new-bar timing require clock/intrabar state unavailable in the DSL."
+    },
+    {
+      "id": 751,
+      "name": "Engulfing & Pin Bar Breakout",
+      "family": "breakout",
+      "entry_long": "close > open and high > donchian_high_prev(high,1) and close - open >= 2 * (high - close)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 10.0,
+      "notes": "A bullish candle with a lower shadow at least twice its body and a prior-high break proxies the hammer branch; engulfing needs shifted OHLC and is omitted. RiskPercent=0.02 is represented as 2%, with the documented 5R long target represented as 10%."
+    },
+    {
+      "id": 3482,
+      "name": "SpaceX Delete StopLoss TakeProfit Button",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The utility only removes protective orders on existing positions and never opens or closes positions, so the impossible guard preserves no entries. Portfolio/order polling, manual trigger state, and timer behavior are unsupported."
+    },
+    {
+      "id": 1632,
+      "name": "Visual Trader Simulator Edition",
+      "family": "volatility",
+      "entry_long": "close > 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The indicator-free demonstration opens one configured long immediately, approximated by the first positive-price bar; its negative-price guard supplies the impossible closure. Absolute-price protection and configurable direction are not represented in the long-only DSL."
+    },
+    {
+      "id": 148,
+      "name": "Rsi Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and roc(rsi(close,14),1) > 0",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<30 with a rising one-bar RSI change proxies RSI and an oversold stochastic beginning to turn; the exact oscillator exits at 50. Stochastic periods and the 2% stop are documented, while no take profit is supplied."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3864,
+      "name": "TwoPerBar Ron",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0",
+      "exit_long": "roc(close,1) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A positive completed-bar return is a single-direction proxy for the profitable long leg of the per-bar hedge. Fixed cash targets, simultaneous short orders, martingale sizing, and point-based management are not expressible in the DSL."
+    },
+    {
+      "id": 2873,
+      "name": "BrainTrend2 V2 Duplex",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,7),ema(close,21)) and atr(high,low,close,7) < ema(atr(high,low,close,7),7)",
+      "exit_long": "crossbelow(ema(close,7),ema(close,21)) or close < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA alignment with compressed ATR approximates the documented bullish river state; the exact weighted river and five indicator colors are unavailable. ATR(7) is documented, while the slower EMA and smoothing lengths are fallbacks; point stops are not percentages."
+    },
+    {
+      "id": 3430,
+      "name": "Hammer & Hanging Man with CCI Confirmation",
+      "family": "trend",
+      "entry_long": "close < sma(close,5) and close > open and close - low >= 2 * (close - open) and close >= low + 0.67 * (high - low) and rsi(close,11) < 40",
+      "exit_long": "crossabove(rsi(close,11),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A long lower wick below SMA(5) approximates a hammer in a downtrend, with RSI(11)<40 standing in for documented CCI confirmation below 40. Exact prior-candle gap, CCI, and vote-based exits are unavailable."
+    },
+    {
+      "id": 3681,
+      "name": "AdaptiveTrader Pro",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),50) and ema(close,20) > ema(close,50) and close > ema(close,20)",
+      "exit_long": "crossbelow(rsi(close,14),50) or ema(close,20) < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish RSI(14) momentum cross is confirmed by the documented 20/50 moving-average trend pair as a same-timeframe translation of the oversold/overbought regime logic. The 1-hour confirmation, spread filter, and ATR(14) trailing and partial-target logic cannot be represented."
+    },
+    {
+      "id": 270,
+      "name": "Williams R Slope Breakout",
+      "family": "trend",
+      "entry_long": "zscore(roc(close,20),20) > 2 and roc(close,20) > 0",
+      "exit_long": "crossbelow(zscore(roc(close,20),20),0)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A 20-bar return slope scored at two standard deviations approximates the unavailable Williams %R slope breakout, and reversion below its mean exits. The documented 2% stop is retained; other direction-side execution is omitted."
+    },
+    {
+      "id": 3826,
+      "name": "Daydream",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,25)",
+      "exit_long": "close < donchian_low_prev(low,25)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 25-candle channel becomes a prior-bar Donchian breakout with the mirrored breakdown as exit. One-action throttling and the 15-pip virtual trailing take-profit cannot be encoded."
+    },
+    {
+      "id": 4138,
+      "name": "Expert610 Breakout",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1) and bars_since(atr(high,low,close,14) > sma(atr(high,low,close,14),14)) < 5",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior-candle high break shortly after an ATR expansion proxies the wide-candle pending-order setup. Threshold and offset pips, paired pending orders, and the 5/10-pip protections are not expressible as percentage fields."
+    },
+    {
+      "id": 1834,
+      "name": "Virtual Stop Manager",
+      "family": "momentum",
+      "entry_long": "close > 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The positive-price guard represents the source's unconditional first-candle long, while the impossible negative-price exit preserves its state-managed nature. Point values are unspecified and virtual trailing, break-even, stop, and target state cannot be expressed."
+    },
+    {
+      "id": 2868,
+      "name": "ATR Normalize Histogram",
+      "family": "volatility",
+      "entry_long": "crossabove(100 * sma(close - low,10) / sma(atr(high,low,close,10),10),50)",
+      "exit_long": "crossbelow(100 * sma(close - low,10) / sma(atr(high,low,close,10),10),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The close-to-low stream normalized by smoothed ATR is a direct proxy for the histogram, with the documented middle level 50 separating long states. Unspecified smoothing lengths use 10, 60/50/40 color levels and signal shifts are omitted, and point stops remain null."
+    },
+    {
+      "id": 3849,
+      "name": "Gap Reversion",
+      "family": "mean_reversion",
+      "entry_long": "open < donchian_low_prev(low,1)",
+      "exit_long": "close > open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "For a long-only roster, a downside opening gap below the prior low selects the expected upward mean reversion, and a bullish close exits. The one-price-step minimum gap, 15-minute schedule, and short-side gap are omitted."
+    }
+  ]
+}

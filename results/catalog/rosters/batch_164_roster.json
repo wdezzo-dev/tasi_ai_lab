@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 490,
+      "name": "Adaptive Fibonacci Pullback",
+      "family": "trend",
+      "entry_long": "low < ema(close, 8) + 1.618 * atr(high, low, close, 8) and close > ema(ema(close, 8) + 1.618 * atr(high, low, close, 8), 21) and close > sma(close, 55) and rsi(close, 7) > 70",
+      "exit_long": "close < ema(ema(close, 8) + 1.618 * atr(high, low, close, 8), 21)",
+      "stop_loss_pct": 0.75,
+      "take_profit_pct": 5.0,
+      "notes": "The three Fibonacci SuperTrend lines over the documented AtrPeriod 8 average to 1.618*ATR(8) around EMA(8) and are smoothed with the documented EMA(21); the AMA midline is proxied by SMA(55) and the pullback by a low under that band. The documented StopLossPercent 0.75 and TakeProfitPercent 5 are retained; the short side and StartProtection plumbing are omitted."
+    },
+    {
+      "id": 489,
+      "name": "Beta Weighted MA",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close, 50))",
+      "exit_long": "crossbelow(close, ema(close, 50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Beta distribution weighting (Alpha 3, Beta 3) has no DSL function, so the documented Length 50 is approximated by EMA(50) and its upward cross with price opens the long. No stops are documented and the short side is not represented."
+    },
+    {
+      "id": 3961,
+      "name": "Macd Pattern Trader DoubleTop",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close, 12, 26), sma(macd(close, 12, 26), 10)) and macd(close, 12, 26) < 0",
+      "exit_long": "crossabove(macd(close, 12, 26), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish double-bottom scan is approximated by the MACD main line turning up through its own SMA(10) while still under the negative trigger, and the return through zero closes. MACD lengths are standard fallbacks and the fixed 100 pip stop / 300 pip target are price distances, not percentages."
+    },
+    {
+      "id": 3446,
+      "name": "Morning/Evening Star CCI",
+      "family": "trend",
+      "entry_long": "close > open and close > close / (1 + roc(close, 2) / 100) and roc(rsi(close, 14), 1) > 0",
+      "exit_long": "close < open and roc(rsi(close, 14), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so RSI(14) supplies the confirmation filter and the Morning/Evening Star is approximated by a strong bullish bar closing above the two-bars-ago close versus the mirror case for the exit. The CciPeriod length is a fallback, the middle doji/star candle test is dropped, and no stops are documented."
+    },
+    {
+      "id": 1842,
+      "name": "TSI WPR Cross",
+      "family": "trend",
+      "entry_long": "crossabove(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), ema(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), 13))",
+      "exit_long": "crossbelow(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), ema(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), 13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is rebuilt as the Donchian stochastic of the 14-bar range and the TSI as the EMA(13)-EMA(25) spread of that oscillator with an EMA(13) signal; the bullish cross opens and the bearish cross closes. All lengths are explicit fallbacks because the parameters carry no values, the denominator can be zero in a flat range, and StartProtection/chart areas are unsupported."
+    },
+    {
+      "id": 2327,
+      "name": "Wlx BW5 Zone",
+      "family": "momentum",
+      "entry_long": "roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 1) > 0 and roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 5) > 0 and roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34) - sma(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 5), 1) > 0",
+      "exit_long": "roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 1) < 0 or roc(sma((high + low) / 2, 5) - sma((high + low) / 2, 34) - sma(sma((high + low) / 2, 5) - sma((high + low) / 2, 34), 5), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Awesome Oscillator is rebuilt as the 5/34 SMA spread of median price and the Accelerator as that spread minus its SMA(5); five consecutive rising bars on both are approximated by positive 1-bar and 5-bar ROC. The 4-hour timeframe, Direct/SignalBar settings, reversal short leg, and stops are not represented."
+    },
+    {
+      "id": 2597,
+      "name": "Morse Code",
+      "family": "volatility",
+      "entry_long": "close > open and close / (1 + roc(close, 1) / 100) < open / (1 + roc(open, 1) / 100) and close / (1 + roc(close, 2) / 100) > open / (1 + roc(open, 2) / 100)",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish candles are 1 and bearish 0, so prior bars are reconstructed as price/(1+roc(price,n)/100) and the bullish three-bar Morse code 1-0-1 is used as the mask; the mask itself is user-selected with no documented default. A bearish completed candle is the exit, and the pip take-profit/stop-loss and direction choice are not roster fields."
+    },
+    {
+      "id": 3227,
+      "name": "Random Hedg",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The expert opens a market buy and a market sell simultaneously and only manages them with fixed stops, targets, break-even and trailing, so there is no market-derived directional entry and the impossible negative-price guard avoids inventing one. The hedged two-leg management is not expressible in a long-only roster."
+    },
+    {
+      "id": 2012,
+      "name": "Random Trader",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are an explicit random long-or-short pick with no market-derived trigger, so the impossible negative-price guard prevents fabricating a deterministic signal. The TakeProfit 10 / StopLoss 10 price-unit protection and the short side are not roster fields."
+    },
+    {
+      "id": 2000,
+      "name": "HFT Spreader for FORTS",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system continuously quotes limit orders on both sides of the order book to harvest the spread and derives no signal from candles or indicators, so the impossible negative-price guard avoids inventing an entry. Order-book quoting, FORTS specifics, and the spread capture are not representable."
+    }
+  ]
+}

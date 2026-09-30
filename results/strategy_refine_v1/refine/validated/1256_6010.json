@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1256,
+  "ticker": "6010",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1256,
+    "name": "RK's Framework Auto Color Gradient",
+    "family": "mean_reversion",
+    "entry_long": "crossabove((zscore((close - bb_lower(close,30,4)) / (bb_upper(close,20,2) - bb_lower(close,20,2)),14) + zscore(rsi(close,14),14)) / 2,0)",
+    "exit_long": "crossbelow((zscore((close - bb_lower(close,20,2)) / (bb_upper(close,20,2) - bb_lower(close,20,2)),14) + zscore(rsi(close,14),14)) / 2,0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The unavailable stochastic normalization is proxied by averaging z-score(14) Bollinger %B and RSI(14). Bollinger(20,2) and RSI(14) are explicit fallbacks because no defaults are documented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8143,
+      "engine_win_ret": 1183.1379837200934,
+      "alpha": 1176.4292042768386,
+      "benchmark_ret": 6.708779443254818,
+      "trades": 521,
+      "win_rate": 0.4894433781190019,
+      "sharpe": 0.9934825023621189,
+      "max_drawdown": -0.47315810285019033,
+      "profit_factor": 2.6821392365825605
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.14290286808005292,
+      "alpha": 0.21069994387073787,
+      "benchmark_ret": -0.3536028119507908,
+      "trades": 17,
+      "win_rate": 0.35294117647058826,
+      "sharpe": -0.5985033556869203,
+      "max_drawdown": -0.2076458076107197,
+      "profit_factor": 0.6074146186321624
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.036946105442486665,
+      "alpha": 0.3001602004771903,
+      "benchmark_ret": -0.2632140950347036,
+      "trades": 9,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 0.35411061136447597,
+      "max_drawdown": -0.11110469965648861,
+      "profit_factor": 1.487088274648939
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8143,
+      "engine_win_ret": 86.65356762166405,
+      "alpha": 79.94478817840924,
+      "benchmark_ret": 6.708779443254818,
+      "trades": 521,
+      "win_rate": 0.4107485604606526,
+      "sharpe": 0.6698418740421844,
+      "max_drawdown": -0.7961607883176703,
+      "profit_factor": 2.0102808006889576
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.21525317791323995,
+      "alpha": 0.13834963403755085,
+      "benchmark_ret": -0.3536028119507908,
+      "trades": 17,
+      "win_rate": 0.29411764705882354,
+      "sharpe": -0.9688605423260255,
+      "max_drawdown": -0.27282447332675186,
+      "profit_factor": 0.46489449325945326
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.006313441322336577,
+      "alpha": 0.25690065371236703,
+      "benchmark_ret": -0.2632140950347036,
+      "trades": 9,
+      "win_rate": 0.5555555555555556,
+      "sharpe": 0.053008309523898026,
+      "max_drawdown": -0.12898671076381274,
+      "profit_factor": 1.031376975388034
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

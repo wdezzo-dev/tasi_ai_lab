@@ -1,0 +1,98 @@
+{
+ "batch_359": {
+  "strategy_ids": [
+   2939,
+   3905,
+   1574,
+   540,
+   3120,
+   3776,
+   1082,
+   1596,
+   949,
+   2665
+  ],
+  "docs": {
+   "2939": {
+    "id": 2939,
+    "name": "Separate Trade",
+    "family": "trend",
+    "overview": "The Separate Trade strategy is a conversion of the MetaTrader 5 expert advisor \"Separate trade\". It preserves the original multi-filter logic while adopting the StockSharp high-level API for robust order management and indicator handling. The strategy attempts to capture quiet market turns when volatility and dispersion are suppressed. Only one net position is maintained at a time, which mirrors the intent of the original code that limited the number of simultaneous positions.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Order size expressed in lots. | `1` |\n| `SlowMaPeriod` | Period of the slower moving average. | `65` |\n| `FastMaPeriod` | Period of the faster moving average. | `14` |\n| `MaMethod` | Smoothing method applied to both moving averages (`Simple`, `Exponential`, `Smoothed`, `LinearWeighted`). | `Exponential` |\n| `PriceType` | Price input for the moving averages and standard deviation (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). | `Close` |\n| `StopLossBuyPips` / `StopLossSellPips` | Stop-loss distance for long and short trades in pips (0 disables the stop). | `50` |\n| `TakeProfitBuyPips` / `TakeProfitSellPips` | Take-profit distance for long and short trades in pips (0 disables the take-profit). | `50` |\n| `TrailingStopPips` | Trailing stop distance in pips. | `5` |\n| `TrailingStepPips` | Minimum profit advance in pips before the trailing stop is moved. Must be positive when trailing is enabled. | `5` |\n| `MaxPositions` | Maximum allowed simultaneous net positions. The StockSharp version operates with a single aggregated position even when the value is greater than one. | `1` |\n| `DeltaBuyPips` / `DeltaSellPips` | Maximum allowed distance between the fast and slow moving averages (per direction). A value of zero disables the distance filter. | `2` |\n| `AtrPeriodBuy` / `AtrPeriodSell` | ATR lookback period for the long and short filters. | `26` |\n| `AtrLevelBuy` / `AtrLevelSell` | Upper ATR threshold that must not be exceeded before entering a trade. | `0.0016` |\n| `StdDevPeriodBuy` / `StdDevPeriodSell` | Standard deviation lookback period for the long and short filters. | `54` |\n| `StdDevLevelBuy` / `StdDevLevelSell` | Standard deviation ceiling that must not be exceeded before entering a trade. | `0.0051` |\n| `CandleType` | Candle data type used by the subscription. | `TimeSpan.FromMinutes(15)` |"
+   },
+   "3905": {
+    "id": 3905,
+    "name": "Fibo Pivot MultiVal",
+    "family": "trend",
+    "overview": "The **Fibo Pivot MultiVal Strategy** is a StockSharp port of the MetaTrader 4 expert advisor `_Fibo_Pivot_multiVal.mq4`. The\nstrategy combines daily pivot points with Fibonacci retracement and extension ratios to deploy limit orders inside each price\nzone that surrounds the pivot. Trading sessions, position targets, and halting rules follow the original expert advisor so that\nrisk control and execution behaviour remain familiar to traders who used the MetaTrader version.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | 15-minute candles | Timeframe used to build the decision candles. |\n| `OrderVolume` | `0.1` | Volume for each limit order registered by the strategy. |\n| `StartTime` | `00:01` | Session time of day that enables trading and resets counters. |\n| `FinishTime` | `08:00` | Session time that disables new entries while keeping existing positions. |\n| `CloseAllTime` | `12:00` | Session time that cancels orders and closes all positions. |\n| `UseReversalTargets` | `true` | When true, targets stay inside the Fibonacci zone. When false, breakout/pivot targets are used based on the daily range. |\n| `LimitPointIn` | `150` | Daily range threshold (points) that enforces pivot reversion targets when exceeded. |\n| `LimitPointOut` | `50` | Daily range threshold (points) that encourages breakout targets when price action is compressed. |\n| `LevelPf1` | `33` | Percentage used to split the Pivot–R1 and Pivot–S1 distance. |\n| `LevelF1F2` | `50` | Percentage used to compute the intermediate level between R1–R2 and S1–S2. |\n| `LevelF2F3` | `33` | Percentage used to compute the intermediate level between R2–R3 and S2–S3. |\n| `LevelF3Out` | `40` | Percentage used to extend R3/S3 for breakout targets. |\n| `MidZoneOrderMode` | `\"bs\"` | Allowed directions inside the mid zones (`\"b\"`=buy only, `\"s\"`=sell only, `\"bs\"`=both). |\n| `DailyProfitTarget` | `50` | Daily profit limit in points. |\n| `DailyTradeTarget` | `35` | Maximum number of completed trades per day. |\n| `SymbolProfitTarget` | `150` | Per-symbol profit target in points. |\n| `SymbolTradeTarget` | `15` | Maximum completed trades per symbol per day. |"
+   },
+   "1574": {
+    "id": 1574,
+    "name": "ZapTeam Pro Strategy v6 — EMA",
+    "family": "trend",
+    "overview": "Simplified version using EMA21/EMA50 crossover with EMA200 trend filter. Buys on bullish crossover and sells on bearish crossover (optional shorts).\n\n## Details\n\n- **Entry Criteria**: EMA21 crosses EMA50 with trend filter\n- **Long/Short**: Both (shorts optional)\n- **Exit Criteria**: Opposite crossover\n- **Stops**: No\n- **Default Values**:\n  - `Ema21Length` = 21\n  - `Ema50Length` = 50\n  - `Ema200Length` = 200\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: EMA21 crosses EMA50 with trend filter\n- **Long/Short**: Both (shorts optional)\n- **Exit Criteria**: Opposite crossover\n- **Stops**: No\n- **Default Values**:\n  - `Ema21Length` = 21\n  - `Ema50Length` = 50\n  - `Ema200Length` = 200\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "540": {
+    "id": 540,
+    "name": "Average Force",
+    "family": "trend",
+    "overview": "The Average Force strategy uses an oscillator that measures where the close lies within the highest high and lowest low of a lookback period and smooths the result with a moving average. Positive values signal upward pressure while negative values show downward force.\n\nThe strategy goes long when the smoothed Average Force value is above zero and goes short when it is below zero.\n\n## Details\n\n- **Entry Criteria**:\n  - Average Force > 0 → Buy.\n  - Average Force < 0 → Sell.\n- **Long/Short**: Both long and short positions.\n- **Exit Criteria**:\n  - Position reverses when Average Force crosses zero in the opposite direction.\n- **Stops**: None.\n- **Default Values**:\n  - `Period` = 18\n  - `Smooth` = 6\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Highest, Lowest, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Average Force > 0 → Buy.\n  - Average Force < 0 → Sell.\n- **Long/Short**: Both long and short positions.\n- **Exit Criteria**:\n  - Position reverses when Average Force crosses zero in the opposite direction.\n- **Stops**: None.\n- **Default Values**:\n  - `Period` = 18\n  - `Smooth` = 6\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Highest, Lowest, SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3120": {
+    "id": 3120,
+    "name": "Contrarian Trade MA Monday",
+    "family": "trend",
+    "overview": "This strategy recreates the MetaTrader expert advisor **\"Contrarian trade MA\"** using the StockSharp high-level API. It combines weekly context with a Monday-only entry filter to trade against extremes. The system waits for a new trading week, measures how far the previous week closed relative to the highest high and lowest low over the lookback window, and checks whether price opened the new week on the opposite side of a shifted moving average. If the market finishes the first daily candle of the week outside those thresholds, a contrarian position is opened.\n\nThe logic relies on finished candles only. A daily series (default) drives entries and exits, while a weekly series supplies the extreme levels and the moving-average signal. Each time a Monday candle completes, the strategy evaluates whether the previous week ended above the recent high band or below the recent low band, or whether the previous moving average value stands on the other side of the current weekly open. The assumption is that such overextended moves tend to mean-revert during the week.\n\n## How it works\n\n1. Weekly candles feed two indicators:\n   - `Highest`/`Lowest` find the extreme high and low over `CalcPeriod` weeks.\n   - A configurable moving average (`MaPeriod`, `MaMethod`, `MaShift`, `AppliedPrice`) processes the same weekly candles.\n2. Daily candles (or any selected `TradeCandleType`) trigger trading decisions once they finish.\n3. On the first completed candle whose `OpenTime.DayOfWeek == Monday`, the strategy evaluates entry conditions:\n   - **Long** if the previous weekly close is above the highest high of the lookback or if the previous MA value is greater than the current weekly open (meaning price opened below the MA).\n   - **Short** if the previous weekly close is below the lowest low of the lookback or if the previous MA value is less than the current weekly open (price opened above the MA).\n4. Orders are sent with `BuyMarket` or `SellMarket` using the strategy volume and no avera",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CalcPeriod` | `int` | `4` | Number of higher-timeframe candles used to calculate the highest high and lowest low. |\n| `StopLossPips` | `int` | `300` | Stop-loss distance in price steps. Set to `0` to disable the protective stop. |\n| `MaPeriod` | `int` | `7` | Length of the weekly moving average. |\n| `MaShift` | `int` | `0` | Forward shift of the moving average in bars. Mirrors the MetaTrader MA shift parameter. |\n| `MaMethod` | `MovingAverageMethod` | `LinearWeighted` | Moving average calculation method (`Simple`, `Exponential`, `Smoothed`, `LinearWeighted`). |\n| `AppliedPrice` | `AppliedPriceType` | `Weighted` | Price source fed into the moving average (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). |\n| `TradeCandleType` | `DataType` | `TimeSpan.FromMinutes(5).TimeFrame()` | Primary timeframe that triggers entries and manages stops/exits. |\n| `MaCandleType` | `DataType` | `TimeSpan.FromDays(7).TimeFrame()` | Higher timeframe used for the moving average and for calculating extremes. |"
+   },
+   "3776": {
+    "id": 3776,
+    "name": "Sweet Spot Extreme",
+    "family": "trend",
+    "overview": "Sweet Spot Extreme is a direct port of the MetaTrader 4 expert advisor \"Sweet_Spot_Extreme.mq4\" built on StockSharp's high-level API. The strategy hunts for strong pullbacks inside an existing trend by combining two exponential moving averages on 15-minute candles with a 30-minute Commodity Channel Index (CCI) filter. Position sizing mirrors the original risk controls, including MetaTrader-style lot reduction after losing streaks.\n\n## Core logic\n\n1. **Trend slope confirmation.** The main EMA (`MaPeriod`, default 85) and the close EMA (`CloseMaPeriod`, default 70) are fed with 15-minute median prices. A long setup requires both EMAs to slope upward; a short setup needs both to slope downward.\n2. **CCI exhaustion filter.** A second candle subscription (30-minute by default) powers the `CciPeriod` CCI. Long trades only fire when CCI dips below `BuyCciLevel` (−200), while shorts require CCI above `SellCciLevel` (+200).\n3. **Pyramid limit.** The aggregated net position cannot exceed `MaxTradesPerSymbol × volume`. When a fresh signal appears, the strategy closes any opposite exposure and then adds up to the allowed capacity in the signal direction.\n4. **Exits.** Positions are closed either when the trend EMA loses its slope advantage (mirroring the MQL condition `MA <= MAprevious`) or after price travels `StopPoints` instrument points in favour of the position.\n\n## Risk management\n\n- **Risk-based volume.** Order size defaults to `Portfolio.CurrentValue × MaximumRisk ÷ price`. When equity information is missing, the engine falls back to the `Lots` parameter (or the strategy `Volume`).\n- **Loss streak adjustment.** After two or more consecutive losing trades the new order size is reduced by `volume × losses ÷ DecreaseFactor`, matching the MQL helper `LotsOptimized()`.\n- **Normalization.** The final volume is aligned with the instrument’s `VolumeStep`, bounded by `MinVolume`, and clipped by `Security.MaxVolume` when provided.\n\n## Parameters\n\n| Name | Default | Description |\n",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `MaxTradesPerSymbol` | `3` | Maximum number of aggregated entries allowed per direction. |\n| `Lots` | `1` | Fallback fixed lot size when portfolio equity is unavailable. |\n| `MaximumRisk` | `0.05` | Fraction of equity used to size each new trade. |\n| `DecreaseFactor` | `6` | Divider that shrinks the next order after consecutive losses. |\n| `StopPoints` | `10` | Profit target distance in instrument points. Set to `0` to disable. |\n| `MaPeriod` | `85` | EMA period applied to 15-minute candles for the trend slope check. |\n| `CloseMaPeriod` | `70` | EMA period applied to 15-minute candles for the close smoothing filter. |\n| `CciPeriod` | `12` | Lookback used for the 30-minute CCI filter. |\n| `BuyCciLevel` | `-200` | Oversold CCI threshold required for long entries. |\n| `SellCciLevel` | `200` | Overbought CCI threshold required for short entries. |\n| `MinVolume` | `0.1` | Minimum volume allowed after normalization. |\n| `TrendCandleType` | `15m` | Candle type used for EMA calculations (median price). |\n| `CciCandleType` | `30m` | Candle type used for the CCI filter. |"
+   },
+   "1082": {
+    "id": 1082,
+    "name": "Moving Average",
+    "family": "trend",
+    "overview": "The strategy enters a long position when a short moving average crosses above a long moving average of the selected price type. The position is closed when the short average crosses back below the long average.\n\n## Details\n- **Entry Criteria:** Short MA crosses above long MA.\n- **Exit Criteria:** Short MA crosses below long MA.\n- **Indicators:** SMA, EMA, DEMA, TEMA, WMA, VWMA.\n- **Price Source:** Close, High, Open, Low, Typical, Center.\n- **Stops:** None.\n- **Default Values:**\n  - `MaType` = EMA\n  - `ShortLength` = 1\n  - `LongLength` = 20\n  - `PriceType` = Typical\n  - `CandleType` = 1 minute\n- **Filters:**\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: Moving average\n  - Stops: No\n  - Complexity: Simple\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:** Short MA crosses above long MA.\n- **Exit Criteria:** Short MA crosses below long MA.\n- **Indicators:** SMA, EMA, DEMA, TEMA, WMA, VWMA.\n- **Price Source:** Close, High, Open, Low, Typical, Center.\n- **Stops:** None.\n- **Default Values:**\n  - `MaType` = EMA\n  - `ShortLength` = 1\n  - `LongLength` = 20\n  - `PriceType` = Typical\n  - `CandleType` = 1 minute\n- **Filters:**\n  - Category: Trend following\n  - Direction: Long only\n  - Indicators: Moving average\n  - Stops: No\n  - Complexity: Simple\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1596": {
+    "id": 1596,
+    "name": "Simple Forecast - Keltner Worms",
+    "family": "trend",
+    "overview": "The strategy builds a dynamic Keltner channel and trades when price moves outside the band.\n\n## Details\n\n- **Entry Criteria**:\n  - Close price above the upper channel opens a long.\n  - Close price below the lower channel opens a short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 10\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Close price above the upper channel opens a long.\n  - Close price below the lower channel opens a short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 10\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: EMA, ATR\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "949": {
+    "id": 949,
+    "name": "Kaito Box with RSI Div",
+    "family": "trend",
+    "overview": "The strategy buys when price breaks below the recent box range with bullish RSI divergence in a downtrend and exits when bearish divergence appears in an uptrend.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2665": {
+    "id": 2665,
+    "name": "Long/Short Expert MACD",
+    "family": "trend",
+    "overview": "The **Long/Short Expert MACD Strategy** is a StockSharp conversion of the MetaTrader expert \"LongShortExpertMACD\". It combines the standard Moving Average Convergence Divergence (MACD) crossover logic with fixed-distance risk controls. The strategy reacts to crossovers between the MACD line and its signal line, can operate in long-only, short-only, or bidirectional modes, and automatically applies take-profit and stop-loss levels expressed in price points.\n\nThe implementation uses the high-level StockSharp API with candle subscriptions and indicator bindings. Orders are registered as market orders, making the strategy simple to connect to both real-time and historical data sources.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `AllowedPosition` | `Both` | Restricts the strategy to long-only, short-only, or bidirectional trading. |\n| `FastLength` | `12` | Period of the fast EMA within the MACD calculation. |\n| `SlowLength` | `24` | Period of the slow EMA within the MACD calculation. |\n| `SignalLength` | `9` | Period of the signal EMA used for crossover detection. |\n| `TakeProfitPoints` | `50` | Distance to the take-profit level measured in price points (`PriceStep * points`). Set to `0` to disable. |\n| `StopLossPoints` | `20` | Distance to the stop-loss level measured in price points. Set to `0` to disable. |\n| `CandleType` | `TimeFrame(1 minute)` | Candle series used for signal generation. |\n| `Volume` | `1` | Number of lots/contracts sent with each market order. |\n\nAll numeric parameters expose optimization ranges to simplify walk-forward testing within StockSharp Designer or the Runner."
+   }
+  }
+ }
+}

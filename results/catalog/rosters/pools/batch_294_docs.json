@@ -1,0 +1,98 @@
+{
+ "batch_294": {
+  "strategy_ids": [
+   1209,
+   1783,
+   3414,
+   935,
+   157,
+   1907,
+   1442,
+   2074,
+   3339,
+   2386
+  ],
+  "docs": {
+   "1209": {
+    "id": 1209,
+    "name": "Quadratic Regression",
+    "family": "trend",
+    "overview": "This strategy calculates a quadratic regression line for the last `Length` bars and trades on price crossovers with the regression line.\n\n## Details\n\n- **Entry Criteria**: Price crosses above/below quadratic regression line.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 54.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Quadratic Regression\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: Price crosses above/below quadratic regression line.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite crossover.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 54.\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame().\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Quadratic Regression\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "1783": {
+    "id": 1783,
+    "name": "Arrows & Curves",
+    "family": "trend",
+    "overview": "This strategy is a conversion of the MQL5 expert advisor **Exp_Arrows_Curves**.\nIt builds a dynamic price channel using recent highs and lows and reacts to\nbreakouts. The strategy can open or close positions depending on user\npermissions and trend direction.",
+    "details": "",
+    "parameters": "- `SspPeriod` – lookback period for highs and lows.\n- `Channel` – expansion percentage for main channel lines.\n- `StopChannel` – additional percent used for inner stop lines.\n- `CandleType` – candle timeframe.\n- `BuyPosOpen` / `SellPosOpen` – allow opening long/short positions.\n- `BuyPosClose` / `SellPosClose` – allow closing long/short positions."
+   },
+   "3414": {
+    "id": 3414,
+    "name": "ABE BE CCI Engulfing",
+    "family": "trend",
+    "overview": "This StockSharp strategy ports the MetaTrader 5 expert advisor **Expert_ABE_BE_CCI** (folder `MQL/306`). The original EA combines Bullish/Bearish Engulfing candlestick patterns with a Commodity Channel Index (CCI) confirmation module and fixed-lot money management. The C# implementation keeps the same decision logic while leveraging the high-level subscription and indicator bindings provided by StockSharp.\n\nThe engine watches completed candles on the selected timeframe, computes a rolling average of candle bodies, an average of close prices, and a CCI with configurable period. Bullish or bearish engulfing patterns are only accepted when the candle bodies exceed the recent average and the midpoint of the engulfed candle is on the correct side of the moving average, mimicking the MQL `CCandlePattern` checks. Long trades require a bullish engulfing plus CCI below the oversold threshold, while short trades require the mirror condition with CCI above the overbought threshold. Position exits mirror the EA \"vote\" logic: CCI crossings of ±ExitLevel neutralize open positions regardless of direction.\n\n## Workflow\n\n1. Subscribe to the configured candle type and calculate:\n   - Candle body average over `BodyAveragePeriod` bars.\n   - Moving average of close prices over the same window.\n   - Commodity Channel Index with length `CciPeriod`.\n2. For every finished candle:\n   - Verify the previous candle forms an opposite-colored engulfed bar.\n   - Check that the engulfing body is larger than the rolling body average and closes beyond the previous open, replicating the MQL filters.\n   - Confirm trend context by comparing the previous candle midpoint with the close-price moving average.\n   - Confirm momentum with CCI vs. `EntryOversoldLevel` or `EntryOverboughtLevel`.\n3. Manage trades:\n   - If bullish conditions align and no long position is active, close shorts and buy the configured volume.\n   - If bearish conditions align and no short is active, close longs and sell the configured ",
+    "details": "",
+    "parameters": ""
+   },
+   "935": {
+    "id": 935,
+    "name": "IU 4 Bar UP",
+    "family": "trend",
+    "overview": "IU 4 Bar UP Strategy is a long-only approach that buys after four consecutive bullish candles when price is above the SuperTrend indicator.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Four consecutive bullish candles and close above SuperTrend.\n- **Exit Criteria**: Close below SuperTrend.\n- **Stops**: None.\n- **Default Values**:\n  - `SupertrendLength` = 14\n  - `SupertrendMultiplier` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SuperTrend\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Four consecutive bullish candles and close above SuperTrend.\n- **Exit Criteria**: Close below SuperTrend.\n- **Stops**: None.\n- **Default Values**:\n  - `SupertrendLength` = 14\n  - `SupertrendMultiplier` = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SuperTrend\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "157": {
+    "id": 157,
+    "name": "Keltner Volume",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 58%. It performs best in the stocks market.\n\nKeltner Channel boundaries define potential reversals, and increased volume signals conviction. The system trades when price touches a band with volume expanding.\n\nTraders wanting volume confirmation around volatility bands may prefer this setup. Stops are computed from ATR.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < LowerBand && Volume > AvgVolume`\n  - Short: `Close > UpperBand && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price crosses EMA\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `Multiplier` = 2.0m\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < LowerBand && Volume > AvgVolume`\n  - Short: `Close > UpperBand && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price crosses EMA\n- **Stops**: ATR-based using `StopLoss`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `Multiplier` = 2.0m\n  - `VolumeAvgPeriod` = 20\n  - `StopLoss` = new Unit(2, UnitTypes.Absolute)\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1907": {
+    "id": 1907,
+    "name": "MALR Channel Breakout",
+    "family": "trend",
+    "overview": "This strategy trades breakouts of a custom MALR (Moving Average Linear Regression) channel. The MALR indicator combines a simple moving average and a linear weighted moving average to form a central line. Standard deviation of price relative to this line creates two outer bands.\n\nA long position is opened when the upper breakout band crosses below the closing price, indicating an upside breakout. A short position is opened when the lower breakout band crosses above the closing price, signalling a downside breakout.\n\n## Parameters\n\n- `MaPeriod` – period for the moving averages and standard deviation.\n- `ChannelReversal` – width of the inner MALR channel measured in standard deviations.\n- `ChannelBreakout` – additional width for the outer breakout channel.\n- `CandleType` – type of candles used for calculations.\n\n## How It Works\n\n1. Calculate SMA and LWMA of the close price.\n2. Compute the MALR line `FF = 3 * LWMA - 2 * SMA`.\n3. Measure standard deviation of `close - FF` over the same period.\n4. Derive breakout bands: `FF ± StdDev * (ChannelReversal + ChannelBreakout)`.\n5. Enter long when the upper band crosses from above to below the close.\n6. Enter short when the lower band crosses from below to above the close.\n\nThe strategy always closes the opposite position before opening a new one.\n\n",
+    "details": "",
+    "parameters": "- `MaPeriod` – period for the moving averages and standard deviation.\n- `ChannelReversal` – width of the inner MALR channel measured in standard deviations.\n- `ChannelBreakout` – additional width for the outer breakout channel.\n- `CandleType` – type of candles used for calculations."
+   },
+   "1442": {
+    "id": 1442,
+    "name": "TMA",
+    "family": "trend",
+    "overview": "TMA Strategy uses multiple smoothed moving averages and candlestick patterns to trade in the direction of the 200-period trend. It combines 3-line strike and engulfing signals with a session filter.\n\n## Details\n\n- **Entry Criteria**: bullish engulfing or 3-line strike in uptrend / bearish engulfing or 3-line strike in downtrend with EMA(2) above/below SMA(200) and optional session filter\n- **Long/Short**: Both\n- **Exit Criteria**: EMA(2) crossing SMA(200)\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5-minute candles\n  - `FastLength` = 21\n  - `MidLength` = 50\n  - `Mid2Length` = 100\n  - `SlowLength` = 200\n  - `UseSession` = false\n  - `SessionStart` = 08:30\n  - `SessionEnd` = 12:00\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: bullish engulfing or 3-line strike in uptrend / bearish engulfing or 3-line strike in downtrend with EMA(2) above/below SMA(200) and optional session filter\n- **Long/Short**: Both\n- **Exit Criteria**: EMA(2) crossing SMA(200)\n- **Stops**: No\n- **Default Values**:\n  - `CandleType` = 5-minute candles\n  - `FastLength` = 21\n  - `MidLength` = 50\n  - `Mid2Length` = 100\n  - `SlowLength` = 200\n  - `UseSession` = false\n  - `SessionStart` = 08:30\n  - `SessionEnd` = 12:00\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2074": {
+    "id": 2074,
+    "name": "ColorSchaff JJRSX Trend Cycle",
+    "family": "trend",
+    "overview": "This strategy applies the Schaff Trend Cycle oscillator based on JJRSX averages. It opens long or short positions when the oscillator crosses user-defined levels.\n\n## Details\n\n- **Entry Criteria**:\n  - Buy when the Schaff Trend Cycle crosses above `HighLevel`. Any short position is closed first.\n  - Sell when the Schaff Trend Cycle crosses below `LowLevel`. Any long position is closed first.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions close when an opposite entry signal occurs.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast` = 23\n  - `Slow` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60\n",
+    "details": "- **Entry Criteria**:\n  - Buy when the Schaff Trend Cycle crosses above `HighLevel`. Any short position is closed first.\n  - Sell when the Schaff Trend Cycle crosses below `LowLevel`. Any long position is closed first.\n- **Long/Short**: Both.\n- **Exit Criteria**: Positions close when an opposite entry signal occurs.\n- **Stops**: None.\n- **Default Values**:\n  - `Fast` = 23\n  - `Slow` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60",
+    "parameters": ""
+   },
+   "3339": {
+    "id": 3339,
+    "name": "Compass Line",
+    "family": "trend",
+    "overview": "This strategy replicates the CompassLine expert by merging two complementary filters:\n\n* **Follow Line** &mdash; a Bollinger Bands breakout trail optionally shifted by ATR. When price closes outside the bands the trail is extended in the breakout direction and never retreats while the trend persists.\n* **Compass** &mdash; a logistic transform of the median price relative to the highest high and lowest low over the moving-average window. The raw signal is double-smoothed (triangular averaging) to produce a stable bullish/bearish state.\n\nA position is opened only when both filters agree on the trend. Optional time filtering and protective stops mirror the MQL logic.\n\n## Details\n\n- **Entry Criteria**:\n  - Follow Line must point upward (recent close above the upper band) for longs or downward (recent close below the lower band) for shorts. ATR displacement can be toggled with `UseAtrFilter`.\n  - Compass state (based on `CompassPeriod`) must be positive for longs or negative for shorts after the double smoothing phase.\n  - Trading is executed only when the optional session filter (`UseTimeFilter` with `Session` in HHmm-HHmm) allows it.\n- **Long/Short**: Both directions are supported.\n- **Exit Criteria**:\n  - `CloseMode = None` keeps the position until an opposite entry or protective stop occurs.\n  - `CloseMode = BothIndicators` closes when both Follow Line and Compass reverse direction simultaneously.\n  - `CloseMode = FollowLineOnly` exits when Follow Line flips against the position.\n  - `CloseMode = CompassOnly` exits when Compass changes polarity.\n- **Stops**: `TakeProfit` and `StopLoss` distances (in security steps) are applied after every entry when greater than zero.\n- **Default Values**:\n  - `FollowBbPeriod` = 21\n  - `FollowBbDeviation` = 1\n  - `FollowAtrPeriod` = 5\n  - `UseAtrFilter` = false\n  - `CompassPeriod` = 30 (smoothing length = round(CompassPeriod / 3))\n  - `CloseMode` = None\n  - `UseTimeFilter` = false\n  - `Session` = \"0000-2400\"\n  - `TakeProfit` = 0\n  - ",
+    "details": "- **Entry Criteria**:\n  - Follow Line must point upward (recent close above the upper band) for longs or downward (recent close below the lower band) for shorts. ATR displacement can be toggled with `UseAtrFilter`.\n  - Compass state (based on `CompassPeriod`) must be positive for longs or negative for shorts after the double smoothing phase.\n  - Trading is executed only when the optional session filter (`UseTimeFilter` with `Session` in HHmm-HHmm) allows it.\n- **Long/Short**: Both directions are supported.\n- **Exit Criteria**:\n  - `CloseMode = None` keeps the position until an opposite entry or protective stop occurs.\n  - `CloseMode = BothIndicators` closes when both Follow Line and Compass reverse direction simultaneously.\n  - `CloseMode = FollowLineOnly` exits when Follow Line flips against the position.\n  - `CloseMode = CompassOnly` exits when Compass changes polarity.\n- **Stops**: `TakeProfit` and `StopLoss` distances (in security steps) are applied after every entry when greater than zero.\n- **Default Values**:\n  - `FollowBbPeriod` = 21\n  - `FollowBbDeviation` = 1\n  - `FollowAtrPeriod` = 5\n  - `UseAtrFilter` = false\n  - `CompassPeriod` = 30 (smoothing length = round(CompassPeriod / 3))\n  - `CloseMode` = None\n  - `UseTimeFilter` = false\n  - `Session` = \"0000-2400\"\n  - `TakeProfit` = 0\n  - `StopLoss` = 0\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, ATR, Triangular moving average\n  - Stops: Optional\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2386": {
+    "id": 2386,
+    "name": "Triple Stochastic MTF",
+    "family": "trend",
+    "overview": "This strategy runs three Stochastic Oscillators on different timeframes and trades when the smallest timeframe crosses its signal line in the direction confirmed by the higher timeframes. It is designed to capture short-term reversals within a larger trend context.\n\nThe primary timeframe (default 30-minute) and secondary timeframe (default 15-minute) determine the market bias. The entry timeframe (default 5-minute) waits for a %K and %D crossover opposite to the previous bar, signaling a pullback. Positions are closed whenever any of the monitored timeframes signals a trend change against the active trade.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous %K > %D on the 5-minute chart, current %K ≤ %D, and both higher timeframes show %K > %D.\n  - **Short**: Previous %K < %D on the 5-minute chart, current %K ≥ %D, and both higher timeframes show %K < %D.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Any timeframe switches to downtrend (%K < %D).\n  - **Short**: Any timeframe switches to uptrend (%K > %D).\n- **Stops**: Not implemented by default.\n- **Default Values**:\n  - `Timeframe 1` = 30-minute.\n  - `Timeframe 2` = 15-minute.\n  - `Timeframe 3` = 5-minute.\n  - `%K Period` = 5.\n  - `%D Period` = 3.\n  - `Slowing` = 3.\n- **Filters**:\n  - Category: Trend following / Pullback\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous %K > %D on the 5-minute chart, current %K ≤ %D, and both higher timeframes show %K > %D.\n  - **Short**: Previous %K < %D on the 5-minute chart, current %K ≥ %D, and both higher timeframes show %K < %D.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Any timeframe switches to downtrend (%K < %D).\n  - **Short**: Any timeframe switches to uptrend (%K > %D).\n- **Stops**: Not implemented by default.\n- **Default Values**:\n  - `Timeframe 1` = 30-minute.\n  - `Timeframe 2` = 15-minute.\n  - `Timeframe 3` = 5-minute.\n  - `%K Period` = 5.\n  - `%D Period` = 3.\n  - `Slowing` = 3.\n- **Filters**:\n  - Category: Trend following / Pullback\n  - Direction: Both\n  - Indicators: Stochastic Oscillator\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_105": {
+  "strategy_ids": [
+   2932,
+   1180,
+   65,
+   3385,
+   3988,
+   645,
+   3889,
+   2695,
+   3938,
+   596
+  ],
+  "docs": {
+   "2932": {
+    "id": 2932,
+    "name": "ZigZag EA",
+    "family": "trend",
+    "overview": "The strategy replicates the original MT5 \"ZigZag EA\" logic by waiting for three consecutive ZigZag swing points and placing two breakout stop orders around the previous swing range. The conversion uses the StockSharp high level API and works with finished candles. The last two completed swings define a trading corridor, while the most recent swing (\"room 0\" in the MQL version) must remain inside that corridor before the strategy arms itself with pending orders. The approach is symmetrical: it prepares both buy-stop and sell-stop orders and lets the market decide the direction of the breakout.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `CandleType` | Candle series used for analysis. | 1 minute candles |\n| `ZigZagDepth` | Number of candles for swing detection. | 12 |\n| `EntryOffsetPips` | Offset added above/below the corridor. | 5 |\n| `MinCorridorPips` | Minimum corridor height to validate a setup. | 20 |\n| `MaxCorridorPips` | Maximum corridor height allowed. | 100 |\n| `FiboStopLoss` | Fibonacci level used to compute stop-loss distance. | 61.8% |\n| `FiboTakeProfit` | Fibonacci level used for profit target. | 161.8% |\n| `StartHour` / `StartMinute` | Beginning of the trading window. | 00:01 |\n| `StopHour` / `StopMinute` | End of the trading window. | 23:59 |\n| `TrailingStopPips` | Distance used by the trailing stop. | 5 |\n| `TrailingStepPips` | Minimum improvement required to move the trailing stop. | 5 |\n| `DrawCorridorLevels` | If enabled the strategy draws a vertical corridor marker on the chart for reference. | `false` |"
+   },
+   "1180": {
+    "id": 1180,
+    "name": "Precision Trading Strategy: Golden Edge",
+    "family": "trend",
+    "overview": "This scalping strategy for Gold aligns a fast EMA and slow EMA crossover with the direction of a Hull Moving Average. Trades occur only when RSI confirms momentum and volatility is adequate.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA, RSI > 55, HMA rising, volatility filter passes.\n  - **Short**: Fast EMA crosses below slow EMA, RSI < 45, HMA falling, volatility filter passes.\n- **Indicators**: EMA, HMA, RSI, ATR, Highest/Lowest.\n- **Type**: Trend following.\n- **Timeframe**: Short-term.\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA crosses above slow EMA, RSI > 55, HMA rising, volatility filter passes.\n  - **Short**: Fast EMA crosses below slow EMA, RSI < 45, HMA falling, volatility filter passes.\n- **Indicators**: EMA, HMA, RSI, ATR, Highest/Lowest.\n- **Type**: Trend following.\n- **Timeframe**: Short-term.",
+    "parameters": ""
+   },
+   "65": {
+    "id": 65,
+    "name": "Pinbar Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 82%. It performs best in the stocks market.\n\nDuring each candle update the system calculates upper and lower shadows and compares them to the body size. A bullish pinbar with a long lower wick may trigger a long entry if price is above the moving average. Likewise a bearish pinbar with an extended upper tail can initiate a short position in a downtrend. Stops are placed a fixed percentage from entry.\n\nThe trade is closed when an opposite pinbar appears against the open position or the protective stop is reached. Combining the pinbar logic with a trend filter improves reliability by avoiding countertrend setups.\n\n## Details\n\n- **Entry Criteria**: Pinbar with long tail and small opposite shadow, confirmed by trend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite pinbar or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `TailToBodyRatio` = 2\n  - `OppositeTailRatio` = 0.5\n  - `MAPeriod` = 20\n  - `CandleType` = 15 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Pinbar with long tail and small opposite shadow, confirmed by trend.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite pinbar or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `TailToBodyRatio` = 2\n  - `OppositeTailRatio` = 0.5\n  - `MAPeriod` = 20\n  - `CandleType` = 15 minute\n  - `StopLossPercent` = 1\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3385": {
+    "id": 3385,
+    "name": "AbcWsCci",
+    "family": "trend",
+    "overview": "The **AbcWsCci Strategy** combines two classic Japanese candlestick reversal patterns — **Three White Soldiers** and **Three Black Crows** — with the **Commodity Channel Index (CCI)** indicator for confirmation. The system scans finished candles, measures the body size relative to a moving average baseline, and opens trades only when strong multi-candle momentum aligns with CCI extremes. Position exits are triggered when the CCI leaves the extreme zones, signalling that momentum is fading.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `CciPeriod` | Length of the CCI indicator used for confirmation. | 37 |\n| `BodyAveragePeriod` | Number of candles in the moving average that defines the minimum “strong” body size. | 13 |\n| `CandleType` | Candle time frame used for pattern detection. | 1 hour |"
+   },
+   "3988": {
+    "id": 3988,
+    "name": "EMA Cross 2",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor **\"EMA_CROSS_2\"** from the MQL repository. The original EA monitors two exponential moving averages (EMAs) and places market orders whenever the averages swap order. The conversion keeps the contrarian nature of the script – it buys when the long EMA moves above the short EMA and sells when the short EMA rises above the long EMA – while wrapping the logic into the high-level StockSharp strategy infrastructure.\n\nThe strategy operates on completed candles supplied by the configurable candle data type. Signals are evaluated on candle close to avoid repeated triggers inside the same bar. Risk management mimics the MetaTrader behaviour by using take-profit, stop-loss, and trailing stop distances expressed in broker points (price steps).",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle series used for indicator calculations and signal detection. | 15-minute time frame |\n| `OrderVolume` | Volume of each market order in lots/contracts. | 2 |\n| `TakeProfitPoints` | Distance to the take-profit level expressed in broker points (price steps). A value of `0` disables the take-profit. | 20 |\n| `StopLossPoints` | Distance to the stop-loss level expressed in broker points. A value of `0` disables the stop-loss. | 30 |\n| `TrailingStopPoints` | Distance used when trailing the open position. `0` disables the trailing stop. | 50 |\n| `ShortEmaPeriod` | Length of the fast EMA. | 5 |\n| `LongEmaPeriod` | Length of the slow EMA. | 60 |"
+   },
+   "645": {
+    "id": 645,
+    "name": "Cup Finder",
+    "family": "breakout",
+    "overview": "This pattern-based strategy searches for rounded \"cup\" formations in price data. When price breaks out from a completed cup, it enters long or short depending on the direction.\n\nTesting indicates an average annual return of about 47%. It works best on stocks.\n\nThe strategy buys on bullish cup breakouts and sells on bearish inverted cups. Positions are protected by a stop-loss.\n\n## Details\n\n- **Entry Criteria**: Cup pattern forms and price breaks the rim.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price reverses or hits stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Lookback` = 150\n  - `WidthPercent` = 5m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long/Short\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Cup pattern forms and price breaks the rim.\n- **Long/Short**: Both.\n- **Exit Criteria**: Price reverses or hits stop-loss.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Lookback` = 150\n  - `WidthPercent` = 5m\n  - `StopLossPercent` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Long/Short\n  - Indicators: Price Action\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3889": {
+    "id": 3889,
+    "name": "Eugene",
+    "family": "breakout",
+    "overview": "## Summary\n\nThe Eugene Strategy ports the original MetaTrader 4 expert advisor \"Eugene\" to the StockSharp high level API. The algorithm monitors hourly candles by default and looks for breakouts of inside candles that are confirmed by a retracement to a third of the prior candle. Once a breakout is confirmed the strategy enters in the breakout direction and can reverse existing positions when an opposite setup appears.\n\n## Trading Logic\n\n1. **Inside candle detection** – the previous candle must be completely inside the range of the candle before it. Its closing direction determines whether it is classified as a black (bearish) or white (bullish) insider.\n2. **Bird filters** – an inside candle confirmed by another candle of the same color behind it is marked as a \"bird\". Black birds block long trades, white birds block short trades. This mirrors the protective filter from the MQL version.\n3. **Zigzag confirmation levels** – two confirmation prices are computed at one third of the prior candle body or wick:\n   - The long confirmation level is one third below the previous close (body for bullish candles, wick for bearish candles).\n   - The short confirmation level is one third above the previous close (body for bearish candles, wick for bullish candles).\n4. **Session filter** – if the current candle opens at 08:00 or later, confirmations are considered satisfied even without a retracement.\n5. **Breakout condition** – a buy signal requires the current candle to make a higher high than the previous candle while keeping a higher low and overlapping the range of the candle two bars back. A sell signal uses the symmetric conditions with lower lows and lower highs.\n6. **Position management** – before opening a new trade the strategy closes any opposite exposure. Only one long and one short entry can be issued per candle, replicating the `Counter_buy` and `Counter_sell` constraints from the original expert advisor.\n\n## Parameters\n\n| Name | Description | Default |\n| --- | --- ",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Trade Volume` | Order size for market orders. | `0.1` |\n| `Candle Type` | Time frame of the processed candle series. | `1 hour` |"
+   },
+   "2695": {
+    "id": 2695,
+    "name": "Exp BlauCMI",
+    "family": "momentum",
+    "overview": "The strategy recreates the MetaTrader 5 expert advisor **Exp_BlauCMI** using StockSharp's high level API. It computes the Blau Candle Momentum Index (CMI), a triple-smoothed momentum ratio, on a configurable candle series and reacts to swings in the oscillator. Long trades are opened when the indicator turns upward after a downswing, short trades are opened when the indicator turns downward after an upswing. The module keeps the implementation fully event driven – orders are sent only after candles are closed.",
+    "details": "",
+    "parameters": "- `Candle Type` – data type (timeframe or other candle description) used for indicator computation and trading decisions. Default is 4-hour candles.\n- `Smoothing Method` – averaging algorithm shared by all three smoothing stages (Simple, Exponential, Smoothed, Linear Weighted).\n- `Momentum Depth` – number of bars between the two price points that form raw momentum.\n- `First/Second/Third Smoothing` – lengths of the three averaging stages applied to both the momentum and its absolute value.\n- `Signal Shift` – number of already closed candles to look back when evaluating reversal patterns (minimum value is 1).\n- `Momentum Price` – applied price used for the non-delayed leg of the momentum calculation.\n- `Reference Price` – applied price used for the delayed comparison leg.\n- `Allow Long Entry`, `Allow Short Entry` – toggles to permit opening trades in each direction.\n- `Allow Long Exit`, `Allow Short Exit` – toggles controlling whether opposite signals close the respective positions.\n- `Stop-Loss Points`, `Take-Profit Points` – risk limits measured in price steps (`Security.PriceStep`). When set to zero the corresponding bracket is disabled.\n- `Order Volume` – absolute quantity used when sending market orders. The strategy also assigns this value to the base `Strategy.Volume` property."
+   },
+   "3938": {
+    "id": 3938,
+    "name": "GPF TCPivotLimit",
+    "family": "volatility",
+    "overview": "The **GPF TCPivotLimit Strategy** recreates the MetaTrader 4 expert advisor `gpfTCPivotLimit.mq4` inside the StockSharp framework. The system trades on **hourly candles** and reacts to reversals around classic **daily pivot levels**. Every new trading day the strategy calculates the pivot, three resistance levels (R1–R3) and three support levels (S1–S3) from the previous day’s high, low and close. As soon as the next day starts, it evaluates the last two completed hourly candles to decide whether price rejected a resistance or support zone and opens a market order in the opposite direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `BaseVolume` | Base volume submitted with each market order before risk adjustments. | `1` |\n| `UseDynamicVolume` | Reduces the trade size after more than one consecutive loss. | `false` |\n| `RiskPercentage` | Reference risk-per-trade ratio used to scale the base volume (MetaTrader `MaxR`). | `0.02` |\n| `DrawdownFactor` | Divisor applied when shrinking the volume after a losing streak (MetaTrader `DcF`). | `3` |\n| `TargetMode` | Selects the resistance/support combination listed above (MetaTrader `TgtProfit`). | `1` |\n| `TrailingPoints` | Trailing-stop distance expressed in instrument points. Set to `0` to disable. | `30` |\n| `CloseAtSessionEnd` | When `true` all positions are closed on the 23:00 candle close. | `false` |\n| `LogSignals` | Prints pivot values, entries and exits into the strategy log. | `false` |\n| `CandleType` | Candle data type used for analysis (defaults to 1-hour candles). | `TimeFrameCandleMessage(1h)` |"
+   },
+   "596": {
+    "id": 596,
+    "name": "Bollinger Bounce Reversal",
+    "family": "mean_reversion",
+    "overview": "Strategy that captures reversals when price bounces off Bollinger Bands with MACD and volume confirmation. The system limits entries to five trades per day and applies fixed percent stop loss and take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close[1] < LowerBand[1] && Close > LowerBand && MACD > Signal && Volume >= AvgVolume * VolumeFactor`\n  - Short: `Close[1] > UpperBand[1] && Close < UpperBand && MACD < Signal && Volume >= AvgVolume * VolumeFactor`\n- **Long/Short**: Both\n- **Stops**: Percent take profit and stop loss\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BbStdDev` = 2m\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `VolumePeriod` = 20\n  - `VolumeFactor` = 1m\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n  - `MaxTradesPerDay` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Bollinger Bands, MACD, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close[1] < LowerBand[1] && Close > LowerBand && MACD > Signal && Volume >= AvgVolume * VolumeFactor`\n  - Short: `Close[1] > UpperBand[1] && Close < UpperBand && MACD < Signal && Volume >= AvgVolume * VolumeFactor`\n- **Long/Short**: Both\n- **Stops**: Percent take profit and stop loss\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BbStdDev` = 2m\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdSignalLength` = 9\n  - `VolumePeriod` = 20\n  - `VolumeFactor` = 1m\n  - `StopLossPercent` = 2m\n  - `TakeProfitPercent` = 4m\n  - `MaxTradesPerDay` = 5\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Bollinger Bands, MACD, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

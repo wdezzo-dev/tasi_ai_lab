@@ -1,0 +1,98 @@
+{
+ "batch_240": {
+  "strategy_ids": [
+   2804,
+   263,
+   2833,
+   2855,
+   3171,
+   423,
+   2483,
+   1284,
+   854,
+   1807
+  ],
+  "docs": {
+   "2804": {
+    "id": 2804,
+    "name": "ADX Expert",
+    "family": "trend",
+    "overview": "The **ADX Expert Strategy** is a direct conversion of the original MetaTrader 4 expert advisor \"ADX Expert\" (MQL script 20315). The expert looks for crosses between the positive and negative Directional Index (DI) lines while the Average Directional Index (ADX) remains below a specified threshold, indicating that the market is ranging. Only one position can be open at a time, just like in the source expert.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Order size used for every market order. | 0.1 |\n| `AdxPeriod` | Period for ADX calculation. | 14 |\n| `AdxThreshold` | Maximum ADX value that still allows a trade. | 20 |\n| `MaxSpreadPoints` | Maximum allowed spread in price points. Set to 0 to disable the filter. | 20 |\n| `StopLossPoints` | Stop-loss distance in price points. | 200 |\n| `TakeProfitPoints` | Take-profit distance in price points. | 400 |\n| `CandleType` | Candle type for indicator calculations (15-minute candles by default). | 15-minute time frame |"
+   },
+   "263": {
+    "id": 263,
+    "name": "MA Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 124%. It performs best in the forex market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `MaLength` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaLength` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaLength` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2833": {
+    "id": 2833,
+    "name": "EA Moving Average",
+    "family": "trend",
+    "overview": "- Converted from the MetaTrader expert advisor **\"EA Moving Average\"** (barabashkakvn edition).\n- Uses four independent moving averages to control long and short entries and exits.\n- Designed for a single symbol in netting mode. The default candle type is 15‑minute time frame, but any regular candle type can be selected.\n- The strategy opens at most one position at a time. While a position is active, only the exit rules are evaluated.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `MaximumRisk` | `0.02` | Fraction of equity risked per trade. |\n| `DecreaseFactor` | `3` | Lot reduction factor after consecutive losses. Use `0` to disable. |\n| `BuyOpenPeriod` | `30` | Period of the moving average used for long entries. |\n| `BuyOpenShift` | `3` | Forward shift (bars) applied to the long entry moving average. |\n| `BuyOpenMethod` | `Exponential` | Moving average method for long entries (`Simple`, `Exponential`, `Smoothed`, `LinearWeighted`). |\n| `BuyOpenPrice` | `Close` | Price input for the long entry moving average. |\n| `BuyClosePeriod` | `14` | Period of the long exit moving average. |\n| `BuyCloseShift` | `3` | Shift (bars) applied to the long exit moving average. |\n| `BuyCloseMethod` | `Exponential` | Method of the long exit moving average. |\n| `BuyClosePrice` | `Close` | Price input for the long exit moving average. |\n| `SellOpenPeriod` | `30` | Period of the short entry moving average. |\n| `SellOpenShift` | `0` | Shift (bars) applied to the short entry moving average. |\n| `SellOpenMethod` | `Exponential` | Method of the short entry moving average. |\n| `SellOpenPrice` | `Close` | Price input for the short entry moving average. |\n| `SellClosePeriod` | `20` | Period of the short exit moving average. |\n| `SellCloseShift` | `2` | Shift (bars) applied to the short exit moving average. |\n| `SellCloseMethod` | `Exponential` | Method of the short exit moving average. |\n| `SellClosePrice` | `Close` | Price input for the short exit moving average. |\n| `UseBuy` | `true` | Enable or disable long trades. |\n| `UseSell` | `true` | Enable or disable short trades. |\n| `ConsiderPriceLastOut` | `true` | Require price improvement relative to the last exit before re-entering. |\n| `CandleType` | `15m` time frame | Candle series used for calculations. |"
+   },
+   "2855": {
+    "id": 2855,
+    "name": "Neuro Nirvaman",
+    "family": "trend",
+    "overview": "The Neuro Nirvaman strategy is a direct conversion of the MetaTrader 5 expert advisor *NeuroNirvamanEA*. It recreates the perceptron-based decision tree from the original MQL implementation by combining four Laguerre-smoothed positive directional indicators (+DI) with two SilverTrend swing detectors. The strategy works on finished candles and submits market orders with dynamic take-profit and stop-loss levels defined in points. No trailing stop, averaging or pyramiding is applied – only a single position can exist at any moment.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 15-minute time frame | Candle type used for calculations. |\n| `TradeVolume` | `decimal` | 0.1 | Position volume in lots. |\n| `Risk1`, `Risk2` | `int` | 3 / 9 | SilverTrend risk factors defining the width of the channel. |\n| `Laguerre1Period` – `Laguerre4Period` | `int` | 14 | ADX length for each Laguerre smoothing stream. |\n| `Laguerre1Distance` – `Laguerre4Distance` | `decimal` | 0 | Distance in percent (0–100) around the 0.5 threshold that defines the neutral zone. |\n| `X11`, `X12`, `X21`, `X22`, `X31`, `X32` | `decimal` | 100 | Weight coefficients; the MQL code subtracts 100 before applying them. |\n| `TakeProfit1`, `StopLoss1`, `TakeProfit2`, `StopLoss2` | `int` | 100 / 50 | Protective distances expressed in points. |\n| `Pass` | `int` | 3 | Supervisor mode that selects the combination of perceptrons used for trading. |"
+   },
+   "3171": {
+    "id": 3171,
+    "name": "VHF Sliding Windows",
+    "family": "trend",
+    "overview": "- Converted from the MetaTrader 5 expert advisor **\"VHF EA\"** by Vladimir Karputov.\n- Uses the Vertical Horizontal Filter (VHF) indicator to classify the market regime as trending or ranging.\n- Works on any instrument and timeframe supported by StockSharp; simply change the candle type parameter to match the desired chart.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `MainWindowSize` | Number of VHF values in the primary sliding window. | `11` | Must be greater than `WorkingWindowSize`. |\n| `WorkingWindowSize` | Number of VHF values in the secondary window. | `7` | Provides faster confirmation of breakouts. |\n| `VhfPeriod` | Lookback period of the Vertical Horizontal Filter. | `9` | Determines sensitivity of the indicator. |\n| `Volume` | Order volume (lots) used for new entries. | `1` | Added to the absolute current position when flipping direction. |\n| `ReverseSignals` | Invert the long/short logic derived from price direction. | `true` | Matches the default behaviour of the original EA. |\n| `CandleType` | Timeframe and candle type for data subscription. | `15 minute time frame` | Change to adapt the strategy to other charts. |"
+   },
+   "423": {
+    "id": 423,
+    "name": "Flawless Victory",
+    "family": "trend",
+    "overview": "Flawless Victory is a modular momentum system that blends oscillators with Bollinger Bands. Depending on the selected version it can operate with simple RSI signals, apply fixed take-profit and stop-loss targets, or demand confirmation from the Money Flow Index. The goal is to exploit exhaustion at the edges of volatility bands and ride mean-reversion swings.\n\nVersion 1 enters when RSI leaves oversold or overbought zones near the Bollinger extremes. Version 2 adds explicit risk control via percentage based targets. Version 3 requires both RSI and MFI to agree, filtering out weak reversals.\n\nThe strategy performs best on intraday markets with clear volatility boundaries.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: see version rules (RSI <30 near lower band; version 3 also `MFI < 20`)\n  - **Short**: RSI >70 near upper band (version 3 also `MFI > 80`)\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - **Version 1**: opposite RSI signal\n  - **Version 2**: take-profit or stop-loss percentages\n  - **Version 3**: opposite RSI/MFI combo\n- **Stops**: Optional in version 2\n- **Default Values**:\n  - `RSI_length` = 14\n  - `MFI_length` = 14\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `TakeProfitPct` = 1.5\n  - `StopLossPct` = 1.0\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, MFI, Bollinger Bands\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: see version rules (RSI <30 near lower band; version 3 also `MFI < 20`)\n  - **Short**: RSI >70 near upper band (version 3 also `MFI > 80`)\n- **Long/Short**: Both sides\n- **Exit Criteria**:\n  - **Version 1**: opposite RSI signal\n  - **Version 2**: take-profit or stop-loss percentages\n  - **Version 3**: opposite RSI/MFI combo\n- **Stops**: Optional in version 2\n- **Default Values**:\n  - `RSI_length` = 14\n  - `MFI_length` = 14\n  - `BBLength` = 20\n  - `BBMultiplier` = 2.0\n  - `TakeProfitPct` = 1.5\n  - `StopLossPct` = 1.0\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: RSI, MFI, Bollinger Bands\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: Yes\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2483": {
+    "id": 2483,
+    "name": "Gandalf PRO",
+    "family": "trend",
+    "overview": "This strategy replicates the Gandalf PRO expert advisor from MQL. It computes two moving averages (LWMA and SMA) on the candle close\nand feeds them into the original recursive smoothing logic to forecast a future target price. When the projected target moves far\nenough away from the current close (15 price steps or more), the strategy opens a market order and stores stop-loss and take-profit\nlevels derived from the forecast.\n\nLong trades require the smoothed target to be above the current close by at least 15 steps; short trades require the target to be\nbelow the close by the same margin. Stop losses are defined in price steps and converted using the security price step. Take-profit\nlevels are equal to the projected target and are monitored on every finished candle. The risk multipliers rescale the base strategy\nvolume, enabling simple money management rules.\n\n## Parameters\n- Candle Type\n- Enable Buy\n- Buy Length\n- Buy Price Factor\n- Buy Trend Factor\n- Buy Stop Loss\n- Buy Risk Multiplier\n- Enable Sell\n- Sell Length\n- Sell Price Factor\n- Sell Trend Factor\n- Sell Stop Loss\n- Sell Risk Multiplier\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Enable Buy\n- Buy Length\n- Buy Price Factor\n- Buy Trend Factor\n- Buy Stop Loss\n- Buy Risk Multiplier\n- Enable Sell\n- Sell Length\n- Sell Price Factor\n- Sell Trend Factor\n- Sell Stop Loss\n- Sell Risk Multiplier"
+   },
+   "1284": {
+    "id": 1284,
+    "name": "RVI Crossover",
+    "family": "trend",
+    "overview": "The RVI Crossover strategy uses the Relative Vigor Index and a moving average filter.\nIt buys when the RVI crosses above its signal line while price is below the EMA, and sells when the RVI crosses below the signal while price is above the EMA.\n\n## Details\n\n- **Entry Criteria**: RVI crossing its signal line with EMA vs VWMA filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 10\n  - `SignalLength` = 10\n  - `EmaLength` = 31\n  - `VwmaLength` = 1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RVI, SMA, EMA, VWMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RVI crossing its signal line with EMA vs VWMA filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 10\n  - `SignalLength` = 10\n  - `EmaLength` = 31\n  - `VwmaLength` = 1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RVI, SMA, EMA, VWMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "854": {
+    "id": 854,
+    "name": "Golden Transform",
+    "family": "trend",
+    "overview": "This strategy combines the Rate of Change indicator with a triple Hull-based TRIX, a Hull MA filter and a smoothed Fisher Transform. Long trades are opened when ROC crosses above TRIX while TRIX is below zero and the opening price is above the Hull MA. Short trades occur on the opposite signal. Positions are closed on opposite crosses or when the smoothed Fisher exceeds thresholds and reverses.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `ROC crosses above TRIX` && `TRIX < 0` && `Open > Hull MA`\n  - **Short**: `ROC crosses below TRIX` && `TRIX > 0` && `Open < Hull MA`\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Long: `ROC crosses below TRIX` OR (`Fisher HMA > 1.5` && `Fisher HMA crosses below previous Fisher`)\n  - Short: `ROC crosses above TRIX` OR (`Fisher HMA < -1.5` && `Fisher HMA crosses above previous Fisher`)\n- **Stops**: No\n- **Default Values**:\n  - `ROC Length` = 50\n  - `Hull TRIX Length` = 90\n  - `Hull Entry Length` = 65\n  - `Fisher Length` = 50\n  - `Fisher Smooth Length` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ROC, Hull MA, Fisher Transform\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `ROC crosses above TRIX` && `TRIX < 0` && `Open > Hull MA`\n  - **Short**: `ROC crosses below TRIX` && `TRIX > 0` && `Open < Hull MA`\n- **Long/Short**: Long and Short\n- **Exit Criteria**:\n  - Long: `ROC crosses below TRIX` OR (`Fisher HMA > 1.5` && `Fisher HMA crosses below previous Fisher`)\n  - Short: `ROC crosses above TRIX` OR (`Fisher HMA < -1.5` && `Fisher HMA crosses above previous Fisher`)\n- **Stops**: No\n- **Default Values**:\n  - `ROC Length` = 50\n  - `Hull TRIX Length` = 90\n  - `Hull Entry Length` = 65\n  - `Fisher Length` = 50\n  - `Fisher Smooth Length` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: ROC, Hull MA, Fisher Transform\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1807": {
+    "id": 1807,
+    "name": "GO",
+    "family": "trend",
+    "overview": "This strategy calculates a composite **GO** value based on exponential moving averages (EMA) of open, high, low, and close prices multiplied by volume. Trading decisions are made according to the sign and level of the GO value.\n\n## Formula\n\n`GO = ((C - O) + (H - O) + (L - O) + (C - L) + (C - H)) * V`\n\nWhere:\n- `C`, `O`, `H`, `L` – EMA values of Close, Open, High, and Low prices.\n- `V` – volume of the processed candle.\n\n## Trading Rules\n\n- **Open Long**: GO > `OpenLevel`\n- **Open Short**: GO < `-OpenLevel`\n- **Close Long**: GO < (`OpenLevel` - `CloseLevelDiff`)\n- **Close Short**: GO > -(`OpenLevel` - `CloseLevelDiff`)\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `MaPeriod` | EMA period for price smoothing. |\n| `OpenLevel` | GO level to trigger new positions. |\n| `CloseLevelDiff` | Difference between open and close levels. |\n| `ShowGo` | Whether to log GO values. |\n| `CandleType` | Type of candles used for processing. |\n\nThe strategy operates on finished candles and uses market orders for position management.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `MaPeriod` | EMA period for price smoothing. |\n| `OpenLevel` | GO level to trigger new positions. |\n| `CloseLevelDiff` | Difference between open and close levels. |\n| `ShowGo` | Whether to log GO values. |\n| `CandleType` | Type of candles used for processing. |\n\nThe strategy operates on finished candles and uses market orders for position management."
+   }
+  }
+ }
+}

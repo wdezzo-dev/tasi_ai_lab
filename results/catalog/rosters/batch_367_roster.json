@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 362,
+      "name": "Crypto Rebalancing Premium",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 29,
+      "name": "MA Deviation",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 1258,
+      "name": "RSI & ADX Long Short",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 14",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 10",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 2919,
+      "name": "Virtual Trailing Stop Level1",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 525,
+      "name": "AO Divergence",
+      "family": "trend",
+      "entry_long": "close > ema(close,34)",
+      "exit_long": "close < ema(close,34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 5/34; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2051,
+      "name": "Trend Catcher",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,50))",
+      "exit_long": "crossbelow(close,ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is approximated by a moving-average crossover because SAR is not available in the local DSL."
+    },
+    {
+      "id": 544,
+      "name": "Backtesting Module",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,50),sma(close,200))",
+      "exit_long": "crossbelow(sma(close,50),sma(close,200))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 50/200; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1575,
+      "name": "Zero Lag MACD + Kijun-sen + EOM",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 1944,
+      "name": "Anchored Momentum",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30))",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 412,
+      "name": "Bollinger Aroon",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    }
+  ]
+}

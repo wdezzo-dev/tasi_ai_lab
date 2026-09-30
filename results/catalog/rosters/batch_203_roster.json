@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2140,
+      "name": "Volatility Quality",
+      "family": "trend",
+      "entry_long": "crossbelow(roc(sma((high + low) / 2,10),1),0)",
+      "exit_long": "crossabove(roc(sma((high + low) / 2,10),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Volatility Quality color is approximated by the slope of SMA(10) of the median price (High+Low)/2, and the documented up-to-down colour switch opens the long while the reverse switch closes it. Length has no documented value, so 10 is a fallback, and the docs' fixed stop/target distances have no numbers."
+    },
+    {
+      "id": 3014,
+      "name": "ASCV BrainTrend Signal",
+      "family": "trend",
+      "entry_long": "roc(ema(close,7),1) > atr(high,low,close,14) / 2.3 and rsi(close,12) > 53",
+      "exit_long": "roc(ema(close,7),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "JmaLength=7 becomes EMA(7), AtrPeriod=14 and the documented ATR/2.3 threshold and 53 long level are kept, with stochastic %K proxied by RSI(12) because no stochastic is whitelisted. Stops, take profit and trailing are documented in pips (15/46) and are not percentage fields."
+    },
+    {
+      "id": 3929,
+      "name": "Forex Profit System",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high + low) / 2,10),ema((high + low) / 2,50)) and ema((high + low) / 2,10) > ema((high + low) / 2,25) and roc(ema((high + low) / 2,10),1) > 0",
+      "exit_long": "crossbelow(ema((high + low) / 2,10),ema((high + low) / 2,50)) or roc(ema((high + low) / 2,10),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All three EMAs (10/25/50) are documented and are fed the median price as in the original; the rising fast average stands in for the Parabolic SAR bullish mode, which the DSL lacks. The default parameter table is truncated in the docs, so the asymmetric stops, trailing stop and early-exit profit trigger are not encoded."
+    },
+    {
+      "id": 318,
+      "name": "Williams R Momentum",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),30) and roc(close,14) > 0",
+      "exit_long": "crossbelow(rsi(close,14),70) or roc(close,14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "WilliamsRPeriod=14 and MomentumPeriod=14 are documented, with the -80/-20 zones mapped to RSI 30/70 since Williams %R is not whitelisted, and MomentumPeriod becomes the 14-bar ROC confirmation. ATR-multiple stops are dynamic price distances and are not percentage fields."
+    },
+    {
+      "id": 4060,
+      "name": "Multi Time-Frame Regression",
+      "family": "trend",
+      "entry_long": "low <= bb_lower(close,50,2) and roc(sma(close,50),1) > 0",
+      "exit_long": "close >= bb_mid(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The M1/M5/H1 linear regression channels are collapsed onto one series: SMA(50) plus/minus 2 standard deviations stands in for the channel bands and the rising centre line for the positive H1 slope. The documented BarsToCount=50 is used; channel-derived stop and target widths are not percentages."
+    },
+    {
+      "id": 3040,
+      "name": "Exp Skyscraper Fix Duplex",
+      "family": "volatility",
+      "entry_long": "crossabove(close,sma(close,20) + atr(high,low,close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Skyscraper Fix channel is approximated by a 20-bar average plus a one-ATR band and the mirror cross at the average; LongKv/Length/Percentage/SignalBar have no documented values, so 20/ATR(20) are fallbacks. The independent short side and the per-side toggles are dropped for a long-only test."
+    },
+    {
+      "id": 80,
+      "name": "Pivot Point Reversal",
+      "family": "mean_reversion",
+      "entry_long": "close > open and low <= donchian_low_prev(low,10)",
+      "exit_long": "close >= bb_mid(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Daily S1/R1 pivots cannot be recomputed inside the DSL, so support is approximated by the prior 10-bar low and the central pivot exit by the 20-bar Bollinger middle. The bullish-candle test and StopLossPercent=2 are documented and retained; session/seasonality reset is not expressible."
+    },
+    {
+      "id": 565,
+      "name": "Bias And Sentiment Strength",
+      "family": "trend",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) > 50 and volume_ratio(volume,30) > 1 and sma(close,5) > sma(close,34)",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented components (MACD 12/26/9, RSI 14, Awesome 5/34, volume bias 30) are expressed as a conjunction standing in for a positive aggregate bias, with volume_ratio(volume,30) replacing the volume bias term. Stochastic 21/14/14 and Alligator components are not whitelisted, and StopLossPercent has no documented value."
+    },
+    {
+      "id": 1758,
+      "name": "Autostop Cyriac",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state entry criteria none: it only attaches absolute-price take profit and stop loss via StartProtection to positions opened manually or elsewhere. With no market-derived signal the never-true guard is used, and the price-unit distances are not percentage fields."
+    },
+    {
+      "id": 545,
+      "name": "Backward Number of Bars",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy trades only while the candle time is inside the last Bar count=50 bars from the start time, which is a pure time window with no indicators. The DSL exposes no time or bar-index field, so the never-true guard is used."
+    }
+  ]
+}

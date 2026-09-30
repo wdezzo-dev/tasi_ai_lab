@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1246,
+      "name": "Responsive Linear Regression Channels",
+      "family": "trend",
+      "entry_long": "close > sma(close,100) and low < sma(close,20) - 2 * std(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Least-squares regression channels are not in the DSL, so the regression line is approximated by SMA(close) and the bands by a two-standard-deviation envelope, with the trend test taken from a long SMA(100) because the timeframe-adaptive lookback has no documented value. Exit is price returning to the mid channel; channel-width position sizing is unsupported."
+    },
+    {
+      "id": 2706,
+      "name": "OsMaSter V0",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,9,26), macd_signal(close,9,26,5)) and roc(close,5) < 3",
+      "exit_long": "crossbelow(macd(close,9,26), macd_signal(close,9,26,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented FastPeriod=9, SlowPeriod=26, SignalPeriod=5 are used directly and the MACD histogram reversal is taken as a cross of the MACD line over its smoothed signal; the short consolidation is approximated by a five-bar move under 3%. StopLossPips=30 and TakeProfitPips=50 are pip distances, not percentages, so both stop fields are null."
+    },
+    {
+      "id": 2426,
+      "name": "Fractal RSI",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,30),40)",
+      "exit_long": "crossabove(rsi(close,30),60)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fractal-dimension adaptive length is not available, so the documented FractalPeriod/NormalSpeed of 30 is used as a plain RSI(30) with the documented LowLevel=40 and HighLevel=60 crossings in Trend Mode - Direct (buy on the cross below 40, exit on the opposite cross above 60). The Against mode and optional StopLoss=1000 / TakeProfit=2000 points are not percentages, so stops are null."
+    },
+    {
+      "id": 3497,
+      "name": "More Orders After BreakEven (StockSharp Port)",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are ticket-count driven: the EA keeps buying while fewer than MaximumOrders=1 long trades lack break-even protection, so there is no market-derived entry signal to translate. Marked non-trading; per-order stop raising at BreakEvenPips=10, TakeProfitPips=100, StopLossPips=200 and tick-level bid checks are not expressible here."
+    },
+    {
+      "id": 3520,
+      "name": "Fast Slow RVI Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close - open,10), ema(close - open,20))",
+      "exit_long": "crossbelow(ema(close - open,10), ema(close - open,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Relative Vigor Index is approximated by EMAs of the close-open momentum line, using 10/20 as explicit defaults because the RVI Period has no documented value. The session window, one-trade-per-candle rule and the pip-based stop, take-profit and trailing distances are unsupported, so both stop fields are null."
+    },
+    {
+      "id": 679,
+      "name": "Divergence for Many Indicators v4",
+      "family": "momentum",
+      "entry_long": "low < donchian_low_prev(low,10) and roc(rsi(close,14),3) > 0 and roc(macd(close,12,26),3) > 0",
+      "exit_long": "high > donchian_high_prev(high,10) and roc(rsi(close,14),3) < 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "Price making a new 10-bar low while its oscillators climb over three bars approximates positive divergence, and the documented two confirmations are satisfied with the two indicators the DSL offers (RSI and MACD); Stochastic, CCI, Momentum, OBV and MFI are unavailable and the 10-bar lookback is an explicit default. The documented 2% stop-loss and 4% take-profit are used directly as percentages."
+    },
+    {
+      "id": 4217,
+      "name": "CCIT3 Zero Cross",
+      "family": "volatility",
+      "entry_long": "crossabove(ema(close - open,60),0)",
+      "exit_long": "crossbelow(ema(close - open,60),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI and Tillson T3 smoothing are unavailable, so the zero-line flip is approximated by a cross of an EMA of the close-open momentum using the documented T3 Period=60; CCI Period=285 and the T3 volume factor 0.618 are dropped. The documented Take Profit of 1750 points with a zero stop-loss are point distances, not percentages, so both stop fields are null."
+    },
+    {
+      "id": 4099,
+      "name": "ARD Order Management Stochastic",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and rsi(close,14) < 50",
+      "exit_long": "crossabove(rsi(close,14),70) or crossbelow(rsi(close,14),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is not in the DSL, so the oversold reversal that triggers the long side is approximated with RSI(14) crossing up from 30 and still below 50; StochasticPeriod, SignalPeriod, SlowingPeriod and Buy/SellThreshold have no documented values. The close-before-reverse routine, per-candle trailing modify offsets and pip-based protection are unsupported, so stops are null."
+    },
+    {
+      "id": 1973,
+      "name": "Angrybird xScalpingn",
+      "family": "volume",
+      "entry_long": "close > open and rsi(close,14) > 30 and rsi(close,14) < 70",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Only the initial long trade is expressible: it follows the recent close direction with the documented RsiMinimum=30 / RsiMaximum=70 filter, and the martingale averaging legs (LotExponent=2, Depth=24, Del=3, MaxTrades=10) are dropped since the engine holds a single position. CCI reversal is unavailable so the exit is a down close, and TakeProfit=20 / StopLoss=500 are pip-style distances rather than percentages, so stops are null."
+    },
+    {
+      "id": 1881,
+      "name": "Genie Pivot Fixed",
+      "family": "volume",
+      "entry_long": "roc(low,7) > 0 and low < donchian_low_prev(low,1) and close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The seven-bar monotonic run cannot be written in the DSL, so the rising-low leg is approximated by the bar low being above its level seven bars ago, while Low[1] < Low[0] and High[1] < Close[0] are kept as prior-bar comparisons. The documented exit is a trailing stop of 200 and take-profit of 500 in absolute price units, which are not percentages, so both stop fields are null."
+    }
+  ]
+}

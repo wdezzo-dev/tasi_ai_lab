@@ -1,0 +1,98 @@
+{
+ "batch_309": {
+  "strategy_ids": [
+   2450,
+   327,
+   467,
+   1001,
+   3097,
+   2279,
+   1534,
+   3244,
+   3660,
+   2155
+  ],
+  "docs": {
+   "2450": {
+    "id": 2450,
+    "name": "Trend Alexcud",
+    "family": "trend",
+    "overview": "The Trend Alexcud strategy searches for strong directional movement by aligning multiple simple moving averages and the Accelerator Oscillator across three timeframes. It was converted from the original MQL5 expert \"TREND_alexcud v_2\".\n\nThe system watches three timeframes (default 15 minutes, 1 hour, 4 hours). On each timeframe it computes five simple moving averages (periods 5, 8, 13, 21, 34) and the Accelerator Oscillator. A timeframe is considered bullish when the closing price is above all moving averages and the Accelerator is positive. A timeframe is bearish when the closing price is below all moving averages and the Accelerator is negative.\n\nA trade is opened only when all three timeframes agree. If they are simultaneously bullish the strategy buys, while a common bearish reading triggers a sell. The position is reversed whenever the opposite signal appears. Protective orders are managed through StockSharp's built-in risk system.\n\n## Details\n\n- **Entry Criteria**\n  - **Long**: Price above all MAs and Accelerator > 0 on each timeframe.\n  - **Short**: Price below all MAs and Accelerator < 0 on each timeframe.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position reverses when the opposite signal forms.\n- **Stops**: Uses built-in protection (no default values).\n- **Default Values**:\n  - Timeframe1 = 15m, Timeframe2 = 1h, Timeframe3 = 4h\n  - MA periods = 5, 8, 13, 21, 34\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**\n  - **Long**: Price above all MAs and Accelerator > 0 on each timeframe.\n  - **Short**: Price below all MAs and Accelerator < 0 on each timeframe.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Position reverses when the opposite signal forms.\n- **Stops**: Uses built-in protection (no default values).\n- **Default Values**:\n  - Timeframe1 = 15m, Timeframe2 = 1h, Timeframe3 = 4h\n  - MA periods = 5, 8, 13, 21, 34\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "327": {
+    "id": 327,
+    "name": "Parabolic SAR Hurst Filter",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 82%. It performs best in the stocks market.\n\nSignals trigger when Parabolic confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like SarAccelerationFactor, SarMaxAccelerationFactor. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SarAccelerationFactor = 0.02m`\n  - `SarMaxAccelerationFactor = 0.2m`\n  - `HurstPeriod = 100`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic, Hurst\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SarAccelerationFactor = 0.02m`\n  - `SarMaxAccelerationFactor = 0.2m`\n  - `HurstPeriod = 100`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Parabolic, Hurst\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "467": {
+    "id": 467,
+    "name": "2Mars OKX",
+    "family": "trend",
+    "overview": "This strategy combines a moving-average crossover with a SuperTrend filter. Bollinger Bands provide profit targets while an ATR-based stop loss limits risk.\n\n## Rules\n- **Long**: Signal EMA crosses above basis EMA and price is above SuperTrend.\n- **Short**: Signal EMA crosses below basis EMA and price is below SuperTrend.\n- **Exit**: Take profit at Bollinger upper or lower band, or stop loss at ATR multiplied by a factor.\n\n## Indicators\n- EMA\n- SuperTrend\n- Bollinger Bands\n- Average True Range\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1001": {
+    "id": 1001,
+    "name": "Lux Clara EMA + VWAP",
+    "family": "trend",
+    "overview": "The Lux Clara EMA + VWAP strategy trades the crossover of a fast and slow EMA, filtered by VWAP and a time window. A long position is opened when the fast EMA crosses above the slow EMA while the slow EMA is above the VWAP during the session. A short position is opened on the opposite conditions. Positions are closed when the EMAs cross in the opposite direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA, slow EMA above VWAP, and current time within session.\n  - Short: fast EMA crosses below slow EMA, slow EMA below VWAP, and current time within session.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite EMA cross.\n- **Stops**: None.\n- **Default Values**:\n  - `FastEmaLength` = 8\n  - `SlowEmaLength` = 50\n  - `StartTime` = 07:30\n  - `EndTime` = 14:30\n  - `CandleType` = 5-minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA, VWAP\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**:\n  - Fast EMA crosses above slow EMA, slow EMA above VWAP, and current time within session.\n  - Short: fast EMA crosses below slow EMA, slow EMA below VWAP, and current time within session.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite EMA cross.\n- **Stops**: None.\n- **Default Values**:\n  - `FastEmaLength` = 8\n  - `SlowEmaLength` = 50\n  - `StartTime` = 07:30\n  - `EndTime` = 14:30\n  - `CandleType` = 5-minute\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA, VWAP\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "3097": {
+    "id": 3097,
+    "name": "Fluctuate",
+    "family": "trend",
+    "overview": "The **Fluctuate Strategy** is a StockSharp port of the MetaTrader expert advisor \"Fluctuate\". It reproduces the original grid-like behaviour using the high-level API: a candle subscription drives all decisions, market entries are performed with `BuyMarket` / `SellMarket`, and recovery orders are placed with stop orders. Long and short exposure are tracked separately to mimic the hedging-style position accounting used in MetaTrader, while the actual StockSharp position remains netted.\n\n## Core idea\n\n1. Every time a new candle closes, the strategy compares the last two close prices. A higher close opens a market buy, a lower close opens a market sell. If both closes are equal the bar is ignored.\n2. Each filled position receives a fixed stop-loss and take-profit (expressed in pips). The strategy also records the exact fill price and the net volume added by the trade.\n3. After an entry, an **opposite** stop order is armed `StepPips` away from the last fill (plus a small spread buffer). Its volume is derived from the previous trade and the `LotCoefficient`, optionally using the cumulative exposure when `MultiplyLotCoefficient = true`.\n4. When the stop order triggers, it cancels the previous pending order, updates the internal exposure statistics and immediately schedules a new recovery stop order in the other direction. This reproduces the averaging / martingale loop present in the MQL implementation.\n5. Trailing protection raises (or lowers) the stop once price moves at least `TrailingStopPips + TrailingStepPips` in favour of the position. This emulates the original EA which required an extra profit buffer before tightening the stop.\n\n## Trading workflow\n\n- **Signal detection.** The candle feed is subscribed via `SubscribeCandles`. Only finished candles are processed. The strategy refuses to trade outside the `[StartHour, EndHour)` time window or when the equity guard is triggered.\n- **Initial position sizing.** Depending on `PositionSizingMode` the first trade in a seq",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Primary timeframe used for signal detection. | 1-minute time frame |\n| `StopLossPips` | Distance between entry price and stop-loss (pips). `0` disables the stop. | 50 |\n| `TakeProfitPips` | Distance between entry price and take-profit (pips). `0` disables the take-profit. | 50 |\n| `TrailingStopPips` | Trailing stop distance (pips). Requires `TrailingStepPips > 0`. | 5 |\n| `TrailingStepPips` | Additional profit needed before the trailing stop advances (pips). | 5 |\n| `StepPips` | Distance between the last fill and the opposite recovery stop (pips). | 30 |\n| `LotCoefficient` | Multiplier applied to the previous volume (or total exposure). | 2.0 |\n| `MultiplyLotCoefficient` | When `true`, the new order volume is computed from the total exposure instead of the last trade. | `false` |\n| `MaxPositions` | Maximum number of simultaneous open sides plus the active pending order. | 9 |\n| `MaxTotalVolume` | Cap for the sum of open volume and the recovery order volume. | 50 |\n| `ProfitTarget` | Unrealised profit (in account currency) that triggers a full exit. `0` disables the target. | 50 |\n| `MinEquityPercent` | Minimum equity percentage (vs. starting balance) required to keep trading. Below this threshold only exits are allowed. | 30 |\n| `CloseAllAtStart` | Close all positions and cancel orders when the strategy starts. | `false` |\n| `StartHour` | Trading window start hour (inclusive, exchange time). | 10 |\n| `EndHour` | Trading window end hour (exclusive, exchange time). | 20 |\n| `PositionSizingMode` | `FixedVolume` for static lots, `RiskPercent` for percent-of-equity sizing. | `FixedVolume` |\n| `VolumeOrRisk` | Fixed lot size (when `FixedVolume`) or risk percentage (when `RiskPercent`). | 1.0 |"
+   },
+   "2279": {
+    "id": 2279,
+    "name": "ColorJFatl Digit",
+    "family": "trend",
+    "overview": "This strategy uses the slope direction of a Jurik Moving Average (JMA) to generate trades. The JMA approximates the \"ColorJFatl_Digit\" indicator from the original MQL5 expert. A long position is opened when the JMA turns upward, while a short position is opened when the JMA turns downward. Opposite positions are closed when the slope reverses.\n\nThe system trades both directions and does not employ hard stops by default. It suits instruments where trend changes can be captured by a smooth adaptive moving average.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: JMA slope changes from negative to positive.\n  - **Short**: JMA slope changes from positive to negative.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: JMA slope turns negative.\n  - **Short**: JMA slope turns positive.\n- **Stops**: None by default.\n- **Default Values**:\n  - `JMA Length` = 5\n  - `Timeframe` = 4 hours\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: JMA slope changes from negative to positive.\n  - **Short**: JMA slope changes from positive to negative.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: JMA slope turns negative.\n  - **Short**: JMA slope turns positive.\n- **Stops**: None by default.\n- **Default Values**:\n  - `JMA Length` = 5\n  - `Timeframe` = 4 hours\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1534": {
+    "id": 1534,
+    "name": "Volume and Volatility Ratio Indicator WODI",
+    "family": "trend",
+    "overview": "Simplified strategy derived from the TradingView script **\"Volume and Volatility Ratio Indicator - WODI\"**. It monitors the product of volume and price volatility to spot potential reversals. When the volatility index exceeds a dynamic threshold and the recent candles show a change in direction, the strategy opens a position with Fibonacci-based risk management.\n\n## Details\n\n- **Entry**: High volume and volatility together with candle reversal pattern.\n- **Exit**: Stop loss and take profit calculated from candle range and Fibonacci multipliers.\n- **Long/Short**: Both.\n- **Timeframe**: Any.\n- **Indicators**: SMA.\n\nThis is a simplified educational port. Original TradingView logic is reduced.\n",
+    "details": "- **Entry**: High volume and volatility together with candle reversal pattern.\n- **Exit**: Stop loss and take profit calculated from candle range and Fibonacci multipliers.\n- **Long/Short**: Both.\n- **Timeframe**: Any.\n- **Indicators**: SMA.\n\nThis is a simplified educational port. Original TradingView logic is reduced.",
+    "parameters": ""
+   },
+   "3244": {
+    "id": 3244,
+    "name": "Grr AL Breakout",
+    "family": "trend",
+    "overview": "The **Grr AL Breakout Strategy** is a direct port of the MetaTrader expert advisor `grr-al.mq5`. It observes the first price reached at the beginning of every candle and waits for the market to move a configurable distance away from that anchor level. When the movement exceeds the threshold, the strategy fires exactly one trade for that candle, optionally reversing existing exposure.\n\nThe StockSharp implementation keeps the behaviour of the original timer-driven robot but translates it to the high-level candle subscription model. Each new candle snapshot provides the initial reference price, while subsequent updates of the same candle supply the latest close that is used as the live market price. The approach recreates the tick-by-tick breakout detection without relying on low-level event processing.",
+    "details": "",
+    "parameters": "- `Volume` – base volume (in contracts) used when `RiskFraction` equals zero. Matches the `BASELOT` constant from the MQL version.\n- `RiskFraction` – value between 0 and 1. If greater than zero, the strategy caps the order size by multiplying the broker maximum volume by this fraction and uses the smaller value between that cap and `Volume`.\n- `DeltaPoints` – number of instrument points that price must move away from the candle open to trigger a trade. Equivalent to the `DELTA` constant.\n- `StopLossPoints` – protective stop distance in points. Zero disables the stop, just like the `SL` constant being zero in MQL.\n- `TakeProfitPoints` – take-profit distance in points. Zero disables the target and replicates the `TP` constant behaviour.\n- `CandleType` – StockSharp candle descriptor that defines the timeframe for anchoring and monitoring breakouts. By default it uses five-minute time frame but can be changed to any supported period."
+   },
+   "3660": {
+    "id": 3660,
+    "name": "Breakout",
+    "family": "trend",
+    "overview": "The Breakout Strategy is a Donchian-channel breakout system converted from the original MetaTrader 5 expert advisor `BreakoutStrategy.mq5`. On each completed bar the strategy monitors the highest high and lowest low over a configurable lookback window and enters trades once price breaks through those boundaries. Open positions are protected by a trailing channel derived from a second Donchian calculation, mirroring the trailing logic used in the source expert.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Data type describing the candle series used by the strategy. The default is 1-hour candles. |\n| `EntryPeriod` | Lookback window for the breakout channel. |\n| `EntryShift` | Number of completed bars used as an offset when evaluating the channel. `1` reproduces the original EA behaviour. |\n| `ExitPeriod` | Lookback window for the trailing exit channel. |\n| `ExitShift` | Offset in bars applied to the trailing channel. |\n| `UseMiddleLine` | When enabled, the Donchian middle line participates in the trailing stop calculation, matching the MQL5 option. |\n| `RiskPerTrade` | Fraction of portfolio equity risked per trade (e.g. `0.01` for 1%). |"
+   },
+   "2155": {
+    "id": 2155,
+    "name": "Loco",
+    "family": "trend",
+    "overview": "This strategy implements the \"Loco\" indicator originally written in MQL5. The indicator analyzes candle prices and assigns a color (green or magenta). A change in color signals a trend reversal.\n\n## Logic\n- The indicator computes a series using a configurable price (close by default) and a lookback length.\n- When the color switches from magenta to green, the strategy closes any short position and opens a long position.\n- When the color switches from green to magenta, the strategy closes any long position and opens a short position.\n\n## Parameters\n- **Candle Type** – type of candles used in the strategy.\n- **Length** – number of bars for comparing price.\n- **Price Type** – price used in indicator calculation.\n\n## Notes\nThe strategy uses a custom implementation of the Loco indicator. Implementations are available in both C# and Python.\n",
+    "details": "",
+    "parameters": "- **Candle Type** – type of candles used in the strategy.\n- **Length** – number of bars for comparing price.\n- **Price Type** – price used in indicator calculation."
+   }
+  }
+ }
+}

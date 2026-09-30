@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1151,
+      "name": "Overnight Positioning with EMA",
+      "family": "trend",
+      "entry_long": "close > ema(close,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) is an explicit fallback because no period is supplied, and a close above it is the long filter; crossing below exits. Market-session clocks and weekend handling are unavailable."
+    },
+    {
+      "id": 2875,
+      "name": "Previous Candle Breakdown",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,1) and sma(close,20) > sma(close,50)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior candle high/low are represented by shifted Donchian levels, with SMA(20)/SMA(50) as fallback trend filters because no values are supplied. Indents, MA shifts/types, pip protection, and higher-timeframe anchoring are omitted."
+    },
+    {
+      "id": 3802,
+      "name": "BollTrade Bollinger Reversion",
+      "family": "trend",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "crossabove(close,bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented lower-band long reversion is translated with Bollinger(20,2), using a middle-band recross as exit. Band offset, pip protection, volume scaling, and the upper-band short branch are unavailable."
+    },
+    {
+      "id": 1450,
+      "name": "Trading Tools Library",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10),sma(close,30)) and rsi(close,14) < 60",
+      "exit_long": "crossbelow(sma(close,10),sma(close,30)) or rsi(close,14) > 40",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented SMA(10)/SMA(30) cross and RSI(14) 60/40 filters are retained; the reverse signal is the long exit. The three-bar cooldown and short side are state/direction features not represented here."
+    },
+    {
+      "id": 2568,
+      "name": "Double MA Crossover Breakout",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20),sma(close,50)) and close > donchian_high_prev(high,20)",
+      "exit_long": "crossbelow(sma(close,20),sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20)/SMA(50) are explicit fallbacks for the unnamed fast/slow periods, and the prior 20-bar high break supplies the required confirmation. Pip protection, trailing modes, session limits, and the short side are unsupported."
+    },
+    {
+      "id": 1698,
+      "name": "TCPivot Stop",
+      "family": "breakout",
+      "entry_long": "crossabove(close,sma(close,20))",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(20) is a rolling pivot proxy because previous-day high/low/close and time fields are unavailable; its bullish and bearish crosses provide entry and exit. Classical support/resistance targets, 23:00 close, and stops are omitted."
+    },
+    {
+      "id": 3890,
+      "name": "ASCPlusPlus",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and atr(high,low,close,10) < sma(atr(high,low,close,10),20)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior ten-bar high break during below-average ATR(10) approximates the narrow-range breakout; the opposite range break exits. Williams %R, confirmation counters, stop-order offsets, and point-based protection are unavailable."
+    },
+    {
+      "id": 2320,
+      "name": "cm RSI",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) with 30/70 levels is an explicit fallback because the period and levels are not supplied; an upward cross enters and the opposite cross exits. Point-based protection, short entries, and the original RSI price source are omitted."
+    },
+    {
+      "id": 3291,
+      "name": "Target EA Manager",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only manages floating PnL and pending orders and explicitly opens no trades. An impossible negative-price guard preserves that behavior instead of inventing a signal."
+    },
+    {
+      "id": 2366,
+      "name": "Delta WPR",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) > 50 and rsi(close,14) > rsi(close,30)",
+      "exit_long": "rsi(close,14) < rsi(close,30) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is unavailable; RSI(14) versus RSI(30) and the documented -50 regime are mapped to a positive oscillator regime proxy. The short side, exact WPR scaling, and 4-hour resampling are omitted."
+    }
+  ]
+}

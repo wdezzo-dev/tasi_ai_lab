@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3851,
+      "name": "Firebird MA Envelope Exhaustion",
+      "family": "trend",
+      "entry_long": "close < sma(open,10) * (1 - 0.003)",
+      "exit_long": "close > sma(open,10) * (1 + 0.003)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented MaLength 10 and Percent 0.3 are used on candle opens, which matches the UseHighLow false default, and the long entry is a close piercing the lower envelope with the mirrored upper-envelope close as exit. Averaging-in beyond PipStep 30, the blocking flag and the shared 30/200-pip stop and target are grid-style and not expressible."
+    },
+    {
+      "id": 2085,
+      "name": "Rijfie Pyramid",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14), 30)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The stochastic is approximated by RSI(14) crossing above the low level, with 30 a fallback because the documented StochasticLowLevel has no value. Pyramiding each fixed-percent price drop, the EMA filter period, the minimum and maximum price guards and the close-time timer are dropped or left as fallbacks."
+    },
+    {
+      "id": 3322,
+      "name": "Auto Trading Publish",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The utility only flips an AutoTradingActive flag when the StartHour or StopHour is reached and deliberately submits no market orders. A clock-driven gate with no price-derived signal cannot be translated."
+    },
+    {
+      "id": 1012,
+      "name": "MACD Volume BBO Reversal",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,11,21),0) and ema(volume,6) > ema(volume,12) and macd(close,11,21) > macd_signal(close,11,21,10)",
+      "exit_long": "crossbelow(macd(close,11,21),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented defaults are used verbatim: VolumeShortLength 6 against VolumeLongLength 12 for the positive volume oscillator and MACD 11/21/10. The recent-low stop and the RiskReward 1.5 target are absolute price distances in the DSL sense, not percentages."
+    },
+    {
+      "id": 3953,
+      "name": "ZigAndZag Trader",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and (5 * close + 2 * open + high + low) / 9 > donchian_low_prev(low, 20) * 1.01",
+      "exit_long": "close < sma(close,20) and close < donchian_low_prev(low, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented weighted price is kept exactly, while the stateful ZigZag pivots and trend buffer are replaced by 20-bar Donchian swing levels and a 20-period trend average; the documented 1 pip break is scaled to 1 percent. TrendDepth 3, ExitDepth 3, the pip stop/target and the MaxOrders cap are not expressible."
+    },
+    {
+      "id": 1543,
+      "name": "Vortex MTF",
+      "family": "other",
+      "entry_long": "crossabove(ema(high - sma(high,2),14), ema(sma(low,2) - low,14))",
+      "exit_long": "crossbelow(ema(high - sma(high,2),14), ema(sma(low,2) - low,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Vortex is not in the DSL, so the plus and minus directional movements are rebuilt from the one-bar high and low changes, where 2 times SMA(2) minus the current value recovers the previous bar, and smoothed over 14 bars. True-range normalisation and the configurable higher timeframe are dropped."
+    },
+    {
+      "id": 863,
+      "name": "Grim Slash",
+      "family": "other",
+      "entry_long": "low <= 2 * sma(close,2) - close",
+      "exit_long": "high >= 2 * sma(high,2) - high",
+      "stop_loss_pct": 5.0,
+      "take_profit_pct": 15.0,
+      "notes": "The previous close and previous high are recovered exactly as 2 times SMA(2) minus the current value, so the documented touch of the previous close enters and the touch of the previous high exits. The documented TakeProfitPercent 15 and StopLossPercent 5 are used as-is."
+    },
+    {
+      "id": 1404,
+      "name": "Adaptive Oscillator Threshold",
+      "family": "other",
+      "entry_long": "rsi(close,2) < 14",
+      "exit_long": "bars_since(rsi(close,2) < 14) > 28",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fixed BuyLevel 14 with RsiLength 2 is used for the entry, and the ExitBars 28 fixed-bar exit is expressed as bars elapsed since the last trigger. The Bufs adaptive threshold branch, AdaptiveLength 8, AdaptiveCoefficient 6 and the DollarStopLoss of 1600 are not expressible in the DSL."
+    },
+    {
+      "id": 866,
+      "name": "Gauge",
+      "family": "other",
+      "entry_long": "donchian_high(high,20) - donchian_low(low,20) > 0 and (close - donchian_low(low,20)) / (donchian_high(high,20) - donchian_low(low,20)) > 0.75",
+      "exit_long": "donchian_high(high,20) - donchian_low(low,20) > 0 and (close - donchian_low(low,20)) / (donchian_high(high,20) - donchian_low(low,20)) < 0.25",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 75 percent and 25 percent thresholds are kept, but the user-supplied Min 0 and Max 100 price bounds are replaced by a 20-bar Donchian range so the gauge is meaningful on any instrument; 20 is a fallback as no period is documented. The zero-range guard is explicit and the docs state there are no stops."
+    },
+    {
+      "id": 1145,
+      "name": "Order Block Finder",
+      "family": "other",
+      "entry_long": "crossabove(close, sma(close,3)) and roc(close,1) > 1",
+      "exit_long": "crossbelow(close, sma(close,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish order block becomes a close reclaiming the short average after a run of down candles, with the confirming impulse scaled by 1 percent; Relevant Periods, Min Percent Move and Use Whole Range carry no values, so 3 bars and 1 percent are fallbacks. Open-based block boundaries and higher-timeframe confirmation are not represented."
+    }
+  ]
+}

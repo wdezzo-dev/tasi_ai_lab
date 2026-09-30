@@ -1,0 +1,98 @@
+{
+ "batch_146": {
+  "strategy_ids": [
+   1851,
+   2565,
+   843,
+   1748,
+   3260,
+   2872,
+   3134,
+   1555,
+   2921,
+   1723
+  ],
+  "docs": {
+   "1851": {
+    "id": 1851,
+    "name": "Channel Trailing Stop",
+    "family": "trend",
+    "overview": "Strategy using Donchian channel breakout entries and trailing stop management.\n\nThe system opens trades when price closes outside the channel. A trailing stop tracks the opposite side of the channel plus offset. Optional \"noose\" trailing keeps stop loss at equal distance from current price to take profit. Pending orders can be cleared after fills.\n\n## Details\n\n- **Entry Criteria**: Close outside channel range.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing stop or opposite signal.\n- **Stops**: Trailing stop, optional noose.\n- **Default Values**:\n  - `TrailPeriod` = 5\n  - `TrailStop` = 50\n  - `UseNooseTrailing` = true\n  - `UseChannelTrailing` = true\n  - `DeletePendingOrders` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close outside channel range.\n- **Long/Short**: Both.\n- **Exit Criteria**: Trailing stop or opposite signal.\n- **Stops**: Trailing stop, optional noose.\n- **Default Values**:\n  - `TrailPeriod` = 5\n  - `TrailStop` = 50\n  - `UseNooseTrailing` = true\n  - `UseChannelTrailing` = true\n  - `DeletePendingOrders` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2565": {
+    "id": 2565,
+    "name": "Renko Line Break vs RSI",
+    "family": "trend",
+    "overview": "This strategy recreates the \"RenkoLineBreak vs RSI\" MetaTrader expert using the StockSharp high level API. It combines Renko trend detection with an RSI pullback filter and executes trades through pending stop orders located around a three-candle price structure.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Renko trend stays bullish and the RSI falls to or below `50 - RsiShift`. A buy stop is placed at the high of the candle from three bars ago plus `IndentFromHighLow`.\n  - **Short**: Renko trend stays bearish and the RSI rises to or above `50 + RsiShift`. A sell stop is placed at the low of the candle from three bars ago minus `IndentFromHighLow`.\n  - Pending orders are cancelled whenever the Renko trend switches direction (`ToUp` / `ToDown`).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Market exits when the opposite Renko transition appears (`ToDown` for longs, `ToUp` for shorts).\n  - RSI crosses back through the midpoint (`50 ± RsiShift`).\n  - Candle ranges hitting the planned stop-loss or take-profit levels.\n- **Stops**:\n  - Stop-loss is anchored to the extreme of the last three candles plus `IndentFromHighLow`.\n  - Take-profit is `TakeProfit` price units away from the intended entry (optional when set to zero).\n- **Default Values**:\n  - `BoxSize` = 500m.\n  - `RsiPeriod` = 4.\n  - `RsiShift` = 20m.\n  - `TakeProfit` = 1000m.\n  - `IndentFromHighLow` = 50m.\n  - `Volume` = 1m.\n  - `CandleType` = 5-minute time frame.\n- **Filters**:\n  - Category: Trend Following.\n  - Direction: Both.\n  - Indicators: Renko, RSI.\n  - Stops: Hard stop & take profit.\n  - Complexity: Intermediate.\n  - Timeframe: Hybrid (Renko + time candles).\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Moderate.\n\n## How It Works\n\n1. A Renko subscription (`RenkoCandleMessage`) estimates the trend direction. When a Renko brick flips direction, the trend state is set to `ToUp` or `ToDown` for one bar to mimic the original indicator behaviour.\n2. Simultaneously, a ",
+    "details": "- **Entry Criteria**:\n  - **Long**: Renko trend stays bullish and the RSI falls to or below `50 - RsiShift`. A buy stop is placed at the high of the candle from three bars ago plus `IndentFromHighLow`.\n  - **Short**: Renko trend stays bearish and the RSI rises to or above `50 + RsiShift`. A sell stop is placed at the low of the candle from three bars ago minus `IndentFromHighLow`.\n  - Pending orders are cancelled whenever the Renko trend switches direction (`ToUp` / `ToDown`).\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Market exits when the opposite Renko transition appears (`ToDown` for longs, `ToUp` for shorts).\n  - RSI crosses back through the midpoint (`50 ± RsiShift`).\n  - Candle ranges hitting the planned stop-loss or take-profit levels.\n- **Stops**:\n  - Stop-loss is anchored to the extreme of the last three candles plus `IndentFromHighLow`.\n  - Take-profit is `TakeProfit` price units away from the intended entry (optional when set to zero).\n- **Default Values**:\n  - `BoxSize` = 500m.\n  - `RsiPeriod` = 4.\n  - `RsiShift` = 20m.\n  - `TakeProfit` = 1000m.\n  - `IndentFromHighLow` = 50m.\n  - `Volume` = 1m.\n  - `CandleType` = 5-minute time frame.\n- **Filters**:\n  - Category: Trend Following.\n  - Direction: Both.\n  - Indicators: Renko, RSI.\n  - Stops: Hard stop & take profit.\n  - Complexity: Intermediate.\n  - Timeframe: Hybrid (Renko + time candles).\n  - Seasonality: No.\n  - Neural networks: No.\n  - Divergence: No.\n  - Risk level: Moderate.",
+    "parameters": ""
+   },
+   "843": {
+    "id": 843,
+    "name": "Gold & EUR/USD Liquidity Grab",
+    "family": "trend",
+    "overview": "This strategy detects liquidity grabs at supply and demand zones on Gold and EUR/USD using RSI, SMA, Stochastic Oscillator and ATR-based fair value gaps.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price wicks below the recent low, market structure shifts up, fair value gap occurs, RSI oversold, price above SMA, Stochastic oversold.\n  - **Short**: Price wicks above the recent high, market structure shifts down, fair value gap occurs, RSI overbought, price below SMA, Stochastic overbought.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `MaLength` = 50\n  - `StochLength` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `StochOverbought` = 80\n  - `StochOversold` = 20\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: RSI, SMA, Stochastic, ATR, Highest, Lowest\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price wicks below the recent low, market structure shifts up, fair value gap occurs, RSI oversold, price above SMA, Stochastic oversold.\n  - **Short**: Price wicks above the recent high, market structure shifts down, fair value gap occurs, RSI overbought, price below SMA, Stochastic overbought.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: No.\n- **Default Values**:\n  - `RsiLength` = 14\n  - `MaLength` = 50\n  - `StochLength` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `StochOverbought` = 80\n  - `StochOversold` = 20\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: RSI, SMA, Stochastic, ATR, Highest, Lowest\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1748": {
+    "id": 1748,
+    "name": "EM VOL",
+    "family": "trend",
+    "overview": "This strategy trades breakouts around pivot-based support and resistance levels.\nIt calculates yesterday's high and low plus an ATR buffer to form entry triggers.\nTrades are only placed when the ADX indicator signals a low volatility environment.\n\n## Logic\n\n1. Compute the previous bar's pivot and add/subtract ATR to obtain resistance and support.\n2. If ADX is below the threshold and price closes above resistance, enter a long position.\n3. If price closes below support, enter a short position.\n4. After entry, protective stop and take-profit orders are placed.\n5. A trailing stop can tighten the protective stop once profit reaches the specified level.\n\n## Parameters\n\n- `TakeProfit` — take-profit distance in price steps.\n- `StopLoss` — stop-loss distance in price steps.\n- `AtrPeriod` — ATR indicator period.\n- `AdxPeriod` — ADX indicator period.\n- `AdxThreshold` — maximum ADX value to allow trading.\n- `TrailStart` — profit required before trailing stop begins.\n- `TrailStep` — distance of the trailing stop.\n- `CandleType` — timeframe used for calculations.\n\n## Indicators Used\n\n- Average True Range\n- Average Directional Index\n",
+    "details": "",
+    "parameters": "- `TakeProfit` — take-profit distance in price steps.\n- `StopLoss` — stop-loss distance in price steps.\n- `AtrPeriod` — ATR indicator period.\n- `AdxPeriod` — ADX indicator period.\n- `AdxThreshold` — maximum ADX value to allow trading.\n- `TrailStart` — profit required before trailing stop begins.\n- `TrailStep` — distance of the trailing stop.\n- `CandleType` — timeframe used for calculations."
+   },
+   "3260": {
+    "id": 3260,
+    "name": "Fibo Arc Momentum",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor \"FiboArc\" (folder `MQL/24924`). The original EA combines\nmultiple momentum filters with Fibonacci arc breakouts. The StockSharp implementation keeps the same idea while adapting it to\nthe high-level candle API:\n\n* Two linear weighted moving averages (`FastMaPeriod`, `SlowMaPeriod`) define the trend direction.\n* A momentum oscillator measured against the neutral 100 level filters out weak setups.\n* A MACD histogram confirms trend strength and detects fresh crossovers.\n* A simplified Fibonacci arc is rebuilt every bar using the open prices of two anchor candles selected by\n  `TrendAnchorLength` and `ArcAnchorLength`. A breakout through this dynamic level replaces the object-based checks from the\n  MetaTrader version.\n\nThe strategy works on any symbol/timeframe pair supported by StockSharp. All calculations run on fully finished candles to\nmirror the EA behaviour and avoid lookahead bias.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Timeframe (and aggregation type) used for all calculations. |\n| `FastMaPeriod`, `SlowMaPeriod` | Trend-defining LWMA lengths. |\n| `MomentumPeriod`, `MomentumThreshold` | Momentum filter settings. |\n| `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` | MACD configuration. |\n| `TrendAnchorLength`, `ArcAnchorLength`, `FibonacciRatio` | Fibonacci arc reconstruction controls. |\n| `StopLossDistance`, `TakeProfitDistance` | Initial stop and target distances (absolute price units). |\n| `EnableBreakEven`, `BreakEvenTrigger`, `BreakEvenOffset` | Break-even logic. |\n| `EnableTrailing`, `TrailingTrigger`, `TrailingDistance` | Trailing stop configuration. |\n\nAll parameters are exposed through `StrategyParam<T>` and support optimization where it makes sense. Default values follow the\noriginal EA."
+   },
+   "2872": {
+    "id": 2872,
+    "name": "Trading Boxing",
+    "family": "momentum",
+    "overview": "Trading Boxing Strategy recreates the manual order management panel from the original TradingBoxing expert advisor. Instead of on-chart buttons the StockSharp version exposes parameters that can be toggled from the strategy UI or automation. Each toggle immediately performs the requested action and then resets itself, giving you a convenient control surface for market entries, pending order placement and existing position cleanup.\n\nThe strategy does not rely on indicator logic or market data events. It simply coordinates order submission and cancellation for the security and portfolio assigned to the strategy instance.",
+    "details": "",
+    "parameters": "### Volume configuration\n- `BuyVolume` – quantity used when the *Open Buy Market* action is triggered. Must be positive.\n- `SellVolume` – quantity used when the *Open Sell Market* action is triggered. Must be positive.\n- `BuyStopVolume` – quantity for new buy stop orders.\n- `BuyLimitVolume` – quantity for new buy limit orders.\n- `SellStopVolume` – quantity for new sell stop orders.\n- `SellLimitVolume` – quantity for new sell limit orders.\n\n### Price configuration\n- `BuyStopPrice` – activation price for buy stop orders.\n- `BuyLimitPrice` – price for buy limit orders.\n- `SellStopPrice` – activation price for sell stop orders.\n- `SellLimitPrice` – price for sell limit orders.\n\n### Action toggles\nAll action parameters are boolean switches. Setting a switch to `true` performs the corresponding task and the strategy sets it back to `false` in the same processing cycle.\n\n- `CloseBuyPositions` – closes the current long exposure (if `Position > 0`).\n- `CloseSellPositions` – closes the current short exposure (if `Position < 0`).\n- `DeleteBuyStops` – cancels tracked buy stop orders.\n- `DeleteBuyLimits` – cancels tracked buy limit orders.\n- `DeleteSellStops` – cancels tracked sell stop orders.\n- `DeleteSellLimits` – cancels tracked sell limit orders.\n- `OpenBuyMarket` – sends a market buy order using `BuyVolume`.\n- `OpenSellMarket` – sends a market sell order using `SellVolume`.\n- `PlaceBuyStop` – registers a new buy stop order at `BuyStopPrice` with `BuyStopVolume` and stores it for later cancellation.\n- `PlaceBuyLimit` – registers a new buy limit order at `BuyLimitPrice` with `BuyLimitVolume` and stores it for later cancellation.\n- `PlaceSellStop` – registers a new sell stop order at `SellStopPrice` with `SellStopVolume` and stores it for later cancellation.\n- `PlaceSellLimit` – registers a new sell limit order at `SellLimitPrice` with `SellLimitVolume` and stores it for later cancellation."
+   },
+   "3134": {
+    "id": 3134,
+    "name": "Open Close",
+    "family": "volatility",
+    "overview": "Open Close is a port of the MetaTrader 5 expert advisor `Open Close.mq5` (ticket 23090). The strategy observes the relationship between the opens and closes of the two most recent finished candles. It trades a single position at a time: when the newer candle reverses relative to the previous one the strategy enters, and when both candles point in the same direction it exits. The C# version reproduces the original adaptive lot sizing that reduces exposure after a streak of losing trades.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `MaximumRiskPercent` | `decimal` | `0.02` | Fraction of portfolio value used to size a new position (0.02 = 2%). |\n| `DecreaseFactor` | `decimal` | `3` | Divisor applied to the lot size after consecutive losing trades. Larger values soften the reduction. |\n| `HistoryDays` | `int` | `60` | Number of calendar days scanned when counting the latest losing streak. |\n| `FallbackVolume` | `decimal` | `0.1` | Order volume used whenever the risk-based calculation cannot be performed. |\n| `CandleType` | `DataType` | `TimeFrame(15m)` | Candle series that provides the open/close values for signal generation. |"
+   },
+   "1555": {
+    "id": 1555,
+    "name": "Weighted Harrell-Davis Quantile Estimator with AbsoluteDeviation",
+    "family": "mean_reversion",
+    "overview": "Strategy uses a median-based quantile estimator with absolute deviation bands to detect price outliers.\nIt buys when the close drops below the lower band and sells when the close rises above the upper band.\n\n## Details\n\n- **Entry Criteria**: close below lower deviation band or above upper band\n- **Long/Short**: Both\n- **Exit Criteria**: opposite band cross\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 39\n  - `DeviationMultiplier` = 1.213\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Median\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: close below lower deviation band or above upper band\n- **Long/Short**: Both\n- **Exit Criteria**: opposite band cross\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 39\n  - `DeviationMultiplier` = 1.213\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Median\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2921": {
+    "id": 2921,
+    "name": "Simple Pivot",
+    "family": "volume",
+    "overview": "- **Market regime**: Always-in-the-market swing trading.\n- **Instruments**: Any instrument that provides candle data for the selected timeframe.\n- **Timeframes**: Configurable through the *Candle Type* parameter (default 1-hour candles).\n- **Orders**: Market orders sized by the *Volume* parameter.",
+    "details": "",
+    "parameters": "- **Volume**: Trade size used for every entry. It also determines the size of the closing order when the strategy flips\n  direction.\n- **Candle Type**: Data type of the candles used for pivot and entry calculations. The default is a 1-hour time frame but any\n  available time frame can be selected."
+   },
+   "1723": {
+    "id": 1723,
+    "name": "Candle Trader",
+    "family": "volume",
+    "overview": "The **Candle Trader Strategy** analyses the direction (bullish or bearish) of the last four completed candles to identify short‑term reversal opportunities. It operates on a single instrument and sends market orders with predefined take‑profit and stop‑loss levels.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `Volume` | Order volume for each trade. |\n| `TakeProfitTicks` | Take‑profit distance in price steps. |\n| `StopLossTicks` | Stop‑loss distance in price steps. |\n| `Continuation` | Enables the continuation patterns for additional entries. |\n| `ReverseClose` | Closes an open position before entering the opposite direction. |\n| `CandleType` | Candle timeframe used for analysis. |"
+   }
+  }
+ }
+}

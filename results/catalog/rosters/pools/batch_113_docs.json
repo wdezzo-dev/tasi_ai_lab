@@ -1,0 +1,98 @@
+{
+ "batch_113": {
+  "strategy_ids": [
+   188,
+   1105,
+   2372,
+   2334,
+   3873,
+   562,
+   2382,
+   1401,
+   3072,
+   2484
+  ],
+  "docs": {
+   "188": {
+    "id": 188,
+    "name": "Parabolic Sar Volume",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 151%. It performs best in the stocks market.\n\nParabolic SAR identifies trend shifts, and higher volume validates the signal. Trades commence when the SAR flip comes with expanding volume.\n\nUseful for traders who track volume-based moves. The SAR trail and an ATR factor guard against big losses.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > SAR && Volume > AvgVolume`\n  - Short: `Close < SAR && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**: SAR flip\n- **Stops**: Uses Parabolic SAR as trailing stop\n- **Default Values**:\n  - `Acceleration` = 0.02m\n  - `MaxAcceleration` = 0.2m\n  - `VolumePeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Parabolic SAR, Parabolic SAR, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > SAR && Volume > AvgVolume`\n  - Short: `Close < SAR && Volume > AvgVolume`\n- **Long/Short**: Both\n- **Exit Criteria**: SAR flip\n- **Stops**: Uses Parabolic SAR as trailing stop\n- **Default Values**:\n  - `Acceleration` = 0.02m\n  - `MaxAcceleration` = 0.2m\n  - `VolumePeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Parabolic SAR, Parabolic SAR, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1105": {
+    "id": 1105,
+    "name": "MultiLayer Acceleration Deceleration",
+    "family": "trend",
+    "overview": "This strategy layers up to five long entries using the Acceleration/Deceleration oscillator. A new buy stop is placed above the bar's high each time momentum builds in the direction of the trend identified by fractals and the Alligator teeth. When the oscillator weakens or the trend reverses, all pending orders are cancelled and the position is closed.\n\n## Details\n\n- **Entry Criteria**:\n  - Uptrend confirmed when price breaks an up fractal above the Alligator teeth.\n  - AC oscillator prints a green bar pattern and the close is above the EMA filter.\n  - Up to five stop orders are placed at the activation level.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trend flips to down.\n  - Oscillator turns negative.\n- **Stops**: Uses fractal-based stop loss.\n- **Default Values**:\n  - `EMA Length` = 100.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Uptrend confirmed when price breaks an up fractal above the Alligator teeth.\n  - AC oscillator prints a green bar pattern and the close is above the EMA filter.\n  - Up to five stop orders are placed at the activation level.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trend flips to down.\n  - Oscillator turns negative.\n- **Stops**: Uses fractal-based stop loss.\n- **Default Values**:\n  - `EMA Length` = 100.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Complex\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2372": {
+    "id": 2372,
+    "name": "Bollinger Bands with DEMA",
+    "family": "trend",
+    "overview": "This strategy combines Bollinger Bands calculated on 30-minute candles with a Double Exponential Moving Average (DEMA) from daily data to trade breakouts with trend confirmation.\n\nA long setup occurs when a bullish candle crosses above the lower Bollinger Band while the DEMA is rising, confirming upward momentum. A short setup occurs when a bearish candle crosses below the upper Bollinger Band while the DEMA is falling. Positions are closed when an opposite colored candle crosses the outer band against the trade.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Candle closes above the lower band and opens below it AND daily DEMA is increasing for three consecutive days.\n  - **Short**: Candle closes below the upper band and opens above it AND daily DEMA is decreasing for three consecutive days.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: Bearish candle closes below the upper band after opening above it.\n  - **Short**: Bullish candle closes above the lower band after opening below it.\n- **Stops**: None.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `DemaPeriod` = 20\n  - `Deviation` = 2\n  - `CandleType` = 30-minute timeframe\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, DEMA\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Intraday with daily trend filter\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Candle closes above the lower band and opens below it AND daily DEMA is increasing for three consecutive days.\n  - **Short**: Candle closes below the upper band and opens above it AND daily DEMA is decreasing for three consecutive days.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: Bearish candle closes below the upper band after opening above it.\n  - **Short**: Bullish candle closes above the lower band after opening below it.\n- **Stops**: None.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `DemaPeriod` = 20\n  - `Deviation` = 2\n  - `CandleType` = 30-minute timeframe\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, DEMA\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Intraday with daily trend filter\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2334": {
+    "id": 2334,
+    "name": "RVI Diff Reversal",
+    "family": "trend",
+    "overview": "The strategy trades based on the smoothed difference between the Relative Vigor Index (RVI) and its signal line.\nIt detects points where this difference stops falling and begins to rise to enter long, and vice versa for short positions.\n\n## Details\n\n- **Entry Criteria**: Slope reversal of the smoothed RVI difference\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 12\n  - `SmoothingLength` = 13\n  - `CandleType` = 6-hour candles\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RVI, SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 6H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Slope reversal of the smoothed RVI difference\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `RviLength` = 12\n  - `SmoothingLength` = 13\n  - `CandleType` = 6-hour candles\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RVI, SMA, EMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: 6H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3873": {
+    "id": 3873,
+    "name": "Trade Channel",
+    "family": "trend",
+    "overview": "Trade Channel is a channel-reversion strategy converted from the MetaTrader \"TradeChannel\" expert advisor. The system draws a price channel from the highest high and lowest low over a configurable number of completed candles. When the channel stops expanding and price retests one of its borders, the strategy opens a position in the opposite direction, expecting a reversion back inside the range.\n\n### Core ideas\n- Use the **Highest** and **Lowest** indicators to form a Donchian-like channel.\n- Require the channel to be flat (no new highs or lows) before opening a trade.\n- Fade the touch of resistance with short positions and the touch of support with long positions.\n- Place the initial protective stop one Average True Range (ATR) away from the breakout point.\n- Optionally trail the stop once the trade moves in favour of the position.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimization |\n| --- | --- | --- | --- |\n| `Volume` | Trade volume in lots/contracts. | 1 | Enabled (0.1 → 2.0, step 0.1) |\n| `ChannelLength` | Number of finished candles used to compute channel boundaries. | 20 | Enabled (10 → 60, step 5) |\n| `AtrPeriod` | Period of the ATR indicator for stop placement. | 4 | Enabled (2 → 20, step 2) |\n| `TrailingPoints` | Trailing stop offset measured in instrument price steps. Set to `0` to disable trailing. | 30 | Enabled (0 → 100, step 10) |\n| `CandleType` | Candle type and timeframe used for calculations. | 30-minute time frame | — |"
+   },
+   "562": {
+    "id": 562,
+    "name": "Berlin Candles",
+    "family": "breakout",
+    "overview": "Strategy using custom Berlin candles derived from smoothed Heikin Ashi values. A long position is opened when a bullish Berlin candle closes above the Donchian baseline. A short position is opened when a bearish Berlin candle closes below the baseline.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Berlin close > Berlin open and Berlin close > baseline.\n  - **Short**: Berlin close < Berlin open and Berlin close < baseline.\n- **Long/Short**: Both\n- **Stops**: None by default\n- **Default Values**:\n  - `Smoothing` = 1\n  - `BaselinePeriod` = 26\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Berlin close > Berlin open and Berlin close > baseline.\n  - **Short**: Berlin close < Berlin open and Berlin close < baseline.\n- **Long/Short**: Both\n- **Stops**: None by default\n- **Default Values**:\n  - `Smoothing` = 1\n  - `BaselinePeriod` = 26\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()",
+    "parameters": ""
+   },
+   "2382": {
+    "id": 2382,
+    "name": "Regression Channel Breakout",
+    "family": "breakout",
+    "overview": "This strategy implements a regression channel trading system based on the MQL script `e-Regr`.\nIt builds a linear regression line over a configurable number of recent candles and\nadds upper and lower bands at a specified standard deviation distance. Trading rules:\n\n- **Long Entry:** when the candle low touches or breaks below the lower band.\n- **Short Entry:** when the candle high touches or breaks above the upper band.\n- **Exit:** when the closing price crosses the regression line in the opposite direction.\n- **Trailing Stop:** optional trailing logic moves the stop level after the trade\n  has reached a configured profit.\n\n## Parameters\n\n| Name            | Description                                                     |\n|-----------------|-----------------------------------------------------------------|\n| `CandleType`    | Candle type used for calculations.                              |\n| `Length`        | Number of candles for regression and standard deviation.        |\n| `Deviation`     | Standard deviation multiplier for channel width.                |\n| `UseTrailing`   | Enables trailing stop logic.                                    |\n| `TrailingStart` | Profit required before trailing starts.                         |\n| `TrailingStep`  | Distance between price and trailing stop.                       |\n\nThe strategy uses the high-level StockSharp API via `SubscribeCandles` and `Bind`\nmethods to receive candle data and indicator values.\n",
+    "details": "",
+    "parameters": "| Name            | Description                                                     |\n|-----------------|-----------------------------------------------------------------|\n| `CandleType`    | Candle type used for calculations.                              |\n| `Length`        | Number of candles for regression and standard deviation.        |\n| `Deviation`     | Standard deviation multiplier for channel width.                |\n| `UseTrailing`   | Enables trailing stop logic.                                    |\n| `TrailingStart` | Profit required before trailing starts.                         |\n| `TrailingStep`  | Distance between price and trailing stop.                       |\n\nThe strategy uses the high-level StockSharp API via `SubscribeCandles` and `Bind`\nmethods to receive candle data and indicator values."
+   },
+   "1401": {
+    "id": 1401,
+    "name": "Gap Momentum System",
+    "family": "momentum",
+    "overview": "Implements the gap momentum system from Perry Kaufman. The strategy compares accumulated up and down gaps and trades when the signal rises or falls.\n\n## Details\n- **Entry Criteria**: Rising signal -> buy, falling signal -> sell or reverse.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Period` = 40\n  - `SignalPeriod` = 20\n  - `LongOnly` = true\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both or long only\n  - Indicators: Gap momentum\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Rising signal -> buy, falling signal -> sell or reverse.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Period` = 40\n  - `SignalPeriod` = 20\n  - `LongOnly` = true\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both or long only\n  - Indicators: Gap momentum\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3072": {
+    "id": 3072,
+    "name": "ColorMetroDuplexStrategy",
+    "family": "volatility",
+    "overview": "`ColorMetroDuplexStrategy` is a C# conversion of the MetaTrader 5 expert **Exp_ColorMETRO_Duplex**. The original robot uses two independent instances of the ColorMETRO indicator to manage long and short trading modules. Each module operates on its own candle subscription, evaluates two stepped RSI envelopes produced by the ColorMETRO indicator, and optionally opens or closes positions when the fast and slow envelopes cross.\n\nThe StockSharp version keeps both modules and reproduces the same signal evaluation rules while using the high-level API for candle subscriptions, order management and indicator binding. A custom `ColorMetroIndicator` is included to mimic the MT5 iCustom implementation, exposing the fast and slow ColorMETRO bands together with the inner RSI value.",
+    "details": "",
+    "parameters": "Each module exposes a dedicated parameter group. Defaults mirror the MT5 expert.\n\n### Shared market parameters\n\n- **Long_Volume**, **Short_Volume** — trade size (lots) used for new entries.\n- **Long_OpenAllowed**, **Short_OpenAllowed** — enable or disable opening trades for the module.\n- **Long_CloseAllowed**, **Short_CloseAllowed** — enable or disable automatic exits.\n- **Long_MarginMode**, **Short_MarginMode** — money-management mode kept for compatibility (no effect in this port).\n- **Long_StopLoss**, **Long_TakeProfit**, **Long_Deviation**, **Short_StopLoss**, **Short_TakeProfit**, **Short_Deviation** — reserved for documentation; stops and slippage control are not automated in this version.\n- **Long_Magic**, **Short_Magic** — original MT5 magic numbers preserved for reference.\n\n### Indicator parameters\n\n- **Long_CandleType**, **Short_CandleType** — timeframe for each ColorMETRO module.\n- **Long_PeriodRSI**, **Short_PeriodRSI** — RSI length used inside the ColorMETRO algorithm.\n- **Long_StepSizeFast**, **Short_StepSizeFast** — step (in RSI points) for the fast envelope.\n- **Long_StepSizeSlow**, **Short_StepSizeSlow** — step for the slow envelope.\n- **Long_SignalBar**, **Short_SignalBar** — bar shift used when reading the indicator buffers (identical to the MT5 `SignalBar` input).\n- **Long_AppliedPrice**, **Short_AppliedPrice** — price source for RSI calculation (close price by default)."
+   },
+   "2484": {
+    "id": 2484,
+    "name": "Puncher",
+    "family": "mean_reversion",
+    "overview": "- Converted from the MetaTrader 5 expert advisor \"The Puncher\".\n- Uses a long-period Stochastic oscillator combined with RSI to identify exhaustion zones.\n- Trades only when the current candle is closed, following the StockSharp high level API approach.\n- Applies protective stop-loss, take-profit, break-even and trailing stop logic to manage risk.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `StochasticPeriod` | 100 | Base period for the Stochastic oscillator. |\n| `StochasticSignalPeriod` | 3 | Smoothing period applied to the %K line. |\n| `StochasticSmoothingPeriod` | 3 | Smoothing period applied to the %D line. |\n| `RsiPeriod` | 14 | RSI calculation length. |\n| `OversoldLevel` | 30 | Threshold shared by Stochastic and RSI to detect oversold zones. |\n| `OverboughtLevel` | 70 | Threshold shared by Stochastic and RSI to detect overbought zones. |\n| `StopLossPips` | 20 | Stop-loss distance in pips (0 disables stop-loss). |\n| `TakeProfitPips` | 50 | Take-profit distance in pips (0 disables take-profit). |\n| `TrailingStopPips` | 10 | Trailing stop distance in pips (0 disables trailing). |\n| `TrailingStepPips` | 5 | Minimum favorable move in pips required before the trailing stop is tightened again. |\n| `BreakEvenPips` | 21 | Profit in pips required before the stop is moved to break-even (0 disables). |\n| `CandleType` | 5 minute time-frame | Candle type used for calculations. |\n| `Volume` | Strategy property | Order size used for entries (set via strategy `Volume`). |\n\n> **Pip handling**: pip-based parameters are converted to absolute prices using `Security.PriceStep`. Adjust `Security.PriceStep` for the instrument you trade."
+   }
+  }
+ }
+}

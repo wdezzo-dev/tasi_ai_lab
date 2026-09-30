@@ -1,0 +1,98 @@
+{
+ "batch_273": {
+  "strategy_ids": [
+   3355,
+   143,
+   1457,
+   235,
+   857,
+   2721,
+   3764,
+   1613,
+   3502,
+   1348
+  ],
+  "docs": {
+   "3355": {
+    "id": 3355,
+    "name": "VirtPO TestBed Scalp",
+    "family": "trend",
+    "overview": "This strategy ports the **VirtPOTestBed_ScalpM1** MetaTrader 4 expert advisor to the StockSharp high level API. It keeps the original idea of creating *virtual pending orders* that are armed by Stochastic oscillator crossovers and executed once price momentum confirms the move. All filters, money-management rules and scheduling controls from the MQL version were replicated with StockSharp indicators and order methods.\n\n## Core Logic\n\n1. **Virtual pending orders** – When no position is open, the strategy checks the filter block on every completed candle:\n   * Spread must remain below `SpreadMaxPips` (best bid/ask retrieved from Level1).\n   * Average tick volume over the last three bars must exceed `VolumeLimit`.\n   * Absolute price volatility (average body size for `VolatilityPeriod` bars) must be above `VolatilityLimit`.\n   * Bollinger band width (period `BollingerPeriod`, width 2) has to stay between `BollingerLowerLimit` and `BollingerUpperLimit`.\n   * Trading time must be inside the configured window (`EntryHour` + `OpenHours`) and outside disabled weekdays (`Day1`, `Day2`, Friday cut-off).\n   * SMA trend filter – the difference between the fast (`SmaFastPeriod`) and slow (`SmaSlowPeriod`) SMA in pips must exceed `SmaDifferencePips` in either direction.\n   * The body of the previous bar must be smaller than `LastBarLimitPips` to avoid chasing long candles.\n\n   If the filters succeed, Stochastic crossovers are evaluated:\n   * A bullish crossover through `StochasticSetLevel` arms a **virtual buy stop** above the bid by `PoThresholdPips`.\n   * A bearish crossover through `100 - StochasticSetLevel` arms a **virtual sell stop** below the bid by the same threshold.\n   Each virtual pending order remembers its expiry (`PoTimeLimitMinutes`) and the stop-loss / take-profit distances taken from `StopLossPips` and `TakeProfitPips`.\n\n2. **Execution phase** – When `TickLevel` is enabled the strategy listens to incoming trades to execute virtual orders as soon as the last price",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n| --- | --- | --- |\n| General | Candle Type | Time-frame used for candle subscription (default: 1 minute). |\n| Execution | Tick Level | Use trade ticks to execute virtual orders immediately. |\n| Execution | PO Threshold (pips) | Distance in pips between the bid price and the virtual stop level. |\n| Execution | PO Lifetime (min) | Expiration time for each virtual pending order. |\n| Filters | Max Spread (pips) | Maximum spread allowed before arming orders. |\n| Filters | Volume Limit | Minimum average tick volume over the last three bars. |\n| Filters | Volatility Period | Number of bars used to average absolute candle bodies. |\n| Filters | Volatility Limit | Minimum average candle body size (in pips). |\n| Filters | Bollinger Period | Bollinger band calculation period. |\n| Filters | Bollinger Lower / Upper | Allowed band width range in pips. |\n| Filters | Last Bar Limit | Maximum body size of the previous candle in pips. |\n| Trend | Fast SMA / Slow SMA | Periods for the moving average trend filter. |\n| Trend | SMA Difference | Minimal SMA distance in pips to confirm a trend. |\n| Stochastic | %K / %D / Smooth | Standard Stochastic oscillator periods. |\n| Stochastic | Stochastic Set | Level used to arm virtual pending orders. |\n| Stochastic | Stochastic Go | Threshold used to execute the armed order. |\n| Trading | Order Volume | Base market order volume. |\n| Risk | Take Profit / Stop Loss / Trailing Stop | Exit distances in pips. |\n| Schedule | Disable Days, First/Second No Trade Day | Weekday filters (use 99 to disable). |\n| Schedule | Entry Hour / Open Hours | Trading window start and duration. |\n| Schedule | Friday Cut-off | Hour after which Friday trading stops. |\n| Risk | Max Lifetime | Time-based exit in minutes (set ≥5000 to disable). |\n| Risk | Profit Filter | 0 – close regardless, 1 – close only winners, 2 – close only losers when the timer fires. |"
+   },
+   "143": {
+    "id": 143,
+    "name": "Parabolic Sar Rsi",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 166%. It performs best in the stocks market.\n\nHere the Parabolic SAR outlines the prevailing trend and RSI measures exhaustion. Trades are opened once both indicators signal the same direction.\n\nThe combination is appealing to those who like trailing stops, since SAR also provides a dynamic exit. The stop placement follows the SAR curve.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close > SAR && RSI < RsiOversold`\n  - Short: `Close < SAR && RSI > RsiOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `Close < SAR`\n  - Short: `Close > SAR`\n- **Stops**: Uses Parabolic SAR as a trailing stop\n- **Default Values**:\n  - `SarAf` = 0.02m\n  - `SarMaxAf` = 0.2m\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Parabolic SAR, Parabolic SAR, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close > SAR && RSI < RsiOversold`\n  - Short: `Close < SAR && RSI > RsiOverbought`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: `Close < SAR`\n  - Short: `Close > SAR`\n- **Stops**: Uses Parabolic SAR as a trailing stop\n- **Default Values**:\n  - `SarAf` = 0.02m\n  - `SarMaxAf` = 0.2m\n  - `RsiPeriod` = 14\n  - `RsiOversold` = 30m\n  - `RsiOverbought` = 70m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Parabolic SAR, Parabolic SAR, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1457": {
+    "id": 1457,
+    "name": "TRAX Detrended Price",
+    "family": "trend",
+    "overview": "Strategy using TRAX and DPO oscillators to trade trend reversals.\n\n## Details\n- **Entry Criteria**: DPO crossing TRAX with TRAX sign and SMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover signals.\n- **Stops**: None.\n- **Default Values**: TRAX Length 12, DPO Length 19, SMA Confirmation Length 3.\n- **Filters**: TRAX sign and confirmation SMA.\n",
+    "details": "- **Entry Criteria**: DPO crossing TRAX with TRAX sign and SMA filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite crossover signals.\n- **Stops**: None.\n- **Default Values**: TRAX Length 12, DPO Length 19, SMA Confirmation Length 3.\n- **Filters**: TRAX sign and confirmation SMA.",
+    "parameters": ""
+   },
+   "235": {
+    "id": 235,
+    "name": "VWAP Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 58%. It performs best in the stocks market.\n\nA long position opens when price drops below VWAP by more than `K` times the ATR. A short is taken when price rallies above VWAP by the same amount. Trades exit as soon as price returns to the VWAP line.\n\nThe approach is designed for intraday traders who expect prices to oscillate around VWAP rather than trend strongly. Stops sized as a multiple of ATR help keep losses controlled if the move continues against the trade.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Close < VWAP - K * ATR\n  - **Short**: Close > VWAP + K * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when close >= VWAP\n  - **Short**: Exit when close <= VWAP\n- **Stops**: Yes, ATR-based stop.\n- **Default Values**:\n  - `K` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `AtrPeriod` = 14\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: VWAP, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close < VWAP - K * ATR\n  - **Short**: Close > VWAP + K * ATR\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when close >= VWAP\n  - **Short**: Exit when close <= VWAP\n- **Stops**: Yes, ATR-based stop.\n- **Default Values**:\n  - `K` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n  - `AtrPeriod` = 14\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: VWAP, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "857": {
+    "id": 857,
+    "name": "Gradient Trend Filter",
+    "family": "trend",
+    "overview": "The strategy applies triple exponential smoothing to detect trend direction. Trades are opened when the filter difference crosses zero and closed on opposite signals.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2721": {
+    "id": 2721,
+    "name": "Larry Connors RSI-2",
+    "family": "trend",
+    "overview": "A faithful StockSharp port of the classic Larry Connors RSI-2 system. The strategy combines a fast 2-period RSI oscillator with moving-average filters on the hourly timeframe to capture short-term mean-reversion setups while staying aligned with the higher timeframe trend. Optional stop-loss and take-profit levels, expressed in pips, replicate the original MetaTrader money-management rules.\n\n## Concept Overview\n\n- **Type**: Mean reversion with trend filter.\n- **Market**: Designed for Forex pairs traded on the H1 chart.\n- **Direction**: Trades both long and short, but only in the direction of the slow SMA filter.\n- **Core Indicators**: 5-period SMA (exit timing), 200-period SMA (trend filter), 2-period RSI (signal trigger).\n\n## Trading Rules\n\n### Long Entries\n- RSI value drops below `RSI Long Entry` (default 6).\n- The closing price of the completed candle stays above the `Slow SMA` (default 200 periods).\n- No open position is present.\n\n### Short Entries\n- RSI value rises above `RSI Short Entry` (default 95).\n- The closing price is below the `Slow SMA`.\n- No open position is present.\n\n### Exit Conditions\n- **Long positions** close when the close moves above the `Fast SMA` (default 5). Optional stop-loss and take-profit levels measured in pips can also close the trade if enabled.\n- **Short positions** close when the close moves below the `Fast SMA`. Optional stop-loss and take-profit levels measured in pips apply symmetrically.\n\n### Risk Management\n- `Use Stop Loss` toggles a fixed stop distance in pips relative to the entry price.\n- `Use Take Profit` enables a symmetric profit target in pips.\n- Pip distances are converted to absolute prices via the instrument's `PriceStep` and decimal precision, mirroring the MT5 logic for 4/5-digit quotes.\n\n## Default Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Trade Volume` | 1 | Base order volume for every entry. |\n| `Fast SMA Period` | 5 | Exit timing average. |\n| `Slow SMA Period` | ",
+    "details": "",
+    "parameters": ""
+   },
+   "3764": {
+    "id": 3764,
+    "name": "Cronex DeMarker Crossover",
+    "family": "trend",
+    "overview": "The Cronex DeMarker Crossover Strategy reproduces the MetaTrader indicator **Cronex DeMarker** and transforms it into an automated trading system. The original indicator plots the DeMarker oscillator together with two linear weighted moving averages (LWMAs). The strategy mirrors that setup, evaluates bullish and bearish crossovers between the smoothed oscillator lines, and converts them into market orders. This allows the trading logic to react immediately when momentum shifts from downside to upside pressure (and vice versa) according to the indicator.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `DeMarkerPeriod` | Number of candles used to build the DeMarker oscillator. | `25` |\n| `FastMaPeriod` | Period of the fast linear weighted moving average that reacts to new oscillator values. | `14` |\n| `SlowMaPeriod` | Period of the slow linear weighted moving average that confirms the direction. | `25` |\n| `CandleType` | Candle series processed by the strategy (time-frame or other `DataType`). | `1 Hour` time-frame |"
+   },
+   "1613": {
+    "id": 1613,
+    "name": "Bollinger RSI Countertrend SOL",
+    "family": "trend",
+    "overview": "Countertrend system for SOL that buys when price crosses above the lower Bollinger Band with low RSI and sells when price crosses below the upper band with high RSI. Weekdays only.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Price crosses above lower band and `RSI` < `Long RSI` on weekdays.\n  - **Short**: Price crosses below upper band and `RSI` > `Short RSI` on weekdays.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Long: price crosses above upper band or stop loss under recent lows.\n  - Short: price crosses above middle band or reaches profit target.\n- **Stops**: Long stop below recent lows.\n- **Default Values**:\n  - `Bollinger Period` = 20\n  - `Bollinger Width` = 2\n  - `RSI Length` = 14\n  - `Long RSI` = 25\n  - `Short RSI` = 79\n  - `Short Profit %` = 3.5\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes (Weekdays)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price crosses above lower band and `RSI` < `Long RSI` on weekdays.\n  - **Short**: Price crosses below upper band and `RSI` > `Short RSI` on weekdays.\n- **Long/Short**: Both directions.\n- **Exit Criteria**:\n  - Long: price crosses above upper band or stop loss under recent lows.\n  - Short: price crosses above middle band or reaches profit target.\n- **Stops**: Long stop below recent lows.\n- **Default Values**:\n  - `Bollinger Period` = 20\n  - `Bollinger Width` = 2\n  - `RSI Length` = 14\n  - `Long RSI` = 25\n  - `Short RSI` = 79\n  - `Short Profit %` = 3.5\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Multiple\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: Yes (Weekdays)\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3502": {
+    "id": 3502,
+    "name": "Tops Bottoms Trend RSI",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor \"Tops bottoms trend and rsi ea\". It monitors finished candles of the selected timeframe, searches for emerging trend tops or bottoms within a configurable lookback window, and confirms each opportunity with a Relative Strength Index (RSI) filter. When the criteria are met the strategy opens a single market order and immediately assigns protective stop-loss and take-profit levels derived from pip-based distances.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `BuyVolume` | Order volume used for long positions. | `0.01` |\n| `BuyStopLossPips` | Stop-loss distance for long trades in pips. | `20` |\n| `BuyTakeProfitPips` | Fixed take-profit distance in pips for longs when percentage mode is disabled. | `5` |\n| `BuyTakeProfitPercentOfStop` | Take-profit as a percentage of the long stop-loss distance. | `100` |\n| `SellVolume` | Order volume used for short positions. | `0.01` |\n| `SellStopLossPips` | Stop-loss distance for short trades in pips. | `20` |\n| `SellTakeProfitPercentOfStop` | Take-profit as a percentage of the short stop-loss distance. | `100` |\n| `SellTrendCandles` | Number of candles inspected when searching for new tops. | `10` |\n| `SellTrendPips` | Minimum advance above the reference low required for a short setup (pips). | `20` |\n| `SellTrendQuality` | Trend-quality filter for short setups (clamped to the 1–9 range). | `5` |\n| `BuyTrendCandles` | Number of candles inspected when searching for new bottoms. | `10` |\n| `BuyTrendPips` | Minimum decline below the reference high required for a long setup (pips). | `20` |\n| `BuyTrendQuality` | Trend-quality filter for long setups (clamped to the 1–9 range). | `5` |\n| `BuyRsiPeriod` | RSI period used for long confirmations. | `14` |\n| `BuyRsiThreshold` | RSI oversold threshold that must be crossed from above to enable long entries. | `40` |\n| `SellRsiPeriod` | RSI period used for short confirmations. | `14` |\n| `SellRsiThreshold` | RSI overbought threshold that must be crossed from below to enable short entries. | `60` |\n| `CandleType` | Timeframe of the candles processed by the strategy. | `30-minute time frame` |"
+   },
+   "1348": {
+    "id": 1348,
+    "name": "Strategy Builder With Indicators",
+    "family": "trend",
+    "overview": "This strategy combines an EMA trend filter with an RSI trigger. Long trades open when price is above the EMA and RSI is oversold, while shorts trigger when price is below the EMA and RSI is overbought.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

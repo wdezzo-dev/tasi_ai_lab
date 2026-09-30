@@ -1,0 +1,98 @@
+{
+ "batch_168": {
+  "strategy_ids": [
+   229,
+   2226,
+   959,
+   1934,
+   805,
+   4096,
+   3645,
+   1919,
+   2835,
+   1695
+  ],
+  "docs": {
+   "229": {
+    "id": 229,
+    "name": "Autocorrelation Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 124%. It performs best in the forex market.\n\nWhen the calculated autocorrelation falls below the threshold and price is below a moving average, the system buys in anticipation of a bounce. If autocorrelation is negative and price is above the average, a short position is opened. Exits occur once price crosses the average or autocorrelation rises above the threshold.\n\nThe approach is suited for traders looking for statistical edges rather than chart patterns. A percentage stop-loss is applied to protect against sustained trends that violate the expected reversal.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Autocorrelation < Threshold && Close < MA\n  - **Short**: Autocorrelation < Threshold && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close > MA or autocorrelation > Threshold\n  - **Short**: Exit when Close < MA or autocorrelation > Threshold\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `AutoCorrPeriod` = 20\n  - `AutoCorrThreshold` = -0.3m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Autocorrelation, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Autocorrelation < Threshold && Close < MA\n  - **Short**: Autocorrelation < Threshold && Close > MA\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when Close > MA or autocorrelation > Threshold\n  - **Short**: Exit when Close < MA or autocorrelation > Threshold\n- **Stops**: Yes, percent stop-loss.\n- **Default Values**:\n  - `AutoCorrPeriod` = 20\n  - `AutoCorrThreshold` = -0.3m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Autocorrelation, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2226": {
+    "id": 2226,
+    "name": "Price Channel Stop",
+    "family": "trend",
+    "overview": "Strategy based on the Price Channel Stop indicator.\n\nThe indicator calculates the highest high and lowest low over the given period to form a Donchian channel. Stop levels are built inside the channel using the `Risk` factor. When the price closes above the upper stop the trend switches to bullish; closing below the lower stop switches the trend to bearish. The strategy opens positions on these reversals and optionally closes opposite positions.\n\n## Details\n\n- **Entry Criteria**: Price crosses stop levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `ChannelPeriod` = 5\n  - `Risk` = 0.10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price crosses stop levels.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `ChannelPeriod` = 5\n  - `Risk` = 0.10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Donchian Channel\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "959": {
+    "id": 959,
+    "name": "Kyrie Crossover",
+    "family": "trend",
+    "overview": "This strategy trades exponential moving average (EMA) crossovers. It buys when the short-term EMA crosses above the long-term EMA and sells short when the short-term EMA crosses below the long-term EMA. A stop-loss is placed at a configurable percentage from the entry price.\n\n## Parameters\n- Candle Type\n- Short EMA period\n- Long EMA period\n- Risk percentage\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Short EMA period\n- Long EMA period\n- Risk percentage"
+   },
+   "1934": {
+    "id": 1934,
+    "name": "Linear Regression Slope Trigger",
+    "family": "trend",
+    "overview": "This strategy uses a linear regression slope indicator and a derived trigger line to identify trend changes. A long position is opened when the trigger line crosses above the slope line, while a short position is opened when the trigger line crosses below the slope line. Existing positions are closed when an opposite signal appears. The approach is inspired by the original MQL5 strategy \"Exp_LinearRegSlopeV2\".",
+    "details": "",
+    "parameters": "- `SlopeLength` – Period for calculating the linear regression slope.\n- `TriggerShift` – Number of bars used to calculate the trigger line.\n- `EnableLong` – Allows long entries.\n- `EnableShort` – Allows short entries.\n- `TakeProfitPercent` – Take‑profit as a percentage of entry price.\n- `StopLossPercent` – Stop‑loss as a percentage of entry price.\n- `CandleType` – Timeframe of candles used by the strategy."
+   },
+   "805": {
+    "id": 805,
+    "name": "FON60DK",
+    "family": "trend",
+    "overview": "This strategy opens long positions when the Tillson T3 line rises above the Optimized Trend Tracker (OTT) upper band and Williams %R confirms bullish momentum. The position is closed once Tillson T3 drops below the opposite OTT band while Williams %R enters oversold territory.\n\n## Details\n\n- **Entry Conditions**: `T3 > OTT_up` && `Williams %R > -20`\n- **Exit Conditions**: `T3_SAT < OTT_dn_SAT` && `Williams %R < -70`\n- **Type**: Trend following\n- **Indicators**: Tillson T3, OTT, Williams %R\n- **Timeframe**: 1 minute (default)\n- **Stops**: None\n",
+    "details": "- **Entry Conditions**: `T3 > OTT_up` && `Williams %R > -20`\n- **Exit Conditions**: `T3_SAT < OTT_dn_SAT` && `Williams %R < -70`\n- **Type**: Trend following\n- **Indicators**: Tillson T3, OTT, Williams %R\n- **Timeframe**: 1 minute (default)\n- **Stops**: None",
+    "parameters": ""
+   },
+   "4096": {
+    "id": 4096,
+    "name": "STO M5xM15xM30",
+    "family": "momentum",
+    "overview": "This strategy is a faithful C# conversion of the MetaTrader 4 expert advisor \"STO_m5xm15xm30\". It uses three stochastic oscillators computed on M5, M15, and M30 timeframes to identify synchronized momentum shifts. The StockSharp implementation keeps the original entry/exit structure, replaces manual order management with the high-level API, and exposes every key constant as a configurable `StrategyParam`.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 5-minute candles | Working timeframe for entries and exits. |\n| `MiddleCandleType` | 15-minute candles | Confirmation timeframe #1. |\n| `SlowCandleType` | 30-minute candles | Confirmation timeframe #2. |\n| `FastKPeriod` | 5 | %K period for the primary stochastic. |\n| `MiddleKPeriod` | 5 | %K period for the middle stochastic. |\n| `SlowKPeriod` | 5 | %K period for the slow stochastic. |\n| `ExitKPeriod` | 5 | %K period for the exit stochastic that operates on the previous bar. |\n| `ShiftBars` | 3 | Number of bars between the reference crossover and the current bar. |\n| `TakeProfitPoints` | 30 | Protective take-profit distance (points). |\n| `StopLossPoints` | 10 | Protective stop-loss distance (points). |\n| `TradeVolume` | 0.1 | Order volume used for new entries. |\n\nAll parameters are exposed through `StrategyParam<T>`, making them available for optimization inside StockSharp Designer."
+   },
+   "3645": {
+    "id": 3645,
+    "name": "Bounce Number",
+    "family": "volatility",
+    "overview": "The **Bounce Number Strategy** is a StockSharp port of the MetaTrader indicator `BounceNumber_V0.mq4` / `BounceNumber_V1.mq4`. The original tool was a visual analyzer that counted how many times price touched a symmetric channel before breaking out of it. This C# strategy recreates the bounce counter with the high-level API, stores the results in a distribution table, and reports every completed cycle through the strategy log. The implementation stays faithful to the MetaTrader logic while adapting it to StockSharp's event-driven pipeline.\n\nUnlike the original indicator, the port runs as a strategy component. It subscribes to finished candles, monitors band touches, and tracks how many alternating hits occur before price exits the channel by twice its half-width. The collected statistics can be consumed from the `BounceDistribution` property or from the generated log messages.",
+    "details": "",
+    "parameters": "| Name | Type | Default | MetaTrader analogue | Description |\n| --- | --- | --- | --- | --- |\n| `MaxHistoryCandles` | `int` | `10000` | `maxbar` input | Maximum number of candles allowed inside one cycle before a forced reset. Set to `0` to disable the safety reset. |\n| `ChannelPoints` | `int` | `300` | `BPoints` input | Half-width of the bounce channel expressed in price points (`PriceStep` multiples). |\n| `CandleType` | `DataType` | `M1` timeframe | `TF` input | Candle series used for the bounce calculations. |"
+   },
+   "1919": {
+    "id": 1919,
+    "name": "Murrey Math Bollinger & Stochastic",
+    "family": "mean_reversion",
+    "overview": "This strategy trades reversals at extreme Murrey Math lines using Bollinger Bands and a Stochastic Oscillator as confirmation.\n\nThe method computes Murrey levels from the highest and lowest prices over a configurable frame. When price approaches the 0/8 line during oversold conditions the strategy buys. When price nears the 8/8 line during overbought conditions it sells. A minimum Bollinger band width filter prevents trading in flat markets.\n\n## Details\n\n- **Entry Criteria**\n  - **Long**: Close is within *Entry Margin* above the 0/8 line, Stochastic <= 21 and Bollinger band width >= threshold.\n  - **Short**: Close is within *Entry Margin* below the 8/8 line, Stochastic >= 79 and Bollinger band width >= threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**\n  - Long positions close at the 1/8 line or if price falls below the -2/8 line.\n  - Short positions close at the 7/8 line or if price rises above the +2/8 line.\n- **Stops**: Murrey lines (-2/8 or +2/8) act as protective stops.\n- **Filters**\n  - Bollinger band width filter.\n  - Stochastic oscillator filter.\n\n",
+    "details": "- **Entry Criteria**\n  - **Long**: Close is within *Entry Margin* above the 0/8 line, Stochastic <= 21 and Bollinger band width >= threshold.\n  - **Short**: Close is within *Entry Margin* below the 8/8 line, Stochastic >= 79 and Bollinger band width >= threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**\n  - Long positions close at the 1/8 line or if price falls below the -2/8 line.\n  - Short positions close at the 7/8 line or if price rises above the +2/8 line.\n- **Stops**: Murrey lines (-2/8 or +2/8) act as protective stops.\n- **Filters**\n  - Bollinger band width filter.\n  - Stochastic oscillator filter.",
+    "parameters": ""
+   },
+   "2835": {
+    "id": 2835,
+    "name": "Exp Sar Tm Plus",
+    "family": "volume",
+    "overview": "High-level StockSharp port of the **Exp_Sar_Tm_Plus** expert advisor. The strategy monitors Parabolic SAR reversals on a configurable timeframe and mirrors the original money-management and time-out features while keeping the logic compatible with the StockSharp high-level API.\n\n## Trading logic\n\n- Candles are subscribed from the `CandleType` parameter (default: 4-hour time frame). The Parabolic SAR indicator is calculated with the user-defined `SarStep` and `SarMaximum` coefficients.\n- For every finished candle the algorithm buffers close prices and SAR values. The `SignalBar` parameter selects which closed candle is evaluated (default: the last closed bar) and compares it to the preceding candle to detect a change in SAR direction.\n- A **long** position is opened when price crosses **above** the SAR (previous candle below SAR, selected candle above SAR) and long trading is enabled. Existing short exposure is closed automatically before switching direction.\n- A **short** position is opened when price crosses **below** the SAR (previous candle above SAR, selected candle below SAR) and short trading is enabled. Existing long exposure is flattened first.\n- Positions are closed when the SAR moves against them (`AllowLongExit` / `AllowShortExit`), when optional stop-loss / take-profit levels are breached, or when the maximum holding time (`UseTimeExit` + `HoldingMinutes`) expires.\n- Stop-loss and take-profit levels are recalculated on every entry using the instrument `PriceStep`. Both levels are optional and ignored when the corresponding value is zero.\n\n## Parameters\n\n- `MoneyManagement` – fraction of the base `Volume` that will be traded on every entry. Values ≤ 0 fall back to the plain `Volume` value. Normalized to the instrument `VolumeStep`.\n- `ManagementMode` – enumeration preserved from the original expert. All modes currently behave like `Lot` (fixed volume) inside this port.\n- `StopLossPoints` / `TakeProfitPoints` – distance in price steps used to set protectiv",
+    "details": "",
+    "parameters": "- `MoneyManagement` – fraction of the base `Volume` that will be traded on every entry. Values ≤ 0 fall back to the plain `Volume` value. Normalized to the instrument `VolumeStep`.\n- `ManagementMode` – enumeration preserved from the original expert. All modes currently behave like `Lot` (fixed volume) inside this port.\n- `StopLossPoints` / `TakeProfitPoints` – distance in price steps used to set protective levels around the entry price. Set to zero to disable.\n- `DeviationPoints` – original slippage setting. It is kept for completeness, but the high-level API executes market orders without using this value.\n- `AllowLongEntry`, `AllowShortEntry` – toggles for opening long/short positions.\n- `AllowLongExit`, `AllowShortExit` – toggles for closing positions when price crosses the SAR in the opposite direction.\n- `UseTimeExit` – enables position liquidation after `HoldingMinutes` minutes in the market.\n- `HoldingMinutes` – duration for the time-based exit window.\n- `CandleType` – candle data type for SAR analysis.\n- `SarStep`, `SarMaximum` – Parabolic SAR configuration.\n- `SignalBar` – number of closed candles to shift the signal evaluation (0 = current finished candle, 1 = previous, etc.)."
+   },
+   "1695": {
+    "id": 1695,
+    "name": "Close vs Previous Open",
+    "family": "volume",
+    "overview": "This strategy compares the close of the last finished candle with the open of the preceding candle.\nIt enters a long position when the latest close is above the previous open and a short position when the latest close is below the previous open.\n\n## Entry Rules\n- **Long**: Close of the most recent completed candle is higher than the open of the candle before it.\n- **Short**: Close of the most recent completed candle is lower than the open of the candle before it.\n\n## Risk Management\n- Optional stop loss and take profit measured in points.\n- Optional trailing of the stop loss.\n\n## Parameters\n- `Volume` – order volume.\n- `UseStopLoss` – enable stop loss.\n- `StopLoss` – stop loss distance in points.\n- `UseTakeProfit` – enable take profit.\n- `TakeProfit` – take profit distance in points.\n- `UseTrailingStop` – trail stop loss as price moves.\n- `CandleType` – candle series for calculations.\n\n## Notes\n- Trades only on fully formed candles.\n- Reverses position when the opposite signal appears.\n",
+    "details": "",
+    "parameters": "- `Volume` – order volume.\n- `UseStopLoss` – enable stop loss.\n- `StopLoss` – stop loss distance in points.\n- `UseTakeProfit` – enable take profit.\n- `TakeProfit` – take profit distance in points.\n- `UseTrailingStop` – trail stop loss as price moves.\n- `CandleType` – candle series for calculations."
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_041": {
+  "strategy_ids": [
+   518,
+   344,
+   4082,
+   1932,
+   508,
+   48,
+   3295,
+   4054,
+   3439,
+   3548
+  ],
+  "docs": {
+   "518": {
+    "id": 518,
+    "name": "ALMA & UT Bot Confluence",
+    "family": "trend",
+    "overview": "The ALMA & UT Bot Confluence strategy combines an Arnaud Legoux Moving Average filter with a UT Bot style trailing stop. A long position opens when price is above both the long-term EMA and ALMA, volume exceeds its average, RSI signals momentum, ADX confirms trend strength, the candle is below the upper Bollinger Band and the UT Bot generates a buy signal. Short entries occur when the UT Bot turns bearish and price crosses below the fast EMA under the same filters. Exits use either the UT Bot trailing stop or fixed ATR-based stop loss and take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price > EMA & ALMA, RSI > 30, ADX > 30, price < Bollinger upper band, UT Bot buy signal, volume and ATR filters, cooldown.\n  - Short: price crosses below fast EMA with UT Bot sell signal and filters.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - UT Bot trailing stop or ATR-based stop loss/take profit and optional time exit.\n- **Stops**: ATR or UT Bot trailing.\n- **Default Values**:\n  - `FastEmaLength` = 20\n  - `EmaLength` = 72\n  - `AtrLength` = 14\n  - `AdxLength` = 10\n  - `RsiLength` = 14\n  - `BbMultiplier` = 3.0\n  - `StopLossAtrMultiplier` = 5.0\n  - `TakeProfitAtrMultiplier` = 4.0\n  - `UtAtrPeriod` = 10\n  - `UtKeyValue` = 1\n  - `VolumeMaLength` = 20\n  - `BaseCooldownBars` = 7\n  - `MinAtr` = 0.005\n- **Filters**:\n  - Category: Trend following with volatility filter\n  - Direction: Long/Short\n  - Indicators: EMA, ALMA, ADX, RSI, Bollinger Bands, UT Bot\n  - Stops: ATR or trailing\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price > EMA & ALMA, RSI > 30, ADX > 30, price < Bollinger upper band, UT Bot buy signal, volume and ATR filters, cooldown.\n  - Short: price crosses below fast EMA with UT Bot sell signal and filters.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - UT Bot trailing stop or ATR-based stop loss/take profit and optional time exit.\n- **Stops**: ATR or UT Bot trailing.\n- **Default Values**:\n  - `FastEmaLength` = 20\n  - `EmaLength` = 72\n  - `AtrLength` = 14\n  - `AdxLength` = 10\n  - `RsiLength` = 14\n  - `BbMultiplier` = 3.0\n  - `StopLossAtrMultiplier` = 5.0\n  - `TakeProfitAtrMultiplier` = 4.0\n  - `UtAtrPeriod` = 10\n  - `UtKeyValue` = 1\n  - `VolumeMaLength` = 20\n  - `BaseCooldownBars` = 7\n  - `MinAtr` = 0.005\n- **Filters**:\n  - Category: Trend following with volatility filter\n  - Direction: Long/Short\n  - Indicators: EMA, ALMA, ADX, RSI, Bollinger Bands, UT Bot\n  - Stops: ATR or trailing\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "344": {
+    "id": 344,
+    "name": "Hull MA Implied Volatility Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 121%. It performs best in the crypto market.\n\nSignals trigger when its indicators confirms breakout opportunities on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like HmaPeriod, IVPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmaPeriod = 9`\n  - `IVPeriod = 20`\n  - `IVMultiplier = 2m`\n  - `StopLossAtr = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmaPeriod = 9`\n  - `IVPeriod = 20`\n  - `IVMultiplier = 2m`\n  - `StopLossAtr = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4082": {
+    "id": 4082,
+    "name": "AIS3 Trading Robot Template",
+    "family": "trend",
+    "overview": "The AIS3 Trading Robot Template is a MetaTrader breakout system that relies on two coordinated timeframes. The primary timeframe\ncaptures the structure of the previous candle, while a secondary timeframe gauges recent volatility to control trailing updates.\nThis StockSharp port faithfully reproduces the original order sizing, entry checks, and trailing logic, but it is implemented on\ntop of the high-level strategy API so it can run inside Designer, Shell, or any custom StockSharp host.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `AccountReserve` | Fraction of equity kept as safety reserve (0–0.95).\n| `OrderReserve` | Fraction of tradable equity allocated to the risk budget per trade (0–0.5 by default).\n| `PrimaryCandleType` | Working timeframe for breakout detection (default 15-minute candles).\n| `SecondaryCandleType` | Faster timeframe that controls trailing distance (default 1-minute candles).\n| `TakeMultiplier` | Multiplier of the primary range used to place the take-profit order.\n| `StopMultiplier` | Multiplier of the primary range used to compute the protective stop.\n| `TrailMultiplier` | Multiplier of the secondary range defining the trailing distance.\n| `BaseVolume` | Fallback position size when portfolio metrics are unavailable.\n| `StopBufferTicks` | Extra distance, in price ticks, that must remain between entry and stop/target levels.\n| `FreezeBufferTicks` | Additional buffer that avoids stop updates too close to the broker freeze level.\n| `TrailStepMultiplier` | Spread multiplier that defines the minimal increment between trailing adjustments."
+   },
+   "1932": {
+    "id": 1932,
+    "name": "Hybrid Scalper",
+    "family": "trend",
+    "overview": "The **Hybrid Scalper Strategy** is a short-term trading algorithm converted from the MQL4 script `hybrid_Scalper.mq4`. It operates on the StockSharp high-level API and is designed for the 1-minute timeframe. The strategy combines multiple technical indicators to identify fast breakout opportunities while avoiding periods of excessive or insufficient volatility.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `RsiPeriod` | Period of the RSI indicator. |\n| `EmaFastPeriod` | Fast EMA period for trend detection. |\n| `EmaSlowPeriod` | Slow EMA period for trend detection. |\n| `BbPeriod` | Period used in Bollinger Bands. |\n| `BbDeviation` | Deviation multiplier for Bollinger Bands. |\n| `TradeMonday`–`TradeFriday` | Enable trading on specific weekdays. |\n| `CandleType` | Candle type/timeframe, default is 1-minute candles. |"
+   },
+   "508": {
+    "id": 508,
+    "name": "ADX for BTC",
+    "family": "trend",
+    "overview": "Strategy uses Average Directional Index (ADX) with optional SMA trend filter to catch strong moves in Bitcoin.\n\nTesting indicates an average annual return of about 80%. It performs best in the crypto market.\n\nThe system buys when ADX crosses above the entry level and the trend filter is bullish. The position closes when ADX falls below the exit level.\n\n## Details\n\n- **Entry Criteria**: ADX crosses above `EntryLevel` and (if enabled) fast SMA > slow SMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: ADX crosses below `ExitLevel`.\n- **Stops**: No.\n- **Default Values**:\n  - `EntryLevel` = 14m\n  - `ExitLevel` = 45m\n  - `SmaFilter` = true\n  - `SmaLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ADX, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: ADX crosses above `EntryLevel` and (if enabled) fast SMA > slow SMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: ADX crosses below `ExitLevel`.\n- **Stops**: No.\n- **Default Values**:\n  - `EntryLevel` = 14m\n  - `ExitLevel` = 45m\n  - `SmaFilter` = true\n  - `SmaLength` = 200\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ADX, SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "48": {
+    "id": 48,
+    "name": "VWAP Breakout",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 181%. It performs best in the crypto market.\n\nThe strategy waits for a close on the other side of VWAP and then trades in that direction. Exits occur when price reverses back through VWAP.\n\nBecause VWAP represents the average transaction price, breaks often lead to momentum moves.\n\n## Details\n\n- **Entry Criteria**: Price closes on the opposite side of VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses back through VWAP or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price closes on the opposite side of VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses back through VWAP or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWAP\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3295": {
+    "id": 3295,
+    "name": "Virtual Profit/Loss Trail",
+    "family": "breakout",
+    "overview": "`VirtualProfitLossTrailStrategy` reproduces the behaviour of the MetaTrader expert advisor \"Virtual Profit Loss Trail\" inside StockSharp. The strategy never opens new positions by itself. Instead, it continuously supervises the current position of the selected security and applies protective logic:\n\n- A configurable take-profit distance expressed in pips.\n- A configurable stop-loss distance expressed in pips.\n- A virtual trailing stop that activates after a minimum profit is reached and slides with the market only when price advances by the specified trailing step.\n\nBecause the protective levels are virtual, no actual stop or limit orders are sent to the exchange. The strategy monitors best bid/ask updates and closes the open position with a market order when any of the virtual levels is touched.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Take-profit (pips)** | Distance between the entry price and the profit target. Set to `0` to disable the take-profit exit. |\n| **Stop-loss (pips)** | Distance between the entry price and the protective stop. Set to `0` to disable the stop-loss exit. |\n| **Trailing stop (pips)** | Distance used to compute the trailing stop. When set to `0` the trailing logic is disabled entirely. |\n| **Trailing step (pips)** | Additional profit that must be gained before the trailing stop is shifted further. Use `0` to move the trail every time a new high/low is printed. |\n| **Trailing activation (pips)** | Minimum profit that must be locked before the trailing stop becomes active. When set to `0`, trailing starts immediately after entering the position. |\n\nAll distances are measured in pip units. The strategy automatically derives the pip size from the security’s price step: for symbols with three or five decimal places a pip is defined as ten price steps, otherwise one step."
+   },
+   "4054": {
+    "id": 4054,
+    "name": "N7S AO 772012",
+    "family": "momentum",
+    "overview": "This strategy is a StockSharp conversion of the MetaTrader expert advisor **N7S_AO_772012**. The original robot combines perceptron-like filters of the Awesome Oscillator (AO) across several timeframes with a price pattern gate and a configurable \"neuro\" mode that can override the base logic. The converted version preserves the decision tree while exposing all tuning knobs as strategy parameters.\n\nThe bot operates on the primary instrument selected in the strategy and uses:\n\n- **M1 candles** for entry timing and the price perceptron.\n- **H1 candles** to feed multiple AO-based perceptrons.\n- **H4 candles** to compute the AO momentum delta used by the base Buy/Sell selector (BTS).",
+    "details": "",
+    "parameters": "### Trading\n- **OrderVolume** – Base volume for all market orders.\n- **AllowLongTrades / AllowShortTrades** – Enable or disable long or short entries.\n- **BtsMode** – When set to `0` the price perceptron gate in BTS is ignored; otherwise its sign must align with the trade.\n- **NeuroMode** – Selects how the advanced perceptrons participate (see logic section).\n\n### Base BTS perceptrons\n- **BaseStopLossPointsLong / BaseTakeProfitFactorLong** – Stop distance (points) and multiplier for long take-profit.\n- **BaseStopLossPointsShort / BaseTakeProfitFactorShort** – Analogous settings for short trades.\n- **PerceptronPeriodX / Y** – AO shift (in H1 bars) used by the respective perceptron.\n- **PerceptronWeightX1..4 / Y1..4** – Weights (0–100) of the perceptron inputs; internally they are centred by subtracting 50.\n- **PerceptronThresholdX / Y** – Minimum absolute perceptron output required before it is considered valid.\n\n### Price filter\n- **PricePatternPeriod** – Number of M1 candles forming each lag in the price perceptron.\n- **PriceWeight1..4** – Weights (centred around 50) applied to price differences inside the perceptron.\n\n### Neuro perceptrons\n- **NeuroStopLossPointsLong / NeuroTakeProfitFactorLong** – Stop and TP multiplier used by Neuro X signals.\n- **NeuroStopLossPointsShort / NeuroTakeProfitFactorShort** – Stop and TP multiplier used by Neuro Y signals.\n- **NeuroPeriodX / Y / Z** – AO shift (H1 candles) for the three neuro perceptrons.\n- **NeuroWeightX1..4 / NeuroWeightY1..4 / NeuroWeightZ1..4** – Perceptron weights.\n- **NeuroThresholdX / NeuroThresholdY / NeuroThresholdZ** – Minimum absolute value for each neuro perceptron.\n\n### Data\n- **CandleType** – Timeframe used for the primary trading candles (default 1 minute)."
+   },
+   "3439": {
+    "id": 3439,
+    "name": "Mission Impossible Power Two Open",
+    "family": "volatility",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor “Mission Impossible Power Two Open”. It monitors the direction of the most recently completed candle and opens a new basket of trades in that direction. When price moves against the active basket, the strategy adds new averaging entries according to a fixed pip grid. The volume of each new entry grows with the floating loss of the basket, mimicking the `power`-based sizing rule from the original EA. Exit targets are recalculated after every fill so that the entire basket shares a single take-profit and stop-loss level.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `BaseVolume` | `decimal` | `0.01` | Initial order size for a new basket before scaling. |\n| `MaxVolume` | `decimal` | `2` | Hard cap for a single market order after rounding. |\n| `Power` | `decimal` | `13` | Multiplier applied to the floating loss when calculating the additive volume for new entries. |\n| `StopLossPips` | `int` | `400` | Distance in price steps used for the shared stop-loss. |\n| `TakeProfitFirstPips` | `int` | `15` | Take-profit distance for the very first entry in a basket. |\n| `TakeProfitNextPips` | `int` | `7` | Take-profit distance for averaged baskets (two or more entries). |\n| `GridStepPips` | `int` | `21` | Minimum adverse move (in price steps) before another averaging entry is allowed. |\n| `MaxTrades` | `int` | `16` | Maximum number of grid trades per direction. |\n| `CandleType` | `DataType` | `TimeSpan.FromMinutes(5).TimeFrame()` | Candles used for signal generation and basket management. |"
+   },
+   "3548": {
+    "id": 3548,
+    "name": "RSI Dual Cloud",
+    "family": "mean_reversion",
+    "overview": "The **RSI Dual Cloud Strategy** is a StockSharp port of the MetaTrader expert advisor “RSI Dual Cloud EA”.\nIt trades on a configurable candle series and analyses two Relative Strength Index (RSI) calculations – a fast\nand a slow line. Signals are generated when the fast RSI enters, stays within, or leaves a defined oversold/overbought\nzone, or when the fast line crosses the slow line. The strategy can optionally invert its signals and can be restricted\nto long-only or short-only operation.\n\nThe strategy operates with market orders only. When a new signal is received the existing position in the opposite\ndirection is closed before opening a fresh position. Position sizing is controlled through a single volume parameter.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| **Candle Type** | The candle series used for calculations (default: 1 hour). |\n| **Fast RSI / Slow RSI** | Periods for the fast and slow RSI calculations. |\n| **Upper Level / Lower Level** | RSI thresholds for the overbought and oversold zones. |\n| **Order Volume** | Volume for market orders. |\n| **Use Entrance / Being / Leaving / Crossing** | Toggles for each signal family. |\n| **Closed Candles** | If enabled, signals are only evaluated on finished candles. |\n| **Reverse** | Swaps long and short signals. |\n| **Trade Mode** | Limits trading to long, short, or both directions. |"
+   }
+  }
+ }
+}

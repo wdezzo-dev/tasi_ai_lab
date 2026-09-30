@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2230,
+      "name": "Doctor",
+      "family": "trend",
+      "entry_long": "close > sma(close,400) and roc(sma(close,40),5) > 0 and rsi(close,14) > 50 and rsi(close,5) > 50",
+      "exit_long": "roc(sma(close,40),5) < 0 or rsi(close,5) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Weighted moving averages are unavailable, so the 40-period slope filter becomes a five-bar change in SMA(40) and the 400-period location test becomes close above SMA(400); the documented RSI 14 and 5 momentum pair is kept as two thresholds above 50. The Parabolic SAR reversal filter and the half-stop trailing are dropped, and StopLossTicks/TakeProfitTicks are tick distances rather than percentages, so stops are null."
+    },
+    {
+      "id": 1556,
+      "name": "Weighted Ichimoku",
+      "family": "trend",
+      "entry_long": "close > sma(close,52) and sma(close,9) > sma(close,26) and sma(close,26) > sma(close,52)",
+      "exit_long": "close < sma(close,26) or sma(close,9) < sma(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ichimoku components and the weighted score are not in the DSL, so a score at or above BuyThreshold=60 is approximated by full bullish alignment of the documented TenkanPeriod=9, KijunPeriod=26 and SenkouSpanBPeriod=52 averages, and the SellThreshold=-49 exit by the first loss of that alignment. Offset=26 is dropped, the short side does not exist in the docs, and the docs state no stops."
+    },
+    {
+      "id": 4052,
+      "name": "MTrendLine",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The system only re-prices up to three pending order slots so they track a LinearRegression(24) line; it never derives a directional market signal itself. Marked non-trading; the pending limit/stop slots, DistancePoints offsets, MinDistancePoints broker filter and point-based StopLossPoints/TakeProfitPoints are pending-order mechanics outside the DSL."
+    },
+    {
+      "id": 2281,
+      "name": "Multik SMA Exp",
+      "family": "trend",
+      "entry_long": "roc(sma(close,50),1) < 0 and roc(sma(close,50),2) < 0",
+      "exit_long": "roc(sma(close,50),2) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MA Period=50 is kept and the contrarian rule 'SMA falling over the last two completed segments opens a long' becomes a one-bar and two-bar decline in SMA(50); the exit is the documented slope reversal. The short branch is dropped for long-only, the one-minute candle type and reversal flag are not configurable here, and no stops are documented."
+    },
+    {
+      "id": 2256,
+      "name": "XDPO Candle",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(close,5),13), ema(ema(open,5),13))",
+      "exit_long": "crossbelow(ema(ema(close,5),13), ema(ema(open,5),13))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The synthetic candle is rebuilt by smoothing open and close with two consecutive EMAs; the cross of the smoothed close over the smoothed open is exactly the documented colour change that opens a long, and the reverse cross closes it. FastLength and SlowLength have no documented values so 5 and 13 are explicit defaults; StartProtection defaults and the short/reversal branch are unsupported, so stops are null."
+    },
+    {
+      "id": 2380,
+      "name": "Day Trading Indicator Fusion",
+      "family": "momentum",
+      "entry_long": "roc(close,1) > 0 and roc(close,14) < 100 and macd(close,12,26) < macd_signal(close,12,26,9) and rsi(close,5) < 35",
+      "exit_long": "rsi(close,5) > 60 or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Parabolic SAR flip to the bullish side is approximated by a rising bar, while the documented MACD 12/26/9 line-below-signal and Momentum(14) under 100 are kept literally and Stochastic %K is replaced by RSI(5) with the same 35/60 levels, so all four documented legs must align. The trailing stop and take profit are point distances and the five-minute candle type is not selectable, so both stop fields are null."
+    },
+    {
+      "id": 3867,
+      "name": "Equal Volume & Range Bars",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This port only rebuilds synthetic equal-volume or range bars from live ticks and logs each completed bar; it contains no entry, exit or directional logic at all. Marked non-trading rather than inventing a signal; Ticks In Bar, Work Mode and the M1 preloading step are data-construction concerns."
+    },
+    {
+      "id": 573,
+      "name": "BTFD",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,70) > 2.5 and rsi(close,20) < 30",
+      "exit_long": "rsi(close,20) > 50",
+      "stop_loss_pct": 5.0,
+      "take_profit_pct": 1.2,
+      "notes": "Entry follows the documented VolumeLength=70 with VolumeMultiplier=2.5 and RsiLength=20 below RsiOversold=30. The documented StopLossPercent=5 is used directly as a percentage stop; the five layered targets Tp1..Tp5 (0.4 to 1.2) with Q1..Q5 partials cannot be staged, so the final 1.2 layer is used as the single take-profit and an RSI mean-reversion exit stands in for the partial ladder."
+    },
+    {
+      "id": 2461,
+      "name": "Ilan14",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-sided hedging grid: both directions are opened at once and each adverse Pip Step adds a larger lot via the Lot Exponent until price reverts Take Profit pips from the weighted average, so there is no market-derived entry signal to translate. Marked non-trading; Max Trades per side and per-leg averaging are multi-order mechanics the single-position engine cannot hold."
+    },
+    {
+      "id": 1538,
+      "name": "Volume Profile",
+      "family": "volume",
+      "entry_long": "close > sma(close,20) and volume_ratio(volume,20) > 1.2",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The point of control (the price of the highest-volume candle) and the session high/low/mid levels are not selectable from a single series, so being above a 20-bar volume-weighted proxy with a volume spike stands in for the documented buy condition, and the documented mid-level exit becomes the same average. The Candle Type is the only parameter and no stops are given, so both stop fields are null."
+    }
+  ]
+}

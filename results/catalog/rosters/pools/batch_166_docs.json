@@ -1,0 +1,98 @@
+{
+ "batch_166": {
+  "strategy_ids": [
+   177,
+   875,
+   2379,
+   4212,
+   3435,
+   3061,
+   2117,
+   1212,
+   1896,
+   1434
+  ],
+  "docs": {
+   "177": {
+    "id": 177,
+    "name": "Ichimoku Stochastic",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 118%. It performs best in the stocks market.\n\nIchimoku outlines trend and support levels while Stochastic times the entry on pullbacks. Trades open when the oscillator resets within the prevailing cloud direction.\n\nTraders who favor structured indicators may find it practical. ATR stops cover abrupt reversals.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Price > Cloud && StochK < 20`\n  - Short: `Price < Cloud && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Cloud breakout in opposite direction\n- **Stops**: Uses Ichimoku cloud boundaries\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouPeriod` = 52\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(30).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Price > Cloud && StochK < 20`\n  - Short: `Price < Cloud && StochK > 80`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Cloud breakout in opposite direction\n- **Stops**: Uses Ichimoku cloud boundaries\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouPeriod` = 52\n  - `StochPeriod` = 14\n  - `StochK` = 3\n  - `StochD` = 3\n  - `CandleType` = TimeSpan.FromMinutes(30).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Ichimoku Cloud, Stochastic Oscillator\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "875": {
+    "id": 875,
+    "name": "Heiken Ashi Supertrend Adx",
+    "family": "trend",
+    "overview": "Strategy combining Heiken Ashi candles, Supertrend direction and optional ADX filter. A bullish Heiken Ashi candle without a lower wick opens a long in an uptrend. Bearish candles without upper wicks open shorts in a downtrend. Positions close on opposite signals or an ATR based trailing stop.\n\nTesting indicates an average annual return of about 128%. It performs best in the crypto market.\n\nHeiken Ashi smooths noise while Supertrend and ADX confirm direction. ATR determines dynamic stops.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: bullish HA candle without lower wick with optional Supertrend up and ADX confirmation\n  - Short: bearish HA candle without upper wick with optional Supertrend down and ADX confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite candle or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `UseSupertrend` = true\n  - `AtrPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `UseAdxFilter` = false\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `TrailAtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Heiken Ashi, Supertrend, ADX, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: bullish HA candle without lower wick with optional Supertrend up and ADX confirmation\n  - Short: bearish HA candle without upper wick with optional Supertrend down and ADX confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite candle or ATR trailing stop\n- **Stops**: ATR trailing stop\n- **Default Values**:\n  - `UseSupertrend` = true\n  - `AtrPeriod` = 10\n  - `SupertrendMultiplier` = 3m\n  - `UseAdxFilter` = false\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `TrailAtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Heiken Ashi, Supertrend, ADX, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2379": {
+    "id": 2379,
+    "name": "Cyberia Trader",
+    "family": "trend",
+    "overview": "This strategy is a simplified StockSharp port of the original **CyberiaTrader.mq5** system. It combines several classic technical indicators to evaluate market direction and open trades when most filters agree.\n\n## Indicators\n\n- **MACD** – Detects momentum shifts using fast/slow EMAs and a signal line.\n- **Simple Moving Average** – Determines the prevailing trend.\n- **Commodity Channel Index** – Screens overbought/oversold conditions.\n- **Average Directional Index** – Confirms directional strength via +DI and -DI components.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `MacdFast` | Fast EMA period for MACD. |\n| `MacdSlow` | Slow EMA period for MACD. |\n| `MacdSignal` | Signal line period for MACD. |\n| `MaPeriod` | Length of the moving average trend filter. |\n| `CciPeriod` | Period of Commodity Channel Index. |\n| `AdxPeriod` | Period of Average Directional Index. |\n| `EnableMacd` | Enable/disable the MACD filter. |\n| `EnableMa` | Enable/disable the moving average filter. |\n| `EnableCci` | Enable/disable the CCI filter. |\n| `EnableAdx` | Enable/disable the ADX filter. |\n| `CandleType` | Timeframe of input candles. |\n\n## Trading Logic\n\n1. Values for all enabled indicators are calculated on each finished candle.\n2. Filters can block buying or selling based on their respective rules:\n   - MACD above its signal blocks short entries; below blocks long entries.\n   - Price above the moving average blocks shorts; below blocks longs.\n   - CCI above +100 blocks longs; below -100 blocks shorts.\n   - +DI greater than -DI blocks shorts; -DI greater than +DI blocks longs.\n3. A trade is opened only if one side is allowed and the opposite side is blocked.\n4. Basic position protection uses 2% take-profit and 1% stop-loss.\n\n## Notes\n\nThis translation focuses on the core directional filters of the original algorithm. The extensive probability analysis and auxiliary modules from the MQL5 version are intentionally omitted for clarity.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `MacdFast` | Fast EMA period for MACD. |\n| `MacdSlow` | Slow EMA period for MACD. |\n| `MacdSignal` | Signal line period for MACD. |\n| `MaPeriod` | Length of the moving average trend filter. |\n| `CciPeriod` | Period of Commodity Channel Index. |\n| `AdxPeriod` | Period of Average Directional Index. |\n| `EnableMacd` | Enable/disable the MACD filter. |\n| `EnableMa` | Enable/disable the moving average filter. |\n| `EnableCci` | Enable/disable the CCI filter. |\n| `EnableAdx` | Enable/disable the ADX filter. |\n| `CandleType` | Timeframe of input candles. |"
+   },
+   "4212": {
+    "id": 4212,
+    "name": "Early Top Prorate V1",
+    "family": "trend",
+    "overview": "This document describes the StockSharp port of the MetaTrader expert advisor **earlyTopProrate_V1**. The strategy searches for intraday moves that extend away from the daily open and scales out of the position using three profit targets. It was converted using the high level StockSharp API while preserving the original money management and trade management ideas.\n\n## Core Logic\n\n1. **Daily context** – the strategy reconstructs the current day's open, high and low from the processed candles. The dominant direction is defined by comparing `high - open` and `open - low`.\n2. **Entry window** – new trades may only be opened between `StartHour` (inclusive) and `EndHour` (exclusive). The default configuration trades the early European session.\n3. **Entry conditions** –\n   - When the dominant direction is bullish and the latest closing price is above the daily open the strategy opens a long position.\n   - When the dominant direction is bearish and the latest closing price is below the daily open the strategy opens a short position.\n   - Only one market position is allowed at the same time (`MaxPositions = 1` by default).\n4. **Money management** – the volume of each entry is obtained from the selected money management mode (see below). The value is rounded using the instrument volume step and clamped between the exchange minimum and maximum volume.\n5. **Position handling** – after entering a position the strategy applies the layered exit rules listed in the next section. The rules mirror the original expert advisor but are implemented with high level StockSharp orders instead of direct stop-loss/take-profit modifications.\n6. **Session close** – if a position remains open when `ClosingHour` is reached the strategy forces an exit at market.\n\n## Trade Management Details\n\nThe original MQL expert advisor relies on manual stop and take-profit adjustments. The StockSharp port reproduces the behaviour with explicit checks on each finished candle:\n\n- **Break-even rescue** (`BreakEven",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Candle series used for decisions. Defaults to 5-minute candles. |\n| `StartHour` / `EndHour` | Trading window in hours (0–23). |\n| `ClosingHour` | Hour when any open position is closed. |\n| `TimeZoneShift` | Informational time zone offset kept for compatibility. |\n| `BaseVolume` | Base lot size before money management adjustments. |\n| `MaxPositions` | Maximum simultaneous positions (default = 1). |\n| `TakeProfit1`, `TakeProfit2`, `TakeProfit3` | Distances, in points, of the three profit targets. |\n| `BreakEvenTrigger` | Loss, in points, that activates the break-even rescue exit. |\n| `StopLoss0`, `StopLoss1`, `StopLoss2` | Adverse/profitable thresholds controlling the protective stop logic. |\n| `Ratio1`, `Ratio2`, `Ratio3` | Percentages of the current position closed at each target. |\n| `MoneyManagementType` | Money management mode (0–3). |\n| `MoneyManagementFactor` | Multiplier for the square root model. |\n| `MoneyManagementRiskPercent` | Risk percentage for the equity model. |\n| `PointMultiplier` | Multiplier applied to the instrument price step when translating points to actual price offsets. |"
+   },
+   "3435": {
+    "id": 3435,
+    "name": "Meeting Lines Stochastic",
+    "family": "trend",
+    "overview": "The **Meeting Lines Stochastic Strategy** is a StockSharp implementation of the MetaTrader expert *Expert_AML_Stoch*. It combines the Bullish/Bearish Meeting Lines candlestick reversal patterns with confirmation from the Stochastic oscillator's %D signal line. The strategy is designed for discretionary traders who want a rules-based approach to pattern recognition with additional momentum confirmation. By using the high-level StockSharp API, the code remains concise, testable, and easy to extend for portfolio management or further automation.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| ---- | ----------- | ------- | ----- |\n| `CandleType` | Primary candle series used for analysis. | 15-minute time frame | Accepts any `DataType` supported by StockSharp. |\n| `StochasticLength` | Lookback period for the raw %K calculation. | 3 | Mirrors the MetaTrader `%K period`. |\n| `StochasticSmoothing` | Smoothing applied to %K (MetaTrader `slowing`). | 25 | Sets the internal smoothing length of the oscillator. |\n| `StochasticSignal` | Smoothing period for the %D signal line. | 36 | Mirrors the MetaTrader `%D period`. |\n| `BodyAveragePeriod` | Number of candles used to average the candle body size. | 3 | Filters out minor bodies when spotting Meeting Lines. |\n| `LongEntryLevel` | Maximum %D value that still allows a bullish entry. | 30 | Equivalent to oversold threshold. |\n| `ShortEntryLevel` | Minimum %D value required for a bearish entry. | 70 | Equivalent to overbought threshold. |\n| `ExitLowerLevel` | Lower boundary that triggers exits on upward crosses. | 20 | Used for both long and short exit decisions. |\n| `ExitUpperLevel` | Upper boundary that triggers exits on downward crosses. | 80 | Used for both long and short exit decisions. |\n\nAll parameters are exposed through `StrategyParam<T>` and can be optimised directly in StockSharp Designer or programmatically."
+   },
+   "3061": {
+    "id": 3061,
+    "name": "Autotrader Momentum",
+    "family": "momentum",
+    "overview": "The **Autotrader Momentum Strategy** is a conversion of the MetaTrader 5 expert advisor *Autotrader Momentum (barabashkakvn's edition)*. The algorithm evaluates recent momentum by comparing the closing price of the monitoring bar with the closing price of a historical reference bar. When a bullish momentum shift is detected, the strategy buys; when a bearish shift appears, it sells. All orders are executed at market price using StockSharp's high-level trading API.\n\nThe implementation keeps the original focus on point-based risk control. Stop-loss, take-profit, and trailing-stop distances are defined in pips and automatically translated into price offsets based on the instrument's `PriceStep`. Support for three and five decimal quotes is preserved by applying the same 10x adjustment used in the MQL code. Trailing logic is evaluated on every finished candle before new entries are considered, ensuring that risk management mirrors the EA's behaviour of prioritizing protective exits.",
+    "details": "",
+    "parameters": "- `CandleType` – Time frame used for price comparison. Default: 1 hour.\n- `TradeVolume` – Base market order volume. Applied on every signal in addition to any volume needed to reverse an existing position.\n- `StopLossPips` – Protective stop distance in pips. Set to 0 to disable the fixed stop-loss.\n- `TakeProfitPips` – Profit target distance in pips. Set to 0 to disable the fixed take-profit.\n- `TrailingStopPips` – Distance maintained by the trailing stop. Set to 0 to disable trailing.\n- `TrailingStepPips` – Minimum favourable move required before the trailing stop is advanced. Must be positive when trailing is enabled.\n- `CurrentBarIndex` – Index of the monitoring candle (0 = most recent finished bar).\n- `ComparableBarIndex` – Index of the historical bar used for momentum comparison.\n\nAll pip-based settings are converted into price offsets using the instrument's `PriceStep`. If the step represents three or five decimal digits, the offset is multiplied by 10 to reproduce the MetaTrader definition of a pip."
+   },
+   "2117": {
+    "id": 2117,
+    "name": "Step Stochastic Cross",
+    "family": "volatility",
+    "overview": "The strategy uses the Step Stochastic indicator (a custom oscillator based on ATR) to generate reversal signals. It subscribes to a user-selected candle timeframe and calculates fast and slow Step Stochastic lines scaled from 0 to 100.",
+    "details": "",
+    "parameters": "- `KFast` – multiplier for fast channel.\n- `KSlow` – multiplier for slow channel.\n- `CandleType` – timeframe of candles.\n- `AllowBuyOpen`, `AllowSellOpen`, `AllowBuyClose`, `AllowSellClose` – permissions for trade actions.\n- `StopLoss`, `TakeProfit` – optional protective levels in price units.\n\nThe strategy calls `StartProtection` to apply stop-loss and take-profit when specified.\n\nThe `StepStochasticIndicator` is a C# port of the original MQL5 indicator and produces `Fast` and `Slow` values for each finished candle."
+   },
+   "1212": {
+    "id": 1212,
+    "name": "Quantum Reversal",
+    "family": "mean_reversion",
+    "overview": "This strategy buys when the price touches the lower Bollinger Band or the smoothed RSI falls below the oversold level. The position is closed once the trade becomes profitable.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1896": {
+    "id": 1896,
+    "name": "Double Trading",
+    "family": "volume",
+    "overview": "Pairs trading strategy that opens opposite positions on two correlated instruments and closes them when combined profit reaches a target.\n\n## Details\n\n- **Entry Criteria**: simultaneously open first security and second security in opposite directions\n- **Long/Short**: Long & Short\n- **Exit Criteria**: combined profit >= ProfitTarget\n- **Stops**: No\n- **Default Values**:\n  - `Volume1` = 1\n  - `Volume2` = 1.3\n  - `ProfitTarget` = 20\n  - `SecondSecurity` = required\n- **Filters**:\n  - Category: Pair Trading\n  - Direction: Hedged\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: simultaneously open first security and second security in opposite directions\n- **Long/Short**: Long & Short\n- **Exit Criteria**: combined profit >= ProfitTarget\n- **Stops**: No\n- **Default Values**:\n  - `Volume1` = 1\n  - `Volume2` = 1.3\n  - `ProfitTarget` = 20\n  - `SecondSecurity` = required\n- **Filters**:\n  - Category: Pair Trading\n  - Direction: Hedged\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1434": {
+    "id": 1434,
+    "name": "Time Range Statistics",
+    "family": "volume",
+    "overview": "Collects simple statistics between selected bar indices.\nLogs mean price, normalized range, percent change, average volume and gap count.\nTrades long if the period ends positive and short if negative.\n\n## Details\n\n- **Entry Criteria**: percent change at `EndIndex` determines direction\n- **Long/Short**: Both\n- **Exit Criteria**: none\n- **Stops**: No\n- **Default Values**:\n  - `StartIndex` = 9000\n  - `EndIndex` = 10000\n- **Filters**:\n  - Category: Statistics\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: percent change at `EndIndex` determines direction\n- **Long/Short**: Both\n- **Exit Criteria**: none\n- **Stops**: No\n- **Default Values**:\n  - `StartIndex` = 9000\n  - `EndIndex` = 10000\n- **Filters**:\n  - Category: Statistics\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   }
+  }
+ }
+}

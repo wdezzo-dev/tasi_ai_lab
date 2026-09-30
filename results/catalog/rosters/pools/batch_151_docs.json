@@ -1,0 +1,98 @@
+{
+ "batch_151": {
+  "strategy_ids": [
+   14,
+   3711,
+   725,
+   1294,
+   2153,
+   3330,
+   3678,
+   4043,
+   4086,
+   2286
+  ],
+  "docs": {
+   "14": {
+    "id": 14,
+    "name": "TradingView Supertrend Flip",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 79%. It performs best in the stocks market.\n\nTradingView Supertrend Flip emulates the popular indicator's color changes. A flip from red to green signals a long entry and green to red signals a short. The strategy exits on the next flip.\n\nVolume confirmation can be used to avoid whipsaws during thin trading periods. By only acting on flips with supporting volume, the method aims to capture more reliable reversals.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on ATR, Supertrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `VolumeAvgPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on ATR, Supertrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `VolumeAvgPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Supertrend\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3711": {
+    "id": 3711,
+    "name": "RRS Chaotic",
+    "family": "trend",
+    "overview": "The original **RRS Chaotic EA** continuously rolls the dice on every tick, choosing random symbols and position sizes before dispatching market orders. The StockSharp port keeps the spirit of controlled chaos by driving entries from a candle stream on the configured security. Each closed candle triggers a new random decision for both direction and volume while mirroring the expert advisor's money-management rules.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Candle series used to trigger the strategy (default 1-minute candles). |\n| `MinVolume` / `MaxVolume` | Range for random lot generation. |\n| `TakeProfitPoints` | Take-profit distance in price points. Set to `0` to disable. |\n| `StopLossPoints` | Stop-loss distance in price points. Set to `0` to disable. |\n| `MaxOpenTrades` | Maximum net volume measured in volume steps that may remain open simultaneously. |\n| `MaxSpreadPoints` | Maximum allowed spread, expressed in price points. |\n| `SlippagePoints` | Informational slippage parameter (kept for completeness). |\n| `RiskControlMode` | Selects between `FixedMoney` and `BalancePercentage` risk models. |\n| `RiskValue` | Either the amount of money to risk or the percentage of equity, depending on the mode. |\n| `TradeComment` | Tag appended to generated orders for easier audit. |"
+   },
+   "725": {
+    "id": 725,
+    "name": "Ehlers Combo",
+    "family": "trend",
+    "overview": "This strategy combines several Ehlers filters including the Elegant Oscillator, Decycler, Instantaneous Trend and a signal-to-noise ratio filter. Long and short entries occur when all filters align, with exits based on the instantaneous trend after a specified number of bars.\n\n## Parameters\n- Candle Type\n- Length\n- Rms length\n- SNR threshold\n- Exit length\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Length\n- Rms length\n- SNR threshold\n- Exit length"
+   },
+   "1294": {
+    "id": 1294,
+    "name": "Separated Moving Average",
+    "family": "trend",
+    "overview": "Builds separate moving averages for bullish and bearish closes. A long position opens when the bullish average rises above the bearish one, and a short position opens on the reverse cross. The strategy supports SMA, EMA, or HMA and can operate on Heikin Ashi prices.\n\n## Details\n\n- **Entry Criteria**: Bullish average crossing above bearish average.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `MaType` = MaType.SMA\n  - `Length` = 20\n  - `UseHeikinAshi` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA, HMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Bullish average crossing above bearish average.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite cross.\n- **Stops**: No.\n- **Default Values**:\n  - `MaType` = MaType.SMA\n  - `Length` = 20\n  - `UseHeikinAshi` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: SMA, EMA, HMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2153": {
+    "id": 2153,
+    "name": "Anchored Momentum Candle",
+    "family": "trend",
+    "overview": "This strategy converts the MQL5 \"AnchoredMomentumCandle\" expert into a StockSharp C# sample. It computes anchored momentum for candle open and close prices using exponential and simple moving averages. The indicator draws a synthetic candle whose color reflects momentum direction.\n\nA change to a **blue** candle opens a long position and closes any short. A change to a **pink** candle opens a short position and closes any long.\n\n## Parameters\n- **Momentum Period** – length of the simple moving averages.\n- **Smooth Period** – length of the exponential moving averages.\n- **Candle Type** – timeframe of candles used for calculations.\n\nThe strategy subscribes to the specified candles, calculates the indicator, and issues market orders on color transitions.\n",
+    "details": "",
+    "parameters": "- **Momentum Period** – length of the simple moving averages.\n- **Smooth Period** – length of the exponential moving averages.\n- **Candle Type** – timeframe of candles used for calculations.\n\nThe strategy subscribes to the specified candles, calculates the indicator, and issues market orders on color transitions."
+   },
+   "3330": {
+    "id": 3330,
+    "name": "Gridder EA Strategy (Ported from MQL4)",
+    "family": "momentum",
+    "overview": "The original GridderEA is a multi-symbol grid trading expert advisor designed for MetaTrader 4. This StockSharp port keeps the core concepts—progressive spacing, adaptive lot sizing, basket take-profit, and emergency hedging—while focusing on a single instrument managed by the hosting strategy. The strategy subscribes to a configurable candle stream, watches finished bars, and opens averaging trades when price moves away from the last reference level by a distance defined in pips.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Initial Volume** | Volume for the very first grid order. |\n| **Volume Multiplier** | Factor applied to calculate the next order volume when lot progression is geometric or exponential. |\n| **Grid Step (pips)** | Base distance (in pips) between successive entries. |\n| **Step Multiplier** | Scaling factor for the grid spacing when step progression is geometric or exponential. |\n| **Target Profit / Lot** | Unrealized profit target expressed per lot. Reaching this target closes every open trade. |\n| **Target Loss / Lot** | Unrealized loss threshold per lot. When reached, all trades are closed to contain drawdown. |\n| **Max Orders Per Side** | Limits the number of averaging trades allowed on each side of the market. `0` disables the limit. |\n| **Allow Long / Allow Short** | Enable or disable buying/selling legs independently. |\n| **Step Mode** | Determines how the step grows: static, geometric, or exponential. |\n| **Lot Mode** | Determines how the order volume grows: static, geometric, or exponential. |\n| **Use Emergency Mode** | Enables the hedge logic that protects against oversized baskets. |\n| **Emergency Trigger** | Number of orders on one side that activates the hedge. |\n| **Hedge Volume Factor** | Fraction of the total side volume placed as the hedge order when emergency mode triggers. |\n| **Candle Type** | Time frame of the candle subscription used for grid calculations. |"
+   },
+   "3678": {
+    "id": 3678,
+    "name": "Two Pair Correlation",
+    "family": "volatility",
+    "overview": "The **Two Pair Correlation Strategy** ports the MetaTrader expert advisor *\"2-Pair Correlation EA\"* (package `MQL/52043`) to the StockSharp high-level API. It watches the bid prices of two highly correlated crypto symbols (BTCUSD as the primary leg and ETHUSD as the hedge leg) and performs a market-neutral trade when their spread deviates from a configurable threshold.\n\n### Core workflow\n\n1. **Risk gating** – portfolio equity is monitored continuously. If the drawdown from the historical peak exceeds `MaxDrawdownPercent`, new trades are suspended until equity recovers above `RecoveryPercent` of the peak value.\n2. **Volatility filter** – both instruments feed a 5-minute candle stream into an `AverageTrueRange` indicator of length `AtrPeriod`. Trading is skipped when either ATR exceeds `PriceDifferenceThreshold * 0.01`, mimicking the \"high volatility pause\" from the MQL code.\n3. **Spread detection** – the strategy subscribes to level-one data for both instruments and evaluates the bid-price spread on every update. When `Bid(BTCUSD) - Bid(ETHUSD) > PriceDifferenceThreshold`, it buys BTCUSD and sells ETHUSD. When the spread drops below `-PriceDifferenceThreshold`, the positions are reversed (short BTCUSD, long ETHUSD).\n4. **Dynamic lot sizing** – the per-leg volume is derived from `RiskPercent` of the current portfolio equity, divided by the synthetic stop distance `StopLossPips * PriceStep`. The result is normalised with the exchange volume constraints before orders are sent.\n5. **Basket exit** – the total floating profit of both legs is tracked in account currency. Once it reaches `MinimumTotalProfit`, the strategy closes the entire pair regardless of the entry direction.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `SecondSecurity` | `Security` | — | Hedge instrument (ETHUSD in the original EA). |\n| `MaxDrawdownPercent` | `decimal` | `20` | Drawdown threshold that pauses new trades. |\n| `RiskPercent` | `decimal` | `2` | Portfolio share risked per trade for position sizing. |\n| `PriceDifferenceThreshold` | `decimal` | `100` | Bid-price divergence required to open the pair. |\n| `MinimumTotalProfit` | `decimal` | `0.30` | Profit target in account currency for closing both legs. |\n| `AtrPeriod` | `int` | `14` | ATR length for the volatility filter. |\n| `RecoveryPercent` | `decimal` | `95` | Percentage of the peak equity required to resume trading after a drawdown. |\n| `StopLossPips` | `int` | `50` | Synthetic stop used to translate `RiskPercent` into lots. |\n| `AtrCandleType` | `DataType` | `TimeSpan.FromMinutes(5).TimeFrame()` | Candle series used for ATR calculation. |"
+   },
+   "4043": {
+    "id": 4043,
+    "name": "Center Of Gravity Mean Reversion",
+    "family": "mean_reversion",
+    "overview": "The strategy rebuilds the Center of Gravity channel used by the original MQL4 expert by solving a polynomial regression on the most recent candles. The regression center is computed from the intercept of the least squares fit, while the band width is derived from the standard deviation of close prices over the same lookback horizon. The lower band equals the regression center minus the scaled deviation, reproducing the `stdl` buffer accessed in the source robot.\n\nDuring live processing the algorithm maintains a rolling queue of closes with the length defined by the **Bars Back** parameter. Each finished candle triggers a recalculation of the regression coefficients through Gaussian elimination on the normal equation system. This avoids storing full candle histories yet yields the same channel geometry as the custom indicator. If the matrix becomes ill-conditioned the update is skipped, preventing unstable trading decisions.\n\nTrading logic mirrors the original expert: when the current candle low stays above the lower deviation band (`lowerBand < Low` in MQL notation) the strategy considers this a mean-reversion bounce. If no long position is open, any short exposure is closed and a market buy order is issued using the strategy volume. The most recent lower, upper and center values are exposed via read-only properties for charting or diagnostics.\n\nRisk management is optional. **Stop Loss Distance** and **Take Profit Distance** are specified in absolute price units. When non-zero, the strategy records the entry price of the active long position and checks candle extremes to determine whether a stop or profit target has been touched. If neither parameter is provided the position can be managed manually or by external modules.\n\n### Parameters\n- **Candle Type** – timeframe of the candle subscription feeding the regression.\n- **Bars Back** – number of historical bars used to compute the regression channel (default 125).\n- **Polynomial Degree** – degree of the polynomial re",
+    "details": "",
+    "parameters": ""
+   },
+   "4086": {
+    "id": 4086,
+    "name": "Parabolic SAR Limit",
+    "family": "volume",
+    "overview": "Parabolic SAR Limit is a direct port of the MT4 expert advisor **ytg_Parabolic_exp.mq4**. The system continuously keeps buy and sell limit orders glued to the Parabolic SAR value and lets the market pull the order into a trade. Once filled, the strategy supervises the open position and performs stop-loss or take-profit exits using candle extremes, mirroring the original MQL behaviour.\n\n## Strategy Logic\n\n1. The strategy subscribes to a configurable candle series (4-hour timeframe by default) and calculates the Parabolic SAR indicator with the same step and maximum values as the MT4 script.\n2. On every finished candle:\n   - If the SAR dot is *below* the bar's low and the best bid is at least `MinOrderDistancePoints` above the SAR price, a buy limit order is placed (or re-aligned) exactly at the SAR value.\n   - If the SAR dot is *above* the bar's high and the best ask is at least `MinOrderDistancePoints` below the SAR price, a sell limit order is placed (or re-aligned) at that SAR price.\n   - Only one pending order per side is maintained. When the SAR moves, the active pending order is cancelled and a new one is submitted at the updated level.\n3. When a pending order is filled, the stop-loss and take-profit distances (expressed in points) are converted to absolute prices using the security price step. Those levels are stored as virtual protective boundaries.\n4. Every new candle checks the recorded boundaries. If the candle range touches the stop or take level, the strategy closes the corresponding position immediately and resets the protective state.\n\n## Parameters\n\n- **CandleType** – timeframe for signal candles. Defaults to 4-hour candles to match the MT4 input parameter `timeframe`.\n- **SarStep** – Parabolic SAR acceleration factor (`step` in MT4). Controls how quickly the SAR catches up with price.\n- **SarMaximum** – maximum acceleration (`maximum` in MT4). Caps the SAR speed.\n- **StopLossPoints** – distance in points between the entry price and the stop level. Se",
+    "details": "",
+    "parameters": "- **CandleType** – timeframe for signal candles. Defaults to 4-hour candles to match the MT4 input parameter `timeframe`.\n- **SarStep** – Parabolic SAR acceleration factor (`step` in MT4). Controls how quickly the SAR catches up with price.\n- **SarMaximum** – maximum acceleration (`maximum` in MT4). Caps the SAR speed.\n- **StopLossPoints** – distance in points between the entry price and the stop level. Set to `0` to disable.\n- **TakeProfitPoints** – distance in points between the entry price and the take-profit level. Set to `0` to disable.\n- **MinOrderDistancePoints** – mimics `MODE_STOPLEVEL` in MT4. Pending orders are submitted only if the market price is farther than this distance from the SAR value.\n- **OrderVolume** – lots (volume) for each pending order. Align it with the instrument's `VolumeStep`.\n\nAll point-based distances are converted to prices using the instrument `PriceStep`, so the behaviour stays consistent across markets."
+   },
+   "2286": {
+    "id": 2286,
+    "name": "Nevalyashka Stopup",
+    "family": "volume",
+    "overview": "This strategy alternates position direction after each trade, mimicking the \"Nevalyashka\" toy that flips sides. It uses a martingale approach: if a trade closes at a loss, the stop-loss and take-profit distances for the next trade are multiplied by a coefficient. After a profitable trade, distances reset to their base values and the strategy can optionally stop trading.\n\nInitial direction is short. Every time a position is closed, the new position is opened in the opposite direction with the preconfigured volume.\n\n## Details\n\n- **Entry Criteria**:\n  - First trade sells at market.\n  - Subsequent trades always enter in the opposite direction of the previous closed trade.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed when price reaches the take-profit or stop-loss distance from entry.\n- **Stops**: Yes, fixed stop-loss and take-profit in points. Distances grow by the martingale coefficient after losses.\n- **Default Values**:\n  - `StopLossPoints` = 150\n  - `TakeProfitPoints` = 50\n  - `OrderVolume` = 0.1\n  - `MartingaleCoeff` = 1.5\n  - `StopAfterProfit` = false\n- **Filters**:\n  - Category: Reversal / Martingale\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High\n",
+    "details": "- **Entry Criteria**:\n  - First trade sells at market.\n  - Subsequent trades always enter in the opposite direction of the previous closed trade.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Position is closed when price reaches the take-profit or stop-loss distance from entry.\n- **Stops**: Yes, fixed stop-loss and take-profit in points. Distances grow by the martingale coefficient after losses.\n- **Default Values**:\n  - `StopLossPoints` = 150\n  - `TakeProfitPoints` = 50\n  - `OrderVolume` = 0.1\n  - `MartingaleCoeff` = 1.5\n  - `StopAfterProfit` = false\n- **Filters**:\n  - Category: Reversal / Martingale\n  - Direction: Both\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High",
+    "parameters": ""
+   }
+  }
+ }
+}

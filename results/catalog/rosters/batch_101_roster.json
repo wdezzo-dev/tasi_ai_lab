@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2550,
+      "name": "Support Resist Trade",
+      "family": "trend",
+      "entry_long": "open > ema(close,500) and close > donchian_high_prev(high,55)",
+      "exit_long": "close < ema(close,500) or close < donchian_low_prev(low,55)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented long rule: close beyond the previous 55-bar high with the bar opening above EMA(500); the exit is the mirror break of the refreshed band or a loss of the EMA. The initial stop at the opposite band and the 20/40/60-pip staged trailing are pip-based and not percentage fields."
+    },
+    {
+      "id": 2239,
+      "name": "Elliott Wave Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(roc(sma(close,5) - sma(close,35),1),0)",
+      "exit_long": "crossbelow(roc(sma(close,5) - sma(close,35),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EWO is SMA(5)-SMA(35) as documented; a local trough that starts rising is rendered as a one-bar ROC of the oscillator crossing above zero, and the opposite turn reverses. The optional StartProtection percentage stop and take-profit have no documented values."
+    },
+    {
+      "id": 3627,
+      "name": "Rectangle Test",
+      "family": "trend",
+      "entry_long": "ema(close,45) > sma(close,200) and close > ema(close,45) and close > donchian_high_prev(high,10)",
+      "exit_long": "ema(close,45) < sma(close,200) or close < ema(close,45)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 10-bar rectangle becomes a Donchian band and the fast EMA(45)/slow SMA(200) direction filter with a close above the fast EMA is used for the long breakout. The 'both averages inside the range' test, the 0.5% rectangle-height cap, the 03:00-22:50 session window, the daily losing-trade cap and the 250/750-point brackets are not expressible."
+    },
+    {
+      "id": 1169,
+      "name": "Pivot Point SuperTrend TrendFilter",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20) + 3 * atr(high,low,close,10))",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SuperTrend is not in the DSL, so a trend-filter flip is proxied by a close crossing EMA(20)+3*ATR(10) (MaPeriod 20, Factor 3, AtrPeriod 10) and the flip-down exit by a close below EMA(20). The pivot-based SuperTrend leg and its date-window (seasonality) condition are dropped; docs state no stops."
+    },
+    {
+      "id": 574,
+      "name": "Bitcoin Exponential Profit",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21))",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "Uses the documented 9/21 EMA pair for the entry and exit crosses. Protection is the documented risk percent 1 and reward multiplier 2 (risk x reward); the 0.5% trailing offset and equity-based sizing are not DSL fields."
+    },
+    {
+      "id": 3018,
+      "name": "Ketty Channel Breakout",
+      "family": "breakout",
+      "entry_long": "close < donchian_low_prev(low,20)",
+      "exit_long": "close > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pre-market channel is rendered as a 20-bar Donchian range (no channel length is documented) and the long is the spike below the channel that arms a stop order on the opposite side, closing when price re-crosses the top. Pre-market/placing hours, the pip buffer and offset parameters and visualise/channel drawing are not expressible."
+    },
+    {
+      "id": 1400,
+      "name": "The Weekly Factor",
+      "family": "breakout",
+      "entry_long": "donchian_high(high,5) - donchian_low(low,5) <= 0.5 * (donchian_high(high,20) - donchian_low(low,20)) and close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Weekly Factor compression is applied as RangeFilter 0.5 on the 5-bar versus 20-bar range and the session-high break uses the same 5-bar extreme. Session open/close handling and the two-day profitable holding exit need time fields; docs state no stops."
+    },
+    {
+      "id": 1636,
+      "name": "Good Gbbi",
+      "family": "momentum",
+      "entry_long": "roc(open,5) > 0",
+      "exit_long": "roc(open,5) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented comparison of the recent open with the older open (T1 vs T2, neither valued) is expressed as a positive 5-bar open ROC for the long leg. The TradeTime hour gate, one-trade-per-day limit, Delta point thresholds, pip take-profit/stop-loss and MaxOpenTime are unavailable."
+    },
+    {
+      "id": 582,
+      "name": "Black-Scholes Option Pricing",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The module only prices European calls/puts from spot, strike, volatility, rate and expiry; it never places or closes trades, so no market-derived signal exists and the impossible negative-price guard is used. User-set strike/volatility/rate/expiry inputs cannot be expressed in the DSL."
+    },
+    {
+      "id": 3859,
+      "name": "Bronze Pan",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,14) < 0 and roc(roc(close,14),1) > 0 and rsi(close,14) < 30",
+      "exit_long": "crossabove(roc(close,14),0) or rsi(close,14) > 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DayImpuls, Williams %R and CCI are unsupported, so the documented long rule (oscillator below DayImpulsLongLevel -50 and rising, %R below WilliamsLevelDown -85, CCI under -CciLevel) becomes a negative-but-rising ROC(14) momentum with RSI(14) oversold. Floating ProfitTarget/LossTarget, the PredBand averaging flip, pip brackets and MinimumBalance gating are not representable."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_338": {
+  "strategy_ids": [
+   1006,
+   1524,
+   984,
+   3273,
+   2054,
+   2103,
+   343,
+   3935,
+   1654,
+   2495
+  ],
+  "docs": {
+   "1006": {
+    "id": 1006,
+    "name": "MACD RSI EMA BB ATR Day Trading",
+    "family": "trend",
+    "overview": "Intraday strategy combining MACD signal cross, RSI bounds and EMA trend direction with a Bollinger Bands squeeze filter. Risk management uses ATR-based stop-loss, trailing stop and risk-reward take profit.\n\n## Details\n\n- **Entry Criteria**: MACD crossing signal in trend direction, RSI within thresholds and no BB squeeze.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite stop or target.\n- **Stops**: ATR-based stop-loss, trailing stop and risk-reward take profit.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `EmaFast` = 9\n  - `EmaSlow` = 21\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2.0\n  - `TrailAtrMultiplier` = 1.5\n  - `BbLength` = 20\n  - `BbMultiplier` = 2.0\n  - `RiskReward` = 2.0\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: MACD, RSI, EMA, Bollinger Bands, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: MACD crossing signal in trend direction, RSI within thresholds and no BB squeeze.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite stop or target.\n- **Stops**: ATR-based stop-loss, trailing stop and risk-reward take profit.\n- **Default Values**:\n  - `MacdFast` = 12\n  - `MacdSlow` = 26\n  - `MacdSignal` = 9\n  - `RsiLength` = 14\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 30\n  - `EmaFast` = 9\n  - `EmaSlow` = 21\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2.0\n  - `TrailAtrMultiplier` = 1.5\n  - `BbLength` = 20\n  - `BbMultiplier` = 2.0\n  - `RiskReward` = 2.0\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: MACD, RSI, EMA, Bollinger Bands, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1524": {
+    "id": 1524,
+    "name": "VIDYA ProTrend Multi-Tier Profit",
+    "family": "trend",
+    "overview": "Trend-following strategy using fast and slow VIDYA averages with a Bollinger Band filter.\nOptional multi-step take profit orders are placed using ATR multiples and percentage targets.\n\n## Details\n\n- **Entry Criteria**: fast VIDYA above slow VIDYA with price outside Bollinger filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite slope or cross\n- **Stops**: No\n- **Default Values**:\n  - `FastVidyaLength` = 10\n  - `SlowVidyaLength` = 30\n  - `MinSlopeThreshold` = 0.05\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VIDYA, Bollinger Bands, ATR\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: fast VIDYA above slow VIDYA with price outside Bollinger filter\n- **Long/Short**: Both\n- **Exit Criteria**: opposite slope or cross\n- **Stops**: No\n- **Default Values**:\n  - `FastVidyaLength` = 10\n  - `SlowVidyaLength` = 30\n  - `MinSlopeThreshold` = 0.05\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VIDYA, Bollinger Bands, ATR\n  - Stops: No\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "984": {
+    "id": 984,
+    "name": "Liquidity Grab Volume Trap",
+    "family": "trend",
+    "overview": "This strategy waits for a bearish liquidity grab on flat volume that forms a fair value gap. When price closes above the gap top while volume stays near its moving average, it places a limit buy at the gap bottom with a symmetrical stop loss and take profit.\n\n## Details\n\n- **Entry Condition**: `Close[2] < Open[1]` && `Close > High[1]` && bearish break with flat volume\n- **Exit Conditions**: stop loss at gap bottom minus gap height, take profit at `High[1]`\n- **Type**: Reversal\n- **Indicators**: Volume SMA\n- **Timeframe**: 1 minute (default)\n",
+    "details": "- **Entry Condition**: `Close[2] < Open[1]` && `Close > High[1]` && bearish break with flat volume\n- **Exit Conditions**: stop loss at gap bottom minus gap height, take profit at `High[1]`\n- **Type**: Reversal\n- **Indicators**: Volume SMA\n- **Timeframe**: 1 minute (default)",
+    "parameters": ""
+   },
+   "3273": {
+    "id": 3273,
+    "name": "Equidistant Channel",
+    "family": "trend",
+    "overview": "The **Equidistant Channel Strategy** ports the original \"Equidistant Channel\" MQL4 expert advisor to the StockSharp high-level API. The strategy analyses MACD line crossovers and manages existing positions through Bollinger Band touches, breakeven logic, and money-based trailing targets.\n\nWhen the MACD line crosses above its signal the strategy opens long positions, and when it crosses below the signal it opens short positions. While a trade is active the strategy watches for exits when price reaches Bollinger Bands, when floating profit hits configurable monetary or percentage targets, or when a trailing drawdown threshold is violated. A breakeven mode mirrors the MetaTrader implementation by moving the protective stop once profit exceeds a configurable number of price steps.",
+    "details": "",
+    "parameters": "| Group | Name | Default | Description |\n| --- | --- | --- | --- |\n| Trading | Volume | 1 | Order volume for new entries. |\n| General | Candle Type | 5 minute | Candle series used for calculations. |\n| Indicators | MACD Fast | 12 | Fast EMA length for MACD. |\n| Indicators | MACD Slow | 26 | Slow EMA length for MACD. |\n| Indicators | MACD Signal | 9 | Signal line length for MACD. |\n| Indicators | BB Period | 20 | Bollinger Bands lookback period. |\n| Indicators | BB Deviation | 2 | Bollinger Bands width in standard deviations. |\n| Risk | Stop Loss | 20 | Stop loss distance in price points. |\n| Risk | Take Profit | 50 | Take profit distance in price points. |\n| Risk | Trailing Stop | 40 | Trailing stop distance in price points. |\n| Risk | Use TP (Money) | false | Close when floating profit reaches an absolute money target. |\n| Risk | TP Money | 10 | Absolute take profit value in account currency. |\n| Risk | Use TP (%) | false | Close when floating profit reaches a percent of initial capital. |\n| Risk | TP Percent | 10 | Percent of initial capital for the percentage take profit. |\n| Risk | Enable Trailing | true | Enables trailing logic on floating profit. |\n| Risk | Trail Activate | 40 | Profit level (currency) that arms the trailing logic. |\n| Risk | Trail Step | 10 | Maximum allowed drawdown from the profit peak (currency). |\n| Risk | Use BB Stop | true | Enable exits when price touches Bollinger Bands. |\n| Risk | Use Breakeven | true | Enable the breakeven behaviour. |\n| Risk | Breakeven Trigger | 10 | Profit (price steps) required to arm the breakeven stop. |\n| Risk | Breakeven Offset | 5 | Offset (price steps) applied to the breakeven level. |"
+   },
+   "2054": {
+    "id": 2054,
+    "name": "Color HMA Reversal",
+    "family": "trend",
+    "overview": "Strategy based on Hull Moving Average slope changes. It closes positions against the new direction and opens positions along the trend when the Hull MA reverses.\n\n## Parameters\n- `HmaPeriod` — period for Hull Moving Average.\n- `CandleType` — type of candles to use.\n- `BuyOpen`, `SellOpen` — allow opening long/short positions.\n- `BuyClose`, `SellClose` — allow closing long/short positions.\n\n## Signals\n- **Upward reversal**: previous HMA was falling and current value rises → close shorts and open a long.\n- **Downward reversal**: previous HMA was rising and current value falls → close longs and open a short.\n\nThe strategy uses market orders and trades with the volume specified in `Strategy.Volume`.\n",
+    "details": "",
+    "parameters": "- `HmaPeriod` — period for Hull Moving Average.\n- `CandleType` — type of candles to use.\n- `BuyOpen`, `SellOpen` — allow opening long/short positions.\n- `BuyClose`, `SellClose` — allow closing long/short positions."
+   },
+   "2103": {
+    "id": 2103,
+    "name": "Color Schaff DeMarker Trend Cycle",
+    "family": "trend",
+    "overview": "The **Color Schaff DeMarker Trend Cycle Strategy** uses a custom oscillator derived from fast and slow DeMarker values. The indicator applies two stochastic steps to create a cycle value that oscillates between -100 and +100. Colors are assigned based on the level and slope of the oscillator, which are then used to generate trading signals.\n\nThe strategy enters long positions when the oscillator exits the upper zone and leaves short positions. It opens short positions when the oscillator leaves the lower zone and exits long positions. The idea is to react to momentum changes at extreme levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous color > 5 and current color < 6.\n  - **Short**: Previous color < 2 and current color > 1.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: Color < 2 when a long position is open.\n  - **Short**: Color > 5 when a short position is open.\n- **Stops**: No explicit stop-loss or take-profit.\n- **Default Values**:\n  - `FastDeMarker` = 23\n  - `SlowDeMarker` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: DeMarker, Highest, Lowest\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous color > 5 and current color < 6.\n  - **Short**: Previous color < 2 and current color > 1.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - **Long**: Color < 2 when a long position is open.\n  - **Short**: Color > 5 when a short position is open.\n- **Stops**: No explicit stop-loss or take-profit.\n- **Default Values**:\n  - `FastDeMarker` = 23\n  - `SlowDeMarker` = 50\n  - `Cycle` = 10\n  - `HighLevel` = 60\n  - `LowLevel` = -60\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: DeMarker, Highest, Lowest\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "343": {
+    "id": 343,
+    "name": "Keltner Reinforcement Learning Signal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 118%. It performs best in the stocks market.\n\nSignals trigger when Keltner confirms trend changes on intraday (15m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like EmaPeriod, AtrPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2m`\n  - `StopLossAtr = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Reinforcement\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `EmaPeriod = 20`\n  - `AtrPeriod = 14`\n  - `AtrMultiplier = 2m`\n  - `StopLossAtr = 2m`\n  - `CandleType = TimeSpan.FromMinutes(15).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Keltner, Reinforcement\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (15m)\n  - Seasonality: No\n  - Neural Networks: Yes\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3935": {
+    "id": 3935,
+    "name": "HarVesteR MACD Trend",
+    "family": "trend",
+    "overview": "The HarVesteR strategy is a trend-following system converted from the original MetaTrader advisor. It combines MACD momentum confirmation with two simple moving averages that define the trend direction and manage trailing exits. An optional ADX filter keeps trading activity focused on strong directional moves.\n\nThe default configuration mirrors the published Expert Advisor: MACD(12, 24, 9), a 50-period management SMA, a 100-period trend filter SMA, and a staged take-profit that halves the position once price travels twice the initial risk.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Fast EMA` | Short EMA period used inside the MACD calculation. | 12 |\n| `Slow EMA` | Long EMA period used inside the MACD calculation. | 24 |\n| `Signal EMA` | Smoothing period for the MACD signal line. | 9 |\n| `MACD Confirmation Bars` | Maximum candles between opposite MACD readings required before a new entry. | 6 |\n| `Trend SMA` | Length of the management SMA that guards trailing exits. | 50 |\n| `Filter SMA` | Length of the directional SMA used to arm long/short setups. | 100 |\n| `Offset (points)` | Offset (in instrument points) added or subtracted when comparing price with the SMAs. | 10 |\n| `Stop Bars` | Number of past candles considered when setting the initial stop. | 6 |\n| `Risk Multiplier` | Multiplier applied to the initial risk distance to trigger the partial take-profit. | 2.0 |\n| `Use ADX` | Enables the ADX>50 trend-strength filter. | Disabled |\n| `ADX Period` | ADX lookback used when the filter is active. | 14 |\n| `Candle Type` | Candle series supplied to the indicators (defaults to 1-hour bars). | 1H time-frame |"
+   },
+   "1654": {
+    "id": 1654,
+    "name": "MACD Sample",
+    "family": "trend",
+    "overview": "This strategy replicates the classic MetaTrader MACD Sample expert.\nIt uses a MACD cross combined with an EMA trend filter, separate take-profit and stop-loss levels for long and short trades, and an optional trailing stop. Trading is allowed only within a configurable time window.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MACD line is below zero and crosses above the signal line while EMA is rising.\n  - **Short**: MACD line is above zero and crosses below the signal line while EMA is falling.\n- **Exit Criteria**:\n  - Opposite MACD cross.\n  - Reaching individual take-profit or stop-loss targets.\n  - Trailing stop hit.\n- **Long/Short**: Both.\n- **Default Values**:\n  - `EMA Period` = 26\n  - `MACD Open Level` = 3\n  - `MACD Close Level` = 2\n  - `Take Profit Long` = 50\n  - `Take Profit Short` = 75\n  - `Stop Loss Long` = 80\n  - `Stop Loss Short` = 50\n  - `Trailing Stop` = 30\n  - Trading hours: 4 to 19 UTC\n- **Indicators**: MACD, EMA\n- **Timeframe**: 1 hour candles by default\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD line is below zero and crosses above the signal line while EMA is rising.\n  - **Short**: MACD line is above zero and crosses below the signal line while EMA is falling.\n- **Exit Criteria**:\n  - Opposite MACD cross.\n  - Reaching individual take-profit or stop-loss targets.\n  - Trailing stop hit.\n- **Long/Short**: Both.\n- **Default Values**:\n  - `EMA Period` = 26\n  - `MACD Open Level` = 3\n  - `MACD Close Level` = 2\n  - `Take Profit Long` = 50\n  - `Take Profit Short` = 75\n  - `Stop Loss Long` = 80\n  - `Stop Loss Short` = 50\n  - `Trailing Stop` = 30\n  - Trading hours: 4 to 19 UTC\n- **Indicators**: MACD, EMA\n- **Timeframe**: 1 hour candles by default",
+    "parameters": ""
+   },
+   "2495": {
+    "id": 2495,
+    "name": "Autotrade Pending Stops",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert advisor *Autotrade (barabashkakvn's edition)*. It continuously maintains two symmetric stop entry orders around the current market price. Whenever the market remains flat and no position is open, the strategy refreshes both pending orders. When a stop order fills, the position is actively monitored: exits are triggered once the price action stabilizes or when an absolute profit/loss threshold is met. The implementation uses the high-level StockSharp API as required by the project guidelines.",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

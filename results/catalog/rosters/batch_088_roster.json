@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 994,
+      "name": "Long Term Profitable Swing",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,16),ema(close,30)) and rsi(close,9) > 50",
+      "exit_long": "crossbelow(ema(close,16),ema(close,30)) or rsi(close,9) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(16)/EMA(30) crossover and RSI(9)>50 entry are direct, with the inverse conditions as the long exit. ATR(21) 8x/11x stops and target are dynamic and cannot be encoded as fixed percentage fields."
+    },
+    {
+      "id": 2265,
+      "name": "Q2MA Cross",
+      "family": "trend",
+      "entry_long": "crossbelow(sma(close,8),sma(open,8))",
+      "exit_long": "crossabove(sma(close,8),sma(open,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(8) of close versus open follows the documented crossover direction exactly, including the stated bullish branch. The source's tick offsets (1000/2000), H4 timeframe, and opposite-side permissions are not percentage/DSL fields."
+    },
+    {
+      "id": 3276,
+      "name": "Lavika100 Strategy (StockSharp)",
+      "family": "trend",
+      "entry_long": "ema(close,9) > ema(close,21) and roc(close,5) > 0",
+      "exit_long": "ema(close,9) < ema(close,21) or roc(close,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9)/EMA(21) and ROC(5) are explicit fallbacks for the undocumented H1/H4 RAVI filter and signal reversal. Multi-timeframe RAVI, money modes, trailing points, and position permissions are not available."
+    },
+    {
+      "id": 3130,
+      "name": "Exp Color TSI Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) line/signal crossover is a practical proxy for the documented double-smoothed TSI swing reversal. Color TSI phases, trigger shift, SignalBar, and 1000/2000-point protection are not directly representable."
+    },
+    {
+      "id": 1050,
+      "name": "MFS 3 Bars Pattern",
+      "family": "trend",
+      "entry_long": "close > open and roc(close,3) > 0 and sma(close,20) > sma(close,50) and close > sma(close,20)",
+      "exit_long": "close < sma(close,20) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A three-bar bullish recovery with SMA(20)>SMA(50) approximates the ignite, pullback, and confirmation sequence. The exact candle bodies, short/medium/long downtrend condition, ignite-low stop, and risk-reward target are not expressible."
+    },
+    {
+      "id": 551,
+      "name": "BB RSI Trailing Stop",
+      "family": "breakout",
+      "entry_long": "close < bb_lower(close,25,2) and crossabove(rsi(close,14),33)",
+      "exit_long": "close > bb_mid(close,25) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A lower Bollinger(25,2) pierce with an RSI(14) recross above 33 represents the long confirmation; the middle band and overbought RSI provide exits. Point-based initial stop and conditional trailing management remain null."
+    },
+    {
+      "id": 1415,
+      "name": "TFM",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,2)",
+      "exit_long": "close < donchian_low_prev(low,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A two-bar prior high break approximates the multiplied-timeframe level and its opposite low exit. The 1-minute multiplier, optional short flag, reversal mode, and session timing are not available."
+    },
+    {
+      "id": 1039,
+      "name": "MCOTs Intuition",
+      "family": "momentum",
+      "entry_long": "zscore(rsi(close,14),14) > 1 and roc(rsi(close,14),1) < 0",
+      "exit_long": "rsi(close,14) > 70 or zscore(rsi(close,14),14) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI momentum above one standard deviation while its ROC turns negative approximates strong-but-exhausting momentum. The exact previous-momentum comparison, tick stop/target, and short exhaustion branch are unsupported."
+    },
+    {
+      "id": 3767,
+      "name": "Zs1 Forex Instruments",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is a hedged martingale grid driven by Level1 zones rather than a deterministic long indicator, so the impossible guard avoids inventing a signal. Basket state, pip zones, and volume constraints are outside the DSL."
+    },
+    {
+      "id": 454,
+      "name": "Williams VIX Fix",
+      "family": "mean_reversion",
+      "entry_long": "atr(high,low,close,20) > sma(atr(high,low,close,20),50) and close < bb_lower(close,20,2)",
+      "exit_long": "atr(high,low,close,20) < sma(atr(high,low,close,20),50) and close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR(20) above its 50-bar mean and a lower Bollinger(20,2) break approximate the Williams VIX Fix fear spike; the inverse ATR/upper-band condition exits. The synthetic VIX inversion and percentile calculations are not directly available."
+    }
+  ]
+}

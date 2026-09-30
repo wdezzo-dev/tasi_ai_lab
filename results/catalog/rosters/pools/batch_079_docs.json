@@ -1,0 +1,98 @@
+{
+ "batch_079": {
+  "strategy_ids": [
+   538,
+   4091,
+   1792,
+   3381,
+   3924,
+   2496,
+   2489,
+   621,
+   2881,
+   3844
+  ],
+  "docs": {
+   "538": {
+    "id": 538,
+    "name": "Automatic Trendlines",
+    "family": "trend",
+    "overview": "Builds dynamic support and resistance trendlines by connecting recent pivot highs and lows. A long signal occurs when price closes above the resistance line, while a short signal fires when price drops below the support line.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses above resistance trendline.\n  - **Short**: Close crosses below support trendline.\n- **Exit Criteria**:\n  - Opposite signal or position reversal.\n- **Indicators**:\n  - Pivot-based trendlines.\n- **Stops**: None.\n- **Default Values**:\n  - `LeftBars` = 100\n  - `RightBars` = 15\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: pivot trendlines\n  - Stops: none\n  - Complexity: Low\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses above resistance trendline.\n  - **Short**: Close crosses below support trendline.\n- **Exit Criteria**:\n  - Opposite signal or position reversal.\n- **Indicators**:\n  - Pivot-based trendlines.\n- **Stops**: None.\n- **Default Values**:\n  - `LeftBars` = 100\n  - `RightBars` = 15\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: pivot trendlines\n  - Stops: none\n  - Complexity: Low",
+    "parameters": ""
+   },
+   "4091": {
+    "id": 4091,
+    "name": "TrainYourself",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor **TrainYourself-V1_1-1**. It recreates the channel-building and breakout logic while replacing the graphical buttons of the MT4 script with explicit method calls. The algorithm continuously rebuilds a Donchian-style price channel and fires a trade once price escapes the channel after first consolidating inside it.\n\n## Trading logic\n\n1. **Channel construction**\n   - A `DonchianChannels` indicator with `ChannelLength` periods is evaluated on every finished candle of the selected `CandleType`.\n   - The raw upper and lower bands are expanded with an extra MetaTrader-like buffer: `BufferPoints` multiplied by the instrument `PriceStep`. This reproduces the original script that initially placed the trendlines 50 points away from the current bid/ask before sliding them over recent highs and lows.\n   - The resulting `UpperBand`/`LowerBand` values are exposed as read-only properties so they can be displayed in custom dashboards.\n\n2. **Arming condition**\n   - The breakout engine stays disarmed while a position is open or when `EnableTrendTrade` is false.\n   - When there is no position, price must close inside the channel with an additional margin of `ActivationPoints` * `PriceStep` from both boundaries. Only then `_isArmed` becomes `true`, mimicking the MetaTrader flag `q=1` that was set when price moved back into the channel.\n\n3. **Breakout execution**\n   - Once armed, a close at or above the `UpperBand` places a market buy order (if `AllowBuyOpen` is enabled). A close at or below the `LowerBand` places a market sell order (respecting `AllowSellOpen`).\n   - After an order is placed the strategy disarms itself until price re-enters the channel without any open position.\n\n4. **Risk management**\n   - `StartProtection` configures automatic protective orders. Distances are calculated by multiplying `TakeProfitPoints` and `StopLossPoints` with the current `PriceStep`. If the broker does not report a step, a fallb",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | `30m` time frame | Primary candle subscription used for all calculations. |\n| `ChannelLength` | `20` | Number of candles analysed by the Donchian channel. |\n| `BufferPoints` | `50` | Extra MetaTrader points added around the last close before finalising the channel. |\n| `ActivationPoints` | `2` | Margin (in points) that price must keep away from the channel edges before a breakout can be armed. |\n| `StopLossPoints` | `100` | Stop-loss distance in points; converted to absolute price by multiplying with `PriceStep`. |\n| `TakeProfitPoints` | `100` | Take-profit distance in points; converted to absolute price using `PriceStep`. |\n| `EnableTrendTrade` | `true` | Enables automatic breakout trading. When `false` only the manual helper methods can open/close positions. |\n| `Volume` | `1` | Order size for both automatic and manual trades. |"
+   },
+   "1792": {
+    "id": 1792,
+    "name": "Magna Rapax Copper",
+    "family": "trend",
+    "overview": "This strategy replicates the \"rainbow\" moving average system from the original MQL expert.\nIt uses eleven exponential moving averages together with MACD and ADX filters.\n\n## How it works\n\n- Calculate EMA(2), EMA(3), EMA(5), EMA(8), EMA(13), EMA(21), EMA(34), EMA(55), EMA(89), EMA(144) and EMA(233) on close prices.\n- Calculate MACD (Fast, Slow, Signal) and use the signal line.\n- Calculate ADX to measure trend strength.\n- **Buy** when:\n  - MACD signal line is above zero.\n  - All EMAs are strictly ascending (each faster EMA above the slower one).\n  - ADX value is above the threshold.\n- **Sell** when:\n  - MACD signal line is below zero.\n  - All EMAs are strictly descending.\n  - ADX value is above the threshold.\n\nPositions are reversed when an opposite signal appears.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `FastMacd` | Fast EMA period for MACD. |\n| `SlowMacd` | Slow EMA period for MACD. |\n| `SignalPeriod` | Signal line period for MACD. |\n| `AdxPeriod` | Period for ADX indicator. |\n| `AdxThreshold` | Minimum ADX value required to trade. |\n| `CandleType` | Candle timeframe used for calculations. |\n\n## Notes\n\n- Strategy uses market orders via `BuyMarket` and `SellMarket`.\n- Only one position is kept at a time; an opposite signal reverses the position.\n- This is a direct conversion of the original MQL strategy without the optional martingale logic.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `FastMacd` | Fast EMA period for MACD. |\n| `SlowMacd` | Slow EMA period for MACD. |\n| `SignalPeriod` | Signal line period for MACD. |\n| `AdxPeriod` | Period for ADX indicator. |\n| `AdxThreshold` | Minimum ADX value required to trade. |\n| `CandleType` | Candle timeframe used for calculations. |"
+   },
+   "3381": {
+    "id": 3381,
+    "name": "Multi Currency Template",
+    "family": "trend",
+    "overview": "The **Multi Currency Template Strategy** is a conversion of the MetaTrader 4 expert advisor *Multi Currency Template v4*. It reproduces the original EMA crossover entry logic together with martingale style averaging, pip based protective levels and trailing management using the StockSharp high-level API. The default time frame is five-minute candles, but it can be changed through a parameter.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| Order Method | Trade direction (Buy & Sell, Buy only, Sell only). | Buy & Sell |\n| Volume (lots) | Base market order size. | 0.01 |\n| Stop Loss (pips) | Protective stop distance in MetaTrader pips. | 50 |\n| Take Profit (pips) | Profit target distance in MetaTrader pips. | 100 |\n| Trailing Stop (pts) | Activation threshold for the trailing stop in MetaTrader points. | 15 |\n| Trailing Step (pts) | Minimal improvement needed before the trailing stop is moved. | 5 |\n| Enable Martingale | Enables averaging down/up with increasing volume. | true |\n| Lot Multiplier | Volume multiplier applied to every new averaging order. | 1.2 |\n| Step (pts) | MetaTrader point distance before placing the next averaging order. | 150 |\n| Average Take Profit | Switch between fixed or averaged take profit when multiple orders exist. | true |\n| Average TP Offset (pts) | MetaTrader point offset applied to the averaged take profit. | 20 |\n| Candle Type | Candle type (time frame) used for indicator calculations. | 5-minute candles |"
+   },
+   "3924": {
+    "id": 3924,
+    "name": "Up3x1 Shifted SMA Strategy (MT4 Conversion)",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 4 expert advisor `up3x1.mq4` located in `MQL/8097`.\n- Implements the triple simple moving average crossover with a positive chart shift exactly as in the original script.\n- Processes only completed candles to emulate the `Volume[0] > 1` guard that forced the expert to evaluate once per bar.\n- Risk management features include take profit, stop loss, dynamic lot reduction after losing trades and an optional trailing stop.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `FastPeriod` | 24 | Length of the fastest shifted SMA. |\n| `MediumPeriod` | 60 | Length of the medium shifted SMA. |\n| `SlowPeriod` | 120 | Length of the slow shifted SMA. |\n| `TakeProfitPoints` | 150 | Distance in price points between the entry price and the take profit. |\n| `StopLossPoints` | 100 | Distance in price points between the entry price and the stop loss. |\n| `TrailingStopPoints` | 100 | Optional trailing stop distance in points (set to 0 to disable). |\n| `BaseVolume` | 0.1 | Fallback trade size and minimum volume after reductions. |\n| `RiskFraction` | 0.00002 | Fraction of the portfolio value used to compute dynamic volume. |\n| `CandleType` | 1 hour time frame | Candle series used to feed indicators. |"
+   },
+   "2496": {
+    "id": 2496,
+    "name": "Big Dog Range Breakout",
+    "family": "breakout",
+    "overview": "The **Big Dog** strategy searches for a narrow consolidation window inside the London morning session and trades breakouts from that box. The original MQL expert advisor placed stop orders once the price range between the specified `StartHour` and `StopHour` stayed within a configurable number of points. The StockSharp port keeps the same idea and uses market orders when the breakout happens, accompanied by dynamic stop-loss and take-profit levels derived from the consolidation extremes.\n\n## Trading Logic\n\n1. Collect finished candles between `StartHour` (inclusive) and `StopHour` (exclusive by default) to build the daily range.\n2. Ignore the session if the difference between the session high and low exceeds `MaxRangePoints` (converted into price units using the adjusted point size).\n3. After the session closes, check the distance between the latest best ask/bid and the breakout levels. A setup is activated only if the market is at least `DistancePoints` away from the high (for long entries) or low (for short entries).\n4. When price breaks through the prepared high or low on a subsequent candle, enter with a market order sized by `OrderVolume` (automatically offsetting any opposite position).\n5. Immediately assign exits:\n   - Long trades use a stop-loss at the recorded session low and a take-profit placed `TakeProfitPoints` above the entry level.\n   - Short trades use a stop-loss at the recorded session high and a take-profit placed `TakeProfitPoints` below the entry level.\n6. On each finished candle the strategy monitors the high/low to decide whether the stop-loss or take-profit was reached and closes the position accordingly.\n7. At the beginning of a new trading day all cached levels are reset to prevent leftover orders from the previous session.\n\n> **Adjusted points.** The strategy converts point-based inputs into actual price distances by multiplying them by the instrument `PriceStep`. When the security has 3 or 5 decimals the value is additionally scaled by 10 ",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `StartHour` | Hour of day (0-23) when the consolidation window starts. | `14` |\n| `StopHour` | Hour of day (0-23) when the consolidation window stops. | `16` |\n| `MaxRangePoints` | Maximum height of the session box measured in adjusted points. | `50` |\n| `TakeProfitPoints` | Take-profit distance in adjusted points from the breakout price. | `50` |\n| `DistancePoints` | Minimum distance between current price and breakout level before activating orders. | `20` |\n| `OrderVolume` | Volume of each breakout trade (also applied to strategy `Volume`). | `1` |\n| `CandleType` | Candle type used for building the session box. One-hour time frame by default. | `1h` |"
+   },
+   "2489": {
+    "id": 2489,
+    "name": "Master MM Droid",
+    "family": "breakout",
+    "overview": "The Master MM Droid strategy is a multi-module port of the original MetaTrader 5 expert advisor. The StockSharp implementation keeps the core ideas of the legacy robot while using the high-level API for candle subscriptions, indicator binding and order management. Four independent money-management blocks can be switched on or off, allowing the strategy to mix momentum entries with scheduled breakout orders and weekly gap plays.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `CandleType` | Time frame used for indicator calculations and time-window checks. |\n| `TimeShiftHours` | Session shift applied to candle timestamps so the hourly schedule matches the original EA. |\n| `StartHour` | Base Monday start hour for the weekly module (before applying the shift). |\n| `EnableRsiModule`, `EnableBoxModule`, `EnableWeeklyModule`, `EnableGapModule` | Toggles for the four independent blocks. |\n| `RsiPeriod`, `RsiLowerLevel`, `RsiUpperLevel` | RSI calculation and trigger levels. |\n| `RsiMaxEntries`, `RsiPyramidPoints` | Pyramiding controls for the RSI block. |\n| `RsiStopLossPoints`, `RsiTrailingPoints` | Initial and trailing stop sizes (in points) for RSI-driven trades. |\n| `BoxEntryPoints`, `BoxTrailingPoints` | Breakout buffer and trailing distance for the box orders. |\n| `WeeklyEntryPoints`, `WeeklySetupEndHour`, `WeeklyTrailingPoints` | Weekly breakout configuration. |\n| `GapStopLossPoints`, `GapTrailingPoints` | Gap module protective stop and trailing distance. |\n\nAll point-based parameters are multiplied by the instrument `TickSize` to obtain price offsets so that the strategy adapts to different symbols."
+   },
+   "621": {
+    "id": 621,
+    "name": "CME Equity Futures Price Limits",
+    "family": "momentum",
+    "overview": "This strategy calculates daily price limit levels for CME equity futures. It captures a reference price at a specified hour and computes limit up/down (+/-5%) as well as -7%, -13%, and -20% limit-down levels. Results are written to the log for monitoring.\n\n## Parameters\n\n- **ManualReference** – manual reference price override (0 to disable).\n- **ShowLimitDownLevels** – enable logging of -7/-13/-20% levels.\n- **OffsetHour** – hour (0-23) to capture the reference price.\n- **CandleType** – candle type to process (default 1 minute).\n",
+    "details": "",
+    "parameters": "- **ManualReference** – manual reference price override (0 to disable).\n- **ShowLimitDownLevels** – enable logging of -7/-13/-20% levels.\n- **OffsetHour** – hour (0-23) to capture the reference price.\n- **CandleType** – candle type to process (default 1 minute)."
+   },
+   "2881": {
+    "id": 2881,
+    "name": "On Tick Market Watch",
+    "family": "volatility",
+    "overview": "The **On Tick Market Watch Strategy** replicates the behaviour of the MetaTrader script `scOnTickMarketWatch.mq5`. The original script continuously scans the Market Watch list and raises a custom event whenever a new tick arrives for any symbol, printing the bid price and spread information. This C# port converts that behaviour into a StockSharp high-level strategy that listens for Level1 updates and logs the tick information through the strategy logger.\n\nThe strategy is intentionally non-trading. Its purpose is to provide diagnostics or monitoring of incoming tick data across multiple instruments connected to the same connector. Because it relies on StockSharp's data subscriptions, the solution is event-driven and does not require manual delays or loops like the MQL version.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `SymbolsList` | `string` | `\"\"` | Comma-separated list of extra security identifiers (e.g. `AAPL@NASDAQ,MSFT@NASDAQ`) that should be observed in addition to the main `Strategy.Security`. Each identifier must exist in the current `SecurityProvider`. |"
+   },
+   "3844": {
+    "id": 3844,
+    "name": "Get Rich GBP Session Reversal",
+    "family": "mean_reversion",
+    "overview": "The **Get Rich or Die Trying GBP Strategy** is a high-frequency mean-reversion system that ported the MetaTrader 4 expert advisor \"Get Rich or Die Trying GBP\" to the StockSharp high-level API. The logic monitors a short rolling history of minute candles and opens trades near two predefined times of day when the most recent candles have mostly closed against the expected direction. This approach attempts to capture a quick retracement immediately after the London and New York sessions overlap.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `TakeProfitPoints` | 100 | Maximum profit distance (in price steps) monitored after the trailing logic. |\n| `PartialTakeProfitPoints` | 40 | Primary take-profit distance (in price steps) that replicates the original EA's early exit. |\n| `StopLossPoints` | 100 | Stop-loss distance (in price steps). |\n| `TrailingStopPoints` | 30 | Trailing stop distance (in price steps). |\n| `FixedVolume` | 1 | Base order volume in lots when money management is disabled. |\n| `UseMoneyManagement` | false | Enables dynamic position sizing based on account value and the configured risk. |\n| `RiskPercent` | 10 | Percentage of portfolio value to risk per trade when money management is active. |\n| `Lookback` | 18 | Number of finished candles used in the bullish/bearish count. |\n| `FirstEntryHour` | 22 | First trading hour before the hour shift correction. |\n| `SecondEntryHour` | 19 | Second trading hour before the hour shift correction. |\n| `HourShift` | 2 | Time-zone correction applied to both trading hours. |\n| `EntryWindowMinutes` | 5 | Width of the entry window (minutes from the start of the qualifying hour). |\n| `CandleType` | 1-minute timeframe | Candle type to subscribe to; can be replaced with any other periodic candle type. |"
+   }
+  }
+ }
+}

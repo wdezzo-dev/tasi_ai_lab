@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1322,
+      "name": "SMC",
+      "family": "trend",
+      "entry_long": "close < (donchian_high(high,8) + donchian_low(low,8)) / 2 and close > sma(close,50)",
+      "exit_long": "close > (donchian_high(high,8) + donchian_low(low,8)) / 2 and close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 8-bar Donchian midpoint approximates premium/discount zones and SMA(50) supplies the documented trend filter. Order-block support/resistance and the short branch are not directly expressible; no stops are documented."
+    },
+    {
+      "id": 2763,
+      "name": "NTK 07 Range Trader",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,20) and close > ema(close,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break with EMA(20) confirmation approximates the range-edge stop-order branch. The range-mode state, pending orders, session hours, pyramiding, and point-based stops/targets are unavailable."
+    },
+    {
+      "id": 1922,
+      "name": "Exponential MA Rounding Channel",
+      "family": "trend",
+      "entry_long": "close > ema(close,12) + 1 * atr(high,low,close,12)",
+      "exit_long": "close < ema(close,12) - 1 * atr(high,low,close,12)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12) plus/minus one ATR(12) approximates the rounded exponential-MA channel and its opposite exit. Tick rounding, the 1000/2000-tick stop/target, and four-hour scheduling are not representable as percentage fields."
+    },
+    {
+      "id": 1604,
+      "name": "EMA 5-8-13 with ADX Filter",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5),ema(close,8)) and adx(high,low,close,14) > 20",
+      "exit_long": "close < ema(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(5)/EMA(8) crossover and the documented ADX threshold 20 are direct; EMA(13) supplies the exit. The opposite short exit and source timeframe details are omitted, and no stops are documented."
+    },
+    {
+      "id": 757,
+      "name": "Enhanced Ichimoku Cloud",
+      "family": "trend",
+      "entry_long": "sma(close,7) > sma(close,211) and close > donchian_high_prev(high,25) and close > ema(close,171)",
+      "exit_long": "sma(close,7) < sma(close,211)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(7)/SMA(211) and the EMA(171) filter approximate Ichimoku span, Tenkan/Kijun, and long-term trend agreement; the prior 25-bar high is the breakout. Displacement, lagging spans, and start/end dates are not DSL fields."
+    },
+    {
+      "id": 4221,
+      "name": "DVD 100-50 Cent",
+      "family": "breakout",
+      "entry_long": "close < sma(close,20) and close > donchian_low_prev(low,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A pullback toward SMA(20) that remains above the prior 20-bar low approximates a contrarian limit-order setup. Four-timeframe scoring, 100-level grid placement, order expiry, and 210/18-pip protection are not representable."
+    },
+    {
+      "id": 3791,
+      "name": "Plan X Breakout",
+      "family": "breakout",
+      "entry_long": "close > sma(close,20) * 1.0025",
+      "exit_long": "close < sma(close,20) * 0.9975",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 0.25% distance from SMA(20) is a normalized proxy for the documented 25-pip long target; the inverse band is the short-style exit reference. Anchor/session timing, instrument pip conversion, initial stop, and trailing steps are unavailable."
+    },
+    {
+      "id": 2059,
+      "name": "Simple Trailing Stop",
+      "family": "momentum",
+      "entry_long": "close > 0",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The first valid positive-price bar approximates the source's one-time initial long entry, while falling below EMA(20) proxies a trailing stop. The first-bar state, fixed TrailPoints distance, and continuous trailing updates are not expressible."
+    },
+    {
+      "id": 3708,
+      "name": "RRS Non-Directional",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy alternates hedged basket modes and has no deterministic long market signal in the single OHLCV series, so the impossible guard avoids fabrication. Virtual/classic protection, risk shutdown, and order-mode state are outside the DSL."
+    },
+    {
+      "id": 2242,
+      "name": "Bezier Standard Deviation",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(std(close,9),sma(std(close,9),20))",
+      "exit_long": "crossbelow(std(close,9),sma(std(close,9),20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A standard-deviation(9) cross above its rolling mean approximates expansion from a volatility trough, with the inverse cross as the opposite exit. The local-neighbor minimum/maximum test and four-hour scheduling are not directly available."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "strategy_id": 1627,
+  "ticker": "2030",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 1627,
+    "name": "ZeroLag MACD Cross",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,3,34),macd_signal(close,4,34,2))",
+    "exit_long": "crossbelow(macd(close,2,34),macd_signal(close,2,34,2))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented FastEmaLength 2, SlowEmaLength 34 and SignalEmaLength 2 are used directly, and crossabove/crossbelow already enforce the documented UseFreshSignal requirement. Session hours 9-15, the KillDay/KillHour forced exit and Volume are not expressible, and the docs state there are no stops."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-07-18",
+        "2024-07-31"
+      ],
+      "bars_in_window": 5810,
+      "engine_win_ret": 1455.3397125739693,
+      "alpha": 1447.8545996936116,
+      "benchmark_ret": 7.485112880357727,
+      "trades": 471,
+      "win_rate": 0.4989384288747346,
+      "sharpe": 1.0362863473525128,
+      "max_drawdown": -0.42246615056662873,
+      "profit_factor": 2.00787474755154
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.3233964778110663,
+      "alpha": 0.6630068674214559,
+      "benchmark_ret": -0.3396103896103896,
+      "trades": 26,
+      "win_rate": 0.5384615384615384,
+      "sharpe": 1.5536534720078055,
+      "max_drawdown": -0.0790156820913479,
+      "profit_factor": 2.4886317516905603
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.12712707227167153,
+      "alpha": 0.07894614798455257,
+      "benchmark_ret": 0.048180924287118954,
+      "trades": 15,
+      "win_rate": 0.7333333333333333,
+      "sharpe": 0.9155430379699662,
+      "max_drawdown": -0.09555470773911268,
+      "profit_factor": 2.1781111300613705
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-07-18",
+        "2024-07-31"
+      ],
+      "bars_in_window": 5810,
+      "engine_win_ret": 137.4530436725987,
+      "alpha": 129.967930792241,
+      "benchmark_ret": 7.485112880357727,
+      "trades": 471,
+      "win_rate": 0.44798301486199577,
+      "sharpe": 0.7367410936785375,
+      "max_drawdown": -0.4904306751590427,
+      "profit_factor": 1.5580212212657805
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.16207783194390268,
+      "alpha": 0.5016882215542923,
+      "benchmark_ret": -0.3396103896103896,
+      "trades": 26,
+      "win_rate": 0.34615384615384615,
+      "sharpe": 0.8509765379713137,
+      "max_drawdown": -0.09747595345646898,
+      "profit_factor": 1.5780157847765053
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.04560293017934858,
+      "alpha": -0.002577994107770376,
+      "benchmark_ret": 0.048180924287118954,
+      "trades": 15,
+      "win_rate": 0.5333333333333333,
+      "sharpe": 0.40345052434463813,
+      "max_drawdown": -0.10477374025258346,
+      "profit_factor": 1.3544139670626936
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

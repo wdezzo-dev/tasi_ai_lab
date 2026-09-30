@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1405,
+      "name": "Trading The Channel",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The configurable strategy rules are represented by its breakout mode using a 20-bar prior Donchian channel, with the opposite channel cross as exit. Linear-regression slopes, zone percentages, range source, and trend-filter options are not available in the DSL."
+    },
+    {
+      "id": 1918,
+      "name": "Trend Collector",
+      "family": "trend",
+      "entry_long": "ema(close,4) > ema(close,204) and rsi(close,14) < 30 and atr(high,low,close,14) < 2",
+      "exit_long": "ema(close,4) < ema(close,204) or rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(4/204), ATR(14)<2, and stochastic lower/upper levels are retained, with RSI(14)<30/>70 as the stochastic proxy. The trading-hour window and 5-minute timeframe are not available."
+    },
+    {
+      "id": 702,
+      "name": "Dskyz (DAFE) MAtrix with ATR-Powered Precision",
+      "family": "trend",
+      "entry_long": "ema(close,10) > ema(close,30) and atr(high,low,close,14) > sma(atr(high,low,close,14),20) and volume_ratio(volume,20) > 1",
+      "exit_long": "ema(close,10) < ema(close,30) or atr(high,low,close,14) < sma(atr(high,low,close,14),20) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(10/30), ATR expansion, and volume_ratio(20) are explicit fallbacks because the source lists parameter names without values. MA types, minimum volume, time window, and ATR-based trailing/profit controls are omitted."
+    },
+    {
+      "id": 169,
+      "name": "Hull Ma Stochastic",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),sma(close,9)) and rsi(close,14) < 30",
+      "exit_long": "crossbelow(ema(close,9),sma(close,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9) turning above a 9-bar average and RSI(14)<30 proxy Hull MA turning up with stochastic oversold. The documented 2x ATR stop is not a percentage field; Hull and stochastic components are unavailable."
+    },
+    {
+      "id": 3241,
+      "name": "Pure Price Action Fractal",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,10) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < donchian_low_prev(low,10) or crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior-range high break with MACD(12,26,9) agreement is the long proxy for fractal retest continuation. Multi-timeframe momentum, monthly MACD, point stops/targets, and trailing controls are not expressible."
+    },
+    {
+      "id": 779,
+      "name": "Fancy Bollinger Bands",
+      "family": "breakout",
+      "entry_long": "crossabove(close,bb_upper(close,20,2))",
+      "exit_long": "crossbelow(close,bb_lower(close,20,2))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,2) is an explicit fallback for the unspecified period and deviation, preserving the upper-band long breakout and reverse lower-band exit. No stops are documented."
+    },
+    {
+      "id": 1196,
+      "name": "Projection",
+      "family": "breakout",
+      "entry_long": "crossabove(close,open + 0.01 * close)",
+      "exit_long": "crossbelow(close,open)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The current open plus a 1% price proxy is used for the projected upper level; 1% is an explicit fallback because the average-change calculation is unavailable. Daily averaging, the 0.2 target multiple, and average-change stops are omitted."
+    },
+    {
+      "id": 4024,
+      "name": "App Price Level Cross",
+      "family": "momentum",
+      "entry_long": "crossabove(close,0)",
+      "exit_long": "crossbelow(close,0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented default AppPrice is 0, so a close crossing above and below that horizontal level is translated directly. The 140/180 price-point protections, short-only mode, and money management are not percentage exits."
+    },
+    {
+      "id": 3577,
+      "name": "XP Trade Manager Grid (C#)",
+      "family": "volatility",
+      "entry_long": "close > ema(close,20) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,20) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) with normalized volume expansion is a deterministic long-side proxy for the grid's initial directional leg. Layered orders, partial targets, break-even clusters, point spacing, and account-risk controls are stateful and omitted."
+    },
+    {
+      "id": 4000,
+      "name": "Master Mind Triple WPR",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,26) < 30 and rsi(close,27) < 30 and rsi(close,29) < 30 and rsi(close,30) < 30",
+      "exit_long": "rsi(close,26) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Four RSI lookbacks (26/27/29/30) below 30 are an explicit multi-WPR oversold proxy for the documented deep-selloff entry. Williams %R, 2000-step stop, and trailing/step parameters are unavailable or not percentage fields."
+    }
+  ]
+}

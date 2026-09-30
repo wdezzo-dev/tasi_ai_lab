@@ -1,0 +1,98 @@
+{
+ "batch_098": {
+  "strategy_ids": [
+   2624,
+   1264,
+   3792,
+   749,
+   2093,
+   1549,
+   2120,
+   2275,
+   2145,
+   619
+  ],
+  "docs": {
+   "2624": {
+    "id": 2624,
+    "name": "NRTR ATR Stop",
+    "family": "trend",
+    "overview": "The NRTR ATR Stop strategy reproduces the behaviour of the MetaTrader expert `Exp_NRTR_ATR_STOP` using StockSharp's high-level API. It tracks the Non-Repainting Trailing Reverse (NRTR) levels built from the Average True Range (ATR). When price crosses the opposite trailing stop the trend flips, generating a fresh market entry while also closing any open position in the previous direction.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `AtrPeriod` | Number of candles used for ATR calculation. |\n| `Coefficient` | Multiplier applied to the ATR value when constructing the trailing stops. |\n| `SignalBar` | Number of fully closed candles to wait before acting on a stored signal. Set to `0` to trade immediately on the current candle. |\n| `CandleType` | Time frame of the incoming candles. |\n| `EnableLongEntry` | Allow opening long positions on buy signals. |\n| `EnableShortEntry` | Allow opening short positions on sell signals. |\n| `EnableLongExit` | Allow closing long positions when a sell signal occurs. |\n| `EnableShortExit` | Allow closing short positions when a buy signal occurs. |"
+   },
+   "1264": {
+    "id": 1264,
+    "name": "RSI Buy Sell Force",
+    "family": "trend",
+    "overview": "The strategy calculates RSI on the incoming candles and smooths it with an EMA.\nIt derives two lines, `cc` and `bb`, representing buying and selling pressure.\nA long position is opened when `cc` crosses above `bb`, while a short position is opened when `cc` crosses below `bb`.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3792": {
+    "id": 3792,
+    "name": "PivotEMA3RLHv4",
+    "family": "trend",
+    "overview": "PivotEMA3RLHv4 is a trend-following strategy that combines the daily pivot level with short-term momentum filters. It tracks a 3-period exponential moving average (EMA) calculated on candle open prices and compares it against the same EMA computed on closing prices. The setup is validated with Heiken Ashi candles to confirm direction and with multiple Average True Range (ATR) measurements to ensure that volatility is expanding. The strategy trades a single instrument on the selected intraday timeframe and always waits for the current candle to finish before making a decision.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `CandleType` | Working timeframe for the strategy candles. |\n| `StopLossPips` | Initial stop distance in pips from the entry price. Set to zero to disable. |\n| `TakeProfitPips` | Profit target distance in pips. Set to zero to disable. |\n| `UseTrailingStop` | Enables or disables trailing stop management. |\n| `TrailingStopType` | Trailing mode: 1 keeps a fixed distance, 2 activates after price moves by `TrailingStopPips`, 3 uses the multi-stage ladder described below. |\n| `TrailingStopPips` | Distance (in pips) used by trailing type 2. |\n| `FirstMovePips` / `FirstStopLossPips` | Trigger distance and resulting stop offset for the first stage of trailing type 3. |\n| `SecondMovePips` / `SecondStopLossPips` | Trigger distance and resulting stop offset for the second stage of trailing type 3. |\n| `ThirdMovePips` / `TrailingStop3Pips` | Trigger distance and dynamic trailing distance for the final stage of trailing type 3. |"
+   },
+   "749": {
+    "id": 749,
+    "name": "EMA Trend Heikin Ashi Entry",
+    "family": "trend",
+    "overview": "Strategy using Bollinger Bands on Heikin Ashi candles with a higher timeframe EMA trend filter. Buys after consecutive bearish Heikin Ashi candles touching the lower band followed by a bullish candle above it when the higher timeframe fast EMA is above the slow EMA. Sells in reverse.\n\nAfter entering, a first target equal to the risk is taken and the stop is trailed using the previous candle's extremes.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: at least two bearish HA candles touching lower band, then bullish above it with higher timeframe fast EMA above slow EMA\n  - Short: at least two bullish HA candles touching upper band, then bearish below it with higher timeframe fast EMA below slow EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: first target at 1R then trailing stop at previous lows\n  - Short: first target at 1R then trailing stop at previous highs\n- **Stops**: Previous candle low/high\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2m\n  - `FastEmaPeriod` = 9\n  - `SlowEmaPeriod` = 21\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `HigherTimeframe` = TimeSpan.FromMinutes(180).TimeFrame()\n- **Filters**:\n  - Category: Pullback\n  - Direction: Both\n  - Indicators: Bollinger Bands, Heikin Ashi, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: at least two bearish HA candles touching lower band, then bullish above it with higher timeframe fast EMA above slow EMA\n  - Short: at least two bullish HA candles touching upper band, then bearish below it with higher timeframe fast EMA below slow EMA\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: first target at 1R then trailing stop at previous lows\n  - Short: first target at 1R then trailing stop at previous highs\n- **Stops**: Previous candle low/high\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2m\n  - `FastEmaPeriod` = 9\n  - `SlowEmaPeriod` = 21\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `HigherTimeframe` = TimeSpan.FromMinutes(180).TimeFrame()\n- **Filters**:\n  - Category: Pullback\n  - Direction: Both\n  - Indicators: Bollinger Bands, Heikin Ashi, EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2093": {
+    "id": 2093,
+    "name": "XDerivative",
+    "family": "trend",
+    "overview": "XDerivative Strategy tracks shifts in price momentum using a smoothed rate of change. The original MQL expert combines a rate-of-change calculation with Jurik smoothing to detect turning points. The StockSharp version reuses built-in indicators to implement the same concept.\n\nThe strategy computes the rate of change over `RocPeriod` bars and smooths it with a Jurik Moving Average of length `MaLength`. When the smoothed derivative forms a trough (previous value is lower than its predecessor and the current value rises above the previous) the strategy enters or flips to a long position. When a peak forms (previous value is higher than its predecessor and the current value falls below it) the strategy enters or flips to a short position. Protective stops manage exits.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Smoothed derivative turns up after a local minimum.\n  - Short: Smoothed derivative turns down after a local maximum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite derivative turn or protective stop.\n- **Stops**: Yes, percentage take-profit and stop-loss.\n- **Default Values**:\n  - `RocPeriod` = 34\n  - `MaLength` = 7\n  - `TakeProfitPercent` = 2\n  - `StopLossPercent` = 1\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RateOfChange, JurikMovingAverage\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Smoothed derivative turns up after a local minimum.\n  - Short: Smoothed derivative turns down after a local maximum.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite derivative turn or protective stop.\n- **Stops**: Yes, percentage take-profit and stop-loss.\n- **Default Values**:\n  - `RocPeriod` = 34\n  - `MaLength` = 7\n  - `TakeProfitPercent` = 2\n  - `StopLossPercent` = 1\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: RateOfChange, JurikMovingAverage\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1549": {
+    "id": 1549,
+    "name": "VWAP Breakout ATR",
+    "family": "breakout",
+    "overview": "Enters long when price crosses above VWAP and short when it crosses below. Stop-loss and take-profit are based on ATR multiples.\n\n## Parameters\n\n- **AtrLength**: ATR period.\n- **StopAtrMultiplier**: ATR multiplier for stop-loss.\n- **TakeAtrMultiplier**: ATR multiplier for take-profit.\n- **CandleType**: Type of candles.\n\n",
+    "details": "",
+    "parameters": "- **AtrLength**: ATR period.\n- **StopAtrMultiplier**: ATR multiplier for stop-loss.\n- **TakeAtrMultiplier**: ATR multiplier for take-profit.\n- **CandleType**: Type of candles."
+   },
+   "2120": {
+    "id": 2120,
+    "name": "Levels With Revolve",
+    "family": "breakout",
+    "overview": "This strategy opens trades when the market price crosses a user defined level. A buy order is placed when price rises through the level and a sell order when price falls through it. The system can optionally reverse an existing position if the opposite signal appears. It also supports optional stop loss and take profit distances measured in price units.\n\nThe strategy subscribes to candles and reacts only when a candle is fully formed. All calculations are performed on the close price of each finished candle. When reversal mode is enabled the current position is closed and a new position in the opposite direction is opened on the next signal.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: close price crosses above `LevelPrice`.\n  - Short: close price crosses below `LevelPrice`.\n- **Long/Short**: Both directions.\n- **Reversal**: Optional, controlled by `EnableReversal`.\n- **Stops**: Optional stop loss and take profit in price units.\n- **Default Values**:\n  - `LevelPrice` = 100.\n  - `StopLoss` = 0 (disabled).\n  - `TakeProfit` = 0 (disabled).\n  - `EnableReversal` = false.\n  - `CandleType` = 1 minute time frame.\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: close price crosses above `LevelPrice`.\n  - Short: close price crosses below `LevelPrice`.\n- **Long/Short**: Both directions.\n- **Reversal**: Optional, controlled by `EnableReversal`.\n- **Stops**: Optional stop loss and take profit in price units.\n- **Default Values**:\n  - `LevelPrice` = 100.\n  - `StopLoss` = 0 (disabled).\n  - `TakeProfit` = 0 (disabled).\n  - `EnableReversal` = false.\n  - `CandleType` = 1 minute time frame.\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: None\n  - Stops: Optional\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2275": {
+    "id": 2275,
+    "name": "RSI Sign",
+    "family": "momentum",
+    "overview": "This strategy converts the original **iRSISign** expert advisor from MQL5 into the StockSharp high level API. It combines the Relative Strength Index (RSI) with the Average True Range (ATR) to generate entry and exit signals.\n\nThe system listens to finished candles of a user defined timeframe. When the RSI crosses above the lower threshold it signals a potential bullish reversal and opens a long position or closes an existing short. Conversely, when RSI falls below the upper threshold it enters a short position or closes an active long. ATR is calculated but used only for additional context, mirroring the original indicator that displayed signal arrows offset by ATR.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Previous RSI value was below `DownLevel` and current RSI crosses above it.\n  - **Short**: Previous RSI value was above `UpLevel` and current RSI crosses below it.\n- **Long/Short**: Both directions are allowed and can be independently enabled.\n- **Exit Criteria**:\n  - Opposite signal closes the current position if the corresponding close flag is enabled.\n- **Stops**: Not implemented. Risk management can be added externally if needed.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `AtrPeriod` = 14\n  - `UpLevel` = 70\n  - `DownLevel` = 30\n  - `CandleType` = 1 hour candles\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Flexible\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `RsiPeriod` | RSI length. |\n| `AtrPeriod` | ATR length. |\n| `UpLevel` | RSI upper threshold generating sell signals. |\n| `DownLevel` | RSI lower threshold generating buy signals. |\n| `CandleType` | Candle timeframe used for calculations. |\n| `BuyOpen` | Enable opening of long positions. |\n| `SellOpen` | Enable opening of short positions. |\n| `BuyClose` | Allow closing of existing longs on opposite signal",
+    "details": "- **Entry Criteria**:\n  - **Long**: Previous RSI value was below `DownLevel` and current RSI crosses above it.\n  - **Short**: Previous RSI value was above `UpLevel` and current RSI crosses below it.\n- **Long/Short**: Both directions are allowed and can be independently enabled.\n- **Exit Criteria**:\n  - Opposite signal closes the current position if the corresponding close flag is enabled.\n- **Stops**: Not implemented. Risk management can be added externally if needed.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `AtrPeriod` = 14\n  - `UpLevel` = 70\n  - `DownLevel` = 30\n  - `CandleType` = 1 hour candles\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: RSI, ATR\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Flexible\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `RsiPeriod` | RSI length. |\n| `AtrPeriod` | ATR length. |\n| `UpLevel` | RSI upper threshold generating sell signals. |\n| `DownLevel` | RSI lower threshold generating buy signals. |\n| `CandleType` | Candle timeframe used for calculations. |\n| `BuyOpen` | Enable opening of long positions. |\n| `SellOpen` | Enable opening of short positions. |\n| `BuyClose` | Allow closing of existing longs on opposite signal. |\n| `SellClose` | Allow closing of existing shorts on opposite signal. |\n\nThe strategy is intended as an educational example demonstrating how to translate simple MQL5 logic into StockSharp's high level strategy framework."
+   },
+   "2145": {
+    "id": 2145,
+    "name": "I Gap",
+    "family": "volatility",
+    "overview": "The **I Gap Strategy** replicates the MetaTrader \"i-GAP\" expert advisor. It monitors the price gap between the previous candle's close and the current candle's open. A downward opening gap exceeding a specified number of price steps can trigger a long entry and optionally close existing short positions. An upward gap works the same way for shorts.\n\n## Details\n- **Entry Criteria**: Opening gap between consecutive candles exceeds the configured size.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite gap signal.\n- **Stops**: No fixed stop loss or take profit.\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `GapSize` = 5\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Gap\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low\n",
+    "details": "- **Entry Criteria**: Opening gap between consecutive candles exceeds the configured size.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite gap signal.\n- **Stops**: No fixed stop loss or take profit.\n- **Default Values**:\n  - `CandleType` = 1 hour\n  - `GapSize` = 5\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n- **Filters**:\n  - Category: Gap\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Low",
+    "parameters": ""
+   },
+   "619": {
+    "id": 619,
+    "name": "Classic Nacked Z-Score Arbitrage",
+    "family": "mean_reversion",
+    "overview": "This strategy trades the spread between two assets using the Z-Score. When the spread's z-score rises above a positive threshold the strategy sells the first asset and buys the second. When the z-score drops below the negative threshold it buys the first asset and sells the second. Positions are closed when the z-score reverts toward zero.\n\n## Parameters\n- Candle Type\n- Lookback Period\n- Z-Score Threshold\n- Second Security\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Lookback Period\n- Z-Score Threshold\n- Second Security"
+   }
+  }
+ }
+}

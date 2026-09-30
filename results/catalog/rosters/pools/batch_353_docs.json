@@ -1,0 +1,98 @@
+{
+ "batch_353": {
+  "strategy_ids": [
+   3232,
+   4205,
+   4064,
+   3254,
+   3730,
+   968,
+   1540,
+   1595,
+   3020,
+   2595
+  ],
+  "docs": {
+   "3232": {
+    "id": 3232,
+    "name": "The Predator",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp high-level translation of the MQL expert advisor **\"The Predator\"**. The original system mixes trend direction filters with momentum, Bollinger Bands, and stochastic oscillators. Two independent entry templates (Strategy 1 and Strategy 2) are available, replicating the selectable modes inside the MQL implementation.\n\nThe conversion focuses on candle-based processing, using StockSharp subscriptions and indicator bindings. All calculations are performed on a single configurable candle series.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Mode` | Chooses Strategy 1 (trend breakout) or Strategy 2 (pullback with stochastic filters). |\n| `FastMaLength`, `SlowMaLength` | LWMA lengths used to determine trend direction. |\n| `DmiPeriod`, `AdxSmoothing` | Directional Movement Index parameters. |\n| `MomentumPeriod` | Lookback used by the momentum indicator. |\n| `MomentumBuyThreshold`, `MomentumSellThreshold` | Minimum deviation from 100 required to accept signals. |\n| `AdxThreshold` | Minimum ADX level signalling an actionable trend. |\n| `BollingerPeriod`, `TightBandWidth`, `WideBandWidth` | Bollinger Band settings for the context filters. |\n| `StochasticLength`, `StochasticSmooth`, `StochasticUpper`, `StochasticLower` | Parameters for the stochastic oscillator used in Strategy 2. |\n| `TradeVolume` | Volume submitted with market orders. |\n| `StopLossPips`, `TakeProfitPips`, `TrailingStopPips` | Risk distances (converted to price units with the instrument step). |\n| `CandleType` | Data series used by the strategy. |"
+   },
+   "4205": {
+    "id": 4205,
+    "name": "RandomT",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor \"RandomT\". The original EA waits for a ZigZag swing that coincides with a confirmed fractal and then filters the entry with a MACD comparison. The StockSharp version keeps the same decision process: it watches a configurable number of candles (`BarWatch`), confirms that a five-bar fractal marks the most recent swing extreme, and only trades when the MACD main line is above or below the signal line on the same historical bar.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Base trade size in lots used for every entry. |\n| `BarWatch` | Number of bars used to validate that a fractal is also a ZigZag swing extreme. |\n| `Shift` | Number of bars back in history that are evaluated for signals. Should stay at 2 for classic fractals. |\n| `UseTrailingProfit` | Enables the trailing stop logic. |\n| `AutoStopLevel` | Switches the trailing distance to `StartStopLevelPoints`. |\n| `StartStopLevelPoints` | Alternate trailing distance (points). |\n| `StopLevelPoints` | Primary trailing distance (points). |\n| `MinProfit` | Minimum floating profit (account currency) required before trailing is applied. |\n| `CandleType` | Timeframe used for candles and indicator calculations. |\n| `MacdFastLength` | Fast EMA period for the MACD filter. |\n| `MacdSlowLength` | Slow EMA period for the MACD filter. |\n| `MacdSignalLength` | Signal EMA period for the MACD filter. |"
+   },
+   "4064": {
+    "id": 4064,
+    "name": "Spazm Volatility Breakout",
+    "family": "trend",
+    "overview": "## Summary\n- Conversion of the MetaTrader 4 expert advisor **Spazm (8683)** to the StockSharp high level API.\n- Trades adaptive breakouts by comparing the latest close against volatility-sized envelopes around the most recent swing high and swing low.\n- Maintains optional chart annotations that join consecutive bullish and bearish pivots just like the original MQL visualization.\n\n## Data Preparation\n1. The strategy subscribes to the candle series specified by the `CandleType` parameter for the active security.\n2. Every finished candle provides the raw range sample used for volatility estimation:\n   - By default the range equals `High - Low`.\n   - When `UseOpenCloseRange` is enabled the absolute body size `|Open - Close|` is used instead.\n3. The range sample is converted to price steps using the instrument `PriceStep` so the logic remains invariant across symbols.\n4. The indicator defined by `UseWeightedVolatility` processes the sequence of range samples:\n   - Disabled → simple moving average with length `VolatilityPeriod`.\n   - Enabled → linear weighted moving average (more weight to recent candles).\n5. The smoothed range (expressed in steps) is multiplied by `VolatilityMultiplier` and finally scaled back to price units. The resulting value is the adaptive breakout threshold applied to both sides of the market.\n6. During the warm-up phase the strategy also records the most recent extreme high and extreme low along with their timestamps. Once `VolatilityPeriod * 3` candles are processed the relative timing of those extremes determines the initial trend direction.\n\n## Parameters\n| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `1` | Order volume sent whenever the strategy opens or reverses a position. |\n| `VolatilityMultiplier` | `5` | Multiplier applied to the averaged volatility in order to build the breakout distance. |\n| `VolatilityPeriod` | `24` | Number of candles used both for the volatility estimator and for seeding the initial swing extremes.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `1` | Order volume sent whenever the strategy opens or reverses a position. |\n| `VolatilityMultiplier` | `5` | Multiplier applied to the averaged volatility in order to build the breakout distance. |\n| `VolatilityPeriod` | `24` | Number of candles used both for the volatility estimator and for seeding the initial swing extremes. |\n| `UseWeightedVolatility` | `false` | Switches the volatility estimator from a simple to a linear weighted moving average. |\n| `UseOpenCloseRange` | `false` | Uses the absolute open-close move instead of the high-low range when measuring volatility. |\n| `StopLossMultiplier` | `0` | Multiplier applied to the breakout threshold to compute a protective stop distance. A minimum of three price steps is enforced. Set to `0` to disable stops. |\n| `DrawSwingLines` | `true` | When enabled the strategy draws a line between the latest bullish and bearish pivots, mimicking the MQL objects. |\n| `CandleType` | `4 hour time frame` | Candle type (time frame or other data type) that feeds the calculations. |"
+   },
+   "3254": {
+    "id": 3254,
+    "name": "Crossover MA",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 5 expert advisor **CrossoverMA.mq5**. The original robot waits for a candle to cross a moving average and only opens a position when the average is sloping in the same direction as the breakout. The StockSharp version keeps the same behaviour while taking advantage of the high-level API for candle subscriptions, indicator management, and automatic chart rendering.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Notes |\n| ---- | ----------- | ------- | ----- |\n| `Candle Type` | Time frame used to build candles. | 1 minute time frame | Any StockSharp-supported candle data type can be selected. |\n| `MA Length` | Number of completed candles included in the SMA. | 12 | Matches the default period of the MetaTrader expert. |\n| `Trade Volume` | Market order volume for entries. | 1 | The strategy closes the opposite exposure before opening a new position. |\n\nAll parameters are available for optimisation in StockSharp Designer or Runner."
+   },
+   "3730": {
+    "id": 3730,
+    "name": "Sniper Jaw",
+    "family": "trend",
+    "overview": "The **Sniper Jaw Strategy** ports the MetaTrader 4 expert advisor `SniperJawEA.mq4` to StockSharp's high-level strategy API. The system analyses Bill Williams' Alligator indicator on the candle median price. A trade is only initiated when the three smoothed moving averages (jaw, teeth, and lips) are stacked in strict bullish or bearish order and all of them advance in the same direction compared with the previous finished candle.\n\n## Trading Logic\n\n1. **Alligator reconstruction** – three `SmoothedMovingAverage` instances calculate the jaw, teeth, and lips on the candle median `(High + Low) / 2`. Each line can be shifted forward by its own number of bars to mirror MetaTrader's plotting.\n2. **Trend confirmation** – a long bias is produced when the shifted values satisfy `jaw < teeth < lips` **and** each line is higher than on the previous candle. A short bias needs `jaw > teeth > lips` with all three lines moving lower compared with the prior bar.\n3. **Entry management** – the strategy opens only one position at a time. When `UseEntryToExit` is enabled and a new opposite signal fires, the current exposure is flattened first and the new order is sent on the next signal.\n4. **Protective exits** – stop-loss and take-profit distances are defined in pips and converted using the security `PriceStep`. Both long and short positions are supervised on every finished candle and closed once either threshold is reached.\n5. **Signal throttling** – the original EA prevented duplicate entries by checking the bar timestamp. The port stores the last signal candle time and skips additional orders during the same bar.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | `0.1` | Trade size in lots or contracts passed to `BuyMarket`/`SellMarket`. |\n| `EnableTrading` | `true` | Master switch that allows disabling new entries while keeping risk management active. |\n| `UseEntryToExit` | `true` | Closes an existing position before arming",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | `0.1` | Trade size in lots or contracts passed to `BuyMarket`/`SellMarket`. |\n| `EnableTrading` | `true` | Master switch that allows disabling new entries while keeping risk management active. |\n| `UseEntryToExit` | `true` | Closes an existing position before arming an opposite signal. Mirrors the \"Entry to Exit\" flag of the EA. |\n| `StopLossPips` | `20` | Distance of the protective stop from the entry price. Zero disables the stop. |\n| `TakeProfitPips` | `50` | Distance of the profit target from the entry price. Zero disables the target. |\n| `MinimumBars` | `60` | Required number of finished candles before the first signal is evaluated. |\n| `JawPeriod` / `TeethPeriod` / `LipsPeriod` | `13 / 8 / 5` | Length of the smoothed moving averages forming the Alligator lines. |\n| `JawShift` / `TeethShift` / `LipsShift` | `8 / 5 / 3` | Forward shift (in bars) used to align the Alligator buffers with the MetaTrader version. |\n| `CandleType` | `1 hour time frame` | Primary candle series subscription. Adjust to match the chart used in MetaTrader. |"
+   },
+   "968": {
+    "id": 968,
+    "name": "Larry Connors Percent B Bollinger",
+    "family": "trend",
+    "overview": "This strategy follows the Larry Connors %B approach. It buys when price is in an uptrend above the 200-period SMA and the Bollinger %B value stays below a threshold for three consecutive candles. Positions are closed when %B rises above an upper threshold.\n\nThe default configuration targets daily candles.\n\n## Details\n\n- **Entry Criteria**: Close above SMA200 and %B below `LowPercentB` for three consecutive candles.\n- **Long/Short**: Long only.\n- **Exit Criteria**: %B crosses above `HighPercentB` or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SmaPeriod` = 200\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `LowPercentB` = 0.2m\n  - `HighPercentB` = 0.8m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: Bollinger Bands, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Close above SMA200 and %B below `LowPercentB` for three consecutive candles.\n- **Long/Short**: Long only.\n- **Exit Criteria**: %B crosses above `HighPercentB` or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `SmaPeriod` = 200\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `LowPercentB` = 0.2m\n  - `HighPercentB` = 0.8m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromDays(1)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Long\n  - Indicators: Bollinger Bands, SMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1540": {
+    "id": 1540,
+    "name": "Volume-Supported Linear Regression Trend Modified",
+    "family": "trend",
+    "overview": "This strategy enters a long position when the 14-period RSI rises above the entry level and closes the position when RSI exceeds the exit level.\n\n## Parameters\n- **RSI Period** – lookback for RSI calculation.\n- **Entry Level** – RSI value that triggers a long entry.\n- **Exit Level** – RSI value that closes the position.\n- **Candle Type** – timeframe of processed candles.\n",
+    "details": "",
+    "parameters": "- **RSI Period** – lookback for RSI calculation.\n- **Entry Level** – RSI value that triggers a long entry.\n- **Exit Level** – RSI value that closes the position.\n- **Candle Type** – timeframe of processed candles."
+   },
+   "1595": {
+    "id": 1595,
+    "name": "Majors Volume Sum",
+    "family": "trend",
+    "overview": "The strategy sums signed volume over recent candles and trades when the short-term sum exceeds a fraction of its historical maximum.\n\n## Details\n\n- **Entry Criteria**:\n  - 10-period signed volume sum is above `Threshold` × maximum and no position, enter long.\n  - 10-period signed volume sum is below `-Threshold` × maximum and no position, enter short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Threshold` = 0.75\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - 10-period signed volume sum is above `Threshold` × maximum and no position, enter long.\n  - 10-period signed volume sum is below `-Threshold` × maximum and no position, enter short.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal closes the position.\n- **Stops**: None.\n- **Default Values**:\n  - `Threshold` = 0.75\n- **Filters**:\n  - Category: Volume\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3020": {
+    "id": 3020,
+    "name": "Sprut Pending Order Grid",
+    "family": "trend",
+    "overview": "The **Sprut Pending Order Grid Strategy** reproduces the MetaTrader 5 expert advisor *Sprut (barabashkakvn's edition)* inside StockSharp's high-level strategy framework. It builds a configurable grid of buy and sell pending orders around the current market price and manages every order's lifetime, volume scaling, and post-fill protection using StockSharp's helper methods (`BuyStop`, `SellStop`, `BuyLimit`, `SellLimit`).\n\nThe converted version keeps the original expert advisor philosophy:\n\n* place the very first order for each enabled direction at either a manual price or at an automatic offset measured in pips from the best quote;\n* extend the grid step-by-step using independent spacing for stop and limit orders;\n* scale order volumes using a multiplier that mirrors the MT5 implementation;\n* arm each filled order with its own stop-loss and take-profit, expressed as pip offsets from the entry price;\n* enforce global profit and loss checkpoints that immediately liquidate positions and remove any remaining pending orders when hit;\n* optionally expire pending orders after a specified number of minutes.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CountOrders` | Number of orders per enabled direction. | 5 |\n| `FirstBuyStop`, `FirstBuyLimit`, `FirstSellStop`, `FirstSellLimit` | Optional absolute prices for the first order in each direction (0 = use automatic offset). | 0 |\n| `DeltaFirstBuyStop`, `DeltaFirstBuyLimit`, `DeltaFirstSellStop`, `DeltaFirstSellLimit` | Pip offsets applied to the best bid/ask when automatic pricing is used. | 15 |\n| `UseBuyStop`, `UseBuyLimit`, `UseSellStop`, `UseSellLimit` | Enable or disable each grid direction. | false |\n| `StepStop`, `StepLimit` | Distance between consecutive stop or limit orders (pips). | 50 |\n| `VolumeStop`, `VolumeLimit` | Base volume for the first stop/limit order. | 0.01 |\n| `CoefficientStop`, `CoefficientLimit` | Multiplier applied to additional orders (>1 keeps the MT5 scaling behaviour). | 1.6 |\n| `ProfitClose` | Total PnL threshold that triggers liquidation (monetary units). | 10 |\n| `LossClose` | Total PnL floor that triggers liquidation (monetary units, typically negative). | -100 |\n| `ExpirationMinutes` | Pending-order lifetime in minutes (0 = good-till-cancel). | 60 |\n| `StopLoss`, `TakeProfit` | Pip distances for protective stop/take orders created after a fill (0 disables). | 50 / 0 |\n| `CandleType` | Candle series used for periodic maintenance. | 1 minute candles |"
+   },
+   "2595": {
+    "id": 2595,
+    "name": "Inverse Reaction",
+    "family": "trend",
+    "overview": "The Inverse Reaction strategy is a mean-reversion system inspired by the original MetaTrader expert advisor \"IREA\". It reacts to unusually large single-bar moves and anticipates an inverse reaction on the next bar. The strategy computes a dynamic confidence level from recent candle ranges and only trades when price swings exceed that level but stay within user-defined bounds. Only one position can be open at any time.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `StopLossPoints` | Stop-loss distance in points (multiplied by `PriceStep`). |\n| `TakeProfitPoints` | Take-profit distance in points. |\n| `TradeVolume` | Volume used for every market order. |\n| `SlippagePoints` | Informational setting that mirrors the MQL version; currently not applied to orders. |\n| `MinCriteriaPoints` | Minimum open/close distance (in points) required for a valid signal. |\n| `MaxCriteriaPoints` | Maximum allowed open/close distance (in points). |\n| `Coefficient` | Multiplier used to build the dynamic confidence threshold. |\n| `MaPeriod` | Length of the moving average used inside the indicator. Must be at least 3. |\n| `CandleType` | Timeframe of the processed candles (default: 1 hour). |"
+   }
+  }
+ }
+}

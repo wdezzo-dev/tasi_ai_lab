@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1425,
+      "name": "Three Moving Averages",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(close,50)) and sma(close,50) > sma(close,200)",
+      "exit_long": "crossbelow(sma(close,20), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented ShortMa=20, MediumMa=50 and LongMa=200 alignment is used exactly: the short/medium cross with the medium above the long enters long and the opposite cross exits. The docs specify no stops."
+    },
+    {
+      "id": 269,
+      "name": "CCI Slope Breakout",
+      "family": "trend",
+      "entry_long": "std(close,20) > 0 and roc((close - sma(close,20)) / (0.015 * std(close,20)),20) > sma(roc((close - sma(close,20)) / (0.015 * std(close,20)),20),20) + 2.0 * std(roc((close - sma(close,20)) / (0.015 * std(close,20)),20),20)",
+      "exit_long": "std(close,20) > 0 and roc((close - sma(close,20)) / (0.015 * std(close,20)),20) < sma(roc((close - sma(close,20)) / (0.015 * std(close,20)),20),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI(20) is rebuilt as (close-SMA(20))/(0.015*std(20)) with a non-zero guard and its slope is proxied by ROC(20), since the DSL cannot difference a lagged series; BreakoutMultiplier=2.0 over the 20-bar slope average is exact and reversion to that average exits. StopLossPercent=2.0 becomes the documented 2.0 percent stop; the 5-minute series is unavailable."
+    },
+    {
+      "id": 869,
+      "name": "Hamster Bot MRS 2",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,3))",
+      "exit_long": "crossbelow(close, sma(close,3))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MA Length=3 level is exact and the reverse crossing is the documented exit. Shift=1 offsets the average by one bar in MetaTrader, which the DSL cannot reproduce because no series can be lagged, so the current SMA(3) level is used; no stops are documented."
+    },
+    {
+      "id": 2314,
+      "name": "CaiChannel System Digit",
+      "family": "trend",
+      "entry_long": "bars_since(close > bb_upper(close,20,2)) <= 2 and close < bb_upper(close,20,2) and close > bb_lower(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "bars_since<=2 captures the previous candle closing outside the band and closing back inside, which is the documented long re-entry; Length=20 and Width=2 are explicit fallbacks. The long exit uses the loss of the channel mean because the documented reversal signal is a short entry, and the Digit price filter and short side are dropped."
+    },
+    {
+      "id": 1599,
+      "name": "ATR Sell the Rip Mean Reversion",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented strategy is short-only (sell the spike above the smoothed close+1.0*ATR(20), cover below the prior low, optional EMA(200) downtrend filter) while this catalog is long-direction, so no long signal is fabricated. ATRMultiplier, SmoothPeriod and the cover rule remain short-side rules only."
+    },
+    {
+      "id": 708,
+      "name": "Dual Momentum",
+      "family": "momentum",
+      "entry_long": "roc(close,12) > 0 and roc(close,12) > roc(close,26)",
+      "exit_long": "roc(close,12) <= 0 or roc(close,12) < roc(close,26)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Period=12 is exact for the risky-asset leg, but the safe asset is a second instrument the single-series DSL cannot load, so its momentum is proxied by the slower ROC(26) on the same series. The monthly candle type and the rotation into the safe asset or cash are not representable."
+    },
+    {
+      "id": 2572,
+      "name": "Nevalyashka Martingale",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The port always starts short and then flips direction purely from the previous cycle's profit or loss while multiplying volume by 1.1, so no market-derived entry condition exists; the never-true guard records that instead of a fabricated signal. The 94/70-point target and stop and the 25/11-point trailing are not percent fields."
+    },
+    {
+      "id": 237,
+      "name": "Stochastic Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3) < sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),20) - 2.0 * std(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),20)",
+      "exit_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3) > sma(sma(100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14)),3),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Raw %K over StochPeriod=14 is smoothed by KPeriod=3 and compared with its AveragePeriod=20 mean minus Multiplier=2.0 standard deviations, with a non-zero range guard; recrossing the mean exits as documented. DPeriod=3 is unused by the stated rules, no percent stop value is supplied despite the percent-stop note, and the 5-minute series is unavailable."
+    },
+    {
+      "id": 1553,
+      "name": "Waindrops Makit0",
+      "family": "volume",
+      "entry_long": "sma(close,10) > 2 * sma(close,20) - sma(close,10)",
+      "exit_long": "sma(close,10) < 2 * sma(close,20) - sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A true volume-weighted average cannot be built from the DSL, so the two halves are compared with plain means where 2*mean20-mean10 recovers the older half exactly, and the right half being higher is the long signal. The 60-minute/1-minute split is rescaled to 10 and 20 daily bars and the docs specify no stops."
+    },
+    {
+      "id": 2445,
+      "name": "Elite eFibo Trader",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA opens an unconditional first market position and then layers Fibonacci-sized stop orders at fixed price-step distances, so there is no market-derived entry signal to translate and the never-true guard is used. The 14 lot levels, LevelDistance spacing, and account-currency MoneyTakeProfit are not DSL fields."
+    }
+  ]
+}

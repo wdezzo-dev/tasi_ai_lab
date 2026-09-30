@@ -1,0 +1,98 @@
+{
+ "batch_191": {
+  "strategy_ids": [
+   3283,
+   2890,
+   25,
+   3550,
+   1772,
+   2913,
+   1172,
+   1358,
+   1020,
+   1000
+  ],
+  "docs": {
+   "3283": {
+    "id": 3283,
+    "name": "Simple 2 MA I",
+    "family": "trend",
+    "overview": "Simple 2 MA I is a trend-following strategy that replicates the core logic of the original MetaTrader expert advisor. It uses a pair of linear weighted moving averages (LWMAs) calculated on typical prices to identify the dominant trend. Momentum confirmation and MACD direction filters remove weak signals. The strategy optionally manages risk through automatic stop-loss, take-profit, break-even moves, and candle-based trailing stops.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| Candle Type | Timeframe used for indicator calculations. | 15-minute candles |\n| Fast LWMA | Period of the fast LWMA. | 6 |\n| Slow LWMA | Period of the slow LWMA. | 85 |\n| Momentum Length | Lookback period for the rate-of-change indicator. | 14 |\n| Momentum Threshold | Minimum absolute rate-of-change value required. | 0.3 |\n| MACD Fast | Fast EMA length used in MACD. | 12 |\n| MACD Slow | Slow EMA length used in MACD. | 26 |\n| MACD Signal | Signal EMA length used in MACD. | 9 |\n| Use Stop-Loss | Enable placement of stop-loss orders. | true |\n| Stop-Loss (points) | Distance to the stop-loss from entry price. | 20 |\n| Use Take-Profit | Enable placement of take-profit orders. | true |\n| Take-Profit (points) | Distance to the take-profit from entry price. | 50 |\n| Use Break-Even | Enable automatic break-even move. | true |\n| Break-Even Trigger | Profit (points) needed before break-even. | 30 |\n| Break-Even Offset | Offset (points) added when moving to break-even. | 30 |\n| Use Candle Trailing | Enable trailing stops based on candle extremes. | true |\n| Trailing Activation | Profit (points) required before trailing activates. | 40 |\n| Trailing Padding | Extra distance (points) added to candle extreme. | 10 |\n| Max Net Volume | Maximum absolute net volume allowed. | 1 |"
+   },
+   "2890": {
+    "id": 2890,
+    "name": "Blau TVI Timed Reversal",
+    "family": "trend",
+    "overview": "## Summary\n- Converted from the MetaTrader 5 expert advisor **Exp_BlauTVI_Tm.mq5** located in `MQL/21014`.\n- Re-implemented Blau Tick Volume Index (TVI) logic with three configurable smoothing stages.\n- Generates reversal trades when the smoothed TVI changes slope and optionally restricts orders to a user-defined trading session.\n- Supports optional stop-loss and take-profit protections defined in price points.\n\n## Blau Tick Volume Index logic\nThe original expert uses the custom `BlauTVI` indicator that counts upticks and downticks from tick volume and smooths the result several times. The C# port keeps the same idea:\n\n1. **Raw uptick/downtick counts**\n   - `UpTicks = (Volume + (Close - Open) / PriceStep) / 2`\n   - `DownTicks = Volume - UpTicks`\n   - Candle volume is used as a proxy for tick volume because the StockSharp feed does not expose tick counts for aggregated candles.\n2. **Stage 1 smoothing** – `UpTicks` and `DownTicks` are smoothed with the selected moving-average type (`EMA`, `SMA`, `SMMA`, `WMA`, `JMA`) and length `Length1`.\n3. **Stage 2 smoothing** – the stage-1 outputs are smoothed again with length `Length2`.\n4. **TVI calculation** – `TVI = 100 * (Up2 - Down2) / (Up2 + Down2)`.\n5. **Stage 3 smoothing** – the TVI is smoothed one more time with length `Length3` to reduce noise.\n\nThe strategy stores a short rolling history of the final TVI values in order to replicate the `SignalBar` offset used by the original EA (`CopyBuffer` with shift `SignalBar`).\n\n## Trading rules\n- **Signal slope detection**\n  - When the previous TVI value (`SignalBar + 1`) is less than the older value (`SignalBar + 2`), the TVI is considered to be turning upward. If the latest available value is also greater than the previous one, a bullish reversal signal is produced.\n  - When the previous TVI value is greater than the older value, the TVI is turning downward. If the latest value is below the previous one, a bearish reversal signal is produced.\n- **Position management**\n  - Long",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Volume` | Order size used for each entry (additional contracts are added to cover opposite exposure).\n| `CandleType` | Candle data type/timeframe used for all calculations (default: 4-hour time frame).\n| `MaType` | Moving-average type for all smoothing stages (EMA, SMA, SMMA, WMA, JMA).\n| `Length1`, `Length2`, `Length3` | Smoothing lengths for each stage of the Blau TVI calculation.\n| `SignalBar` | Offset for the TVI values used in signal generation (1 matches the previous closed candle like the MQL version).\n| `EnableBuyOpen`, `EnableSellOpen` | Allow opening long/short positions on signals.\n| `EnableBuyClose`, `EnableSellClose` | Allow closing existing long/short positions when slope reverses.\n| `EnableTimeFilter` | Toggle for the trading-session window.\n| `StartHour`, `StartMinute`, `EndHour`, `EndMinute` | Session bounds in exchange time. Supports intraday and overnight ranges.\n| `StopLossPoints`, `TakeProfitPoints` | Fixed protective distances expressed in price points (0 disables each protection)."
+   },
+   "25": {
+    "id": 25,
+    "name": "Stochastic RSI Cross",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 112%. It performs best in the forex market.\n\nStochastic RSI Cross watches the %K and %D lines of StochRSI. Bullish crosses near oversold levels trigger buys, bearish crosses near overbought trigger sells, and opposite crosses exit.\n\nBecause StochRSI oscillates quickly, signals can be frequent. Many traders require the cross to happen near an extreme to filter out noise.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on RSI, Stochastic.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, Stochastic\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on RSI, Stochastic.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `StochPeriod` = 14\n  - `KPeriod` = 3\n  - `DPeriod` = 3\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: RSI, Stochastic\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3550": {
+    "id": 3550,
+    "name": "AMA Trader 2",
+    "family": "trend",
+    "overview": "The AMA Trader 2 strategy replicates the averaging workflow of the original MetaTrader expert by Vladimir Karputov. It combines a Kaufman Adaptive Moving Average (AMA) trend filter with a Relative Strength Index (RSI) confirmation block. When price closes above the AMA and the RSI dips into oversold territory the strategy adds long exposure; the symmetric rule applies to short trades when price closes below the AMA while RSI prints an overbought reading. Averaging trades are submitted in fixed lot sizes and can be constrained through risk parameters such as maximum position count, minimum entry spacing, and protective trailing stops.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `CandleType` | Candle data type/timeframe used for calculations. |\n| `LotSize` | Volume for each market order. |\n| `RsiLength` | RSI averaging period. |\n| `StepLength` | Number of recent RSI readings inspected (0 → 1). |\n| `RsiLevelUp` | RSI overbought threshold for short entries. |\n| `RsiLevelDown` | RSI oversold threshold for long entries. |\n| `AmaLength` | AMA smoothing length. |\n| `AmaFastPeriod` | Fast smoothing constant for AMA. |\n| `AmaSlowPeriod` | Slow smoothing constant for AMA. |\n| `StopLoss` | Fixed stop distance in price units (0 disables). |\n| `TakeProfit` | Fixed target distance in price units (0 disables). |\n| `TrailingActivation` | Profit required to arm the trailing stop (0 disables). |\n| `TrailingDistance` | Distance maintained by the trailing stop. |\n| `TrailingStep` | Minimum improvement before the trailing stop is tightened. |\n| `MaxPositions` | Maximum averaging entries per direction (0 disables). |\n| `MinStep` | Minimum distance between consecutive entries (0 disables). |\n| `CloseOpposite` | Close opposite exposure before opening a trade. |\n| `OnlyOnePosition` | Block new entries whenever any position exists. |\n| `UseTimeWindow` | Enable intraday start/end time filtering. |\n| `StartTime` | Session start time (UTC) when the window is enabled. |\n| `EndTime` | Session end time (UTC) when the window is enabled. |"
+   },
+   "1772": {
+    "id": 1772,
+    "name": "PSAR Trader v2",
+    "family": "trend",
+    "overview": "This strategy trades market reversals using the Parabolic SAR indicator. A position is opened when the SAR value switches sides relative to price, signalling a potential change in trend. The algorithm operates only within a specified time window and can optionally close an existing position when an opposite signal appears.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Timeframe of candles used for trading. |\n| `Step` | Acceleration step of the Parabolic SAR. |\n| `Maximum` | Maximum acceleration factor of the Parabolic SAR. |\n| `TakeProfit` | Profit target in price units. |\n| `StopLoss` | Stop loss in price units. |\n| `StartHour` | Hour to start trading (0–23). |\n| `EndHour` | Hour to stop trading (0–23). |\n| `CloseOnOppositeSignal` | Close current position when an opposite signal appears. |"
+   },
+   "2913": {
+    "id": 2913,
+    "name": "TakeProfitTimeGuardStrategy",
+    "family": "volatility",
+    "overview": "`TakeProfitTimeGuardStrategy` emulates the behaviour of the MetaTrader expert `Exp_GTakeProfit_Tm` by supervising the account-level profit and forcing a flat position state outside of a configurable trading schedule. The strategy does not open positions on its own. Instead, it serves as a risk-management overlay that automatically closes any existing exposure once the profit objective is achieved or when trading must halt outside the permitted time range.",
+    "details": "",
+    "parameters": "| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `CandleType` | `DataType` | 1-minute time-frame | Candle series used to evaluate profit and schedule logic. |\n| `TargetMode` | `ProfitTargetModes` (`Percent`/`Currency`) | `Percent` | Selects whether `TakeProfitValue` is interpreted as a percentage of account capital or as an absolute currency amount. |\n| `TakeProfitValue` | `decimal` | `100` | Profit target threshold. Interpreted according to `TargetMode`. Must be greater than zero. |\n| `UseTradingWindow` | `bool` | `true` | Enables or disables the time filter. |\n| `StartTime` | `TimeSpan` | `00:00:00` | Beginning of the allowed trading window (inclusive). |\n| `EndTime` | `TimeSpan` | `23:59:00` | End of the allowed trading window. When the start time is greater than the end time, the window spans midnight. |"
+   },
+   "1172": {
+    "id": 1172,
+    "name": "Polynomial Regression Bands Channel",
+    "family": "mean_reversion",
+    "overview": "This strategy fits a polynomial regression line to recent prices and builds upper and lower bands from the standard deviation of residuals. Long positions are opened when price falls below the lower band and short positions are opened when price rises above the upper band.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close < LowerBand`.\n  - **Short**: `Close > UpperBand`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 100.\n  - `Degree` = 2.\n  - `Std Dev Multiplier` = 2.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Polynomial regression\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close < LowerBand`.\n  - **Short**: `Close > UpperBand`.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: No.\n- **Default Values**:\n  - `Length` = 100.\n  - `Degree` = 2.\n  - `Std Dev Multiplier` = 2.\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Polynomial regression\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1358": {
+    "id": 1358,
+    "name": "Streak-Based Trading",
+    "family": "other",
+    "overview": "Tracks consecutive winning and losing candles. After the specified streak is reached, the strategy enters in the opposite direction and holds the position for a fixed number of candles. Doji candles are ignored based on body size.\n\n## Details\n\n- **Entry Criteria**: Opposite side after reaching win/loss streak.\n- **Long/Short**: Configurable (`TradeDirection`).\n- **Exit Criteria**: After `HoldDuration` candles.\n- **Stops**: No.\n- **Default Values**:\n  - `TradeDirection` = Long\n  - `StreakThreshold` = 8\n  - `HoldDuration` = 7\n  - `DojiThreshold` = 0.01\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Configurable\n  - Indicators: Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Opposite side after reaching win/loss streak.\n- **Long/Short**: Configurable (`TradeDirection`).\n- **Exit Criteria**: After `HoldDuration` candles.\n- **Stops**: No.\n- **Default Values**:\n  - `TradeDirection` = Long\n  - `StreakThreshold` = 8\n  - `HoldDuration` = 7\n  - `DojiThreshold` = 0.01\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Reversal\n  - Direction: Configurable\n  - Indicators: Price Action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1020": {
+    "id": 1020,
+    "name": "Market EKG",
+    "family": "other",
+    "overview": "Market EKG strategy compares the previous bar's OHLC values with the averages of two earlier bars. It buys when the average of the two older closing prices is above the latest close and sells when below.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1000": {
+    "id": 1000,
+    "name": "Lunar Calendar Day Crypto Trading",
+    "family": "other",
+    "overview": "Trades based on the lunar calendar. The strategy enters a long position on the 12th day of each lunar month and exits on the 26th.\n\nLunar calendar data for 2020–2026 is preloaded using the Asia/Seoul time zone.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

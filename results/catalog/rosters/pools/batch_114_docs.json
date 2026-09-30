@@ -1,0 +1,98 @@
+{
+ "batch_114": {
+  "strategy_ids": [
+   1320,
+   4112,
+   3562,
+   998,
+   710,
+   102,
+   3259,
+   383,
+   3086,
+   2207
+  ],
+  "docs": {
+   "1320": {
+    "id": 1320,
+    "name": "SMB Magic",
+    "family": "trend",
+    "overview": "This strategy trades breakouts on large candles with volume confirmation and an EMA filter. Position size is calculated from the account balance using a selected risk model.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "4112": {
+    "id": 4112,
+    "name": "Moving Average with Frames",
+    "family": "trend",
+    "overview": "Conversion of the MetaTrader 5 expert advisor **\"Moving Average with Frames\"**. The original system evaluates the relationship between each candle's open/close prices and a shifted simple moving average (SMA) while displaying multiple optimization \"frames\" on charts. This StockSharp port focuses on the trading logic: it reacts only once per completed bar, opens a single netting position, and mirrors the money-management rules from the source code.\n\n## Trading Logic\n\n- **Data source** – the strategy subscribes to the configured time frame (`CandleType`) and processes only finished candles, which reproduces the MetaTrader constraint `if(rt[1].tick_volume>1) return;`.\n- **Indicator** – a simple moving average with period `MovingPeriod`. The indicator output is shifted forward by `MovingShift` completed candles by keeping a buffer of past values.\n- **Warm-up** – trading is suspended until at least 100 completed candles are collected, matching the original `Bars(_Symbol,_Period)>100` guard.\n- **Entry conditions**\n  - Go **long** when the candle opens below the shifted SMA and closes above it.\n  - Go **short** when the candle opens above the shifted SMA and closes below it.\n  - The engine enforces a single position: opposing exposure is flattened before entering in the new direction.\n- **Exit conditions** – an existing long is closed when the open price is above and the close price is below the shifted SMA; shorts are closed on the opposite crossover. New trades are not opened on the same bar after an exit, just like the original expert.\n\n## Position Sizing and Risk\n\n- **MaximumRisk** – determines the raw order volume as `Portfolio.CurrentValue * MaximumRisk / price` when portfolio data are available. If the broker feed does not provide equity information, the strategy falls back to the manual `Volume` property.\n- **DecreaseFactor** – after more than one consecutive losing trade, the next position size is reduced by `volume * losses / DecreaseFactor`, mimicking MetaTrader",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `MaximumRisk` | `0.02` | Fraction of portfolio equity risked on each entry. |\n| `DecreaseFactor` | `3` | Divisor used to shrink position size after two or more consecutive losses. |\n| `MovingPeriod` | `12` | Length of the simple moving average applied to closing prices. |\n| `MovingShift` | `6` | Number of completed candles used to offset the SMA forward in time. |\n| `CandleType` | `1h time frame` | Primary candle series processed by the strategy. |"
+   },
+   "3562": {
+    "id": 3562,
+    "name": "TenKijun Cross Alert",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp high-level API port of the MetaTrader expert advisor **TenKijun.mq4**. The original EA only watches the Ichimoku indicator and sends push notifications when the Tenkan-sen (conversion line) crosses the Kijun-sen (base line). The C# version keeps the alert-only nature but upgrades the implementation with StockSharp infrastructure, chart bindings, parameterization and safe session handling.\n\nThe logic works on completed candles of a configurable timeframe. When a new candle closes within the active trading hours, the strategy evaluates the Ichimoku indicator calculated with the classic 9/26/52 periods and records the latest Tenkan/Kijun values. If the Tenkan crosses above the Kijun an informational message is logged indicating a bullish cross; if Tenkan crosses below Kijun a bearish alert is logged. No trades are executed – the strategy is intended for signal generation or to be combined with external automation.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default | Notes |\n|-----------|-------------|---------|-------|\n| `StartHour` | Hour when alerts can begin. | 0 | Inclusive, 0-23 range. |\n| `LastHour` | Hour when alerts stop. | 20 | Inclusive, 0-23 range. |\n| `TenkanPeriod` | Conversion line lookback. | 9 | Optimizable. |\n| `KijunPeriod` | Base line lookback. | 26 | Optimizable. |\n| `SenkouSpanBPeriod` | Leading span B lookback. | 52 | Provided for completeness even though alerts do not depend on the cloud. |\n| `CandleType` | Candle series used for the indicator. | 30-minute timeframe | Choose any `TimeSpan`-based timeframe. |"
+   },
+   "998": {
+    "id": 998,
+    "name": "LSMA Fast And Simple Alternative Calculation",
+    "family": "trend",
+    "overview": "This strategy uses a fast approximation of the Least Squares Moving Average (LSMA) computed as `3 × WMA − 2 × SMA`. A long position is opened when the price crosses above the LSMA, and a short position is opened when the price crosses below it.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close crosses above LSMA.\n  - **Short**: Close crosses below LSMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - Length 25.\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: WMA, SMA\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Not specified\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close crosses above LSMA.\n  - **Short**: Close crosses below LSMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - Length 25.\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: WMA, SMA\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Not specified",
+    "parameters": ""
+   },
+   "710": {
+    "id": 710,
+    "name": "Dual Strategy Selector V2 - Cryptogyani",
+    "family": "trend",
+    "overview": "This strategy switches between two SMA-based long-only approaches.\n\n- **Strategy 1**: trades SMA crossover with optional trailing take profit or fixed target.\n- **Strategy 2**: trades SMA crossover confirmed by a higher timeframe trend, uses ATR stop and partial take profit.\n\n## Details\n\n- **Entry Criteria**:\n  - Strategy 1: fast SMA crosses above slow SMA.\n  - Strategy 2: fast SMA crosses above slow SMA and price is above higher timeframe SMA.\n- **Exit Criteria**:\n  - Strategy 1: take profit target or trailing stop.\n  - Strategy 2: partial take profit then ATR-based stop.\n- **Indicators**: SMA, ATR.\n- **Direction**: Long only.\n- **Stops**: Yes.\n",
+    "details": "- **Entry Criteria**:\n  - Strategy 1: fast SMA crosses above slow SMA.\n  - Strategy 2: fast SMA crosses above slow SMA and price is above higher timeframe SMA.\n- **Exit Criteria**:\n  - Strategy 1: take profit target or trailing stop.\n  - Strategy 2: partial take profit then ATR-based stop.\n- **Indicators**: SMA, ATR.\n- **Direction**: Long only.\n- **Stops**: Yes.",
+    "parameters": ""
+   },
+   "102": {
+    "id": 102,
+    "name": "Bearish Harami",
+    "family": "breakout",
+    "overview": "Testing indicates an average annual return of about 43%. It performs best in the stocks market.\n\nThe strategy sells short when that inside candle closes, betting on a reversal as buyers lose conviction.\n\nA percent stop above the pattern high caps the risk and the trade exits if price breaks to new highs.\n\n## Details\n\n- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: pattern match\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: Candlestick\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3259": {
+    "id": 3259,
+    "name": "AeroSpine",
+    "family": "breakout",
+    "overview": "The AeroSpine Strategy is a conversion of the MetaTrader expert **AEROSPINE.mq4**. It trades a single symbol and attempts to capture breakouts away from the daily open price. The original robot was designed for daily charts while monitoring ticks; the port keeps the daily open breakout idea but relies on finished candles supplied by StockSharp.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| **Candle Type** | Time-frame of the working candles used for signal evaluation. |\n| **Volume** | Base order size used for first entries and to build the recovery volume. |\n| **Entry Hour** | Minimum hour (exchange time) when new entries may be taken. |\n| **Entry Offset** | Distance in pips from the daily open that must be crossed to open the first trade of the day. |\n| **Exit Offset** | Distance in pips beyond the daily open used to close positions that revert back across the open. |\n| **Recovery Offset** | Distance in pips from the daily open required to trigger a recovery trade after a loss. |\n| **Take Profit** | Fixed take-profit distance measured in pips from the entry price. |\n| **Break Even** | Distance in pips required to arm the break-even exit. |\n| **Use Break Even** | Enables or disables the break-even management block. |\n| **Volume Filter** | Minimum candle volume required for new entries, mirroring the original `Volume[0] > 10000` check. |\n| **Max Spread** | Rejects new entries if the current spread is wider than the allowed value (converted from pips). |\n| **Enable Recovery** | Enables the opposite-direction recovery logic after a losing trade. |"
+   },
+   "383": {
+    "id": 383,
+    "name": "Mutual Fund Momentum",
+    "family": "momentum",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis strategy rotates quarterly among a set of mutual funds. At the end of each quarter the funds are ranked by their trailing six-month performance. Capital is allocated to the top fund for the next quarter, allowing long-term investors to follow persistent momentum in actively managed products.\n\nOnly one fund is held at a time. Daily price data is used, and rebalancing occurs during the first three trading days of January, April, July, and October.\n\n## Details\n\n- **Universe**: list of mutual funds.\n- **Signal**: 126-day (six-month) total return ranking.\n- **Rebalance**: quarterly on the first trading days of the new quarter.\n- **Positioning**: fully long the highest-ranked fund.\n- **Risk control**: skip trade when order value below `MinTradeUsd`.\n",
+    "details": "- **Universe**: list of mutual funds.\n- **Signal**: 126-day (six-month) total return ranking.\n- **Rebalance**: quarterly on the first trading days of the new quarter.\n- **Positioning**: fully long the highest-ranked fund.\n- **Risk control**: skip trade when order value below `MinTradeUsd`.",
+    "parameters": ""
+   },
+   "3086": {
+    "id": 3086,
+    "name": "Tunnel Gen4 Hedged Grid",
+    "family": "volatility",
+    "overview": "This strategy replicates the logic of the MetaTrader \"Tunnel gen4\" expert advisor using the StockSharp high-level API. It maintains a market neutral hedge by opening an initial buy/sell pair, doubles the position in the direction of the break-out once the price travels a configurable number of pips, and exits the entire basket when the same distance is covered again beyond the second anchor.\n\n## Trading Logic\n\n- **Initial hedge:** As soon as no exposure exists, the strategy sends simultaneous market buy and sell orders with volume `StartVolume`. The first fill defines the reference price for all subsequent decisions.\n- **Step detection:** The configured `StepPips` is converted to a price offset using the instrument tick size (with automatic adjustments for three- and five-decimal forex quotes). Best bid/ask updates from the Level 1 stream are compared against this offset.\n- **Reinforcement order:** When the best bid moves up by at least one step from the first fill, a sell order with twice the base volume is sent. When the best ask moves down by at least one step, a buy order of the same size is issued instead. The first fill of this order becomes the second anchor.\n- **Cycle termination:** After the second anchor is active, any further step-sized move in either direction triggers a full liquidation of all open positions. Once both sides are closed the state resets and a new cycle can start.\n- **Volume validation:** Strategy start-up checks that both the initial and doubled volumes respect the instrument's minimum, maximum, and increment requirements so that every order sent to the connector is executable.\n\n## Entry Conditions\n\n### Long reinforcement\n- There is at least one open position from the initial hedge.\n- The second anchor has not been created yet.\n- Current best ask price is less than or equal to `first_fill_price - StepPips_in_price`.\n\n### Short reinforcement\n- There is at least one open position from the initial hedge.\n- The second anchor has not been cre",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `StartVolume` | Volume of the buy and sell orders that form the initial hedge. |\n| `StepPips` | Distance in pips that triggers the reinforcement order and the subsequent basket exit. |"
+   },
+   "2207": {
+    "id": 2207,
+    "name": "Bollinger Bands Automated",
+    "family": "mean_reversion",
+    "overview": "Strategy that places buy limit orders at the lower Bollinger Band and sell limit orders at the upper band. Positions close when the price touches the middle band. Pending orders are refreshed at the start of each candle.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: buy limit at lower Bollinger Band\n  - Short: sell limit at upper Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price crosses above middle Bollinger Band\n  - Short: price crosses below middle Bollinger Band\n- **Stops**: None\n- **Default Values**:\n  - `BbPeriod` = 20\n  - `BbDeviation` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: buy limit at lower Bollinger Band\n  - Short: sell limit at upper Bollinger Band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price crosses above middle Bollinger Band\n  - Short: price crosses below middle Bollinger Band\n- **Stops**: None\n- **Default Values**:\n  - `BbPeriod` = 20\n  - `BbDeviation` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(15).TimeFrame()\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_139": {
+  "strategy_ids": [
+   319,
+   3781,
+   153,
+   2133,
+   330,
+   3156,
+   3466,
+   3222,
+   3178,
+   3387
+  ],
+  "docs": {
+   "319": {
+    "id": 319,
+    "name": "Bollinger K-Means Cluster",
+    "family": "trend",
+    "overview": "Signals trigger when Bollinger confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like BollingerLength, BollingerDeviation. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `BollingerLength = 20`\n  - `BollingerDeviation = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n  - `KMeansHistoryLength = 50`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `BollingerLength = 20`\n  - `BollingerDeviation = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n  - `KMeansHistoryLength = 50`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3781": {
+    "id": 3781,
+    "name": "SMC Trader Camel CCI MACD",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert advisor **\"Steve Cartwright Trader Camel CCI MACD\"**.\nIt reproduces the original trading logic based on a camel-style exponential moving average channel,\na MACD trend filter and Commodity Channel Index (CCI) thresholds. Trades are executed on completed\ncandles to ensure deterministic behaviour and to stay close to the bar-by-bar workflow of the MQL version.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Candle data type/timeframe used for all indicators. | 1-hour time frame |\n| `CamelLength` | Length of the high/low EMA channel. | 34 |\n| `CciPeriod` | Length of the CCI filter. | 20 |\n| `MacdFastPeriod` | Fast EMA length for MACD. | 12 |\n| `MacdSlowPeriod` | Slow EMA length for MACD. | 26 |\n| `MacdSignalPeriod` | Signal smoothing period for MACD. | 9 |\n| `CciThreshold` | Absolute CCI level that must be exceeded for entries (applied symmetrically). | 100 |\n\nAll parameters are optimizable through the StockSharp optimizer thanks to the `SetOptimize` calls."
+   },
+   "153": {
+    "id": 153,
+    "name": "Bollinger Adx",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 46%. It performs best in the stocks market.\n\nPrice movements outside Bollinger bands are filtered through ADX for strength. Trades engage when a band break coincides with high ADX.\n\nUseful for volatility surges accompanied by strong trends. Stop size is driven by ATR.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < LowerBand && ADX > AdxThreshold`\n  - Short: `Close > UpperBand && ADX > AdxThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Bollinger mean reversion\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `AtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < LowerBand && ADX > AdxThreshold`\n  - Short: `Close > UpperBand && ADX > AdxThreshold`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Bollinger mean reversion\n- **Stops**: ATR-based using `AtrMultiplier`\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `AtrMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Bollinger Bands, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2133": {
+    "id": 2133,
+    "name": "Dots",
+    "family": "trend",
+    "overview": "Converted from MQL5 \"Exp_Dots\". The strategy trades reversals when the Dots indicator changes color.\nIt goes long when the indicator switches from blue to red and short when it switches from red to blue.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: Indicator color changes from blue to red.\n  - Short: Indicator color changes from red to blue.\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 10\n  - `Filter` = 0m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Both\n  - Indicators: Dots (NonLag Moving Average)\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: Indicator color changes from blue to red.\n  - Short: Indicator color changes from red to blue.\n- **Long/Short**: Both\n- **Exit Criteria**: Opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Length` = 10\n  - `Filter` = 0m\n  - `CandleType` = TimeSpan.FromHours(4).TimeFrame()\n- **Filters**:\n  - Category: Trend reversal\n  - Direction: Both\n  - Indicators: Dots (NonLag Moving Average)\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: 4H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "330": {
+    "id": 330,
+    "name": "Ichimoku Volatility Contraction",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 85%. It performs best in the crypto market.\n\nSignals trigger when its indicators confirms volatility contraction patterns on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like TenkanPeriod, KijunPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `AtrPeriod = 14`\n  - `DeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `TenkanPeriod = 9`\n  - `KijunPeriod = 26`\n  - `SenkouSpanBPeriod = 52`\n  - `AtrPeriod = 14`\n  - `DeviationFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3156": {
+    "id": 3156,
+    "name": "SR Rate Indicator",
+    "family": "momentum",
+    "overview": "This strategy is a C# port of the MetaTrader 5 expert **Exp_SR-RateIndicator**. It reproduces the original trading logic using Sto\nckSharp's high level API and a custom implementation of the SR Rate oscillator. The indicator measures how far the weighted candl\ne price is located inside a smoothed support/resistance channel and paints a color code that highlights extreme readings.\n\nThe algorithm processes finished candles from a configurable time frame. Whenever the oscillator color jumps to the bullish or be\narish extreme the strategy closes any opposite position and opens a new trade in the direction of the signal. Protective stop los\ns and take profit levels are applied with the same point distances used in the MetaTrader version.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `OrderVolume` | Trade volume used for every market order. |\n| `EnableLongEntries` | Enable/disable opening of long positions. |\n| `EnableShortEntries` | Enable/disable opening of short positions. |\n| `EnableLongExits` | Close long positions when a strong bearish color appears. |\n| `EnableShortExits` | Close short positions when a strong bullish color appears. |\n| `StopLossPoints` | Stop loss distance in instrument points (converted using the price step). |\n| `TakeProfitPoints` | Take profit distance in instrument points (converted using the price step). |\n| `SlippagePoints` | Maximum tolerated slippage when closing positions. Preserved for compatibility; no explicit slippage control is a\npplied by the high level API. |\n| `CandleType` | Candle type and timeframe used to calculate the indicator. |\n| `SignalBar` | Number of closed candles to shift the signal evaluation (default 1). |\n| `WindowSize` | Length of the rolling window used by the SR Rate normalization. |\n| `HighLevel` | Oscillator level that defines the bullish extreme (default +20). |\n| `LowLevel` | Oscillator level that defines the bearish extreme (default -20). |"
+   },
+   "3466": {
+    "id": 3466,
+    "name": "Ronz Auto SLTP",
+    "family": "volatility",
+    "overview": "The **Ronz Auto SLTP Strategy** is a direct C# port of the MetaTrader 5 utility *Ronz Auto SLTP*. It acts as a trade manager that automatically attaches protective stop-loss and take-profit levels, applies profit locking, and activates trailing rules for every open position. The conversion relies on the high-level StockSharp API and supports both account-wide supervision and single-symbol deployment.\n\nKey capabilities:\n\n- Apply server-side or virtual (client-side) protection depending on the `UseServerStops` flag.\n- Set initial stop-loss and take-profit distances using MetaTrader-style pip measurements.\n- Lock in a fixed amount of profit after the trade reaches a configurable threshold.\n- Execute three trailing stop variations (classic, step distance, step-by-step) mirroring the original advisor.\n- Monitor all securities in the connected portfolio or restrict management to the strategy security only.\n- Issue optional log notifications whenever a virtual stop or take-profit closes a position.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n| --- | --- | --- |\n| `ManageAllSecurities` | `true` | Monitor every open position in the portfolio. Disable to manage only the strategy security. |\n| `TakeProfitPips` | `550` | Distance in MetaTrader pips added to the entry price for the take-profit target (including broker minimal stop distance). |\n| `StopLossPips` | `350` | Distance in MetaTrader pips subtracted from the entry price for the stop-loss level (including broker minimal stop distance). |\n| `UseServerStops` | `true` | When enabled, send stop and limit orders to the broker. When disabled, close positions virtually once thresholds are hit. |\n| `EnableLockProfit` | `true` | Enable the profit-lock logic that moves the stop above/below the entry price after a threshold is reached. |\n| `LockProfitAfterPips` | `100` | Profit (in pips) that must be achieved before the lock logic becomes active. Set to zero to skip the lock stage and trail immediately. |\n| `ProfitLockPips` | `60` | Profit preserved once the lock engages. The stop is moved to entry price plus/minus this distance. |\n| `TrailingStopMode` | `Classic` | Trailing algorithm used after the lock threshold. Options: `None`, `Classic`, `StepDistance`, `StepByStep`. |\n| `TrailingStopPips` | `50` | Trailing distance in pips. Acts as the main buffer for both classic and step-based trailing modes. |\n| `TrailingStepPips` | `10` | Increment used by step-based trailing modes. Ignored by the classic trailing variant. |\n| `EnableAlerts` | `false` | When true, write log messages whenever a virtual stop or take-profit closes an order. |"
+   },
+   "3222": {
+    "id": 3222,
+    "name": "OneHrStocTrader",
+    "family": "mean_reversion",
+    "overview": "The **OneHrStocTrader** strategy replicates the MetaTrader 4 expert advisor *OneHrStocTrader.mq4* inside the StockSharp high-level\nAPI. It trades a single instrument on hourly candles and combines the stochastic oscillator with a Bollinger Band width filter. A\ntrade is opened only when volatility (measured by the distance between the Bollinger Bands) sits inside the configured range and\nthe stochastic oscillator leaves an extreme zone exactly at the configured hour.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `TradeVolume` | Order size in lots. | `0.01` |\n| `CandleType` | Time frame used for all calculations. | `1h` |\n| `BollingerPeriod` | Bollinger Bands look-back period. | `20` |\n| `BollingerSigma` | Bollinger Bands sigma multiplier. | `2.0` |\n| `BollingerSpreadLower` | Minimum band spread in pips required to trade. | `56` |\n| `BollingerSpreadUpper` | Maximum band spread in pips allowed to trade. | `158` |\n| `BuyHourStart` | Hour (0-23) when long entries are evaluated. | `4` |\n| `SellHourStart` | Hour (0-23) when short entries are evaluated. | `0` |\n| `StochasticKPeriod` | Stochastic %K period. | `5` |\n| `StochasticDPeriod` | Stochastic %D period. | `3` |\n| `StochasticSlowing` | Stochastic slowing factor. | `5` |\n| `StochasticLower` | Oversold threshold. | `36` |\n| `StochasticUpper` | Overbought threshold. | `70` |\n| `TakeProfitPips` | Take-profit distance in pips. | `200` |\n| `StopLossPips` | Stop-loss distance in pips. | `95` |\n| `TrailingStopPips` | Trailing stop distance in pips (0 = disabled). | `40` |\n| `MaxOrdersPerDirection` | Maximum consecutive entries per direction. | `1` |"
+   },
+   "3178": {
+    "id": 3178,
+    "name": "FitFul 13",
+    "family": "volume",
+    "overview": "The FitFul 13 expert advisor works around weekly pivot levels derived from the previous trading week. It waits for the current H1 candle (default timeframe) to react to one of the pivot bands and confirms the move with two older candles from an M15 confirmation series. When the confirmation is present the strategy opens a position with pre-calculated stop-loss and take-profit levels derived from the same pivot structure. A trailing stop protects profitable trades once price travels far enough.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n|------|------|---------|-------------|\n| `CandleType` | `DataType` | H1 | Main timeframe used to evaluate pivot reactions. |\n| `ConfirmationCandleType` | `DataType` | M15 | Lower timeframe that provides the two-bar confirmation. |\n| `Volume` | `decimal` | 0.1 | Net order volume for each entry. |\n| `MaxPositions` | `int` | 3 | Maximum net exposure expressed as multiples of `Volume`. |\n| `IndentPips` | `decimal` | 3 | Offset applied to pivot-based stop-loss and take-profit calculations. |\n| `TrailingStopPips` | `decimal` | 150 | Trailing stop distance in pips. Set to zero to disable trailing. |\n| `TrailingStepPips` | `decimal` | 5 | Minimum additional price progress (in pips) required before tightening the trailing stop. |"
+   },
+   "3387": {
+    "id": 3387,
+    "name": "Manual Trading Lightweight Utility Panel",
+    "family": "volume",
+    "overview": "The **Manual Trading Lightweight Utility Panel Strategy** replicates the behaviour of the MT4 \"Manual Trading Lightweight Utility\" panel using the StockSharp high level strategy API. It exposes the same interactive controls as strategy parameters so that the operator can toggle between market, limit and stop orders, adjust automatic price calculation, configure volume management and attach risk controls without relying on custom chart objects.\n\nThe strategy is designed for discretionary trading. Orders are triggered manually by changing the `Send Buy Order` or `Send Sell Order` parameters in the UI. Every command is acknowledged immediately, while the strategy keeps all calculations — such as automatic price suggestions and risk levels — synchronised with real time market data.",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_364": {
+  "strategy_ids": [
+   3111,
+   214,
+   2746,
+   3976,
+   264,
+   3213,
+   3217,
+   1641,
+   1720,
+   1019
+  ],
+  "docs": {
+   "3111": {
+    "id": 3111,
+    "name": "Exp AFIRMA",
+    "family": "trend",
+    "overview": "The **Exp AFIRMA Strategy** reproduces the MetaTrader expert advisor `Exp_AFIRMA.mq5` using the StockSharp high-level API. The\noriginal system relies on the AFIRMA indicator (Adaptive Finite Impulse Response Moving Average) that blends a windowed FIR\nsmoother with a short ARMA forecast. The StockSharp version keeps the same market logic: it opens long positions when the ARMA\ncomponent turns upward and exits or reverses when the forecast rolls over to the downside.\n\nTrading decisions are made on completed candles from a configurable timeframe (default: H4). The strategy evaluates the ARMA\nvalues of several closed bars to confirm a slope change. Orders are placed at market with optional protective stops and targets\nimplemented through StockSharp's risk management.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Base position size used for both long and short entries. |\n| `CandleType` | Timeframe/data type requested from the market data adapter (default: 4-hour candles). |\n| `Periods` | Reciprocal bandwidth of the FIR stage (`1 / (2 * Periods)`), identical to the original EA input. |\n| `Taps` | Number of FIR coefficients. Internally adjusted to the nearest odd value if needed. |\n| `Window` | Window function applied to the FIR filter (`Rectangular`, `Hanning1`, `Hanning2`, `Blackman`, `BlackmanHarris`). |\n| `SignalBar` | Number of already closed bars to look back for confirmation. `1` corresponds to the last fully closed bar. |\n| `EnableBuyEntries` / `EnableSellEntries` | Allow opening of long/short positions. |\n| `EnableBuyExits` / `EnableSellExits` | Allow closing of long/short positions on opposite signals. |\n| `StopLossPoints` | Optional protective stop expressed in price units. |\n| `TakeProfitPoints` | Optional protective target expressed in price units. |"
+   },
+   "214": {
+    "id": 214,
+    "name": "Bollinger Supertrend",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 79%. It performs best in the stocks market.\n\nA long trade triggers when price closes above the upper Bollinger Band and remains above the Supertrend line, confirming momentum and trend alignment. A short trade occurs when price closes below the lower band while staying under the Supertrend level. Trades are exited once price crosses back through the Supertrend, indicating momentum has faded.\n\nBecause the system waits for breakouts beyond normal volatility, it suits traders looking to capture sustained runs rather than quick reversals. The Supertrend stop dynamically adjusts to market swings, helping manage risk without manual intervention.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Close > upper Bollinger Band && Close > Supertrend\n  - **Short**: Close < lower Bollinger Band && Close < Supertrend\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price crosses below Supertrend\n  - **Short**: Exit when price crosses above Supertrend\n- **Stops**: Yes, via Supertrend trailing stop.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close > upper Bollinger Band && Close > Supertrend\n  - **Short**: Close < lower Bollinger Band && Close < Supertrend\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price crosses below Supertrend\n  - **Short**: Exit when price crosses above Supertrend\n- **Stops**: Yes, via Supertrend trailing stop.\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 2.0m\n  - `SupertrendPeriod` = 10\n  - `SupertrendMultiplier` = 3.0m\n  - `CandleType` = TimeSpan.FromMinutes(15)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Bollinger Bands, Supertrend\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2746": {
+    "id": 2746,
+    "name": "Expert ZZLWA",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp high-level port of the original **ExpertZZLWA** MetaTrader 5 expert advisor. The EA offered three distinct operating modes and optional martingale position sizing. The port keeps the structure of the original expert while adapting it to StockSharp candles and indicators:\n\n1. **Original mode** – alternates between long and short trades on every completed bar as long as there is no open position.\n2. **ZigZag Addition mode** – recreates the behaviour of the \"ZigZag LW Addition\" custom indicator by tracking fresh swing highs and lows through rolling highest/lowest values.\n3. **Moving Average Test mode** – mirrors the smoothed MA (150) vs simple MA (10) crossover logic from the MQL code.\n\nAll modes use configurable protective stop loss and take profit offsets expressed in price points. The strategy supports optional martingale sizing where a new trade is increased by a multiplier after a realised loss, capped by a maximum volume.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `StopLossPoints` | 600 | Distance to the protective stop in price points. |\n| `TakeProfitPoints` | 700 | Distance to the take profit in price points. |\n| `BaseVolume` | 0.01 | Default order size used when martingale is not applied. |\n| `UseMartingale` | false | Enables martingale sizing when set to true. |\n| `MartingaleMultiplier` | 2 | Multiplier applied to the last trade volume after a loss. |\n| `MaximumVolume` | 10 | Maximum allowed volume for martingale sizing. |\n| `Mode` | Original | Operating mode: `Original`, `ZigZagAddition`, or `MovingAverageTest`. |\n| `ZigZagTerm` | LongTerm | Sensitivity preset for ZigZag mode (ShortTerm, MediumTerm, LongTerm). |\n| `SlowMaPeriod` | 150 | Period of the smoothed MA used in MA Test mode. |\n| `FastMaPeriod` | 10 | Period of the simple MA used in MA Test mode. |\n| `CandleType` | 15-minute time frame | Candle type subscribed for processing. |"
+   },
+   "3976": {
+    "id": 3976,
+    "name": "Vector Basket Trend Strategy (MT4 Port)",
+    "family": "trend",
+    "overview": "This folder contains the StockSharp high-level API port of the MetaTrader 4 expert advisor **Vector** (original script: `MQL/8305/Vector.mq4`). The strategy coordinates up to four major forex pairs — EURUSD (primary), GBPUSD, USDCHF, and USDJPY — and trades them in the same direction when a shared smoothed moving average alignment appears. The conversion keeps the core Vector ideas while adapting them to idiomatic StockSharp patterns.\n\n## Trading logic\n\n1. **Smoothed moving averages (SMMA)** – each instrument tracks a fast (3-period) and slow (7-period) SMMA calculated on median prices of the configurable trading timeframe (15 minutes by default).\n2. **Vector trend filter** – the differences between every fast/slow pair are summed. A positive sum signals synchronized bullish momentum across the basket, while a negative sum implies collective bearish pressure.\n3. **Entry rules** – the strategy opens or reverses positions with market orders only when:\n   - The basket trend is positive and the instrument's fast SMMA stays above the slow SMMA (long entry).\n   - The basket trend is negative and the fast SMMA is below the slow SMMA (short entry).\n4. **Pip target from H4 range** – for every instrument a separate 4-hour candle subscription measures the previous range. One fifth of that range (capped at 13 pips) becomes the per-position profit objective, mirroring the fixed-pip exit from the MT4 code.\n5. **Global equity guard** – percentage-based profit and drawdown thresholds (taken from the original `PrcProfit` and `PrcLose` inputs) close all open positions once triggered.\n\n## Key differences vs. the original EA\n\n- StockSharp's **high-level candle subscriptions and indicator binding** replace the low-level polling found in MT4 (`SubscribeCandles().Bind(...)`).\n- The port supports **optional secondary instruments**: leave the GBPUSD / USDCHF / USDJPY slots empty to trade only the main security.\n- The dynamic lot sizing tied to MT4 account margin has been replaced with a cle",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `CandleType` | `TimeSpan.FromMinutes(15)` | Timeframe used for the SMMA calculations and entry checks. |\n| `RangeCandleType` | `TimeSpan.FromHours(4)` | Higher timeframe used to derive the adaptive pip target. |\n| `SecondSecurity` | `null` | Optional GBPUSD slot (set a `Security` before start). |\n| `ThirdSecurity` | `null` | Optional USDCHF slot. |\n| `FourthSecurity` | `null` | Optional USDJPY slot. |\n| `BaseVolume` | `1` | Requested trade volume per order, normalized to exchange limits. |\n| `TakeProfitPercent` | `0.5` | Global equity gain (in %) that triggers a portfolio-wide exit. |\n| `MaxDrawdownPercent` | `30` | Maximum allowed equity drawdown (in %) before all positions close. |"
+   },
+   "264": {
+    "id": 264,
+    "name": "EMA Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 127%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `EmaLength` = 20.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaLength` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `EmaLength` = 20\n  - `LookbackPeriod` = 20\n  - `DeviationMultiplier` = 2m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3213": {
+    "id": 3213,
+    "name": "Accelerator Trailing TP & SL",
+    "family": "trend",
+    "overview": "The Accelerator Trailing TP & SL strategy ports the \"Accelerator Trailing TP&SL\" Expert Advisor from MetaTrader to the StockSharp high-level API. The system blends Bill Williams' Accelerator Oscillator with multi-timeframe momentum confirmation and a monthly MACD trend filter. Entries are layered with geometric position sizing while exits combine classic stop/target distances, adaptive trailing and break-even logic.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `FastMaLength` / `SlowMaLength` | Periods of the fast and slow LWMAs on the trading timeframe. |\n| `MomentumThreshold` | Minimum absolute deviation of momentum from the neutral 100 value on the higher timeframe. |\n| `StopLossPips` / `TakeProfitPips` | Protective stop and target distances in pips. |\n| `TrailingStopPips` | Distance used by the optional trailing stop manager. |\n| `BreakEvenTriggerPips` / `BreakEvenOffsetPips` | Defines when and how the stop is moved to break-even. |\n| `MaxTrades` | Maximum number of layered entries per direction. |\n| `BaseVolume` | Volume of the first order in a sequence. |\n| `LotExponent` | Multiplier applied to each additional layered entry. |\n| `EnableTrailing` | Enables or disables trailing-stop management. |\n| `UseBreakEven` | Enables or disables the break-even stop movement. |\n| `CloseOnMacdFlip` | Closes all trades if the higher timeframe MACD reverses. |\n| `CandleType` | Primary candle series for signals (defaults to 15 minutes). |\n| `MomentumCandleType` | Higher timeframe candles used by the momentum filter (defaults to 1 hour). |\n| `MacdCandleType` | Candle series used for the MACD trend filter (defaults to monthly candles). |"
+   },
+   "3217": {
+    "id": 3217,
+    "name": "Harami",
+    "family": "trend",
+    "overview": "HaramiStrategy converts the MetaTrader \"Harami\" expert advisor into StockSharp's high-level API. The strategy combines a bullish/bearish Harami pattern detected on a higher timeframe with momentum expansion and a long-term MACD filter. Only completed candles are processed and all trade management is handled through StockSharp's built-in protection engine.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `CandleType` | Primary timeframe for moving averages and signal execution. | 15-minute candles |\n| `HigherCandleType` | Timeframe used for Harami and momentum confirmation. | 1-hour candles |\n| `MacdCandleType` | Timeframe for the MACD trend filter. | 30-day candles |\n| `FastMaLength` | Fast linear weighted MA length. | 6 |\n| `SlowMaLength` | Slow exponential MA length. | 85 |\n| `MomentumPeriod` | Momentum lookback on the higher timeframe. | 14 |\n| `MomentumBuyThreshold` | Minimum momentum deviation for long confirmation. | 0.3 |\n| `MomentumSellThreshold` | Minimum momentum deviation for short confirmation. | 0.3 |\n| `StopLossPoints` | Stop-loss distance in points. | 40 |\n| `TakeProfitPoints` | Take-profit distance in points. | 100 |"
+   },
+   "1641": {
+    "id": 1641,
+    "name": "X Trail 2",
+    "family": "trend",
+    "overview": "This strategy trades based on the crossover of two configurable moving averages calculated from a chosen price type.\n\n## Details\n- **Entry**: Buys when MA1 crosses above MA2 and this cross is confirmed by the previous two bars; sells when the opposite occurs.\n- **Exit**: Opposite crossover.\n- **Indicators**: Two moving averages with selectable type (simple, exponential, smoothed, weighted) and price source (close, open, high, low, median, typical, weighted).\n- **Parameters**:\n  - `Ma1Length` = 1\n  - `Ma1Type` = MovingAverageTypeEnum.Simple\n  - `Ma1PriceType` = AppliedPriceType.Median\n  - `Ma2Length` = 14\n  - `Ma2Type` = MovingAverageTypeEnum.Simple\n  - `Ma2PriceType` = AppliedPriceType.Median\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n",
+    "details": "- **Entry**: Buys when MA1 crosses above MA2 and this cross is confirmed by the previous two bars; sells when the opposite occurs.\n- **Exit**: Opposite crossover.\n- **Indicators**: Two moving averages with selectable type (simple, exponential, smoothed, weighted) and price source (close, open, high, low, median, typical, weighted).\n- **Parameters**:\n  - `Ma1Length` = 1\n  - `Ma1Type` = MovingAverageTypeEnum.Simple\n  - `Ma1PriceType` = AppliedPriceType.Median\n  - `Ma2Length` = 14\n  - `Ma2Type` = MovingAverageTypeEnum.Simple\n  - `Ma2PriceType` = AppliedPriceType.Median\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()",
+    "parameters": ""
+   },
+   "1720": {
+    "id": 1720,
+    "name": "VR Setka P2",
+    "family": "trend",
+    "overview": "This strategy is a grid-based approach translated from the MetaTrader 4 expert `VR---SETKAp2`.\nIt trades when the daily close deviates from the day's high or low by a given percentage.\nThe strategy opens long positions after a significant drop from the daily high and\nshort positions after a significant rise from the daily low. Once in a position it\nexits at a fixed take-profit distance. Volume can optionally increase using a simple\nmartingale scheme.\n\n## Parameters\n- **TakeProfit** – distance to the profit target in price steps.\n- **Lot** – base volume for every trade.\n- **Percent** – percentage threshold calculated from the daily range.\n- **UseMartingale** – enable volume increase when adding to a losing position.\n- **Slippage** – allowed price slippage for orders.\n- **Correlation** – offset applied when calculating grid levels.\n- **Candle Type** – timeframe used for calculations (daily by default).\n\n## Logic\n1. Subscribe to daily candles.\n2. For each finished candle, calculate percentage deviations from the daily high and low.\n3. Enter long or short depending on the deviation and the previous candle direction.\n4. Close the position when the take-profit level is reached.\n\nThis implementation demonstrates how a classic MetaTrader grid expert can be\nported to the StockSharp high-level API.\n",
+    "details": "",
+    "parameters": "- **TakeProfit** – distance to the profit target in price steps.\n- **Lot** – base volume for every trade.\n- **Percent** – percentage threshold calculated from the daily range.\n- **UseMartingale** – enable volume increase when adding to a losing position.\n- **Slippage** – allowed price slippage for orders.\n- **Correlation** – offset applied when calculating grid levels.\n- **Candle Type** – timeframe used for calculations (daily by default)."
+   },
+   "1019": {
+    "id": 1019,
+    "name": "Markdown The Pine Editor's Hidden Gem",
+    "family": "trend",
+    "overview": "This strategy uses Bollinger Bands built on a simple moving average. A long position opens when the price closes above the upper band, and a short position opens when it closes below the lower band.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close price crosses above the upper band.\n  - **Short**: Close price crosses below the lower band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 50\n  - `Multiplier` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close price crosses above the upper band.\n  - **Short**: Close price crosses below the lower band.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 50\n  - `Multiplier` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Bollinger Bands\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

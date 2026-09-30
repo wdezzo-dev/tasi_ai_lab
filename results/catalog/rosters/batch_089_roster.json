@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2826,
+      "name": "Blau Ergodic",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),0)",
+      "exit_long": "crossbelow(macd(close,12,26),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26) zero-line direction is a fallback for the Blau momentum oscillator's Breakdown mode. Triple EMA smoothing, Twist/CloudTwist modes, SignalBar, and point-based protection are not directly expressible."
+    },
+    {
+      "id": 2167,
+      "name": "ColorMETRO WPR",
+      "family": "trend",
+      "entry_long": "crossbelow(rsi(close,7),sma(rsi(close,7),5))",
+      "exit_long": "crossabove(rsi(close,7),sma(rsi(close,7),5))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "RSI(7) versus its five-period smoother approximates the fast/slow Williams-%R step lines and retains the documented cross direction. The explicit 2% stop and 4% target are retained; ColorMETRO construction and the short branch are simplified."
+    },
+    {
+      "id": 1507,
+      "name": "Ultimate Strategy Template",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,9),sma(close,21))",
+      "exit_long": "crossbelow(sma(close,9),sma(close,21))",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 3.0,
+      "notes": "The documented SMA(9)/SMA(21) crossover and inverse exit are exact. The optional 1% stop and 3% take-profit are retained, while the short side and template settings are not added to this long-only roster."
+    },
+    {
+      "id": 1925,
+      "name": "FmOne Scalping",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9)/EMA(21) and MACD(12,26,9) crossovers retain the documented fast/slow momentum combination. Parameter names have no values, and trailing-stop, percent protection, and exact MACD signal settings are not supplied."
+    },
+    {
+      "id": 1867,
+      "name": "MA SAR ADX",
+      "family": "trend",
+      "entry_long": "close > sma(close,100) and adx(high,low,close,14) > 20 and roc(close,5) > 0",
+      "exit_long": "close < sma(close,100) or adx(high,low,close,14) < 15",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "SMA(100), ADX(14), and positive ROC(5) approximate the moving-average, DI-strength, and SAR-direction conditions. Parabolic SAR, +DI/-DI lines, and SAR exits are unavailable; no stops are documented."
+    },
+    {
+      "id": 4216,
+      "name": "PSAR Multi Timeframe",
+      "family": "breakout",
+      "entry_long": "ema(close,20) > ema(close,50) and roc(close,5) > 0",
+      "exit_long": "ema(close,20) < ema(close,50) or roc(close,5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20)/EMA(50) and ROC(5) provide a directional proxy for the three-timeframe Parabolic SAR filter. M15/M30/H1 streams, SAR state, money management, and point offsets are not expressible in the single-series DSL."
+    },
+    {
+      "id": 1526,
+      "name": "Visible Chart",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar prior high break and opposite low break approximate the visible Highest/Lowest range; 20 is an explicit fallback because no lookback is supplied. The configurable length and opposite-signal permissions are otherwise retained in long-only form."
+    },
+    {
+      "id": 2029,
+      "name": "DiNapoli Stochastic",
+      "family": "momentum",
+      "entry_long": "crossbelow(rsi(close,14),sma(rsi(close,14),6))",
+      "exit_long": "crossabove(rsi(close,14),sma(rsi(close,14),6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) versus a six-period smoother approximates the Stochastic %K/%D relationship and follows the documented long cross direction. FastK/SlowK/SlowD, permission flags, and exact DiNapoli smoothing are not directly available."
+    },
+    {
+      "id": 3469,
+      "name": "Trading Panel Batch",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy fires an operator-selected batch rather than deriving a market signal, so the impossible guard avoids fabricating entries. Panel state, direction reset, pip protection, and order batching are outside the DSL."
+    },
+    {
+      "id": 4100,
+      "name": "JMaster RSX",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),25) and sma(close,30) > sma(close,50)",
+      "exit_long": "crossbelow(rsi(close,14),50) or sma(close,30) < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) crossing the documented 25 oversold level with a bullish SMA(30)/SMA(50) regime approximates Jurik RSX confirmation. The fast/slow RSX streams, midline calculation, and exact delayed-bar execution are not available."
+    }
+  ]
+}

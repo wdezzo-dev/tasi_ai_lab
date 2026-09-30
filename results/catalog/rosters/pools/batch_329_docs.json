@@ -1,0 +1,98 @@
+{
+ "batch_329": {
+  "strategy_ids": [
+   697,
+   4171,
+   2266,
+   1532,
+   2066,
+   1114,
+   2321,
+   2615,
+   1542,
+   868
+  ],
+  "docs": {
+   "697": {
+    "id": 697,
+    "name": "Dow Theory Trend",
+    "family": "trend",
+    "overview": "Dow Theory Trend Strategy uses pivot highs and lows to determine trend direction. The strategy enters long when both higher highs and higher lows appear, and enters short when both lower highs and lower lows form.\n\n## Details\n\n- **Entry Criteria**: Higher highs and higher lows for long; lower highs and lower lows for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `PivotLookback` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Higher highs and higher lows for long; lower highs and lower lows for short.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse signal.\n- **Stops**: None.\n- **Default Values**:\n  - `PivotLookback` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Price action\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: Yes\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4171": {
+    "id": 4171,
+    "name": "Envelope MA Short",
+    "family": "trend",
+    "overview": "The **Envelope MA Short Strategy** is a C# port of the MetaTrader expert advisor `EnvelopeMA.mq4` (ID 9533). It recreates the original short-only breakout logic on 15-minute candles by combining an exponential moving average envelope with two additional EMAs and a trio of Parabolic SAR filters. The strategy watches for pullbacks of price and the fast EMA into the lower half of the envelope, then arms a pending sell-stop order at the envelope's lower boundary. When the order fills, it manages the short position with fixed stop-loss and take-profit levels as well as indicator-based exit rules.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle type/timeframe processed by the strategy. | 15-minute time frame |\n| `EnvelopePeriod` | EMA length used as the envelope base. | 280 |\n| `EnvelopeDeviation` | Envelope width expressed in percent. | 0.08 |\n| `FastMaPeriod` | Fast EMA period calculated on lows. | 6 |\n| `SlowMaPeriod` | Slow EMA period (evaluated with a one-bar delay). | 18 |\n| `StopLossPips` | Stop-loss distance in pips from the entry price. | 25 |\n| `TakeProfitPips` | Take-profit distance in pips from the entry price. | 25 |\n| `TradeVolume` | Volume used for pending and market orders. | 1 |\n| `LiquidityThreshold` | Minimum equity-to-balance ratio; shorts are liquidated when breached. | 0.58 |"
+   },
+   "2266": {
+    "id": 2266,
+    "name": "Ma Channel",
+    "family": "trend",
+    "overview": "The Ma Channel strategy trades breakouts of a moving average channel built from the\nhigh and low prices. A position is opened when price leaves the channel in the\ncorresponding direction and reversed when the trend flips. The channel boundaries\nare calculated from exponential moving averages with a fixed offset.\n\nThe system is designed for both long and short trading and reacts only on finished\ncandles. It aims to catch trend transitions early while avoiding noise inside the\nchannel.\n\n## Details\n\n- **Entry Conditions**:\n  - **Long**: Price breaks above the upper channel.\n  - **Short**: Price breaks below the lower channel.\n- **Exit Conditions**:\n  - Opposite breakout triggers a reversal of the position.\n- **Indicators**: Exponential moving averages of highs and lows with configurable\n  length and price offset.\n- **Stops**: Not used by default, trades are closed only on opposite signals.\n- **Default Values**:\n  - `Length` = 8\n  - `Offset` = 10\n  - `CandleType` = 1 hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate\n",
+    "details": "- **Entry Conditions**:\n  - **Long**: Price breaks above the upper channel.\n  - **Short**: Price breaks below the lower channel.\n- **Exit Conditions**:\n  - Opposite breakout triggers a reversal of the position.\n- **Indicators**: Exponential moving averages of highs and lows with configurable\n  length and price offset.\n- **Stops**: Not used by default, trades are closed only on opposite signals.\n- **Default Values**:\n  - `Length` = 8\n  - `Offset` = 10\n  - `CandleType` = 1 hour candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Moderate",
+    "parameters": ""
+   },
+   "1532": {
+    "id": 1532,
+    "name": "Volatility Momentum Breakout",
+    "family": "trend",
+    "overview": "Combines ATR-based breakout levels with EMA trend filter and RSI momentum to capture strong moves.\n\n## Details\n\n- **Entry Criteria**: price closes above/below ATR breakout levels with EMA and RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop loss and 1:2 risk-reward take profit\n- **Stops**: ATR stop\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.5\n  - `Lookback` = 20\n  - `EmaPeriod` = 50\n  - `RsiPeriod` = 14\n  - `RsiLongThreshold` = 50\n  - `RsiShortThreshold` = 50\n  - `RiskReward` = 2\n  - `AtrStopMultiplier` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, EMA, RSI, Highest, Lowest\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: price closes above/below ATR breakout levels with EMA and RSI confirmation\n- **Long/Short**: Both\n- **Exit Criteria**: ATR-based stop loss and 1:2 risk-reward take profit\n- **Stops**: ATR stop\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1.5\n  - `Lookback` = 20\n  - `EmaPeriod` = 50\n  - `RsiPeriod` = 14\n  - `RsiLongThreshold` = 50\n  - `RsiShortThreshold` = 50\n  - `RiskReward` = 2\n  - `AtrStopMultiplier` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, EMA, RSI, Highest, Lowest\n  - Stops: ATR\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2066": {
+    "id": 2066,
+    "name": "AMMA Trend",
+    "family": "trend",
+    "overview": "The strategy uses the **Modified Moving Average (AMMA)** indicator to capture short term trend changes. It analyzes the direction of the AMMA slope on recent candles and opens a position in the direction of the emerging trend while closing the opposite one.",
+    "details": "",
+    "parameters": "- `CandleType` – timeframe of candles used for calculations.\n- `MaPeriod` – period of the modified moving average.\n- `AllowLongEntry` – enable opening long positions.\n- `AllowShortEntry` – enable opening short positions.\n- `AllowLongExit` – enable closing long positions.\n- `AllowShortExit` – enable closing short positions."
+   },
+   "1114": {
+    "id": 1114,
+    "name": "Negroni Opening Range",
+    "family": "trend",
+    "overview": "Trades breakouts based on either pre-market or opening range defined by configurable time windows. Orders are allowed only within the specified trading session and any open position is closed at the session end.\n\n## Parameters\n- `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- `MaxTradesPerDay` = 3\n- `Direction` = TradeDirection.LongShort\n- `SessionStart` = new TimeSpan(9, 30, 0)\n- `SessionEnd` = new TimeSpan(14, 0, 0)\n- `CloseTime` = new TimeSpan(16, 0, 0)\n- `UsePreMarketRange` = true\n- `PreMarketStart` = new TimeSpan(8, 0, 0)\n- `PreMarketEnd` = new TimeSpan(9, 0, 0)\n- `OpenRangeStart` = new TimeSpan(9, 5, 0)\n- `OpenRangeEnd` = new TimeSpan(9, 30, 0)\n",
+    "details": "",
+    "parameters": "- `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- `MaxTradesPerDay` = 3\n- `Direction` = TradeDirection.LongShort\n- `SessionStart` = new TimeSpan(9, 30, 0)\n- `SessionEnd` = new TimeSpan(14, 0, 0)\n- `CloseTime` = new TimeSpan(16, 0, 0)\n- `UsePreMarketRange` = true\n- `PreMarketStart` = new TimeSpan(8, 0, 0)\n- `PreMarketEnd` = new TimeSpan(9, 0, 0)\n- `OpenRangeStart` = new TimeSpan(9, 5, 0)\n- `OpenRangeEnd` = new TimeSpan(9, 30, 0)"
+   },
+   "2321": {
+    "id": 2321,
+    "name": "CandlesticksBW",
+    "family": "trend",
+    "overview": "This strategy replicates the Bill Williams CandlesticksBW approach. It colors each candle using Awesome Oscillator (AO) and Accelerator Oscillator (AC) momentum. The strategy opens or closes positions based on transitions between bullish and bearish colors.\n\n## How it works\n- Computes AO as the difference between 5- and 34-period SMAs of the median price.\n- Computes AC as AO minus a 5-period SMA of AO.\n- Each candle is classified into six colors depending on AO/AC growth and candle direction.\n- A bullish setup occurs when the penultimate candle is bullish (color 0 or 1). If the last candle's color is above 1, a long position is opened and short positions are closed.\n- A bearish setup occurs when the penultimate candle is bearish (color 4 or 5). If the last candle's color is below 4, a short position is opened and long positions are closed.\n- Stops and targets are applied via `StartProtection`.\n\n## Parameters\n- `CandleType` – candle timeframe.\n- `SignalBar` – offset bar for signal evaluation.\n- `StopLoss` – stop loss distance in points.\n- `TakeProfit` – take profit distance in points.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions.\n- `SellPosClose` – allow closing short positions.\n\n## Indicators\n- Awesome Oscillator (derived from SMAs).\n- Accelerator Oscillator.\n\n## Trading rules\n- **Long entry:** penultimate candle color <2 and last color >1.\n- **Short entry:** penultimate candle color >3 and last color <4.\n- **Long exit:** on short entry condition if position >0.\n- **Short exit:** on long entry condition if position <0.\n",
+    "details": "",
+    "parameters": "- `CandleType` – candle timeframe.\n- `SignalBar` – offset bar for signal evaluation.\n- `StopLoss` – stop loss distance in points.\n- `TakeProfit` – take profit distance in points.\n- `BuyPosOpen` – allow opening long positions.\n- `SellPosOpen` – allow opening short positions.\n- `BuyPosClose` – allow closing long positions.\n- `SellPosClose` – allow closing short positions."
+   },
+   "2615": {
+    "id": 2615,
+    "name": "Total Power Indicator X",
+    "family": "trend",
+    "overview": "The strategy recreates the behaviour of the MetaTrader expert \"Exp_TotalPowerIndicatorX\" using StockSharp high level APIs. It relies on a custom implementation of the Total Power Indicator that measures the dominance of bulls and bears by counting how many candles in a rolling window close above or below an internal EMA baseline. Trading decisions are made when the bullish and bearish strength lines cross each other.\n\nThe indicator works on any symbol and timeframe. By default the strategy subscribes to 4-hour candles, matching the original expert advisor configuration, but the timeframe can be adjusted through a parameter.",
+    "details": "",
+    "parameters": "- **Candle Type** – timeframe used for indicator calculations. Default: 4-hour candles.\n- **Power Period** – EMA length inside the indicator; mirrors the MQL input. Default: 10.\n- **Lookback** – number of candles used to count bullish and bearish dominance. Default: 45.\n- **Volume** – order size sent to the exchange or simulator. Default: 1.\n- **Enable Long Entry / Enable Short Entry** – allow or forbid new positions in the corresponding direction.\n- **Enable Long Exit / Enable Short Exit** – close positions on opposite signals. Disable to keep positions open until manually closed or stopped out.\n- **Use Trading Hours** – enable the time filter. When active the strategy trades only between **Start Hour/Minute** and **End Hour/Minute** and closes any open positions outside that interval. Overnight windows (start later than end) are supported.\n- **Stop Loss Points / Take Profit Points** – distances from the entry price measured in price steps. Set to zero to disable the level. The calculation uses `Security.PriceStep`, therefore make sure the security metadata is available."
+   },
+   "1542": {
+    "id": 1542,
+    "name": "Vortex Cross with MA Confirmation",
+    "family": "trend",
+    "overview": "This strategy uses the Vortex indicator to detect trend reversals and confirms entries with a smoothed moving average. A long trade is opened when the positive Vortex crosses above the negative one and price is above the smoothing line. A short trade occurs on the opposite cross under the line.\n\n## Parameters\n- **Vortex Length** – period for Vortex calculation.\n- **SMA Length** – length of the base SMA.\n- **Smoothing Length** – length for the smoothing moving average.\n- **MA Type** – smoothing method.\n- **Candle Type** – timeframe of processed candles.\n",
+    "details": "",
+    "parameters": "- **Vortex Length** – period for Vortex calculation.\n- **SMA Length** – length of the base SMA.\n- **Smoothing Length** – length for the smoothing moving average.\n- **MA Type** – smoothing method.\n- **Candle Type** – timeframe of processed candles."
+   },
+   "868": {
+    "id": 868,
+    "name": "Hammer + EMA Strategy with Tick-based SL/TP",
+    "family": "trend",
+    "overview": "Combines hammer and inverted hammer candlestick patterns with an EMA trend filter and tick-based risk management.\n\n## Details\n\n- **Entry Criteria**: Hammer above EMA or inverted hammer below EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Tick-based take profit or stop loss.\n- **Stops**: Tick-based.\n- **Default Values**:\n  - `EmaLength` = 50\n  - `StopLossTicks` = 1\n  - `TakeProfitTicks` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: EMA, Hammer, Inverted Hammer\n  - Stops: Tick-based\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Hammer above EMA or inverted hammer below EMA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Tick-based take profit or stop loss.\n- **Stops**: Tick-based.\n- **Default Values**:\n  - `EmaLength` = 50\n  - `StopLossTicks` = 1\n  - `TakeProfitTicks` = 10\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: EMA, Hammer, Inverted Hammer\n  - Stops: Tick-based\n  - Complexity: Basic\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

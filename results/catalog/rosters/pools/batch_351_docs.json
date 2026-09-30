@@ -1,0 +1,98 @@
+{
+ "batch_351": {
+  "strategy_ids": [
+   1356,
+   4220,
+   2072,
+   2985,
+   216,
+   2220,
+   644,
+   1136,
+   3404,
+   891
+  ],
+  "docs": {
+   "1356": {
+    "id": 1356,
+    "name": "Percent Stop Take Profit",
+    "family": "trend",
+    "overview": "This strategy uses two simple moving averages (SMA) to detect trend direction. When the fast SMA crosses above the slow SMA, it enters a long position. When the fast SMA crosses below the slow SMA, it enters a short position. After entering, the strategy sets stop-loss and take-profit levels as percentages of the entry price.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above Slow SMA.\n  - **Short**: Fast SMA crosses below Slow SMA.\n- **Exit Criteria**:\n  - Stop-loss and take-profit based on percentages of entry price.\n- **Stops**: Yes, both stop-loss and take-profit.\n- **Indicators**: SMA.\n- **Category**: Trend following.\n- **Timeframe**: Any.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above Slow SMA.\n  - **Short**: Fast SMA crosses below Slow SMA.\n- **Exit Criteria**:\n  - Stop-loss and take-profit based on percentages of entry price.\n- **Stops**: Yes, both stop-loss and take-profit.\n- **Indicators**: SMA.\n- **Category**: Trend following.\n- **Timeframe**: Any.",
+    "parameters": ""
+   },
+   "4220": {
+    "id": 4220,
+    "name": "MA Mirror",
+    "family": "trend",
+    "overview": "The MA Mirror strategy is a conversion of the MetaTrader expert *MA_MirrorEA*. The system compares two simple moving averages\ncalculated on the same period but using different price sources: candle closes versus candle opens. When the moving average of\nclosing prices stays above the moving average of opening prices the strategy wants to be long; when it drops below the opening\naverage the strategy wants to be short. A configurable shift parameter allows the moving averages to be read from older candles\nso the StockSharp port can reproduce the visual displacement applied in the original MetaTrader indicator.\n\nThe StockSharp implementation keeps the original “mirror” behaviour: only one market position can exist at any time, and a\nsignal change first closes the previous position and then opens a new one in the opposite direction. Just like the MetaTrader\ncode, the strategy begins with a virtual short signal, meaning the very first real trade happens only after the close average\nmoves above the open average.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | 1-minute time frame | Primary timeframe processed by the strategy. |\n| `MovingPeriod` | `int` | `20` | Length of the simple moving averages used on close and open prices. |\n| `MovingShift` | `int` | `0` | Number of completed candles that the moving-average values are shifted backwards. |\n| `TradeVolume` | `decimal` | `1` | Quantity used for every market order. |"
+   },
+   "2072": {
+    "id": 2072,
+    "name": "Instantaneous Trend Filter",
+    "family": "trend",
+    "overview": "This strategy uses John Ehlers' Instantaneous Trendline and a trigger line to generate signals on any timeframe. The trigger is computed as `2 * ITrend - ITrend[2]`, forming a fast line that crosses the slower trendline. A downward crossover closes short positions and opens a long, while an upward crossover closes longs and opens a short. The smoothing factor `Alpha` controls responsiveness: lower values produce smoother lines, higher values react faster.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Trigger was above the trendline on the previous bar and crosses below it on the current bar.\n  - **Short**: Trigger was below the trendline on the previous bar and crosses above it on the current bar.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Long positions are closed when a short signal appears.\n  - Short positions are closed when a long signal appears.\n- **Stops**: None by default.\n- **Default Values**:\n  - `Alpha` = 0.07.\n  - `Candle Type` = 4-hour timeframe.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Trigger was above the trendline on the previous bar and crosses below it on the current bar.\n  - **Short**: Trigger was below the trendline on the previous bar and crosses above it on the current bar.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Long positions are closed when a short signal appears.\n  - Short positions are closed when a long signal appears.\n- **Stops**: None by default.\n- **Default Values**:\n  - `Alpha` = 0.07.\n  - `Candle Type` = 4-hour timeframe.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Single\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2985": {
+    "id": 2985,
+    "name": "Iin MA Signal",
+    "family": "trend",
+    "overview": "The strategy reproduces the behaviour of the classic **Iin MA Signal** MQL5 expert advisor. It watches for a crossover between a fast and a slow moving average and reacts on the bar defined by the `SignalBar` parameter, just like the original template that polled the indicator buffers. Bullish crosses open long positions and optionally close existing shorts, while bearish crosses open shorts and optionally close longs. Stops and targets can be attached automatically through StockSharp position protection.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Data type describing the candle series used for calculations. | 1-hour time frame |\n| `FastPeriod` | Period of the fast moving average. | 10 |\n| `FastMaType` | Type of the fast moving average (`Sma`, `Ema`, `Smma`, `Lwma`). | `Ema` |\n| `SlowPeriod` | Period of the slow moving average. | 22 |\n| `SlowMaType` | Type of the slow moving average (`Sma`, `Ema`, `Smma`, `Lwma`). | `Sma` |\n| `SignalBar` | Number of finished bars back that must contain the crossover (1 reproduces the MQL default). | 1 |\n| `AllowLongEntries` | Enable or disable long entries. | `true` |\n| `AllowShortEntries` | Enable or disable short entries. | `true` |\n| `CloseLongOnSignal` | Close long positions when a bearish signal appears. | `true` |\n| `CloseShortOnSignal` | Close short positions when a bullish signal appears. | `true` |\n| `StopLossPoints` | Absolute stop-loss distance in price units (0 disables). | 1000 |\n| `TakeProfitPoints` | Absolute take-profit distance in price units (0 disables). | 2000 |"
+   },
+   "216": {
+    "id": 216,
+    "name": "Mean Reversion",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 85%. It performs best in the crypto market.\n\nTrades are opened when price pushes a set distance from the average. A dip below the lower band triggers a long entry, anticipating a rebound toward the mean, while a rally above the upper band prompts a short. Once price touches the moving average again, any open position is closed.\n\nThe method appeals to traders who prefer a contrarian style and want clearly defined entry and exit zones. Because it relies on volatility-based bands, it adapts to quieter or more active markets while still keeping losses in check via a fixed stop-loss.\n\n## Details\n- **Entry Criteria**:\n  - **Long**: Price < MA - k*StdDev (below lower band)\n  - **Short**: Price > MA + k*StdDev (above upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price crosses above the moving average\n  - **Short**: Exit when price crosses below the moving average\n- **Stops**: Yes.\n- **Default Values**:\n  - `MovingAveragePeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Mean Reversion\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Price < MA - k*StdDev (below lower band)\n  - **Short**: Price > MA + k*StdDev (above upper band)\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - **Long**: Exit when price crosses above the moving average\n  - **Short**: Exit when price crosses below the moving average\n- **Stops**: Yes.\n- **Default Values**:\n  - `MovingAveragePeriod` = 20\n  - `DeviationMultiplier` = 2.0m\n  - `StopLossPercent` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Mean Reversion\n  - Direction: Both\n  - Indicators: Mean Reversion\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2220": {
+    "id": 2220,
+    "name": "Go Candle Body Reversal",
+    "family": "trend",
+    "overview": "Strategy based on the Go indicator that averages candle body size. It opens a long position when the smoothed candle body crosses below zero after being positive and opens a short position on the opposite cross. Existing positions are closed on opposite signals.\n\n## Details\n\n- **Entry Criteria**: sign change of body SMA (positive to negative for long, negative to positive for short)\n- **Long/Short**: Both\n- **Exit Criteria**: opposite sign change of body SMA\n- **Stops**: No\n- **Default Values**:\n  - `Period` = 174\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: sign change of body SMA (positive to negative for long, negative to positive for short)\n- **Long/Short**: Both\n- **Exit Criteria**: opposite sign change of body SMA\n- **Stops**: No\n- **Default Values**:\n  - `Period` = 174\n  - `CandleType` = 1 hour\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long & Short\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "644": {
+    "id": 644,
+    "name": "Crypto Volatility Bitcoin Correlation",
+    "family": "trend",
+    "overview": "This strategy enters a long position when Bitcoin volatility rises together with the BVOL7D index and price trades above its EMA. It exits when price drops back below the EMA.\n\n## Details\n\n- **Entry Criteria**: VIXFix greater than previous value, BVOL7D greater than previous value, close above EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below EMA.\n- **Stops**: No.\n- **Default Values**:\n  - `VixFixLength` = 22\n  - `EmaLength` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: Highest, EMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: VIXFix greater than previous value, BVOL7D greater than previous value, close above EMA.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Close below EMA.\n- **Stops**: No.\n- **Default Values**:\n  - `VixFixLength` = 22\n  - `EmaLength` = 50\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Volatility\n  - Direction: Long\n  - Indicators: Highest, EMA\n  - Stops: No\n  - Complexity: Beginner\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1136": {
+    "id": 1136,
+    "name": "Optimized Auto-Detect",
+    "family": "trend",
+    "overview": "Moving average crossover strategy with optional trend and RSI filters. Stops and take profits can be ATR-based or fixed percentage.\n\n## Parameters\n- Use Trend Filter\n- Use RSI Filter\n- RSI Period\n- RSI Long Threshold\n- RSI Short Threshold\n- Use ATR Stop\n- ATR Period\n- ATR Multiplier\n- Risk Reward Ratio\n",
+    "details": "",
+    "parameters": "- Use Trend Filter\n- Use RSI Filter\n- RSI Period\n- RSI Long Threshold\n- RSI Short Threshold\n- Use ATR Stop\n- ATR Period\n- ATR Multiplier\n- Risk Reward Ratio"
+   },
+   "3404": {
+    "id": 3404,
+    "name": "CDC PL RSI",
+    "family": "trend",
+    "overview": "The **CDC PL RSI Strategy** replicates the MQL Expert Advisor *Expert_ADC_PL_RSI* inside the StockSharp ecosystem. The system scans finished candles for Japanese candlestick reversal patterns and confirms entries with the Relative Strength Index (RSI). Long trades rely on the *Piercing Line* pattern during oversold RSI conditions, while short trades require the *Dark Cloud Cover* pattern combined with overbought RSI readings. The approach keeps the original money-management concept simple by using the strategy volume and letting StockSharp handle position sizing.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `RsiPeriod` | 20 | RSI look-back length. Optimizable between 10 and 40 in steps of 5. |\n| `BodyAveragePeriod` | 14 | Period for both the average candle body size and close-price trend filter. Optimizable between 10 and 30 in steps of 5. |\n| `CandleType` | 1-hour time frame | Candle series used for calculations. Any StockSharp-supported candle type can be selected. |\n| `Volume` (base class) | — | Trade volume set on the strategy instance before launching. |"
+   },
+   "891": {
+    "id": 891,
+    "name": "How To Set Backtest Time Ranges",
+    "family": "trend",
+    "overview": "This strategy demonstrates restricting trading to specific date and intraday time windows. It enters long when a fast SMA crosses above a slow SMA and exits on the opposite crossover.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA within the selected date and entry time ranges.\n- **Exit Criteria**: Fast SMA crosses below slow SMA within the selected date and exit time ranges.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 14\n  - `SlowLength` = 28\n  - `FromDate` = 2021-01-01\n  - `ThruDate` = 2112-01-01\n  - `EntryStart` = 00:00\n  - `EntryEnd` = 00:00\n  - `ExitStart` = 00:00\n  - `ExitEnd` = 00:00\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Fast SMA crosses above slow SMA within the selected date and entry time ranges.\n- **Exit Criteria**: Fast SMA crosses below slow SMA within the selected date and exit time ranges.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 14\n  - `SlowLength` = 28\n  - `FromDate` = 2021-01-01\n  - `ThruDate` = 2112-01-01\n  - `EntryStart` = 00:00\n  - `EntryEnd` = 00:00\n  - `ExitStart` = 00:00\n  - `ExitEnd` = 00:00\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: SMA\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "batch_057": {
+  "strategy_ids": [
+   271,
+   2262,
+   1869,
+   1965,
+   1391,
+   3160,
+   3801,
+   2836,
+   2933,
+   397
+  ],
+  "docs": {
+   "271": {
+    "id": 271,
+    "name": "MACD Slope Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 142%. It performs best in the stocks market.\n\nEntries occur when slope exceeds its typical level by a multiple of standard deviation, taking trades in the direction of acceleration with a protective stop.\n\nIt appeals to active traders eager for early trend exposure. Positions exit when the slope drifts back toward normal readings. Default `FastEma` = 12.\n\n## Details\n\n- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastEma` = 12\n  - `SlowEma` = 26\n  - `SignalMa` = 9\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Indicator exceeds average by deviation multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Indicator reverts to average.\n- **Stops**: Yes.\n- **Default Values**:\n  - `FastEma` = 12\n  - `SlowEma` = 26\n  - `SignalMa` = 9\n  - `SlopePeriod` = 20\n  - `BreakoutMultiplier` = 2.0m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: MACD\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2262": {
+    "id": 2262,
+    "name": "Directed Movement",
+    "family": "trend",
+    "overview": "This strategy replicates the **Directed Movement** expert advisor from MetaTrader. It applies a Relative Strength Index (RSI) that is smoothed twice by moving averages. The first smoothing forms a fast line while the second smoothing creates a slower line.\n\nTrading decisions are based on the crossover of the fast and slow lines in a contrarian fashion:\n\n- **Buy** when the fast line crosses below the slow line.\n- **Sell** when the fast line crosses above the slow line.\n\nOptional stop loss and take profit levels are applied as percentages of the entry price.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `CandleType` | Candle series used for calculations. |\n| `RsiPeriod` | RSI calculation period. |\n| `FirstMaType` | Moving average type used for the fast line. |\n| `FirstMaLength` | Period of the fast moving average. |\n| `SecondMaType` | Moving average type used for the slow line. |\n| `SecondMaLength` | Period of the slow moving average. |\n| `StopLossPercent` | Stop loss in percent of entry price. |\n| `TakeProfitPercent` | Take profit in percent of entry price. |"
+   },
+   "1869": {
+    "id": 1869,
+    "name": "Bollinger Breakout Momentum",
+    "family": "trend",
+    "overview": "Converted from the original MQL strategy. Trades Bollinger Band breakouts confirmed by EMA, MACD, and RSI. The strategy enters only once per volatility expansion and trails the stop along the middle band while using a fixed take profit in pips.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: band width above `BreakoutFactor`, MACD > 0, RSI > 50, EMA above middle band, previous close above previous upper band\n  - Short: band width above `BreakoutFactor`, MACD < 0, RSI < 50, EMA below middle band, previous close below previous lower band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price touches trailing middle-band stop or hits take profit\n  - Short: price touches trailing middle-band stop or hits take profit\n- **Stops**: Stop level is the current middle Bollinger Band, updated every candle\n- **Take Profit**: Fixed distance specified in pips\n- **Default Values**:\n  - `BollingerLength` = 18\n  - `BollingerDeviation` = 2m\n  - `BreakoutFactor` = 0.0015m\n  - `TakeProfitPips` = 100\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, MACD, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: band width above `BreakoutFactor`, MACD > 0, RSI > 50, EMA above middle band, previous close above previous upper band\n  - Short: band width above `BreakoutFactor`, MACD < 0, RSI < 50, EMA below middle band, previous close below previous lower band\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Long: price touches trailing middle-band stop or hits take profit\n  - Short: price touches trailing middle-band stop or hits take profit\n- **Stops**: Stop level is the current middle Bollinger Band, updated every candle\n- **Take Profit**: Fixed distance specified in pips\n- **Default Values**:\n  - `BollingerLength` = 18\n  - `BollingerDeviation` = 2m\n  - `BreakoutFactor` = 0.0015m\n  - `TakeProfitPips` = 100\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, MACD, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1965": {
+    "id": 1965,
+    "name": "Forex Profit Boost",
+    "family": "trend",
+    "overview": "The **Forex Profit Boost** strategy is a reversal trading system that combines a fast Exponential Moving Average (EMA) and a slow Simple Moving Average (SMA). The strategy waits for the fast EMA to cross the slow SMA and then trades against the direction of the crossover, expecting a price retracement. Optional stop-loss and take-profit levels in absolute price points can be configured for risk management.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `FastPeriod` | Period for the fast EMA. | 7 |\n| `SlowPeriod` | Period for the slow SMA. | 21 |\n| `StopLoss` | Stop-loss distance in price points. | 1000 |\n| `TakeProfit` | Take-profit distance in price points. | 2000 |\n| `CandleType` | Timeframe used for calculations. | 1 hour |"
+   },
+   "1391": {
+    "id": 1391,
+    "name": "Swing High Low Pivots Strategy [LV]",
+    "family": "trend",
+    "overview": "Trades around confirmed swing highs and lows. When a pivot low appears the strategy places a long limit order at the pivot bar and sets fixed stop and take-profit targets. Pivot highs trigger short setups. An optional moving average filter can restrict trades to the trend direction.\n\n## Details\n\n- **Inputs**:\n  - Pivot length.\n  - Stop-loss distance in ticks.\n  - Take-profit distance in ticks.\n  - Second take-profit and double entry switch.\n  - Moving-average filter type and length.\n- **Long/Short**: Both.\n- **Exit**: Fixed stop and up to two profit targets.\n- **Filters**:\n  - Category: Pattern recognition\n  - Direction: Both\n  - Indicators: Moving average\n  - Stops: Fixed\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Inputs**:\n  - Pivot length.\n  - Stop-loss distance in ticks.\n  - Take-profit distance in ticks.\n  - Second take-profit and double entry switch.\n  - Moving-average filter type and length.\n- **Long/Short**: Both.\n- **Exit**: Fixed stop and up to two profit targets.\n- **Filters**:\n  - Category: Pattern recognition\n  - Direction: Both\n  - Indicators: Moving average\n  - Stops: Fixed\n  - Complexity: High\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3160": {
+    "id": 3160,
+    "name": "Cidomo",
+    "family": "breakout",
+    "overview": "Breakout system converted from the MetaTrader 5 expert advisor \"Cidomo\". The strategy waits for a new candle on the configured timeframe, measures the recent trading range, and places paired stop orders above and below that range. It manages risk with classic stop-loss/take-profit levels, an optional trailing stop, and two money-management modes (fixed volume or percentage risk).\n\n## How it works\n\n1. On every finished candle of `CandleType`, collect the last `BarsCount` highs and lows to define the short-term channel.\n2. Place a buy stop at `highest + IndentPips` and a sell stop at `lowest - IndentPips` (both values expressed in pips and converted to absolute prices).\n3. When a stop order is triggered, the opposite pending order is cancelled immediately.\n4. For an open position the strategy keeps track of:\n   - Initial stop-loss (`StopLossPips`) and take-profit (`TakeProfitPips`).\n   - A stepped trailing stop (`TrailingStopPips` / `TrailingStepPips`). The stop is moved only after price advances by at least `TrailingStop + TrailingStep`, mirroring the original EA.\n   - Market exits are used to emulate MetaTrader's `PositionModify` calls when the stop or take-profit is touched.\n5. When `UseTimeFilter` is enabled, new orders are submitted only within ±30 seconds of `StartHour:StartMinute` (server time), replicating the tight trading window of the source script.\n\n## Money management\n\n- **FixedVolume**: always trades the exact `TradeVolume` specified by the user.\n- **RiskPercent**: calculates the order size so that a losing trade at the configured stop-loss distance reduces equity by `RiskPercent`. Volumes are rounded to the instrument's `VolumeStep` and clamped between `MinVolume` / `MaxVolume`.\n\n## Risk controls\n\n- Initial stop-loss and take-profit levels are stored locally and executed via market orders when price crosses the target during the next candle.\n- The trailing stop only moves in one direction and respects the step distance from the original EA, preventing c",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| --- | --- | --- | --- |\n| `CandleType` | `DataType` | `H4` | Timeframe used to build the breakout range. |\n| `BarsCount` | `int` | `15` | Number of completed candles considered when calculating the highest high and lowest low. |\n| `IndentPips` | `decimal` | `3` | Offset (in pips) added above/below the range before submitting stop orders. |\n| `StopLossPips` | `decimal` | `50` | Protective stop distance in pips. A value of `0` disables the stop. |\n| `TakeProfitPips` | `decimal` | `50` | Profit target distance in pips. A value of `0` disables the target. |\n| `TrailingStopPips` | `decimal` | `35` | Trailing stop distance in pips. Set to `0` to disable trailing. |\n| `TrailingStepPips` | `decimal` | `5` | Minimum extra profit required before tightening the trailing stop. |\n| `MoneyManagement` | `CidomoMoneyManagementMode` | `RiskPercent` | Chooses between fixed position size and risk-based sizing. |\n| `RiskPercent` | `decimal` | `1` | Percentage of equity risked per trade when `MoneyManagement = RiskPercent`. |\n| `TradeVolume` | `decimal` | `0.1` | Fixed order volume used in `FixedVolume` mode or when risk-based sizing cannot be computed. |\n| `UseTimeFilter` | `bool` | `false` | Enables the ±30 second time window filter. |\n| `StartHour` | `int` | `9` | Hour (0-23) of the trading window centre. |\n| `StartMinute` | `int` | `58` | Minute (0-59) of the trading window centre. |"
+   },
+   "3801": {
+    "id": 3801,
+    "name": "Order Stabilization",
+    "family": "breakout",
+    "overview": "The **Order Stabilization Strategy** is a conversion of the MetaTrader expert advisor `hjueiisyx8lp2o379e_www_forex-instruments_info.mq4`. The original robot places a pair of stop orders around the current price and waits for a breakout. Once a position is opened, the system monitors recent candle bodies to determine whether price action has stalled (\"stabilized\") and exits the trade when the market loses momentum or when a predefined profit threshold is reached.\n\nThis C# port keeps the same logic by using the high-level StockSharp API. It relies on completed candles instead of raw ticks, making the behaviour deterministic during backtesting and live trading.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `OrderVolume` | Trade volume in lots used for both stop entries. | `0.1` |\n| `OrderDistancePoints` | Distance between the current close price and each stop order, expressed in MetaTrader points. | `20` |\n| `ProfitThreshold` | Minimum floating profit (account currency) required before an exit triggered by stabilization is allowed. | `-2` |\n| `AbsoluteFixation` | Profit level (account currency) that forces an immediate exit. | `30` |\n| `StabilizationPoints` | Maximum candle body size (points) that signals a flat market. | `25` |\n| `ExpirationMinutes` | Lifetime of pending stop orders in minutes. `0` disables expiration. | `20` |\n| `CandleType` | Candle type used to evaluate stabilization (defaults to 5-minute time frame). | `TimeFrame(5m)` |"
+   },
+   "2836": {
+    "id": 2836,
+    "name": "Amstell Grid",
+    "family": "momentum",
+    "overview": "The Amstell Grid Strategy is a C# port of the MetaTrader 5 expert advisor `exp_Amstell.mq5`. It creates a symmetric buy/sell grid and applies a virtual take profit to individual entries. The conversion follows the StockSharp high-level API guidelines and replaces tick handling with candle processing while keeping the original idea intact.\n\n## How It Works\n\n1. **Initialization**\n   - The strategy subscribes to the configured candle type and starts position protection.\n   - An adjusted pip size is calculated from the security's `PriceStep` and decimal precision. Five-digit and three-digit symbols automatically receive a 10x multiplier, mirroring the MT5 implementation.\n\n2. **First Trade**\n   - When both the last recorded buy and sell prices are empty (initial launch), a market buy order is sent immediately. This bootstraps the grid exactly like the original expert advisor.\n\n3. **Grid Expansion**\n   - A new **buy** is issued whenever the current close price is at least `StepPips` below the last recorded buy price.\n   - A new **sell** is issued whenever the price is at least `StepPips` above the last recorded sell price.\n   - The strategy internally tracks separate long and short stacks so that alternating orders can coexist even on a netting account. Opposite orders first reduce the other stack before adding new exposure, reproducing the hedging behavior of the MT5 version.\n\n4. **Virtual Take Profit**\n   - Every open long is monitored independently. When price advances by `TakeProfitPips`, a market sell is sent for that position's volume only.\n   - Every open short is treated similarly in the opposite direction. The take profit is \"virtual\" because positions are closed programmatically without using broker-side TP orders.\n   - After a direction has been fully closed while the opposite side still exists, the corresponding last-deal price is cleared so that the next order in that direction can fire immediately, just as in the original code.\n\n5. **State Tracking**\n   - Th",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Volume` | `0.1` | Order size used for every market order in both directions. |\n| `TakeProfitPips` | `50` | Distance in pips that must be gained before an individual position is closed. |\n| `StepPips` | `15` | Gap in pips between consecutive grid orders of the same direction. |\n| `CandleType` | `1 Minute` | Candle data source used to approximate tick-based logic. |\n\nAll pip-based settings respect the security's price step and precision. For example, on EURUSD (5 digits) `StepPips = 15` corresponds to 0.0015."
+   },
+   "2933": {
+    "id": 2933,
+    "name": "Breakdown Pending Stop",
+    "family": "volatility",
+    "overview": "This strategy recreates the original MetaTrader \"breakdown\" expert advisor. It places stop orders around the previous day's range and continuously refreshes the orders each session. A trailing-stop engine replicates the stepped trailing logic of the source script, keeping the stops tight once a position starts moving in the profitable direction.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `Working Candles` | Time frame used for monitoring price action and managing stops (default 15-minute candles). |\n| `Stop Loss (ticks)` | Initial protective stop distance converted to absolute price using the instrument tick size. Set to zero to disable. |\n| `Take Profit (ticks)` | Initial take-profit distance. Set to zero to disable. |\n| `Trailing Stop (ticks)` | Core trailing-stop distance. Set to zero to disable trailing. |\n| `Trailing Step (ticks)` | Additional profit required before the trailing stop is moved. |\n| `Min Distance (ticks)` | Offset added to the previous day's high/low when placing pending orders. |\n| `Order Volume` | Quantity sent with both stop orders. |"
+   },
+   "397": {
+    "id": 397,
+    "name": "Short-Term Reversal Stocks",
+    "family": "mean_reversion",
+    "overview": "The **Short-Term Reversal Stocks** strategy applies mean reversion principles to equities. Each day the stocks with the largest losses over the prior week are bought while recent winners are shorted, betting on a short-lived reversal.\n\nPositions are held for only a few days before re-evaluating.\n\n## Details\n- **Entry Criteria**: Daily ranking by one-week return.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions closed after several days or when rankings update.\n- **Stops**: Volatility-based stop may be used.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Daily ranking by one-week return.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions closed after several days or when rankings update.\n- **Stops**: Volatility-based stop may be used.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1228,
+      "name": "RCI",
+      "family": "trend",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)),14))",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)),14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Rank Correlation Index has no DSL function, so it is approximated by the bounded 10-bar range position (RciLength 10) crossed against the documented SMA(14) of itself, which preserves the rising-above-average long rule and the opposite-cross exit. The Direction restriction, the no-stop configuration and the 1-minute CandleType are not signals."
+    },
+    {
+      "id": 1805,
+      "name": "Triple Moving Average Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,10), sma(close,20)) and sma(close,10) > sma(close,50) and sma(close,20) > sma(close,50)",
+      "exit_long": "crossbelow(sma(close,10), sma(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "FastMaLength, MediumMaLength and SlowMaLength carry no values so 10/20/50 SMAs are explicit fallbacks, and the entry implements the branch used when EnableEntryMediumSlowCross is false: a fast-over-medium cross with both averages on the same side of the slow one. The documented fast/slow opposite cross is the exit, the medium/slow entry branch is unused for the long side, and StartProtection has no distances."
+    },
+    {
+      "id": 2907,
+      "name": "CCFp Currencies Strength",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Signals require a spread between the relative strength scores of two different currencies built from seven USD-based FX pairs, which a single-instrument OHLCV engine cannot compute, so the never-true guard records the limitation instead of inventing one. Fast/Slow MA, Strength Step, Close Opposite and base Volume are cross-market parameters."
+    },
+    {
+      "id": 507,
+      "name": "ADX Range Breakout",
+      "family": "trend",
+      "entry_long": "close >= donchian_high_prev(close,34) and adx(high,low,close,14) < 17.5",
+      "exit_long": "close < donchian_low_prev(close,34)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented defaults are used verbatim: a close at or above the previous 34-bar highest close while ADX(14) stays under the 17.5 quiet-market threshold. The 1000-unit stop, the session restriction, MaxTradesPerDay 3 and the 30-minute CandleType are price-unit and schedule features, so the mirrored range break exits and the percentage fields stay null."
+    },
+    {
+      "id": 713,
+      "name": "Dual Supertrend MACD",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) + 3 * atr(high,low,close,10) and close > ema(close,20) + 5 * atr(high,low,close,20) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < ema(close,10) + 3 * atr(high,low,close,10) or close < ema(close,20) + 5 * atr(high,low,close,20) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both SuperTrend lines are rebuilt from the documented parameters as their EMA basis plus the factor times ATR: ema(close,10)+3.0*atr(10) and ema(close,20)+5.0*atr(20), and a positive MACD histogram is macd(12,26) above its 9 signal, exactly as documented. Either line flipping or the histogram crossing zero exits; there are no stops by default and the TradeDirection switch is not a long-roster input."
+    },
+    {
+      "id": 2075,
+      "name": "Virtual Trailing Stop",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state the strategy does not generate entry signals and expects orders to be opened externally, so it is a pure position-management utility and the never-true guard is used. StopLoss, TakeProfit, TrailingStop, TrailingStart and TrailingStep are all price-step offsets that a signal-based roster cannot hold."
+    },
+    {
+      "id": 4087,
+      "name": "Open Time Daily Window",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Orders are placed inside a daily time window (Trading Time 18:50, 5 minutes) and flattened in the Close Position Time 20:50 window, with long entries disabled by default via Allow Buy Entries false, so there is no market-derived signal and the never-true guard is used. Stop-Loss/Take-Profit points and the trailing switch are price-distance settings."
+    },
+    {
+      "id": 1432,
+      "name": "Ticker Pulse Meter + Fear EKG",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(100 * (close - donchian_low(low,50)) / (donchian_high(high,50) - donchian_low(low,50)), 20)",
+      "exit_long": "crossbelow(100 * (close - donchian_low(low,50)) / (donchian_high(high,50) - donchian_low(low,50)), 95)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The combined percentile is approximated by the 50-bar range position (LookbackShort 50, with the 200-bar lookback dropped) and the documented thresholds are applied to it: recovering above EntryThresholdHigh 20 is the long entry and rolling back under the OrangeEntryThreshold/ProfitTake 95 level is the profit-take exit. EntryThresholdLow 40 and the Fear EKG visualisation are not used, and no stops are documented."
+    },
+    {
+      "id": 3564,
+      "name": "Turbo Scaler Grid",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are pending stop grids at operator-configured base prices with PendingStepPoints spacing, activated by Level1 proximity or multi-timeframe confirmations, so no market-derived directional signal exists and the never-true guard is used. Break-even/trailing points, PendingQuantity and the daily block levels are order-management settings."
+    },
+    {
+      "id": 2198,
+      "name": "Exp Multic",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The doc lists Indicators: None: positions open in an internal predefined direction when balance exceeds Margin, volume escalates after wins and direction flips after losses, with Loss/Profit/KChange/KClose thresholds in account currency across several FX pairs. That is a money-management martingale rather than a market signal, so the never-true guard is used."
+    }
+  ]
+}

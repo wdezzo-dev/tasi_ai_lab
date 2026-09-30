@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 209,
+      "name": "Volume Supertrend",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,20) > 1 and close > ema(close,10)",
+      "exit_long": "close < ema(close,10)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "EMA(10) and volume above its 20-bar average proxy the SuperTrend/volume-surge direction. The documented 2% stop is retained; ATR SuperTrend state and any trailing implementation are omitted."
+    },
+    {
+      "id": 3982,
+      "name": "RAVIiAO Strategy (StockSharp)",
+      "family": "trend",
+      "entry_long": "(ema(close,9) - sma(close,21)) / sma(close,21) > 0.1 and (high + low) / 2 > sma((high + low) / 2,5)",
+      "exit_long": "(ema(close,9) - sma(close,21)) / sma(close,21) < 0 or (high + low) / 2 < sma((high + low) / 2,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RAVI uses explicit fallback lengths 9/21 and threshold 0.1, while median price versus SMA(5) proxies AC confirmation. Point-based stops, targets, and sizing are not percentage fields."
+    },
+    {
+      "id": 4184,
+      "name": "JK BullP AutoTrader",
+      "family": "trend",
+      "entry_long": "close - ema(close,13) > 0 and roc(close - ema(close,13),3) < 0",
+      "exit_long": "close - ema(close,13) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Distance above EMA(13) proxies Bull's Power, and a falling three-bar distance captures weakening bullish pressure. Pip stop, target, and trailing settings are not percentage exits."
+    },
+    {
+      "id": 2560,
+      "name": "IBS RSI CCI v4 X2",
+      "family": "trend",
+      "entry_long": "close > ema(close,50) and crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "close < ema(close,50) or crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(50) is an explicit slow-bias proxy and MACD 12/26/9 preserves the documented counterintuitive fast envelope cross. The IBS/RSI/CCI composite, two timeframes, thresholds, and point protection are unsupported."
+    },
+    {
+      "id": 870,
+      "name": "Hancock RSI Volume",
+      "family": "trend",
+      "entry_long": "roc(rsi(close,14),1) > 0.1",
+      "exit_long": "roc(rsi(close,14),1) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Rising regular RSI(14) replaces the unavailable volume-weighted RSI, with the documented 0.1 slope threshold. Bullish/bearish volume and wick weighting are not reproduced."
+    },
+    {
+      "id": 1806,
+      "name": "Hardcore FX Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,17)",
+      "exit_long": "close < bb_mid(close,17)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 17-bar extreme proxies the last ZigZag pivot, and the mean band supplies a long exit. The 1400/5400/500 point stop, target, and trail are not percentage fields."
+    },
+    {
+      "id": 1295,
+      "name": "Session Breakout Scalper Trading Bot",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar session-range fallback and ATR(14) expansion preserve breakout behavior. The 01:00-02:00 clock, 100/50 point targets, and 2-ATR dynamic stop are not representable."
+    },
+    {
+      "id": 3698,
+      "name": "Symbol Swap Panel",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented panel only switches and monitors a security and never places orders, so an impossible negative-price guard preserves that behavior. Manual requests, symbol switching, logs, and timers are unsupported."
+    },
+    {
+      "id": 1222,
+      "name": "Range Filter Strategy with ATR TP/SL",
+      "family": "volatility",
+      "entry_long": "crossabove(close,bb_upper(close,20,1.5))",
+      "exit_long": "crossbelow(close,bb_mid(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger(20,1.5) is a direct volatility-band proxy for the unavailable range filter. ATR(14) target and stop multipliers are dynamic price distances rather than percentage fields."
+    },
+    {
+      "id": 872,
+      "name": "Harmony Signal Flow By Arun",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,5),30)",
+      "exit_long": "crossabove(rsi(close,5),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(5) crossings above 30 and 50 retain the long reversal and neutral-exit proxies. The 15:25 forced close is unavailable, and 100/150 point protections are not percentage fields."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 578,
+      "name": "Bitcoin Momentum",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and roc(close,7) > 0 and atr(high,low,close,5) > 0",
+      "exit_long": "close < ema(close,20) or roc(close,7) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) represents the higher-timeframe trend, while seven-bar ROC and ATR(5) approximate momentum and the documented trailing-volatility context. Weekly EMA, the trailing-stop calculation, caution condition, and time dates are unavailable."
+    },
+    {
+      "id": 3177,
+      "name": "iMA iStochastic Custom",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) + 0.01 * close and rsi(close,14) > 50",
+      "exit_long": "close < ema(close,20) - 0.01 * close or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20) with a 1% envelope is an explicit fallback for the missing MA period and pip offsets; RSI(14)>50 is the stochastic confirmation proxy. Stochastic K/D, exact envelope shifts, money modes, and pip protections are not representable."
+    },
+    {
+      "id": 3891,
+      "name": "SilverTrend V3 JTPO",
+      "family": "trend",
+      "entry_long": "ema(close,12) > ema(close,26) and volume_ratio(volume,20) > 1",
+      "exit_long": "ema(close,12) < ema(close,26) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(12/26) alignment and normalized volume provide a deterministic proxy for the unavailable SilverTrend and JTPO indicators. Point-based initial/trailing stops, the Friday cutoff, and custom statistical filter are omitted."
+    },
+    {
+      "id": 2906,
+      "name": "BykovTrend + ColorX2MA",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 50 and crossabove(ema(close,10),sma(close,20))",
+      "exit_long": "rsi(close,14) < 50 or crossbelow(ema(close,10),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) and an EMA/SMA slope cross are explicit proxies for the Williams %R and two-stage ColorX2MA blocks. The two independent timeframe blocks, applied-price modes, signal delays, and all permission toggles are not expressible."
+    },
+    {
+      "id": 539,
+      "name": "Autonomous 5-Minute Robot",
+      "family": "trend",
+      "entry_long": "close > sma(close,50) and roc(close,6) > 0 and volume_ratio(volume,10) > 1",
+      "exit_long": "close < sma(close,50) or volume_ratio(volume,10) < 1",
+      "stop_loss_pct": 3.0,
+      "take_profit_pct": 29.0,
+      "notes": "The documented SMA(50), six-bar comparison, and VolumeLength(10) are retained; volume_ratio(10)>1 proxies buy volume exceeding sell volume. The source's 3% stop and 29% target are encoded exactly; the 5-minute clock is not."
+    },
+    {
+      "id": 4188,
+      "name": "Early Bird Range Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and rsi(close,14) > 50",
+      "exit_long": "close < ema(close,20) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 20-bar high break and RSI(14)>50 proxy the pre-market range breakout bias. Session/range hours, entry buffer, pip targets/stops, daily close, and volatility trailing controls are not DSL fields."
+    },
+    {
+      "id": 2071,
+      "name": "Daily Breakpoint",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and roc(close,1) > 0",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A prior 10-bar high break with positive momentum is a price-based proxy for the daily-open breakout. Stored daily open, previous-bar size/body gates, point-based stop/target, and trailing settings are not available."
+    },
+    {
+      "id": 2561,
+      "name": "Three Candles Reversal",
+      "family": "momentum",
+      "entry_long": "close > open and roc(close,1) > 0 and roc(close,3) > 0 and volume_ratio(volume,20) > 1",
+      "exit_long": "close < open or roc(close,3) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish multi-bar momentum with normalized volume confirmation approximates the three-candle reversal; the exact rolling candle-pattern buffer cannot be represented. Optional volume modes, signal-bar offset, and pip stops/targets are omitted."
+    },
+    {
+      "id": 3838,
+      "name": "FitFul 13 Time Gated",
+      "family": "volatility",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weekly pivot ladder is approximated by prior 20-bar range boundaries and their crosses. Pivot formulas, allowed-minute gate, confirmation timeframe, offset targets, and trailing/Friday controls are not expressible."
+    },
+    {
+      "id": 1103,
+      "name": "Multi-Timeframe RSI Grid Strategy with Arrows",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,14) < 30 and atr(high,low,close,14) > 0",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14)<30 and a valid ATR(14) series provide a long-side oversold/grid proxy; RSI>70 is the reversion exit. Higher-timeframe RSI alignment, ATR grid spacing, lot multipliers, daily profit target, and drawdown management are omitted."
+    }
+  ]
+}

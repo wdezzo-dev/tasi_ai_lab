@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1309,
+      "name": "SJ NIFTY",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) and close > sma(close * volume,20) / sma(volume,20) and rsi(close,14) > 50 and close > ema(close,200) and close > donchian_high_prev(high,10)",
+      "exit_long": "close < ema(close,20) or rsi(close,14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(20), a volume-weighted VWAP proxy, RSI(14), EMA(200), and a prior-high break approximate the documented long filter stack. SuperTrend, Keltner basis, risk sizing, and risk-ratio protection are unavailable, and the short branch is omitted."
+    },
+    {
+      "id": 884,
+      "name": "HMA 200 + EMA 20 Crossover",
+      "family": "trend",
+      "entry_long": "close > ema(close,200) and crossabove(close,ema(close,20))",
+      "exit_long": "close < ema(close,200) or crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(200) is an explicit proxy for HMA(200), while the documented close/EMA(20) crossover and opposite reversal are retained. The exact Hull calculation, timeframe, and no-stop short side are outside this long-only translation."
+    },
+    {
+      "id": 3638,
+      "name": "Donchian Scalper",
+      "family": "trend",
+      "entry_long": "crossabove(close,ema(close,20)) and close > donchian_high_prev(high,20)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A close recross above EMA(20) plus a prior 20-bar high break approximates the pullback-then-rebreakout stop-order logic. Pending-order arming, opposite-band protection, cooldown, and adaptive trailing modes are not expressible."
+    },
+    {
+      "id": 39,
+      "name": "Historical Volatility Breakout",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) + 2 * std(close,20)",
+      "exit_long": "crossbelow(close,sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "SMA(20) plus two standard deviations is the explicit proxy for the historical-volatility level, with an MA recross as the documented exit. The 2% stop is retained; the exact HV estimator and short branch are omitted."
+    },
+    {
+      "id": 1225,
+      "name": "Range Filter DW",
+      "family": "trend",
+      "entry_long": "close > ema(close,14) + 2.618 * atr(high,low,close,14)",
+      "exit_long": "close < ema(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(14) plus/minus 2.618 ATR(14) approximates the stateful ATR range-filter bands and retains the documented multipliers. The rolling band state, opposite-band exit details, and short side are simplified for the DSL."
+    },
+    {
+      "id": 1142,
+      "name": "ORB 15m – First 15min Breakout (Long/Short)",
+      "family": "breakout",
+      "entry_long": "close > open and close > donchian_high_prev(high,1)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish prior-bar body and high break approximate the first-15-minute opening-range signal. Stockholm session timing, reference-bar stop, 10R target, and session-end exit are not available; the long branch is retained."
+    },
+    {
+      "id": 1751,
+      "name": "Maximus vX Lite",
+      "family": "breakout",
+      "entry_long": "high - low <= sma(high - low,40) and close > donchian_high_prev(high,40)",
+      "exit_long": "close < donchian_low_prev(low,40)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 40-bar average range and prior-high break provide a consolidation-plus-breakout proxy. The source's point distances, delay, reset period, fixed stop, and trailing stop are not representable as percentage fields."
+    },
+    {
+      "id": 624,
+      "name": "Color Gradient Framework",
+      "family": "momentum",
+      "entry_long": "crossabove(rsi(close,14),50)",
+      "exit_long": "crossbelow(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) zero-line direction is a direct proxy for the visual Color Gradient center-line signal. The configurable RSI period is not supplied, so 14 is a documented fallback; gradient rendering and short state are omitted."
+    },
+    {
+      "id": 2852,
+      "name": "Surefirething",
+      "family": "volatility",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish completed candle is a fallback for the symmetric buy-limit leg, with a bearish candle as the opposite exit. The pending grid, 50-pip protection, trailing step, and midnight shutdown are unavailable."
+    },
+    {
+      "id": 1269,
+      "name": "RSI Long Only with Confirmed Crossbacks",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),44)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The RSI(14) cross above 44 directly represents confirmation after oversold, and the documented 70 cross is the long exit. Short parameters are disabled by default; no stop or take-profit is documented."
+    }
+  ]
+}

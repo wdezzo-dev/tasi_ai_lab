@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4196,
+      "name": "Trailing Stop FrCnSar",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3870,
+      "name": "MA2CCI Adaptive Volume",
+      "family": "trend",
+      "entry_long": "zscore((high + low + close) / 3,4) > 0",
+      "exit_long": "zscore((high + low + close) / 3,4) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is approximated by a z-score of typical price because the local DSL has no dedicated CCI function; documented period is preserved where available."
+    },
+    {
+      "id": 1827,
+      "name": "Terminator V2",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,14,26),macd_signal(close,14,26,1))",
+      "exit_long": "crossbelow(macd(close,14,26),macd_signal(close,14,26,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 2182,
+      "name": "Exp ADX Cross Hull Style",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 4022,
+      "name": "Awesome Fx Trader",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,8) - close) / (donchian_high(high,8) - donchian_low(low,8))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,8) - close) / (donchian_high(high,8) - donchian_low(low,8))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 1652,
+      "name": "AML Candle Cross",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,10))",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fractal/pivot/zigzag structure is approximated with prior-bar Donchian extremes because explicit pivot state is unavailable in the DSL."
+    },
+    {
+      "id": 2214,
+      "name": "Auto Trade With RSI",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 30",
+      "exit_long": "rsi(close,14) < 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 2037,
+      "name": "Ergodic Ticks Volume OSMA",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 4055,
+      "name": "Stat Euclidean Metric",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+    },
+    {
+      "id": 3692,
+      "name": "Profit Labels",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    }
+  ]
+}

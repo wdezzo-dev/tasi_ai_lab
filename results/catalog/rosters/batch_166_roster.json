@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 177,
+      "name": "Ichimoku Stochastic",
+      "family": "trend",
+      "entry_long": "close > (donchian_high(high, 9) + donchian_low(low, 9) + donchian_high(high, 26) + donchian_low(low, 26)) / 4 and 100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)) < 20",
+      "exit_long": "close < (donchian_high(high, 9) + donchian_low(low, 9) + donchian_high(high, 26) + donchian_low(low, 26)) / 4",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The cloud top is the unshifted Tenkan 9 / Kijun 26 average and the entry keeps the documented StochK 14 < 20 pullback condition, with a close back under the cloud as the opposite breakout exit. The 26-bar forward projection of the spans, Senkou 52, K/D smoothing, and Ichimoku-boundary stops are not expressible; the stochastic denominator can be zero."
+    },
+    {
+      "id": 875,
+      "name": "Heiken Ashi Supertrend Adx",
+      "family": "trend",
+      "entry_long": "close > open and low >= open and close > ema(close, 10) + 3 * atr(high, low, close, 10)",
+      "exit_long": "close < ema(close, 10) - 2 * atr(high, low, close, 10) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish wick-less candle is approximated on raw OHLC, the Supertrend line uses the documented AtrPeriod 10 with multiplier 3, and the exit band uses the documented TrailAtrMultiplier 2; the ADX filter is not applied because UseAdxFilter defaults to false. Heiken-Ashi smoothing, the incremental ATR trail, and the 15-minute timeframe are not representable."
+    },
+    {
+      "id": 2379,
+      "name": "Cyberia Trader",
+      "family": "trend",
+      "entry_long": "macd(close, 12, 26) > macd_signal(close, 12, 26, 9) and close > sma(close, 50) and rsi(close, 14) < 70 and roc(adx(high, low, close, 14), 1) > 0",
+      "exit_long": "macd(close, 12, 26) < macd_signal(close, 12, 26, 9) or close < sma(close, 50)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 2.0,
+      "notes": "The four blocking filters are translated to the long side: MACD above signal, price above the MA, CCI below +100 as RSI(14) < 70, and +DI above -DI as rising ADX with the enable flags on. All periods are explicit fallbacks because no values are documented; the documented 1% stop and 2% target are retained."
+    },
+    {
+      "id": 4212,
+      "name": "Early Top Prorate V1",
+      "family": "trend",
+      "entry_long": "high + low > 2 * open and close > open",
+      "exit_long": "close < open or high + low < 2 * open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented dominant-direction test (high - open versus open - low) is rewritten as high + low > 2*open, so a bullish day that closes above its open opens the long and the mirror closes. The StartHour/EndHour/ClosingHour window, the three prorated profit targets, break-even rescue, and money-management modes are not expressible in a daily DSL."
+    },
+    {
+      "id": 3435,
+      "name": "Meeting Lines Stochastic",
+      "family": "trend",
+      "entry_long": "close > open and low <= open and (close - open) > (sma(close, 3) - sma(open, 3)) and 100 * (close - donchian_low(low, 3)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 30",
+      "exit_long": "100 * (close - donchian_low(low, 3)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 20 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish Meeting Lines are approximated by a bullish candle whose low sits at the open and whose body exceeds the documented BodyAveragePeriod 3 average body, confirmed by the documented LongEntryLevel 30; exits use ExitLowerLevel 20 or a bearish candle. StochasticSmoothing 25 and StochasticSignal 36 are dropped, the short side is omitted, and the oscillator denominator can be zero."
+    },
+    {
+      "id": 3061,
+      "name": "Autotrader Momentum",
+      "family": "momentum",
+      "entry_long": "close > close / (1 + roc(close, 1) / 100)",
+      "exit_long": "close < close / (1 + roc(close, 1) / 100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The monitoring close is compared with the reference bar's close, reconstructed as close/(1+roc(close,1)/100), so a bullish momentum shift buys and the bearish shift closes; the reference offset of one bar is a fallback because ComparableBarIndex has no documented value. Pip stop/target/trailing and the 1-hour timeframe are not percentage/DSL fields."
+    },
+    {
+      "id": 2117,
+      "name": "Step Stochastic Cross",
+      "family": "volatility",
+      "entry_long": "crossabove(close, ema(close, 10) - 1 * atr(high, low, close, 14))",
+      "exit_long": "close < ema(close, 20) - 3 * atr(high, low, close, 14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ATR-based Step Stochastic is rebuilt as fast and slow EMA channels offset by 1x and 3x ATR(14), with a reclaim of the fast channel buying and losing the slow channel exiting; the multipliers are explicit fallbacks because KFast and KSlow carry no values. The price-unit stop/target and the buy/sell permission flags are not roster fields."
+    },
+    {
+      "id": 1212,
+      "name": "Quantum Reversal",
+      "family": "mean_reversion",
+      "entry_long": "low <= bb_lower(close, 20) or rsi(close, 14) < 30",
+      "exit_long": "close > ema(close, 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two documented long triggers are kept: a touch of the lower Bollinger band (length 20 fallback) or a smoothed RSI below the 30 oversold level. 'Closed once profitable' has no price-free expression, so an EMA(10) recovery is the exit proxy, and no lengths, stops, or short side are documented."
+    },
+    {
+      "id": 1896,
+      "name": "Double Trading",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy opens offsetting positions in two correlated securities with a required SecondSecurity and no market-derived trigger, so the impossible negative-price guard avoids inventing one. Combined profit targeting, Volume1/Volume2 sizing, and cross-instrument pairs logic are not expressible."
+    },
+    {
+      "id": 1434,
+      "name": "Time Range Statistics",
+      "family": "volume",
+      "entry_long": "roc(close, 21) > 0",
+      "exit_long": "roc(close, 21) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented decision is the sign of the percent change between StartIndex 9000 and EndIndex 10000, which on daily bars is approximated by ROC(21); a positive window change buys and a negative one closes since no exit is documented. The mean/range/volume/gap logging, gap count, and intraday bar indexing are not signals."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_345": {
+  "strategy_ids": [
+   2786,
+   3298,
+   1675,
+   3323,
+   51,
+   2938,
+   4177,
+   1053,
+   716,
+   3053
+  ],
+  "docs": {
+   "2786": {
+    "id": 2786,
+    "name": "BHS System",
+    "family": "trend",
+    "overview": "The BHS System is a breakout-style approach that converts the original MetaTrader 5 expert advisor into the StockSharp high-level API. The strategy observes the relationship between price and a Kaufman Adaptive Moving Average (AMA). When the current bar closes above the AMA, the system prepares to join a bullish breakout; when the close falls below the AMA, it prepares for a bearish expansion. Instead of entering immediately, the algorithm waits for price to touch predefined “round number” levels and submits stop orders at those levels. This keeps the behaviour of the ported strategy identical to the MQL version where pending orders were always aligned to rounded price boundaries.",
+    "details": "",
+    "parameters": "- `OrderVolume` – lot size used for both entries and protective orders.\n- `StopLossBuyPoints` / `StopLossSellPoints` – stop-loss distance in points for long and short positions respectively.\n- `TrailingStopBuyPoints` / `TrailingStopSellPoints` – trailing stop distance for long and short positions expressed in points.\n- `TrailingStepPoints` – additional gap (in points) required before the trailing stop can be improved again.\n- `RoundStepPoints` – number of points used when constructing rounded trigger levels.\n- `ExpirationHours` – life span of a pending entry order. When set to zero, orders never expire automatically.\n- `AmaLength`, `AmaFastPeriod`, `AmaSlowPeriod` – parameters of the Kaufman Adaptive Moving Average used as the directional filter.\n- `CandleType` – data type/timeframe of candles that drive the strategy."
+   },
+   "3298": {
+    "id": 3298,
+    "name": "Cryptocurrency Fibonacci MAs (StockSharp)",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader expert advisor \"Cryptocurrency Fibonacci MAs\" to StockSharp's high-level API. The system tracks a stack of Fibonacci-based exponential moving averages (8/13/21/55), validates momentum on a higher timeframe, and confirms the macro trend with a monthly MACD filter before sending market orders. Only completed candles are processed and all indicator updates are performed via the `Bind`/`BindEx` pipeline.\n\nCompared to the MetaTrader version the following intentional adjustments were made:\n- Money-based take profit, equity stop-out, candle-by-candle trailing and break-even automation were omitted. The StockSharp port uses classic pip-based stop-loss and take-profit via `StartProtection`.\n- Order pyramiding is limited to a net position per direction. Reversals close the opposite exposure first, mirroring StockSharp's netted position model.\n- Multi-timeframe data is provided through additional candle subscriptions rather than ad-hoc indicator requests on demand.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `TradeVolume` | Order size in lots. | 0.1 |\n| `StopLossPips` | Stop-loss distance in pips. | 20 |\n| `TakeProfitPips` | Take-profit distance in pips. | 50 |\n| `MomentumBuyThreshold` | Minimum absolute momentum deviation from 100 required for long trades. | 0.3 |\n| `MomentumSellThreshold` | Minimum absolute momentum deviation from 100 required for short trades. | 0.3 |\n| `MaxPositions` | Maximum net volume per direction expressed as multiples of `TradeVolume`. | 1 |\n| `CandleType` | Primary timeframe for EMA calculations. | 1-hour candles |"
+   },
+   "1675": {
+    "id": 1675,
+    "name": "Lego V3",
+    "family": "trend",
+    "overview": "This strategy is a port of the MQL4 \"Lego_v3\" expert advisor.  \nIt combines several classic indicators to generate entries and exits:\n\n- **Moving Averages** – fast and slow SMA to detect trend direction.\n- **Stochastic Oscillator** – %K and %D values define oversold and overbought zones.\n- **Awesome Oscillator** – confirms momentum alignment with the trend.\n- **Average True Range** – determines stop-loss and take-profit distances.\n\nA long position is opened when the fast MA crosses above the slow MA, the Stochastic %K is below the buy level, and the Awesome Oscillator is positive.  \nShort positions occur under opposite conditions. ATR is used once at the beginning to start protective stop management.\n\n## Parameters\n\n- `FastMaPeriod` – period for the fast moving average.\n- `SlowMaPeriod` – period for the slow moving average.\n- `StochK` – %K period for the Stochastic oscillator.\n- `StochD` – %D period for the Stochastic oscillator.\n- `StochBuy` – buy zone threshold for %K.\n- `StochSell` – sell zone threshold for %K.\n- `AtrPeriod` – period for ATR calculation.\n- `AtrMultiplier` – multiplier applied to ATR for stop levels.\n- `CandleType` – time frame of processed candles.\n",
+    "details": "",
+    "parameters": "- `FastMaPeriod` – period for the fast moving average.\n- `SlowMaPeriod` – period for the slow moving average.\n- `StochK` – %K period for the Stochastic oscillator.\n- `StochD` – %D period for the Stochastic oscillator.\n- `StochBuy` – buy zone threshold for %K.\n- `StochSell` – sell zone threshold for %K.\n- `AtrPeriod` – period for ATR calculation.\n- `AtrMultiplier` – multiplier applied to ATR for stop levels.\n- `CandleType` – time frame of processed candles."
+   },
+   "3323": {
+    "id": 3323,
+    "name": "Moving Averages",
+    "family": "trend",
+    "overview": "This strategy replicates the classic moving-average crossover expert advisor from MQL. It uses high-level StockSharp APIs to monitor two simple moving averages calculated from the selected candle series. Signals are generated when the fast average crosses the slow one, and the strategy can optionally close an active position when the opposite crossover occurs.",
+    "details": "",
+    "parameters": "- **Fast MA Period** – length of the fast SMA used for crossover detection.\n- **Slow MA Period** – length of the slow SMA used for crossover detection.\n- **Trade Volume** – order size in lots.\n- **Stop Loss (points)** – distance in instrument points for the initial stop loss.\n- **Take Profit (points)** – distance in instrument points for the initial take profit.\n- **Break-even Trigger** – profit distance that activates moving the stop to break-even.\n- **Break-even Offset** – additional points kept as profit after break-even is activated.\n- **Trailing Start** – profit distance required before enabling the trailing stop.\n- **Trailing Distance** – distance maintained between price and the trailing stop.\n- **Close On Opposite** – whether to close an active trade when an opposite crossover appears.\n- **Candle Type** – candle series used for indicator calculations."
+   },
+   "51": {
+    "id": 51,
+    "name": "Volume Weighted Price Breakout",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 40%. It performs best in the crypto market.\n\nTrades align with the VWMA direction and use the simple moving average as a higher‑level trend filter. Exits occur when price reverses relative to the moving average.\n\nThe goal is to capture breakouts supported by volume.\n\n## Details\n\n- **Entry Criteria**: Price above or below VWMA with MA confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA in opposite direction or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `VWAPPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWMA, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price above or below VWMA with MA confirmation.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA in opposite direction or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `VWAPPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: VWMA, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2938": {
+    "id": 2938,
+    "name": "Crossing Moving Average",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 5 expert advisor **\"Crossing Moving Average (barabashkakvn's edition)\"** from the `MQL/21515` source.\n- Implements the logic on top of the StockSharp high-level API with candle subscriptions and indicator binding.\n- Designed for instruments where momentum and moving average crossovers capture trend reversals.\n- Implementations are available in both C# and Python.",
+    "details": "",
+    "parameters": ""
+   },
+   "4177": {
+    "id": 4177,
+    "name": "EMA WMA RSI",
+    "family": "trend",
+    "overview": "EMA WMA RSI is a conversion of the MetaTrader 4 expert advisor \"EMA WMA RSI\" created by cmillion. The original robot compares an exponential moving average (EMA) and a linear weighted moving average (WMA) calculated from candle opens, and filters every crossover with a Relative Strength Index (RSI) threshold. The StockSharp port keeps the same indicator logic, operates on finished candles, and reproduces the money-management options: optional counter-position flattening, point-based stop-loss/take-profit levels, and a trailing stop that can follow fixed distances, the latest fractal, or recent candle extremes.\n\nThe strategy is designed for a single symbol and time frame selected via the `Candle Type` parameter. It assumes MetaTrader \"points\" (the minimal tick) when converting risk distances to absolute prices, so instrument metadata such as `Security.Step` and `Security.StepPrice` should be filled for best results.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `EMA Period` | Period of the exponential moving average applied to candle opens. | `28` |\n| `WMA Period` | Period of the linear weighted moving average on opens. | `8` |\n| `RSI Period` | RSI length used as a directional filter. | `14` |\n| `Stop Loss (points)` | Stop-loss offset in MetaTrader points. `0` disables the protective stop. | `0` |\n| `Take Profit (points)` | Take-profit offset in points. `0` disables the target. | `500` |\n| `Trailing Stop (points)` | Fixed trailing distance in points. `0` switches to adaptive trailing (fractals or candle lows/highs). | `70` |\n| `Trailing Source` | Adaptive trailing method: `CandleExtremes` for raw highs/lows, `Fractals` for Williams fractals. | `CandleExtremes` |\n| `Close Counter Trades` | Close an opposite position before opening a new trade. | `false` |\n| `Fixed Volume` | Market order volume. Set to `0` to enable risk-based sizing. | `0.1` |\n| `Risk %` | Percent of portfolio equity committed when `Fixed Volume` is zero. Requires a valid stop distance. | `10` |\n| `Candle Type` | Primary timeframe used for indicators and signal evaluation. | `30-minute candles` |"
+   },
+   "1053": {
+    "id": 1053,
+    "name": "Mikul's Ichimoku Cloud v2",
+    "family": "trend",
+    "overview": "Breakout strategy using Ichimoku Cloud with an optional moving average filter. Positions are managed by a trailing stop (ATR, percent, or Ichimoku rules) and optional take profit.\n\n## Details\n\n- **Entry Criteria**: Tenkan-sen crossing above Kijun-sen with price above the cloud, or a strong breakout above a green cloud.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Trailing stop or Ichimoku reversal, optional take profit.\n- **Stops**: Trailing.\n- **Default Values**:\n  - `TrailSource` = `LowsHighs`\n  - `TrailMethod` = `Atr`\n  - `TrailPercent` = 10\n  - `SwingLookback` = 7\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1\n  - `AddIchiExit` = false\n  - `UseTakeProfit` = false\n  - `TakeProfitPercent` = 25\n  - `UseMaFilter` = false\n  - `MaType` = `Ema`\n  - `MaLength` = 200\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouBPeriod` = 52\n  - `Displacement` = 26\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Ichimoku, ATR\n  - Stops: Trailing\n  - Complexity: Medium\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Tenkan-sen crossing above Kijun-sen with price above the cloud, or a strong breakout above a green cloud.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Trailing stop or Ichimoku reversal, optional take profit.\n- **Stops**: Trailing.\n- **Default Values**:\n  - `TrailSource` = `LowsHighs`\n  - `TrailMethod` = `Atr`\n  - `TrailPercent` = 10\n  - `SwingLookback` = 7\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1\n  - `AddIchiExit` = false\n  - `UseTakeProfit` = false\n  - `TakeProfitPercent` = 25\n  - `UseMaFilter` = false\n  - `MaType` = `Ema`\n  - `MaLength` = 200\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouBPeriod` = 52\n  - `Displacement` = 26\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: Ichimoku, ATR\n  - Stops: Trailing\n  - Complexity: Medium\n  - Timeframe: Intraday (1h)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "716": {
+    "id": 716,
+    "name": "Dynamic Dots Dashboard",
+    "family": "trend",
+    "overview": "This strategy combines the Ichimoku cloud with two zero-lag exponential moving averages. It counts how many components are above price and goes long when bullish signals dominate or short when bearish signals prevail.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3053": {
+    "id": 3053,
+    "name": "MA Envelopes",
+    "family": "trend",
+    "overview": "Converted from the MetaTrader 5 expert \"MA Envelopes\". The strategy looks for price retracements towards a moving average that is wrapped by an envelope channel. When a completed candle closes between the moving average and one of the envelope bands during the configured trading window, the strategy places limit entries at the moving average with protective exit orders derived from the envelope.\n\n## Trading logic\n\n1. A moving average is calculated with the selected method, price source and period. The same value is used to build symmetric envelope bands using the deviation parameter.\n2. When a finished candle closes above the moving average but below the upper envelope band and the current ask price remains above the moving average, a staggered sequence of buy limit orders is prepared at the moving average price.\n   * Each buy limit uses the lower envelope as the stop-loss level and the upper envelope plus an additional pip offset as the take-profit.\n   * Up to three independent orders are managed, each with its own take-profit offset (`First`, `Second`, `Third` SL/TP parameters).\n3. When a finished candle closes below the moving average but above the lower envelope band and the current bid price remains below the moving average, the logic is mirrored for sell limit orders.\n4. The trading window is controlled by `StartHour` and `EndHour` (terminal time). After the end hour all still-active entry orders are cancelled.\n5. Risk per trade is estimated through `MaximumRisk` and reduced after consecutive losses using `DecreaseFactor`. Order volume is aligned to the instrument’s volume step and limits.\n6. Once an entry order is fully filled, protective stop-loss and take-profit orders are registered immediately. If an exit order is triggered, the counterpart order is cancelled and, if there is remaining position volume, new protective orders are issued for the rest.\n\n## Parameters\n\n| Parameter | Description |\n|-----------|-------------|\n| `MaximumRisk` | Fraction of availa",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `MaximumRisk` | Fraction of available equity risked per position. |\n| `DecreaseFactor` | Reduces position size after consecutive losing trades. |\n| `First/Second/ThirdStopTakeProfitPips` | Pip distances added to the envelope bands for the three staged orders. |\n| `StartHour`, `EndHour` | Trading session boundaries in terminal time (0–23). |\n| `MaPeriod`, `MaShift`, `MaMethodType`, `AppliedPrice` | Moving-average configuration. |\n| `EnvelopeDeviation` | Width of the envelope channel in percent. |\n| `CandleType` | Timeframe of candles used for the calculations. |"
+   }
+  }
+ }
+}

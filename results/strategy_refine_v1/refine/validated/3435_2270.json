@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3435,
+  "ticker": "2270",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3435,
+    "name": "Meeting Lines Stochastic",
+    "family": "trend",
+    "entry_long": "close > open and low <= open and (close - open) > (sma(close, 95.0) - sma(open, 25.0)) and 95.0 * (close - donchian_low(low, 1)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 25.0",
+    "exit_long": "100 * (close - donchian_low(low, 3)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 20 or close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bullish Meeting Lines are approximated by a bullish candle whose low sits at the open and whose body exceeds the documented BodyAveragePeriod 3 average body, confirmed by the documented LongEntryLevel 30; exits use ExitLowerLevel 20 or a bearish candle. StochasticSmoothing 25 and StochasticSignal 36 are dropped, the short side is omitted, and the oscillator denominator can be zero."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2005-05-23",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4834,
+      "engine_win_ret": 10.459761483654404,
+      "alpha": 8.061146251211278,
+      "benchmark_ret": 2.398615232443126,
+      "trades": 336,
+      "win_rate": 0.46130952380952384,
+      "sharpe": 0.8730479120297051,
+      "max_drawdown": -0.18743488436824762,
+      "profit_factor": 1.6068766824514653
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.057472409719640516,
+      "alpha": 0.24082304482581407,
+      "benchmark_ret": -0.2982954545454546,
+      "trades": 11,
+      "win_rate": 0.45454545454545453,
+      "sharpe": -0.8540680681382782,
+      "max_drawdown": -0.09027038376676044,
+      "profit_factor": 0.3377125341035459
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.002035512760794944,
+      "alpha": 0.2277051679523332,
+      "benchmark_ret": -0.22974068071312814,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": -0.3200104629788058,
+      "max_drawdown": -0.00884942494101948,
+      "profit_factor": 0.6814077582870245
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2005-05-23",
+        "2024-07-31"
+      ],
+      "bars_in_window": 4834,
+      "engine_win_ret": 1.1305818460089845,
+      "alpha": -1.2680333864341415,
+      "benchmark_ret": 2.398615232443126,
+      "trades": 336,
+      "win_rate": 0.38392857142857145,
+      "sharpe": 0.3208078027515624,
+      "max_drawdown": -0.5584054932935696,
+      "profit_factor": 1.121193976667834
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.1082168515971127,
+      "alpha": 0.1900786029483419,
+      "benchmark_ret": -0.2982954545454546,
+      "trades": 11,
+      "win_rate": 0.2727272727272727,
+      "sharpe": -1.4908592923253094,
+      "max_drawdown": -0.1307998898943391,
+      "profit_factor": 0.10141416862793247
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.012009238687193724,
+      "alpha": 0.21773144202593442,
+      "benchmark_ret": -0.22974068071312814,
+      "trades": 2,
+      "win_rate": 0.0,
+      "sharpe": -1.2779031769325806,
+      "max_drawdown": -0.016308772359586388,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

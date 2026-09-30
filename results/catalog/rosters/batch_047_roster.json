@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1976,
+      "name": "Exp 3XMA Ichimoku",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,9),ema(close,26))",
+      "exit_long": "crossabove(ema(close,9),ema(close,26))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(9/26) is used as a Kijun/cloud proxy, so a downward cross into the proxy cloud is the documented contrarian long setup and the opposite cross exits. Ichimoku spans, exact cloud-entry state, 4-hour timeframe, and short permissions are unavailable."
+    },
+    {
+      "id": 1296,
+      "name": "Setup: Smooth Gaussian + Adaptive Supertrend (Manual Vol)",
+      "family": "trend",
+      "entry_long": "close > sma(sma(close,75),75) and std(close,20) > 0",
+      "exit_long": "close < sma(sma(close,75),75)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A double SMA(75) is a direct proxy for the documented Gaussian trend line; positive 20-bar standard deviation is a manual-volatility fallback. Adaptive Supertrend, the exact volatility state, 5-minute timeframe, and no-stop status are otherwise unchanged."
+    },
+    {
+      "id": 517,
+      "name": "Alligator + MA Trend Catcher",
+      "family": "trend",
+      "entry_long": "close > ema(close,200) and ema(close,8) > ema(close,13) and ema(close,13) > ema(close,21)",
+      "exit_long": "close < ema(close,200) or ema(close,8) < ema(close,13) or ema(close,13) < ema(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(200) is the documented long trend filter; EMA(8/13/21) is an explicit smooth-line proxy for the unavailable Alligator lips, teeth, and jaw. Alligator offsets, separate entry/exit colors, and timeframe are not expressible."
+    },
+    {
+      "id": 1938,
+      "name": "Range EA",
+      "family": "trend",
+      "entry_long": "close > sma(close,21) + 0.02 * sma(close,21)",
+      "exit_long": "close < sma(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 21-period average and 250-point range are normalized to a 2% offset because instrument price-step units are unavailable; the 500/250-point target and stop are not percentage fields. Trailing, step-down averaging, reversal, and session logic are omitted."
+    },
+    {
+      "id": 1472,
+      "name": "Trend Vanguard",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20),sma(close,20))",
+      "exit_long": "crossbelow(ema(close,20),sma(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented Depth(21) ZigZag is approximated by EMA(20)/SMA(20) slope changes, with the inverse change as exit. The actual ZigZag swing state, intraday timing, and no-stop status are not available."
+    },
+    {
+      "id": 4070,
+      "name": "Very Blondie System",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,60)",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 60-bar prior high is a long-side proxy for the range-extension trigger. The four-order martingale ladder, account-currency target, lock-down, point spacing, and whether the source fades or follows each extreme are not expressible."
+    },
+    {
+      "id": 1388,
+      "name": "Swing Breakout Strategy PRO",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and high > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Prior 10-bar and one-bar highs approximate confirmed swing resistance and continuation; the prior 10-bar low is the opposite swing exit. Internal pivot offsets, opposite-swing stop, and range target cannot be encoded directly."
+    },
+    {
+      "id": 992,
+      "name": "Long Explosive V1",
+      "family": "momentum",
+      "entry_long": "roc(close,1) > 1",
+      "exit_long": "roc(close,1) < -1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(close,1)>1 is the exact scale-free translation of the documented 1% close-versus-prior-close increase; the inverse 1% drop exits. The source has no stops, and a re-entry before the prior position closes is handled by the one-position simulator."
+    },
+    {
+      "id": 1744,
+      "name": "Renko Live Chart",
+      "family": "volatility",
+      "entry_long": "roc(close,1) > 1 and close > open",
+      "exit_long": "roc(close,1) < -1 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 1% one-bar upward move with a bullish candle is a price-momentum fallback for an upward Renko brick; the reverse is the exit. Brick size, offset, wick handling, brick persistence, and automatic protection are unavailable."
+    },
+    {
+      "id": 161,
+      "name": "Macd Cci",
+      "family": "mean_reversion",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and rsi(close,14) < 30",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) is retained exactly and RSI(14)<30 is an explicit oversold proxy for CCI<-100. The documented 2% stop is retained; CCI period/levels, the opposite MACD state wording, and short side are approximated or omitted."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2802,
+      "name": "Zone Recovery Area",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a hedging zone-recovery grid: it opens a base trade then stacks alternating martingale (x2) or additive orders up to MaxTrades 6 and closes the whole basket at a pip target from the base price. Basket accounting and simultaneous opposing orders are not expressible in a single long position, so the never-true guard is used."
+    },
+    {
+      "id": 164,
+      "name": "Ma Williams R",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and rsi(close,14) < 20",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Williams %R is approximated by RSI(14) using the identity %R = RSI - 100, so the documented oversold -80, overbought -20 and mid-level exits map to 20 and 50, with the documented Simple MA(20) trend filter. The 2% percent stop is applied verbatim; the overview's alternative ATR-distance stop is noted as inconsistent and not used."
+    },
+    {
+      "id": 1351,
+      "name": "Gaussian Anomaly Derivative",
+      "family": "trend",
+      "entry_long": "roc(sma(1 - (high + low) / (2 * close),3),2) > std(sma(1 - (high + low) / (2 * close),3),20)",
+      "exit_long": "roc(sma(1 - (high + low) / (2 * close),3),2) < -std(sma(1 - (high + low) / (2 * close),3),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The anomaly 1 - (high+low)/(2*close) is smoothed with the documented SMA(3) and its 2-period change is the derivative, thresholded at one standard deviation of the anomaly (ThresholdCoeff 1.0 with a 20-bar scale chosen as a stated default). DerivativeMaPeriod is folded into the 2-bar change and StartBarCount 600 is a warm-up setting."
+    },
+    {
+      "id": 3309,
+      "name": "Reversals With Pin Bars",
+      "family": "trend",
+      "entry_long": "close > open and (open - low) > 2 * (close - open) and roc(close,10) > 0 and ema(close,10) > ema(close,30) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < ema(close,10) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish pin bar is a small body with a lower wick over twice the body, filtered by positive 10-bar momentum (MomentumPeriod/Threshold undocumented), an EMA(10)/EMA(30) higher-timeframe trend proxy and MACD(12,26,9); the exit is the trend/MACD flip. Pip-based stop, target, trailing and break-even, plus the multi-timeframe subscriptions, are not expressible."
+    },
+    {
+      "id": 522,
+      "name": "Anomalous Holonomy Field Theory",
+      "family": "trend",
+      "entry_long": "zscore(close,20) + (rsi(close,14) - 50) / 50 + roc(close,10) / 10 + macd(close,12,26) / atr(high,low,close,14) >= 2",
+      "exit_long": "zscore(close,20) + (rsi(close,14) - 50) / 50 + roc(close,10) / 10 + macd(close,12,26) / atr(high,low,close,14) <= -2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The composite is assembled with equal weights from the documented ingredients - EMA trend as a 20-bar z-score, RSI bias, rate of change and an ATR-normalised MACD - and compared with the documented SignalThreshold 2; VWAP distance is dropped since session VWAP is unavailable. The ATR-based protective stop is a volatility distance, not a percentage, so SL/TP stay null."
+    },
+    {
+      "id": 956,
+      "name": "Khaled Tamim's Avellaneda-Stoikov",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a market-making engine whose bid/ask reservation quotes depend on current inventory and realized variance (Gamma 2, Sigma 8, T 0.0833, K 5) and then refresh orders on both sides of the book. Inventory-dependent two-sided quoting cannot be expressed with a single long signal, so the never-true guard is used."
+    },
+    {
+      "id": 1069,
+      "name": "Monte Carlo Simulation - Random Walk",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented as a simulation sample that generates 500 random price paths of 50 bars and does not place trades. The never-true guard records the absence of any entry signal."
+    },
+    {
+      "id": 974,
+      "name": "Linear Correlation Oscillator",
+      "family": "other",
+      "entry_long": "crossabove(roc(close,14),0)",
+      "exit_long": "crossbelow(roc(close,14),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Correlating price with a time index is not computable in the DSL, so the sign of the rolling price-time relationship is approximated by the 14-bar return crossing zero, using the documented Length = 14; no stops are documented."
+    },
+    {
+      "id": 1500,
+      "name": "Tutorial - Adding sessions to strategies",
+      "family": "other",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The RSI core of the tutorial is a cross above the lower level for long with the bearish cross as exit, using RSI(14) with 30/70 as stated defaults because no values are documented. The session window and the session-end flattening it teaches are time features with no DSL field."
+    },
+    {
+      "id": 948,
+      "name": "The Price Radio",
+      "family": "other",
+      "entry_long": "roc(close,14) > std(close,14) and roc(close,5) > 0",
+      "exit_long": "roc(close,14) < -std(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Ehlers' Price Radio cannot be computed, so the price derivative is the 14-bar rate of change exceeding one standard deviation of price as the amplitude threshold, with a positive 5-bar change standing in for the frequency threshold (both approximations are stated). The mirrored negative threshold is the documented opposite-signal exit."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_176": {
+  "strategy_ids": [
+   305,
+   41,
+   3009,
+   3912,
+   1516,
+   392,
+   3710,
+   3555,
+   1700,
+   2398
+  ],
+  "docs": {
+   "305": {
+    "id": 305,
+    "name": "RSI Dynamic Overbought Oversold",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 178%. It performs best in the stocks market.\n\nSignals trigger when Overbought confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like RsiPeriod, MovingAvgPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `RsiPeriod = 14`\n  - `MovingAvgPeriod = 50`\n  - `StdDevMultiplier = 2.0m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Overbought, Oversold\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `RsiPeriod = 14`\n  - `MovingAvgPeriod = 50`\n  - `StdDevMultiplier = 2.0m`\n  - `StopLossPercent = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Overbought, Oversold\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "41": {
+    "id": 41,
+    "name": "Volatility Adjusted Moving Average",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 160%. It performs best in the forex market.\n\nLong trades are opened above the upper band, shorts below the lower band. A cross back through the baseline moving average closes the position.\n\nBecause the bands expand with volatility, stops adapt to market conditions.\n\n## Details\n\n- **Entry Criteria**: Price breaks above or below MA ± ATR multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `ATRPeriod` = 14\n  - `ATRMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price breaks above or below MA ± ATR multiplier.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `ATRPeriod` = 14\n  - `ATRMultiplier` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA, ATR\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3009": {
+    "id": 3009,
+    "name": "Bulls & Bears Power Average",
+    "family": "trend",
+    "overview": "- Port of the MetaTrader 5 expert `MySystem.mq5` located in `MQL/22016`.\n- Detects momentum reversals by averaging Elder Bulls Power and Bears Power values computed from candle extremes and an EMA.\n- Enters **long** when the average increases while still below zero (bearish pressure is fading) and **short** when the average decreases while still above zero (bullish pressure is fading).\n- Designed for one open position at a time; stop-loss and take-profit are optional and expressed in pips.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `OrderVolume` | 0.1 | Order size for market entries. |\n| `StopLossPips` | 15 | Stop-loss distance in pips. Set to `0` to disable. |\n| `TakeProfitPips` | 95 | Take-profit distance in pips. Set to `0` to disable. |\n| `MaPeriod` | 5 | EMA length used for the Bulls/Bears Power calculation. |\n| `CandleType` | 1-hour time frame | Candle series used for all computations (change to match your data feed). |"
+   },
+   "3912": {
+    "id": 3912,
+    "name": "4 SMA",
+    "family": "trend",
+    "overview": "The 4 SMA strategy replicates the MetaTrader expert advisor **4 SMA.mq4**. It works on 30-minute candles calculated with median prices and compares four simple moving averages (5, 20, 40, and 60 periods) to detect momentum breakouts. The StockSharp port keeps the single-position behaviour of the original code and uses high-level API helpers for market entries and risk management.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| CandleType | Candle series used for calculations (30-minute by default). | M30 time frame |\n| TakeProfit | Take-profit distance in points. | 50 |\n| StopLoss | Stop-loss distance in points. | 50 |\n| TrailingStop | Trailing stop distance in points. | 11 |\n| FastLength | Length of the fast SMA. | 5 |\n| MediumLength | Length of the medium SMA. | 20 |\n| SlowLength | Length of the slow SMA. | 40 |\n| VerySlowLength | Length of the very slow SMA. | 60 |\n\nAll numeric parameters are exposed for optimisation via the StockSharp parameter UI."
+   },
+   "1516": {
+    "id": 1516,
+    "name": "US30 Stealth",
+    "family": "trend",
+    "overview": "Price action strategy for US30 using moving average slope, engulfing patterns, volume and session filter.\nPosition size is calculated from risk per trade, with stop-loss and take-profit based on candle range.\n\n## Details\n\n- **Entry Criteria**: Trend direction, three lower highs or higher lows, engulfing pattern, volume and time filter.\n- **Long/Short**: Both\n- **Exit Criteria**: Take-profit or stop-loss\n- **Stops**: Fixed\n- **Default Values**:\n  - `MaLen` = 50\n  - `VolMaLen` = 20\n  - `HlLookback` = 5\n  - `RrRatio` = 2.2\n  - `MaxCandleSize` = 30\n  - `PipValue` = 1\n  - `RiskAmount` = 50\n  - `LargeCandleThreshold` = 25\n  - `MaSlopeLen` = 3\n  - `MinSlope` = 0.1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: Trend direction, three lower highs or higher lows, engulfing pattern, volume and time filter.\n- **Long/Short**: Both\n- **Exit Criteria**: Take-profit or stop-loss\n- **Stops**: Fixed\n- **Default Values**:\n  - `MaLen` = 50\n  - `VolMaLen` = 20\n  - `HlLookback` = 5\n  - `RrRatio` = 2.2\n  - `MaxCandleSize` = 30\n  - `PipValue` = 1\n  - `RiskAmount` = 50\n  - `LargeCandleThreshold` = 25\n  - `MaSlopeLen` = 3\n  - `MinSlope` = 0.1\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "392": {
+    "id": 392,
+    "name": "Return Asymmetry Commodity",
+    "family": "momentum",
+    "overview": "The **Return Asymmetry Commodity** strategy exploits the difference between positive and negative returns. For each commodity future, the rolling window sums all upward and downward moves separately. A high ratio implies persistent positive drift, while a low ratio points to sustained selling pressure.\n\nAt the start of each month, commodities are ranked by this asymmetry measure. The system buys the top N contracts and sells short the weakest N, allocating capital equally. Rebalancing occurs monthly.\n\n## Details\n- **Entry Criteria**: Monthly ranking of the asymmetry of daily returns over a lookback window.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions adjusted on monthly rebalance.\n- **Stops**: No explicit stop; position size capped by `MinTradeUsd`.\n- **Default Values**:\n  - `WindowDays = 120`\n  - `TopN = 5`\n  - `MinTradeUsd = 200`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Monthly ranking of the asymmetry of daily returns over a lookback window.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Positions adjusted on monthly rebalance.\n- **Stops**: No explicit stop; position size capped by `MinTradeUsd`.\n- **Default Values**:\n  - `WindowDays = 120`\n  - `TopN = 5`\n  - `MinTradeUsd = 200`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Momentum\n  - Direction: Both\n  - Indicators: Price based\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Medium-term\n  - Seasonality: Yes\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3710": {
+    "id": 3710,
+    "name": "RRS Randomness",
+    "family": "volatility",
+    "overview": "The **RRS Randomness Strategy** is a StockSharp port of the “RRS Randomness in Nature EA” for MetaTrader 4.  \nIt emulates the original expert advisor by generating random long or short market entries, applies stop-loss and take-profit levels, optionally trails profitable trades, and performs risk-based liquidation when floating losses exceed the configured threshold.\n\nBecause StockSharp uses net positions per security, simultaneous long and short exposure is not supported. The \"DoubleSide\" mode therefore alternates the entry direction on each opportunity instead of maintaining two hedged trades as in MetaTrader.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n|-------|------|-------------|\n| General | `Mode` | Trading mode: alternate entries (`DoubleSide`) or random gated entries (`OneSide`). |\n| Lot Settings | `MinVolume` / `MaxVolume` | Volume range for randomly generated trades. |\n| Protection | `TakeProfitPoints` | Take-profit distance in price steps. |\n| Protection | `StopLossPoints` | Stop-loss distance in price steps. |\n| Protection | `TrailingStartPoints` | Profit distance that enables trailing stop management. |\n| Protection | `TrailingGapPoints` | Offset between market price and trailing stop. |\n| Filters | `MaxSpreadPoints` | Maximum allowed spread (in price steps) for opening new positions. |\n| Filters | `SlippagePoints` | Informational slippage setting (not enforced automatically). |\n| Risk Management | `MoneyRiskMode` | Choose between fixed currency loss or percent of portfolio value. |\n| Risk Management | `RiskValue` | Amount of risk (currency or percent depending on the mode). |\n| General | `TradeComment` | Informational comment attached to generated orders. |\n| General | `CandleType` | Candle series driving the decision loop. |"
+   },
+   "3555": {
+    "id": 3555,
+    "name": "WPR Custom Cloud Simple",
+    "family": "mean_reversion",
+    "overview": "The **WPR Custom Cloud Simple Strategy** is a StockSharp port of the MetaTrader expert advisor `WPR Custom Cloud Simple.mq5`. The EA monitors Larry Williams' %R oscillator and opens trades when the indicator exits oversold or overbought territory. This C# version keeps the original design of trading only on new candles, reversing the position when an opposite signal appears, and avoids any stop-loss or take-profit orders exactly like the reference implementation.",
+    "details": "",
+    "parameters": "| Name | Type | Default | MetaTrader counterpart | Description |\n| --- | --- | --- | --- | --- |\n| `WprPeriod` | `int` | `14` | `Inp_WPR_Period` | Lookback length for the Williams %R calculation. |\n| `OverboughtLevel` | `decimal` | `-20` | `Inp_WPR_Level1` | Threshold that defines overbought territory. Crossing below it triggers shorts. |\n| `OversoldLevel` | `decimal` | `-80` | `Inp_WPR_Level2` | Threshold that defines oversold territory. Crossing above it triggers longs. |\n| `CandleType` | `DataType` | 1-hour time frame | `InpWorkingPeriod` | Candle series used to update the indicator and evaluate signals. |\n| `Volume` | `decimal` | Strategy base volume | `InpLots` | Lot size for market orders. The strategy automatically offsets the current net position before opening a new trade. |"
+   },
+   "1700": {
+    "id": 1700,
+    "name": "TCPivotLimit",
+    "family": "volume",
+    "overview": "This strategy trades around classic daily pivot point levels. Pivot points are calculated from the previous day's high, low and close prices. Limit orders are placed at selected support or resistance levels and positions are managed with predefined stop-loss and take-profit levels.\n\n## Parameters\n- **Volume** – order volume.\n- **Target Variant** – selects which support/resistance levels are used for entry, stop and target:\n  1. Entry at S1/R1, stop at S2/R2, target at R1/S1.\n  2. Entry at S1/R1, stop at S2/R2, target at R2/S2.\n  3. Entry at S2/R2, stop at S3/R3, target at R1/S1.\n  4. Entry at S2/R2, stop at S3/R3, target at R2/S2.\n  5. Entry at S2/R2, stop at S3/R3, target at R3/S3.\n- **Intraday Close** – close any open position at 23:00.\n- **Modify Stop Loss** – move stop loss to the first target level after it has been reached.\n\n## Trading Logic\n1. At the start of each day the strategy computes pivot, three resistance and three support levels using the previous day's data.\n2. When price touches the chosen support or resistance level a limit order is sent in the opposite direction.\n3. Position is closed when stop-loss or take-profit level is hit. Optional stop-loss modification can tighten risk after the first target.\n4. If *Intraday Close* is enabled, any open position is closed at the end of the trading session.\n",
+    "details": "",
+    "parameters": "- **Volume** – order volume.\n- **Target Variant** – selects which support/resistance levels are used for entry, stop and target:\n  1. Entry at S1/R1, stop at S2/R2, target at R1/S1.\n  2. Entry at S1/R1, stop at S2/R2, target at R2/S2.\n  3. Entry at S2/R2, stop at S3/R3, target at R1/S1.\n  4. Entry at S2/R2, stop at S3/R3, target at R2/S2.\n  5. Entry at S2/R2, stop at S3/R3, target at R3/S3.\n- **Intraday Close** – close any open position at 23:00.\n- **Modify Stop Loss** – move stop loss to the first target level after it has been reached."
+   },
+   "2398": {
+    "id": 2398,
+    "name": "Times Direction",
+    "family": "volume",
+    "overview": "This time-based strategy opens a single long or short position during a predefined window and closes it during another window. The entry direction is configurable and the system monitors optional stop-loss and take-profit levels. The approach relies solely on finished candles without using indicators.\n\n## Details\n\n- **Entry Criteria**:\n  - When current candle time is within `[OpenTime, OpenTime + TradeInterval)` and no position is open, enter in the configured direction.\n- **Exit Criteria**:\n  - Close the position when time is within `[CloseTime, CloseTime + TradeInterval)`.\n  - Additionally exit if stop-loss or take-profit levels are reached.\n- **Long/Short**: Configurable.\n- **Stops**: Stop-loss and take-profit in price units relative to entry price.\n- **Default Values**:\n  - `Trade` = Sell.\n  - `OpenTime` = 1970-01-01 00:00.\n  - `CloseTime` = 3000-01-01 00:00.\n  - `TradeInterval` = 1 minute.\n  - `StopLoss` = 1000.\n  - `TakeProfit` = 2000.\n  - `Volume` = 0.1.\n- **Filters**:\n  - Category: Time based\n  - Direction: Single\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term\n",
+    "details": "- **Entry Criteria**:\n  - When current candle time is within `[OpenTime, OpenTime + TradeInterval)` and no position is open, enter in the configured direction.\n- **Exit Criteria**:\n  - Close the position when time is within `[CloseTime, CloseTime + TradeInterval)`.\n  - Additionally exit if stop-loss or take-profit levels are reached.\n- **Long/Short**: Configurable.\n- **Stops**: Stop-loss and take-profit in price units relative to entry price.\n- **Default Values**:\n  - `Trade` = Sell.\n  - `OpenTime` = 1970-01-01 00:00.\n  - `CloseTime` = 3000-01-01 00:00.\n  - `TradeInterval` = 1 minute.\n  - `StopLoss` = 1000.\n  - `TakeProfit` = 2000.\n  - `Volume` = 0.1.\n- **Filters**:\n  - Category: Time based\n  - Direction: Single\n  - Indicators: None\n  - Stops: Yes\n  - Complexity: Simple\n  - Timeframe: Short-term",
+    "parameters": ""
+   }
+  }
+ }
+}

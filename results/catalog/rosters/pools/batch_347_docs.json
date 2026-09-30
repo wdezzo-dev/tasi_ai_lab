@@ -1,0 +1,98 @@
+{
+ "batch_347": {
+  "strategy_ids": [
+   1890,
+   750,
+   106,
+   2518,
+   1376,
+   969,
+   1687,
+   1287,
+   3722,
+   2342
+  ],
+  "docs": {
+   "1890": {
+    "id": 1890,
+    "name": "RoNz Auto SL TS TP",
+    "family": "trend",
+    "overview": "Strategy that opens positions on EMA crossover and automatically manages stop-loss and take-profit levels.  \nAfter entry it sets initial stop and target, then optionally locks profit and activates a trailing stop.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `EMA10 < EMA20 && EMA10 > EMA100`\n  - Short: `EMA10 > EMA20 && EMA10 < EMA100`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, take profit, profit lock or trailing stop\n- **Stops**: Yes\n- **Default Values**:\n  - `TakeProfit` = 500\n  - `StopLoss` = 250\n  - `LockProfitAfter` = 100\n  - `ProfitLock` = 60\n  - `TrailingStop` = 50\n  - `TrailingStep` = 10\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: SL/TP/Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `EMA10 < EMA20 && EMA10 > EMA100`\n  - Short: `EMA10 > EMA20 && EMA10 < EMA100`\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, take profit, profit lock or trailing stop\n- **Stops**: Yes\n- **Default Values**:\n  - `TakeProfit` = 500\n  - `StopLoss` = 250\n  - `LockProfitAfter` = 100\n  - `ProfitLock` = 60\n  - `TrailingStop` = 50\n  - `TrailingStep` = 10\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: SL/TP/Trailing\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "750": {
+    "id": 750,
+    "name": "Energy Advanced Policy",
+    "family": "trend",
+    "overview": "The **Energy Advanced Policy** strategy combines policy sentiment with basic technical filters.\n\n- **Long**: EMA(21) above EMA(55), RSI below overbought, Bollinger Bands not in squeeze.\n- **Exit**: RSI crosses above overbought or EMA trend reverses.\n\n## Parameters\n- `NewsSentiment` – manual sentiment.\n- `EnableNewsFilter` – enable policy sentiment override.\n- `EnablePolicyDetection` – allow policy event detection.\n- `PolicyVolumeThreshold` – volume spike multiple.\n- `PolicyPriceThreshold` – price change threshold (%).\n- `RsiLength` – RSI period.\n- `RsiOverbought` – RSI overbought level.\n- `FastLength` – fast EMA period.\n- `SlowLength` – slow EMA period.\n- `BbLength` / `BbMult` – Bollinger Bands settings.\n\nIndicators: RSI, EMA, Bollinger Bands.\n",
+    "details": "",
+    "parameters": "- `NewsSentiment` – manual sentiment.\n- `EnableNewsFilter` – enable policy sentiment override.\n- `EnablePolicyDetection` – allow policy event detection.\n- `PolicyVolumeThreshold` – volume spike multiple.\n- `PolicyPriceThreshold` – price change threshold (%).\n- `RsiLength` – RSI period.\n- `RsiOverbought` – RSI overbought level.\n- `FastLength` – fast EMA period.\n- `SlowLength` – slow EMA period.\n- `BbLength` / `BbMult` – Bollinger Bands settings.\n\nIndicators: RSI, EMA, Bollinger Bands."
+   },
+   "106": {
+    "id": 106,
+    "name": "Spring Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 55%. It performs best in the stocks market.\n\nThe strategy buys once price reclaims the broken level, anticipating swift short covering and new demand.\n\nA stop just below the spring low limits downside, and the position is closed if follow-through fails.\n\n## Details\n\n- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Wyckoff\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: indicator signal\n- **Long/Short**: Both\n- **Exit Criteria**: stop-loss or opposite signal\n- **Stops**: Yes, percent based\n- **Default Values**:\n  - `CandleType` = 15 minute\n  - `StopLoss` = 2%\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Wyckoff\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2518": {
+    "id": 2518,
+    "name": "Moving Average Trade System Strategy (2518)",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader \"Moving Average Trade System\" expert advisor. It analyses the trend using four simple moving averages (SMA) calculated on the median candle price. The system waits for a confirmed crossover between the medium-term and long-term averages while the faster averages confirm trend alignment. Once confirmation arrives, the strategy flips its position in the direction of the new trend and manages risk with fixed take-profit, stop-loss, and trailing stop offsets defined in price steps.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimizable |\n| --- | --- | --- | --- |\n| `Volume` | Order volume used when opening new positions. | `1` | No |\n| `TakeProfitSteps` | Distance to the take-profit target measured in price steps. | `50` | Yes |\n| `StopLossSteps` | Distance to the protective stop measured in price steps. | `50` | Yes |\n| `TrailingStopSteps` | Trailing-stop offset in price steps (`0` disables trailing). | `11` | Yes |\n| `SlopeThresholdSteps` | Minimal separation between `SMA(40)` and `SMA(60)` to validate a breakout (in price steps). | `1` | Yes |\n| `FastPeriod` | Length of the fast SMA. | `5` | Yes |\n| `MediumPeriod` | Length of the medium SMA. | `20` | Yes |\n| `SignalPeriod` | Length of the signal SMA (compared with the slow SMA). | `40` | Yes |\n| `SlowPeriod` | Length of the slow SMA that defines the background trend. | `60` | Yes |\n| `CandleType` | Candle series used for indicator calculations. | `1h time frame` | No |"
+   },
+   "1376": {
+    "id": 1376,
+    "name": "Supertrend Fixed Tp Unified With Time Filter Msk",
+    "family": "trend",
+    "overview": "Strategy based on Supertrend indicator with fixed percentage take profit, optional price filter and time filter in Moscow timezone.\n\n## Details\n- **Entry Criteria**: Supertrend direction change with optional price and time filters\n- **Long/Short**: Configurable (long, short or both)\n- **Exit Criteria**: Fixed take profit or opposite signal\n- **Stops**: Take profit only\n- **Default Values**:\n  - `AtrPeriod` = 23\n  - `Factor` = 1.8m\n  - `TakeProfitPercent` = 1.5m\n  - `PriceFilter` = 10000m\n  - `TimeFrom` = 0\n  - `TimeTo` = 23\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Supertrend direction change with optional price and time filters\n- **Long/Short**: Configurable (long, short or both)\n- **Exit Criteria**: Fixed take profit or opposite signal\n- **Stops**: Take profit only\n- **Default Values**:\n  - `AtrPeriod` = 23\n  - `Factor` = 1.8m\n  - `TakeProfitPercent` = 1.5m\n  - `PriceFilter` = 10000m\n  - `TimeFrom` = 0\n  - `TimeTo` = 23\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Supertrend\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "969": {
+    "id": 969,
+    "name": "Larry Connors 3 Day High Low",
+    "family": "trend",
+    "overview": "Implements the Larry Connors 3 Day High/Low mean reversion approach.\n\n## Logic\n\n- Buy when:\n  - Close is above the long moving average.\n  - Close is below the short moving average.\n  - High and low have been lower for three consecutive candles.\n- Exit when price closes above the short moving average.\n\n## Parameters\n\n- **Long MA Length** — period for the long SMA (default 200)\n- **Short MA Length** — period for the short SMA (default 5)\n- **Candle Type** — timeframe used for analysis\n",
+    "details": "",
+    "parameters": "- **Long MA Length** — period for the long SMA (default 200)\n- **Short MA Length** — period for the short SMA (default 5)\n- **Candle Type** — timeframe used for analysis"
+   },
+   "1687": {
+    "id": 1687,
+    "name": "Scalping EA",
+    "family": "trend",
+    "overview": "A simple scalping system that constantly maintains two pending orders: a buy stop above the market and a sell stop below. When the market price moves too close to an order or too far away, the order is replaced to keep a fixed distance from current price. Filled orders use fixed take-profit and stop-loss offsets.\n\nThe strategy does not rely on indicators and reacts only to tick price changes.\n\n## Details\n\n- **Entry Criteria**:\n  - Place buy stop 100 points above price and sell stop 100 points below.\n  - Orders are replaced if the gap to price becomes too small or too wide.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Each order carries fixed take profit and stop loss.\n- **Stops**: Yes, fixed distance.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**:\n  - Place buy stop 100 points above price and sell stop 100 points below.\n  - Orders are replaced if the gap to price becomes too small or too wide.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Each order carries fixed take profit and stop loss.\n- **Stops**: Yes, fixed distance.\n- **Filters**: None.",
+    "parameters": ""
+   },
+   "1287": {
+    "id": 1287,
+    "name": "Safa Bot Alert",
+    "family": "trend",
+    "overview": "The Safa Bot Alert strategy uses a short SMA with an ADX filter to trade price crossovers. It enters long when price crosses above the SMA with strong trend strength and enters short on crosses below. Fixed take profit, stop loss and a trailing stop manage positions, and all trades close at a specified session time.\n\n## Details\n\n- **Entry Criteria**: Price crosses SMA and ADX > `AdxThreshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Take profit, stop loss, trailing stop or session close.\n- **Stops**: Fixed and trailing.\n- **Default Values**:\n  - `SmaLength` = 3\n  - `TakeProfitPoints` = 80m\n  - `StopLossPoints` = 35m\n  - `TrailPoints` = 15m\n  - `AdxLength` = 15\n  - `AdxThreshold` = 15m\n  - `SessionCloseHour` = 16\n  - `SessionCloseMinute` = 0\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: SMA, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses SMA and ADX > `AdxThreshold`.\n- **Long/Short**: Both.\n- **Exit Criteria**: Take profit, stop loss, trailing stop or session close.\n- **Stops**: Fixed and trailing.\n- **Default Values**:\n  - `SmaLength` = 3\n  - `TakeProfitPoints` = 80m\n  - `StopLossPoints` = 35m\n  - `TrailPoints` = 15m\n  - `AdxLength` = 15\n  - `AdxThreshold` = 15m\n  - `SessionCloseHour` = 16\n  - `SessionCloseMinute` = 0\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend Following\n  - Direction: Both\n  - Indicators: SMA, ADX\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3722": {
+    "id": 3722,
+    "name": "StellarLite ICT EA",
+    "family": "trend",
+    "overview": "StellarLite ICT EA is a discretionary-style algorithm that translates the \"Stellar Lite\" prop-firm playbook into StockSharp. The strategy merges two Inner Circle Trader (ICT) entry models — Silver Bullet and the 2022 model — and automates the partial take-profit plan used in the original MetaTrader expert advisor. It works on any instrument that provides candle, price step, and volume step information.",
+    "details": "",
+    "parameters": "- **Entry Candle (`CandleType`)** – lower timeframe candles used for entry signals.\n- **Higher Timeframe (`HigherTimeframeType`)** – candles feeding the bias moving average.\n- **Higher MA Period (`HigherMaPeriod`)** – moving average length for bias detection.\n- **ATR Period (`AtrPeriod`)** – lookback for the ATR consolidation filter.\n- **Liquidity Lookback (`LiquidityLookback`)** – number of candles inspected to locate liquidity pools.\n- **ATR Threshold (`AtrThreshold`)** – maximum allowed candle range as a fraction of ATR.\n- **TP1/TP2/TP3 Risk Reward (`Tp1Ratio`, `Tp2Ratio`, `Tp3Ratio`)** – risk-reward multipliers for targets.\n- **TP1/TP2/TP3 Close % (`Tp1Percent`, `Tp2Percent`, `Tp3Percent`)** – partial close percentages.\n- **Break Even After TP1 (`MoveToBreakEven`)** – toggles the break-even adjustment.\n- **Break Even Offset (`BreakEvenOffset`)** – number of price steps added or subtracted when moving the stop.\n- **Trailing Distance (`TrailingDistance`)** – trailing stop distance (in price steps) activated after TP2.\n- **Use Silver Bullet / Use 2022 Model (`UseSilverBullet`, `Use2022Model`)** – enable or disable each setup.\n- **Use OTE Entry (`UseOteEntry`)** – calculate the entry inside the optimal trade entry zone.\n- **Risk % (`RiskPercent`)** – percentage of equity risked per trade to derive the position size.\n- **OTE Lower (`OteLowerLevel`)** – Fibonacci coefficient for the OTE level."
+   },
+   "2342": {
+    "id": 2342,
+    "name": "HelloSmart",
+    "family": "trend",
+    "overview": "This strategy implements a simple grid trading approach that opens positions in only one direction. A new order is placed each time the market moves a configured number of ticks against the last entry. When the aggregate position volume reaches a threshold, the next order size is multiplied. All positions are closed when total profit or loss hits predefined limits.\n\n## Parameters\n- **Trade Direction** – choose 1 to open only long positions or 2 to open only short positions.\n- **Step** – number of price ticks the market must move before adding another position.\n- **Initial Lot** – base volume for the first order.\n- **Threshold Volume** – cumulative position size that triggers lot multiplication.\n- **Maximum Lot** – upper bound for any single order volume.\n- **Profit Target** – profit amount in currency after which all positions are closed.\n- **Loss Limit** – loss amount in currency after which all positions are closed.\n- **Lot Multiplier** – factor applied to the next order when the threshold volume is exceeded.\n- **Candle Type** – candle series used to measure price movement.\n",
+    "details": "",
+    "parameters": "- **Trade Direction** – choose 1 to open only long positions or 2 to open only short positions.\n- **Step** – number of price ticks the market must move before adding another position.\n- **Initial Lot** – base volume for the first order.\n- **Threshold Volume** – cumulative position size that triggers lot multiplication.\n- **Maximum Lot** – upper bound for any single order volume.\n- **Profit Target** – profit amount in currency after which all positions are closed.\n- **Loss Limit** – loss amount in currency after which all positions are closed.\n- **Lot Multiplier** – factor applied to the next order when the threshold volume is exceeded.\n- **Candle Type** – candle series used to measure price movement."
+   }
+  }
+ }
+}

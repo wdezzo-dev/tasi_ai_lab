@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2446,
+  "ticker": "1322",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2446,
+    "name": "Ma Cross",
+    "family": "trend",
+    "entry_long": "crossabove(sma(close,2.0), sma((high + low) / 2.0,2.0))",
+    "exit_long": "crossbelow(sma(close,1), sma((high + low) / 2.0,13))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "FastPeriod=3 on Close and SlowPeriod=13 on median price are exact and the market orders fire on the cross. LinearWeighted has no DSL function so the slow curve is a plain SMA, and the FastShift/SlowShift offsets, the order volume, and the 1-minute series are not represented."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2022-03-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 578,
+      "engine_win_ret": 0.3514618070344513,
+      "alpha": 0.626187081759726,
+      "benchmark_ret": -0.27472527472527475,
+      "trades": 38,
+      "win_rate": 0.5789473684210527,
+      "sharpe": 0.6289978433886663,
+      "max_drawdown": -0.2732693725035267,
+      "profit_factor": 1.662902973052733
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.6300326103666278,
+      "alpha": 0.17788739584517566,
+      "benchmark_ret": 0.4521452145214522,
+      "trades": 20,
+      "win_rate": 0.6,
+      "sharpe": 1.3639025265886047,
+      "max_drawdown": -0.23938241542071825,
+      "profit_factor": 2.5383249438622206
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.21781763850398095,
+      "alpha": -0.08911030778210072,
+      "benchmark_ret": -0.12870733072188023,
+      "trades": 9,
+      "win_rate": 0.3333333333333333,
+      "sharpe": -0.5963729139316228,
+      "max_drawdown": -0.4391450038518703,
+      "profit_factor": 0.45763826547383174
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2022-03-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 578,
+      "engine_win_ret": 0.117328186180776,
+      "alpha": 0.39205346090605075,
+      "benchmark_ret": -0.27472527472527475,
+      "trades": 38,
+      "win_rate": 0.5,
+      "sharpe": 0.3103905361680608,
+      "max_drawdown": -0.28101480314565175,
+      "profit_factor": 1.1956454858137617
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.47187775211644767,
+      "alpha": 0.019732537594995492,
+      "benchmark_ret": 0.4521452145214522,
+      "trades": 20,
+      "win_rate": 0.55,
+      "sharpe": 1.0994918777700802,
+      "max_drawdown": -0.2528067217175569,
+      "profit_factor": 2.093254500340385
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.2509114015375229,
+      "alpha": -0.12220407081564266,
+      "benchmark_ret": -0.12870733072188023,
+      "trades": 9,
+      "win_rate": 0.3333333333333333,
+      "sharpe": -0.7247008228398045,
+      "max_drawdown": -0.45640343627790947,
+      "profit_factor": 0.3937198036617895
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

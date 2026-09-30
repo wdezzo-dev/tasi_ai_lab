@@ -1,0 +1,98 @@
+{
+ "batch_320": {
+  "strategy_ids": [
+   3731,
+   2375,
+   3015,
+   1846,
+   1455,
+   715,
+   952,
+   2590,
+   4170,
+   1797
+  ],
+  "docs": {
+   "3731": {
+    "id": 3731,
+    "name": "Pending tread Grid",
+    "family": "trend",
+    "overview": "The **Pending tread Grid Strategy** is a faithful StockSharp port of the MetaTrader 4 expert advisor `Pending_tread.mq4`. The original EA constantly rebuilds two ladders of pending orders: one ladder above the market and one below. Each ladder can be configured to use buy or sell orders, and spacing is defined in pips. The StockSharp implementation reproduces the same behaviour through the high-level API without introducing additional indicators or collections.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `OrderVolume` | 0.01 | Volume used when placing every pending order. Rounded to the instrument volume step before registration. |\n| `PipStep` | 12 | Spacing between consecutive orders in the ladder, expressed in pips. |\n| `TakeProfitPips` | 10 | Distance in pips used to place the take-profit for every pending order. |\n| `OrdersPerSide` | 10 | Maximum number of active orders maintained above the market and below the market. |\n| `AboveMarketSide` | Buy | Order type used above the market. `Buy` creates buy stop orders, `Sell` creates sell limit orders. |\n| `BelowMarketSide` | Sell | Order type used below the market. `Buy` creates buy limit orders, `Sell` creates sell stop orders. |\n| `MinStopDistancePoints` | 0 | Minimal distance (in raw points) allowed between the bid/ask and the pending price. Set this to the broker `MODE_STOPLEVEL` if needed. |\n| `ThrottleSeconds` | 5 | Cooldown period between grid maintenance cycles. |\n| `SlippagePoints` | 3 | Preserved for documentation parity; StockSharp pending orders do not use this value. |"
+   },
+   "2375": {
+    "id": 2375,
+    "name": "X2MA JFATL Crossover",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp adaptation of the MetaTrader expert `Exp_X2MA_JFatl`. It combines a fast Simple Moving Average (SMA) with a slow Jurik Moving Average (JMA) and an additional Jurik filter to confirm trend direction. Trades are opened when the fast average crosses the slow one and the price is on the same side of the filter. Positions are closed when price moves against the filter or an opposite crossover occurs.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `SMA_fast` crosses above `JMA_slow` and `Close` > `JMA_filter`.\n  - **Short**: `SMA_fast` crosses below `JMA_slow` and `Close` < `JMA_filter`.\n- **Exit Criteria**:\n  - Price moves to the opposite side of the filter.\n  - Opposite crossover of the averages.\n- **Long/Short**: Both sides.\n- **Stops**: Not used by default.\n- **Default Values**:\n  - `Fast MA Length` = 5.\n  - `Slow MA Length` = 12.\n  - `Filter Length` = 20.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple (SMA, JMA)\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `SMA_fast` crosses above `JMA_slow` and `Close` > `JMA_filter`.\n  - **Short**: `SMA_fast` crosses below `JMA_slow` and `Close` < `JMA_filter`.\n- **Exit Criteria**:\n  - Price moves to the opposite side of the filter.\n  - Opposite crossover of the averages.\n- **Long/Short**: Both sides.\n- **Stops**: Not used by default.\n- **Default Values**:\n  - `Fast MA Length` = 5.\n  - `Slow MA Length` = 12.\n  - `Filter Length` = 20.\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Multiple (SMA, JMA)\n  - Stops: No\n  - Complexity: Moderate\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3015": {
+    "id": 3015,
+    "name": "XDeMarker Histogram Vol",
+    "family": "trend",
+    "overview": "This strategy reproduces the original MetaTrader expert advisor **Exp_XDeMarker_Histogram_Vol** on top of the StockSharp high-level API. It transforms the DeMarker oscillator into a volume-weighted histogram, smooths both the oscillator and volume with configurable moving averages, and reacts to regime changes when the histogram crosses predefined bands.\n\nThe logic is deliberately symmetrical. Long positions are opened when the histogram steps into one of the bullish zones, while shorts are opened when it moves into bearish zones. Opposite signals close the active position and, if enabled, immediately flip the direction.\n\n## Concept\n\n1. **Volume-weighted DeMarker**\n   - DeMarker is calculated with the selected period.\n   - The oscillator is scaled to the `[-50; +50]` range and multiplied by the chosen candle volume.\n   - A moving average smooths the weighted oscillator. The same moving average is applied to the volume itself. Only four moving-average types are provided (simple, exponential, smoothed, weighted) because these are natively available in StockSharp.\n2. **Dynamic levels**\n   - Four user-defined multipliers (`HighLevel1`, `HighLevel2`, `LowLevel1`, `LowLevel2`) define the bullish and bearish thresholds.\n   - Thresholds are scaled by the smoothed volume so that higher participation widens the acceptable range.\n3. **State machine**\n   - Each finished candle is classified into one of five states: `0` (extreme bullish), `1` (bullish), `2` (neutral), `3` (bearish), `4` (extreme bearish).\n   - Signals are generated when the state of the last closed candle (offset by `SignalBar`) differs from the prior state in a way that indicates a transition into bullish or bearish territory.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `CandleType` | Primary timeframe. Defaults to 2-hour candles to mirror the original expert advisor. |\n| `DeMarkerPeriod` | Period of the DeMarker oscillator. |\n| `HighLevel1` / `HighLevel2` | Positive multipliers defining the first an",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Primary timeframe. Defaults to 2-hour candles to mirror the original expert advisor. |\n| `DeMarkerPeriod` | Period of the DeMarker oscillator. |\n| `HighLevel1` / `HighLevel2` | Positive multipliers defining the first and second bullish thresholds. |\n| `LowLevel1` / `LowLevel2` | Negative multipliers defining the first and second bearish thresholds. |\n| `Smoothing` | Moving average type for both the histogram and the volume. Choices: Simple, Exponential, Smoothed, Weighted. |\n| `SmoothingLength` | Length of the smoothing averages. |\n| `SignalBar` | Number of closed bars used for signal comparison. `1` means “use the most recently closed candle”. |\n| `VolumeType` | Volume source. Both options fall back to candle volume because StockSharp does not expose tick counts on all feeds. |\n| `EnableLongEntries` / `EnableShortEntries` | Allow opening new positions in the respective direction. |\n| `EnableLongExits` / `EnableShortExits` | Allow closing existing positions when the opposite setup appears. |"
+   },
+   "1846": {
+    "id": 1846,
+    "name": "MaRsi Trigger",
+    "family": "trend",
+    "overview": "This strategy combines fast and slow exponential moving averages (EMA) with RSI to detect trend reversals.\nWhen the fast EMA and fast RSI are both above their slow counterparts, it treats the market as bullish and opens a long position.\nWhen both are below, it opens a short position. Parameters allow enabling or disabling long and short entries or exits.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: fast EMA > slow EMA AND fast RSI > slow RSI with previous trend bearish.\n  - **Short**: fast EMA < slow EMA AND fast RSI < slow RSI with previous trend bullish.\n- **Exit Criteria**:\n  - **Long**: trend turns bearish and long exits are allowed.\n  - **Short**: trend turns bullish and short exits are allowed.\n- **Indicators**: EMA, RSI.\n- **Stops**: Not included.\n- **Timeframe**: 4-hour candles by default.\n- **Parameters**:\n  - `FastRsiPeriod` = 3\n  - `SlowRsiPeriod` = 13\n  - `FastMaPeriod` = 5\n  - `SlowMaPeriod` = 10\n  - `AllowBuyEntry` = true\n  - `AllowSellEntry` = true\n  - `AllowLongExit` = true\n  - `AllowShortExit` = true\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: fast EMA > slow EMA AND fast RSI > slow RSI with previous trend bearish.\n  - **Short**: fast EMA < slow EMA AND fast RSI < slow RSI with previous trend bullish.\n- **Exit Criteria**:\n  - **Long**: trend turns bearish and long exits are allowed.\n  - **Short**: trend turns bullish and short exits are allowed.\n- **Indicators**: EMA, RSI.\n- **Stops**: Not included.\n- **Timeframe**: 4-hour candles by default.\n- **Parameters**:\n  - `FastRsiPeriod` = 3\n  - `SlowRsiPeriod` = 13\n  - `FastMaPeriod` = 5\n  - `SlowMaPeriod` = 10\n  - `AllowBuyEntry` = true\n  - `AllowSellEntry` = true\n  - `AllowLongExit` = true\n  - `AllowShortExit` = true",
+    "parameters": ""
+   },
+   "1455": {
+    "id": 1455,
+    "name": "Trailing TP Bot",
+    "family": "trend",
+    "overview": "This strategy trades SMA crossovers on both long and short sides. Each position defines a fixed take profit and stop loss. After the profit target is hit the stop can trail to protect gains.\n\n## Details\n\n- **Entry**: Fast SMA crosses slow SMA.\n- **Exit**: Stop loss, take profit or trailing stop.\n- **Indicators**: SMA.\n- **Direction**: Both.\n- **Risk**: Fixed stop loss with optional trailing.\n",
+    "details": "- **Entry**: Fast SMA crosses slow SMA.\n- **Exit**: Stop loss, take profit or trailing stop.\n- **Indicators**: SMA.\n- **Direction**: Both.\n- **Risk**: Fixed stop loss with optional trailing.",
+    "parameters": ""
+   },
+   "715": {
+    "id": 715,
+    "name": "Dynamic Breakout Master",
+    "family": "trend",
+    "overview": "Breakout strategy using Donchian Channels with moving average trend filter, RSI and ATR filters plus volume and time constraints.\n\n## Strategy rules\n\n- Long: price breaks above upper Donchian band or pulls back after breakout, MA1 > MA2, RSI between `RsiOversold` and `RsiOverbought`, ATR above `AtrMultiplier`, volume above average and within trading hours.\n- Short: price breaks below lower Donchian band or pulls back after breakout, MA1 < MA2, RSI between thresholds, ATR above `AtrMultiplier`, volume above average and within trading hours.\n- Exits: stop loss/trailing, take profit, RSI extreme or moving average crossover.\n\n## Parameters\n\n- `DonchianPeriod` – channel lookback period.\n- `Ma1Length`, `Ma1IsEma` – first moving average.\n- `Ma2Length`, `Ma2IsEma` – second moving average.\n- `RsiLength`, `RsiOverbought`, `RsiOversold` – RSI filter.\n- `AtrLength`, `AtrMultiplier` – volatility filter.\n- `RiskPerTrade`, `RewardRatio`, `AccountSize` – position sizing.\n- `TradingStartHour`, `TradingEndHour` – trading session.\n- `CandleType` – candle timeframe.\n",
+    "details": "",
+    "parameters": "- `DonchianPeriod` – channel lookback period.\n- `Ma1Length`, `Ma1IsEma` – first moving average.\n- `Ma2Length`, `Ma2IsEma` – second moving average.\n- `RsiLength`, `RsiOverbought`, `RsiOversold` – RSI filter.\n- `AtrLength`, `AtrMultiplier` – volatility filter.\n- `RiskPerTrade`, `RewardRatio`, `AccountSize` – position sizing.\n- `TradingStartHour`, `TradingEndHour` – trading session.\n- `CandleType` – candle timeframe."
+   },
+   "952": {
+    "id": 952,
+    "name": "Keltner Channel Based Grid",
+    "family": "trend",
+    "overview": "This strategy adjusts position size based on the relative distance of price from a moving average within a Keltner Channel. When the price deviates from the mean, the strategy rebalances using market orders on a grid.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2590": {
+    "id": 2590,
+    "name": "Heiken Ashi Idea",
+    "family": "trend",
+    "overview": "The strategy reproduces the behaviour of the original **HeikenAshiIdea.mq4** expert advisor using the StockSharp high-level API. It waits for aligned bullish or bearish signals on two timeframes of Heikin Ashi candles and then places pending limit orders at a configurable distance from the market. The goal is to catch strong continuation moves when the most recent Heikin Ashi candle has no wick against the direction of the trend.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `DistancePoints` | Distance in price steps for the pending limit orders. | `8` |\n| `StopLossPoints` | Stop-loss distance in price steps (0 disables the stop). | `0` |\n| `TakeProfitPoints` | Take-profit distance in price steps (0 disables the target). | `20` |\n| `UseCloseAllOnNewBar` | Close position and cancel orders when a new candle of the close-all timeframe opens. | `true` |\n| `CandleType` | Primary candle type used for trading signals. | `30m` timeframe |\n| `HigherCandleType` | Confirmation candle type for the multi-timeframe filter. | `1d` timeframe |\n| `CloseAllCandleType` | Candle type that triggers the close-all routine. | `7d` timeframe |\n| `StartHour` | First hour of the trading session (inclusive). | `9` |\n| `EndHour` | Last hour of the trading session (inclusive). | `19` |\n| `UseAtrFilter` | Enable the ATR rising volatility filter. | `true` |\n| `AtrPeriod` | ATR period used by the volatility filter. | `14` |"
+   },
+   "4170": {
+    "id": 4170,
+    "name": "TDSGlobal 4",
+    "family": "trend",
+    "overview": "TDSGlobal 4 is a conversion of the MetaTrader 4 expert advisor \"TDSGlobal 4\". The original system applies Alexander Elder's triple\nscreen method by combining the slope of a daily MACD histogram (OsMA) with a Williams %R filter. Orders are only deployed when th\ne daily momentum aligns with the oscillator extremes, after which the strategy brackets the previous day's range with pending sto\np orders. The StockSharp port keeps the same breakout logic, adds precise scheduling so that different FX symbols fire at stagge\nred minutes, and manages open exposure with optional trailing stops plus configurable take-profit targets.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `Volume` | Order volume for stop entries. | `1` |\n| `MacdFastPeriod` / `MacdSlowPeriod` / `MacdSignalPeriod` | MACD configuration used to measure the daily slope. | `12 / 26 / 9` |\n| `WilliamsPeriod` | Lookback for the Williams %R filter. | `24` |\n| `WilliamsBuyLevel` | Upper threshold (typically −25) required before long orders are enabled. | `-25` |\n| `WilliamsSellLevel` | Lower threshold (typically −75) required before short orders are enabled. | `-75` |\n| `TakeProfitPips` | Take-profit distance in pips; `0` disables the target. | `999` |\n| `TrailingStopPips` | Trailing stop distance in pips; `0` disables trailing. | `10` |\n| `EntryBufferPips` | Offset added beyond the previous day's high/low before placing a stop order. | `1` |\n| `MinDistancePips` | Minimum pip distance from the current quote to the pending order. | `16` |\n| `DailyCandleType` | Timeframe that feeds the MACD and Williams %R filters. | `1 day` candles |\n| `TriggerCandleType` | Lower timeframe used to schedule and monitor orders. | `1 minute` candles |"
+   },
+   "1797": {
+    "id": 1797,
+    "name": "Brake Parabolic",
+    "family": "trend",
+    "overview": "The strategy implements the Brake Parabolic indicator that projects a parabolic barrier above or below price. When the barrier is broken, the trend flips and a new position is opened in the direction of the breakout. The algorithm trails the extreme price with a curved line defined by parameters **A**, **B**, and **Shift**.\n\nTesting indicates an average annual return of about 48%. It performs best in trending markets on higher timeframes.\n\nThe system waits for the barrier to switch sides. A bullish flip closes any short and opens a new long position. A bearish flip closes any long and opens a short. While in a trend, opposite positions are closed when the indicator confirms the direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Barrier switches from above price to below price.\n  - **Short**: Barrier switches from below price to above price.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or indicator confirms opposing trend.\n- **Stops**: No fixed stops; exits rely on barrier reversal.\n- **Default Values**:\n  - `A` = 1.5\n  - `B` = 1.0\n  - `BeginShift` = 10\n  - `CandleType` = 4-hour timeframe\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Barrier switches from above price to below price.\n  - **Short**: Barrier switches from below price to above price.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or indicator confirms opposing trend.\n- **Stops**: No fixed stops; exits rely on barrier reversal.\n- **Default Values**:\n  - `A` = 1.5\n  - `B` = 1.0\n  - `BeginShift` = 10\n  - `CandleType` = 4-hour timeframe\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Custom\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Swing\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

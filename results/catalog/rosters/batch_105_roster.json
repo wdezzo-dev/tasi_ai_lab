@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2932,
+      "name": "ZigZag EA",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,12)",
+      "exit_long": "close < donchian_low_prev(low,12)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag swing detection is approximated by a Donchian band of the documented ZigZagDepth 12, giving the corridor top/bottom that the two-sided pending stop orders would sit on. The three-swing confirmation, 20/100-pip corridor validation, 5-pip entry offset, Fibonacci 61.8%/161.8% stops, trailing and the trading window are not expressible."
+    },
+    {
+      "id": 1180,
+      "name": "Precision Trading Strategy: Golden Edge",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,9),ema(close,21)) and rsi(close,14) > 55 and roc(ema(close,9),1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),50)",
+      "exit_long": "crossbelow(ema(close,9),ema(close,21)) or rsi(close,14) < 45",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule keeps the fast/slow EMA cross, RSI above 55 and rising trend line, with HMA replaced by the EMA pair (9/21 are fallbacks since no lengths are documented) and the Highest/Lowest volatility filter rendered as ATR(14) above its own average. Docs list no stops."
+    },
+    {
+      "id": 65,
+      "name": "Pinbar Reversal",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and close > open and (close - low) > 2 * (close - open) and (high - close) <= 0.5 * (close - open)",
+      "exit_long": "close < sma(close,20) or (high - close) > 2 * (open - close)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The documented TailToBodyRatio 2, OppositeTailRatio 0.5 and MAPeriod 20 trend filter are used directly for the bullish pinbar, with the bearish pinbar (or loss of the MA) as the exit. The documented StopLossPercent 1 is applied; docs list no take-profit percentage."
+    },
+    {
+      "id": 3385,
+      "name": "AbcWsCci",
+      "family": "trend",
+      "entry_long": "close > open and sma(close - open,3) > sma(close - open,13) and zscore(close,37) > 1.5",
+      "exit_long": "zscore(close,37) < 0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Three White Soldiers is approximated by bullish bars whose BodyAveragePeriod 13 average body is exceeded over the 3-candle pattern, and CCI(37) is rendered as a 1.5-sigma z-score of close (CCI 100 is roughly 1.5 standard deviations); the exit is the documented CCI leaving the extreme zone. Exact candle-by-candle pattern matching and the Three Black Crows mirror are dropped."
+    },
+    {
+      "id": 3988,
+      "name": "EMA Cross 2",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,60),ema(close,5))",
+      "exit_long": "crossbelow(ema(close,60),ema(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented contrarian rule is kept literally: the long EMA (60) moving above the short EMA (5) opens the long and the reverse swap closes it. TakeProfitPoints 20, StopLossPoints 30 and TrailingStopPoints 50 are broker points, not percentages."
+    },
+    {
+      "id": 645,
+      "name": "Cup Finder",
+      "family": "breakout",
+      "entry_long": "donchian_high(high,150) - donchian_low(low,150) <= donchian_high(high,250) - donchian_low(low,250) and close > donchian_high_prev(high,150)",
+      "exit_long": "close < donchian_high_prev(high,150)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": null,
+      "notes": "The rim break uses the documented Lookback 150 and a width cap; the absolute WidthPercent 5 is unattainable on daily bars, so width is measured against the wider 250-bar range instead. The rounded-cup geometry is not computable, hence the rim-failure exit. The documented StopLossPercent 1 is used and no take-profit percentage is given."
+    },
+    {
+      "id": 3889,
+      "name": "Eugene",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1) and low > donchian_low_prev(low,1) and close > donchian_low_prev(low,2) and close < donchian_high_prev(high,2)",
+      "exit_long": "high < donchian_high_prev(high,1) and low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented breakout core is kept: a higher high than the prior candle, a higher low and a close inside the range of the candle two bars back, with the symmetric short condition as exit. Inside-candle colour classification, the bird filters, the one-third retracement confirmations and the 08:00 session rule need shifted series or time fields and are dropped."
+    },
+    {
+      "id": 2695,
+      "name": "Exp BlauCMI",
+      "family": "momentum",
+      "entry_long": "crossabove(roc(ema(ema(ema(roc(close,10),5),5),5),1),0)",
+      "exit_long": "crossbelow(roc(ema(ema(ema(roc(close,10),5),5),5),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Blau CMI's triple-smoothed momentum is rebuilt as EMA(5) applied three times to ROC(10), and the turn up after a downswing becomes a zero-cross of its one-bar ROC. Momentum Depth 10 and the 5/5/5 smoothing stages are fallbacks; applied price, smoothing method, Signal Shift, allow-entry toggles and price-step brackets are not expressible."
+    },
+    {
+      "id": 3938,
+      "name": "GPF TCPivotLimit",
+      "family": "volatility",
+      "entry_long": "low < donchian_low_prev(low,20) and close > donchian_low_prev(low,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "P, R1-R3 and S1-S3 are rebuilt from the previous day's high, low and close, but the shifted prior close is unavailable, so the 20-bar prior extremes stand in: a probe of the prior low closing back above it is the documented support-rejection long. TrailingPoints 30, session-close liquidation, dynamic volume after losses and the target-mode selection are not expressible."
+    },
+    {
+      "id": 596,
+      "name": "Bollinger Bounce Reversal",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,1) < 0 and close > bb_lower(close,20,2) and macd(close,12,26) > macd_signal(close,12,26,9) and volume_ratio(volume,20) >= 1",
+      "exit_long": "close > bb_upper(close,20,2) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": 4.0,
+      "notes": "The documented long rule is preserved: a down bar whose close recovers back inside Bollinger(20, 2) (the shift-free stand-in for Close[1] below LowerBand[1]), MACD(12,26,9) above signal and volume at or above its VolumePeriod 20 average (VolumeFactor 1); the upper band or MACD flip exits. The documented StopLossPercent 2 and TakeProfitPercent 4 are used, while the five-trades-per-day cap is not expressible."
+    }
+  ]
+}

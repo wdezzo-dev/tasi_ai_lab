@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1112,
+      "name": "NASDAQ 100 Peak Hours",
+      "family": "trend",
+      "entry_long": "close > ema(close,9) and ema(close,9) > ema(close,21) and roc(ema(close,9),3) > 0 and roc(ema(close,21),10) > 0 and rsi(close,14) > 50 and close > sma(close,20)",
+      "exit_long": "ema(close,9) < ema(close,21) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented filters are used: short EMA 9 over long EMA 21, rising EMAs as positive ROC, RSI(14) above 50, and a volume-weighted-average proxy as close above SMA(20). Peak-session hours and the ATR trailing/break-even and Time-Exit-Bars 20 rules need intraday clock and position state, so the exit is the documented EMA-reversal/time-based exit proxy."
+    },
+    {
+      "id": 880,
+      "name": "High Yield Spread Strategy with SMA Filter",
+      "family": "trend",
+      "entry_long": "zscore(close,50) > 0.5 and close > sma(close,50)",
+      "exit_long": "close < sma(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The external high-yield spread or VIX series is unavailable, so a standardized 50-bar deviation of price stands in for \"spread beyond threshold 5\" (0.5 in z-score units) and the documented SmaLength 50 filter is kept literally. The HoldingPeriod 5 close-out needs position-age state, and the doc states no stops."
+    },
+    {
+      "id": 3115,
+      "name": "Precipice",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA uses no market structure or indicators and simply flips a coin each finished candle, so a deterministic DSL signal cannot be derived and the impossible negative-price guard is used. The symmetric 100-pip stop and target are price-distance fields the engine cannot express as percentages."
+    },
+    {
+      "id": 1007,
+      "name": "MACD Aggressive Scalp Simple",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26) - macd_signal(close,12,26,9),0) and close > ema(close,50)",
+      "exit_long": "crossbelow(macd(close,12,26) - macd_signal(close,12,26,9),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The MACD histogram is written as macd minus macd_signal and must cross zero while price sits above the documented 50-period EMA; the opposite histogram cross is the momentum-reversal exit. MACD lengths are not documented so 12/26/9 is an explicit default, and no stops are mentioned."
+    },
+    {
+      "id": 3010,
+      "name": "Daydream Channel Breakout",
+      "family": "trend",
+      "entry_long": "close < donchian_low_prev(low,25)",
+      "exit_long": "close > donchian_high_prev(high,25)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented contrarian long is a close below the prior 25-bar lower band (current bar excluded via the _prev variants) and the short-side condition doubles as the exit that flattens the long. TakeProfitPips 50 is a pip distance, not a percentage, and the 1-hour timeframe is not configurable here."
+    },
+    {
+      "id": 463,
+      "name": "2:45 AM Candle Breakout",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The specific 02:45 reference candle cannot be isolated without a clock, so the immediately preceding bar's high/low stand in for it and the opposite violation ends the position (the end-of-window exit). TargetHour/TargetMinute, LookForwardBars 2 and the 45-minute series are session-dependent and unavailable."
+    },
+    {
+      "id": 1633,
+      "name": "Breakdown Level Day",
+      "family": "breakout",
+      "entry_long": "high > donchian_high_prev(high,1)",
+      "exit_long": "low < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pending buy stop above the session range (Delta 0) becomes a break above the previous bar's high, with the mirrored break the exit. OrderTime, tick-denominated stop/target/break-even/trailing and Volume are order-book features the signal DSL cannot carry."
+    },
+    {
+      "id": 2578,
+      "name": "Trade on Qualified RSI",
+      "family": "momentum",
+      "entry_long": "rsi(close,28) < 45 and bars_since(rsi(close,28) >= 45) < 7",
+      "exit_long": "rsi(close,28) > 45 and bars_since(rsi(close,28) <= 45) < 7",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The contrarian long is RSI(28) below the documented LowerThreshold 45 with the prior CountBars 5 readings also below it, encoded through bars_since; the mirrored qualification closes the trade. StopLossPoints 21 is a price-step distance and the trailing management needs position state."
+    },
+    {
+      "id": 636,
+      "name": "Correlation Arrays",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document explicitly describes an analysis-only correlation matrix logger that places no trades, so the impossible negative-price guard is used instead of inventing a signal. Multi-security correlation windows and the +/-0.3/0.5/0.7 logging thresholds have no single-series equivalent."
+    },
+    {
+      "id": 2181,
+      "name": "RSI Bollinger Bands",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,20) < 30 and close < bb_lower(close,20,2)",
+      "exit_long": "rsi(close,20) > 70 and close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Fully documented parameters are used: RsiPeriod 20, BollingerPeriod 20 with width 2, RsiOversold 30 and RsiOverbought 70, with the opposite condition acting as the reversal exit. The 15-minute timeframe is not configurable and the docs state no stops."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_111": {
+  "strategy_ids": [
+   2983,
+   1321,
+   748,
+   3214,
+   3559,
+   553,
+   1197,
+   2777,
+   3325,
+   1341
+  ],
+  "docs": {
+   "2983": {
+    "id": 2983,
+    "name": "AnyRange Cloud Tail System Tm Plus",
+    "family": "trend",
+    "overview": "This strategy reproduces the behaviour of the **Exp_i-AnyRangeCldTail_System_Tm_Plus.mq5** expert using StockSharp's high level API. It builds a custom intraday range between two user-defined times, waits for breakouts beyond that range, and schedules orders a configurable number of bars after the breakout so that signals are aligned with the original MQL timing logic.\n\nThe strategy is designed for both long and short trading. It exposes parameters that control breakout permissions, stop-loss/take-profit distances in price steps, the holding period, and the indicator calculation window. In addition, a time-based exit closes positions that remain open longer than the configured number of minutes, matching the protective logic of the source expert advisor.\n\n## Trading Logic\n\n1. **Range Construction**\n   - Two timestamps (`RangeStartTime` and `RangeEndTime`) define the session window used to compute the reference range.\n   - For each completed day the strategy records the highest high and lowest low between these timestamps. If `RangeStartTime` is greater than `RangeEndTime`, the window automatically spans across midnight, just like the original indicator.\n   - The latest completed range is reused until a new daily range is completed.\n\n2. **Breakout Detection**\n   - Each finished candle is compared with the stored range.\n   - Candles closing above the range high receive the same colour codes (2 or 3) as the MQL indicator, while candles closing below the range low receive codes 0 or 1. Candles inside the range are tagged with code 4 (no signal).\n   - The `SignalBar` parameter shifts the inspection point: the strategy evaluates the candle that is `SignalBar + 1` bars old and confirms that the more recent candle (`SignalBar`) does not carry the same colour. This reproduces the delayed confirmation used by the EA to trigger orders one bar after the breakout candle.\n\n3. **Entries**\n   - **Long**: permitted when `AllowBuyEntry` is true and a bullish colour (2 or 3) is detect",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `OrderVolume` | Base order size used for new positions. | `0.1` |\n| `AllowBuyEntry` | Allow long entries on bullish breakouts. | `true` |\n| `AllowSellEntry` | Allow short entries on bearish breakouts. | `true` |\n| `AllowBuyExit` | Close long positions on bearish breakouts. | `true` |\n| `AllowSellExit` | Close short positions on bullish breakouts. | `true` |\n| `UseTimeExit` | Enable the time-based exit. | `true` |\n| `ExitAfterMinutes` | Holding time in minutes before the time exit fires. | `1500` |\n| `StopLossPoints` | Stop-loss distance in price steps. Use `0` to disable. | `1000` |\n| `TakeProfitPoints` | Take-profit distance in price steps. Use `0` to disable. | `2000` |\n| `SignalBar` | Number of bars back inspected for breakout detection (matches the MQL `SignalBar`). | `1` |\n| `RangeLookbackDays` | Maximum number of past sessions scanned to find a completed range. Set to `0` to always use the most recent range only. | `1` |\n| `RangeStartTime` | Start of the range-building window (TimeSpan). | `02:00` |\n| `RangeEndTime` | End of the range-building window (TimeSpan). | `07:00` |\n| `CandleType` | Candle data type/timeframe used for calculations. | `30 minutes` |"
+   },
+   "1321": {
+    "id": 1321,
+    "name": "SMC Strategy BTC 1H OB FVG",
+    "family": "trend",
+    "overview": "Smart Money Concepts based strategy for Bitcoin on 1-hour candles. The system enters long after a bullish break of structure when price returns to the detected order block or fair value gap. Stop loss uses an ATR multiplier and take profit is calculated from a risk/reward ratio.\n\n## Details\n\n- **Entry Criteria**: After bullish BOS, buy if price touches order block or fair value gap within `ZoneTimeout` bars.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Fixed take profit and stop loss.\n- **Stops**: Fixed using ATR.\n- **Default Values**:\n  - `UseOrderBlock` = true\n  - `UseFvg` = true\n  - `AtrFactor` = 6\n  - `RiskRewardRatio` = 2.5\n  - `ZoneTimeout` = 10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR\n  - Stops: Fixed\n  - Complexity: Simple\n  - Timeframe: Intraday (1H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: After bullish BOS, buy if price touches order block or fair value gap within `ZoneTimeout` bars.\n- **Long/Short**: Long only.\n- **Exit Criteria**: Fixed take profit and stop loss.\n- **Stops**: Fixed using ATR.\n- **Default Values**:\n  - `UseOrderBlock` = true\n  - `UseFvg` = true\n  - `AtrFactor` = 6\n  - `RiskRewardRatio` = 2.5\n  - `ZoneTimeout` = 10\n  - `CandleType` = TimeSpan.FromHours(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long\n  - Indicators: ATR\n  - Stops: Fixed\n  - Complexity: Simple\n  - Timeframe: Intraday (1H)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "748": {
+    "id": 748,
+    "name": "EMA RSI Swing Trend Filter",
+    "family": "trend",
+    "overview": "This strategy trades the crossover of EMA20 and EMA50 in the direction of an EMA200 trend filter.\nAn optional RSI filter limits long entries when RSI is overbought and shorts when it is oversold.\n\n## Details\n\n- **Entry Criteria**: EMA20 crosses EMA50 with price relative to EMA200 and optional RSI filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Optional exit on opposite EMA cross.\n- **Stops**: No.\n- **Default Values**:\n  - `EmaFastPeriod` = 20\n  - `EmaSlowPeriod` = 50\n  - `EmaTrendPeriod` = 200\n  - `RsiLength` = 14\n  - `UseRsiFilter` = true\n  - `RsiMaxLong` = 70\n  - `RsiMinShort` = 30\n  - `RequireCloseConfirm` = true\n  - `ExitOnOpposite` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: EMA20 crosses EMA50 with price relative to EMA200 and optional RSI filter.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Optional exit on opposite EMA cross.\n- **Stops**: No.\n- **Default Values**:\n  - `EmaFastPeriod` = 20\n  - `EmaSlowPeriod` = 50\n  - `EmaTrendPeriod` = 200\n  - `RsiLength` = 14\n  - `UseRsiFilter` = true\n  - `RsiMaxLong` = 70\n  - `RsiMinShort` = 30\n  - `RequireCloseConfirm` = true\n  - `ExitOnOpposite` = true\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: EMA, RSI\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3214": {
+    "id": 3214,
+    "name": "Hedging Martingale",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor \"Hedging Martingale\" (folder `MQL/23693`). It keeps a balanced hedge by opening both a long and a short position on every new bar and then applies a martingale averaging scheme. When price moves adversely by a configurable pip distance, the strategy adds a new position on the losing side with an increased volume while keeping the opposite hedge in place. Floating profit is managed using money- and percent-based targets together with an optional trailing lock.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| Candle Type | Timeframe that drives the logic. Each finished candle can trigger new hedging actions. |\n| Use Money TP / Money Take Profit | Enable and define the floating profit (in currency units) that closes all positions. |\n| Use Percent TP / Percent Take Profit | Close the basket when the floating profit reaches a percentage of the starting portfolio value. |\n| Enable Trailing / Trailing Start / Trailing Step | Activate the money-based trailing lock for the basket and configure the trigger level together with the permitted profit give-back. |\n| Take Profit (pips) | Distance in pips for per-leg take-profit exits. |\n| Pip Step | Adverse price movement (in pips) required before adding another martingale order. |\n| Base Volume | Initial volume for both the buy and sell legs. |\n| Volume Multiplier | Multiplier applied to the largest position volume when adding martingale entries. |\n| Max Trades | Maximum number of simultaneously open entries (across both directions). |\n| Close On Max | Whether to liquidate all positions once the maximum trade count is breached. |"
+   },
+   "3559": {
+    "id": 3559,
+    "name": "Two Pending Orders 2",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor **\"Two pending orders 2\"**. It keeps two symmetric pending orders around the market price and lets the first triggered side manage the trade with configurable stop-loss, take-profit, and trailing rules. The conversion uses the high level StockSharp API and keeps the core ideas of the original algorithm while exposing every tuning knob through strategy parameters.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `StopLossPoints` | Distance to the protective stop-loss in points (0 disables it). |\n| `TakeProfitPoints` | Distance to the take-profit target in points (0 disables it). |\n| `MaxPositions` | Maximum number of simultaneously active positions and pending orders. |\n| `MinStepPoints` | Minimum distance between the entry price of existing trades and new pending orders. |\n| `TrailingActivatePoints` | Profit threshold that activates the trailing stop (0 disables trailing). |\n| `TrailingStopPoints` | Distance between the market price and trailing stop once activated. |\n| `TrailingStepPoints` | Minimum price improvement required to move the trailing stop again. |\n| `TradeMode` | Allowed direction for new pending orders: `Buy`, `Sell`, or `BuySell`. |\n| `PendingType` | Type of pending orders to place: `Stop` or `Limit`. |\n| `PendingExpirationMinutes` | Lifetime of pending orders in minutes (`0` keeps them until filled or cancelled manually). |\n| `PendingIndentPoints` | Offset from the current bid/ask used to calculate pending order prices. |\n| `PendingMaxSpreadPoints` | Maximum allowed spread between bid and ask to place pending orders (`0` disables the filter). |\n| `OnlyOnePosition` | If `true`, prevents opening new trades until the current position is closed. |\n| `ReverseLevels` | Swaps the placement of buy and sell orders to mirror the original EA reverse mode. |\n| `CandleType` | Time frame used to trigger signal evaluation (daily by default). |"
+   },
+   "553": {
+    "id": 553,
+    "name": "BB Breakout Momentum Squeeze",
+    "family": "breakout",
+    "overview": "The BB Breakout Momentum Squeeze strategy combines a Bollinger Breakout oscillator with a volatility squeeze filter. The squeeze is detected when Bollinger Bands move outside Keltner Channels, signaling potential expansion. A long trade occurs when the bullish breakout oscillator crosses above the threshold during this expansion, while a short trade uses the bearish crossing. Stops are based on an ATR band and a risk‑reward target completes the exit logic.\n\n## Details\n\n- **Entry Criteria**:\n  - Squeeze off (Bollinger Bands outside Keltner Channels).\n  - **Long**: Bull oscillator crosses above threshold.\n  - **Short**: Bear oscillator crosses above threshold.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price hits ATR stop or risk‑reward target.\n- **Stops**: ATR band with risk‑reward target.\n- **Default Values**:\n  - `BbLength` = 14\n  - `BbMultiplier` = 1.0\n  - `Threshold` = 50\n  - `SqueezeLength` = 20\n  - `SqueezeBbMultiplier` = 2.0\n  - `KcMultiplier` = 2.0\n  - `AtrLength` = 30\n  - `AtrMultiplier` = 1.4\n  - `RrRatio` = 1.5\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Squeeze off (Bollinger Bands outside Keltner Channels).\n  - **Long**: Bull oscillator crosses above threshold.\n  - **Short**: Bear oscillator crosses above threshold.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price hits ATR stop or risk‑reward target.\n- **Stops**: ATR band with risk‑reward target.\n- **Default Values**:\n  - `BbLength` = 14\n  - `BbMultiplier` = 1.0\n  - `Threshold` = 50\n  - `SqueezeLength` = 20\n  - `SqueezeBbMultiplier` = 2.0\n  - `KcMultiplier` = 2.0\n  - `AtrLength` = 30\n  - `AtrMultiplier` = 1.4\n  - `RrRatio` = 1.5\n- **Filters**:\n  - Category: Volatility breakout\n  - Direction: Both\n  - Indicators: Bollinger Bands, Keltner Channels, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1197": {
+    "id": 1197,
+    "name": "Prop Firm Business Simulator",
+    "family": "breakout",
+    "overview": "Strategy that simulates prop firm risk management using Keltner Channel breakouts with position sizing based on risk per trade.\n\nThe method places stop orders at the channel boundaries. Quantity is calculated so that the distance between bands represents the chosen percentage of account equity.\n\n## Details\n\n- **Entry Criteria**: Price breaks Keltner Channel bands.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band breakout.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `Multiplier` = 2m\n  - `RiskPerTrade` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Keltner, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price breaks Keltner Channel bands.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite band breakout.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MaPeriod` = 20\n  - `AtrPeriod` = 10\n  - `Multiplier` = 2m\n  - `RiskPerTrade` = 1m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Keltner, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2777": {
+    "id": 2777,
+    "name": "N Candles v6",
+    "family": "momentum",
+    "overview": "The **N Candles v6** strategy monitors the most recent finished candles and looks for streaks of identical direction. When the market prints `N` bullish candles in a row the strategy opens a long position, while a string of `N` bearish candles produces a short entry. The logic is inspired by the MetaTrader expert advisor *N Candles v6.mq5* and is adapted to the StockSharp high-level API.\n\nThe algorithm is designed for any symbol that delivers standard time-based candles. A configurable trading window keeps the strategy inactive outside of the desired session, but active trailing and exit logic continues to protect an open position even during the blocked hours.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n|------|---------|-------------|\n| `CandlesCount` | 3 | Number of identical candles required for a signal. |\n| `OrderVolume` | 0.01 | Base market order size. Opposite exposure is closed before establishing a new trade. |\n| `TakeProfitPips` | 50 | Take-profit distance in pips. `0` disables the target. |\n| `StopLossPips` | 50 | Stop-loss distance in pips. `0` disables the stop. |\n| `TrailingStopPips` | 10 | Trailing stop distance in pips. `0` disables trailing. |\n| `TrailingStepPips` | 4 | Minimum price improvement before the trailing level moves. Must be > 0 when trailing is enabled. |\n| `MaxPositionVolume` | 2 | Maximum absolute net position. |\n| `UseTradingHours` | true | Enables trading window filtering. |\n| `StartHour` | 11 | Beginning of the trading session (0-23). |\n| `EndHour` | 18 | End of the trading session (0-23). |\n| `ClosingMode` | All | Behaviour when a black sheep candle appears. |\n| `CandleType` | 1 hour candles | Data type used for signal generation. |"
+   },
+   "3325": {
+    "id": 3325,
+    "name": "Reversing Martingale",
+    "family": "volatility",
+    "overview": "The **Reversing Martingale Strategy** is a direct C# port of the MetaTrader expert advisor “Reversing Martingale EA”. It continuously maintains a single market position and alternates the trade direction after each closed deal. Losing trades trigger a martingale volume progression, while profitable trades reset the cycle back to the initial lot size. All positions are protected by symmetric stop-loss and take-profit levels expressed in price points.\n\nThe strategy does not rely on indicators or market structure. It simply reacts to completed positions and keeps capital exposure active at all times (unless trading is disabled).",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| **Start Volume** | Initial trade volume used at the beginning of every winning cycle. |\n| **Lot Multiplier** | Volume multiplier applied after a losing trade. Must be greater than 1. |\n| **First Trade Side** | Direction of the very first trade when the strategy session starts. |\n| **Target (points)** | Distance in price steps used for both stop-loss and take-profit orders. |\n| **Order Comment** | Optional text tag assigned to each generated market order. |"
+   },
+   "1341": {
+    "id": 1341,
+    "name": "Stochastic",
+    "family": "mean_reversion",
+    "overview": "Simple strategy using the Stochastic Oscillator. A long position is opened when %K crosses above the oversold threshold. A short position is opened when %K crosses below the overbought threshold. Default levels are 50 for both directions.\n",
+    "details": "",
+    "parameters": ""
+   }
+  }
+ }
+}

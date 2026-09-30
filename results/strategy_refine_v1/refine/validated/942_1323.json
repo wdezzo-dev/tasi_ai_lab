@@ -1,0 +1,84 @@
+{
+  "strategy_id": 942,
+  "ticker": "1323",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 942,
+    "name": "IU Open Equal to High Low",
+    "family": "pattern",
+    "entry_long": "open <= low * 1 and close > open",
+    "exit_long": "close < donchian_low_prev(low,1)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The open-equals-low geometry is applied to any bar with a 0.1% equality tolerance because the DSL has no session/time fields to isolate the first candle of the day, and the long side (open at the low, close up) is traded. The prior-candle low becomes the structural exit; the RiskReward 2 target and stop are price distances, not percents."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 152,
+      "engine_win_ret": 0.01184650583105773,
+      "alpha": 0.48920691192242827,
+      "benchmark_ret": -0.47736040609137054,
+      "trades": 10,
+      "win_rate": 0.2,
+      "sharpe": 0.23930007518528074,
+      "max_drawdown": -0.06193865402731369,
+      "profit_factor": 1.1281565950568166
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.1924007304710087,
+      "alpha": 0.23013657952761246,
+      "benchmark_ret": -0.037735849056603765,
+      "trades": 14,
+      "win_rate": 0.5,
+      "sharpe": 1.7459099115400833,
+      "max_drawdown": -0.06735573463168654,
+      "profit_factor": 3.3106807254743305
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 152,
+      "engine_win_ret": -0.037681456191785645,
+      "alpha": 0.4396789498995849,
+      "benchmark_ret": -0.47736040609137054,
+      "trades": 10,
+      "win_rate": 0.2,
+      "sharpe": -0.5315965017268528,
+      "max_drawdown": -0.08760801851945799,
+      "profit_factor": 0.7104033110552234
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.11462495363919145,
+      "alpha": 0.15236080269579522,
+      "benchmark_ret": -0.037735849056603765,
+      "trades": 14,
+      "win_rate": 0.35714285714285715,
+      "sharpe": 1.0757908338800282,
+      "max_drawdown": -0.09071782232209902,
+      "profit_factor": 2.060277047630457
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

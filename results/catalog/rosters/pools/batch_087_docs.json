@@ -1,0 +1,98 @@
+{
+ "batch_087": {
+  "strategy_ids": [
+   1562,
+   1384,
+   990,
+   167,
+   3915,
+   2862,
+   944,
+   3432,
+   1893,
+   3388
+  ],
+  "docs": {
+   "1562": {
+    "id": 1562,
+    "name": "XAU/USD ADX Bollinger",
+    "family": "trend",
+    "overview": "This strategy trades gold using Bollinger Bands and the ADX indicator. A position is opened when price leaves the band and trend strength exceeds the configured threshold.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1384": {
+    "id": 1384,
+    "name": "Supertrend Target Stop",
+    "family": "trend",
+    "overview": "Strategy that buys when price crosses above the Supertrend line and sells when it crosses below. A fixed percentage target and stop loss close positions.\n\n## Details\n\n- **Entry Criteria**: Price crossing Supertrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Target or stop loss percentage.\n- **Stops**: Yes, fixed percentage.\n- **Default Values**:\n  - `Period` = 14\n  - `Multiplier` = 3m\n  - `TargetPct` = 0.01m\n  - `StopPct` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Supertrend\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crossing Supertrend.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Target or stop loss percentage.\n- **Stops**: Yes, fixed percentage.\n- **Default Values**:\n  - `Period` = 14\n  - `Multiplier` = 3m\n  - `TargetPct` = 0.01m\n  - `StopPct` = 0.01m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, Supertrend\n  - Stops: Fixed\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "990": {
+    "id": 990,
+    "name": "Long and Short with Multi Indicators",
+    "family": "trend",
+    "overview": "This strategy uses RSI, Rate of Change and a selectable moving average to generate long and short signals. It applies an ATR-based trailing stop for exits.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: RSI between oversold and overbought, ROC > 0 and price above MA.\n  - Short: Bearish trend confirmed, ROC < 0 and price below MA.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - ATR-based trailing stop or indicator stop conditions.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `RsiLength` = 5\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 44\n  - `RocLength` = 4\n  - `MaLength` = 24\n  - `MaTypeParam` = TEMA\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n  - `BearishMaLength` = 200\n  - `BearishTrendDuration` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: RSI, ROC, MA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: RSI between oversold and overbought, ROC > 0 and price above MA.\n  - Short: Bearish trend confirmed, ROC < 0 and price below MA.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - ATR-based trailing stop or indicator stop conditions.\n- **Stops**: ATR trailing stop.\n- **Default Values**:\n  - `RsiLength` = 5\n  - `RsiOverbought` = 70\n  - `RsiOversold` = 44\n  - `RocLength` = 4\n  - `MaLength` = 24\n  - `MaTypeParam` = TEMA\n  - `AtrLength` = 14\n  - `AtrMultiplier` = 2\n  - `BearishMaLength` = 200\n  - `BearishTrendDuration` = 5\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: RSI, ROC, MA, ATR\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "167": {
+    "id": 167,
+    "name": "Keltner Rsi",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 88%. It performs best in the stocks market.\n\nKeltner Channels map recent volatility while RSI measures momentum extremes. Entries occur when RSI supports a move beyond the channel.\n\nGreat for bounce traders around volatility envelopes. Stops rely on an ATR multiplier.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Close < LowerBand && RSI < RsiOversoldLevel`\n  - Short: `Close > UpperBand && RSI > RsiOverboughtLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price returns to EMA\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `RsiPeriod` = 14\n  - `RsiOverboughtLevel` = 70m\n  - `RsiOversoldLevel` = 30m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Close < LowerBand && RSI < RsiOversoldLevel`\n  - Short: `Close > UpperBand && RSI > RsiOverboughtLevel`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Price returns to EMA\n- **Stops**: Percent-based using `StopLossPercent`\n- **Default Values**:\n  - `EmaPeriod` = 20\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 2.0m\n  - `RsiPeriod` = 14\n  - `RsiOverboughtLevel` = 70m\n  - `RsiOversoldLevel` = 30m\n  - `StopLossPercent` = 2.0m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: Keltner Channel, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3915": {
+    "id": 3915,
+    "name": "TRAYLERv",
+    "family": "trend",
+    "overview": "The **TRAYLERv Strategy** is a direct conversion of the MetaTrader 4 expert advisor *TRAYLERv*. The original code acted as an automated trade manager rather than a signal generator; it continuously adjusted protective orders for existing positions using Bill Williams fractals and allowed traders to clean up outstanding pending orders. This StockSharp port preserves the same behaviour while leveraging the high-level API for order management and candle subscriptions.\n\nThe strategy does **not** open positions on its own. It expects trades to be created manually or by another strategy and then takes over the job of maintaining stops and take-profits according to the logic below. All comments and configuration names follow the legacy EA so that experienced users can map the behaviour quickly.",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `OrderVolume` | Suggested default volume for manual entries. It is kept for compatibility with the original EA and is not used internally. | `0.1` |\n| `DeleteAllPendingOrders` | When `true`, cancel every active pending order on the connection after each candle. | `false` |\n| `DeleteOwnPendingOrders` | When `true`, cancel only the pending orders for the current symbol. | `false` |\n| `UseTakeProfit` | Enables fractal-based take-profit calculation. When disabled, any existing take-profit order is removed. | `true` |\n| `EnableSound` | Preserved legacy flag from MT4; provided for completeness but not used in StockSharp. | `true` |\n| `ShowCommentary` | Legacy switch equivalent to the MT4 on-chart commentary. It is available for configuration screens but has no effect in the port. | `true` |\n| `StopFractalDepth` | Number of bars inspected to find a fractal for the trailing stop. | `7` |\n| `TakeProfitFractalDepth` | Number of bars inspected to find a fractal for the take-profit. | `21` |\n| `CandleType` | Data type used for the primary candle series. Defaults to a 1-minute time frame. | `1 minute` time frame |"
+   },
+   "2862": {
+    "id": 2862,
+    "name": "AIS2 Trading Robot",
+    "family": "breakout",
+    "overview": "The AIS2 Trading Robot is a multi-timeframe breakout system converted from the original MetaTrader 5 expert advisor. It scans a higher timeframe (default 15-minute candles) to detect directional breakouts, while a faster timeframe (default 1-minute candles) provides adaptive trailing stops. Order placement, risk budgeting, and trailing logic follow the rules encoded in the legacy MQ5 version, but are implemented on top of StockSharp's high-level strategy API.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `AccountReserve` | Fraction of equity withheld from trading (0–0.95).\n| `OrderReserve` | Fraction of tradable equity that defines the risk budget per trade (0–1).\n| `PrimaryCandleType` | Working timeframe for breakout detection (default 15 minutes).\n| `SecondaryCandleType` | Faster timeframe that drives trailing stop updates (default 1 minute).\n| `TakeFactor` | Multiplier applied to the primary range to compute the take-profit distance.\n| `StopFactor` | Multiplier applied to the primary range to compute the stop-loss distance.\n| `TrailFactor` | Multiplier applied to the secondary range to compute the trailing distance.\n| `BaseVolume` | Fallback order size used when portfolio metrics are not available.\n| `StopBufferTicks` | Additional distance (in ticks) required beyond exchange stop constraints.\n| `FreezeBufferTicks` | Extra buffer that prevents minor trailing adjustments near the freeze level.\n| `TrailStepMultiplier` | Spread multiplier that defines the minimum increment between trailing updates."
+   },
+   "944": {
+    "id": 944,
+    "name": "IU Range Trading",
+    "family": "breakout",
+    "overview": "The IU Range Trading Strategy identifies consolidation zones where the price range over a lookback period stays within an ATR multiplier. Breakout trades trigger when price exceeds the range boundaries. Positions are protected by an ATR-based trailing stop that moves with favorable price action.\n\n## Details\n\n- **Entry Criteria**: Price breaks above or below a narrow ATR-defined range.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RangeLength` = 10\n  - `AtrLength` = 14\n  - `AtrTargetFactor` = 2.0m\n  - `AtrRangeFactor` = 1.75m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price breaks above or below a narrow ATR-defined range.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: ATR-based trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `RangeLength` = 10\n  - `AtrLength` = 14\n  - `AtrTargetFactor` = 2.0m\n  - `AtrRangeFactor` = 1.75m\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: ATR, Highest, Lowest\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3432": {
+    "id": 3432,
+    "name": "DreamBot",
+    "family": "momentum",
+    "overview": "DreamBot is a StockSharp port of the MetaTrader 4 expert advisor \"DreamBot\". The strategy monitors the Force Index oscillator on hourly candles and waits for the momentum to cross bullish or bearish thresholds. When the Force Index crosses above the bullish level after being below it on the previous bar, the strategy opens a long position. When the Force Index crosses below the bearish level after being above it, the strategy opens a short position. Trading occurs only when there is no existing position, mirroring the single-position logic of the original robot.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `ForcePeriod` | Force Index smoothing period (default 13). |\n| `TakeProfitPoints` | Take-profit distance in MetaTrader points. |\n| `StopLossPoints` | Stop-loss distance in MetaTrader points. |\n| `BullsThreshold` | Bullish Force Index threshold that enables long entries. |\n| `BearsThreshold` | Bearish Force Index threshold that enables short entries. |\n| `EnableTrailing` | Enables the trailing stop logic. |\n| `TrailingStartPoints` | Distance (in points) maintained between price and trailing stop once activated. |\n| `TrailingStepPoints` | Profit (in points) required before the trailing stop activates. |\n| `CandleType` | Timeframe used for Force Index calculations (defaults to H1 candles). |"
+   },
+   "1893": {
+    "id": 1893,
+    "name": "EA Template",
+    "family": "volatility",
+    "overview": "This strategy originates from a MetaTrader EA template. It analyses the previous finished candle and opens a position in the direction of the candle body. A bullish candle triggers a long trade, while a bearish candle triggers a short one. Reverse mode flips the interpretation of the candle so the strategy trades against the bar color.\n\nThe strategy supports fixed position size or an equity based calculation. Stop-loss and take-profit levels are set in points from the entry price. Trading is skipped when the spread exceeds the allowed threshold.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: previous candle close > open and `ReverseTrade` disabled.\n  - **Short**: previous candle close < open and `ReverseTrade` disabled.\n  - When `ReverseTrade` is enabled the signals are inverted.\n  - Spread must be below `SpreadLimit` points.\n- **Exit Criteria**:\n  - Opposite candle color or stop-loss/take-profit hit.\n- **Position Sizing**:\n  - Fixed size `Lots` or equity based size using `RiskPercent` when `UseMoneyManagement` is true.\n- **Stops**:\n  - `StopLoss` and `TakeProfit` in points relative to entry price.\n- **Long/Short**: Both directions.\n- **Indicators**: None.\n- **Risk Level**: Medium.\n\nParameters allow tuning candle type, reverse mode, money management rules and risk limits.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: previous candle close > open and `ReverseTrade` disabled.\n  - **Short**: previous candle close < open and `ReverseTrade` disabled.\n  - When `ReverseTrade` is enabled the signals are inverted.\n  - Spread must be below `SpreadLimit` points.\n- **Exit Criteria**:\n  - Opposite candle color or stop-loss/take-profit hit.\n- **Position Sizing**:\n  - Fixed size `Lots` or equity based size using `RiskPercent` when `UseMoneyManagement` is true.\n- **Stops**:\n  - `StopLoss` and `TakeProfit` in points relative to entry price.\n- **Long/Short**: Both directions.\n- **Indicators**: None.\n- **Risk Level**: Medium.\n\nParameters allow tuning candle type, reverse mode, money management rules and risk limits.",
+    "parameters": ""
+   },
+   "3388": {
+    "id": 3388,
+    "name": "CBC_WS_RSI",
+    "family": "mean_reversion",
+    "overview": "The **CBC_WS_RSI Strategy** is a high-level StockSharp implementation of the MQL5 expert advisor that combines the \"Three White Soldiers\" and \"Three Black Crows\" candlestick patterns with RSI confirmation. The strategy focuses on identifying strong multi-candle reversals and only enters a trade when market momentum, measured by RSI, agrees with the pattern. Exits are controlled by RSI threshold crossovers and optional risk management through stop-loss and take-profit protections.\n\nThe strategy subscribes to a configurable candle series and processes data exclusively on fully formed candles. All logic is implemented using StockSharp's high-level API (`SubscribeCandles().Bind(...)`) without direct access to indicator buffers.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `CandleType` | Candle data type and timeframe to subscribe to. | 1-hour time frame |\n| `RsiPeriod` | RSI period used for confirmation. | 37 |\n| `LongConfirmationLevel` | Maximum RSI value that permits a long entry. | 40 |\n| `ShortConfirmationLevel` | Minimum RSI value that permits a short entry. | 60 |\n| `LowerExitLevel` | RSI level used to detect momentum reversal near oversold territory. | 30 |\n| `UpperExitLevel` | RSI level used to detect momentum reversal near overbought territory. | 70 |\n| `StopLossPercent` | Optional stop-loss in percent; 0 disables the protection. | 1 |\n| `TakeProfitPercent` | Optional take-profit in percent; 0 disables the protection. | 2 |\n\nAll numeric parameters can be optimized via the built-in optimizer thanks to `SetCanOptimize(true)`."
+   }
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3243,
+      "name": "JBrainTrend1Stop",
+      "family": "trend",
+      "entry_long": "roc(ema(close,7),2) > atr(high,low,close,7) / close * 100 / 2.3 and rsi(close,9) > 53",
+      "exit_long": "rsi(close,9) < 47 or roc(ema(close,7),2) < -atr(high,low,close,7) / close * 100 / 2.3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Jurik MA is approximated by EMA(7) and the Stochastic by RSI(9), keeping the documented 47/53 neutral bands and the ATR(7)/2.3 swing trigger; the extended ATR(10)*1.5 stop line, SignalBar delay and automatic reversal are not DSL features."
+    },
+    {
+      "id": 2360,
+      "name": "ColorXvaMA Digit StDev",
+      "family": "trend",
+      "entry_long": "close > ema(close,20) + 2 * std(close,20)",
+      "exit_long": "close < ema(close,20) + 1 * std(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Deviation bands are EMA(20) plus/minus K2=2 and K1=1 standard deviations of STD(20); the docs list only parameter names, so these lengths and multipliers are stated defaults. The short branch is dropped because the engine is long-only and no stops are documented."
+    },
+    {
+      "id": 4203,
+      "name": "Early Open Trend",
+      "family": "trend",
+      "entry_long": "low < open and close > open",
+      "exit_long": "high > open and close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The wick-based confirmation around the session open becomes a bar that sweeps its open and closes back on the bullish side, with the mirrored sweep as exit. The 07-18 session window, 20:00 flatten, once-per-day gating, DST offsets and 100/1000-pip protections are time features and price units, so SL/TP stay null."
+    },
+    {
+      "id": 4071,
+      "name": "SVOS EURJPY D1",
+      "family": "trend",
+      "entry_long": "(adx(high,low,close,20) > 20 and crossabove(macd(close,10,25),macd_signal(close,10,25,5))) or (adx(high,low,close,20) <= 20 and crossabove(rsi(close,8),30))",
+      "exit_long": "crossbelow(macd(close,10,25),macd_signal(close,10,25,5)) or (close < open and roc(close,1) < 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VHF is unavailable so the trending/ranging regime uses ADX(20); the trending branch uses the documented MACD(10,25,5) histogram cross and the ranging branch an RSI(8) recross, with a bearish-bar/engulfing proxy as exit. Pip-based 350/90/150 stops, the 0.3 std-dev floor, doji divisor and order caps are dropped."
+    },
+    {
+      "id": 1817,
+      "name": "Liquidex V1",
+      "family": "trend",
+      "entry_long": "open < sma(close,20) and close > sma(close,20)",
+      "exit_long": "open > sma(close,20) and close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "WMA is approximated by SMA(20) (MaPeriod has no documented value) and the buy rule is an open below the average with a close above it; the opposite cross reverses per the docs. RangeFilter and StopLoss are absolute price/point units that do not translate."
+    },
+    {
+      "id": 786,
+      "name": "Fibonacci Retracement Strategy for Crypto",
+      "family": "other",
+      "entry_long": "crossabove(close,donchian_high(high,20) - 0.618 * (donchian_high(high,20) - donchian_low(low,20)))",
+      "exit_long": "close >= donchian_high(high,20) - 0.236 * (donchian_high(high,20) - donchian_low(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 61.8% entry and 23.6% long-exit retracements are computed from the 20-bar Donchian high/low; the docs give no lookback value so 20 is a stated default. The 38.2%/78.6% short legs are omitted for the long-only engine."
+    },
+    {
+      "id": 1304,
+      "name": "Simple Fibonacci Retracement",
+      "family": "other",
+      "entry_long": "crossabove(close,donchian_high(high,100) - 0.618 * (donchian_high(high,100) - donchian_low(low,100)))",
+      "exit_long": "close < donchian_high(high,100) - 0.618 * (donchian_high(high,100) - donchian_low(low,100))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented LookbackPeriod = 100 and the long branch of the level cross at 61.8% (the docs leave the chosen level open). The 50/20-pip take-profit and stop are price units, not percentages, so the loss of the level supplies the exit instead."
+    },
+    {
+      "id": 845,
+      "name": "Gold Friday Anomaly",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a purely calendar-driven EA: it buys the first Friday candle inside a date range and exits after a fixed 4-bar hold, with no market-derived condition. The DSL has no weekday/date field, so the never-true guard is used rather than inventing a signal."
+    },
+    {
+      "id": 1329,
+      "name": "Spearman Rank Correlation Coefficient",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a rank correlation between two separate securities (threshold 0.8 over 10 bars) traded as a pair, which a single-symbol backtest cannot observe. The never-true guard is used to avoid fabricating a long leg."
+    },
+    {
+      "id": 3472,
+      "name": "Close Orders Risk Control",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A risk-management overlay that liquidates existing orders when floating P&L hits the target or cut-loss, with no entry logic and no percentage thresholds. The never-true guard prevents inventing a market signal."
+    }
+  ]
+}

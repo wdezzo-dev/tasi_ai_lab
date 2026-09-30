@@ -1,0 +1,98 @@
+{
+ "batch_099": {
+  "strategy_ids": [
+   2197,
+   1363,
+   1352,
+   1248,
+   3424,
+   2106,
+   2754,
+   3884,
+   4061,
+   4016
+  ],
+  "docs": {
+   "2197": {
+    "id": 2197,
+    "name": "IMA Expert",
+    "family": "trend",
+    "overview": "Strategy trading on the relative speed of price against its moving average.\nThe ratio `Close / SMA - 1` is compared between two consecutive candles. A strong increase opens a long position, while a strong decrease opens a short position.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `(IMA_now - IMA_prev) / abs(IMA_prev) >= SignalLevel`\n  - Short: `(IMA_now - IMA_prev) / abs(IMA_prev) <= -SignalLevel`\n- **Exit Criteria**: Opposite signal\n- **Position Sizing**: `RiskLevel` and `StopLossTicks` define trade volume, limited by `MaxVolume`\n- **Long/Short**: Both\n- **Stops**: None\n- **Default Values**:\n  - `SmaPeriod` = 5\n  - `TakeProfitTicks` = 50\n  - `StopLossTicks` = 1000\n  - `SignalLevel` = 0.5\n  - `RiskLevel` = 0.01\n  - `MaxVolume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `(IMA_now - IMA_prev) / abs(IMA_prev) >= SignalLevel`\n  - Short: `(IMA_now - IMA_prev) / abs(IMA_prev) <= -SignalLevel`\n- **Exit Criteria**: Opposite signal\n- **Position Sizing**: `RiskLevel` and `StopLossTicks` define trade volume, limited by `MaxVolume`\n- **Long/Short**: Both\n- **Stops**: None\n- **Default Values**:\n  - `SmaPeriod` = 5\n  - `TakeProfitTicks` = 50\n  - `StopLossTicks` = 1000\n  - `SignalLevel` = 0.5\n  - `RiskLevel` = 0.01\n  - `MaxVolume` = 1\n  - `CandleType` = TimeSpan.FromMinutes(1).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SMA\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1363": {
+    "id": 1363,
+    "name": "SuperATR 7-Step Profit",
+    "family": "trend",
+    "overview": "Combines an adaptive ATR trend filter with a seven-stage take-profit system. Momentum-normalized ATR defines trend strength, while entries occur when the short moving average aligns with the confirmed trend direction.\n\n- **Long**: Trend strength above threshold, price above short MA and short MA above long MA.\n- **Short**: Trend strength below negative threshold, price below short MA and short MA below long MA.\n- **Indicators**: Momentum, Standard Deviation, SMA, ATR.\n- **Take Profit**: Four ATR-based levels and three fixed-percentage levels, each closing a portion of the position when enabled.\n\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1352": {
+    "id": 1352,
+    "name": "Reversal Catcher",
+    "family": "trend",
+    "overview": "Reversal Catcher enters when price pushes beyond a Bollinger band and then re-enters while momentum shifts. It relies on a fast and slow EMA to define trend direction and uses RSI crosses of overbought or oversold levels to time entries. Targets and stops are derived from Bollinger band levels and the prior candle's extreme. Positions may optionally close at a specified end-of-day time.\n\n## Details\n\n- **Entry Criteria**: Price re-enters Bollinger Bands with higher high/low structure and RSI crossing extremes.\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, target, or end-of-day flat\n- **Stops**: Previous candle extreme\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 1.5\n  - `FastEmaPeriod` = 21\n  - `SlowEmaPeriod` = 50\n  - `RsiPeriod` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `EndOfDay` = 1500\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price re-enters Bollinger Bands with higher high/low structure and RSI crossing extremes.\n- **Long/Short**: Both\n- **Exit Criteria**: Stop loss, target, or end-of-day flat\n- **Stops**: Previous candle extreme\n- **Default Values**:\n  - `BollingerPeriod` = 20\n  - `BollingerDeviation` = 1.5\n  - `FastEmaPeriod` = 21\n  - `SlowEmaPeriod` = 50\n  - `RsiPeriod` = 14\n  - `Overbought` = 70\n  - `Oversold` = 30\n  - `EndOfDay` = 1500\n  - `CandleType` = 5 minute\n- **Filters**:\n  - Category: Reversal\n  - Direction: Both\n  - Indicators: Bollinger Bands, EMA, RSI\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1248": {
+    "id": 1248,
+    "name": "Reversal & Breakout Strategy with ORB",
+    "family": "trend",
+    "overview": "This strategy combines RSI and SMA reversal signals with EMA crossover breakouts and an Opening Range Breakout (ORB). ATR-based stops and two take-profit levels manage risk.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3424": {
+    "id": 3424,
+    "name": "RangeBreakout2",
+    "family": "trend",
+    "overview": "The **RangeBreakout2 Strategy** is a StockSharp port of the MetaTrader expert advisor \"RangeBreakout2\". The algorithm prepares a price range at configurable times (weekly, daily or continuously) and opens a single market order once bid/ask quotes escape that range. After each trade the range preparation cycle restarts. The implementation reproduces the original money-management rules (constant, linear, martingale and Fibonacci scaling) and the optional expansion of the take-profit distance after a losing trade.\n\nThe strategy works with a single security and relies on the best bid/ask quotes. Ensure the adapter provides up-to-date order book data so that breakout detection remains responsive.",
+    "details": "",
+    "parameters": "| Group | Name | Description | Default |\n|-------|------|-------------|---------|\n| Schedule | `Periodicity` | Range preparation frequency: Weekly, Daily or NonStop. | `Weekly` |\n| Schedule | `Day` | Trading day used when `Periodicity` = Weekly. | `Monday` |\n| Schedule | `Hour` | Hour of day when the setup is built (MetaTrader-style adjustment: stored value + 1, capped to 0 if ≥ 23). | `0` |\n| Range | `RangeMode` | Raw range calculation method (ATR / Percent / Fixed). | `Atr` |\n| Range | `AtrPercentage` | Percentage multiplier applied to the ATR value. | `50` |\n| Range | `AtrLength` | Number of candles used in the ATR indicator. | `20` |\n| Range | `PricePercentage` | Percentage of the current ask price used when `RangeMode = Percent`. | `1` |\n| Range | `FixedRangePoints` | Fixed range expressed in price steps when `RangeMode = Fixed`. | `1000` |\n| Trading | `RangePercentage` | Percentage of the raw range applied to breakout levels. | `100` |\n| Trading | `TradeMode` | Entry style: Stop (breakout), Limit (fade) or Random. | `Stop` |\n| Trading | `TakeProfitPercentage` | Take-profit distance as a percentage of the (optionally expanded) range. | `100` |\n| Trading | `StopLossPercentage` | Stop-loss distance as a percentage of the base range. | `100` |\n| Risk | `LotMode` | Lot management scheme (Constant / Linear / Martingale / Fibonacci). | `Martingale` |\n| Risk | `MarginPercentage` | Portion of free capital reserved for the base order volume. | `10` |\n| Risk | `LotMultiplier` | Multiplier applied in martingale-like scaling modes. | `2` |\n| Risk | `RangeMultiplier` | Take-profit multiplier applied after a losing trade. | `1` |\n| Data | `SignalCandleType` | Candle type used to check scheduling conditions. | `1m time-frame` |\n| Data | `AtrCandleType` | Candle type used for ATR calculation. Only requested when `RangeMode = Atr`. | `1d time-frame` |"
+   },
+   "2106": {
+    "id": 2106,
+    "name": "CandleStop Trailing",
+    "family": "breakout",
+    "overview": "This strategy implements trailing stop management based on the CandleStop approach. It analyzes completed candles and moves the stop level only in the direction of the trade. The algorithm relies on Donchian channels with separate look-back periods for long and short positions, making it suitable for attaching to manual trades or other entry strategies.",
+    "details": "",
+    "parameters": "- **Up Trail Periods** – number of candles used to calculate the highest high for short position trailing.\n- **Down Trail Periods** – number of candles used to calculate the lowest low for long position trailing.\n- **Candle Type** – timeframe of candles used for analysis."
+   },
+   "2754": {
+    "id": 2754,
+    "name": "ZigZag EvgeTrofi",
+    "family": "breakout",
+    "overview": "The ZigZag EvgeTrofi strategy ports the classic MetaTrader expert advisor into the StockSharp high level API. It watches the most recent swing detected by a ZigZag-style process and reacts quickly while the pivot is still fresh.\n\n## Concept\n\n* The original advisor analyses the first non-zero point of the ZigZag buffer and decides whether the last confirmed swing was a high or a low.\n* A swing high generates a long entry by default. Activating **SignalReverse** inverts the logic.\n* Positions are opened only while the new pivot is considered recent. The **Urgency** parameter limits the number of bars after a pivot when trades can be initiated.\n* Existing positions in the opposite direction are flattened immediately before new orders are placed. The strategy can scale into the same direction on consecutive bars while the urgency window is open.\n\nThis port keeps the behaviour contrarian: new highs trigger long trades whereas fresh lows trigger shorts, mimicking the original setup.\n\n## How it Works\n\n1. Two rolling indicators (`Highest` and `Lowest`) approximate the MetaTrader ZigZag depth logic.\n2. Whenever price prints a new extreme above/below those bands and the move exceeds **Deviation** (in price steps), a pivot is recorded.\n3. The algorithm tracks how many bars passed since the pivot. Once the counter exceeds **Urgency** the signal expires.\n4. On every closed candle during the active window the strategy enters using `VolumePerTrade`. Opposite exposure is closed first, so flip trades happen cleanly.\n\n## Parameters\n\n| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Depth` | 17 | Window in bars to look back for swing highs/lows. Mirrors the ZigZag depth input. |\n| `Deviation` | 7 | Minimum price displacement in points (multiplied by the symbol price step) required to accept a new pivot. |\n| `Backstep` | 5 | Bars that must elapse before the indicator may switch to the opposite pivot direction. |\n| `Urgency` | 2 | Maximum number of bars afte",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `Depth` | 17 | Window in bars to look back for swing highs/lows. Mirrors the ZigZag depth input. |\n| `Deviation` | 7 | Minimum price displacement in points (multiplied by the symbol price step) required to accept a new pivot. |\n| `Backstep` | 5 | Bars that must elapse before the indicator may switch to the opposite pivot direction. |\n| `Urgency` | 2 | Maximum number of bars after the pivot when entries are allowed. |\n| `SignalReverse` | `false` | Flips the mapping of highs/lows to long/short signals. |\n| `CandleType` | 5 minute candles | Timeframe used for the analysis. Adjust to the chart you want to mirror. |\n| `VolumePerTrade` | 0.10 | Order size submitted on every entry. Matches the original lot input. |"
+   },
+   "3884": {
+    "id": 3884,
+    "name": "Otkat Sys",
+    "family": "momentum",
+    "overview": "The strategy reproduces the MetaTrader expert advisor **1_Otkat_Sys**. It monitors the previous trading day's open, close, high,\nand low to decide whether to enter a position during the first three minutes after midnight (broker time) from Tuesday to\nThursday.\n\n## Trading Logic\n\n1. **Daily statistics** – the last completed daily candle is cached in order to compute:\n   - `Open - Close` and `Close - Open` to detect whether the previous session was bearish or bullish.\n   - `Close - Low` and `High - Close` to measure how deeply the price pulled back from the extremes.\n2. **Entry window** – new trades are evaluated when the entry candle opens between 00:00 and 00:03. Monday and Friday are\n   skipped, matching the original robot's `DayOfWeek` filters.\n3. **Directional filters** – four mutually exclusive conditions mirror the MQL rules:\n   - Bearish previous day (`Open - Close` above the corridor threshold) combined with a shallow retracement (`Close - Low`\n     below `Pullback - Tolerance`) opens a long.\n   - Bullish previous day with an extended upside retracement (`High - Close` above `Pullback + Tolerance`) also opens a long.\n   - Bullish previous day with a weak upside retracement (`High - Close` below `Pullback - Tolerance`) opens a short.\n   - Bearish previous day with an extended downside retracement (`Close - Low` above `Pullback + Tolerance`) opens a short.\n4. **Orders** – entries are market orders placed with the configured lot size. Buy trades use a take-profit distance equal to\n   `TakeProfit + 3` points (as in the original EA); shorts use exactly `TakeProfit` points. Both sides apply the same stop-loss\n   distance.\n5. **Time-based exit** – any open position is flattened after 22:45, replicating the nightly cleanup implemented in the MetaTrader\n   script.\n\nAll threshold parameters are expressed in points and translated into price distances with the instrument's `PriceStep`.\n\n## Parameters\n\n| Name | Description |\n| --- | --- |\n| `EntryCandleType` | Timeframe u",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `EntryCandleType` | Timeframe used for the trading window (default: 1 minute). |\n| `DailyCandleType` | Timeframe providing the daily statistics (default: 1 day). |\n| `TakeProfit` | Profit target in points. Long trades add a 3-point buffer. |\n| `StopLoss` | Protective stop distance in points. |\n| `PullbackThreshold` | Base pullback (\"Otkat\") threshold in points. |\n| `CorridorThreshold` | Directional corridor threshold (`KoridorOC`). |\n| `ToleranceThreshold` | Pullback tolerance (`KoridorOt`). |\n| `TradeVolume` | Lot size for each entry. |\n\nThe strategy automatically resets its cached values on `Reset`, subscribes to both entry and daily candle streams, and draws\ncandles plus trade markers when a chart area is available."
+   },
+   "4061": {
+    "id": 4061,
+    "name": "Parabolic SAR Fibo Limits",
+    "family": "volatility",
+    "overview": "Parabolic SAR Fibo Limits is a StockSharp port of the MetaTrader 4 expert advisor `FT_0tk80i9uw4ep_Parabolic`. The original robot combines a dual Parabolic SAR stack with Fibonacci retracement levels to stage limit entries at key pullback zones. The C# strategy preserves the staged order placement, the built-in break-even and trailing protections, and the optional trading session filter so that the behaviour matches the source EA when it is attached to a chart with finished candles.",
+    "details": "",
+    "parameters": "* **Use Time Filter** – toggles the trading session filter.\n* **Start Hour / Stop Hour** – inclusive session hours used when the time filter is enabled.\n* **Fast SAR Step / Fast SAR Max** – acceleration factor and maximum acceleration for the fast Parabolic SAR.\n* **Slow SAR Step / Slow SAR Max** – acceleration factor and maximum acceleration for the slow Parabolic SAR.\n* **Bar Search** – number of bars included in the swing high/low calculation.\n* **Offset (points)** – number of price steps added beyond the swing extreme when computing the stop-loss.\n* **Entry Fibonacci %** – Fibonacci percentage (expressed as 0–200+) used for the limit order price.\n* **Target Fibonacci %** – Fibonacci percentage applied to compute the take-profit projection.\n* **Break Even (points)** – profit in points required before the stop jumps to the entry price (+/- one step). Set to `0` to disable.\n* **Trailing Stop (points)** – distance between price and trailing stop. Set to `0` to disable trailing.\n* **Trailing Step (points)** – minimum improvement (in points) before the trailing stop is advanced.\n* **Candle Type** – timeframe that drives the indicator and swing calculations.\n* **Volume** – base order volume inherited from the StockSharp `Strategy` class (default `0.1`)."
+   },
+   "4016": {
+    "id": 4016,
+    "name": "Rsi Test",
+    "family": "mean_reversion",
+    "overview": "`RsiTestStrategy` converts the MetaTrader 4 expert advisor **RSI_Test** into StockSharp's high level API. The strategy combines a fast RSI momentum filter with simple candle confirmation and risk-aware position sizing. It trades a single instrument defined by the host strategy and uses completed candles only, mirroring the tick-to-close logic of the original code.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `RsiPeriod` | RSI lookback period. | `14` |\n| `BuyLevel` | Oversold threshold that prepares a long setup. | `12` |\n| `SellLevel` | Overbought threshold that prepares a short setup. | `88` |\n| `RiskPercentage` | Portfolio share used for position sizing. Set `0` to ignore. | `10` |\n| `TrailingDistanceSteps` | Distance (in price steps) required to arm the trailing stop. | `50` |\n| `MaxOpenPositions` | Maximum simultaneous positions; `0` removes the limit. | `1` |\n| `CandleType` | Primary timeframe for calculations. | `15` minutes |\n| `Volume` | Base volume when risk sizing cannot be resolved. | `1` |"
+   }
+  }
+ }
+}

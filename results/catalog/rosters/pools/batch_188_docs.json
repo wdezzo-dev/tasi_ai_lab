@@ -1,0 +1,98 @@
+{
+ "batch_188": {
+  "strategy_ids": [
+   3044,
+   3346,
+   312,
+   440,
+   739,
+   3136,
+   2464,
+   552,
+   2408,
+   382
+  ],
+  "docs": {
+   "3044": {
+    "id": 3044,
+    "name": "Donchian Channels",
+    "family": "trend",
+    "overview": "This strategy ports the classic \"Donchian Channels\" expert advisor to the StockSharp high level API. It combines a multi-timeframe Donchian breakout with weighted moving averages, momentum confirmation, MACD trend filtering, and extensive risk controls (stop loss, take profit, break-even, trailing stop and equity-based emergency exit).\n\n## Logic Overview\n\n- **Market Regime:**\n  - Donchian Channel is calculated on a higher timeframe (default 4-hour) to detect the prevailing breakout structure.\n  - A MACD computed on a configurable trend timeframe (daily by default) ensures the higher timeframe trend agrees with the trade direction.\n- **Entry Conditions:**\n  - **Long setup:**\n    - Lower Donchian band or channel median penetrates the previous higher-timeframe candle body from below, signalling a potential breakout.\n    - Previous two base-timeframe candles form an upward swing (`Low[2] < High[1]`).\n    - Momentum absolute deviation from 100 on the higher timeframe exceeds the buy threshold in any of the last three readings.\n    - Fast LWMA stays within the configured distance above the slow LWMA to avoid overstretched moves.\n    - MACD main line is above its signal (both positive or both negative) confirming bullish bias.\n  - **Short setup:** Symmetric rules mirrored for the upper Donchian band, swing structure, bearish momentum deviation and MACD confirmation.\n  - Multiple entries (pyramiding) are allowed until the configured maximum trade count is reached.\n- **Exit Conditions:**\n  - Fixed stop loss and take profit defined in price steps.\n  - Optional move-to-break-even once price progresses a configurable distance beyond entry.\n  - Trailing stop that can either follow recent candle extremes (with padding) or trail price using a classic trigger/step approach.\n  - Equity stop monitors strategy P&L drawdown and forces flat when losses breach the allowed risk budget.\n\n## Parameters\n\n| Group | Name | Description |\n| ----- | ---- | ----------- |\n| General | Base Candle | ",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n| ----- | ---- | ----------- |\n| General | Base Candle | Execution timeframe for entries and risk checks. |\n| General | Donchian Candle | Higher timeframe for Donchian channel and momentum filter. |\n| General | Trend Candle | Timeframe used by the MACD trend filter. |\n| General | Volume | Order size for each entry. |\n| Indicators | Donchian Length | Lookback period for Donchian Channel. |\n| Indicators | Fast MA / Slow MA | Lengths of the weighted moving averages on the trading timeframe. |\n| Indicators | MA Distance | Maximum allowed distance between fast and slow LWMA (in price steps). |\n| Indicators | Momentum Period | Lookback for the momentum filter on the higher timeframe. |\n| Filters | Momentum Buy / Sell | Minimum absolute deviation from 100 required for bullish/bearish momentum. |\n| Risk | Stop Loss / Take Profit | Hard exits measured in price steps from the entry price. |\n| Risk | Use Trailing | Enables trailing stop management. |\n| Risk | Trailing Trigger / Step | Classic trailing parameters when candle-based trailing is disabled. |\n| Risk | Candle Trail / Trail Candles | Toggles candle-based trailing and sets the number of candles used. |\n| Risk | Trailing Padding | Extra buffer applied around candle extremes. |\n| Risk | Use BreakEven | Enables move-to-break-even. |\n| Risk | BreakEven Trigger / Offset | Distance and offset applied when moving the stop to break-even. |\n| Risk | Use Equity Stop | Activates drawdown-based emergency exit. |\n| Risk | Equity Risk | Maximum allowed drawdown before flattening the position. |\n| Risk | Max Trades | Maximum number of concurrent pyramid entries. |"
+   },
+   "3346": {
+    "id": 3346,
+    "name": "ROC",
+    "family": "trend",
+    "overview": "The ROC strategy is a StockSharp port of the MetaTrader expert advisor stored in `MQL/26938/ROC.mq4`. It operates on a single symbol and evaluates price action using a chain of linear weighted moving averages (LWMA), a custom rate-of-change (ROC) model, higher timeframe momentum and a monthly MACD filter. The original money management features such as break-even, pip-based trailing stops, equity protection and money denominated profit targets are preserved.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `LotSize` | Base trade volume opened on each signal. |\n| `IncreaseFactor` | Recalculates the next volume after consecutive losing trades. |\n| `FastMaPeriod` / `SlowMaPeriod` | Length of the LWMA trend filters. |\n| `PeriodMa0`, `PeriodMa1`, `BarsV`, `AverBars`, `KCoefficient` | Define the custom ROC trend model. |\n| `MomentumBuyThreshold`, `MomentumSellThreshold` | Minimum absolute deviation from 100 used by the higher timeframe momentum filter. |\n| `StopLossSteps`, `TakeProfitSteps` | Initial protective distances expressed in MetaTrader points. |\n| `TrailingStopSteps` | Pip-based trailing stop. |\n| `UseBreakEven`, `BreakEvenTriggerSteps`, `BreakEvenOffsetSteps` | Configure the break-even module. |\n| `UseTpInMoney`, `TpInMoney`, `UseTpInPercent`, `TpInPercent` | Money and percent based take profit targets. |\n| `EnableMoneyTrailing`, `TakeProfitMoney`, `StopLossMoney` | Money trailing module parameters. |\n| `UseEquityStop`, `TotalEquityRisk` | Equity protection settings. |\n| `MaxTrades` | Maximum number of scale-ins per direction. |\n| `ExitStrategy` | Forces an immediate flat position when enabled. |"
+   },
+   "312": {
+    "id": 312,
+    "name": "Hull MA Volume Spike",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 43%. It performs best in the stocks market.\n\nSignals trigger when Spike confirms trend changes on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like HmaPeriod, VolumeAvgPeriod. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmaPeriod = 9`\n  - `VolumeAvgPeriod = 20`\n  - `VolumeThresholdFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Spike\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `HmaPeriod = 9`\n  - `VolumeAvgPeriod = 20`\n  - `VolumeThresholdFactor = 2.0m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Spike\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "440": {
+    "id": 440,
+    "name": "QQE Signals",
+    "family": "trend",
+    "overview": "Implements the Quantitative Qualitative Estimation technique on RSI. The indicator builds dynamic upper and lower bands around a smoothed RSI line and tracks band crosses to signal trend changes. When RSI crosses above the trailing band a long signal is generated; crosses below trigger exits.\n\nBy adapting the bands to volatility, QQE seeks to smooth noise while remaining responsive. The strategy focuses on long trades and relies on the engine's trade reversals to close positions.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: RSI smoothed line crosses above the trailing band.\n- **Exit Criteria**:\n  - RSI falls below the opposite band or an opposite signal appears.\n- **Indicators**:\n  - RSI (period 14, smoothing 5)\n  - QQE bands derived from ATR of RSI with factor 4.238\n- **Stops**: None by default; relies on opposite signals.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `RsiSmoothing` = 5\n  - `QqeFactor` = 4.238\n  - `Threshold` = 10\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: RSI, QQE\n  - Stops: None\n  - Complexity: Moderate\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RSI smoothed line crosses above the trailing band.\n- **Exit Criteria**:\n  - RSI falls below the opposite band or an opposite signal appears.\n- **Indicators**:\n  - RSI (period 14, smoothing 5)\n  - QQE bands derived from ATR of RSI with factor 4.238\n- **Stops**: None by default; relies on opposite signals.\n- **Default Values**:\n  - `RsiPeriod` = 14\n  - `RsiSmoothing` = 5\n  - `QqeFactor` = 4.238\n  - `Threshold` = 10\n- **Filters**:\n  - Trend-following\n  - Single timeframe\n  - Indicators: RSI, QQE\n  - Stops: None\n  - Complexity: Moderate",
+    "parameters": ""
+   },
+   "739": {
+    "id": 739,
+    "name": "EMA Crossover Take Profit",
+    "family": "trend",
+    "overview": "This strategy trades based on a crossover of the 20-period and 50-period exponential moving averages (EMAs). A long position is opened when the fast EMA crosses above the slow EMA, and a short position is opened on the opposite crossover.\n\nAfter an entry, four take-profit levels are calculated from the range of the signal candle. The position is closed when price reaches any of these levels or when a stop-loss triggers. Candles are highlighted green when the fast EMA is above the slow EMA and red when it is below.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: EMA20 crosses above EMA50.\n  - **Short**: EMA20 crosses below EMA50.\n- **Take Profit**: Four targets based on previous range multipliers.\n- **Stops**: 3% stop-loss from entry price.\n- **Indicators**: EMA20, EMA50, EMA200.\n- **Timeframe**: Configurable via parameter.\n- **Direction**: Long and Short.\n\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: EMA20 crosses above EMA50.\n  - **Short**: EMA20 crosses below EMA50.\n- **Take Profit**: Four targets based on previous range multipliers.\n- **Stops**: 3% stop-loss from entry price.\n- **Indicators**: EMA20, EMA50, EMA200.\n- **Timeframe**: Configurable via parameter.\n- **Direction**: Long and Short.",
+    "parameters": ""
+   },
+   "3136": {
+    "id": 3136,
+    "name": "E-Friday",
+    "family": "momentum",
+    "overview": "- Converts the original MetaTrader expert advisor `E-Friday.mq5` to the StockSharp high-level API.\n- Trades only when the chart time frame is **H1 or lower**; otherwise the strategy logs a warning and stays flat.\n- Enters positions in a contrarian fashion: a bearish candle opens a long position and a bullish candle opens a short position.\n- Completely disables trading every Friday to match the original weekend-protection behaviour.\n- Restricts trading to a configurable time window and can force positions to be closed after the session end.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Time frame of the processed candles. Must define a positive `TimeSpan` and should not exceed one hour. |\n| `TradeVolume` | Order volume in lots. Must be positive. |\n| `StopLossPips` | Distance from the entry price to the protective stop, expressed in pips. Set to zero to disable the initial stop. |\n| `TakeProfitPips` | Distance from the entry price to the profit target in pips. Set to zero to disable the target. |\n| `TrailingStopPips` | Trailing stop distance in pips. Works together with `TrailingStepPips`. |\n| `TrailingStepPips` | Minimal additional progress (in pips) required before the trailing stop is tightened. Must be positive when the trailing stop is enabled. |\n| `StartHour` | Hour (exchange time) when the strategy may start opening positions. |\n| `UseCloseHour` | Enables or disables forced closing after the end hour. |\n| `EndHour` | Hour (exchange time) after which the strategy stops trading and closes existing positions. |"
+   },
+   "2464": {
+    "id": 2464,
+    "name": "MACD Signal",
+    "family": "volatility",
+    "overview": "This strategy trades based on the difference between the MACD line and its signal line.\nA position is opened when the difference crosses an ATR-based threshold and is closed on opposite crossings.\nA trailing stop and fixed take-profit are applied in ticks.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: MACD - Signal crosses above `ATR * Level`.\n  - **Short**: MACD - Signal crosses below `-ATR * Level`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite threshold crossing.\n- **Stops**:\n  - Fixed take-profit in ticks.\n  - Optional trailing stop.\n- **Indicators**:\n  - MACD (configurable fast, slow, signal periods).\n  - ATR(200) to scale threshold.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: MACD - Signal crosses above `ATR * Level`.\n  - **Short**: MACD - Signal crosses below `-ATR * Level`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite threshold crossing.\n- **Stops**:\n  - Fixed take-profit in ticks.\n  - Optional trailing stop.\n- **Indicators**:\n  - MACD (configurable fast, slow, signal periods).\n  - ATR(200) to scale threshold.",
+    "parameters": ""
+   },
+   "552": {
+    "id": 552,
+    "name": "BB + RSI",
+    "family": "mean_reversion",
+    "overview": "This strategy buys when the price closes below the lower Bollinger Band while the RSI is below the buy level. The position is closed when the RSI rises above the exit level or when the price drops from the peak by the specified trailing step percentage.\n\n## Parameters\n- Candle Type\n- Bollinger Bands period\n- Bollinger Bands deviation\n- RSI period\n- RSI buy level\n- RSI exit level\n- Trailing step percent\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Bollinger Bands period\n- Bollinger Bands deviation\n- RSI period\n- RSI buy level\n- RSI exit level\n- Trailing step percent"
+   },
+   "2408": {
+    "id": 2408,
+    "name": "Candels High Open",
+    "family": "other",
+    "overview": "Strategy that trades when a candle opens exactly at its high or low.\nA long position is opened if the candle's open equals its low, anticipating upward movement.\nA short position is opened if the candle's open equals its high, expecting a decline.\nThe position is closed when price crosses the Parabolic SAR value, acting as a trailing exit.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `Open == Low`\n  - Short: `Open == High`\n- **Long/Short**: Both\n- **Exit Criteria**: Price crosses Parabolic SAR or opposite signal\n- **Stops**: Uses fixed stop loss and take profit levels\n- **Default Values**:\n  - `StopLevel` = 50m\n  - `TakeLevel` = 50m\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `ReverseSignals` = false\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `Open == Low`\n  - Short: `Open == High`\n- **Long/Short**: Both\n- **Exit Criteria**: Price crosses Parabolic SAR or opposite signal\n- **Stops**: Uses fixed stop loss and take profit levels\n- **Default Values**:\n  - `StopLevel` = 50m\n  - `TakeLevel` = 50m\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.2m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n  - `ReverseSignals` = false\n- **Filters**:\n  - Category: Price action\n  - Direction: Both\n  - Indicators: Parabolic SAR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "382": {
+    "id": 382,
+    "name": "Month12 Cycle",
+    "family": "other",
+    "overview": "[Русский](README_ru.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [Português](README_pt.md) | [日本語](README_ja.md)\n\nThis Python strategy implements the 12​-month cycle anomaly. Stocks are ranked by the return they earned one year ago over the corresponding calendar month. Each month the top decile is bought and the bottom decile is sold short, creating a market-neutral portfolio based on lagged annual performance.\n\nThe system uses daily data to approximate monthly closes and rebalances at the start of every month. Position sizes are scaled to keep dollar exposure balanced across long and short sides.\n\n## Details\n\n- **Universe**: user defined list of securities.\n- **Signal**: sort by percentage change from the same month one year earlier.\n- **Portfolio**: long top decile, short bottom decile with leverage per leg set by `Leverage`.\n- **Rebalance**: monthly.\n- **Data**: daily candles aggregated into month-end prices.\n",
+    "details": "- **Universe**: user defined list of securities.\n- **Signal**: sort by percentage change from the same month one year earlier.\n- **Portfolio**: long top decile, short bottom decile with leverage per leg set by `Leverage`.\n- **Rebalance**: monthly.\n- **Data**: daily candles aggregated into month-end prices.",
+    "parameters": ""
+   }
+  }
+ }
+}

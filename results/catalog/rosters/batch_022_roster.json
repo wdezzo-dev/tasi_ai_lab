@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 260,
+      "name": "Supertrend Distance Breakout",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,20)",
+      "exit_long": "close < (donchian_high_prev(high,20) + donchian_low_prev(low,20)) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Supertrend is unavailable; the documented 20-bar lookback is represented by a prior-high breakout and midpoint reversion. The 10/3/2 Supertrend and deviation parameters, stop, and short side are not expressible as this long DSL."
+    },
+    {
+      "id": 261,
+      "name": "Parabolic SAR Distance Breakout",
+      "family": "breakout",
+      "entry_long": "crossabove(close,ema(close,20))",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so EMA(20) is an explicit direction proxy using the documented lookback period. Acceleration 0.02/0.2, the deviation band, price-step stop, and short side are unsupported."
+    },
+    {
+      "id": 289,
+      "name": "Williams R Slope Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and bars_since(rsi(close,14) < 30) <= 20",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Williams %R and slope are unavailable; RSI(14) oversold recross within the documented 20-bar lookback proxies the reversal, with RSI(14)>50 as balance. The documented 2% stop is retained."
+    },
+    {
+      "id": 2008,
+      "name": "Color JLaguerre",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,14),50)",
+      "exit_long": "crossbelow(rsi(close,14),50) or rsi(close,14) >= 85",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) is the permitted proxy for the unavailable Laguerre color oscillator, preserving the documented middle 50 and high 85 levels. A bearish recross exits; the documented 2% stop is retained and the short side is omitted."
+    },
+    {
+      "id": 2251,
+      "name": "Forex Fraus Portfolio",
+      "family": "breakout",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is unavailable, so RSI(14) crossing above the standard oversold proxy 30 represents the long re-entry and RSI>70 the opposite extreme exit. WPR period, thresholds, session limits, and point-based protection have no documented numeric defaults here."
+    },
+    {
+      "id": 2377,
+      "name": "X2MA JJRSX",
+      "family": "trend",
+      "entry_long": "sma(close,12) > sma(close,5) and crossabove(rsi(close,8),30)",
+      "exit_long": "rsi(close,8) > 70 or crossbelow(sma(close,12),sma(close,5))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast/slow MA values 12/5 and RSI(8) 30/70 thresholds are retained on the available series. The 4h/30m split and long-only schema omit higher-timeframe evaluation; no stop is documented."
+    },
+    {
+      "id": 3128,
+      "name": "Parabolic SAR EA",
+      "family": "momentum",
+      "entry_long": "crossabove(close,ema(close,20))",
+      "exit_long": "crossbelow(close,ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR reversals are unavailable, so bullish and bearish EMA(20) crosses are explicit direction proxies. The 0.02/0.2 SAR settings and 50-pip stop/target are absolute-price protections, not percentage fields."
+    },
+    {
+      "id": 3572,
+      "name": "Conditional Position Opener",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This manual-switch strategy has no documented indicator entry and defaults both EnableBuy and EnableSell to false; the impossible positive-price guard avoids fabricating orders. Position state and 100/200-pip protection are not representable."
+    },
+    {
+      "id": 3845,
+      "name": "Glam Trader (Multi-timeframe Confirmation)",
+      "family": "trend",
+      "entry_long": "ema(close,3) > ema(close,20) and roc(close,1) > 0",
+      "exit_long": "ema(close,3) < ema(close,20) or roc(close,1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA(3) bias is approximated with EMA(20) on the available series and positive ROC for the unavailable Laguerre/Awesome confirmations. The three timeframes, gamma, and point-based stops/targets/trailing are unsupported."
+    },
+    {
+      "id": 4131,
+      "name": "EXP FIBO ZZ",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,12)",
+      "exit_long": "close < donchian_low_prev(low,12)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag is unavailable; the documented depth 12 is approximated by a prior 12-bar high breakout and opposite prior-low exit. The 5/20/100-pip corridor limits, 61.8/161.8 Fibonacci protection, session, and break-even logic are unsupported."
+    }
+  ]
+}

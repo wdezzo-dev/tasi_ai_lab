@@ -1,0 +1,98 @@
+{
+ "batch_290": {
+  "strategy_ids": [
+   3402,
+   1491,
+   2031,
+   2800,
+   76,
+   2973,
+   711,
+   3074,
+   2551,
+   973
+  ],
+  "docs": {
+   "3402": {
+    "id": 3402,
+    "name": "Dark Cloud Piercing CCI",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader Expert_ADC_PL_CCI advisor. It scans the price action for Piercing Line and Dark Cloud Cover candlestick reversals and uses the Commodity Channel Index (CCI) as confirmation. Once a valid pattern is detected together with an extreme CCI reading, the strategy opens a market position in the direction of the reversal and later exits when the CCI moves out of its extreme zone.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle type and timeframe used for detection. | `1H` time frame |\n| `CciPeriod` | Lookback length of the Commodity Channel Index. | `49` |\n| `AverageBodyPeriod` | Number of candles for the body-size moving average. | `11` |\n| `EntryConfirmationLevel` | Absolute CCI level that validates pattern entries. | `50` |\n| `ExitLevel` | Absolute CCI level that triggers position exits. | `80` |"
+   },
+   "1491": {
+    "id": 1491,
+    "name": "TSI SuperTrend Decision",
+    "family": "trend",
+    "overview": "Combines a correlation-based Trend Strength Index with SuperTrend direction. Long trades are taken when the SuperTrend is bullish and TSI is above -threshold. Short trades are taken when the SuperTrend is bearish and TSI is below +threshold. Optional take profit and stop loss can be enabled.\n\n- Indicators: Correlation, SuperTrend\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2031": {
+    "id": 2031,
+    "name": "Dig Variation",
+    "family": "trend",
+    "overview": "This strategy is inspired by the MQL5 *DigVariation* example. It approximates the indicator using a simple moving average (SMA) and opens trades when the SMA trend changes direction.\n\n## Logic\n- The SMA is calculated on incoming candles.\n- If the previous SMA values show an upward slope and the latest value continues higher, the strategy opens a long position.\n- If the previous SMA values show a downward slope and the latest value continues lower, the strategy opens a short position.\n- Existing positions are closed when the trend reverses.\n\n## Parameters\n- **Period** – SMA calculation period.\n- **BuyOpen** – enable long entries.\n- **SellOpen** – enable short entries.\n- **BuyClose** – allow closing long positions.\n- **SellClose** – allow closing short positions.\n- **StopLoss** – loss protection value (passed to `StartProtection`).\n- **TakeProfit** – profit target value (passed to `StartProtection`).\n\n## Notes\nThis is a simplified conversion. It uses a standard SMA instead of the original custom DigVariation indicator.\n\n",
+    "details": "",
+    "parameters": "- **Period** – SMA calculation period.\n- **BuyOpen** – enable long entries.\n- **SellOpen** – enable short entries.\n- **BuyClose** – allow closing long positions.\n- **SellClose** – allow closing short positions.\n- **StopLoss** – loss protection value (passed to `StartProtection`).\n- **TakeProfit** – profit target value (passed to `StartProtection`)."
+   },
+   "2800": {
+    "id": 2800,
+    "name": "CoensioTrader1 V06",
+    "family": "trend",
+    "overview": "CoensioTrader1 V06 is a trend-following breakout strategy originally distributed as a MetaTrader Expert Advisor. The StockSharp port keeps the discretionary pattern recognition logic while removing the broker- and internet-specific features from the MQL implementation. The strategy operates on a single security and timeframe, using Bollinger Bands and a double exponential moving average (DEMA) to identify exhaustion moves followed by trend resumption.\n\nThe original robot allowed trading up to six currency pairs with individual parameter sets, supported DLL-based licensing, and reported optimization results to a remote server. Those auxiliary services are intentionally omitted in this port. The focus is the core entry and exit workflow that reacts to Bollinger Band rejections confirmed by swing structure and the DEMA slope.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `BollingerPeriod` | Period for Bollinger Band calculation. | 30 |\n| `BollingerDeviation` | Standard deviation multiplier for the bands. | 1.5 |\n| `DemaPeriod` | Length of the double exponential moving average used for trend confirmation. | 20 |\n| `StopLossDistance` | Absolute stop-loss offset passed to `StartProtection`. Set to zero to disable. | `0 (absolute)` |\n| `TakeProfitDistance` | Absolute take-profit offset passed to `StartProtection`. Set to zero to disable. | `0 (absolute)` |\n| `CloseOnSignal` | Close the current position before opening a new one in the opposite direction. | `false` |\n| `CandleType` | Candle data type or timeframe. Defaults to 1-hour time frame. | `1h` |"
+   },
+   "76": {
+    "id": 76,
+    "name": "Fibonacci Retracement Reversal",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 115%. It performs best in the stocks market.\n\nThe algorithm tracks swings over a rolling window and calculates Fibonacci levels between them. When price nears a key retracement and forms a candle in the direction of the original trend, a trade is opened with a stop placed a set percent away. Targets are around the 50% midpoint of the swing.\n\nBy focusing on deep pullbacks within an existing trend, the method aims to capture the early stages of a continuation move after sellers or buyers have briefly taken control.\n\n## Details\n\n- **Entry Criteria**: Price tests 61.8% or 78.6% retracement and prints a confirming candle.\n- **Long/Short**: Both depending on trend.\n- **Exit Criteria**: Price reaching the 50% level or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `SwingLookbackPeriod` = 20\n  - `FibLevelBuffer` = 0.5\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fibonacci levels\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price tests 61.8% or 78.6% retracement and prints a confirming candle.\n- **Long/Short**: Both depending on trend.\n- **Exit Criteria**: Price reaching the 50% level or stop-loss.\n- **Stops**: Yes, percentage based.\n- **Default Values**:\n  - `SwingLookbackPeriod` = 20\n  - `FibLevelBuffer` = 0.5\n  - `CandleType` = 5 minute\n  - `StopLossPercent` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fibonacci levels\n  - Stops: Yes\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2973": {
+    "id": 2973,
+    "name": "Renko Fractals Grid",
+    "family": "trend",
+    "overview": "Renko Fractals Grid is a direct port of the MetaTrader 4 expert advisor \"RENKO FRACTALS GRID\". The strategy trades breakouts of recent Bill Williams fractals that are confirmed by a Renko-style volatility filter, a weighted moving average trend bias, and momentum strength derived from the rate of change indicator. The StockSharp version keeps the grid-style position management of the original robot, including martingale position sizing, break-even handling, trailing stops, equity protection, and optional floating profit trailing in currency units.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CandleType` | Primary candle type used for all indicators. |\n| `FastMaLength` / `SlowMaLength` | Periods of the weighted moving averages that define trend direction. |\n| `MomentumLength` | Rate-of-change lookback for the momentum filter. |\n| `MomentumBuyThreshold` / `MomentumSellThreshold` | Minimum absolute deviation from 100 required for entries. |\n| `UseAtrFilter` | Use ATR instead of a fixed pip distance for the Renko confirmation. |\n| `BoxSizePips` | Size of the synthetic Renko box when ATR filtering is disabled. |\n| `CandlesToRetrace` | Number of candles inspected when measuring recent highs and lows. |\n| `BaseVolume` | Initial trade volume before applying the martingale multiplier. |\n| `LotExponent` | Multiplier applied to each new position in the grid. |\n| `MaxTrades` | Maximum number of concurrent positions per direction. |\n| `StopLossPips` / `TakeProfitPips` | Static protective stop and target distances. |\n| `TrailingStopPips` | Trailing stop distance in pips (set to zero to disable). |\n| `UseBreakEven` | Enable moving the stop to break even. |\n| `BreakEvenTriggerPips` / `BreakEvenOffsetPips` | Distance required before break-even activation and the offset applied afterwards. |\n| `UseMoneyTarget` | Enable floating profit trailing in currency units. |\n| `MoneyTakeProfit` / `MoneyStopLoss` | Profit threshold that activates money trailing and the maximum permitted pullback. |\n| `UseEquityStop` | Enable equity based global stop-out. |\n| `EquityRiskPercent` | Maximum allowed drawdown from the equity peak before closing all trades. |"
+   },
+   "711": {
+    "id": 711,
+    "name": "Dual SuperTrend w VIX Filter",
+    "family": "trend",
+    "overview": "This strategy combines two SuperTrend indicators with a VIX-based volatility filter. A long position opens when both SuperTrends are bullish and the VIX index is above its mean. A short position opens when both SuperTrends are bearish and the VIX is rising above its average plus a standard-deviation buffer. Positions are closed when either SuperTrend flips direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Both SuperTrends indicate an uptrend and VIX is above its mean.\n  - **Short**: Both SuperTrends indicate a downtrend and VIX is above its mean and rising.\n- **Exit Criteria**:\n  - Opposite SuperTrend signal.\n- **Stops**: None.\n- **Default Values**:\n  - `StLength1` = 13\n  - `StMultiplier1` = 3.5\n  - `StLength2` = 8\n  - `StMultiplier2` = 5\n  - `UseVixFilter` = true\n  - `VixLookback` = 252\n  - `VixTrendPeriod` = 10\n  - `StdDevMultiplier` = 1\n  - `EnableLong` = true\n  - `EnableShort` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend, SMA, StandardDeviation, EMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Both SuperTrends indicate an uptrend and VIX is above its mean.\n  - **Short**: Both SuperTrends indicate a downtrend and VIX is above its mean and rising.\n- **Exit Criteria**:\n  - Opposite SuperTrend signal.\n- **Stops**: None.\n- **Default Values**:\n  - `StLength1` = 13\n  - `StMultiplier1` = 3.5\n  - `StLength2` = 8\n  - `StMultiplier2` = 5\n  - `UseVixFilter` = true\n  - `VixLookback` = 252\n  - `VixTrendPeriod` = 10\n  - `StdDevMultiplier` = 1\n  - `EnableLong` = true\n  - `EnableShort` = true\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend, SMA, StandardDeviation, EMA\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3074": {
+    "id": 3074,
+    "name": "Adaptive Renko Duplex",
+    "family": "trend",
+    "overview": "The **Adaptive Renko Duplex Strategy** is a StockSharp port of the original `Exp_AdaptiveRenko_Duplex.mq5` expert advisor. The converted version keeps the idea of running **two independent Adaptive Renko streams** – one dedicated to bullish setups and another to bearish setups – while exposing the logic through the high-level API. Each stream builds Renko-style support and resistance rails whose brick height dynamically adapts to recent volatility. The strategy reacts to trend reversals detected inside these rails and can maintain asymmetric configurations for the long and short sides.\n\nUnlike classical Renko trading systems, which operate on synthetic bricks, the duplex approach listens to standard candles and continuously recalculates the adaptive Renko buffers. Signals are only generated on fully completed candles to avoid repainting and to match StockSharp's event-driven model.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `LongCandleType` | 4-hour candles | Candle series used to compute long signals. |\n| `ShortCandleType` | 4-hour candles | Candle series used to compute short signals. |\n| `LongVolatilityMode` | ATR | Volatility source (`AverageTrueRange` or `StandardDeviation`) for long bricks. |\n| `ShortVolatilityMode` | ATR | Volatility source for short bricks. |\n| `LongVolatilityPeriod` | 10 | Lookback period for the long volatility indicator. |\n| `ShortVolatilityPeriod` | 10 | Lookback period for the short volatility indicator. |\n| `LongSensitivity` | 1.0 | Multiplier applied to the volatility value before building long bricks. |\n| `ShortSensitivity` | 1.0 | Multiplier applied to the volatility value before building short bricks. |\n| `LongPriceMode` | Close | Price input (`HighLow` or `Close`) used to update the long Renko rails. |\n| `ShortPriceMode` | Close | Price input used to update the short Renko rails. |\n| `LongMinimumBrickPoints` | 2 | Minimum brick height for the long stream, measured in points. |\n| `ShortMinimumBrickPoints` | 2 | Minimum brick height for the short stream. |\n| `LongSignalBarOffset` | 1 | Delay (in bars) before confirming a long signal. |\n| `ShortSignalBarOffset` | 1 | Delay (in bars) before confirming a short signal. |\n| `LongEntriesEnabled` | true | Toggle to allow or block long entries. |\n| `LongExitsEnabled` | true | Toggle to allow or block Renko-driven long exits. |\n| `ShortEntriesEnabled` | true | Toggle to allow or block short entries. |\n| `ShortExitsEnabled` | true | Toggle to allow or block Renko-driven short exits. |\n| `LongStopLossPoints` | 1000 | Stop-loss distance for long positions (points × `PriceStep`). |\n| `LongTakeProfitPoints` | 2000 | Take-profit distance for long positions. |\n| `ShortStopLossPoints` | 1000 | Stop-loss distance for short positions. |\n| `ShortTakeProfitPoints` | 2000 | Take-profit distance for short positions. |\n\n> **Point conversion** – the MQL version used the broker “point” definition. In StockSharp every distance is multiplied by `Security.PriceStep` (or `Security.MinStep` fallback) to convert points into absolute price increments. Adjust the defaults for the tick size of your instrument."
+   },
+   "2551": {
+    "id": 2551,
+    "name": "T3 MA Direction Change",
+    "family": "trend",
+    "overview": "This strategy reproduces the behavior of the original **T3MA(barabashkakvn's edition)** expert advisor. The Expert Advisor relies on the \"T3MA-ALARM\" indicator that applies exponential smoothing twice and raises a signal when the smoothed line changes direction. The StockSharp port keeps the same concept: it creates a double-smoothed exponential moving average (EMA of EMA) and trades whenever the slope of that curve flips from falling to rising or vice versa.\n\nThe strategy operates on finished candles only. Signals can be delayed by a configurable number of bars to mimic the original `InpBarNumber` option (default delay is one bar). Orders are placed using market execution so that the portfolio switches between long and short exposure without accumulating multiple concurrent hedged positions.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `EMA Length` | Length of the EMA used for both smoothing passes. This matches the `MAPeriod` input in the MetaTrader implementation. |\n| `EMA Shift` | Number of bars by which the smoothed EMA is shifted before comparing slopes. Equivalent to the indicator's `MAShift`. |\n| `Signal Delay` | Number of completed candles to wait before executing a signal. This mirrors `InpBarNumber` so a value of 1 trades the previous bar's signal. |\n| `Stop Loss (steps)` | Stop-loss distance measured in price steps. Set to zero to disable the stop-loss protection. |\n| `Take Profit (steps)` | Take-profit distance measured in price steps. Set to zero to disable the take-profit protection. |\n| `Trade Volume` | Base order size used for new entries. When reversing a position the strategy adds the current absolute position size to this value. |\n| `Candle Type` | Candle data type used for calculations (default: 5-minute time frame). |"
+   },
+   "973": {
+    "id": 973,
+    "name": "Linear Continuation",
+    "family": "trend",
+    "overview": "This example converts the TradingView \"Linear Continuation\" study to StockSharp. The strategy calculates three moving averages and logs their linear continuation projection. It is intended as an indicator showcase and does not include trading logic.\n\n## Details\n\n- **MA Type** – moving average type (SMA or EMA)\n- **MA1 Period** – period for the first moving average\n- **MA2 Period** – period for the second moving average\n- **MA3 Period** – period for the third moving average\n- **Aggressive Mode** – toggles projection distance calculation\n\n## Notes\n\n- No orders are submitted.\n- Designed for demonstration purposes.\n",
+    "details": "- **MA Type** – moving average type (SMA or EMA)\n- **MA1 Period** – period for the first moving average\n- **MA2 Period** – period for the second moving average\n- **MA3 Period** – period for the third moving average\n- **Aggressive Mode** – toggles projection distance calculation",
+    "parameters": ""
+   }
+  }
+ }
+}

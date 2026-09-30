@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1557,
+      "name": "Williams %R Cross Strategy with 200 MA Filter",
+      "family": "trend",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossabove(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)), -40) and close > sma(close,200)",
+      "exit_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossbelow(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)), -60) or close < sma(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R(14) is rebuilt from the documented Donchian window with a non-zero range guard, and the -50 level plus CrossThreshold=10 gives the -40/-60 pair, filtered by SMA(200). The documented 20/30 unit take-profit and stop-loss are absolute price distances, so the percent fields stay null."
+    },
+    {
+      "id": 3332,
+      "name": "Two EMA Intraday Filter",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,5), ema(close,30))",
+      "exit_long": "crossbelow(ema(close,5), ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The FastEmaPeriod=5 / SlowEmaPeriod=30 crossover is exact and the reverse cross closes the long. The 1.2-ATR limit shift, 5x/8x ATR stop and target, four-bar order expiration, and the minute/hour/day filters are not expressible in the DSL."
+    },
+    {
+      "id": 4111,
+      "name": "EMA RSI Volatility Adaptive Crossover",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,40), ema(close,50))",
+      "exit_long": "crossabove(ema(close,40), ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rule is followed literally: a long opens when the slow line crosses below the fast line and the next opposite crossover reverses it. ema() needs an integer length, so the RSI-driven adaptive period (RSI 310/200) is replaced by the base SlowEmaPeriod=40 and FastEmaPeriod=50; the point legs are disabled by default."
+    },
+    {
+      "id": 3057,
+      "name": "Exp Skyscraper Fix + ColorAML + X2MA Candle MMRec",
+      "family": "trend",
+      "entry_long": "close > sma(sma(close,12),5) and close > sma(close,10) + 0.9 * atr(high,low,close,10)",
+      "exit_long": "close < sma(sma(close,12),5) or close < sma(close,10) - 0.9 * atr(high,low,close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Two of the three colour blocks are expressible and are combined: X2MA double smoothing (12 then 5, SMA standing in for JJMA) and the Skyscraper Fix midline plus 0.9*ATR(10) envelope. The ColorAML adaptive level, Jurik phases, gap points, signal-bar offsets, and the per-block loss-streak money management are dropped."
+    },
+    {
+      "id": 3752,
+      "name": "Dealers Trade v7.51 RIVOT (C#)",
+      "family": "trend",
+      "entry_long": "close > (donchian_high_prev(high,1) + donchian_low_prev(low,1) + close) / 4 and close > (high + low + close) / 3 and ((donchian_high_prev(high,1) + donchian_low_prev(low,1) + close) / 4 - (high + low + close) / 3) / close * 100 > 0.07 or ((high + low + close) / 3 - (donchian_high_prev(high,1) + donchian_low_prev(low,1) + close) / 4) / close * 100 > 0.07",
+      "exit_long": "close < (high + low + close) / 3 or close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented pivots are implemented (P from the prior bar's high/low with the current close standing in for the previous close, FLP as the current-bar average) and GapThreshold=7 pips is converted to a 0.07% gap. The martingale scaling, volume multiplier, and the 15/90/15 pip target, stop, and trail are not expressible."
+    },
+    {
+      "id": 3308,
+      "name": "EurGbp EA",
+      "family": "momentum",
+      "entry_long": "macd(close,12,26) > macd_signal(close,12,26,9) and roc(macd(close,12,26),1) > 0",
+      "exit_long": "macd(close,12,26) < macd_signal(close,12,26,9) or roc(macd(close,12,26),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The relative comparison of EUR/USD and GBP/USD MACD needs two external instruments the single-security DSL cannot load, so momentum is reduced to the traded instrument's own MACD line above its signal and rising. The 75/46 price-step stop and target are not percent fields."
+    },
+    {
+      "id": 3558,
+      "name": "At Random Full",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries come from a pseudo-random generator (RandomSeed, ReverseSignals) with no market-derived condition, so the never-true negative-price guard prevents inventing a signal. The grid spacing, averaging, session window, and the 150/460-point protections are not DSL fields."
+    },
+    {
+      "id": 74,
+      "name": "Williams %R Divergence",
+      "family": "mean_reversion",
+      "entry_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and close < donchian_low_prev(low,5) and roc(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)), 1) > 0 and bars_since(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)) < -80) <= 3",
+      "exit_long": "rsi(close,14) > 50",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A new DivergencePeriod=5 low while Williams %R(14) ticks up and was below -80 within the last three bars is the documented bullish divergence, and RSI(14)>50 stands in for the %R return to the opposite extreme. StopLossPercent=2 becomes the documented 2.0 percent stop; the 5-minute series and take profit are not supplied."
+    },
+    {
+      "id": 3485,
+      "name": "ValidateMe",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a broker-validation harness: it checks funds and exchange limits, then fires one order in a user-chosen direction with no market-derived entry condition, so the never-true guard is used. Pip distances, lot size, and the direction switch have no DSL representation."
+    },
+    {
+      "id": 1776,
+      "name": "AntiFragile EA",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs list no indicators: entries are fifty layered limit orders spaced 700 price steps from the bid/ask with rising volume, so there is no directional market signal to translate. The 300-pip initial stop, 100-pip trailing, and 1-minute series are outside the DSL."
+    }
+  ]
+}

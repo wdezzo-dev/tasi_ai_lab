@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3349,
+      "name": "N Trades Per Set Martingale",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA opens a new long immediately after the previous one closes and only manages martingale sizing, per-set resets and the equity-increase exit, so there is no market-derived entry to translate and the never-true guard is used. Pip stop/take-profit, Scale Factor, Equity Divisor and the equity reset are not DSL signals."
+    },
+    {
+      "id": 3379,
+      "name": "No Nonsense Tester",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,20),ema(close,40)) and rsi(close,14) > 60 and atr(high,low,close,14) > sma(atr(high,low,close,14),50)",
+      "exit_long": "crossbelow(ema(close,20),ema(close,40)) or rsi(close,14) < 40",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The NNFX baseline plus two confirmations is rendered as an EMA(20)/EMA(40) cross with RSI(14) above 60 and ATR(14) above its own average; the exit RSI lower level closes. Every documented threshold is a parameter name without a value (20/40, 60/40 and ATR 14 are fallbacks) and the ATR-scaled brackets, trailing and volume multiplier are not percentage fields."
+    },
+    {
+      "id": 384,
+      "name": "Option Expiration Week",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is purely calendar based (buy the Monday before the third Friday, close Friday's close, otherwise hold cash), so no price-derived entry exists and the never-true guard is used. The expiration-week window and the MinTradeUsd order-size check are not expressible."
+    },
+    {
+      "id": 1406,
+      "name": "Technical Rank",
+      "family": "trend",
+      "entry_long": "rsi(close,14) > 70 and roc(close,10) > 0 and ema(close,20) > ema(close,50) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "rsi(close,14) < 30 and roc(close,10) < 0 and ema(close,20) < ema(close,50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weighted composite rank (MA, ROC, PPO slope, RSI) is approximated by unanimity of RSI above 70, positive ROC(10), EMA(20)>EMA(50) and MACD above signal for rank>70, mirrored for rank<30 on the exit. Component periods are not documented (10/20/50 and 12/26/9 are fallbacks) and the docs state no stops."
+    },
+    {
+      "id": 1911,
+      "name": "Exp MAMA",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close,5),ema(close,34))",
+      "exit_long": "crossabove(ema(close,5),ema(close,34))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MESA MAMA/FAMA cannot be computed, so the adaptive pair is approximated by a 5/34 EMA pair, keeping the documented contrarian rule that MAMA crossing below FAMA opens the long. FastLimit/SlowLimit values, the Buy/Sell toggles and the timeframe choice are not documented and market orders use no stops."
+    },
+    {
+      "id": 1055,
+      "name": "MM Fibonacci",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,10) and close > donchian_low(low,10) + 0.5 * (donchian_high(high,10) - donchian_low(low,10))",
+      "exit_long": "close < donchian_low(low,10) + 0.5 * (donchian_high(high,10) - donchian_low(low,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 100% Murrey level becomes the 10-bar Donchian high (length not documented) and the most-recent-extreme-is-a-high condition is checked by requiring the break close above the 50% midpoint; the documented exit is the mirror 50% break. The internal Murrey grid below the 50% level is not expressible and docs state no stops."
+    },
+    {
+      "id": 2789,
+      "name": "Hans123 Trader",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,80)",
+      "exit_long": "close < donchian_low_prev(low,80)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The rolling RangeLength 80 channel is kept as the Donchian breakout and its mirror close; pending stop-order placement inside the 06:00-10:00 window is replaced by the close-based break. The 50-pip stop/target, 10-pip trailing and 5-pip step are pip distances, not percentages."
+    },
+    {
+      "id": 3790,
+      "name": "RPM5 BullsBearsEyes",
+      "family": "momentum",
+      "entry_long": "close > ema(close,13) and high - ema(close,13) > 0.5 * atr(high,low,close,5)",
+      "exit_long": "close < ema(close,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bulls Power from the 13-period EMA is tested against the documented Threshold 0.5 scaled by ATR(5) instead of the four-stage Gamma 0.5 smoother, with price above the EMA confirming the bullish bias. The 25/150-pip brackets and the 1.5xATR(5) trailing are not percentage fields."
+    },
+    {
+      "id": 1216,
+      "name": "Random ATR Strategy - Bybit",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry is a pseudo-random signal seeded from recent price ranges and the current date, so no deterministic market condition can be derived and the never-true guard is used rather than inventing one. The ATR(14) 3x/3x1 stop-target pair is ATR-distanced, not a fixed percentage."
+    },
+    {
+      "id": 1049,
+      "name": "MFI Strategy with Oversold Zone Exit and Averaging",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),20) and volume_ratio(volume,20) > 1",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": 1.0,
+      "take_profit_pct": 1.0,
+      "notes": "MFI is approximated by volume-weighted RSI(14): the documented MfiOversoldLevel 20 recross with volume above its 20-bar average opens the long, and StartProtection supplies the documented 1% stop and 1% target. The 0.1% limit-buy offset, the 5-bar cancel window and averaging orders are not expressible; the mean-reversion exit uses an RSI recross above 50."
+    }
+  ]
+}

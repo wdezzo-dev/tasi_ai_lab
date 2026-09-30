@@ -1,0 +1,114 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3,
+      "name": "ADX Trend",
+      "family": "trend",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "adx(high,low,close,14) > 25 and close > ema(close,50)",
+      "exit_long": "adx(high,low,close,14) < 20 or close < ema(close,50)",
+      "notes": "ADX trend filter (AdxPeriod=14, exit threshold 20) with 50-bar MA trend. Corpus stops are ATR-multiple based, not representable as fixed pct; left null."
+    },
+    {
+      "id": 91,
+      "name": "MACD Histogram Reversal",
+      "family": "momentum",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9))",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "notes": "MACD (12,26,9) zero-line crossover of the histogram, documented StopLoss=2%."
+    },
+    {
+      "id": 27,
+      "name": "Bollinger Reversion",
+      "family": "mean_reversion",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "notes": "Fade closes beyond lower Bollinger band (20,2), exit on return to mid band. Corpus stop is ATR-based; left null."
+    },
+    {
+      "id": 38,
+      "name": "Bollinger Band Width Breakout",
+      "family": "breakout",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "bb_upper(close,20,2) - bb_lower(close,20,2) > sma(bb_upper(close,20,2) - bb_lower(close,20,2), 20) and close > bb_mid(close,20)",
+      "exit_long": "bb_upper(close,20,2) - bb_lower(close,20,2) < sma(bb_upper(close,20,2) - bb_lower(close,20,2), 20)",
+      "notes": "Band width expanding above its 20-bar average with price above the mid-band; exit when band width contracts. Corpus stop is ATR-based; left null."
+    },
+    {
+      "id": 55,
+      "name": "Volume Surge",
+      "family": "breakout",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "volume_ratio(volume,20) > 2.0",
+      "exit_long": "volume_ratio(volume,20) < 1.0",
+      "notes": "VolumeSurgeMultiplier=2 relative to 20-bar average; exit when volume drops below average. Corpus lists a stop but no pct; used 2.0 proxy."
+    },
+    {
+      "id": 218,
+      "name": "ZScore Reversal",
+      "family": "mean_reversion",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "zscore(close,20) < -2.0",
+      "exit_long": "crossabove(zscore(close,20), 0)",
+      "notes": "Long when 20-bar close z-score below -2, exit when z-score crosses 0. Documented StopLossPercent=2."
+    },
+    {
+      "id": 58,
+      "name": "RSI Overbought/Oversold",
+      "family": "mean_reversion",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "crossabove(rsi(close,14), 50)",
+      "notes": "Long on RSI(14) oversold (<30), exit at neutral 50. Documented StopLossPercent=2."
+    },
+    {
+      "id": 409,
+      "name": "52-Week High",
+      "family": "breakout",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "close > donchian_high_prev(high,252)",
+      "exit_long": "close < 0.9 * donchian_high_prev(high,252)",
+      "notes": "Prior-252-bar high breakout (prior 52 weeks, daily). Exit on 10% pullback from breakout high; corpus 'new low' exit omitted conservatively. Volatility sizing not representable."
+    },
+    {
+      "id": 488,
+      "name": "80-20",
+      "family": "pattern",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "entry_long": "close >= low + 0.8 * (high - low) and open <= low + 0.2 * (high - low)",
+      "exit_long": "open >= low + 0.8 * (high - low) and close <= low + 0.2 * (high - low)",
+      "notes": "Close in top 20% with open in bottom 20% of the bar range; exit on opposite 80-20 signal. Corpus: no stops."
+    },
+    {
+      "id": 110,
+      "name": "RSI Failure Swing",
+      "family": "other",
+      "suggested_timeframe": "Daily",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "entry_long": "crossabove(rsi(close,14), 30)",
+      "exit_long": "crossbelow(rsi(close,14), 50)",
+      "notes": "RSI crosses back above 30 (long failure swing); exit when RSI fades below neutral 50. Corpus exit 'crosses the opposite level' ambiguous; 50 used conservatively. Documented StopLoss=2%."
+    }
+  ]
+}

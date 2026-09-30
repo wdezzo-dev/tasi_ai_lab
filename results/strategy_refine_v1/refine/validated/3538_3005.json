@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3538,
+  "ticker": "3005",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3538,
+    "name": "MA on Momentum Min Profit",
+    "family": "trend",
+    "entry_long": "crossabove(roc(close,0.2),ema(roc(close,7),12)) and roc(close,14) > 0.2",
+    "exit_long": "crossbelow(roc(close,14),ema(roc(close,14),6))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MT5 momentum is close/close[14]*100, so ROC(14) plus the documented MomentumReference 100 is used: momentum crossing above its MomentumMovingAveragePeriod 6 average while above the neutral level enters long, and the opposite cross exits. The money-based StopLossMoney 15 and the 460-point take-profit are not percentage fields."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2014-06-12",
+        "2024-07-31"
+      ],
+      "bars_in_window": 2523,
+      "engine_win_ret": 0.7507827295374809,
+      "alpha": 0.24351000226475383,
+      "benchmark_ret": 0.5072727272727271,
+      "trades": 21,
+      "win_rate": 0.7142857142857143,
+      "sharpe": 0.7900950820763523,
+      "max_drawdown": -0.1258613204906346,
+      "profit_factor": 6.236646474822504
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.04010414680447549,
+      "alpha": 0.2038278920304759,
+      "benchmark_ret": -0.2439320388349514,
+      "trades": 4,
+      "win_rate": 0.25,
+      "sharpe": -0.4728589104469698,
+      "max_drawdown": -0.10899068195133599,
+      "profit_factor": 0.6307025069880515
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.005288652938120864,
+      "alpha": 0.11435040113379058,
+      "benchmark_ret": -0.10906174819566972,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": 0.19848191109161553,
+      "max_drawdown": -0.02262391622980464,
+      "profit_factor": 1.3014564137911355
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2014-06-12",
+        "2024-07-31"
+      ],
+      "bars_in_window": 2523,
+      "engine_win_ret": 0.5772525514011446,
+      "alpha": 0.06997982412841752,
+      "benchmark_ret": 0.5072727272727271,
+      "trades": 21,
+      "win_rate": 0.6190476190476191,
+      "sharpe": 0.6470949904939998,
+      "max_drawdown": -0.14359426140001463,
+      "profit_factor": 4.0580388929278834
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.059273804476535075,
+      "alpha": 0.18465823435841633,
+      "benchmark_ret": -0.2439320388349514,
+      "trades": 4,
+      "win_rate": 0.25,
+      "sharpe": -0.7002919632879073,
+      "max_drawdown": -0.12472169471281702,
+      "profit_factor": 0.5163388762346398
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.0047443822901175325,
+      "alpha": 0.10431736590555218,
+      "benchmark_ret": -0.10906174819566972,
+      "trades": 2,
+      "win_rate": 0.5,
+      "sharpe": -0.13226549890672998,
+      "max_drawdown": -0.025113115072846637,
+      "profit_factor": 0.7891247405105506
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3433,
+      "name": "AH HM MFI",
+      "family": "trend",
+      "entry_long": "(close - low) > 2 * (open - close) and (high - close) < 0.5 * (high - low) and close < sma(close,5) and rsi(close,47) <= 40",
+      "exit_long": "crossabove(rsi(close,47),70) or crossbelow(rsi(close,47),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MFI is not in the DSL, so RSI(47) stands in as the money-flow proxy with the documented 40 entry and 70/30 exit levels. The hammer is approximated by a long lower shadow with a small body in the upper half of the range plus the documented SMA(5) downtrend filter; the 30-minute timeframe and emergency risk module are dropped."
+    },
+    {
+      "id": 1682,
+      "name": "X Alert 3",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Non-trading: the documented system only logs two-MA crossover alerts (MA1 1 vs MA2 14) and explicitly opens or closes no positions, so no market-derived entry signal exists. Marked with a never-true guard."
+    },
+    {
+      "id": 3226,
+      "name": "Cronex DeMarker",
+      "family": "trend",
+      "entry_long": "crossbelow(sma(rsi(close,25),14),sma(rsi(close,25),25))",
+      "exit_long": "crossabove(sma(rsi(close,25),14),sma(rsi(close,25),25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is not available, so RSI(25) (documented DeMarkerPeriod) feeds the documented SMA(14) fast and SMA(25) slow smoothing stack. The contrarian long entry is the fast line crossing below the slow line, with the opposite cross as exit; short side and Volume sizing are dropped."
+    },
+    {
+      "id": 85,
+      "name": "Ichimoku Tenkan/Kijun Cross",
+      "family": "trend",
+      "entry_long": "crossabove(0.5 * (donchian_high(high,9) + donchian_low(low,9)),0.5 * (donchian_high(high,26) + donchian_low(low,26))) and close > 0.5 * (donchian_high(high,52) + donchian_low(low,52))",
+      "exit_long": "crossbelow(0.5 * (donchian_high(high,9) + donchian_low(low,9)),0.5 * (donchian_high(high,26) + donchian_low(low,26)))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Tenkan(9) and Kijun(26) are the midpoints of the respective Donchian ranges; the Kumo cloud is approximated by the midpoint of the 52-bar range (documented SenkouSpanBPeriod) since span shifting is not expressible. The stop sits at Kijun per the docs, which is a price level rather than a documented percentage, so both stop fields are null."
+    },
+    {
+      "id": 2816,
+      "name": "True Sort Trend",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,24) > 20 and sma((ema(close,10) > ema(close,20) and ema(close,20) > ema(close,50) and ema(close,50) > ema(close,100) and ema(close,100) > ema(close,200)),2) >= 1.0",
+      "exit_long": "ema(close,10) < ema(close,50) or ema(close,100) < ema(close,200)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Keeps the documented five-EMA stack (10/20/50/100/200) with ADX(24) above 20; the two-candle confirmation is expressed as an SMA(2) of the stack condition being 1. Exit is the documented stack break. StopLossDistance 0.005 and TakeProfitDistance 0.015 are absolute price distances, not percentages, so both stop fields are null."
+    },
+    {
+      "id": 1773,
+      "name": "Breakout 04",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The prior-day high/low are translated to the prior bar's high/low on the daily engine, and the mirror breakdown is used as the long exit because only trailing/fixed stops are documented. TrailingStop 21, StopLoss 124 and TakeProfit 550 are point distances, not percentages, so the stop fields are null; Monday/Friday hour filters are not expressible."
+    },
+    {
+      "id": 2131,
+      "name": "Cidomo V1",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20)",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Range breakout is expressed with prior-bar Donchian extremes; Lookback has no documented value so 20 is an explicit fallback and the Delta buffer is dropped. Exits are documented only as points-based stop/target/breakeven/trailing, so the opposite-range break is a translation choice and the stop fields are null."
+    },
+    {
+      "id": 1859,
+      "name": "CMO Zero Cross",
+      "family": "momentum",
+      "entry_long": "crossbelow(rsi(close,14),50)",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CMO is unavailable, so its zero-line cross is proxied by RSI(14) crossing 50 with CmoPeriod 14 as an explicit fallback. Documented long entry is the cross below zero and the long exit the cross back above; point-based stop/target and the allow-entry toggles are dropped."
+    },
+    {
+      "id": 1227,
+      "name": "Rawstocks 15 Minute Model",
+      "family": "volatility",
+      "entry_long": "low <= donchian_low_prev(low,20) + 0.25 * atr(high,low,close,14) and close > donchian_low_prev(low,20) + 0.618 * (donchian_high(high,20) - donchian_low_prev(low,20))",
+      "exit_long": "close < donchian_low_prev(low,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish order block is approximated by a test of the 20-bar swing low, and the documented 61.8% retracement reclaim of the swing range supplies the entry; ATR(14) provides the minimum swing-size filter. Intrabar swing/fib construction, the 79% level, the risk/reward sizing and all session/force-close hours are not expressible."
+    },
+    {
+      "id": 1274,
+      "name": "RSI Strategy with Manual TP and SL",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30) and close > 0.7 * donchian_high(close,50)",
+      "exit_long": "crossbelow(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long entry keeps the documented RSI cross above oversold plus close above 70% of the 50-bar highest close, using Donchian(50) on close; exit mirrors the overbought condition. RSI length 14 / 30 / 70 are explicit fallbacks because no defaults are given, and the percentage stop/target have no documented values, so both fields are null."
+    }
+  ]
+}

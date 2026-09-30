@@ -1,0 +1,98 @@
+{
+ "batch_093": {
+  "strategy_ids": [
+   4137,
+   1458,
+   1763,
+   917,
+   2637,
+   1144,
+   3803,
+   2492,
+   3847,
+   2383
+  ],
+  "docs": {
+   "4137": {
+    "id": 4137,
+    "name": "AIS5 Trade Machine",
+    "family": "trend",
+    "overview": "AIS5 Trade Machine ports the MetaTrader 4 expert advisor `AIS5TM.mq4` into the StockSharp high-level strategy API. The original\nprogram focused on building market profile histograms on two timeframes and offering a semi-automatic execution console. The\nStockSharp version keeps the idea of highlighting strong and weak price zones from tick volume aggregation and turns it into an\nautomated breakout system with adaptive risk control based on the Average True Range (ATR).\n\nThe strategy subscribes to two candle streams:\n* A **profile timeframe** (default 15 minutes) that accumulates volume to detect strong and weak zones.\n* A **trading timeframe** (default 1 minute) that looks for volume-confirmed breakouts away from those zones.\n\nPositions are protected by ATR-proportional stops and scalable targets. Volume contractions trigger early exits to mimic the\nmonitoring discipline found in the MT4 code.",
+    "details": "",
+    "parameters": "* **Profile Candle** – candle type that feeds the volume profile (default: 15-minute candles).\n* **Trading Candle** – lower timeframe used for breakouts and exits (default: 1-minute candles).\n* **Volume Lookback** – number of candles for both volume SMAs and the ATR period.\n* **Strong Volume Mult** – multiplier above the average volume that marks a strong zone (maps to `Parameter.1` in MQL).\n* **Weak Volume Divider** – divider below average volume that marks weak zones and sizes the profit target (maps to\n  `Parameter.2`).\n* **ATR Multiplier** – scale factor applied to ATR when computing the adaptive stop distance (maps to `Parameter.3`).\n* **Zone Base Points** – minimum buffer in points added to the zone level before checking breakouts (maps to `ZoneBasePoints`).\n* **Zone Step Points** – additional breakout buffer in points that widens the distance away from the zone before entries are\n  triggered (maps to `ZoneStepPoints`).\n* **Volume** – inherited from the base `Strategy` class; defines the order size for market entries."
+   },
+   "1458": {
+    "id": 1458,
+    "name": "Trend Confirmation",
+    "family": "trend",
+    "overview": "Strategy combining SuperTrend, MACD and VWAP to confirm trends.\n\n## Details\n- **Entry Criteria**: SuperTrend direction with MACD confirmation and price relative to VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crossing its signal line against the position.\n- **Stops**: None.\n- **Default Values**: ATR Length 10, Factor 3, MACD Fast 12, Slow 26, Signal 9.\n- **Filters**: SuperTrend and VWAP.\n",
+    "details": "- **Entry Criteria**: SuperTrend direction with MACD confirmation and price relative to VWAP.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: MACD crossing its signal line against the position.\n- **Stops**: None.\n- **Default Values**: ATR Length 10, Factor 3, MACD Fast 12, Slow 26, Signal 9.\n- **Filters**: SuperTrend and VWAP.",
+    "parameters": ""
+   },
+   "1763": {
+    "id": 1763,
+    "name": "MMA Breakout Volume I",
+    "family": "trend",
+    "overview": "This strategy trades breakouts when the close price crosses a long-term Smoothed Moving Average (SMMA).\nA long position is opened when the price rises above the SMMA and a short position is opened when it falls below.\nPositions are exited when the price moves against the trade and crosses an Exponential Moving Average (EMA).\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close price crosses above SMMA(200).\n  - **Short**: Close price crosses below SMMA(200).\n- **Exit Criteria**:\n  - **Long**: Close price falls below EMA(5).\n  - **Short**: Close price rises above EMA(5).\n- **Long/Short**: Both.\n- **Stops**: No fixed stop-loss, exit is driven by the EMA signal.\n- **Default Values**:\n  - `SMMA period` = 200\n  - `EMA period` = 5\n  - `Candle type` = 5-minute candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Averages\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close price crosses above SMMA(200).\n  - **Short**: Close price crosses below SMMA(200).\n- **Exit Criteria**:\n  - **Long**: Close price falls below EMA(5).\n  - **Short**: Close price rises above EMA(5).\n- **Long/Short**: Both.\n- **Stops**: No fixed stop-loss, exit is driven by the EMA signal.\n- **Default Values**:\n  - `SMMA period` = 200\n  - `EMA period` = 5\n  - `Candle type` = 5-minute candles\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Moving Averages\n  - Stops: No\n  - Complexity: Simple\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "917": {
+    "id": 917,
+    "name": "IMACD Sniper",
+    "family": "trend",
+    "overview": "IMACD Sniper combines MACD crossovers with an EMA trend filter, volume confirmation, and strong candle patterns. Dynamic take profit and stop loss are based on the recent average range.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal line, price above EMA, MACD delta > min delta, both lines far from zero, volume above average, strong bullish candle.\n  - **Short**: MACD line crosses below signal line, price below EMA, MACD delta > min delta, both lines far from zero, volume above average, strong bearish candle.\n- **Exit Criteria**: Opposite MACD cross or reaching take profit / stop loss.\n- **Stops**: Dynamic take profit and stop loss based on average range.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `MacdDeltaMin` = 0.03\n  - `MacdZeroLimit` = 0.05\n  - `RangeLength` = 14\n  - `RangeMultiplierTp` = 4.0\n  - `RangeMultiplierSl` = 1.5\n  - `EmaLength` = 20\n  - `CandleType` = tf(1m)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: MACD, EMA, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: MACD line crosses above signal line, price above EMA, MACD delta > min delta, both lines far from zero, volume above average, strong bullish candle.\n  - **Short**: MACD line crosses below signal line, price below EMA, MACD delta > min delta, both lines far from zero, volume above average, strong bearish candle.\n- **Exit Criteria**: Opposite MACD cross or reaching take profit / stop loss.\n- **Stops**: Dynamic take profit and stop loss based on average range.\n- **Default Values**:\n  - `FastLength` = 12\n  - `SlowLength` = 26\n  - `SignalLength` = 9\n  - `MacdDeltaMin` = 0.03\n  - `MacdZeroLimit` = 0.05\n  - `RangeLength` = 14\n  - `RangeMultiplierTp` = 4.0\n  - `RangeMultiplierSl` = 1.5\n  - `EmaLength` = 20\n  - `CandleType` = tf(1m)\n- **Filters**:\n  - Category: Trend\n  - Direction: Long & Short\n  - Indicators: MACD, EMA, Volume\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2637": {
+    "id": 2637,
+    "name": "Double ZigZag Alignment",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MQL5 expert \"Double ZigZag\". It recreates the dual-ZigZag confirmation logic by\ncombining two swing detectors with different lookbacks. A trade is triggered only when both detectors agree on three consecutive\npivots and the most recent swing shows sufficient strength compared to the previous ones.\n\n## Concept\n\n- The fast swing detector approximates the original ZigZag(13, 5, 3) settings using a rolling highest/lowest window.\n- The slow swing detector uses a longer window (default x8) to confirm major turning points.\n- When both detectors flip direction on the same candle, an \"alignment\" pivot is registered together with the number of fast swings\n  that occurred since the previous alignment. These counts are direct analogues of the `up` and `dw` counters from the source EA.\n\n## Long Setup\n\n1. The latest alignment is a swing high, the previous alignment is a swing low, and the one before that is also a swing high.\n2. The number of fast swings accumulated since the latest alignment is greater than the previous segment count multiplied by\n   `StrengthMultiplier` (default 2.1). This emulates the original condition `up > dw * k`.\n3. The newest swing high breaks above the middle swing low more aggressively than the older high, i.e. `(previousHigh - swingLow) *\n   BreakoutMultiplier < (newestHigh - swingLow)` with the same multiplier default of 2.1.\n4. When all criteria are met the strategy buys a volume equal to the configured `Volume` plus any outstanding short position so that\nthe net position becomes long.\n\n## Short Setup\n\n1. The latest alignment is a swing low, the previous alignment is a swing high, and the one before that is another swing low.\n2. The most recent segment count is smaller than the previous count divided by `StrengthMultiplier` (the translated check\n   `up * k < dw`).\n3. The current swing low breaks below the middle swing high more aggressively than the older low using `BreakoutMultiplier`.\n4. The strategy sells",
+    "details": "",
+    "parameters": ""
+   },
+   "1144": {
+    "id": 1144,
+    "name": "ORB Heikin Ashi SPY Correlation",
+    "family": "breakout",
+    "overview": "Uses SPY as a correlated asset to build an opening range with optional Heikin Ashi candles. Breakouts between 10:00 and 12:00 are traded only when volume exceeds the recent average, and all positions close between 15:50 and 15:55.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3803": {
+    "id": 3803,
+    "name": "Macd Stochastic Trailing",
+    "family": "breakout",
+    "overview": "- Converted from the MetaTrader 4 expert advisor `MQL/7637/3_lccfpgubwykd__www_forex-instruments_info.mq4`.\n- Uses a **three-timeframe** workflow: hourly candles drive both MACD filters, 15-minute candles supply Stochastic oscillators, and 1-minute candles confirm price breakouts and manage trailing exits.\n- Implements a high-level StockSharp strategy using `SubscribeCandles(...).Bind(...)` / `BindEx(...)` without manual data polling.\n- Positions are opened with market orders and managed entirely inside the strategy (no external test harness changes were required).",
+    "details": "",
+    "parameters": ""
+   },
+   "2492": {
+    "id": 2492,
+    "name": "Gazonkos Rollback",
+    "family": "momentum",
+    "overview": "The Gazonkos Rollback Strategy is a conversion of the original **gazonkos** MetaTrader 5 expert advisor. The approach trades the EUR/USD hourly chart and looks for strong momentum between two historical closes. After detecting that momentum, it waits for a pullback of a predefined size and then enters in the direction of the initial move. The StockSharp implementation keeps the same staged state machine as the source code while using the high-level API with candle subscriptions and protective orders.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `TakeProfit` | `0.0016` | Absolute distance (in price units) for the take profit. Matches 16 points on a 5-digit EUR/USD quote. |\n| `Rollback` | `0.0016` | Required pullback from the extreme reached after the momentum signal. |\n| `StopLoss` | `0.0040` | Absolute distance for the protective stop loss. Equivalent to 40 points on EUR/USD. |\n| `Delta` | `0.0040` | Minimum difference between the two historical closes that defines a strong move. |\n| `TradeVolume` | `0.1` | Default order volume passed to `BuyMarket()` and `SellMarket()`. |\n| `FirstShift` | `3` | Older bar index (number of candles back) used for the closing price comparison. |\n| `SecondShift` | `2` | Newer bar index used in the closing price comparison. |\n| `ActiveTrades` | `1` | Maximum number of simultaneous trades. Set to zero to disable the limit. |\n| `CandleType` | `1 hour` time frame | Candle series used for analysis; defaults to hourly candles like the source EA. |"
+   },
+   "3847": {
+    "id": 3847,
+    "name": "Gselector Pattern Probability",
+    "family": "volatility",
+    "overview": "The **Gselector Pattern Probability** strategy is a StockSharp port of the MetaTrader 4 \"Gselector\" expert. It studies direction changes of synthetic price series built from multiple step sizes, keeps probability statistics for every observed pattern, and trades when the probability of a continuation move is high enough. Stop-loss and take-profit distances are simulated in software to mirror the original expert behaviour.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `CandleType` | Candle data type used for the backtest/live session. | 1-minute time frame |\n| `ProbabilityThreshold` | Minimum continuation probability required to open a trade. | 0.8 |\n| `BaseDeltaPoints` | Base point distance that defines the first synthetic ladder. | 1 |\n| `DeltaSteps` | Number of delta ladders to evaluate. | 20 |\n| `PatternLength` | Number of elements in the ladder history. | 10 |\n| `StopLevels` | Count of stop/take levels. | 1 |\n| `StopDistancePoints` | Base stop/take distance in points. | 25 |\n| `ForgetFactor` | Decay applied to growth/decline counters after each observation. | 1.05 |\n| `MinSamples` | Minimum number of completed observations. | 10 |\n| `ProbabilityBuffer` | Extra probability required to close the opposite position. | 0.05 |\n| `FixedVolume` | Base trade volume. | 1 lot |\n| `UseReinvest` | Enables balance-proportional volume adjustment. | true |\n| `VolumeMode` | 0 – fixed, 1 – percent per 10k, 2 – ladder, 3 – linear. | 1 |\n| `PercentPer10k` | Percentage per 10 000 units in mode 1. | 3 |\n| `BaseDeposit` | Base deposit for modes 2 and 3. | 500 |\n| `DepositStep` | Deposit increment for modes 2 and 3. | 500 |\n| `MaxVolume` | Maximum volume cap. | 10000 |\n| `CooldownFactor` | Number of candle intervals used as the reactivation cooldown. | 2 |"
+   },
+   "2383": {
+    "id": 2383,
+    "name": "The MasterMind 2",
+    "family": "mean_reversion",
+    "overview": "This strategy combines the **Stochastic Oscillator** and **Williams %R** to identify extreme oversold and overbought conditions.\nA long position is opened when the Stochastic signal line drops below **3** and Williams %R is lower than **-99.9**.\nA short position is opened when the Stochastic signal line rises above **97** and Williams %R is higher than **-0.1**.\n\nRisk control includes an initial stop loss and take profit, a trailing stop with adjustable step, and an optional break-even trigger that moves the stop to the entry price after sufficient profit.",
+    "details": "",
+    "parameters": "- `LotSize` - trade volume in contracts.\n- `StochasticPeriod` - period for the Stochastic Oscillator.\n- `StochasticK` - smoothing of the %K line.\n- `StochasticD` - smoothing of the %D (signal) line.\n- `WilliamsRPeriod` - period for Williams %R.\n- `StopLossPoints` - initial stop loss in price points.\n- `TakeProfitPoints` - initial take profit in price points.\n- `TrailingStopPoints` - trailing stop distance in points.\n- `TrailingStepPoints` - minimum favorable movement before the trailing stop is updated.\n- `BreakEvenPoints` - distance in points to move stop to break-even.\n- `CandleType` - type and timeframe of candles used for calculations."
+   }
+  }
+ }
+}

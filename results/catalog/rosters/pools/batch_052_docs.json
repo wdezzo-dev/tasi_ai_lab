@@ -1,0 +1,98 @@
+{
+ "batch_052": {
+  "strategy_ids": [
+   1525,
+   3546,
+   911,
+   2641,
+   2912,
+   825,
+   3263,
+   1798,
+   3834,
+   3253
+  ],
+  "docs": {
+   "1525": {
+    "id": 1525,
+    "name": "Vinicius Setup ATR",
+    "family": "trend",
+    "overview": "This strategy combines SuperTrend direction, RSI, and volume to identify strong momentum candles. A long signal occurs when price is above the SuperTrend, the candle body exceeds an ATR-based threshold, volume is higher than average, and RSI remains below 70. A short signal triggers under the opposite conditions with RSI above 30.\n\n## Details\n- **Entry**: Price in SuperTrend direction with strong candle and high volume.\n- **Exit**: Opposite signal.\n- **Indicators**: SuperTrend, RSI, ATR, SMA(Volume).\n",
+    "details": "- **Entry**: Price in SuperTrend direction with strong candle and high volume.\n- **Exit**: Opposite signal.\n- **Indicators**: SuperTrend, RSI, ATR, SMA(Volume).",
+    "parameters": ""
+   },
+   "3546": {
+    "id": 3546,
+    "name": "DeMarker Pending 2",
+    "family": "trend",
+    "overview": "The strategy replicates the core logic of the MetaTrader expert \"DeMarker Pending 2\" using the StockSharp high-level API. It evaluates a DeMarker oscillator on the working timeframe and prepares pending buy or sell entries when the indicator crosses configurable thresholds. Orders can be created as stop or limit requests with an additional indent from the current market price. A session filter, spread guard and distance checks keep new entries under control.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| Working Candles | Timeframe used for signals and protective checks. |\n| Order Volume | Default volume for pending orders. |\n| Stop Loss (pts) | Initial stop-loss distance in price points. |\n| Take Profit (pts) | Initial take-profit distance in price points. |\n| Trailing Activate (pts) | Profit needed before the trailing stop engages. |\n| Trailing Stop (pts) | Distance between price and trailing stop. |\n| Trailing Step (pts) | Additional gain required to move the trailing stop. |\n| Trail On Close | Update the trailing stop only on finished candles when enabled. |\n| Max Positions | Maximum number of open positions plus pending orders. Zero disables the cap. |\n| Min Distance (pts) | Minimum distance from the current position price to new pending entries. |\n| Use Stop Orders | Place stop orders when true, otherwise limit orders are used. |\n| Single Pending | Allow only one active pending order at a time. |\n| Replace Pendings | Cancel outstanding pending orders before placing a new one. |\n| Pending Offset (pts) | Indent for new pending prices relative to the market. |\n| Max Spread (pts) | Maximum allowed spread before skipping order placement. |\n| Use Session Filter | Enable or disable the trading window filter. |\n| Start Hour/Minute, End Hour/Minute | Session boundaries when the session filter is active. |\n| DeMarker Period | Averaging period for the DeMarker oscillator. |\n| Upper Level | Threshold that triggers short setups. |\n| Lower Level | Threshold that triggers long setups. |"
+   },
+   "911": {
+    "id": 911,
+    "name": "Ichimoku Clouds Strategy Long and Short",
+    "family": "trend",
+    "overview": "This strategy uses the Tenkan-sen and Kijun-sen crossover of the Ichimoku indicator. Crosses are classified as strong, neutral or weak depending on the Tenkan value relative to the cloud. Depending on the selected trading mode, it opens long or short positions when the chosen signal strength occurs. Optional percentage-based take profit and stop loss can close positions or opposite signals as configured.\n\n## Details\n\n- **Entry Criteria**:\n  - Tenkan-sen crosses above Kijun-sen and the signal strength matches selected long options.\n  - Tenkan-sen crosses below Kijun-sen and the signal strength matches selected short options.\n- **Long/Short**: Configurable, default long.\n- **Exit Criteria**:\n  - Opposite signals as defined by exit options.\n  - Optional take profit or stop loss percentages.\n- **Stops**: Percentage take-profit and stop-loss.\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanPeriod` = 52\n  - `TakeProfitPct` = 0\n  - `StopLossPct` = 0\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Tenkan-sen crosses above Kijun-sen and the signal strength matches selected long options.\n  - Tenkan-sen crosses below Kijun-sen and the signal strength matches selected short options.\n- **Long/Short**: Configurable, default long.\n- **Exit Criteria**:\n  - Opposite signals as defined by exit options.\n  - Optional take profit or stop loss percentages.\n- **Stops**: Percentage take-profit and stop-loss.\n- **Default Values**:\n  - `TenkanPeriod` = 9\n  - `KijunPeriod` = 26\n  - `SenkouSpanPeriod` = 52\n  - `TakeProfitPct` = 0\n  - `StopLossPct` = 0\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Ichimoku\n  - Stops: Optional\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2641": {
+    "id": 2641,
+    "name": "EURUSD Session Breakout",
+    "family": "trend",
+    "overview": "This strategy replicates the classic EUR/USD breakout idea where a narrow European morning range is used as a springboard for the\nUS session. It monitors a rolling 24-candle window (15-minute candles by default) to measure the pre-US trading range, filters out\ndays where the range exceeds a configurable pip threshold, and then trades breakouts that occur fully outside of that band.\nOnly one long and one short attempt are allowed per trading day.\n\n## How It Works\n\n1. **Session tracking** – at the start of the configured US session hour the strategy locks the EU range captured by the 24 most\n   recent completed candles (excluding the current bar). The range is adjusted to pip values automatically for 3- or 5-digit\n   forex quotes.\n2. **Range filter** – trading is enabled only if the captured EU range is smaller than the *Small EU Session (pips)* threshold.\n3. **Breakout validation** – during the allowed US session hours, and only between `(EU start hour + 5)` and `(EU start hour + 10)`,\n   the strategy looks for candles whose entire body traded outside of the stored range with an additional buffer measured in points.\n4. **Order execution** – a market buy is sent when the bar’s low stays above the top of the range plus buffer. A market sell is\n   sent when the bar’s high stays below the bottom of the range minus buffer. Long and short trades are independent flags so each\n   direction can be attempted once per day.\n5. **Risk management** – stop loss and take profit levels are defined in pips, converted to absolute price distances, and tracked\n   on every finished candle using high/low extremes.\n\n## Parameters\n\n- **EU Session Start / US Session Start / US Session End** – hours (0–23) defining when the EU monitoring begins and when the US\n  breakout window is open.\n- **Small EU Session (pips)** – maximum size of the EU range that still allows trading.\n- **Trade On Monday** – enables or disables Monday trading while still blocking weekends.\n- **Stop Loss (pips)** – distanc",
+    "details": "",
+    "parameters": "- **EU Session Start / US Session Start / US Session End** – hours (0–23) defining when the EU monitoring begins and when the US\n  breakout window is open.\n- **Small EU Session (pips)** – maximum size of the EU range that still allows trading.\n- **Trade On Monday** – enables or disables Monday trading while still blocking weekends.\n- **Stop Loss (pips)** – distance between entry price and protective stop, automatically scaled by tick size and digits.\n- **Take Profit (pips)** – profit target distance, handled in the same way as the stop.\n- **Breakout Buffer (points)** – number of price steps added to the breakout trigger so that the confirming bar must be entirely\n  beyond the stored range.\n- **Candle Type** – data type for candle subscription; defaults to 15-minute time frame because the original script was designed\n  for M15 charts."
+   },
+   "2912": {
+    "id": 2912,
+    "name": "Global Stop Loss & Trading Window",
+    "family": "trend",
+    "overview": "This strategy replicates the behaviour of the MetaTrader expert **Exp_GStopLoss_Tm**, providing a risk overlay that monitors the\ncombined result of all trades opened by the strategy instance. The module does not generate entry signals by itself; instead it\ntracks the profit and loss of existing positions and enforces both a global stop loss threshold and an optional trading session\nwindow. When losses exceed the configured limit or the market moves outside the permitted time range, the strategy liquidates the\ncurrent exposure and blocks any further trades until the book is flat again.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `LossMode` | Selects how the loss threshold is interpreted: percentage of current account equity or absolute account currency. |\n| `StopLoss` | Loss threshold value. For percentage mode the number represents percent, while currency mode uses the account currency. |\n| `UseTimeFilter` | Enables the intraday trading window. When disabled the strategy ignores the time filter entirely. |\n| `StartTime` | Inclusive start of the trading window in UTC. Works together with `EndTime` to define the valid session. |\n| `EndTime` | Exclusive end of the trading window in UTC. Supports wrap-around sessions when the end time is earlier than the start. |\n| `CandleType` | Candle subscription used to drive the periodic risk evaluation. The default is a 1-minute time frame. |"
+   },
+   "825": {
+    "id": 825,
+    "name": "FVG Breakout Lite",
+    "family": "breakout",
+    "overview": "This strategy detects fair value gaps using a three-candle pattern and enters a position when price closes beyond the gap boundaries. A percentage stop-loss manages risk.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3263": {
+    "id": 3263,
+    "name": "Explosion Range Expansion",
+    "family": "breakout",
+    "overview": "Explosion Range Expansion Strategy is a breakout system converted from the MetaTrader 5 expert advisor \"Explosion\". The algorithm compares the range of the current completed candle with the previous candle and opens a market position in the direction of the candle body whenever the range expansion exceeds a configurable ratio. The StockSharp version keeps the original money-management features and adds convenient parameters for schedule control and trailing stop management.",
+    "details": "",
+    "parameters": "- `Candle Type` – Data type used for candle subscription.\n- `Order Volume` – Size of each position in lots.\n- `Range Ratio` – Multiplier applied to the previous candle range to trigger entries.\n- `Max Positions` – Maximum number of lots allowed simultaneously.\n- `Pause (sec)` – Minimum time in seconds between entries.\n- `Start Hour` / `End Hour` – Trading hours filter (0–23).\n- `One Trade Per Day` – Restricts the strategy to one entry per calendar day.\n- `Stop Loss` – Initial stop-loss distance in price steps.\n- `Take Profit` – Initial take-profit distance in price steps.\n- `Trailing Stop` – Trailing stop distance in price steps.\n- `Trailing Step` – Additional distance required before trailing is updated."
+   },
+   "1798": {
+    "id": 1798,
+    "name": "Bulls & Bears Power Cross",
+    "family": "momentum",
+    "overview": "This strategy trades based on the crossover of the Bulls Power and Bears Power indicators on a four-hour timeframe. The Bulls Power measures buying pressure above an average price, while Bears Power shows selling pressure below it. When buying strength overtakes selling strength, the system opens a long position. When selling strength becomes dominant, it opens a short.\n\nTesting on historical crypto data shows that clear crossovers often precede short-term reversals. The strategy is designed to always be either long or short, reversing the position whenever the indicators cross in the opposite direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Bulls Power value crosses above Bears Power.\n  - **Short**: Bears Power value crosses above Bulls Power.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite crossover that reverses the position.\n- **Stops**: None. Positions are reversed rather than stopped out.\n- **Filters**:\n  - Timeframe: 4-hour candles by default.\n  - Indicators: Bulls Power, Bears Power.\n  - Direction: Reversal based on momentum shift.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Bulls Power value crosses above Bears Power.\n  - **Short**: Bears Power value crosses above Bulls Power.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Opposite crossover that reverses the position.\n- **Stops**: None. Positions are reversed rather than stopped out.\n- **Filters**:\n  - Timeframe: 4-hour candles by default.\n  - Indicators: Bulls Power, Bears Power.\n  - Direction: Reversal based on momentum shift.",
+    "parameters": ""
+   },
+   "3834": {
+    "id": 3834,
+    "name": "Elderv30aug05v",
+    "family": "volatility",
+    "overview": "The Elderv30aug05v strategy is a direct port of the MetaTrader 4 expert advisor with the same name. It combines signals from two MACD filters calculated on hourly candles and two stochastic oscillators calculated on 15-minute candles. Trade execution and exit management happen on one-minute candles to replicate the tick-by-tick logic of the original MQL script. The strategy opens at most one position at a time and relies on dynamic trailing stops rather than fixed take-profit orders.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `Volume` | `0.1` | Trade volume sent to `BuyMarket`/`SellMarket`. |\n| `LongStopLoss` | `17` | Long stop-loss distance in points. |\n| `ShortStopLoss` | `46` | Short stop-loss distance in points. |\n| `LongTrailingStop` | `18` | Trailing distance for long positions. |\n| `ShortTrailingStop` | `22` | Trailing distance for short positions. |\n| `LongStochasticThreshold` | `36` | Maximum fast stochastic %K value for long entries. |\n| `ShortStochasticThreshold` | `66` | Minimum slow stochastic %K value for short entries. |\n| `BaseCandleType` | `TimeFrame(1m)` | Candle series used for execution logic. |\n| `StochasticCandleType` | `TimeFrame(15m)` | Candle series for both stochastic oscillators. |\n| `MacdCandleType` | `TimeFrame(1h)` | Candle series for both MACD filters. |\n| `MacdFastPeriod` / `MacdSlowPeriod` / `MacdSignalPeriod` | `13 / 30 / 9` | Periods for the primary MACD. |\n| `AltMacdFastPeriod` / `AltMacdSlowPeriod` / `AltMacdSignalPeriod` | `14 / 56 / 9` | Periods for the secondary MACD. |\n| `StochasticFastKPeriod` / `StochasticFastDPeriod` / `StochasticFastSmooth` | `2 / 3 / 3` | Parameters for the fast stochastic. |\n| `StochasticSlowKPeriod` / `StochasticSlowDPeriod` / `StochasticSlowSmooth` | `1 / 3 / 3` | Parameters for the slow stochastic. |"
+   },
+   "3253": {
+    "id": 3253,
+    "name": "MultiTrader Currency Strength Strategy (3253)",
+    "family": "mean_reversion",
+    "overview": "This strategy is a high-level StockSharp port of the public \"MultiTrader\" MQL panel (code base #24786). The original Expert Advisor was a discretionary dashboard that displayed the relative strength of the eight major currencies, triggered visual/audio alerts when a currency became extremely strong or weak, and suggested which Forex pair to trade. The StockSharp version automates the same analytical workflow and optionally executes trades on the strongest-vs-weakest pair.\n\nThe logic calculates a % position of each symbol's close within its current candle range. Averaging the relevant crosses produces a strength score for AUD, CAD, CHF, EUR, GBP, JPY, NZD, and USD. When one currency climbs above the configurable buy threshold and another drops below the sell threshold, the strategy recommends the pair built from those currencies. If the pair exists in the configured universe, the strategy can automatically place a market order in that direction.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `Universe` | List of `Security` objects representing the FX pairs (28 majors recommended). | Required |\n| `CandleType` | Candle specification used for the calculations (Daily, Weekly, Monthly, etc.). | Daily candles |\n| `BuyLevel` | Threshold above which a currency is treated as overbought. | 90 |\n| `SellLevel` | Threshold below which a currency is treated as oversold. | 10 |\n| `EnableAutoTrading` | Enable or disable automatic order placement. | false |\n| `OrderVolume` | Volume to submit with market orders when auto trading is enabled. | 1 |\n| `SymbolPrefix` | Optional prefix used by the broker/exchange (e.g., `m.`). | \"\" |\n| `SymbolSuffix` | Optional suffix used by the broker/exchange (e.g., `.FX`). | \"\" |"
+   }
+  }
+ }
+}

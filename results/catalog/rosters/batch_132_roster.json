@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1183,
+      "name": "PresentTrend RMI Synergy",
+      "family": "trend",
+      "entry_long": "rsi(roc(close,21), 21) > 60 and close > sma(close,5)",
+      "exit_long": "close < sma(close,5) or rsi(roc(close,21),21) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RMI is built as RSI(21) of ROC(21) with the documented RmiPeriod 21, and the moving-average filter uses SuperTrendLength 5. The documented SuperTrend band (Factor 4.0 x ATR) is far outside daily ranges here, so the trailing-stop exit is approximated by a SuperTrend line flip (close under the 5-line) or a loss of RMI above 50; ATR period 14 is a fallback and the short leg is dropped."
+    },
+    {
+      "id": 626,
+      "name": "Combo 2/20 EMA Bandpass Filter",
+      "family": "trend",
+      "entry_long": "ema(close,2) > ema(close,20) and zscore(close,20) > 0.5",
+      "exit_long": "ema(close,2) < ema(close,20) or zscore(close,20) < 0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 2/20 EMA crossover is used verbatim; the EMA bandpass value is not available, so it is approximated by a 20-period z-score and the BpfSellZone of 5 is mapped to +0.5 sigma (documented values are in undocumented 10^-6 quote units). Exit closes the position when either signal disappears; the short leg and StartDate gate are not translated."
+    },
+    {
+      "id": 629,
+      "name": "Commitment of Trader R",
+      "family": "trend",
+      "entry_long": "close > 0.9 * donchian_high(high, 252) + 0.1 * donchian_low(low, 252) and close > sma(close, 200)",
+      "exit_long": "close < 0.9 * donchian_high(high, 252) + 0.1 * donchian_low(low, 252)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R > -10 is written division-free as close > 0.9*donchian_high + 0.1*donchian_low over the documented WilliamsPeriod 252, with the SmaEnabled trend filter as close > sma(close,200). Exit is %R dropping back below the upper threshold; LowerThreshold -90 and the short leg are not used."
+    },
+    {
+      "id": 203,
+      "name": "Keltner Williams R",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) - 2 * atr(high,low,close,14) and close < 0.2 * donchian_high(high,14) + 0.8 * donchian_low(low,14)",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Keltner lower band uses documented EmaPeriod 20, KeltnerMultiplier 2 and AtrPeriod 14, while %R < -80 over WilliamsRPeriod 14 is written division-free as the 20/80 channel position. Exit is the documented return to the middle band; the short leg is dropped and the undocumented percent stop leaves protection null."
+    },
+    {
+      "id": 3400,
+      "name": "Expert ADC PL Stoch",
+      "family": "trend",
+      "entry_long": "close > open and close > low + 0.6 * (high - low) and rsi(close,14) < 30",
+      "exit_long": "crossabove(rsi(close,14), 80) or rsi(close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bullish Piercing Line is approximated by a bullish candle closing in the top 40% of its range because prior-candle bodies cannot be referenced, and the %D extreme filter uses the documented LongEntryThreshold 30 via RSI(14). Exit uses the documented 80/20 exit boundaries; StochasticLength 47, K/D smoothing 9/13 and Slow 3 cannot be reproduced."
+    },
+    {
+      "id": 4227,
+      "name": "Daily STP Entry Frame Strategy (StockSharp)",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high, 1)",
+      "exit_long": "close < donchian_low_prev(low, 1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry levels come from the previous day's high/low, so on daily bars donchian_high_prev/donchian_low_prev with length 1 reproduce the arm-and-trigger stop orders. The table documents no default values, so ThresholdPoints/SpreadPoints proximity filters, the hour filters, trailing and point-based stops are omitted rather than guessed."
+    },
+    {
+      "id": 597,
+      "name": "Bollinger Breakout Direction",
+      "family": "breakout",
+      "entry_long": "close > bb_upper(close,20) and rsi(close,14) > 50",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long rule (close above the upper band with RSI above its midline) is reproduced with a 20-period Bollinger band; the band length is a fallback because no value is documented. Exit falls back to a close back at the band midpoint, and the risk/reward stop and target are configurable without numeric values so protection stays null."
+    },
+    {
+      "id": 3623,
+      "name": "Matrix Machine Learning",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries come from a Hopfield recurrent network retrained on every candle whose output vector forecasts the next binary price steps, and no such trained forecast exists in the DSL, so the never-true close<0 guard avoids fabricating a momentum proxy. Predictor/Forecast/History depths, in-sample accuracy evaluation and debug logging are outside the expression language."
+    },
+    {
+      "id": 4163,
+      "name": "Parabolic SAR Bug 2",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high, 10) and adx(high,low,close,14) > 20",
+      "exit_long": "close < donchian_low_prev(low, 10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR itself is not available, so the first dot flip to the long side is approximated by a 10-bar channel breakout confirmed with ADX(14) > 20. The documented SarStep 0.001 / SarMaximum 0.2 acceleration cannot be reproduced, and StopLossPoints 90 / TakeProfitPoints 20 are price-point values so no percent protection is set."
+    },
+    {
+      "id": 1809,
+      "name": "Lucky Jump",
+      "family": "mean_reversion",
+      "entry_long": "roc(close,1) <= -0.17",
+      "exit_long": "close >= sma(close, 3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The bid/ask jump fade is translated to a one-bar close drop, with the documented Shift 30 / Limit 180 ratio mapped to roughly 0.17% since quote points have no percent equivalent. Exit is the mean-reversion completion proxy (close back at SMA(3)) because 'close as soon as profitable' is not expressible, and the 180-point implicit stop is not a percent field."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_295": {
+  "strategy_ids": [
+   3186,
+   2005,
+   902,
+   399,
+   916,
+   3427,
+   1678,
+   40,
+   2310,
+   2287
+  ],
+  "docs": {
+   "3186": {
+    "id": 3186,
+    "name": "Auto Stop-Loss and Take-Profit",
+    "family": "trend",
+    "overview": "This utility strategy automatically attaches protective stop-loss and take-profit orders to every open position on the configured instrument. It mirrors the behaviour of the original MetaTrader \"AutoSet SL TP\" expert by monitoring the active position list and enforcing broker distance restrictions before registering protective orders.\n\nThe strategy does not open trades on its own. Instead, it watches the volume, direction and execution price of positions that have been created manually or by other strategies. As soon as a long or short position appears, the algorithm calculates the desired stop-loss and take-profit levels expressed in MetaTrader-style pips, adjusts the levels to comply with the freeze and stop constraints published by the trading venue, and then submits the appropriate market-protective orders. When the position is fully closed the protective orders are cancelled automatically.\n\n## How it works\n\n1. Subscribes to Level1 data to receive best bid/ask prices together with optional `StopLevel` and `FreezeLevel` fields supplied by the broker.\n2. Converts the configured pip distances into absolute prices using the symbol metadata (price step and decimal precision). Five-digit and three-digit quotes automatically scale by a factor of ten to match MetaTrader pip semantics.\n3. On every quote update or personal trade notification:\n   - Ignores the signal if there is no open position or if the direction does not match the configured filter (buy-only, sell-only or both).\n   - Calculates the minimal permitted distance between the market price and a protective order. If the broker does not publish freeze/stop levels, the algorithm falls back to three spreads multiplied by 1.1 to stay safely outside of forbidden zones.\n   - Determines the stop-loss price and take-profit price relative to the current ask (for longs) or bid (for shorts) and normalises the result to the instrument price step.\n   - Places or re-registers stop or limit protective orders with the exact p",
+    "details": "",
+    "parameters": "- **`StopLossPips`** – distance from the current market price to the stop-loss in MetaTrader pips. A value of `0` disables the stop order. Default: `50`.\n- **`TakeProfitPips`** – distance from the current market price to the take-profit in MetaTrader pips. A value of `0` disables the take-profit order. Default: `140`.\n- **`DirectionFilter`** – specifies which position direction is managed:\n  - `Buy` – protect only long exposure.\n  - `Sell` – protect only short exposure.\n  - `BuySell` – protect both sides (default behaviour in the original script)."
+   },
+   "2005": {
+    "id": 2005,
+    "name": "OsHMA Breakdown Twist",
+    "family": "trend",
+    "overview": "Strategy built on the OsHMA oscillator (difference between fast and slow Hull Moving Averages). It can operate in two modes:\n\n- **Breakdown** – trades when the oscillator crosses the zero line.\n- **Twist** – trades when the oscillator changes its direction.\n\nThe strategy subscribes to candles of a selected timeframe and uses Hull Moving Average indicators to compute the oscillator.\n\n## Details\n\n- **Entry Criteria**: OsHMA zero crossing or direction change.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Take profit and stop loss.\n- **Default Values**:\n  - `FastHma` = 13\n  - `SlowHma` = 26\n  - `Mode` = Twist\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: OsHMA zero crossing or direction change.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Take profit and stop loss.\n- **Default Values**:\n  - `FastHma` = 13\n  - `SlowHma` = 26\n  - `Mode` = Twist\n  - `TakeProfit` = 2000\n  - `StopLoss` = 1000\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: MA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "902": {
+    "id": 902,
+    "name": "Hurst Future Lines of Demarcation",
+    "family": "trend",
+    "overview": "The strategy uses a smoothed Future Line of Demarcation (FLD) and three cycle lengths (signal, trade, trend). It enters when price crosses the signal FLD in specific trend states and exits on a cross between selected values.\n\n## Details\n\n- **Entry Criteria**:\n  - Buy when price crosses above the signal FLD while trend state equals 1.\n  - Sell when price crosses below the signal FLD while trend state equals 6.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close position when `CloseTrigger1` crosses `CloseTrigger2` in opposite direction of trade.\n- **Stops**: No.\n- **Default Values**:\n  - `SmoothFld` = false\n  - `FldSmoothing` = 5\n  - `SignalCycleLength` = 5\n  - `TradeCycleLength` = 20\n  - `TrendCycleLength` = 80\n  - `CloseTrigger1` = Price\n  - `CloseTrigger2` = Trade\n",
+    "details": "- **Entry Criteria**:\n  - Buy when price crosses above the signal FLD while trend state equals 1.\n  - Sell when price crosses below the signal FLD while trend state equals 6.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close position when `CloseTrigger1` crosses `CloseTrigger2` in opposite direction of trade.\n- **Stops**: No.\n- **Default Values**:\n  - `SmoothFld` = false\n  - `FldSmoothing` = 5\n  - `SignalCycleLength` = 5\n  - `TradeCycleLength` = 20\n  - `TrendCycleLength` = 80\n  - `CloseTrigger1` = Price\n  - `CloseTrigger2` = Trade",
+    "parameters": ""
+   },
+   "399": {
+    "id": 399,
+    "name": "Small Cap Premium",
+    "family": "trend",
+    "overview": "The **Small Cap Premium** strategy captures the historical tendency for small capitalization stocks to outperform large caps. The universe is split by market capitalization and the portfolio holds a basket of small caps while shorting an index of large caps.\n\n## Details\n- **Entry Criteria**: Selection by market capitalization ranking.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Periodic rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Selection by market capitalization ranking.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Periodic rebalance.\n- **Stops**: No explicit stop.\n- **Default Values**:\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Fundamental\n  - Direction: Both\n  - Indicators: Fundamentals\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Medium-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "916": {
+    "id": 916,
+    "name": "iD EMARSI on Chart",
+    "family": "trend",
+    "overview": "This strategy trades crossovers between the RSI plotted on the price chart and its exponential moving average. A long position opens when the RSI crosses above the EMA, and a short position opens on the opposite crossover. Signals can be filtered by minimum trend duration and positions are protected with optional take profit and trailing stop in percent.\n\n## Parameters\n- Candle Type\n- RSI Length\n- EMA Length\n- Min Trend Bars\n- Use Filtered Signals\n- Take Profit %\n- Trailing Stop %\n",
+    "details": "",
+    "parameters": "- Candle Type\n- RSI Length\n- EMA Length\n- Min Trend Bars\n- Use Filtered Signals\n- Take Profit %\n- Trailing Stop %"
+   },
+   "3427": {
+    "id": 3427,
+    "name": "TemplateEAbyMarket",
+    "family": "trend",
+    "overview": "TemplateEAbyMarket is a direct StockSharp port of the original MetaTrader 4 expert advisor *TemplateEAbyMarket.mq4*. The strategy uses the Moving Average Convergence Divergence (MACD) indicator to detect momentum shifts. When the MACD main line crosses the signal line while both components are in the same positive or negative zone, the strategy opens a market position in the direction of the crossover. Exits are managed exclusively through protective orders (take profit and stop loss) configured via the built-in `StartProtection` helper.\n\nThe StockSharp version keeps the behaviour of the MQL program: it only opens new positions without trying to automatically close the opposite side. Once a position is filled, the trade is left to be managed by protective levels or manual intervention.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `MacdFastPeriod` | Fast EMA length for the MACD calculation. |\n| `MacdSlowPeriod` | Slow EMA length for the MACD calculation. |\n| `MacdSignalPeriod` | Signal EMA length for the MACD calculation. |\n| `CandleType` | Candle type (time frame) that feeds the indicator. |\n| `OrderVolume` | Volume submitted with each market order. |\n| `MaxOrders` | Maximum number of concurrent orders, expressed as multiples of `OrderVolume`. The strategy checks `abs(Position) < MaxOrders * OrderVolume` before sending a new order. |\n| `TakeProfitPoints` | Take-profit distance in price points. Value `0` disables the take profit. |\n| `StopLossPoints` | Stop-loss distance in price points. Value `0` disables the stop loss. |"
+   },
+   "1678": {
+    "id": 1678,
+    "name": "Status Mail and Alert On Order Close",
+    "family": "trend",
+    "overview": "This strategy monitors the account and reports important events:\n\n- Sends a daily status notification at a specified minute.\n- Reports each closed order with basic trade information.\n\nIt is based on the MQL expert *StatusMailandAlertOnOrderClose.mq4* and showcases how to handle notifications in StockSharp.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `SendReportEmail` | Enable daily status notification. |\n| `StatusEmailMinute` | Minute of the hour to send the status message. |\n| `SendClosedEmail` | Enable notifications when orders are closed. |\n| `StartBalance` | Initial account balance used for profit calculation. |\n| `CandleType` | Timeframe used to check the clock. Usually set to 1 minute. |\n\n## Logic\n\n1. Subscribe to candles of the chosen timeframe.\n2. When a candle finishes, check if it is the specified minute and send a report message.\n3. On each new trade, notify if an order was closed.\n\nThese messages are logged via `AddInfo`, but can be replaced with any desired notification mechanism.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `SendReportEmail` | Enable daily status notification. |\n| `StatusEmailMinute` | Minute of the hour to send the status message. |\n| `SendClosedEmail` | Enable notifications when orders are closed. |\n| `StartBalance` | Initial account balance used for profit calculation. |\n| `CandleType` | Timeframe used to check the clock. Usually set to 1 minute. |"
+   },
+   "40": {
+    "id": 40,
+    "name": "ATR Trailing Stops",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 157%. It performs best in the crypto market.\n\nAs price advances, the stop ratchets up (or down) based on the latest ATR reading, never retreating. This locks in gains as the trend persists.\n\nExits happen when the trailing stop is triggered or when price crosses back through the moving average.\n\n## Details\n\n- **Entry Criteria**: Price above or below MA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Trailing stop hit or price crosses MA.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 3.0m\n  - `MAPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price above or below MA.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Trailing stop hit or price crosses MA.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 3.0m\n  - `MAPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ATR, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2310": {
+    "id": 2310,
+    "name": "SMI Correct",
+    "family": "trend",
+    "overview": "SMI Correct Strategy implements a trading system based on the Stochastic Momentum Index (SMI) indicator. The strategy watches the SMI line and its moving average signal line. A long position is opened when the SMI crosses below the signal line. A short position is opened when the SMI crosses above the signal line.",
+    "details": "",
+    "parameters": "- **Candle Type** – time frame of candles used for calculations.\n- **SMI Length** – number of periods for the Stochastic calculation.\n- **Signal Length** – smoothing period for the signal line."
+   },
+   "2287": {
+    "id": 2287,
+    "name": "Universal Trailing Stop Hedge",
+    "family": "trend",
+    "overview": "Strategy demonstrating different trailing stop techniques to protect open positions.\nIt offers ATR-, Parabolic SAR-, moving average-, percentage- and fixed-pip based trailing stops.\nA simple entry based on candle direction is used purely for educational purposes.\n\n## Details\n\n- **Entry Criteria**: Long if candle closes above open, short if closes below open\n- **Long/Short**: Both\n- **Exit Criteria**: Trailing stop hit\n- **Stops**: ATR, Parabolic SAR, Moving Average, Percent Profit or fixed pips depending on selected mode\n- **Default Values**:\n  - `Mode` = `TrailingModes.Atr`\n  - `Delta` = 10\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1m\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.2m\n  - `MaPeriod` = 34\n  - `PercentProfit` = 50m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: ATR, Parabolic SAR, SMA\n  - Stops: Trailing stop\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Long if candle closes above open, short if closes below open\n- **Long/Short**: Both\n- **Exit Criteria**: Trailing stop hit\n- **Stops**: ATR, Parabolic SAR, Moving Average, Percent Profit or fixed pips depending on selected mode\n- **Default Values**:\n  - `Mode` = `TrailingModes.Atr`\n  - `Delta` = 10\n  - `AtrPeriod` = 14\n  - `AtrMultiplier` = 1m\n  - `SarStep` = 0.02m\n  - `SarMax` = 0.2m\n  - `MaPeriod` = 34\n  - `PercentProfit` = 50m\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Risk management\n  - Direction: Both\n  - Indicators: ATR, Parabolic SAR, SMA\n  - Stops: Trailing stop\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   }
+  }
+ }
+}

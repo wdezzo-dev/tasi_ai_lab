@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2791,
+      "name": "Cross Line Trader",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 3210,
+      "name": "Back Kick",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 1468,
+      "name": "Trend Magic with EMA, SMA, and Auto-Trading",
+      "family": "trend",
+      "entry_long": "ema(close,45)> sma(close,90)> sma(close,180)",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Translated from the documented long-side rule where a directly usable rule expression was available; vendor-specific execution, multi-timeframe state, or unsupported indicators are simplified to the local DSL."
+    },
+    {
+      "id": 2448,
+      "name": "Fractal ADX Cloud",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,30) > 30",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,30) < 25",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 985,
+      "name": "Liquidity Sweep Filter",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bollinger reference translated with period 20 and deviation 2; trailing/point-based protection not representable unless expressed as percentage fields."
+    },
+    {
+      "id": 827,
+      "name": "G-Channel with EMA",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,30))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 1469,
+      "name": "Trend Signals with TP & SL",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2533,
+      "name": "Polish Layer",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 5-bar high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 2232,
+      "name": "StepMA NRTR",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2481,
+      "name": "Cash Machine 5min",
+      "family": "trend",
+      "entry_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) < 20.0",
+      "exit_long": "(100 * (close - donchian_low(low,3)) / (donchian_high(high,3) - donchian_low(low,3))) > 80.0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic is approximated from the close position within the 3-bar high/low range because the DSL has no dedicated stochastic function."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+ "batch_349": {
+  "strategy_ids": [
+   1037,
+   472,
+   3557,
+   2396,
+   2324,
+   1166,
+   1178,
+   4053,
+   726,
+   2605
+  ],
+  "docs": {
+   "1037": {
+    "id": 1037,
+    "name": "McClellan A-D Volume Integration Model",
+    "family": "trend",
+    "overview": "This strategy builds a weighted advance-decline line by multiplying the price spread of the bar by its volume. Two EMAs of this weighted line form a McClellan-style oscillator.\n\nA long position is opened when the oscillator crosses above a user-defined threshold after being below it. The trade is closed automatically after a fixed number of bars.\n\n## Details\n\n- **Entry**: oscillator crosses above `Long Entry Threshold` from below.\n- **Exit**: position closed after `Exit After Bars` candles.\n- **Long/Short**: long only.\n- **Indicators**: two EMAs.\n- **Stops**: none.\n- **Timeframe**: configurable.\n",
+    "details": "- **Entry**: oscillator crosses above `Long Entry Threshold` from below.\n- **Exit**: position closed after `Exit After Bars` candles.\n- **Long/Short**: long only.\n- **Indicators**: two EMAs.\n- **Stops**: none.\n- **Timeframe**: configurable.",
+    "parameters": ""
+   },
+   "472": {
+    "id": 472,
+    "name": "Three Signal Directional Trend",
+    "family": "trend",
+    "overview": "The Three Signal Directional Trend strategy combines MACD, Stochastic oscillator and moving average rate of change to determine trend direction. Each indicator votes for long or short conditions and positions are opened when at least two indicators agree. The method aims to capture broad directional moves while filtering noise using multiple confirmation signals.\n\n## Details\n\n- **Entry Criteria:**\n  - At least two out of three signals agree.\n  - **Long**: MACD signal rising, Stochastic below oversold, MA ROC positive.\n  - **Short**: MACD signal falling, Stochastic above overbought, MA ROC negative.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `AvgLength` = 50\n  - `RocLength` = 1\n  - `AvgRocLength` = 10\n  - `StochLength` = 14\n  - `SmoothK` = 3\n  - `Overbought` = 80\n  - `Oversold` = 20\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdAvgLength` = 9\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, Stochastic, SMA, ROC\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria:**\n  - At least two out of three signals agree.\n  - **Long**: MACD signal rising, Stochastic below oversold, MA ROC positive.\n  - **Short**: MACD signal falling, Stochastic above overbought, MA ROC negative.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Opposite signal.\n- **Stops**: None.\n- **Default Values**:\n  - `AvgLength` = 50\n  - `RocLength` = 1\n  - `AvgRocLength` = 10\n  - `StochLength` = 14\n  - `SmoothK` = 3\n  - `Overbought` = 80\n  - `Oversold` = 20\n  - `MacdFastLength` = 12\n  - `MacdSlowLength` = 26\n  - `MacdAvgLength` = 9\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: MACD, Stochastic, SMA, ROC\n  - Stops: None\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3557": {
+    "id": 3557,
+    "name": "At Random",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 5 expert advisor \"At random\" (MQL ID 39835). The original bot demonstrates how a purely random decision process behaves when it is forced to be always in the market. Every completed bar triggers a coin flip that determines whether the next action is to buy or to sell. The StockSharp version keeps the same idea but expresses it with high-level API primitives (`SubscribeCandles`, `BuyMarket`, `SellMarket`) and integrates smoothly with Designer or Runner.\n\nThe implementation intentionally avoids take-profit, stop-loss or trailing stops, mirroring the reference MQL script. It therefore serves as a testing harness or a pedagogical example rather than a profitable strategy.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `TradeVolume` | Base order size used for every random entry. Must remain positive. |\n| `CloseBeforeReversal` | Forces the strategy to close the current position before taking the next random trade. |\n| `LogSignals` | Writes `AddInfoLog` messages whenever a random direction is generated. |\n| `CandleType` | Timeframe that produces the candle series driving the random coin flip. |\n| `RandomSeed` | Seed value for the pseudo random number generator. Use `0` to rely on the system clock. |"
+   },
+   "2396": {
+    "id": 2396,
+    "name": "Center Of Gravity Candle",
+    "family": "trend",
+    "overview": "This strategy replicates the MetaTrader expert \"Exp_CenterOfGravityCandle\" using the StockSharp high level API. The expert trades synthetic candles generated by the Center of Gravity Candle indicator. Each synthetic candle is built by applying John Ehlers' Center of Gravity calculation to the open, high, low and close prices and then smoothing the results with a configurable moving average. The color of the synthetic candle (bullish, bearish or neutral) is the only trading signal.\n\n## Indicator logic\n\n1. Each incoming market candle is processed after it is fully closed.\n2. For every price component (open, high, low, close) the strategy calculates two moving averages: a simple MA and a linear weighted MA with the period defined by **Period**.\n3. The product of these two averages is divided by the instrument's price step and smoothed with the configured method (**Ma Method**) and length (**Smooth Period**).\n4. The synthetic high and low are forced to include the synthetic open/close so that candle bodies stay consistent with the MetaTrader implementation.\n5. The candle color is determined by comparing the synthetic open and close: open below close = bullish (color 2), open above close = bearish (color 0), otherwise neutral (color 1).\n\n## Trading rules\n\n1. The strategy keeps a rolling history of synthetic candle colors and inspects the bar defined by **Signal Bar** (default = previous finished bar).\n2. When the inspected synthetic candle turns bullish and the previous candle was not bullish:\n   - Close any existing short position if **Enable Sell Close** is `true`.\n   - Open a new long position if **Enable Buy Open** is `true`.\n3. When the inspected synthetic candle turns bearish and the previous candle was not bearish:\n   - Close any existing long position if **Enable Buy Close** is `true`.\n   - Open a new short position if **Enable Sell Open** is `true`.\n4. Market entries use the volume calculated from **Money Management** and **Margin Mode**. Negative values for **M",
+    "details": "",
+    "parameters": "- **Money Management** – fraction of account value used to derive order volume (negative values = fixed lot). Optimizable.\n- **Margin Mode** – interpretation of the money management parameter (equity based, balance based, loss based or fixed lot).\n- **Stop Loss** – stop-loss distance in price steps. Used both for protection orders and risk-based position sizing.\n- **Take Profit** – take-profit distance in price steps. Applied via `StartProtection`.\n- **Open Long / Open Short** – allow opening long/short positions on their respective signals.\n- **Close Long / Close Short** – allow closing long/short positions when the opposite signal appears.\n- **Candle Type** – timeframe of candles used for indicator calculation.\n- **Center of Gravity Period** – base period for the simple and linear weighted moving averages. Optimizable.\n- **Smoothing Period** – length of the smoothing moving average applied to the synthetic candles. Optimizable.\n- **Smoothing Method** – moving average type used in the smoothing stage (SMA, EMA, SMMA or LWMA).\n- **Signal Bar** – index of the synthetic candle used to generate signals (0 = current, 1 = previous, etc.)."
+   },
+   "2324": {
+    "id": 2324,
+    "name": "RAVI Histogram",
+    "family": "trend",
+    "overview": "This strategy converts the MetaTrader RAVI Histogram expert to StockSharp. It measures trend strength as the percentage difference between a fast and a slow EMA. The result is compared with upper and lower levels to decide when to trade.\n\nWhen the RAVI value rises above the upper level the market is considered bullish. Short positions are closed and, if enabled, a long position is opened. When the value falls below the lower level the strategy closes longs and may open a short. By default it operates on four‑hour candles.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: RAVI crosses upward through `UpLevel`.\n  - **Short**: RAVI crosses downward through `DownLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite RAVI signal closes existing positions.\n- **Stops**: None.\n- **Filters**: None.\n- **Timeframe**: 4‑hour candles by default.\n- **Parameters**:\n  - `FastLength` and `SlowLength` – EMA periods for RAVI calculation.\n  - `UpLevel` and `DownLevel` – thresholds defining trending zones.\n  - `BuyOpen`, `SellOpen`, `BuyClose`, `SellClose` – enable or disable operations in each direction.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: RAVI crosses upward through `UpLevel`.\n  - **Short**: RAVI crosses downward through `DownLevel`.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite RAVI signal closes existing positions.\n- **Stops**: None.\n- **Filters**: None.\n- **Timeframe**: 4‑hour candles by default.\n- **Parameters**:\n  - `FastLength` and `SlowLength` – EMA periods for RAVI calculation.\n  - `UpLevel` and `DownLevel` – thresholds defining trending zones.\n  - `BuyOpen`, `SellOpen`, `BuyClose`, `SellClose` – enable or disable operations in each direction.",
+    "parameters": ""
+   },
+   "1166": {
+    "id": 1166,
+    "name": "Pineconnector Strategy Template",
+    "family": "trend",
+    "overview": "This strategy demonstrates how to connect any indicator to generate trading signals. It uses two moving averages as an example and enters long when the fast average crosses above the slow average, and enters short on the opposite cross.\n\n## Parameters\n- **Fast Length** – period of the fast moving average.\n- **Slow Length** – period of the slow moving average.\n- **Candle Type** – candle type for calculation.\n",
+    "details": "",
+    "parameters": "- **Fast Length** – period of the fast moving average.\n- **Slow Length** – period of the slow moving average.\n- **Candle Type** – candle type for calculation."
+   },
+   "1178": {
+    "id": 1178,
+    "name": "Powertrend - Volume Range Filter",
+    "family": "trend",
+    "overview": "This strategy uses a volume-adjusted range filter to define dynamic price bands. Long entries occur when price breaks the upper band during an uptrend, and positions close when price falls below the lower band. Optional filters include ADX, high/low trend confirmation, and a VWMA of the filter value.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "4053": {
+    "id": 4053,
+    "name": "Alligator Volatility",
+    "family": "trend",
+    "overview": "The Alligator Volatility Strategy is a high-level StockSharp port of the \"Alligator vol 1.1\" MetaTrader expert advisor. It combines Bill Williams' Alligator indicator with optional fractal breakout confirmation, martingale-style averaging orders, and trailing risk management. The module is intended for discretionary traders who want to automate the original workflow while keeping granular control over position sizing and filters.\n\n## Logic overview\n\n- Subscribes to the selected time-frame candles and calculates three smoothed moving averages (jaw, teeth, lips) that form the Alligator indicator.\n- Detects bullish phases when the lips stay above the jaw by at least the configured `EntryGap` and remain above the teeth by `ExitGap`. Bearish phases require the jaw to dominate the lips while staying above the teeth.\n- Tracks Bill Williams fractals within the latest `FractalBars` candles. The fractal breakout filter is optional and ensures fresh highs for longs or fresh lows for shorts.\n- Places an initial market order once a new Alligator state appears. When martingale is enabled, additional averaging limit orders are distributed around multiples of the stop-loss distance with exponential position sizing.\n- Manages position exits through take-profit, stop-loss, optional trailing stop, and optional Alligator state reversal.\n\n## Entry rules\n\n1. The strategy waits for finished candles and ignores partial data.\n2. A long setup requires one of the following:\n   - Alligator entry enabled, the bullish state flips from false to true, and (if enabled) a valid upper fractal is at least `FractalDistancePips` away from the current close.\n   - Alligator entry disabled, but (if enabled) the fractal breakout condition still passes.\n3. A short setup mirrors the long conditions using the bearish Alligator state and lower fractals.\n4. The `ManualMode` parameter blocks automatic entries, allowing discretionary order submission through the UI.\n5. When `OnlyOnePosition` is true the strategy r",
+    "details": "",
+    "parameters": "| Parameter | Description | Default |\n|-----------|-------------|---------|\n| `CandleType` | Data type used for candle subscription. | 15-minute time frame |\n| `ManualMode` | Disable automatic entries when true. | `false` |\n| `UseAlligatorEntry` | Require Alligator expansion before entering. | `true` |\n| `UseFractalFilter` | Enforce fractal breakout confirmation. | `false` |\n| `UseAlligatorExit` | Close trades when the Alligator collapses. | `false` |\n| `OnlyOnePosition` | Allow only a single open position. | `true` |\n| `EnableMartingale` | Add averaging limit orders. | `true` |\n| `EnableTrailing` | Activate trailing stop management. | `true` |\n| `RiskPerThousand` | Equity-based volume multiplier. | `0.04` |\n| `MaxVolume` | Maximum allowed order size. | `0.5` |\n| `MinVolume` | Fallback order size. | `0.01` |\n| `StopLossPips` / `TakeProfitPips` | Distance to stop and target in pips. | `80` |\n| `TrailingStopPips` | Trailing stop distance in pips. | `30` |\n| `TrailingActivationPips` | Profit required before trailing adjusts. | `20` |\n| `EntryGap` | Minimum gap between lips and jaw (price units). | `0.0005` |\n| `ExitGap` | Minimum separation from the teeth (price units). | `0.0001` |\n| `JawPeriod`, `TeethPeriod`, `LipsPeriod` | SMMA lengths for the Alligator lines. | `13 / 8 / 5` |\n| `JawShift`, `TeethShift`, `LipsShift` | Bar shift applied when evaluating signals. | `8 / 5 / 3` |\n| `FractalBars` | Number of candles scanned for fractals. | `10` |\n| `FractalDistancePips` | Required distance between price and fractal. | `30` |\n| `MartingaleDepth` | Number of averaging limit orders. | `10` |\n| `MartingaleMultiplier` | Additional multiplier for averaging volume. | `1.3` |\n| `GridSpreadPips` | Spread offset applied to the grid. | `10` |"
+   },
+   "726": {
+    "id": 726,
+    "name": "Eliora Gold 1m Heikin Ashi",
+    "family": "trend",
+    "overview": "Strategy uses Heikin Ashi candles on a one-minute timeframe. It enters on strong trend-aligned candles when the market is not consolidating and enforces a cooldown between trades. Exits are handled by an ATR-based trailing stop.\n\n## Details\n\n- **Entry Criteria**: strong Heikin Ashi candle in trend direction, no consolidation, volatility filter.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `CooldownBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Heikin Ashi, ATR, SMA, Highest/Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: strong Heikin Ashi candle in trend direction, no consolidation, volatility filter.\n- **Long/Short**: Both.\n- **Exit Criteria**: ATR trailing stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AtrPeriod` = 14\n  - `CooldownBars` = 5\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Heikin Ashi, ATR, SMA, Highest/Lowest\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Intraday (1m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "2605": {
+    "id": 2605,
+    "name": "Kolier SuperTrend X2",
+    "family": "trend",
+    "overview": "The strategy reproduces the original MetaTrader expert by combining two SuperTrend filters working on different timeframes. The higher timeframe SuperTrend defines the dominant market bias, while the lower timeframe SuperTrend searches for synchronized breakouts to trigger entries. The StockSharp port uses high-level API bindings, so the indicators receive candle updates directly and keep their own history.",
+    "details": "",
+    "parameters": "- `TrendCandleType` – timeframe for the trend filter.\n- `EntryCandleType` – timeframe for entry signals.\n- `TrendAtrPeriod`, `TrendAtrMultiplier` – ATR settings for the trend SuperTrend.\n- `EntryAtrPeriod`, `EntryAtrMultiplier` – ATR settings for the entry SuperTrend.\n- `TrendMode`, `EntryMode` – confirmation modes: `NewWay` reacts after one bar, other modes require two consecutive bars (Visual and ExpertSignal behave like the classic SuperTrend in this port).\n- `TrendSignalShift`, `EntrySignalShift` – number of closed bars to wait before using indicator values.\n- `EnableBuyEntries`, `EnableSellEntries` – enable long/short trades.\n- `CloseBuyOnTrendFlip`, `CloseSellOnTrendFlip` – exit on opposite signals from the trend filter.\n- `CloseBuyOnEntryFlip`, `CloseSellOnEntryFlip` – exit on opposite signals from the entry timeframe.\n- `StopLossPoints`, `TakeProfitPoints` – distance in price steps for protective orders (set to 0 to disable).\n- `Volume` – base volume for new positions.\n- `Slippage` – placeholder parameter kept for compatibility with the source expert."
+   }
+  }
+ }
+}

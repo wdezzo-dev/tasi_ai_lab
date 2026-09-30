@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 14,
+      "name": "TradingView Supertrend Flip",
+      "family": "trend",
+      "entry_long": "crossabove(close, sma(close,10) + 3 * atr(high, low, close, 10)) and volume_ratio(volume,20) > 1",
+      "exit_long": "crossbelow(close, sma(close,10) + 3 * atr(high, low, close, 10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Supertrend is not in the DSL, so the documented period 10 and multiplier 3.0 are approximated by a trailing SMA(10)+3*ATR(10) band; a flip to green buys and a flip to red sells back. Optional volume confirmation uses the documented VolumeAvgPeriod=20; no stops are documented."
+    },
+    {
+      "id": 3711,
+      "name": "RRS Chaotic",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA rolls random symbols, random lot sizes and random directions on every tick, so there is no market-derived entry signal to translate. Marked non-trading with a never-true guard rather than inventing a signal; money-management and point-based TP/SL are unsupported."
+    },
+    {
+      "id": 725,
+      "name": "Ehlers Combo",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10), ema(close,20)) and zscore(close,20) > -2 and adx(high, low, close,14) > 20",
+      "exit_long": "crossbelow(ema(close,10), ema(close,20)) or bars_since(ema(close,10) > ema(close,20)) > 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Elegant Oscillator/Instantaneous Trend pair is approximated by an EMA(10)-over-EMA(20) cross and the signal-to-noise gate by a z-score(20) floor; Length, Rms length, SNR threshold and Exit length have no documented values so 10/20/20/20 are explicit defaults. The documented exit uses the exit length, rendered as 20 bars of EMA(10)>EMA(20)."
+    },
+    {
+      "id": 1294,
+      "name": "Separated Moving Average",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), sma(open,20))",
+      "exit_long": "crossbelow(sma(close,20), sma(open,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Averages built only from bullish (up-close) and only from bearish (down-close) bars cannot be conditioned inside the DSL, so the bullish leg is approximated by SMA(close,20) and the bearish leg by SMA(open,20) at the documented Length=20. Heikin-Ashi prices and the EMA/HMA options are unsupported; entry is the bullish-above-bearish cross and exit the reverse cross."
+    },
+    {
+      "id": 2153,
+      "name": "Anchored Momentum Candle",
+      "family": "trend",
+      "entry_long": "crossabove(ema(sma(close,14) - sma(open,14),9),0)",
+      "exit_long": "crossbelow(ema(sma(close,14) - sma(open,14),9),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented simple-average momentum (close minus open) smoothed by an exponential average is written as SMA(14)-SMA(open,14) passed through EMA(9); a cross of that line above zero is the blue (long) candle and a cross below zero the pink (short) candle. Momentum Period and Smooth Period have no values, so 14 and 9 are explicit defaults."
+    },
+    {
+      "id": 3330,
+      "name": "Gridder EA Strategy (Ported from MQL4)",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a multi-order grid/basket manager: entries are averaging legs triggered by pip spacing from the previous order level, with lot and step progressions, per-lot profit/loss targets and emergency hedging. No market-derived directional signal exists to translate, so it is marked non-trading; grid spacing and lot sizing are not expressible here."
+    },
+    {
+      "id": 3678,
+      "name": "Two Pair Correlation",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal is a bid-price spread between two securities (BTCUSD/ETHUSD), so it needs a second instrument and cannot be expressed in a single-ticker DSL. Marked non-trading; the drawdown gate, ATR(14) volatility pause, basket profit target and pair position sizing are all multi-symbol constructs."
+    },
+    {
+      "id": 4043,
+      "name": "Center Of Gravity Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "low > sma(close,125) - std(close,125)",
+      "exit_long": "close < sma(close,125) - std(close,125)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The polynomial-regression intercept and the stdl buffer are not in the DSL, so the regression center is approximated by SMA(close) and the lower band by center minus one standard deviation over the documented Bars Back default of 125. The documented long rule (low above the lower band) is kept; optional absolute-price Stop Loss/Take Profit distances have no values, so both are null."
+    },
+    {
+      "id": 4086,
+      "name": "Parabolic SAR Limit",
+      "family": "volume",
+      "entry_long": "close > ema(close,20) and bars_since(close <= ema(close,20)) < 5",
+      "exit_long": "close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is not available, so a buy limit glued under a rising trend is approximated by price recovering EMA(20) within 5 bars of an EMA(20) touch; the exit is the trend-line break. SarStep/SarMaximum and the point-based StopLossPoints/TakeProfitPoints have no documented values, and pending-order re-alignment plus virtual point levels are unsupported."
+    },
+    {
+      "id": 2286,
+      "name": "Nevalyashka Stopup",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entries are purely mechanical - the first trade sells and every later trade enters opposite the previous closed trade - with martingale widening of the point distances, so there is no market-derived signal to translate. Marked non-trading; the documented StopLossPoints=150 / TakeProfitPoints=50 are point distances, not percentages, and the state-dependent reversal cannot be expressed."
+    }
+  ]
+}

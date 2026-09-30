@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 4092,
+      "name": "Elli",
+      "family": "trend",
+      "entry_long": "close > (donchian_high(high,60) + donchian_low(low,60)) / 2 and (donchian_high(high,19) + donchian_low(low,19)) / 2 > (donchian_high(high,60) + donchian_low(low,60)) / 2 and adx(high,low,close,10) > 13",
+      "exit_long": "close < (donchian_high(high,60) + donchian_low(low,60)) / 2 or adx(high,low,close,10) < 6",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Kijun is the 60-bar Donchian midpoint and Tenkan the 19-bar midpoint of the documented periods, with ConvertHigh/ConvertLow mapped to ADX(10) thresholds 13/6. The H1/M1 timeframe split, Tenkan-Kijun pip gap and 60/30 pip StartProtection levels are not expressible as percent fields."
+    },
+    {
+      "id": 2374,
+      "name": "XMA Candles",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,14), ema(open,14))",
+      "exit_long": "crossbelow(ema(close,14), ema(open,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A bullish colour change of the smoothed candle is a close-EMA crossing above the open-EMA, and the bearish change is the mirror. Length 14 is a fallback because the docs list the parameter name without a value, and the percent StopLoss/TakeProfit fields have no supplied values."
+    },
+    {
+      "id": 134,
+      "name": "ADX MACD",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,14) > 25 and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "adx(high,low,close,14) < 20 or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The documented aligned ADX+MACD entry is expressed with ADX(14) strength above 25 and MACD(12,26,9) above its signal; the exit fires when ADX weakens or MACD crosses down. The 2% percent stop is documented; the 15-minute timeframe and neural/seasonality filters have no DSL equivalent."
+    },
+    {
+      "id": 3584,
+      "name": "MultiCurrency Template MT5",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a multi-symbol basket engine with a martingale averaging block, break-even averaging and trailing across a comma-separated security list, and its two-candle pattern rules are not stated in the docs. Marked non-trading so no signal is fabricated."
+    },
+    {
+      "id": 649,
+      "name": "CVD Divergence Volume HMA RSI MACD",
+      "family": "trend",
+      "entry_long": "2 * ema(close,10) - ema(ema(close,10),10) > 2 * ema(close,25) - ema(ema(close,25),25) and close > 2 * ema(close,10) - ema(ema(close,10),10) and rsi(close,14) > 40 and rsi(close,14) < 70 and macd(close,12,26) > macd_signal(close,12,26,9) and roc(macd(close,12,26),1) > 0 and volume_ratio(volume,20) > 1.5",
+      "exit_long": "close < 2 * ema(close,10) - ema(ema(close,10),10) or rsi(close,14) > 70 or crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Hull 20/50 are approximated by 2*EMA-EMA(EMA) at half the documented lengths, keeping the documented RSI 40-70 band, MACD 12/26/9 histogram rise and VolumeMultiplier 1.5 on the 20-bar average. CVD divergence is dropped because tick-level delta is not in the data."
+    },
+    {
+      "id": 651,
+      "name": "Cycle Biologique",
+      "family": "other",
+      "entry_long": "crossabove(close - sma(close,30), 0)",
+      "exit_long": "crossbelow(close - sma(close,30), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A sine oscillator is not available, so the documented CycleLength 30 is kept as a zero-centred 30-period cycle and the documented zero crossing entry/exit is applied to it. Amplitude 1.0 and Offset 0 have no effect on the sign rule and are dropped."
+    },
+    {
+      "id": 2209,
+      "name": "CCI Histogram",
+      "family": "other",
+      "entry_long": "crossbelow(zscore(close,14), 2)",
+      "exit_long": "crossabove(zscore(close,14), -2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI(14) is unavailable, so the documented upper/lower level exit-from-extreme is mapped to a 14-bar z-score leaving the +/-2 band, with the opposite signal as the documented exit. The 100/200 point stop and target are price steps, not percentages, so they are left null."
+    },
+    {
+      "id": 1935,
+      "name": "Vortex Indicator Cross",
+      "family": "other",
+      "entry_long": "crossabove(roc(high,14), roc(low,14))",
+      "exit_long": "crossbelow(roc(high,14), roc(low,14))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VI+/VI- are approximated by the competing 14-bar up and down price pressure, so the documented cross of the two lines keeps its directional meaning. Vortex Length 14 is a fallback since the docs list the parameter name only, and price-step stop/target are not percent fields."
+    },
+    {
+      "id": 830,
+      "name": "Gann Swing Multi Layer",
+      "family": "other",
+      "entry_long": "close > donchian_high_prev(high,3) and close > sma(close,7)",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Three consecutive aligned Gann swing turns are approximated by a close beyond the prior three-bar high with an SMA(7) continuation filter, exiting on the mirrored three-bar low. The multi-layer swing stacking, its multipliers and the 1-minute swing frame are not expressible."
+    },
+    {
+      "id": 1302,
+      "name": "Simple APF Strategy Backtesting",
+      "family": "other",
+      "entry_long": "roc(close,20) > 0 and roc(close,20) > sma(roc(close,20),20)",
+      "exit_long": "roc(close,20) <= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Autocorrelation cycle detection and the linear-regression forecast are not available, so the documented forecast-gain entry is proxied by ROC(20) above its own 20-bar mean, and the target-price exit by ROC turning non-positive. Length 20 and the gain/signal thresholds are fallbacks because no values are documented."
+    }
+  ]
+}

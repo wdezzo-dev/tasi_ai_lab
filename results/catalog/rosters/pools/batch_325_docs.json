@@ -1,0 +1,98 @@
+{
+ "batch_325": {
+  "strategy_ids": [
+   1219,
+   2536,
+   2523,
+   1059,
+   2735,
+   1043,
+   549,
+   49,
+   3165,
+   1211
+  ],
+  "docs": {
+   "1219": {
+    "id": 1219,
+    "name": "Random State Machine",
+    "family": "trend",
+    "overview": "Random State Machine Strategy enters trades on random state changes filtered by a moving average. Long positions open when a state change occurs and price is above the moving average. Short positions open when price is below the average. The strategy supports optional take-profit/stop-loss, timed exits, and moving-average cross exits.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2536": {
+    "id": 2536,
+    "name": "Currency Strength v1.1",
+    "family": "trend",
+    "overview": "The Currency Strength v1.1 strategy replicates the MetaTrader expert advisor *Currency Strength v1.1*. It measures the relative strength of the eight major currencies (USD, EUR, JPY, CAD, AUD, NZD, GBP, CHF) using daily percentage changes for 26 liquid FX pairs. Whenever the strength of two currencies diverges beyond a configurable threshold, the strategy opens a position in the corresponding currency pair in the direction of the stronger currency.",
+    "details": "",
+    "parameters": ""
+   },
+   "2523": {
+    "id": 2523,
+    "name": "Fractal Weight Oscillator",
+    "family": "trend",
+    "overview": "This strategy replicates the \"Exp_Fractal_WeightOscillator\" expert advisor by\naggregating four oscillators (RSI, Money Flow Index, Williams %R and DeMarker)\ninto a single smoothed composite signal. The oscillator is compared with two\nhorizontal levels (`HighLevel`/`LowLevel`) to trigger long or short trades in\neither trend-following or counter-trend mode. All calculations are performed on\nthe selected candle timeframe and use the standard StockSharp high-level API.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `TrendMode` | Select direct (trend-following) or counter-trend behaviour. |\n| `SignalBar` | Number of closed bars back used for signal evaluation. |\n| `Period` | Base length for RSI, MFI, Williams %R and DeMarker. |\n| `SmoothingLength` | Window for the moving-average smoother. |\n| `SmoothingMethod` | Type of moving average (`None`, `Sma`, `Ema`, `Smma`, `Lwma`). |\n| `RsiPrice`, `MfiPrice` | Applied price source used in component oscillators. |\n| `MfiVolume` | Volume type for MFI (tick and real both use candle volume). |\n| `RsiWeight`, `MfiWeight`, `WprWeight`, `DeMarkerWeight` | Relative weights in the composite oscillator. |\n| `HighLevel`, `LowLevel` | Upper and lower thresholds for level crossings. |\n| `BuyOpenEnabled`, `SellOpenEnabled` | Enable long or short entries. |\n| `BuyCloseEnabled`, `SellCloseEnabled` | Allow closing existing positions on opposite signals. |\n| `StopLossPoints`, `TakeProfitPoints` | Protective distances in price steps (0 disables the level). |\n| `CandleType` | Timeframe of candles passed to the strategy. |\n| `Volume` *(Strategy property)* | Trade size used for entries (position reversals add the absolute position). |"
+   },
+   "1059": {
+    "id": 1059,
+    "name": "MOC Delta MOO Entry",
+    "family": "trend",
+    "overview": "This strategy computes buy and sell volume delta during the 14:50–14:55 session and trades at 08:30 if the delta percentage exceeds a threshold relative to the day's volume. It uses SMA filters on the open price and attaches tick-based stop loss and take profit.\n\n## Details\n\n- **Entry Criteria:**\n  - **Long:** 08:30, MOC delta % above threshold, open above SMA15 and SMA30.\n  - **Short:** 08:30, MOC delta % below negative threshold, open below SMA15 and SMA30.\n- **Exit Criteria:**\n  - **Stops:** Take-profit and stop-loss in ticks.\n  - **Time-based:** Close all positions at 14:50.\n- **Default Values:**\n  - `DeltaThreshold` = 2\n  - `TakeProfitTicks` = 20\n  - `StopLossTicks` = 10\n",
+    "details": "- **Entry Criteria:**\n  - **Long:** 08:30, MOC delta % above threshold, open above SMA15 and SMA30.\n  - **Short:** 08:30, MOC delta % below negative threshold, open below SMA15 and SMA30.\n- **Exit Criteria:**\n  - **Stops:** Take-profit and stop-loss in ticks.\n  - **Time-based:** Close all positions at 14:50.\n- **Default Values:**\n  - `DeltaThreshold` = 2\n  - `TakeProfitTicks` = 20\n  - `StopLossTicks` = 10",
+    "parameters": ""
+   },
+   "2735": {
+    "id": 2735,
+    "name": "Starter V6 Mod Strategy (StockSharp Conversion)",
+    "family": "trend",
+    "overview": "The **Starter V6 Mod** strategy is a StockSharp high-level API conversion of the MetaTrader 5 Expert Advisor `Starter_v6mod`. The original system combines a Laguerre RSI oscillator, dual exponential moving averages, a commodity channel index filter, and a grid-style position management module. This port preserves the multi-layered confirmation logic while adapting position handling, money management, and protective actions to the StockSharp environment.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| ---- | ------- | ----------- |\n| `UseManualVolume` | `false` | Toggle between fixed and risk-based position sizing. |\n| `ManualVolume` | `1` | Volume used when manual sizing is enabled or risk sizing cannot be computed. |\n| `RiskPercent` | `5` | Percentage of equity risked per trade when automatic sizing is active. |\n| `StopLossPips` | `35` | Stop-loss distance in pips. |\n| `TakeProfitPips` | `10` | Take-profit distance in pips. |\n| `TrailingStopPips` | `0` | Trailing stop distance in pips (0 disables trailing). |\n| `TrailingStepPips` | `5` | Minimum advance before the trailing stop begins to follow price. |\n| `DecreaseFactor` | `1.6` | Factor applied to reduce size after each loss. |\n| `MaxLossesPerDay` | `3` | Maximum losing exits permitted per calendar day. |\n| `EquityCutoff` | `800` | Equity threshold that halts new trades. |\n| `MaxOpenTrades` | `10` | Maximum number of simultaneous grid entries. |\n| `GridStepPips` | `30` | Minimum spacing between stacked entries in the same direction. |\n| `LongEmaPeriod` | `120` | Period of the slow EMA filter. |\n| `ShortEmaPeriod` | `40` | Period of the fast EMA filter. |\n| `CciPeriod` | `14` | Commodity Channel Index period. |\n| `AngleThreshold` | `3` | EMA spread threshold expressed in ticks. |\n| `LevelUp` | `0.85` | Upper Laguerre level. |\n| `LevelDown` | `0.15` | Lower Laguerre level. |\n| `CandleType` | `15m` | Candle timeframe used for calculations. |"
+   },
+   "1043": {
+    "id": 1043,
+    "name": "Mean Reversion with Incremental Entry",
+    "family": "trend",
+    "overview": "This strategy enters trades when price deviates from a simple moving average by a defined percentage. Additional orders are placed incrementally as price moves further away from the average.\n\nPositions are closed once price returns to the moving average.\n\n## Details\n\n- **Entry Criteria:**\n  - **Long:** `Low < SMA` and percent difference between `Low` and `SMA` ≥ `Initial Percent`.\n  - **Short:** `High > SMA` and percent difference between `High` and `SMA` ≥ `Initial Percent`.\n- **Incremental Entries:** New orders are added every `Percent Step` further from the previous entry.\n- **Exit Criteria:**\n  - **Long:** `Close ≥ SMA`.\n  - **Short:** `Close ≤ SMA`.\n- **Indicators:** SMA.\n- **Default Values:**\n  - `MA Length` = 30.\n  - `Initial Percent` = 5.\n  - `Percent Step` = 1.\n",
+    "details": "- **Entry Criteria:**\n  - **Long:** `Low < SMA` and percent difference between `Low` and `SMA` ≥ `Initial Percent`.\n  - **Short:** `High > SMA` and percent difference between `High` and `SMA` ≥ `Initial Percent`.\n- **Incremental Entries:** New orders are added every `Percent Step` further from the previous entry.\n- **Exit Criteria:**\n  - **Long:** `Close ≥ SMA`.\n  - **Short:** `Close ≤ SMA`.\n- **Indicators:** SMA.\n- **Default Values:**\n  - `MA Length` = 30.\n  - `Initial Percent` = 5.\n  - `Percent Step` = 1.",
+    "parameters": ""
+   },
+   "549": {
+    "id": 549,
+    "name": "Baseline2",
+    "family": "trend",
+    "overview": "Strategy enters long when price touches recent support while fast EMA is above slow EMA and RSI > 50. Short entry occurs on resistance touch with fast EMA below slow EMA and RSI < 45. Volume must be above its average and ADX above 15. Exits use ATR-based stop loss and take profit.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "49": {
+    "id": 49,
+    "name": "VWMA Cross",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 184%. It performs best in the crypto market.\n\nA close above VWMA after being below it generates a long entry, while a drop below VWMA prompts a short trade. Positions exit when price crosses back in the opposite direction.\n\nUsing a volume-weighted average reduces noise from low-volume periods.\n\n## Details\n\n- **Entry Criteria**: Price crosses VWMA from below or above.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse crossover or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VWMAPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Price crosses VWMA from below or above.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Reverse crossover or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `VWMAPeriod` = 14\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3165": {
+    "id": 3165,
+    "name": "Dynamic Averaging",
+    "family": "trend",
+    "overview": "Dynamic Averaging is a direct port of the MetaTrader 5 expert advisor \"Dynamic averaging.mq5\" (id 23319). The strategy combines a fast stochastic oscillator with a volatility filter based on standard deviation. Trades are only allowed while the market volatility remains below its rolling average, forcing entries to occur during consolidations where stochastic reversals are more reliable.",
+    "details": "",
+    "parameters": "- **TradeVolume** – order size for every new entry. It is automatically doubled after a losing sequence and reset after a profitable one.\n- **MinimumProfit** – floating profit (in account currency) that closes all open positions once exceeded.\n- **SlidingWindowDays** – number of calendar days used to average the standard deviation values and build the volatility baseline.\n- **StochasticKPeriod** – number of bars for the %K calculation.\n- **StochasticDPeriod** – smoothing length for the %D line.\n- **StochasticSlowPeriod** – final slowing period for the stochastic oscillator.\n- **StdDevPeriod** – lookback period for the standard deviation indicator.\n- **CandleType** – source candles for calculations (defaults to 15-minute time frame)."
+   },
+   "1211": {
+    "id": 1211,
+    "name": "Quantitative Trend Strategy Uptrend Long",
+    "family": "trend",
+    "overview": "This strategy buys when the price closes above the most recent pivot high detected over configurable lookback windows. Support and resistance levels are taken from pivot highs and lows. Positions are protected by percent-based take-profit and stop-loss.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Close price crosses above last pivot high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close price crosses below last pivot low.\n  - Last pivot high becomes lower than last pivot low.\n- **Stops**: Yes, percent take-profit and stop-loss.\n- **Default Values**:\n  - `PivotLeft` = 46\n  - `PivotRight` = 32\n  - `StopLossPercent` = 1.75\n  - `TakeProfitPercent` = 2\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Close price crosses above last pivot high.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Close price crosses below last pivot low.\n  - Last pivot high becomes lower than last pivot low.\n- **Stops**: Yes, percent take-profit and stop-loss.\n- **Default Values**:\n  - `PivotLeft` = 46\n  - `PivotRight` = 32\n  - `StopLossPercent` = 1.75\n  - `TakeProfitPercent` = 2",
+    "parameters": ""
+   }
+  }
+ }
+}

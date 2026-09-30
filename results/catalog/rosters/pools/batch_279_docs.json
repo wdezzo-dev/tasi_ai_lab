@@ -1,0 +1,98 @@
+{
+ "batch_279": {
+  "strategy_ids": [
+   3209,
+   1168,
+   3252,
+   743,
+   834,
+   1709,
+   428,
+   3080,
+   1154,
+   4003
+  ],
+  "docs": {
+   "3209": {
+    "id": 3209,
+    "name": "ADX MACD Deev",
+    "family": "trend",
+    "overview": "The **ADX MACD Deev Strategy** is a StockSharp port of the MetaTrader expert advisor with the same name. It combines the trend strength signal from the Average Directional Index (ADX) with momentum confirmation from the Moving Average Convergence Divergence (MACD). The strategy trades only when both indicators agree on the market direction and can optionally secure profits through trailing stops and partial position exits.",
+    "details": "",
+    "parameters": "| Group | Name | Description |\n| --- | --- | --- |\n| Trading | Order Volume | Volume of each new market order. |\n| Risk | Stop Loss (pips) | Initial stop-loss offset from entry. |\n| Risk | Take Profit (pips) | Initial take-profit offset from entry. |\n| Risk | Trailing Stop (pips) | Trailing stop distance. Set to zero to disable trailing. |\n| Risk | Trailing Step (pips) | Extra price move before the trailing stop moves again. |\n| Risk | Take Half Profit | Enables partial exit when the take-profit level is hit. |\n| Indicators | ADX Period | ADX averaging period. |\n| Indicators | ADX Bars Interval | Number of recent ADX bars that must trend in one direction. |\n| Indicators | ADX Minimum | Minimum ADX value required for entries. |\n| Indicators | MACD Fast EMA | Fast EMA length used by MACD. |\n| Indicators | MACD Slow EMA | Slow EMA length used by MACD. |\n| Indicators | MACD Signal EMA | Signal EMA length used by MACD. |\n| Indicators | MACD Bars Interval | Number of MACD bars that must align in the same direction. |\n| Indicators | MACD Minimum (pips) | Minimum MACD magnitude converted to pips. |\n| General | Candle Type | Candle type or time-frame used for calculations. |"
+   },
+   "1168": {
+    "id": 1168,
+    "name": "Pivot Percentile Trend",
+    "family": "trend",
+    "overview": "This strategy computes percentile-based trend strength across multiple lookbacks and combines it with a SuperTrend filter. Long trades occur when trend strength is positive and price is above the SuperTrend line. Short trades are taken when trend strength is negative and price is below the SuperTrend.\n\n## Details\n\n- **Indicators**: percentile analysis, SuperTrend\n- **Direction**: Both\n- **Timeframe**: Any\n",
+    "details": "- **Indicators**: percentile analysis, SuperTrend\n- **Direction**: Both\n- **Timeframe**: Any",
+    "parameters": ""
+   },
+   "3252": {
+    "id": 3252,
+    "name": "Trend Line",
+    "family": "trend",
+    "overview": "## Summary\nThe Trend Line strategy replicates the core trade management logic of the original MetaTrader expert by combining a fast and slow linear weighted moving average, a momentum filter and a MACD confirmation. The conversion focuses on high-level StockSharp components and keeps the same systematic approach that waits for momentum bursts in the direction of the trend before entering. Protective stops, profit targets and an optional trailing stop in price steps provide risk management similar to the source expert.\n\n## Trading Logic\n1. Subscribe to the configured candle series and calculate the following indicators:\n   - Fast linear weighted moving average (LWMA) with the configurable `FastMaPeriod`.\n   - Slow LWMA with the configurable `SlowMaPeriod`.\n   - Momentum indicator with period `MomentumPeriod`. The most recent three momentum readings are tracked to emulate the multi-bar momentum check present in the MQL version.\n   - Moving Average Convergence Divergence (MACD) indicator with standard fast/slow/signal lengths. The strategy stores the MACD and signal values for later use.\n2. Enter long when:\n   - The fast LWMA is above the slow LWMA.\n   - At least one of the last three momentum values is greater than or equal to `MomentumBuyThreshold`.\n   - The MACD main line is above the MACD signal line.\n   - No open short position exists (short exposure is flattened before opening a long position).\n3. Enter short when:\n   - The fast LWMA is below the slow LWMA.\n   - At least one of the last three momentum values is less than or equal to `MomentumSellThreshold` (threshold should be negative to detect downward acceleration).\n   - The MACD main line is below the MACD signal line.\n   - No open long position exists (long exposure is flattened before opening a short position).\n4. After each entry the strategy places protective stop-loss and take-profit orders by distance in price steps. Both orders are recalculated every time the position changes.\n5. A trailing stop can be",
+    "details": "",
+    "parameters": "- `CandleType` – data type for the candle series used by every indicator (default 1-hour timeframe).\n- `FastMaPeriod` – period of the fast LWMA (default 6).\n- `SlowMaPeriod` – period of the slow LWMA (default 85).\n- `MomentumPeriod` – number of candles for the momentum calculation (default 14).\n- `MomentumBuyThreshold` – minimum positive momentum needed to allow new long positions (default 0.3).\n- `MomentumSellThreshold` – maximum (negative) momentum allowed before opening new short positions (default -0.3).\n- `MacdFastLength` – fast EMA length of the MACD (default 12).\n- `MacdSlowLength` – slow EMA length of the MACD (default 26).\n- `MacdSignalLength` – signal EMA length of the MACD (default 9).\n- `StopLossSteps` – protective stop distance expressed in instrument steps (default 20).\n- `TakeProfitSteps` – protective profit target distance in steps (default 50).\n- `TrailingStopSteps` – trailing stop distance in steps (default 40, disabled when zero).\n- `TrailingTriggerSteps` – profit in steps required before the trailing stop becomes active (default 40)."
+   },
+   "743": {
+    "id": 743,
+    "name": "EMA Grid Martingale Cooldown",
+    "family": "trend",
+    "overview": "Implements an EMA-based long-only grid system with optional martingale sizing and cooldown between grids. A new grid starts when both fast EMAs cross above their slower counterparts. Additional buys are placed at fixed pip intervals, and the position is closed at the weighted average price plus a buffer.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "834": {
+    "id": 834,
+    "name": "Gaussian Channel",
+    "family": "trend",
+    "overview": "The strategy builds a channel using an exponential moving average and average true range. Trades are opened when the price crosses the selected line within a lookback window. Positions can be reversed on opposite signals.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "1709": {
+    "id": 1709,
+    "name": "MLTrendE",
+    "family": "trend",
+    "overview": "This strategy trades in the direction of a weighted moving average (WMA) and optionally pyramids positions when price moves favorably.\n\n## Logic\n\n- Calculate a WMA of the selected candle series.\n- If no position is open:\n  - **Trade type 0**: open a long position when the close price is above the WMA, or a short position when it is below.\n  - **Trade type 1**: always open a long position.\n  - **Trade type 2**: always open a short position.\n- When a position is open and reaches the specified profit target, add another trade with scaled volume.\n- Once the maximum number of trades is reached, the entire position is closed at the next profit target.\n\n## Parameters\n\n- `Volume` – base trade volume.\n- `Multiplier1` – volume multiplier for the second trade.\n- `Multiplier2` – volume multiplier for the third trade.\n- `TakeProfit` – profit in price units required to scale or close.\n- `Map` – period of the weighted moving average.\n- `MaxTrades` – maximum number of consecutive trades.\n- `TradeType` – 0 trend following, 1 force long, 2 force short.\n- `CandleType` – timeframe of the analyzed candles.\n\n## Notes\n\nThe strategy uses only completed candles and market orders. It does not manage stops or risk; use account protection if needed.\n",
+    "details": "",
+    "parameters": "- `Volume` – base trade volume.\n- `Multiplier1` – volume multiplier for the second trade.\n- `Multiplier2` – volume multiplier for the third trade.\n- `TakeProfit` – profit in price units required to scale or close.\n- `Map` – period of the weighted moving average.\n- `MaxTrades` – maximum number of consecutive trades.\n- `TradeType` – 0 trend following, 1 force long, 2 force short.\n- `CandleType` – timeframe of the analyzed candles."
+   },
+   "428": {
+    "id": 428,
+    "name": "Improvisando",
+    "family": "trend",
+    "overview": "Improvisando mixes a basic EMA trend filter with RSI swings. The goal is to follow the prevailing direction indicated by the EMA while entering only when the RSI crosses the neutral 50 line. The original design also experimented with MACD style momentum but this simplified version focuses on clarity and ease of tuning.\n\nThe user can enable long and/or short trades separately.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Close > EMA` and `RSI > 50`\n  - **Short**: `Close < EMA` and `RSI < 50`\n- **Long/Short**: Configurable\n- **Exit Criteria**:\n  - Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `EmaLength` = 10\n  - `RsiLength` = 14\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: EMA, RSI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Close > EMA` and `RSI > 50`\n  - **Short**: `Close < EMA` and `RSI < 50`\n- **Long/Short**: Configurable\n- **Exit Criteria**:\n  - Opposite signal\n- **Stops**: None\n- **Default Values**:\n  - `EmaLength` = 10\n  - `RsiLength` = 14\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: EMA, RSI\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Short-term\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3080": {
+    "id": 3080,
+    "name": "Exp XBullsBearsEyes Vol",
+    "family": "trend",
+    "overview": "This strategy is a C# conversion of the MetaTrader expert **Exp_XBullsBearsEyes_Vol**. The original advisor combines Bulls Power and Bears Power readings, multiplies the result by candle volume and colours the histogram according to the resulting momentum. Two independent position slots are maintained for both the long and the short side, allowing the system to scale in when the colour intensity increases. The StockSharp port recreates the multi-stage filter, colour logic and trade management while using high-level API calls for orders and risk control.\n\nThe algorithm subscribes to a configurable timeframe, rebuilds the custom XBullsBearsEyes indicator and reacts only to finished candles. Colour transitions determine both the entries and the exits: bullish colours close short trades and can open one or two long slots; bearish colours perform the mirror action. Stop-loss and take-profit distances are translated into `StartProtection` parameters so that platform risk managers can handle protective orders.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `PrimaryVolume` | Volume for the first slot (triggered by colour 1 / 3). |\n| `SecondaryVolume` | Volume for the second slot (triggered by colour 0 / 4). |\n| `StopLossPoints` / `TakeProfitPoints` | Protective distances in price steps. Set to zero to disable. |\n| `AllowLongEntry` / `AllowShortEntry` | Enable scaling into the corresponding direction. |\n| `AllowLongExit` / `AllowShortExit` | Enable automated exits when the opposite colour appears. |\n| `CandleType` | Timeframe subscribed for candles and indicator calculation (default: 8 hours). |\n| `IndicatorPeriod` | EMA period used to rebuild Bulls/Bears Power. |\n| `Gamma` | Adaptive smoothing factor for the four-stage filter (0.0 – 0.999). |\n| `VolumeType` | Select tick volume or real volume for weighting. |\n| `HighLevel1`, `HighLevel2`, `LowLevel1`, `LowLevel2` | Level multipliers that define colour thresholds. |\n| `SmoothingMethod` | Moving average type used to smooth the indicator and the volume (SMA, EMA, SMMA, LWMA, Jurik, JurX, ParMA→EMA, T3, VIDYA→EMA, AMA). |\n| `SmoothingLength` | Length of the smoothing moving average. |\n| `SmoothingPhase` | Jurik phase parameter (clamped to [-100, 100]). |\n| `SignalBar` | Number of closed candles to step back before evaluating colour transitions. |"
+   },
+   "1154": {
+    "id": 1154,
+    "name": "Parabolic RSI",
+    "family": "trend",
+    "overview": "Strategy applying Parabolic SAR to RSI for trend shifts. The strategy enters when the SAR flips relative to the RSI line and can filter trades by RSI thresholds.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: `SAR` flips below RSI and (optional) `RSI ≥ LongRsiMin`\n  - Short: `SAR` flips above RSI and (optional) `RSI ≤ ShortRsiMax`\n- **Long/Short**: Configurable\n- **Exit Criteria**: Opposite SAR flip\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `SarStart` = 0.02\n  - `SarIncrement` = 0.02\n  - `SarMax` = 0.2\n  - `LongRsiMin` = 50\n  - `ShortRsiMax` = 50\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: Parabolic SAR, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: `SAR` flips below RSI and (optional) `RSI ≥ LongRsiMin`\n  - Short: `SAR` flips above RSI and (optional) `RSI ≤ ShortRsiMax`\n- **Long/Short**: Configurable\n- **Exit Criteria**: Opposite SAR flip\n- **Stops**: None\n- **Default Values**:\n  - `RsiLength` = 14\n  - `SarStart` = 0.02\n  - `SarIncrement` = 0.02\n  - `SarMax` = 0.2\n  - `LongRsiMin` = 50\n  - `ShortRsiMax` = 50\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Trend following\n  - Direction: Configurable\n  - Indicators: Parabolic SAR, RSI\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Mid-term\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "4003": {
+    "id": 4003,
+    "name": "MA Cross Method PriceMode",
+    "family": "trend",
+    "overview": "The **MA Cross Method PriceMode** strategy is a direct StockSharp port of the MetaTrader 4 expert \"MA_cross_Method_PriceMode\". It combines two configurable moving averages and reacts whenever the fast average crosses the slow average. Both lines expose the original MetaTrader inputs: period, smoothing method (SMA, EMA, SMMA, LWMA), applied price (close, open, high, low, median, typical, weighted) and horizontal shift. The strategy works with any instrument that provides regular time-based candles.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| --- | --- | --- |\n| `FirstPeriod` | Period of the fast moving average. | `3` |\n| `SecondPeriod` | Period of the slow moving average. | `13` |\n| `FirstMethod` | Smoothing method used for the fast moving average (`Simple`, `Exponential`, `Smoothed`, `LinearWeighted`). | `Simple` |\n| `SecondMethod` | Smoothing method used for the slow moving average. | `LinearWeighted` |\n| `FirstPriceMode` | Applied price for the fast moving average (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). | `Close` |\n| `SecondPriceMode` | Applied price for the slow moving average. | `Median` |\n| `FirstShift` | Horizontal shift (in bars) applied to the fast moving average. | `0` |\n| `SecondShift` | Horizontal shift (in bars) applied to the slow moving average. | `0` |\n| `OrderVolume` | Base order volume used for new positions. | `0.1` |\n| `CandleType` | Candle type/timeframe processed by the strategy. | 5-minute candles |"
+   }
+  }
+ }
+}

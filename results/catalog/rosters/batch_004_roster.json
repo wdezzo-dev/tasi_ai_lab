@@ -1,0 +1,114 @@
+{
+  "strategy_roster": [
+    {
+      "id": 90,
+      "name": "Donchian Channel Reversal",
+      "family": "breakout",
+      "entry_long": "crossabove(close, donchian_low_prev(low,20))",
+      "exit_long": "crossbelow(close, donchian_low_prev(low,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Failed lower-band breakout: prior close below channel low, current close moves back above it (Period=20). Corpus exits only on stop; channel re-cross added as exit proxy so positions do not ride to window end. StopLoss=2% documented."
+    },
+    {
+      "id": 141,
+      "name": "Donchian Volume",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) and volume_ratio(volume,20) > 1.5",
+      "exit_long": "close < donchian_high_prev(high,20) or volume_ratio(volume,20) < 1",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Upper-channel breakout with volume confirmation (VolumeMultiplier default undocumented, used 1.5x); exit when close returns inside channel or volume fades below average. StopLoss=2% documented."
+    },
+    {
+      "id": 146,
+      "name": "Macd Volume",
+      "family": "breakout",
+      "entry_long": "crossabove(macd(close,12,26), macd_signal(close,12,26,9)) and volume_ratio(volume,20) > 1.5",
+      "exit_long": "crossbelow(macd(close,12,26), macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MACD(12,26,9) bullish cross filtered by volume above average (VolumeMultiplier default undocumented, used 1.5x); exit on opposite cross. Corpus stop is percent-based but StopLossPercent value undocumented; left null."
+    },
+    {
+      "id": 245,
+      "name": "Momentum Breakout",
+      "family": "breakout",
+      "entry_long": "roc(close,14) > sma(roc(close,14),20) + 2 * std(roc(close,14),20)",
+      "exit_long": "roc(close,14) < sma(roc(close,14),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Momentum(=roc 14) above its 20-bar mean plus 2 std (Multiplier=2.0); exit when momentum returns below its average. StopLossPercent=2 documented."
+    },
+    {
+      "id": 247,
+      "name": "RSI Breakout",
+      "family": "breakout",
+      "entry_long": "rsi(close,14) > sma(rsi(close,14),20) + 2 * std(rsi(close,14),20)",
+      "exit_long": "rsi(close,14) < sma(rsi(close,14),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "RSI(14) above its 20-bar mean plus 2 std (Multiplier=2.0); exit when RSI crosses back below its average. StopLossPercent=2 documented."
+    },
+    {
+      "id": 35,
+      "name": "Bollinger Percent B Reversion",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_mid(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Percent B < 0 (close below lower band, Period=20, Dev=2.0); exit when close returns through the middle band (Percent B crosses ExitValue=0.5 approx). StopLossPercent=2 documented."
+    },
+    {
+      "id": 28,
+      "name": "ZScore",
+      "family": "trend",
+      "entry_long": "zscore(close,20) < -2",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Z-score(20) below -2.0 (extreme low) anticipating reversion; exit when z-score normalizes above 0.0 (ZScoreExitThreshold=0). MAPeriod=20/StdDevPeriod=20. StopLossPercent=2 documented."
+    },
+    {
+      "id": 32,
+      "name": "ATR Reversion",
+      "family": "trend",
+      "entry_long": "close < sma(close,20) - 2 * atr(high,low,close,14)",
+      "exit_long": "crossabove(close, sma(close,20))",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Close more than 2x ATR(14) below MA(20) fades the spike; exit when close crosses back above MA. AtrMultiplier=2.0 documented. StopLossPercent=2 documented."
+    },
+    {
+      "id": 73,
+      "name": "Keltner Channel Reversal",
+      "family": "trend",
+      "entry_long": "close < ema(close,20) - 2 * atr(high,low,close,14) and close > open",
+      "exit_long": "crossabove(close, ema(close,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish candle closing below lower Keltner band (EMA20 center - 2*ATR14) fades the push outside; exit when price crosses back through center EMA. Corpus stop is ATR-based (2x), not representable as fixed pct; left null."
+    },
+    {
+      "id": 763,
+      "name": "Equivolume Bars",
+      "family": "volume",
+      "entry_long": "volume_ratio(volume,20) > 2 and close > open",
+      "exit_long": "volume_ratio(volume,20) < 1 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Volume spike above 2x its lookback sum/baseline with a bullish candle; exit when volume drops back to average or the candle turns bearish. Lookback defaulted to 20, threshold 2.0; corpus stop undocumented, left null."
+    },
+    {
+      "id": 2055,
+      "name": "Historical Volatility Ratio",
+      "family": "volatility",
+      "entry_long": "std(roc(close,1),6) / std(roc(close,1),100) > 1.2",
+      "exit_long": "std(roc(close,1),6) / std(roc(close,1),100) < 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "HVR approximated as ratio of short(6)-to-long(100)-period realized vol (std of 1-bar returns); long on volatility regime expansion (RatioThreshold 1.0, entry relaxed to 1.2), exit when ratio reverts below 1. Corpus has no fixed stop; left null."
+    }
+  ]
+}

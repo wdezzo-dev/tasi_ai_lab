@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 272,
+      "name": "ADX Slope Breakout",
+      "family": "trend",
+      "entry_long": "roc(adx(high,low,close,14),20) > 0 and zscore(roc(adx(high,low,close,14),20),20) > 2",
+      "exit_long": "roc(adx(high,low,close,14),20) <= 0",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Twenty-bar ROC of ADX(14) is a slope proxy, and a two-standard-deviation breakout retains the documented multiplier. Reverting to nonpositive slope exits; the explicit 2% stop is retained."
+    },
+    {
+      "id": 1887,
+      "name": "Vlt Trader",
+      "family": "trend",
+      "entry_long": "high - low <= donchian_low(high - low,20) and crossabove(high,donchian_high_prev(high,1))",
+      "exit_long": "crossbelow(low,donchian_low_prev(low,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 20-bar minimum-range lookback is an explicit fallback; a break of the prior candle's extremes represents the armed stop orders. Tick offsets and protection distances have no supplied values and are omitted."
+    },
+    {
+      "id": 1430,
+      "name": "Tick Delta Volume",
+      "family": "trend",
+      "entry_long": "volume_ratio(volume,10) > sma(volume_ratio(volume,10),10) + std(volume_ratio(volume,10),10)",
+      "exit_long": "volume_ratio(volume,10) < sma(volume_ratio(volume,10),10) - std(volume_ratio(volume,10),10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bar-level volume_ratio(10) is used as the closest OHLCV proxy for per-tick volume delta. The mean-plus/minus-one-standard-deviation signal and Length=10 are retained; the opposite signal exits."
+    },
+    {
+      "id": 2538,
+      "name": "ADX MA Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(ema((high + low) / 2,15),ema((high + low) / 2,15)) and adx(high,low,close,12) > 16",
+      "exit_long": "crossbelow(ema((high + low) / 2,15),ema((high + low) / 2,15))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "EMA(15) on median price approximates the source SMMA, and ADX must exceed the documented 16 threshold. The opposite crossover is a long exit proxy; pip stop, target, and trailing settings have no numeric values."
+    },
+    {
+      "id": 1780,
+      "name": "PZ Parabolic SAR EA",
+      "family": "trend",
+      "entry_long": "close > ema(close,10) and close > ema(close,20)",
+      "exit_long": "close < ema(close,10) or close < ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The two SARs are approximated by aligned EMA(10) and EMA(20) trend lines, with the documented step settings mapped to those periods. ATR stop/trailing, partial closing, and break-even state cannot be expressed in the roster DSL."
+    },
+    {
+      "id": 3768,
+      "name": "Wss Trader",
+      "family": "breakout",
+      "entry_long": "high > (donchian_high_prev(high,20) + donchian_low_prev(low,20) + sma(close,20)) / 3",
+      "exit_long": "low < (donchian_high_prev(high,20) + donchian_low_prev(low,20) + sma(close,20)) / 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A rolling 20-bar Camarilla pivot is a daily-data fallback, with the long side selected when price trades above it. London hours, metric-point offsets, targets, and trailing stops are unavailable or have no percentage values."
+    },
+    {
+      "id": 248,
+      "name": "Stochastic Breakout",
+      "family": "breakout",
+      "entry_long": "rsi(close,14) > sma(rsi(close,14),20) + 2 * std(rsi(close,14),20)",
+      "exit_long": "rsi(close,14) < sma(rsi(close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI(14) substitutes for stochastic %K, while a 20-bar mean plus two standard deviations retains the documented lookback and multiplier. Falling back below its average exits; the source names a percent stop but supplies no value."
+    },
+    {
+      "id": 3393,
+      "name": "Easy Robot",
+      "family": "momentum",
+      "entry_long": "close > open",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Bullish and bearish completed candles are the documented long-side and reversal proxies because explicit historical-bar access is unavailable. ATR factors, pip-based protection, trailing, and the holding timer are omitted."
+    },
+    {
+      "id": 1778,
+      "name": "C Factor HLH4 Buy Only",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close > donchian_low_prev(low,1) or close < donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The entry is exactly a close above the previous candle high; the two target branches become previous-low and prior-high exits after dropping unnormalizable 100/20-tick offsets. Configurable pip protection and risk sizing are not percentage fields."
+    },
+    {
+      "id": 387,
+      "name": "Pairs Trading Country ETFs",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close,60) < -1",
+      "exit_long": "zscore(close,60) >= 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A 60-day z-score of one price is an explicit single-security proxy for the unsupported second ETF and price ratio. EntryZ=-1 and ExitZ=0 are fallbacks because the docs provide neither numeric level; the minimum-dollar filter is unsupported."
+    }
+  ]
+}

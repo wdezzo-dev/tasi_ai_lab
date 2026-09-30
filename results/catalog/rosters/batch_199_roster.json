@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3887,
+      "name": "Double Up",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close, 8), 20) and macd(close, 13, 33) < 0",
+      "exit_long": "crossbelow(rsi(close, 8), 20) or macd(close, 13, 33) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so the documented CciPeriod 8 oscillator returning from its extreme is approximated by RSI(8) crossing back above a low level, with the documented MACD 13/33 main line still negative; the Threshold 230 is rescaled to the RSI scale. Exponential martingale sizing is not expressible."
+    },
+    {
+      "id": 3816,
+      "name": "Arttrader",
+      "family": "trend",
+      "entry_long": "roc(ema(open, 20), 3) > 0 and close > ema(open, 20) and open - close < 0.005 * close",
+      "exit_long": "roc(ema(open, 20), 3) < 0 and close < ema(open, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented EMA of the open with a rising slope and the price-position filter is kept, and the big-gap volatility guard becomes a limit on the bar's own open-to-close loss. The EMA period is an explicit default, and the pip-based emergency stop, take-profit, timed stop and slope bounds are not expressible."
+    },
+    {
+      "id": 1725,
+      "name": "Rampok Scalp",
+      "family": "trend",
+      "entry_long": "crossabove(close, bb_lower(close, 20))",
+      "exit_long": "crossbelow(close, bb_mid(close, 20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The moving average envelope is approximated by Bollinger bands, and the documented buy on a cross back above the lower band is expressed as a cross of the current close over that band. No envelope periods or stop/target values are documented, so 20 and null are used."
+    },
+    {
+      "id": 1957,
+      "name": "Simple Trading System",
+      "family": "trend",
+      "entry_long": "roc(ema(close, 2), 4) <= 0 and roc(close, 4) >= 0 and roc(close, 6) <= 0 and close < open",
+      "exit_long": "roc(ema(close, 2), 4) >= 0 and roc(close, 4) <= 0 and roc(close, 6) >= 0 and close > open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented rules map one-to-one using the default MaType EMA, MaPeriod 2 and MaShift 4: ROC over 4 and 6 bars stands in for the shifted close comparisons, and the bearish candle test closes the long entry. The 1000/2000 stop and target are absolute price units, not percentages."
+    },
+    {
+      "id": 4190,
+      "name": "Colibri Grid Manager",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a discretionary grid manager that stages layered pending orders around anchor prices with risk sizing, a daily loss limit and manual maintenance commands, so it has no single-symbol market signal. A never-true guard is used."
+    },
+    {
+      "id": 3027,
+      "name": "Rollback System",
+      "family": "volatility",
+      "entry_long": "(roc(open, 24) < -1 and close - donchian_low_prev(low, 24) < 0.01 * close) or (roc(open, 24) > 1 and donchian_high_prev(high, 24) - close > 0.02 * close)",
+      "exit_long": "close > open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented long rules are kept: an extended 24-bar down day closing near its low, and an extended up day closing far below its high, with the pip thresholds normalised to 1% and 2%. Signals are only taken once per day at 00:00 in the original and pip-based stops, so the time gate is dropped."
+    },
+    {
+      "id": 2201,
+      "name": "WPR Histogram",
+      "family": "mean_reversion",
+      "entry_long": "crossbelow(rsi(close, 14), 80) and rsi(close, 14) > 50",
+      "exit_long": "rsi(close, 14) < 30",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is unavailable, so its overbought/oversold zones are mapped to RSI(14) with 80/20 equivalents; the long is the documented fall back from the high level while still above the midpoint. The WPR period and both level values are undocumented (14/80/20 used), and docs state no stops are set."
+    },
+    {
+      "id": 2304,
+      "name": "Aroon Oscillator Sign Alert",
+      "family": "other",
+      "entry_long": "crossabove(200 * (close - donchian_low(low, 10)), 50 * (donchian_high(high, 10) - donchian_low(low, 10)))",
+      "exit_long": "crossbelow(200 * (close - donchian_low(low, 10)), 150 * (donchian_high(high, 10) - donchian_low(low, 10)))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Aroon is not in the DSL, so the oscillator is approximated by price position within the 10-bar range scaled to +/-100; crossing above the documented DownLevel -50 opens long and crossing below the UpLevel +50 reverses. Multiplying through by the range avoids a division by zero in flat series. Docs state no stops."
+    },
+    {
+      "id": 1153,
+      "name": "Pairs",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented entry requires a separate reference asset's candle direction, so the condition is not computable from a single symbol. A never-true guard is used; the close above the previous high exit is not translated without a valid entry."
+    },
+    {
+      "id": 1787,
+      "name": "Stop Loss to Break-Even",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Docs state the strategy generates no entry signals and only moves an existing position's stop to break-even after BreakEvenPips. A never-true guard is used, and the pip trigger is order management rather than a DSL condition."
+    }
+  ]
+}

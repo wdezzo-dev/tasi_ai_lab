@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3267,
+      "name": "Parallax Sell",
+      "family": "trend",
+      "entry_long": "-100 * (close - donchian_low(low,350)) / (donchian_high(high,350) - donchian_low(low,350)) < -80 and 100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)) > 10 and macd(close,12,120) < macd_signal(close,12,120,9)",
+      "exit_long": "-100 * (close - donchian_low(low,350)) / (donchian_high(high,350) - donchian_low(low,350)) > -80 or 100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)) > 90",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The EA is short-only, so the documented Williams %R / stochastic / MACD confluence is mirrored: Williams %R(350) rebuilt from the 350-bar range, the 10-period fast stochastic proxy and MACD 12/120/9 below its signal line. EntryWilliamsThreshold -10 and ExitWilliamsThreshold -80 are applied as the mirrored -80 boundary, MacdThreshold 0.178 is a price-unit value replaced by the signal-line relation, and martingale sizing plus pip targets are position state."
+    },
+    {
+      "id": 3499,
+      "name": "Alligator Candle Cross",
+      "family": "trend",
+      "entry_long": "close < sma((high+low)/2,5) and open <= sma((high+low)/2,13) and close > sma((high+low)/2,13)",
+      "exit_long": "close > sma((high+low)/2,5) and open >= sma((high+low)/2,13) and close < sma((high+low)/2,13)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The Alligator is rebuilt from the documented median price with the 13/8/5 smoothed averages (lips 5, teeth 8, jaw 13); the long setup is a body crossing up through the jaw after closing below the lips, and the mirrored cross exits. The 8/5/3 forward shifts are not expressible, so they are dropped, and 50-pip stop/target are not percentages."
+    },
+    {
+      "id": 3883,
+      "name": "Graal EMA Momentum",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,13),ema(open,34)) and roc(close,14) > 0.1 and roc(close,14) > sma(roc(close,14),3)",
+      "exit_long": "crossbelow(ema(close,13),ema(open,34))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented fast EMA(13) on close versus slow EMA(34) on open crossover is literal; MT4 momentum is reproduced by ROC(14) in percent, so the MomentumFilter 0.1 threshold and the strengthening condition are expressed directly. TakeProfitPoints 200 is a price-step target and the volume-flip logic needs position state."
+    },
+    {
+      "id": 987,
+      "name": "Livermore Seykota Breakout",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,3) and ema(close,20) > ema(close,50) and volume_ratio(volume,20) > 1",
+      "exit_long": "close < ema(close,20) or close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented PivotLength 3 becomes a 3-bar prior high/low break with the FastEma 20 over MainEma 50 trend filter and VolumeSmaLength 20 confirmation; SlowEma 200 is dropped as a slow-trend variant. StopAtrMultiplier 3 and TrailAtrMultiplier 2 are ATR-relative distances needing position state, so no percentage stop is set."
+    },
+    {
+      "id": 1335,
+      "name": "Starter Edge",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,12,26),macd_signal(close,12,26,9)) and close > ema(close,100) and rsi(close,14) > 50",
+      "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZLEMA has no DSL function, so the ZLEMA-based MACD is approximated by a standard EMA MACD, and 12/26/9 plus RSI(14) are explicit defaults; the documented EMA 100 filter and RSI 50 confirmation are kept. The separate histogram-turning-down exit is dropped as redundant with the opposite MACD cross, leaving the cross and RSI-zone exits."
+    },
+    {
+      "id": 3994,
+      "name": "RPoint 250 Reversal",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,250)",
+      "exit_long": "high > donchian_high_prev(high,250)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The emulated RPoint swing levels are the 250-bar rolling extremes as documented, so a new lowest low is the long and a new highest high is the exit that reverses it. StopLossPoints 999, TakeProfitPoints 15 and the optional trailing are price-step distances, and the one-entry-per-bar safeguard is enforced by the engine itself."
+    },
+    {
+      "id": 1070,
+      "name": "Monthly Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,21)",
+      "exit_long": "close < sma(close,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "With EntryOption LongAtHigh the monthly high is approximated by a 21-trading-day prior high since the calendar month boundary cannot be detected. HoldingPeriod 5 bars is approximated by a 5-period mean as the time-based close-out, and the selected-month filter plus the doc's lack of stops are noted."
+    },
+    {
+      "id": 411,
+      "name": "Asset Class Momentum Rotational",
+      "family": "momentum",
+      "entry_long": "roc(close,21) > 0",
+      "exit_long": "roc(close,21) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Single-symbol translation of the rotational model: a positive monthly momentum qualifies the holding and non-positive momentum drops the asset back to the defensive cash proxy, with 21 bars standing in for the monthly rebalance. Cross-sectional ranking of top N assets, position caps and multi-asset weights are not representable in one series."
+    },
+    {
+      "id": 3150,
+      "name": "BullsBearsEyes EA",
+      "family": "volatility",
+      "entry_long": "(close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)) < 0.1",
+      "exit_long": "(close - donchian_low(low,13)) / (donchian_high(high,13) - donchian_low(low,13)) > 0.9",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 0-to-1 Bulls/Bears Eyes ratio is approximated by the close's position in the documented 13-period range, with a collapsed ratio (below 0.1) as the washed-out long and a spiked ratio (above 0.9) as the exhaustion exit. The four-stage IIR smoothing (Gamma 0.6) and the 150-pip stop/target and 25-pip trailing cannot be expressed in the DSL."
+    },
+    {
+      "id": 211,
+      "name": "CCI VWAP",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close,20) < -2 and close < sma(close,20)",
+      "exit_long": "close > sma(close,20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI(20) is proxied by zscore(close,20) with the documented -100 threshold mapped to -2 z-score units, and VWAP by SMA(20) on daily bars, so the long requires both stretched weakness and price below that anchor. Exit is the documented VWAP reclaim, and the documented StopLossPercent 2% is the only protection kept."
+    }
+  ]
+}

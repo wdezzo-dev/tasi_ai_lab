@@ -1,0 +1,98 @@
+{
+ "batch_226": {
+  "strategy_ids": [
+   3851,
+   2085,
+   3322,
+   1012,
+   3953,
+   1543,
+   863,
+   1404,
+   866,
+   1145
+  ],
+  "docs": {
+   "3851": {
+    "id": 3851,
+    "name": "Firebird MA Envelope Exhaustion",
+    "family": "trend",
+    "overview": "The strategy replicates the Firebird v0.60 envelope reversion expert. It measures a simple moving average and offsets it by a percentage to form upper and lower envelopes. When price pierces the upper band the strategy sells, and when the lower band breaks it buys. Additional positions are averaged in only if price moves at least one configurable pip step beyond the previous entry. The total stop loss is shared among all entries, preventing runaway trends from repeatedly re-entering in the same direction.\n\n## Details\n\n- **Entry Criteria**:\n  - Calculate an SMA on either candle opens or the high/low midpoint.\n  - Upper envelope = SMA × (1 + Percent/100); lower envelope = SMA × (1 − Percent/100).\n  - Enter short on a close above the upper band (unless a recent stop locked shorts), enter long on a close below the lower band (unless longs are locked).\n  - Average-in trades are allowed once price moves `PipStep` pips (optionally scaled by power) beyond the latest fill.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Shared take profit at the averaged entry price ± `TakeProfit` pips.\n  - Shared stop loss at the averaged entry price ∓ `StopLoss / position count` pips.\n  - Blocking flag prevents re-entry in the same direction until an opposite signal triggers after a stop.\n- **Stops**: Yes, aggregated stop loss and take profit.\n- **Default Values**:\n  - `MaLength` = 10\n  - `Percent` = 0.3\n  - `TradeOnFriday` = true\n  - `UseHighLow` = false (use opens)\n  - `PipStep` = 30\n  - `IncreasementPower` = 0\n  - `TakeProfit` = 30\n  - `StopLoss` = 200\n  - `TradeVolume` = 1\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: SMA envelopes\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: Optional Friday filter\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High due to averaging\n",
+    "details": "- **Entry Criteria**:\n  - Calculate an SMA on either candle opens or the high/low midpoint.\n  - Upper envelope = SMA × (1 + Percent/100); lower envelope = SMA × (1 − Percent/100).\n  - Enter short on a close above the upper band (unless a recent stop locked shorts), enter long on a close below the lower band (unless longs are locked).\n  - Average-in trades are allowed once price moves `PipStep` pips (optionally scaled by power) beyond the latest fill.\n- **Long/Short**: Long and short.\n- **Exit Criteria**:\n  - Shared take profit at the averaged entry price ± `TakeProfit` pips.\n  - Shared stop loss at the averaged entry price ∓ `StopLoss / position count` pips.\n  - Blocking flag prevents re-entry in the same direction until an opposite signal triggers after a stop.\n- **Stops**: Yes, aggregated stop loss and take profit.\n- **Default Values**:\n  - `MaLength` = 10\n  - `Percent` = 0.3\n  - `TradeOnFriday` = true\n  - `UseHighLow` = false (use opens)\n  - `PipStep` = 30\n  - `IncreasementPower` = 0\n  - `TakeProfit` = 30\n  - `StopLoss` = 200\n  - `TradeVolume` = 1\n- **Filters**:\n  - Category: Mean reversion\n  - Direction: Both\n  - Indicators: SMA envelopes\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: Optional Friday filter\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: High due to averaging",
+    "parameters": ""
+   },
+   "2085": {
+    "id": 2085,
+    "name": "Rijfie Pyramid",
+    "family": "trend",
+    "overview": "This strategy opens an initial long position when the Stochastic oscillator crosses above a configurable low level. It then adds new positions each time price drops by a fixed percentage while staying above an EMA filter and a minimum price. An optional timer can close all positions at a specified time.\n\n## Parameters\n- Candle Type\n- Stochastic low level\n- Maximum price for first entry\n- Minimum allowed price\n- EMA period\n- Step level in percent\n- Close positions at time\n- Close hour\n- Close minute\n",
+    "details": "",
+    "parameters": "- Candle Type\n- Stochastic low level\n- Maximum price for first entry\n- Minimum allowed price\n- EMA period\n- Step level in percent\n- Close positions at time\n- Close hour\n- Close minute"
+   },
+   "3322": {
+    "id": 3322,
+    "name": "Auto Trading Publish",
+    "family": "trend",
+    "overview": "This strategy ports the MetaTrader 4 utility **\"Auto Trading Publish\"** to StockSharp. Instead of submitting market orders, the\nstrategy focuses on controlling when trading is allowed. It monitors the market clock via a candle subscription and flips the\n`AutoTradingActive` flag whenever the configured start or stop hour is reached. The flag mirrors the behaviour of the original\nutility which programmatically toggled the MT4 \"AutoTrading\" button.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `StartHour` | Hour of the day (0-23) that enables auto trading. |\n| `StopHour` | Hour of the day (0-23) that disables auto trading. |\n| `CandleType` | Timeframe used to poll the market clock. Smaller frames react faster. |"
+   },
+   "1012": {
+    "id": 1012,
+    "name": "MACD Volume BBO Reversal",
+    "family": "trend",
+    "overview": "Strategy combining volume oscillator with MACD zero-line crossings and signal comparison.\nEnters long when MACD crosses above zero with positive volume oscillator and MACD above its signal.\nShort entries are symmetric. Stop loss uses recent low/high and take profit is based on risk reward ratio.\n\n## Parameters\n- `VolumeShortLength` – short EMA period for volume (default: 6)\n- `VolumeLongLength` – long EMA period for volume (default: 12)\n- `MacdFastLength` – fast MA period for MACD (default: 11)\n- `MacdSlowLength` – slow MA period for MACD (default: 21)\n- `MacdSignalLength` – signal line period for MACD (default: 10)\n- `LookbackPeriod` – bars to calculate recent high/low (default: 10)\n- `RiskReward` – take profit to stop loss ratio (default: 1.5)\n- `CandleType` – timeframe for candles (default: 5 minutes)\n",
+    "details": "",
+    "parameters": "- `VolumeShortLength` – short EMA period for volume (default: 6)\n- `VolumeLongLength` – long EMA period for volume (default: 12)\n- `MacdFastLength` – fast MA period for MACD (default: 11)\n- `MacdSlowLength` – slow MA period for MACD (default: 21)\n- `MacdSignalLength` – signal line period for MACD (default: 10)\n- `LookbackPeriod` – bars to calculate recent high/low (default: 10)\n- `RiskReward` – take profit to stop loss ratio (default: 1.5)\n- `CandleType` – timeframe for candles (default: 5 minutes)"
+   },
+   "3953": {
+    "id": 3953,
+    "name": "ZigAndZag Trader",
+    "family": "trend",
+    "overview": "The **ZigAndZag Trader Strategy** is the StockSharp port of the MetaTrader expert *ZigAndZag_trader.mq4*. The system layers two ZigZag-inspired swing detectors:\n\n1. A **long-term ZigZag** (configured by `TrendDepth`) tracks the primary trend by marking major swing highs and lows.\n2. A **short-term ZigZag** (configured by `ExitDepth`) identifies the latest swing pivot inside that trend and monitors the weighted price (`(5×Close + 2×Open + High + Low) / 9`).\n\nThe robot opens trades only when price moves away from the latest swing pivot in the direction of the dominant trend and closes positions when the weighted price breaks back through that pivot against the trend. This reproduces the behaviour of the original MetaTrader expert that read buffers 4–6 of the custom `ZigAndZag` indicator.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | `1 Minute` | Candle type used for both ZigZag evaluations. |\n| `Lots` | `0.1` | Requested trade size in lots. The final volume is aligned to the instrument volume step. |\n| `TrendDepth` | `3` | Lookback (in candles) of the long-term ZigZag that defines the trend. |\n| `ExitDepth` | `3` | Lookback (in candles) of the short-term ZigZag that produces swing entries and exits. |\n| `MaxOrders` | `1` | Maximum number of simultaneous orders/position units. |\n| `StopLossPips` | `0` | Protective stop-loss distance in pips (`0` disables the stop). |\n| `TakeProfitPips` | `0` | Take-profit distance in pips (`0` disables the target). |"
+   },
+   "1543": {
+    "id": 1543,
+    "name": "Vortex MTF",
+    "family": "other",
+    "overview": "This strategy calculates the Vortex indicator on a configurable timeframe.\nLong positions are opened when the positive Vortex line crosses above the negative line.\nShort positions are opened on the opposite crossover.\n\n## Details\n\n- **Indicator**: Vortex\n- **Direction**: Long and short\n- **Timeframe**: Configurable\n",
+    "details": "- **Indicator**: Vortex\n- **Direction**: Long and short\n- **Timeframe**: Configurable",
+    "parameters": ""
+   },
+   "863": {
+    "id": 863,
+    "name": "Grim Slash",
+    "family": "other",
+    "overview": "Grim Slash is a simple price action strategy that buys when the current candle's low tests the previous close and exits when the high reaches the previous high. Risk is managed with fixed percentage take profit and stop loss.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Current low touches or dips below the previous close.\n- **Exit Criteria**: Current high touches or exceeds the previous high.\n- **Stops**: 15% take profit, 5% stop loss.\n- **Default Values**:\n  - `TakeProfitPercent` = 15\n  - `StopLossPercent` = 5\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: None\n  - Complexity: Low\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: Current low touches or dips below the previous close.\n- **Exit Criteria**: Current high touches or exceeds the previous high.\n- **Stops**: 15% take profit, 5% stop loss.\n- **Default Values**:\n  - `TakeProfitPercent` = 15\n  - `StopLossPercent` = 5\n- **Filters**:\n  - Category: Reversal\n  - Direction: Long\n  - Indicators: None\n  - Complexity: Low\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1404": {
+    "id": 1404,
+    "name": "Adaptive Oscillator Threshold",
+    "family": "other",
+    "overview": "Adaptive Oscillator Threshold uses RSI with a dynamic threshold based on Bufi's Adaptive Threshold (BAT). It buys when the RSI falls below either a fixed level or an adaptive threshold.\n\n## Details\n\n- **Entry Criteria**: RSI drops below fixed or adaptive threshold\n- **Long/Short**: Long\n- **Exit Criteria**: Fixed-bar exit or dollar stop-loss\n- **Stops**: Dollar stop-loss\n- **Default Values**:\n  - `UseAdaptiveThreshold` = true\n  - `RsiLength` = 2\n  - `BuyLevel` = 14\n  - `AdaptiveLength` = 8\n  - `AdaptiveCoefficient` = 6\n  - `ExitBars` = 28\n  - `DollarStopLoss` = 1600\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI, StandardDeviation, LinearRegression\n  - Stops: Dollar\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: RSI drops below fixed or adaptive threshold\n- **Long/Short**: Long\n- **Exit Criteria**: Fixed-bar exit or dollar stop-loss\n- **Stops**: Dollar stop-loss\n- **Default Values**:\n  - `UseAdaptiveThreshold` = true\n  - `RsiLength` = 2\n  - `BuyLevel` = 14\n  - `AdaptiveLength` = 8\n  - `AdaptiveCoefficient` = 6\n  - `ExitBars` = 28\n  - `DollarStopLoss` = 1600\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Long\n  - Indicators: RSI, StandardDeviation, LinearRegression\n  - Stops: Dollar\n  - Complexity: Basic\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "866": {
+    "id": 866,
+    "name": "Gauge",
+    "family": "other",
+    "overview": "This strategy mirrors the TradingView gauge library by measuring price position\nbetween a user defined minimum and maximum. When the percentage crosses the\nupper or lower thresholds it enters trades in the corresponding direction.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: gauge ratio above upper threshold.\n  - **Short**: gauge ratio below lower threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal generates an exit.\n- **Stops**: None.\n- **Default Values**:\n  - Min value = 0, Max value = 100.\n  - Upper threshold = 75%, Lower threshold = 25%.\n- **Filters**:\n  - Category: Range / Utility\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: gauge ratio above upper threshold.\n  - **Short**: gauge ratio below lower threshold.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite signal generates an exit.\n- **Stops**: None.\n- **Default Values**:\n  - Min value = 0, Max value = 100.\n  - Upper threshold = 75%, Lower threshold = 25%.\n- **Filters**:\n  - Category: Range / Utility\n  - Direction: Both\n  - Indicators: None\n  - Stops: No\n  - Complexity: Low\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1145": {
+    "id": 1145,
+    "name": "Order Block Finder",
+    "family": "other",
+    "overview": "This strategy identifies bullish and bearish order blocks based on a specified number of consecutive candles and a minimum percent move. When a bullish order block is detected, the strategy buys; when a bearish block is found, it sells.\n\n## Parameters\n- **Relevant Periods** – number of subsequent candles to confirm an order block\n- **Min Percent Move** – minimal percent change between the block and the last confirming candle\n- **Use Whole Range** – use High/Low range instead of Open-based boundaries\n- **Candle Type** – candle type used for calculations\n",
+    "details": "",
+    "parameters": "- **Relevant Periods** – number of subsequent candles to confirm an order block\n- **Min Percent Move** – minimal percent change between the block and the last confirming candle\n- **Use Whole Range** – use High/Low range instead of Open-based boundaries\n- **Candle Type** – candle type used for calculations"
+   }
+  }
+ }
+}

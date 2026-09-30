@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1286,
+      "name": "S4 IBS Mean Rev 3candleExit",
+      "family": "trend",
+      "entry_long": "close <= 0.75 * low + 0.25 * high",
+      "exit_long": "close > sma(close, 3) or bars_since(close <= 0.75 * low + 0.25 * high) >= 3",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "IBS<=0.25 is written division-free as close <= 0.75*low + 0.25*high (documented IbsThreshold 0.25) and uses the current bar because the DSL cannot shift a computed series. Exit proxies 'close above entry' with SMA(3) and the 3-candle force exit with bars_since; the StartTime/EndTime window is not representable."
+    },
+    {
+      "id": 1261,
+      "name": "Rsi Stochastic Wma",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30 and bars_since(crossabove(rsi(close,14), sma(rsi(close,14),3))) < 5 and close > sma(close,21)",
+      "exit_long": "crossbelow(rsi(close,14), sma(rsi(close,14),3)) or rsi(close,14) > 70 or close < sma(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic %K/%D are approximated by RSI(14) and its 3-period EMA smoother (documented StochK 14 / StochD 3), with the cross allowed within 3 bars; WMA(21) is approximated by SMA(21). The short leg, 5-minute timeframe and no-stop rule are dropped for long-only DSL output."
+    },
+    {
+      "id": 1904,
+      "name": "Bleris",
+      "family": "trend",
+      "entry_long": "high > donchian_high_prev(high,10)",
+      "exit_long": "high < donchian_high_prev(high,10) and close < sma(close,10)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The three-segment highest-high/lowest-low comparison is reduced to a single prior-segment extreme test; SignalBarSample=10 is an explicit fallback since the docs list the name but no value. CounterTrend reversal, Lots and the AnotherOrderPips spacing gate are not expressible, so only the long trend direction is kept."
+    },
+    {
+      "id": 93,
+      "name": "Stochastic Hook Reversal",
+      "family": "trend",
+      "entry_long": "low <= donchian_low_prev(low,14) and roc(rsi(close,14),1) > 0",
+      "exit_long": "roc(rsi(close,14),1) < 0 or rsi(close,14) > 80 or high >= donchian_high_prev(high,14)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "A new 14-bar low with a rising one-bar oscillator change is the long hook reversal (%K turning up from below 20); the exit mirrors the hook and adds the overbought/new-high opposite. StopLoss=2% is documented, and the 15-minute timeframe plus short leg are dropped."
+    },
+    {
+      "id": 853,
+      "name": "Golden Cross VWMA & EMA",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close,20), ema(close,10))",
+      "exit_long": "crossbelow(sma(close,20), ema(close,10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "VWMA is approximated by SMA(20) since volume-weighted averages are unavailable, and the 4-hour EMA is collapsed to EMA(10) on the daily bars; the long crossover enters and the opposite cross exits. No parameter values are documented and the short leg is not translated."
+    },
+    {
+      "id": 1901,
+      "name": "Coensio Swing Trader V06",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,20) * 1.002",
+      "exit_long": "close < sma(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Long entry is a close above the 20-bar Donchian upper band (documented Channel Period 20) with the 15-pip Entry Threshold approximated as a 0.2% buffer; exit is a loss of the 20-period channel midpoint. Documented 50-pip stop, 80-pip target, break-even and trailing step are pip-based, so no percent stops are set."
+    },
+    {
+      "id": 2757,
+      "name": "Price Extreme",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented LevelLength 5 with the prior-bar variant to honour SignalShift 1 (last closed candle) so the breakout compares against completed candles. ReverseSignals is false by default, so the long leg is used; StopLossPoints/TakeProfitPoints default to 0 (disabled) and OrderVolume/CandleType are not DSL fields."
+    },
+    {
+      "id": 546,
+      "name": "Balance of Power",
+      "family": "momentum",
+      "entry_long": "crossabove(close - open, 0.8 * (high - low))",
+      "exit_long": "crossbelow(close - open, -0.8 * (high - low))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Balance of Power is expressed division-free as (close-open) versus Threshold*(high-low) with the documented Threshold 0.8, keeping the documented cross semantics on both sides. The no-stop rule is preserved with null protection fields."
+    },
+    {
+      "id": 3919,
+      "name": "Et4 MTC v1 Strategy (StockSharp Conversion)",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs describe a skeleton template that generates no automatic entries and only replicates money-management helpers plus timing restrictions, so no market-derived long signal exists and the never-true close<0 guard is used. Trade entry/exit logic is explicitly left open for future development."
+    },
+    {
+      "id": 2547,
+      "name": "UmnickTrader",
+      "family": "mean_reversion",
+      "entry_long": "sma((open + high + low + close) / 4, 2) >= sma((open + high + low + close) / 4, 4) * 1.002",
+      "exit_long": "sma((open + high + low + close) / 4, 2) < sma((open + high + low + close) / 4, 4) * 0.998",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The average price (O+H+L+C)/4 is tracked with short and long smoothers, and the documented StopBase 0.017 move gate is approximated as a 0.2% shift. Long/short alternation after each trade, the eight-item profit/loss buffers, spread padding and self-managed price-unit TP/SL are not expressible, so a single long bias and null percent protection are used."
+    }
+  ]
+}

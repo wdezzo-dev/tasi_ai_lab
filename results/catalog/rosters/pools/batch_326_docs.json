@@ -1,0 +1,98 @@
+{
+ "batch_326": {
+  "strategy_ids": [
+   864,
+   728,
+   1785,
+   1715,
+   1138,
+   1569,
+   1249,
+   2390,
+   2655,
+   3866
+  ],
+  "docs": {
+   "864": {
+    "id": 864,
+    "name": "GRIM309 CallPut",
+    "family": "trend",
+    "overview": "GRIM309 CallPut Strategy trades based on multiple EMA trend alignment with a warning system. Long positions enter when short-term EMAs confirm an uptrend and EMA5 is rising above EMA10. Short positions enter on the opposite conditions. A cooldown period prevents immediate re-entry after a close. An additional warning triggers early exits when the EMA5-EMA10 spread contracts rapidly.\n\n## Details\n- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: EMA10 above EMA20, price above EMA50, EMA5 rising above EMA10, no position and cooldown satisfied.\n  - **Short**: EMA10 below EMA20, price below EMA50, EMA5 falling below EMA10, no position and cooldown satisfied.\n- **Exit Criteria**: Price crossing EMA15 or warning signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Ema5Length` = 5\n  - `Ema10Length` = 10\n  - `Ema15Length` = 15\n  - `Ema20Length` = 20\n  - `Ema50Length` = 50\n  - `Ema200Length` = 200\n  - `CooldownBars` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA\n  - Complexity: Medium\n  - Risk level: Medium\n",
+    "details": "- **Data**: Price candles.\n- **Entry Criteria**:\n  - **Long**: EMA10 above EMA20, price above EMA50, EMA5 rising above EMA10, no position and cooldown satisfied.\n  - **Short**: EMA10 below EMA20, price below EMA50, EMA5 falling below EMA10, no position and cooldown satisfied.\n- **Exit Criteria**: Price crossing EMA15 or warning signal.\n- **Stops**: None.\n- **Default Values**:\n  - `Ema5Length` = 5\n  - `Ema10Length` = 10\n  - `Ema15Length` = 15\n  - `Ema20Length` = 20\n  - `Ema50Length` = 50\n  - `Ema200Length` = 200\n  - `CooldownBars` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long & Short\n  - Indicators: EMA\n  - Complexity: Medium\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "728": {
+    "id": 728,
+    "name": "Elliott's Quadratic Momentum",
+    "family": "trend",
+    "overview": "The **Elliott's Quadratic Momentum** strategy combines multiple SuperTrend indicators to capture Elliott-wave inspired momentum.\n\nThe strategy enters long when all four SuperTrend lines signal an uptrend and enters short when all signal a downtrend. Positions are closed when any SuperTrend reverses direction.\n\n## Details\n- **Entry Criteria**: All SuperTrend indicators align in the same direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Any SuperTrend flips against the position.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `AtrLength1 = 7`\n  - `Multiplier1 = 4.0m`\n  - `AtrLength2 = 14`\n  - `Multiplier2 = 3.618m`\n  - `AtrLength3 = 21`\n  - `Multiplier3 = 3.5m`\n  - `AtrLength4 = 28`\n  - `Multiplier4 = 3.382m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: All SuperTrend indicators align in the same direction.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Any SuperTrend flips against the position.\n- **Stops**: No explicit stops.\n- **Default Values**:\n  - `AtrLength1 = 7`\n  - `Multiplier1 = 4.0m`\n  - `AtrLength2 = 14`\n  - `Multiplier2 = 3.618m`\n  - `AtrLength3 = 21`\n  - `Multiplier3 = 3.5m`\n  - `AtrLength4 = 28`\n  - `Multiplier4 = 3.382m`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: SuperTrend\n  - Stops: No\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1785": {
+    "id": 1785,
+    "name": "Fracture",
+    "family": "trend",
+    "overview": "Fracture combines fractal breakouts with smoothed moving averages and ADX to trade both ranging and trending markets.\n\n## Details\n\n- **Entry Criteria**: If ADX is below the threshold, go long above the last up fractal or short below the last down fractal when price is also above/below the fast SMMA. In a trending regime (fast SMMA above/below slower ones), enter in the trend direction on price crossing the fast SMMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close position once profit exceeds ATR multiplied by `MinProfit`.\n- **Stops**: ATR-based profit target.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `AtrPeriod` = 14\n  - `AdxPeriod` = 22\n  - `AdxLine` = 40\n  - `Ma1Period` = 5\n  - `Ma2Period` = 9\n  - `Ma3Period` = 22\n  - `RangingMultiplier` = 0.5\n  - `MinProfit` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Fractal, SMMA, ATR, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: If ADX is below the threshold, go long above the last up fractal or short below the last down fractal when price is also above/below the fast SMMA. In a trending regime (fast SMMA above/below slower ones), enter in the trend direction on price crossing the fast SMMA.\n- **Long/Short**: Both.\n- **Exit Criteria**: Close position once profit exceeds ATR multiplied by `MinProfit`.\n- **Stops**: ATR-based profit target.\n- **Default Values**:\n  - `CandleType` = TimeSpan.FromMinutes(1)\n  - `AtrPeriod` = 14\n  - `AdxPeriod` = 22\n  - `AdxLine` = 40\n  - `Ma1Period` = 5\n  - `Ma2Period` = 9\n  - `Ma3Period` = 22\n  - `RangingMultiplier` = 0.5\n  - `MinProfit` = 1\n- **Filters**:\n  - Category: Breakout\n  - Direction: Long & Short\n  - Indicators: Fractal, SMMA, ATR, ADX\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1715": {
+    "id": 1715,
+    "name": "Batman ATR Trailing Stop",
+    "family": "trend",
+    "overview": "This strategy implements an ATR-based trailing stop approach inspired by the original \"Batman\" Expert Advisor.\nIt tracks dynamic support and resistance levels derived from the **Average True Range (ATR)** indicator and reacts when the price crosses these levels.\n\n## Logic\n\n1. Calculate ATR with the configurable period.\n2. Determine support and resistance:\n   - `support = price - ATR * factor`\n   - `resistance = price + ATR * factor`\n3. Maintain the closest support or resistance depending on the current trend.\n4. When price breaks above the resistance, open a **long** position.\n5. When price breaks below the support, open a **short** position.\n\nThe price can be either the close price or the typical price `(high + low + close) / 3`.\n\n## Parameters\n\n| Name | Description |\n|------|-------------|\n| `ATR Period` | Period of the ATR indicator. |\n| `ATR Factor` | Multiplier applied to the ATR value to build the stop lines. |\n| `Use Typical Price` | If enabled, uses `(High + Low + Close)/3` instead of the close price. |\n| `Candle Type` | Type of candles used for calculations. |\n\n## Notes\n\n- The strategy uses the high-level API with `SubscribeCandles` and `Bind`.\n- `StartProtection()` is called on start to ensure position safety.\n- Trading is performed only on finished candles.\n",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| `ATR Period` | Period of the ATR indicator. |\n| `ATR Factor` | Multiplier applied to the ATR value to build the stop lines. |\n| `Use Typical Price` | If enabled, uses `(High + Low + Close)/3` instead of the close price. |\n| `Candle Type` | Type of candles used for calculations. |"
+   },
+   "1138": {
+    "id": 1138,
+    "name": "Optimized Heikin-Ashi Strategy with Buy/Sell Options",
+    "family": "trend",
+    "overview": "Heikin-Ashi candles smooth price data and highlight trend direction. This strategy trades a single direction at a time: either longs on green candles or shorts on red ones within a user-defined date range. Optional stop-loss and take-profit levels provide risk control.\n\n## Details\n\n- **Entry Criteria**: Heikin-Ashi candle color change.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Optional, percentage based.\n- **Default Values**:\n  - `CandleType` = 1 day\n  - `StartDate` = 2023-01-01\n  - `EndDate` = 2024-01-01\n  - `TradeType` = BuyOnly\n  - `UseStopLoss` = true\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = true\n  - `TakeProfitPercent` = 4\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: Heikin-Ashi\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Date range\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Heikin-Ashi candle color change.\n- **Long/Short**: Configurable.\n- **Exit Criteria**: Opposite signal or stop levels.\n- **Stops**: Optional, percentage based.\n- **Default Values**:\n  - `CandleType` = 1 day\n  - `StartDate` = 2023-01-01\n  - `EndDate` = 2024-01-01\n  - `TradeType` = BuyOnly\n  - `UseStopLoss` = true\n  - `StopLossPercent` = 2\n  - `UseTakeProfit` = true\n  - `TakeProfitPercent` = 4\n- **Filters**:\n  - Category: Trend\n  - Direction: Configurable\n  - Indicators: Heikin-Ashi\n  - Stops: Optional\n  - Complexity: Basic\n  - Timeframe: Daily\n  - Seasonality: Date range\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1569": {
+    "id": 1569,
+    "name": "YinYang RSI Volume Trend",
+    "family": "trend",
+    "overview": "YinYang RSI Volume Trend Strategy uses volume-weighted price zones and an RSI filter to detect trend reversals. The strategy buys when price exits the lower zone and sells when it exits the upper zone. Optional stop-loss and take-profit levels are based on dynamic zones.\n\n## Details\n\n- **Entry Criteria**: Price crosses out of the calculated purchase zones with availability reset options.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price reaches the opposite zone or triggers optional stop-loss/take-profit.\n- **Stops**: Optional.\n- **Default Values**:\n  - `TrendLength` = 80\n  - `UseTakeProfit` = true\n  - `UseStopLoss` = true\n  - `StopLossMultiplier` = 0.1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA, EMA, RSI\n  - Stops: Optional\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Price crosses out of the calculated purchase zones with availability reset options.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price reaches the opposite zone or triggers optional stop-loss/take-profit.\n- **Stops**: Optional.\n- **Default Values**:\n  - `TrendLength` = 80\n  - `UseTakeProfit` = true\n  - `UseStopLoss` = true\n  - `StopLossMultiplier` = 0.1\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: VWMA, EMA, RSI\n  - Stops: Optional\n  - Complexity: Intermediate\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1249": {
+    "id": 1249,
+    "name": "Reversal Finder",
+    "family": "trend",
+    "overview": "Reversal Finder looks for large range candles making new extremes and closing back toward the other side of the bar.\nIt buys when price washes out to a new low but finishes near the high, and sells when price spikes to a new high but closes near the low.\n\n## Details\n\n- **Entry Criteria**: range expansion with close near opposite extreme after new high/low\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 20\n  - `SmaLength` = 20\n  - `RangeMultiple` = 1.5\n  - `RangeThreshold` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: SMA, Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n\n",
+    "details": "- **Entry Criteria**: range expansion with close near opposite extreme after new high/low\n- **Long/Short**: Both\n- **Exit Criteria**: opposite signal\n- **Stops**: No\n- **Default Values**:\n  - `Lookback` = 20\n  - `SmaLength` = 20\n  - `RangeMultiple` = 1.5\n  - `RangeThreshold` = 0.5\n- **Filters**:\n  - Category: Pattern\n  - Direction: Both\n  - Indicators: SMA, Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2390": {
+    "id": 2390,
+    "name": "Exp MUV NorDIFF Cloud",
+    "family": "trend",
+    "overview": "Strategy based on normalized momentum of SMA and EMA.\nEnters long when SMA or EMA momentum reaches +100 and short when it reaches -100.\n\n## Parameters\n- `MaPeriod` – moving average period.\n- `MomentumPeriod` – number of bars used for momentum calculation.\n- `KPeriod` – window for normalization of momentum extremes.\n- `CandleType` – timeframe of candles.\n\n## Notes\nThe strategy calculates SMA and EMA values, measures their momentum and\nnormalizes it within the recent range to generate trading signals.\n",
+    "details": "",
+    "parameters": "- `MaPeriod` – moving average period.\n- `MomentumPeriod` – number of bars used for momentum calculation.\n- `KPeriod` – window for normalization of momentum extremes.\n- `CandleType` – timeframe of candles."
+   },
+   "2655": {
+    "id": 2655,
+    "name": "Force Trend",
+    "family": "trend",
+    "overview": "- Conversion of the MetaTrader 5 expert advisor **Exp_ForceTrend.mq5** located in `MQL/18817`.\n- Uses the proprietary ForceTrend oscillator to detect transitions between bullish and bearish momentum.\n- Implements the logic with StockSharp's high-level API, relying on candle subscriptions and built-in indicators instead of direct series access.",
+    "details": "",
+    "parameters": "- `Length` – size of the ForceTrend lookback window; must remain positive.\n- `SignalBar` – how many finished candles to shift the signal. `0` reacts to the most recent closed bar, `1` mimics the default MT5 setting by waiting for one extra bar, and larger values delay the execution even more.\n- `EnableLongEntry` – if disabled the strategy will not open long positions on bullish transitions.\n- `EnableShortEntry` – if disabled the strategy will not open short positions on bearish transitions.\n- `EnableLongExit` – toggles whether bullish signals are allowed to close existing short positions.\n- `EnableShortExit` – toggles whether bearish signals are allowed to close existing long positions.\n- `CandleType` – timeframe of the candles used for indicator calculations."
+   },
+   "3866": {
+    "id": 3866,
+    "name": "AG Dual MACD",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader 4 expert **AG.mq4**. The robot operates with two Moving Average Convergence Divergence (MACD) calculations that use different parameter sets. The primary MACD produces entry triggers, while the secondary (scaled) MACD acts as a directional filter to avoid counter-trend trades and to control exits. The logic mirrors the original MQL4 expert by evaluating only closed candles and by reusing the signal line sign checks that gated the original orders.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `OrderVolume` | Base lot size for new trades. |\n| `FastEmaLength` | Fast EMA period of the primary MACD. |\n| `SlowEmaLength` | Slow EMA period of the primary MACD. |\n| `SignalSmaLength` | Signal smoothing period for both MACDs. |\n| `MaxOpenOrders` | Maximum number of combined active orders and open positions. Set `0` for unlimited. |\n| `CandleType` | Time frame used to build candles for both indicators. |"
+   }
+  }
+ }
+}

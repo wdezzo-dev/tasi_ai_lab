@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3161,
+  "ticker": "1810",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3161,
+    "name": "ColorMaRsi Trigger MMRec Duplex",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,1),ema(close,5)) and rsi(close,2) > rsi(close,13)",
+    "exit_long": "crossbelow(ema(close,5),ema(close,10)) or rsi(close,3) < rsi(close,13)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "EMA(5/10) and RSI(3/13) alignment are the documented long-block composite values and produce a bullish trigger. Separate short block, applied-price variants, MMRec volume history, 1000/2000-point protections, and signal-bar shifts are not representable."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2012-06-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3026,
+      "engine_win_ret": 21.983482616661004,
+      "alpha": 21.48644048216867,
+      "benchmark_ret": 0.4970421344923339,
+      "trades": 287,
+      "win_rate": 0.4912891986062718,
+      "sharpe": 1.4957860899726514,
+      "max_drawdown": -0.186970695316518,
+      "profit_factor": 2.1901964220182504
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.25439243449755766,
+      "alpha": 0.16849292072122046,
+      "benchmark_ret": 0.0858995137763372,
+      "trades": 44,
+      "win_rate": 0.5,
+      "sharpe": 1.1304712753856045,
+      "max_drawdown": -0.13265634102160684,
+      "profit_factor": 1.58157125547373
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0004997056389510757,
+      "alpha": 0.2390593455489285,
+      "benchmark_ret": -0.23855963990997742,
+      "trades": 20,
+      "win_rate": 0.35,
+      "sharpe": 0.0884462708762319,
+      "max_drawdown": -0.1318577183031291,
+      "profit_factor": 0.9864685301499716
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2012-06-04",
+        "2024-07-31"
+      ],
+      "bars_in_window": 3026,
+      "engine_win_ret": 4.472543101146729,
+      "alpha": 3.975500966654395,
+      "benchmark_ret": 0.4970421344923339,
+      "trades": 287,
+      "win_rate": 0.4250871080139373,
+      "sharpe": 0.8385595201236224,
+      "max_drawdown": -0.27893605715397374,
+      "profit_factor": 1.4872147046879904
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.006191925008407484,
+      "alpha": -0.07970758876792972,
+      "benchmark_ret": 0.0858995137763372,
+      "trades": 44,
+      "win_rate": 0.38636363636363635,
+      "sharpe": 0.10726396107592219,
+      "max_drawdown": -0.21180430274155693,
+      "profit_factor": 1.012171409828008
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.09282861350110316,
+      "alpha": 0.14573102640887425,
+      "benchmark_ret": -0.23855963990997742,
+      "trades": 20,
+      "win_rate": 0.35,
+      "sharpe": -0.6716210434642699,
+      "max_drawdown": -0.18357908907781084,
+      "profit_factor": 0.6799817041010338
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

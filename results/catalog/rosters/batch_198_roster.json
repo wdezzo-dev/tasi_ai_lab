@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 583,
+      "name": "Bober XM",
+      "family": "trend",
+      "entry_long": "close > ema(close, 20) + 1.5 * atr(high, low, close, 10) and close > ema(close, 15) and adx(high, low, close, 60) > 35",
+      "exit_long": "volume_ratio(volume, 22) < 1 and adx(high, low, close, 60) > 35",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "The Keltner channel is rebuilt from the documented EmaPeriod 20, AtrPeriod 10 and KeltnerMultiplier 1.5, WMA by EMA(15) and the OBV exit by volume_ratio below its ObvMaPeriod 22 average, with the documented AdxThreshold 35. The documented StopLossPercent 2 is applied."
+    },
+    {
+      "id": 1239,
+      "name": "Relative Strength",
+      "family": "trend",
+      "entry_long": "crossabove(zscore((ema(close, 8) - ema(close, 34)) / ema(close, 34) + (sma(close, 20) - sma(close, 50)) / sma(close, 50) + (sma(close, 50) - sma(close, 200)) / sma(close, 200), 20), 2)",
+      "exit_long": "crossbelow(zscore((ema(close, 8) - ema(close, 34)) / ema(close, 34) + (sma(close, 20) - sma(close, 50)) / sma(close, 50) + (sma(close, 50) - sma(close, 200)) / sma(close, 200), 20), -2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The weighted strength measure combines the documented EMA 8/34, SMA 20/50 and SMA 200 pairs as normalised spreads, and the Bollinger bands on that signal become a 2-standard-deviation z-score using a 20-bar look. No band period or deviation is documented, and the denominators can approach zero only in flat series."
+    },
+    {
+      "id": 3189,
+      "name": "Demarker Martingale Strategy (StockSharp)",
+      "family": "trend",
+      "entry_long": "rsi(close, 14) > 50 and macd(close, 12, 26) > macd_signal(close, 12, 26, 9)",
+      "exit_long": "rsi(close, 14) < 45 or crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "DeMarker is unavailable, so the documented bullish DeMarker threshold plus the higher-timeframe MACD trend filter is approximated by RSI(14) above its midpoint with MACD 12/26/9 above signal. Martingale lot escalation, break-even, pip stops and the trailing stop are not expressible."
+    },
+    {
+      "id": 2968,
+      "name": "ColorXPWMA Digit MMRec",
+      "family": "trend",
+      "entry_long": "crossbelow(ema(close, 14), ema(close, 30))",
+      "exit_long": "crossabove(ema(close, 14), ema(close, 30))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The power-weighted line with its smoother is approximated by EMAs, so an up colour (fast above slow) losing that colour becomes the documented long entry on the downward cross. IndicatorPeriod and SmoothingLength have no documented values (14/30) and the MMRec sizing and point protection are dropped."
+    },
+    {
+      "id": 417,
+      "name": "DMI Winner",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close, 14), 0) and adx(high, low, close, 14) > 23 and close > sma(close, 20)",
+      "exit_long": "crossbelow(roc(close, 14), 0) or adx(high, low, close, 14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The DSL has no +DI/-DI lines, so the +DI-over--DI cross is approximated by a positive 14-bar price change while the documented KeyLevel 23 filter and the optional MA filter (SMA 20) are kept. Docs default UseSL to false, so no stop is set; the MA period is an explicit default."
+    },
+    {
+      "id": 1684,
+      "name": "Line Order Dual Level",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Trades are triggered by trader-defined horizontal BuyPrice and SellPrice levels, so no market-derived entry signal can be recovered. A never-true guard is used and the pip-based stop, target and trailing are not translated."
+    },
+    {
+      "id": 2122,
+      "name": "Auto Trade With Bollinger Bands",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close, 20) and rsi(close, 14) < 25 and rsi(close, 5) < 15",
+      "exit_long": "close > bb_upper(close, 20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented long condition (close below the lower band, RSI under 25 and stochastic %K under the low level) is kept with a 20-bar Bollinger period; the doc's %K value of 155 is read as 15. RSI(5) approximates %K since no stochastic is in the DSL, and the GMT window and point trailing are unavailable."
+    },
+    {
+      "id": 785,
+      "name": "Fibonacci Levels High Low",
+      "family": "other",
+      "entry_long": "close > donchian_low_prev(low, 5) and close > donchian_high(high, 20) - 0.382 * (donchian_high(high, 20) - donchian_low(low, 20))",
+      "exit_long": "close < donchian_high_prev(high, 5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The higher-timeframe Fibonacci level is approximated by a 38.2 percent retracement of the 20-bar Donchian range, combined with the documented break above the previous lowest low. The retracement ratio and lookbacks are defaults because the docs supply no values, and higher-timeframe data is not accessible."
+    },
+    {
+      "id": 1275,
+      "name": "RSI Strategy With TP/SL (Lower TF)",
+      "family": "other",
+      "entry_long": "rsi(close, 14) < 30",
+      "exit_long": "rsi(close, 14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only states that longs open below a buy level and shorts above a sell level with percentage take-profit and stop-loss, without any values. RSI(14) with 30/70 is an explicit default, and the percentage exits are left null since none are documented."
+    },
+    {
+      "id": 1610,
+      "name": "`security()` Revisited",
+      "family": "other",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Docs describe a demonstration of higher-timeframe access and repaint control with no indicators and no trading logic, so no market-derived signal exists. A never-true guard is used rather than inventing one."
+    }
+  ]
+}

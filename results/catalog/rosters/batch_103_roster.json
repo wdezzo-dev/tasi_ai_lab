@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 534,
+      "name": "Pearson's R Oscillator",
+      "family": "trend",
+      "entry_long": "crossabove(close,bb_upper(close,48,2))",
+      "exit_long": "crossbelow(close,bb_mid(close,48))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The dynamic Pearson-correlation search and fitted regression lines are replaced by a linear channel over MinPeriod 48 with the documented 2 deviations, so a close crossing the upper band is the breakout and the midline cross closes. MaxPeriod, Step, IdealPositive/IdealNegative and the per-period channel selection are not expressible; docs state no stops."
+    },
+    {
+      "id": 520,
+      "name": "Altcoin Index Correlation",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,47),ema(close,50))",
+      "exit_long": "crossbelow(ema(close,47),ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The DSL has a single price series, so the index leg (IndexFastEmaLength/IndexSlowEmaLength 47/50) is dropped and only the traded instrument's documented 47/50 EMA cross is used, with the opposite crossover as exit. SkipIndexReference and InverseSignal are switches with no effect on the reduced rule; docs state no stops."
+    },
+    {
+      "id": 3538,
+      "name": "MA on Momentum Min Profit",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,14),ema(roc(close,14),6)) and roc(close,14) > 0",
+      "exit_long": "crossbelow(roc(close,14),ema(roc(close,14),6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MT5 momentum is close/close[14]*100, so ROC(14) plus the documented MomentumReference 100 is used: momentum crossing above its MomentumMovingAveragePeriod 6 average while above the neutral level enters long, and the opposite cross exits. The money-based StopLossMoney 15 and the 460-point take-profit are not percentage fields."
+    },
+    {
+      "id": 2023,
+      "name": "ColorXdinMA",
+      "family": "trend",
+      "entry_long": "crossabove(roc(2 * sma(close,10) - sma(close,20),1),0)",
+      "exit_long": "crossbelow(roc(2 * sma(close,10) - sma(close,20),1),0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "XdinMA is exactly ma_main*2 - ma_plus with the documented MainLength 10 and PlusLength 20, and a slope change is a zero-cross of its one-bar ROC. The 6-hour candle choice and the colour-plot logic are not representable and the docs list no exits beyond the slope change or stops."
+    },
+    {
+      "id": 1892,
+      "name": "Auto Pending By RSI",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30 and bars_since(rsi(close,14) >= 30) > 3",
+      "exit_long": "crossabove(rsi(close,14),50)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pending buy limit is represented by the documented oversold-streak condition (RSI below RsiOversold for more than MatchCount bars) with fallbacks RSI 14, level 30 and a 3-bar streak since no values are documented. The PendingOffset price-point distance, order cancellation and the overbought short leg are not expressible; the exit uses an RSI recross above 50."
+    },
+    {
+      "id": 3765,
+      "name": "Lucky Code",
+      "family": "breakout",
+      "entry_long": "low < donchian_low_prev(low,5) and close > open",
+      "exit_long": "close > donchian_high_prev(high,5) or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Level-1 bid/ask ticks are replaced by 5-bar extremes: a bar that pierces the prior low and closes up is the documented 'bid drops by Shift points, buy the rebound' entry. Shift and Limit point values are not supplied, so the 5-bar window is a fallback, and the equity-based volume sizing is not a DSL field."
+    },
+    {
+      "id": 2435,
+      "name": "H4L4 Breakout",
+      "family": "breakout",
+      "entry_long": "low <= donchian_low_prev(low,20) and close > donchian_low_prev(low,20)",
+      "exit_long": "close > ema(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "H4/L4 need the prior session close, which the DSL cannot shift, so the 20-bar prior band stands in and the long limit fill is a probe of the prior low that closes back inside the band. TakeProfit 57 and StopLoss 7 are instrument points, not percentages, so protection is null and the exit is a recovery above EMA(20)."
+    },
+    {
+      "id": 1941,
+      "name": "MPM Momentum",
+      "family": "momentum",
+      "entry_long": "close > open and sma(close - open,3) > 0.5 * sma(atr(high,low,close,14),3)",
+      "exit_long": "close < ema(close,14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A run of ProgressiveCandles progressive bullish candles is approximated by a bullish body with the 3-bar average body above 0.5x the average ATR(14) (ProgressiveCandles, ProgressiveSize and AtrPeriod have no documented values). The ATR StopRatio trailing and the money-based profit, breakeven and loss targets per lot are not expressible."
+    },
+    {
+      "id": 1622,
+      "name": "TPSL Insert",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The script only attaches the documented 35-pip take-profit and 100-pip stop to positions opened elsewhere and explicitly generates no entry or exit signal, so the never-true guard is used. Pip-to-price conversion and StartProtection order handling are outside the DSL."
+    },
+    {
+      "id": 575,
+      "name": "Bitcoin Futures vs Spot Tri-Frame",
+      "family": "mean_reversion",
+      "entry_long": "zscore(close,20) < -2",
+      "exit_long": "zscore(close,20) > 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The futures-versus-spot spread and its three-timeframe confirmation need a second series and multi-timeframe data, so the single-instrument proxy is a 20-bar z-score with the standard 2-sigma long threshold and a reversion-to-average exit. The holding period and the percent take-profit/stop-loss are not documented numerically."
+    }
+  ]
+}

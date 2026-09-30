@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2364,
+      "name": "TRIX Crossover",
+      "family": "trend",
+      "entry_long": "roc(roc(ema(close, 5), 5), 2) < 0 and roc(roc(ema(close, 5), 5), 1) > 0 and roc(roc(ema(close, 20), 20), 1) > 0",
+      "exit_long": "roc(roc(ema(close, 5), 5), 1) < 0 or roc(roc(ema(close, 20), 20), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "TRIX is rebuilt as the percent ROC of a period EMA, so a two-bar down-then-up V in the fast TRIX(5) with a rising slow TRIX(20) is the documented local bottom; the 5/20 periods are explicit fallbacks because the parameters have no values. The absolute-price take-profit and stop loss are not percentage fields."
+    },
+    {
+      "id": 2341,
+      "name": "ColorXvaMA Digit",
+      "family": "trend",
+      "entry_long": "crossabove(ema(ema(close, 5), 5), ema(close, 15))",
+      "exit_long": "crossbelow(ema(ema(close, 5), 5), ema(close, 15))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Jurik smoothing has no DSL function, so the fast JMA is approximated by an EMA(5) smoothed a second time and compared with the documented SlowLength 15 EMA, keeping the bullish and bearish crosses. The 8-hour timeframe, colour digit output, and short side are not representable."
+    },
+    {
+      "id": 336,
+      "name": "Parabolic SAR RSI Divergence",
+      "family": "trend",
+      "entry_long": "low < donchian_low_prev(low, 2) and roc(rsi(close, 14), 1) > 0 and close > ema(close, 20)",
+      "exit_long": "close < ema(close, 20) or roc(rsi(close, 14), 1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so an EMA(20) direction filter stands in for the SAR confirmation while a new two-bar low with a rising documented RsiPeriod 14 oscillator supplies the bullish divergence. The 0.02/0.2 acceleration factors, the ATR-multiple stop, the 5-minute timeframe, and the short side are not representable."
+    },
+    {
+      "id": 3651,
+      "name": "Trail SL Manager",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The document states the strategy does not open trades on its own and only pushes an existing stop to break-even and then trails it in point increments, so there is no market-derived entry and the impossible negative-price guard avoids inventing one. Point arithmetic, break-even/trigger offsets, and the trailing step logic are not roster fields."
+    },
+    {
+      "id": 4140,
+      "name": "FiftyFiveMedianSlopeStrategy",
+      "family": "trend",
+      "entry_long": "sma((high + low) / 2, 55) / (1 + roc(sma((high + low) / 2, 55), 1) / 100) > sma((high + low) / 2, 55) / (1 + roc(sma((high + low) / 2, 55), 13) / 100)",
+      "exit_long": "sma((high + low) / 2, 55) / (1 + roc(sma((high + low) / 2, 55), 1) / 100) < sma((high + low) / 2, 55) / (1 + roc(sma((high + low) / 2, 55), 13) / 100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented MaPeriod 55 average of median price is reconstructed one bar and MaShift 13 bars back through 1+roc(...)/100, so a rising slope comparison enters long and the falling case exits. SMMA/LWMA/EMA method selection, MaxOrders stacking, risk-based sizing, point protection, and the exclusive StartHour/EndHour gate are not representable."
+    },
+    {
+      "id": 2297,
+      "name": "Random Coin Toss Baseline",
+      "family": "momentum",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy is an explicitly educational coin flip that opens a long or short at random on each finished candle, so no deterministic market-derived signal exists and the impossible negative-price guard prevents fabricating one. The time-seeded random generator, absolute-price stop/target, and the short leg are not roster fields."
+    },
+    {
+      "id": 3394,
+      "name": "Virtual Profit Close",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is an exit manager that watches an existing position and closes it at an internal virtual profit target with an optional trailing exit, and its testing mode opens random sample positions, so no market-derived entry exists and the impossible negative-price guard avoids inventing one. Profit-target and trailing parameters are not roster fields."
+    },
+    {
+      "id": 373,
+      "name": "F-Score Reversal",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The signal needs Piotroski F-Score fundamentals plus a cross-sectional ranking of the security universe and a monthly rebalance, none of which a single OHLCV series can express, so the impossible negative-price guard avoids inventing a price signal. The Lookback 21 return ranking, FHi 7 / FLo 3 screens, and MinTradeUsd filter are not DSL fields."
+    },
+    {
+      "id": 1704,
+      "name": "Martini Martingale",
+      "family": "volume",
+      "entry_long": "high > donchian_high_prev(high, 1)",
+      "exit_long": "low < donchian_low_prev(low, 1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The initial buy-stop and sell-stop around the market are approximated by a fresh one-bar high for the long trigger and a fresh one-bar low for the opposite cancel, with Step in absolute price units. The volume doubling against Step*orderCount, ProfitClose portfolio exit, and the short leg cannot be expressed in a single long-only position."
+    },
+    {
+      "id": 2306,
+      "name": "CM Fishing",
+      "family": "volume",
+      "entry_long": "roc(close, 2) <= -2",
+      "exit_long": "roc(close, 2) >= 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The fixed point step from the last executed trade is mapped to a 2% two-bar cell, so a one-cell drop adds the long grid leg and a one-cell rebound closes it. The exact step in points, the layered grid of long or short orders, and the profit-target close of the whole stack are not representable."
+    }
+  ]
+}

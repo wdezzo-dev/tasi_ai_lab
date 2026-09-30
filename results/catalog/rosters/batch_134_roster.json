@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 345,
+      "name": "VWAP Behavioral Bias Filter",
+      "family": "trend",
+      "entry_long": "close > sma(close,20) and zscore(close,20) > 0.5",
+      "exit_long": "close < sma(close,20) or zscore(close,20) < -0.5",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs give no explicit condition ('see implementation') and no numeric scale, so the BiasWindowSize 20 window is kept as an SMA with the BiasThreshold 0.5 mapped to a normalized 0.5-sigma bias and VWMA approximated by the same average. The custom Behavioral indicator, the 2m ATR-style stop and the 5-minute timeframe are not representable."
+    },
+    {
+      "id": 306,
+      "name": "Bollinger Volatility Breakout",
+      "family": "trend",
+      "entry_long": "close > bb_upper(close,20,2) and atr(high,low,close,14) > sma(atr(high,low,close,14),20)",
+      "exit_long": "close < bb_mid(close,20) or atr(high,low,close,14) < sma(atr(high,low,close,14),20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Documented BollingerPeriod 20 and BollingerDeviation 2.0 give the band break, and the documented AtrPeriod 14 is used as a volatility-expansion gate standing in for AtrDeviationMultiplier 2.0. StopLossMultiplier 2.0 is an ATR distance from entry rather than a percent field, and the short leg and 5-minute timeframe are dropped."
+    },
+    {
+      "id": 1767,
+      "name": "Aeron Robot Grid",
+      "family": "trend",
+      "entry_long": "roc(close,1) <= -1",
+      "exit_long": "roc(close,1) >= 1",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The only market-derived rule is the documented grid step (buy when price falls by Gap points from the last buy price), translated as a one-bar drop of about 1% because Gap, GapFactor, TakeProfit and StopLoss have no documented values. FirstLot, LotsFactor volume scaling, MaxTrades, Hedging and multi-order averaging cannot be represented by the single-position long engine."
+    },
+    {
+      "id": 2013,
+      "name": "MAVA Xonax",
+      "family": "trend",
+      "entry_long": "crossabove(ema(open,6), ema(close,6))",
+      "exit_long": "crossbelow(ema(open,6), ema(close,6))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented reversal rule is reproduced exactly with the documented EmaPeriod 6: EMA(open) crossing above EMA(close) enters long and the opposite cross exits. The stop and target are derived from high/low EMA ranges rather than percentages, and the 240-minute timeframe and short leg are not translated."
+    },
+    {
+      "id": 3164,
+      "name": "Price Action Fractal",
+      "family": "trend",
+      "entry_long": "low <= donchian_low(low,5) and ema(close,9) > ema(close,21) and (roc(close,14) >= 2 or roc(close,14) <= -2) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "ema(close,9) < ema(close,21) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "A fresh five-candle down fractal is expressed as the current low at the 5-bar range extreme, the fast/slow weighted averages are approximated by EMA 9/21 and MomentumPeriod 14 is the documented 14-bar ROC with a 2% MomentumThreshold fallback. MACD 12/26/9 is exact; StopLossPoints, TakeProfitPoints, trailing, break-even and FractalLifetime are not percentage fields."
+    },
+    {
+      "id": 563,
+      "name": "Berlin Range Index",
+      "family": "trend",
+      "entry_long": "adx(high,low,close,9) > 25 and close > open",
+      "exit_long": "adx(high,low,close,9) < 20 or close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ATR-filtered Choppiness Index is not available, so a trending regime is approximated with ADX at the documented Length 9 and the ChopMin 10 / ChopMax 40 thresholds mapped to 25 / 20, and the long side takes the documented current-candle direction (close above open). The StdDevLength 14 normalisation and LowLookback 14 filters are not reproduced and no stops are documented."
+    },
+    {
+      "id": 1135,
+      "name": "Opening Range Breakout",
+      "family": "breakout",
+      "entry_long": "close > donchian_high_prev(high,5) and (donchian_high_prev(high,5) - donchian_low_prev(low,5)) / close > 0.0035",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The 09:30-10:15 opening range cannot be identified on daily bars, so a prior 5-bar range stands in as the range box with the documented MinRangePercent 0.35 read as 0.35%. RewardRisk 1.1, the 0.5 retrace exit, the one-trade-per-day rule, losing-trade reversal and the 15:45 end-of-day flat are all session or sizing logic outside the DSL."
+    },
+    {
+      "id": 2210,
+      "name": "RoBoost",
+      "family": "momentum",
+      "entry_long": "close >= sma(close,2) and crossabove(rsi(close,14), 50)",
+      "exit_long": "close < sma(close,2) and rsi(close,14) < 50",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented 'previous close lower or equal to the current close' is exactly close >= sma(close,2), and the RSI-above-RsiUp long rule becomes a cross above the midline. RsiPeriod, RsiUp and RsiDown are documented only as names with no values, so RSI(14) and 50 are fallbacks; TakeProfit, StopLoss and the trailing tools are absolute price distances, not percentages."
+    },
+    {
+      "id": 3351,
+      "name": "Roulette Game",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The docs state there is no technical filter and the direction is a random coin flip per candle, so no deterministic long signal exists and the never-true close<0 guard is used. Martingale staking, virtual bankroll, MaxMultiplier, losing-streak reset and round cooldowns are position-management logic outside the DSL."
+    },
+    {
+      "id": 3237,
+      "name": "Stoch Sell",
+      "family": "mean_reversion",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy only ever sends an initial market sell and then a ladder of pending sell stops, and every oscillator setting (three stochastic triplets, OversoldLevel, LongTermOversoldLevel, ATR threshold) is documented by name only with no values, so a mirrored long entry would be entirely fabricated. The never-true close<0 guard records that instead; grid orders and pip targets are unsupported."
+    }
+  ]
+}

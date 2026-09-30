@@ -1,0 +1,98 @@
+{
+ "batch_272": {
+  "strategy_ids": [
+   955,
+   2429,
+   652,
+   43,
+   3836,
+   3025,
+   1663,
+   2294,
+   2540,
+   3038
+  ],
+  "docs": {
+   "955": {
+    "id": 955,
+    "name": "Keltner Channel",
+    "family": "trend",
+    "overview": "This strategy trades Keltner Channel breakouts and EMA trend crossings.\n\n## Details\n\n- **Entry Criteria**:\n  - Long: price crosses below the lower Keltner band or EMA9 crosses above EMA21 while price is above EMA50.\n  - Short: price crosses above the upper Keltner band or EMA9 crosses below EMA21 while price is below EMA50.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price crosses the middle band in the opposite direction or the EMAs cross back.\n  - Stop loss at 1.5 ATR.\n  - Take profit at 3 ATR.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Length` = 20\n  - `Multiplier` = 1.5\n  - `AtrMultiplier` = 1.5\n  - `FastEmaPeriod` = 9\n  - `SlowEmaPeriod` = 21\n  - `TrendEmaPeriod` = 50\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: EMA, ATR, Keltner\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Long: price crosses below the lower Keltner band or EMA9 crosses above EMA21 while price is above EMA50.\n  - Short: price crosses above the upper Keltner band or EMA9 crosses below EMA21 while price is below EMA50.\n- **Long/Short**: Both sides.\n- **Exit Criteria**:\n  - Price crosses the middle band in the opposite direction or the EMAs cross back.\n  - Stop loss at 1.5 ATR.\n  - Take profit at 3 ATR.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Length` = 20\n  - `Multiplier` = 1.5\n  - `AtrMultiplier` = 1.5\n  - `FastEmaPeriod` = 9\n  - `SlowEmaPeriod` = 21\n  - `TrendEmaPeriod` = 50\n  - `CandleType` = TimeSpan.FromMinutes(5).TimeFrame()\n- **Filters**:\n  - Category: Channel\n  - Direction: Both\n  - Indicators: EMA, ATR, Keltner\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2429": {
+    "id": 2429,
+    "name": "JS MA Day",
+    "family": "trend",
+    "overview": "The **JS MA Day Strategy** trades based on a simple moving average calculated on daily candles using the median price. The strategy compares the position of the moving average relative to each day's open price and opens positions when the trend of the moving average confirms a crossover of the open price.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `MaPeriod` | Period of the simple moving average. | `3` |\n| `Reverse` | Reverse trading signals. When enabled, buy signals become sell signals and vice versa. | `false` |\n| `CandleType` | Candle type used for calculations. Default is daily timeframe candles. | `TimeFrame(1 day)` |"
+   },
+   "652": {
+    "id": 652,
+    "name": "D-BoT Alpha Short SMA and RSI",
+    "family": "trend",
+    "overview": "Short strategy that sells when RSI crosses above a threshold while price stays below a simple moving average. A trailing stop follows new lows and positions are closed if RSI reaches stop or take-profit levels.\n\n## Details\n\n- **Entry Criteria**: RSI crosses above the entry level and price is below the SMA.\n- **Exit Criteria**: Price crosses above the trailing stop or RSI hits stop or take-profit levels.\n",
+    "details": "- **Entry Criteria**: RSI crosses above the entry level and price is below the SMA.\n- **Exit Criteria**: Price crosses above the trailing stop or RSI hits stop or take-profit levels.",
+    "parameters": ""
+   },
+   "43": {
+    "id": 43,
+    "name": "Volatility Contraction Pattern",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 166%. It performs best in the stocks market.\n\nOnce contraction is observed, a breakout beyond the recent extremes triggers a trade in that direction. Price crossing the moving average is used to manage exits.\n\nThis approach aims to capture explosive moves following a volatility squeeze.\n\n## Details\n\n- **Entry Criteria**: Range contraction then breakout of recent high/low.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Range, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Range contraction then breakout of recent high/low.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Price crosses MA or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `MAPeriod` = 20\n  - `LookbackPeriod` = 20\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Breakout\n  - Direction: Both\n  - Indicators: Range, MA\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3836": {
+    "id": 3836,
+    "name": "Karakatica",
+    "family": "trend",
+    "overview": "The Karakatica Strategy is a medium-term trend-following system that was ported from the original MetaTrader 4 expert advisor \"Exp_karakatica\". The strategy trades **EUR/USD on the M15 timeframe** by default and uses a custom signal engine that emulates the behaviour of the original \"iKarakatica\" indicator with a moving-average crossover model. The crossover is recalculated on every bar and the signal period is continuously re-optimised in order to follow the most profitable recent regime.\n\nThe strategy enters the market with market orders only when no position is currently open. Protective orders (stop-loss and take-profit) are attached automatically through the StockSharp protection subsystem.",
+    "details": "",
+    "parameters": "| Name | Description | Default | Optimisable |\n| ---- | ----------- | ------- | ----------- |\n| `Risk` | Percentage of portfolio value (per 1000 units) that defines the target order volume. | 0.5 | Yes |\n| `StopLossPoints` | Stop-loss distance in price points. | 50 | Yes |\n| `TakeProfitPoints` | Take-profit distance in price points. | 150 | Yes |\n| `Period` | Active SMA period used for signal generation. Updated automatically by the optimiser. | 70 | Yes |\n| `OptimizationDepth` | Number of historical bars used for the in-sample backtest. | 250 | No |\n| `ReoptimizeEvery` | Frequency of optimisation runs measured in finished bars. | 50 | No |\n| `OptimizationStart` | Minimum period considered during optimisation. | 10 | No |\n| `OptimizationStep` | Step between neighbour periods. | 5 | No |\n| `OptimizationEnd` | Maximum period considered during optimisation. | 150 | No |\n| `CandleType` | Data type of candles (defaults to 15-minute time frame). | M15 time-frame candles | No |"
+   },
+   "3025": {
+    "id": 3025,
+    "name": "One Two Three",
+    "family": "trend",
+    "overview": "The One Two Three strategy trades breakouts of the Chaikin oscillator after an extended period of flat accumulation. It emulates the original MetaTrader 5 expert by combining an accumulation/distribution line with two EMAs, validating that market pressure has stayed neutral for several bars, and then entering on a strong surge of Chaikin momentum. The StockSharp port keeps the lot sizing, stop management, and trailing logic configurable through strategy parameters.\n\n## Concept\n\n- Build the Chaikin oscillator as the difference between a fast and a slow exponential moving average applied to the accumulation/distribution line derived from the incoming candles.\n- Track the last **BarsCount** oscillator readings and classify bars where the absolute Chaikin value stays within **FlatLevel**.\n- Allow trading only when more than **FlatPercent** percent of those stored readings stayed inside the flat range, signalling quiet accumulation.\n- When a new candle finishes, enter in the direction of the Chaikin surge if its magnitude exceeds **OpenLevel**.\n\n## Entry Rules\n\n- **Long**: The Chaikin oscillator on the just closed candle is greater than or equal to **OpenLevel** and the current net position is non-positive.\n- **Short**: The Chaikin oscillator on the just closed candle is less than or equal to the negative **OpenLevel** and the current net position is non-negative.\n- Orders are issued at market. If the strategy holds an opposite position, the order size is increased to flatten the existing exposure before establishing the new trade.\n\n## Exit Rules\n\n- A fixed stop-loss (**StopLossPips**) and take-profit (**TakeProfitPips**) are translated into price offsets using the security price step (1 pip = 1 price step) and applied immediately after entry.\n- An optional trailing stop adjusts the protective stop once price moves in favour of the trade by at least **TrailingStopPips + TrailingStepPips**. The new stop is placed exactly **TrailingStopPips** away from the current close wh",
+    "details": "",
+    "parameters": "- **OrderVolume** – Base volume for entries.\n- **StopLossPips** – Distance, in pips, between the entry price and the protective stop.\n- **TakeProfitPips** – Distance, in pips, between the entry price and the profit target.\n- **TrailingStopPips** – Distance, in pips, maintained between price and the trailing stop. Set to zero to disable trailing.\n- **TrailingStepPips** – Minimum pip gain beyond the trailing distance required before the stop is moved again.\n- **FastLength** – Period of the fast EMA in the Chaikin oscillator.\n- **SlowLength** – Period of the slow EMA in the Chaikin oscillator.\n- **FlatLevel** – Absolute Chaikin value that still counts as flat market behaviour.\n- **OpenLevel** – Chaikin magnitude required to trigger a new trade once the flat condition is satisfied.\n- **BarsCount** – Number of recent Chaikin values to evaluate when computing the flat ratio.\n- **FlatPercent** – Minimum percentage of the stored values that must stay within the flat range to allow trading.\n- **CandleType** – Candle data type or timeframe that feeds the indicator calculations."
+   },
+   "1663": {
+    "id": 1663,
+    "name": "Psi Proc EMA MACD",
+    "family": "trend",
+    "overview": "This strategy replicates the T4 system from the original MQL expert `e-PSI@PROC.mq4`. It trades based on the alignment of multiple exponential moving averages and a MACD filter.\n\n## Strategy Logic\n\n1. Calculate EMA(200), EMA(50) and EMA(10) on each incoming candle.\n2. Calculate MACD with parameters 12, 26, 9.\n3. Go long when:\n   - EMA200 is rising and EMA50 > EMA200.\n   - EMA50 is rising and EMA10 > EMA50.\n   - MACD is rising and above `LimitMACD`.\n4. Go short when:\n   - EMA200 is falling and EMA50 < EMA200.\n   - EMA50 is falling and EMA10 < EMA50.\n   - MACD is falling and below `-LimitMACD`.\n5. Exit long when the price closes below EMA50.\n6. Exit short when the price closes above EMA50.\n\nOptional take-profit and trailing-stop protections are supported.\n\n## Parameters\n\n| Name | Description |\n| ---- | ----------- |\n| `LimitMACD` | Minimal absolute MACD level to allow entry. |\n| `TakeProfitPoints` | Take-profit level in price points. |\n| `TrailStopPoints` | Trailing stop level in price points. |\n| `CandleType` | Timeframe of candles used by the strategy. |\n\n## Notes\n\n- Trades are opened with market orders.\n- Only completed candles are processed.\n- The strategy operates on a single security.\n\n",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `LimitMACD` | Minimal absolute MACD level to allow entry. |\n| `TakeProfitPoints` | Take-profit level in price points. |\n| `TrailStopPoints` | Trailing stop level in price points. |\n| `CandleType` | Timeframe of candles used by the strategy. |"
+   },
+   "2294": {
+    "id": 2294,
+    "name": "Volume Weighted MA Digit System",
+    "family": "trend",
+    "overview": "This strategy replicates the **Volume Weighted MA Digit System**. It builds two volume weighted moving averages (VWMA) based on candle highs and lows. The price crossing these bands provides trading signals.\n\n## How It Works\n\n1. **Indicators**\n   - `VWMA High`: VWMA applied to candle highs.\n   - `VWMA Low`: VWMA applied to candle lows.\n2. **Signals**\n   - **Long Entry**: Close price crosses above `VWMA High`.\n   - **Short Entry**: Close price crosses below `VWMA Low`.\n   - Opposite cross closes open positions.\n3. **Risk Management**\n   - Uses built‑in `StartProtection` with configurable stop loss and take profit (points).\n\n## Parameters\n\n| Name | Description | Default |\n|------|-------------|---------|\n| `VwmaPeriod` | VWMA calculation length | `12` |\n| `CandleType` | Candle timeframe used for calculation | `4h` |\n| `StopLoss` | Stop loss in points | `1000` |\n| `TakeProfit` | Take profit in points | `2000` |\n\n## Notes\n\n- Only closed candles are processed.\n- Strategy uses high level API features such as `SubscribeCandles`, `Bind` and standard indicators.\n- Original MQL strategy: `Exp_Volume_Weighted_MA_Digit_System.mq5`.\n",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n|------|-------------|---------|\n| `VwmaPeriod` | VWMA calculation length | `12` |\n| `CandleType` | Candle timeframe used for calculation | `4h` |\n| `StopLoss` | Stop loss in points | `1000` |\n| `TakeProfit` | Take profit in points | `2000` |"
+   },
+   "2540": {
+    "id": 2540,
+    "name": "Rabbit3",
+    "family": "trend",
+    "overview": "- Conversion of the original MetaTrader 5 expert advisor `Rabbit3 (barabashkakvn's edition)`.\n- Implements the logic in the StockSharp high-level API with candle subscriptions and indicator bindings.\n- Focuses on a dual confirmation between Williams %R and the Commodity Channel Index (CCI) before stacking positions.\n- Adds dynamic position sizing: profits beyond a cash threshold increase the order volume for the next signal.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | `1h` time frame | Data type for candle subscription. |\n| `CciPeriod` | `15` | Length of the Commodity Channel Index. |\n| `CciBuyLevel` | `-80` | CCI threshold that allows long entries. |\n| `CciSellLevel` | `80` | CCI threshold that allows short entries. |\n| `WilliamsPeriod` | `62` | Lookback period for Williams %R. |\n| `WilliamsOversold` | `-80` | Oversold threshold used for long confirmation. |\n| `WilliamsOverbought` | `-20` | Overbought threshold used for short confirmation. |\n| `FastEmaPeriod` | `17` | Fast EMA plotted for trend context. |\n| `SlowEmaPeriod` | `30` | Slow EMA plotted for trend context. |\n| `MaxPositions` | `2` | Maximum number of stacked entries per direction. |\n| `ProfitThreshold` | `4` | Realized profit required to boost the next order size (monetary units). |\n| `BaseVolume` | `0.01` | Base order volume. |\n| `VolumeMultiplier` | `1.6` | Multiplier applied when the boost condition is met. |\n| `StopLossPips` | `45` | Stop-loss distance in adjusted points. |\n| `TakeProfitPips` | `110` | Take-profit distance in adjusted points. |"
+   },
+   "3038": {
+    "id": 3038,
+    "name": "Bollinger Band Squeeze Breakout",
+    "family": "trend",
+    "overview": "The strategy replicates the original MetaTrader 4 expert advisor \"BOLINGER BAND SQUEEZE\" using the StockSharp high level API. It looks for periods where Bollinger Bands contract and then enter trades once the bands expand, provided that momentum and trend filters confirm the move. The conversion keeps the multi-timeframe confirmation logic and transforms the money-management blocks into StockSharp idioms.",
+    "details": "",
+    "parameters": "| Name | Default | Description |\n| --- | --- | --- |\n| `CandleType` | 15-minute candles | Primary working timeframe. |\n| `BollingerPeriod` | 20 | Bollinger Band length. |\n| `BollingerWidth` | 2.0 | Bollinger Band standard deviation multiplier. |\n| `SqueezeRatio` | 1.1 | Minimum width expansion ratio between current and historical bands. |\n| `RetraceCandles` | 10 | Lookback used for squeeze comparison. |\n| `FastMaLength` | 6 | Length of the fast WMA (typical price). |\n| `SlowMaLength` | 85 | Length of the slow WMA (typical price). |\n| `MomentumLength` | 14 | Momentum period on the higher timeframe. |\n| `MomentumBuyThreshold` | 0.3 | Minimum deviation from 100 required to validate long entries. |\n| `MomentumSellThreshold` | 0.3 | Minimum deviation from 100 required to validate short entries. |\n\nAll parameters are exposed as `StrategyParam<T>` values and can be optimised inside StockSharp Designer or at runtime."
+   }
+  }
+ }
+}

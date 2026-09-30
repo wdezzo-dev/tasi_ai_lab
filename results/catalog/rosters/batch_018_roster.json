@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 258,
+      "name": "Donchian Channel Width Breakout",
+      "family": "breakout",
+      "entry_long": "donchian_high(high,20) - donchian_low(low,20) > sma(donchian_high(high,20) - donchian_low(low,20),20) + 2 * std(donchian_high(high,20) - donchian_low(low,20),20)",
+      "exit_long": "donchian_high(high,20) - donchian_low(low,20) <= sma(donchian_high(high,20) - donchian_low(low,20),20)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "Uses the documented 20-bar Donchian width and compares it with its 20-bar mean plus a 2-standard-deviation band; reversion below the mean exits. The documented 2% stop is retained."
+    },
+    {
+      "id": 358,
+      "name": "Commodity Momentum",
+      "family": "momentum",
+      "entry_long": "roc(close,252) > roc(close,21)",
+      "exit_long": "roc(close,252) <= roc(close,21)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ROC(252) exceeding ROC(21) is equivalent to positive 12-month momentum excluding the latest month. Cross-sectional TopN ranking, monthly scheduling, and commodity breadth are unavailable, so positive qualifying momentum is the per-ticker proxy."
+    },
+    {
+      "id": 592,
+      "name": "Bollinger Bands Mean Reversion",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2)",
+      "exit_long": "close > bb_upper(close,20,2)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Directly preserves the documented Bollinger length 20, multiplier 2, lower-band long entry, and upper-band exit. No stop is documented."
+    },
+    {
+      "id": 1696,
+      "name": "EPSI Multi SET",
+      "family": "breakout",
+      "entry_long": "high - open >= 20",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long rule preserves the documented High-Open >= 20 entry. A bearish close is the closest representable reversal exit; the 20-point take-profit and 200-point stop are absolute price levels, not percentages, and the 02:00-20:00 session filter is unsupported."
+    },
+    {
+      "id": 1912,
+      "name": "Auto SL-TP Setter",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This utility generates no entries and only attaches fixed-pip or ATR-based protection to externally opened positions. The false price guard preserves that no-signal behavior; configuration-dependent protection cannot be encoded."
+    },
+    {
+      "id": 1958,
+      "name": "Trendless AG Histogram",
+      "family": "trend",
+      "entry_long": "crossabove(sma(close - sma(close,7),5),close - sma(close,7))",
+      "exit_long": "crossbelow(sma(close - sma(close,7),5),close - sma(close,7))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Price distance from SMA(7), smoothed with length 5, proxies the documented custom histogram; an upward turn enters long and a downward turn is the opposite exit. Fixed 1000/2000 price-unit protection is not a percentage."
+    },
+    {
+      "id": 2017,
+      "name": "Color Momentum AMA",
+      "family": "trend",
+      "entry_long": "roc(ema(roc(close,10),5),1) > 0 and roc(ema(roc(close,10),5),2) > 0",
+      "exit_long": "roc(ema(roc(close,10),5),1) < 0 and roc(ema(roc(close,10),5),2) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "With no documented numeric defaults, ROC(10) smoothed by EMA(5) proxies momentum plus Kaufman AMA; positive one- and two-bar changes represent consecutive rises and negative changes represent the opposite exit."
+    },
+    {
+      "id": 2413,
+      "name": "Simple FX",
+      "family": "trend",
+      "entry_long": "crossabove(ema(close,10),ema(close,25))",
+      "exit_long": "crossbelow(ema(close,10),ema(close,25))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented short-over-long EMA crossover is preserved. Because no period defaults are supplied, 10/25 is an explicit research fallback; point-based stop and target fields remain null."
+    },
+    {
+      "id": 3611,
+      "name": "MartingaleEA-5 Levels Strategy (StockSharp)",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy supervises externally opened positions and has no initial entry signal. The false price guard avoids fabricating exposure; position-dependent five-level averaging, volume multipliers, pip ladders, and currency PnL exits are unsupported."
+    },
+    {
+      "id": 3758,
+      "name": "MACD Signal Crossover",
+      "family": "trend",
+      "entry_long": "crossabove(macd(close,23,40),macd_signal(close,23,40,8))",
+      "exit_long": "crossbelow(macd(close,23,40),macd_signal(close,23,40,8))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented MACD 23/40/8 crossovers exactly for the long side, with the opposite crossover as exit. Point-based stop, distant target, and partial profit cannot be represented as percentage exits."
+    }
+  ]
+}

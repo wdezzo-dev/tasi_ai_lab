@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 1064,
+      "name": "Momentum Alligator 4h Bitcoin",
+      "family": "trend",
+      "entry_long": "crossabove(sma((high + low) / 2,5) - sma((high + low) / 2,34), sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5)) and close > ema(close,13) and close > ema(close,8) and close > ema(close,5)",
+      "exit_long": "close < ema(close,13)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "AO is SMA(5)-SMA(34) of median price crossing its SMA(5), and the 13/8/5 Alligator lines are approximated with EMA closes. The documented StopLossPercent=0.02m becomes 2.0 percent; the Alligator-jaw trailing part of that stop and the skip-two-signals rule are not expressible."
+    },
+    {
+      "id": 2621,
+      "name": "Color XMUV Time",
+      "family": "trend",
+      "entry_long": "roc(ema((close > open) * (high + close) / 2 + (close < open) * (low + close) / 2 + (close == open) * close,10),1) > 0 and bars_since(roc(ema((close > open) * (high + close) / 2 + (close < open) * (low + close) / 2 + (close == open) * close,10),1) <= 0) <= 2",
+      "exit_long": "roc(ema((close > open) * (high + close) / 2 + (close < open) * (low + close) / 2 + (close == open) * close,10),1) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented composite bar price is rebuilt with boolean weights ((H+C)/2 on bullish bars, (L+C)/2 on bearish, close on doji) and its smoothed slope gives the colour; bars_since<=2 with a positive slope marks the bullish flip bar. Smoothing length 10 is a fallback, and the session filter plus point-based stops are unavailable."
+    },
+    {
+      "id": 2246,
+      "name": "ColorJFatl StDev",
+      "family": "trend",
+      "entry_long": "crossabove(close, ema(close,7) + 1.0 * std(close,20))",
+      "exit_long": "crossbelow(close, ema(close,7) - 1.0 * std(close,20)) or crossbelow(ema(close,7), ema(ema(close,7),7))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Point mode is translated as a close crossing the JMA plus one standard deviation, with the mirrored band and a JMA turning point as the long exit. JMA is approximated by EMA(7); StdPeriod=20, K1=1.0 and K2=2.0 are explicit fallbacks because the docs give no values, and the mode switches/phase are dropped."
+    },
+    {
+      "id": 3326,
+      "name": "Fly System Scalp",
+      "family": "trend",
+      "entry_long": "close > donchian_high_prev(high,5)",
+      "exit_long": "close < donchian_low_prev(low,5)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The symmetric buy-stop/sell-stop pair is rendered as a 5-bar upside breakout for the long side with the mirrored one for exits, since the DSL engine only takes market orders. PendingDistance=4 pips, the 0.4-pip stop, 10-pip target, spread filter, session filter, and risk-based sizing are not percent or DSL fields."
+    },
+    {
+      "id": 2229,
+      "name": "Silver Trend",
+      "family": "trend",
+      "entry_long": "crossabove(close, donchian_high(high,9) - (donchian_high(high,9) - donchian_low(low,9)) * 0.3)",
+      "exit_long": "crossbelow(close, donchian_low(low,9) + (donchian_high(high,9) - donchian_low(low,9)) * 0.3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Both documented channel formulas are implemented literally with Ssp=9 and Risk=3 giving the 0.30 shrink factor, so a close above smax flips the indicator bullish and below smin reverses it. The internal SMA(Highest/Lowest) averaging and the hourly timeframe are not separable in the DSL, and the docs specify no stops."
+    },
+    {
+      "id": 3813,
+      "name": "Artificial Intelligence Right",
+      "family": "momentum",
+      "entry_long": "crossabove(135 * (sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5)) + 127 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),2) + 16 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),3) + 93 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),4), 0)",
+      "exit_long": "crossbelow(135 * (sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5)) + 127 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),2) + 16 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),3) + 93 * sma(sma((high + low) / 2,5) - sma((high + low) / 2,34) - sma(sma((high + low) / 2,5) - sma((high + low) / 2,34),5),4), 0)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The four perceptron weights (135, 127, 16, 93) are kept and the signal is the weighted AC sum crossing zero, the zero crossing giving the documented entry and reversal. The DSL cannot shift a series, so the four delayed AC samples are replaced by the AC and its 2/3/4-bar smoothings; the point stop and 1-minute series are unavailable."
+    },
+    {
+      "id": 4026,
+      "name": "4026 - Pivots",
+      "family": "volatility",
+      "entry_long": "close > donchian_high_prev(high,1)",
+      "exit_long": "close < donchian_low_prev(low,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The pair of pending orders staged at the daily pivot is rendered as a break of the prior bar's high for the long side and the prior bar's low as the exit, using the daily series as the pivot proxy. The 15-minute session schedule, fixed stop/target, 30-point trailing stop, and intraday pivot timeframe cannot be expressed."
+    },
+    {
+      "id": 2504,
+      "name": "RSI EA Crossover",
+      "family": "mean_reversion",
+      "entry_long": "crossabove(rsi(close,14),30)",
+      "exit_long": "crossabove(rsi(close,14),70)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented defaults are used directly: RSI(14) crossing above the 30 buy level enters and, with CloseBySignal enabled, crossing above the 70 sell level closes the long. StopLoss, TakeProfit and TrailingStop all default to 0 (disabled) and the equity-based sizing has no DSL field."
+    },
+    {
+      "id": 1782,
+      "name": "Hedger",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The strategy anchors a limit order and a hedge stop to a user-supplied EntryPrice and then manages risk, so it has no market-derived entry condition; inventing one would be fabrication, hence the never-true guard. The 75-50 trailing rule, risk hedge, and tick-based stop tightening are not DSL features."
+    },
+    {
+      "id": 1631,
+      "name": "Blonde Trader",
+      "family": "volume",
+      "entry_long": "close < donchian_high(high,20) - atr(high,low,close,14)",
+      "exit_long": "close > donchian_high_prev(high,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The long setup is a price sitting below the 20-bar high by more than one ATR, a scale-free stand-in for the Limit tick distance, and the exit is the return to the prior extreme. PeriodX=20 and the ATR proxy are explicit fallbacks; the four buy limits, volume doubling, Amount profit target, and LockDown breakeven are unsupported."
+    }
+  ]
+}

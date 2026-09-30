@@ -1,0 +1,98 @@
+{
+ "batch_278": {
+  "strategy_ids": [
+   3101,
+   309,
+   1706,
+   3292,
+   3981,
+   2815,
+   1319,
+   2427,
+   2935,
+   2593
+  ],
+  "docs": {
+   "3101": {
+    "id": 3101,
+    "name": "5MIN Scalping",
+    "family": "trend",
+    "overview": "Conversion of the MT4 expert advisor **\"5MIN SCALPING\" (MQL ID 22828)** to the StockSharp high level API. The strategy searches for fast breakout setups on the primary timeframe and confirms them with higher timeframe momentum and monthly MACD direction before entering the market.\n\n- **Category:** Breakout / Momentum scalping\n- **Original platform:** MetaTrader 4\n- **Data requirements:** Tick or candle feed for the configured timeframes (default 5 minutes, 30 minutes, 1 month)\n\n## Trading Logic\n\n1. **Trend filter.** Two linear weighted moving averages (LWMA) with configurable lengths (default 6 and 85) define the prevailing trend. Longs require the fast LWMA to stay above the slow LWMA, shorts require the opposite relation.\n2. **Multi-bar structure filter.** Internal LWMA triplet (lengths 8, 13, 21) is evaluated on the last 20 completed candles. The algorithm mimics the `scalper()` function from the MQL version:\n   - Bullish setup: every bar inside the loop must satisfy `LWMA8 > LWMA13 > LWMA21`, the candle low pulls back into the moving average stack, and the current close breaks above the highest high of the previous 5 candles.\n   - Bearish setup: mirror logic using highs penetrating the LWMA stack and the current close breaking below the lowest low of the previous 5 candles.\n3. **Candlestick overlap guard.** A minor overlap condition (`Low[2] < High[1]` for longs, `Low[1] < High[2]` for shorts) prevents entries in isolated spikes.\n4. **Momentum confirmation.** A higher timeframe `Momentum` indicator (default 30-minute candles, length 14) must show that at least one of the last three values deviates from the 100 baseline by more than the configured thresholds (0.3 by default).\n5. **Macro MACD alignment.** A monthly `MACD(12, 26, 9)` histogram is calculated via `MovingAverageConvergenceDivergenceSignal`. Long trades require the MACD line to be above the signal line, short trades require the opposite.\n6. **Position aggregation.** Entering in the opposite direction c",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 5-minute timeframe | Primary timeframe where the breakout is detected. |\n| `MomentumCandleType` | 30-minute timeframe | Candle type used for the higher timeframe momentum filter. |\n| `MacroMacdCandleType` | 1-month timeframe | Candle type used for the long-term MACD confirmation. |\n| `FastMaLength` | 6 | Length of the fast LWMA trend filter. |\n| `SlowMaLength` | 85 | Length of the slow LWMA trend filter. |\n| `MomentumLength` | 14 | Lookback for the momentum indicator. |\n| `MomentumBuyThreshold` | 0.3 | Minimum deviation |Momentum-100| needed to confirm long trades. |\n| `MomentumSellThreshold` | 0.3 | Minimum deviation |Momentum-100| needed to confirm short trades. |\n| `TakeProfitPips` | 50 | Take-profit distance expressed in pips. Set to 0 to disable. |\n| `StopLossPips` | 20 | Stop-loss distance expressed in pips. Set to 0 to disable. |\n| `TrailingStopPips` | 40 | Trailing stop distance in pips. Effective only when `EnableTrailing` is true. |\n| `EnableTrailing` | true | Turns the trailing stop logic on or off. |\n| `EnableBreakEven` | true | Enables automatic break-even management. |\n| `BreakEvenTriggerPips` | 30 | Profit in pips needed before the stop is moved to break-even. |\n| `BreakEvenOffsetPips` | 30 | Extra buffer (in pips) added when the stop is shifted to break-even. |\n| `TradeVolume` | 1 | Order volume used for entries. |"
+   },
+   "309": {
+    "id": 309,
+    "name": "Supertrend Momentum Filter",
+    "family": "trend",
+    "overview": "Signals trigger when its indicators confirms filtered entries on intraday (5m) data. This makes the method suitable for active traders.\n\nStops rely on ATR multiples and factors like SupertrendPeriod, SupertrendMultiplier. Adjust these defaults to balance risk and reward.\n\n## Details\n- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SupertrendPeriod = 10`\n  - `SupertrendMultiplier = 3.0m`\n  - `MomentumPeriod = 14`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: see implementation for indicator conditions.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: opposite signal or stop logic.\n- **Stops**: Yes, using indicator-based calculations.\n- **Default Values**:\n  - `SupertrendPeriod = 10`\n  - `SupertrendMultiplier = 3.0m`\n  - `MomentumPeriod = 14`\n  - `CandleType = TimeSpan.FromMinutes(5).TimeFrame()`\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: multiple indicators\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "1706": {
+    "id": 1706,
+    "name": "Robot Danu",
+    "family": "trend",
+    "overview": "Strategy that compares fast and slow ZigZag levels derived from candle highs and lows.\nA short position is opened when the fast ZigZag level is above the slow one.\nA long position is opened when the fast ZigZag level is below the slow one.\n\n## Details\n- **Entry Criteria**: Comparison of fast and slow ZigZag pivots.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite ZigZag relation.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 28\n  - `SlowLength` = 56\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Comparison of fast and slow ZigZag pivots.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite ZigZag relation.\n- **Stops**: None.\n- **Default Values**:\n  - `FastLength` = 28\n  - `SlowLength` = 56\n  - `CandleType` = TimeSpan.FromMinutes(1)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Highest, Lowest\n  - Stops: No\n  - Complexity: Basic\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3292": {
+    "id": 3292,
+    "name": "CloseDeleteEA",
+    "family": "trend",
+    "overview": "The CloseDeleteEA strategy reproduces the MetaTrader utility that mass-closes positions and removes pending orders.\nIt periodically scans the selected portfolio and sends market orders or cancel requests according to user-defined filters.\nThis makes it useful for emergency liquidation or clean-up scenarios when manual order management is too slow.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `CloseBuyPositions` | Close long exposure that matches the filters. |\n| `CloseSellPositions` | Close short exposure that matches the filters. |\n| `CloseMarketPositions` | Enables the market-position closing module. |\n| `CancelPendingOrders` | Enables canceling of pending orders. |\n| `CloseOnlyProfitable` | Close positions only when the current PnL is non-negative. |\n| `CloseOnlyLosing` | Close positions only when the current PnL is non-positive. |\n| `ApplyToCurrentSecurity` | When true, only the strategy security is scanned. Otherwise all securities in the portfolio are processed. |\n| `TargetStrategyId` | Optional strategy identifier filter (empty value matches everything). |\n| `TimerInterval` | Timer frequency used for the management loop. |"
+   },
+   "3981": {
+    "id": 3981,
+    "name": "Trend RDS",
+    "family": "trend",
+    "overview": "Trend RDS is a session-based reversal strategy originally written for MetaTrader. It scans for a three-bar momentum formation at the start of a specified trading window and fades the move by entering in the opposite direction. The StockSharp port keeps the original money management logic, including optional reversal of the signals, fixed stop-loss and take-profit levels, break-even protection, and a trailing stop with adjustable step size.",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| **Trade Volume** | Market order size expressed in lots or contracts. |\n| **Stop Loss (pips)** | Distance to the protective stop. Set to zero to disable. |\n| **Take Profit (pips)** | Distance to the profit target. Set to zero to disable. |\n| **Start Time** | Time of day (exchange time) when the pattern search begins. |\n| **Close Time** | Time of day (exchange time) when all open trades are closed within 15 minutes. |\n| **Reverse Signals** | Inverts long and short entries. |\n| **Trailing Stop (pips)** | Base trailing distance. Zero disables trailing. |\n| **Trailing Step (pips)** | Extra movement needed before the trailing stop updates again. |\n| **Break-Even (pips)** | Profit threshold to move the stop to the entry price. Zero disables the feature. |\n| **Candle Type** | Candle series used for the analysis. |"
+   },
+   "2815": {
+    "id": 2815,
+    "name": "Poker Show",
+    "family": "trend",
+    "overview": "The Poker Show strategy is a direct port of the MetaTrader 5 expert advisor \"Poker_SHOW\". It combines a moving average trend filter with a probabilistic trigger that mimics drawing a poker hand. Trades are executed only when the randomly generated hand value falls below a configurable poker combination threshold. The approach produces infrequent entries while staying aligned with the prevailing trend detected by the moving average.\n\nThe strategy works on a single symbol and relies on regular time-based candles. Trading decisions are evaluated once per completed candle, which matches the original advisor that reacts on the opening of each new bar.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| **Poker Combination** | Probability threshold that must exceed the random draw to allow a new trade. Represents classic poker hands from straight flush (rarest) to one pair (most common). |\n| **Volume** | Order volume in lots. Used both for fresh entries and for reversing existing positions. |\n| **Stop Loss** | Distance between the entry price and the protective stop, measured in price steps. Set to zero to disable. |\n| **Take Profit** | Distance between the entry price and the profit target, measured in price steps. Set to zero to disable. |\n| **Enable Buy** | Allows the strategy to open long positions. |\n| **Enable Sell** | Allows the strategy to open short positions. |\n| **MA Distance** | Minimum distance in price steps between the moving average value and the current price. Acts as a trend confirmation filter. |\n| **MA Period** | Number of bars used by the moving average. |\n| **MA Shift** | Horizontal shift applied to the moving average (in bars), matching the MetaTrader `ma_shift` input. |\n| **MA Method** | Moving average smoothing type: simple, exponential, smoothed, or linear weighted. |\n| **Applied Price** | Candle price used in the moving average calculation. |\n| **Reverse Signals** | Inverts the comparison between the moving average and price, effectively swapping long and short logic. |\n| **Candle Type** | Time frame of the candle subscription. Default is one hour to replicate the original settings. |"
+   },
+   "1319": {
+    "id": 1319,
+    "name": "SmartScale Envelope DCA",
+    "family": "trend",
+    "overview": "Uses a moving average envelope to perform dollar-cost averaging. Buys when price dips below the lower band and closes all positions when price crosses above the upper band with take-profit or stop-loss rules.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2427": {
+    "id": 2427,
+    "name": "Fisher Transform X2",
+    "family": "trend",
+    "overview": "This strategy uses the Fisher Transform indicator on two different timeframes. The higher timeframe defines the overall trend, while the lower timeframe generates entries when Fisher crosses its previous value against that trend. Optional parameters allow closing positions on trend change or on cross signals.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: `Trend Fisher rising` && `Signal Fisher crosses below its previous value`\n  - **Short**: `Trend Fisher falling` && `Signal Fisher crosses above its previous value`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Optional close on trend reversal\n  - Optional close on opposite Fisher cross on signal timeframe\n- **Stops**: Take profit and stop loss in points\n- **Default Values**:\n  - `Trend Length` = 10\n  - `Signal Length` = 10\n  - `Trend Timeframe` = 6 hours\n  - `Signal Timeframe` = 30 minutes\n  - `Take Profit` = 2000 points\n  - `Stop Loss` = 1000 points\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fisher Transform\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: `Trend Fisher rising` && `Signal Fisher crosses below its previous value`\n  - **Short**: `Trend Fisher falling` && `Signal Fisher crosses above its previous value`\n- **Long/Short**: Both\n- **Exit Criteria**:\n  - Optional close on trend reversal\n  - Optional close on opposite Fisher cross on signal timeframe\n- **Stops**: Take profit and stop loss in points\n- **Default Values**:\n  - `Trend Length` = 10\n  - `Signal Length` = 10\n  - `Trend Timeframe` = 6 hours\n  - `Signal Timeframe` = 30 minutes\n  - `Take Profit` = 2000 points\n  - `Stop Loss` = 1000 points\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: Fisher Transform\n  - Stops: Yes\n  - Complexity: Medium\n  - Timeframe: Multi-timeframe\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2935": {
+    "id": 2935,
+    "name": "One MA Channel Breakout",
+    "family": "trend",
+    "overview": "The **One MA Channel Breakout Strategy** replicates the MetaTrader 5 expert advisor *One MA EA* using StockSharp's high-level strategy API. The system draws a shifted moving average and surrounds it with a configurable pip-based channel. When price opens outside of the channel after probing it on the same bar, the strategy opens a position in the breakout direction while optional stop-loss and take-profit protections manage risk automatically.\n\nKey characteristics:\n- Supports multiple moving-average calculation methods (SMA, EMA, SMMA, LWMA).\n- Allows choosing the candle price (close, open, high, low, median, typical, weighted) that feeds the moving average.\n- Applies independent shifts to the moving-average value and to the candle used for signal evaluation, matching the original EA's `Current Bar` controls.\n- Converts pip distances to absolute price increments using the instrument `PriceStep` and decimal precision (3/5 decimal instruments map to classic FX pips automatically).",
+    "details": "",
+    "parameters": "| Parameter | Description |\n|-----------|-------------|\n| `MaPeriod` | Moving average length. Must be > 0. |\n| `MaShift` | Horizontal shift of the moving average in bars. Positive values displace the MA to the right. |\n| `MaMethodParam` | Moving average calculation type (`Sma`, `Ema`, `Smma`, `Lwma`). |\n| `AppliedPriceType` | Candle price fed into the MA (`Close`, `Open`, `High`, `Low`, `Median`, `Typical`, `Weighted`). |\n| `MaBarShift` | Which historical MA value to use (0 = current processed bar). |\n| `PriceBarShift` | Which historical candle to inspect for OHLC values. |\n| `ChannelHighPips` | Distance (in pips) from the MA to the upper channel boundary. |\n| `ChannelLowPips` | Distance (in pips) from the MA to the lower channel boundary. |\n| `StopLossPips` | Protective stop distance in pips. Zero disables the stop. |\n| `TakeProfitPips` | Profit target distance in pips. Zero disables the target. |\n| `TradeVolume` | Order size in strategy volume units (mapped to `Strategy.Volume`). |\n| `CandleType` | Candle data series used for calculations and signals. |"
+   },
+   "2593": {
+    "id": 2593,
+    "name": "Stochastic Chaikin's Volatility",
+    "family": "trend",
+    "overview": "This strategy is a StockSharp port of the MetaTrader expert advisor `Exp_Stochastic_Chaikins_Volatility`. It analyses the spread between high and low prices, smooths that volatility with a configurable moving average, and then normalizes the result using a stochastic-like oscillator. Trading decisions follow the original counter-trend logic: the strategy looks for turning points in the oscillator to fade short-term extremes while optionally closing existing positions when momentum flips back.",
+    "details": "",
+    "parameters": "| Name | Description |\n| --- | --- |\n| `Candle Type` | Timeframe used for all calculations (default 4-hour time candles). |\n| `Primary Method` / `Primary Length` | Moving-average type and length for smoothing the high–low spread. |\n| `Secondary Method` / `Secondary Length` | Moving-average type and length for smoothing the normalized oscillator. |\n| `Stochastic Length` | Lookback window for the highest/lowest range used in the normalization step. |\n| `Signal Shift` | Number of completed candles between the current bar and the bar used for signal evaluation. Must stay ≥1. |\n| `Allow Long/Short Entry` | Enable or disable opening long or short trades. |\n| `Allow Long/Short Exit` | Enable or disable position closing when the oscillator reverses. |\n| `High/Middle/Low Level` | Visual guide levels reproduced from the original indicator (no direct trading effect). |"
+   }
+  }
+ }
+}

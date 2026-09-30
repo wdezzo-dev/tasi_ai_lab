@@ -1,0 +1,112 @@
+{
+  "strategy_id": 3261,
+  "ticker": "3060",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3261,
+    "name": "Explosion",
+    "family": "momentum",
+    "entry_long": "(high - low) > 1 * (donchian_high_prev(high,1) - donchian_low_prev(low,1.0)) and close > open",
+    "exit_long": "(high - low) > 1.0 * (donchian_high_prev(high,1) - donchian_low_prev(low,1)) and close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented doubling of the previous candle's range with a bullish body is literal, using multiplication to avoid a division-by-zero on flat bars. StopLossPips 20, TakeProfitPips 10, the 25/5 pip trailing and the one-entry-per-bar flag are pip and order features."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8186,
+      "engine_win_ret": 878.9129701374147,
+      "alpha": 878.64414557258,
+      "benchmark_ret": 0.26882456483473494,
+      "trades": 769,
+      "win_rate": 0.47464239271781533,
+      "sharpe": 1.1144520092635806,
+      "max_drawdown": -0.45242356384847815,
+      "profit_factor": 1.559838912781687
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.025605689367711015,
+      "alpha": 0.46738518646635707,
+      "benchmark_ret": -0.44177949709864606,
+      "trades": 37,
+      "win_rate": 0.4594594594594595,
+      "sharpe": 0.1969807403546924,
+      "max_drawdown": -0.10410495434876599,
+      "profit_factor": 1.086344031694474
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.046330450017038505,
+      "alpha": 0.03270647181540354,
+      "benchmark_ret": 0.013623978201634968,
+      "trades": 17,
+      "win_rate": 0.5882352941176471,
+      "sharpe": 0.5250443113038454,
+      "max_drawdown": -0.11995665272265732,
+      "profit_factor": 1.3289528210590238
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "1993-01-02",
+        "2024-07-31"
+      ],
+      "bars_in_window": 8186,
+      "engine_win_ret": 17.748012805978615,
+      "alpha": 17.47918824114388,
+      "benchmark_ret": 0.26882456483473494,
+      "trades": 769,
+      "win_rate": 0.3992197659297789,
+      "sharpe": 0.5357873172380007,
+      "max_drawdown": -0.5197931340155182,
+      "profit_factor": 1.1986227756847194
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.14822130359451757,
+      "alpha": 0.2935581935041285,
+      "benchmark_ret": -0.44177949709864606,
+      "trades": 37,
+      "win_rate": 0.2702702702702703,
+      "sharpe": -0.6708180776333806,
+      "max_drawdown": -0.16184705474623895,
+      "profit_factor": 0.6141221432976522
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.03918187749316726,
+      "alpha": -0.05280585569480223,
+      "benchmark_ret": 0.013623978201634968,
+      "trades": 17,
+      "win_rate": 0.47058823529411764,
+      "sharpe": -0.3095257894656228,
+      "max_drawdown": -0.15694329691516995,
+      "profit_factor": 0.7801289174008602
+    }
+  },
+  "survivor": false,
+  "reason": "fail: test alpha or trades"
+}

@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 3411,
+      "name": "NNFX Auto Trade",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The ported tool exposes manual command flags (BuyCommand, SellCommand, CloseAllCommand, BreakevenCommand, TrailingCommand) and is a risk/position-sizing panel rather than a signal generator, so there is no market-derived entry to translate. Marked non-trading; ATR(14) sizing with 1.5/1.0 multipliers, partial target plus runner, and pip-based advanced targets are all unsupported."
+    },
+    {
+      "id": 3448,
+      "name": "Morning/Evening Star with MFI Confirmation",
+      "family": "trend",
+      "entry_long": "crossabove(rsi(close,49),40) and close > open",
+      "exit_long": "crossbelow(rsi(close,49),70) or crossabove(rsi(close,49),30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "MFI is not in the DSL, so the documented MfiPeriod=49 and thresholds 40/60/70/30 are carried over with RSI(49) as the money-flow proxy; a bullish bar with an up-cross of 40 approximates the three-candle Morning Star. The Evening Star (short) side is dropped for long-only, and no stops are documented."
+    },
+    {
+      "id": 3685,
+      "name": "EuroSurge Simplified",
+      "family": "trend",
+      "entry_long": "sma(close,20) > sma(close,50) and rsi(close,14) > 30 and rsi(close,14) < 70 and macd(close,12,26) > macd_signal(close,12,26,9) and close > bb_mid(close,20)",
+      "exit_long": "crossbelow(sma(close,20),sma(close,50)) or crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "All documented filters (MA, RSI, MACD, Bollinger) are enabled; only the fixed fast SMA=20 is given, so MaPeriod=50, RSI 14 with 30/70 levels, MACD 12/26/9 and Bollinger 20 are explicit defaults, and Stochastic is dropped as unavailable. Cool-down minutes, the three sizing modes and point-based TP/SL have no percentage values, so both stops are null."
+    },
+    {
+      "id": 158,
+      "name": "Parabolic Sar Stochastic",
+      "family": "trend",
+      "entry_long": "close > ema(close,200) and rsi(close,14) < 40 and bars_since(rsi(close,14) < 40) < 3",
+      "exit_long": "crossbelow(close, ema(close,50))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Parabolic SAR is unavailable, so the Close>SAR trend leg is approximated by price above a long EMA(200) and the stochastic pullback by an RSI(14) dip to 40 for up to 3 bars (AccelerationFactor 0.02 / MaxAccelerationFactor 0.2 and the StochK/D/StochOversold=20 scale are not representable). The documented exit is the opposite SAR flip, rendered as the close crossing below EMA(50); SAR stops are dynamic, so both percentage fields are null."
+    },
+    {
+      "id": 3975,
+      "name": "ZigAndZag Scalpel",
+      "family": "trend",
+      "entry_long": "close > ema(close,55) and bars_since(low < donchian_low_prev(low,17)) < 3",
+      "exit_long": "close < ema(close,55)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ZigZag is not in the DSL, so the documented KeelOverLength=55 trend is approximated by EMA(55) and the SlalomLength=17 swing by prior-bar 17-bar lows, buying while price is still within 3 bars of that pivot. The KeelOver trend turn is the exit; DeviationPoints, Backstep, BreakoutDistancePoints and MaxTradesPerDay are point/daily-limit rules that are unsupported."
+    },
+    {
+      "id": 3169,
+      "name": "DynamicRS_C",
+      "family": "momentum",
+      "entry_long": "close > ema(close,20) and roc(ema(close,20),5) > 0",
+      "exit_long": "close < ema(close,20) or roc(ema(close,20),5) < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The custom indicator's colour index (0 bullish / 2 bearish) cannot be read, so a flip of the dynamic support-resistance line is approximated by price versus a rising EMA(20) (Length has no documented value, so 20 is an explicit default). SignalBar offset inspection, the AllowBuy/AllowSell permission flags and point-based StopLossPoints/TakeProfitPoints are unsupported, so stops are null."
+    },
+    {
+      "id": 2808,
+      "name": "Multi Pair Closer",
+      "family": "volatility",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This is a basket supervisor: it only liquidates positions on a list of watched symbols when combined floating profit hits 60 or the loss breaches 60, and it never opens anything. Marked non-trading; multi-symbol closing, MinAgeSeconds and the informational slippage are not expressible in a single-ticker DSL."
+    },
+    {
+      "id": 542,
+      "name": "Averaging Down",
+      "family": "mean_reversion",
+      "entry_long": "rsi(close,10) < 33",
+      "exit_long": "close > donchian_high_prev(high,1)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Entry follows the documented RsiLength=10 / RsiBuyThreshold=33 exactly and the exit is close above the previous bar's high. Averaging into an existing long on every repeated signal is not expressible with a single position, and the docs state no stops."
+    },
+    {
+      "id": 1793,
+      "name": "News Trading EA",
+      "family": "volume",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The trigger is a scheduled release (StartDateTime plus StartStraddle/StopStraddle window) and it just straddles the price, so there is no market-derived entry signal to translate. Marked non-trading; the documented Distance=55, TakeProfit=30 and StopLoss=30 are price steps tied to a time window, not percentages."
+    },
+    {
+      "id": 2302,
+      "name": "Trade Panel Autopilot",
+      "family": "volume",
+      "entry_long": "close > open and close > (high + low) / 2 and roc(close,1) > 0",
+      "exit_long": "close < open and close < (high + low) / 2",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The buy/sell score sums seven price-component comparisons over eight timeframes, which a single-series DSL cannot reproduce; a one-bar unanimity proxy (close above open, mid-point and rising) is used instead of the documented OpenThreshold=85 / CloseThreshold=55 percentage gates. Lot modes, Autopilot toggle and UseStopLoss have no values, so stops are null."
+    }
+  ]
+}

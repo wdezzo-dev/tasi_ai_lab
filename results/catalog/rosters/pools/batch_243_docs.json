@@ -1,0 +1,98 @@
+{
+ "batch_243": {
+  "strategy_ids": [
+   1980,
+   3240,
+   1326,
+   496,
+   1122,
+   3314,
+   22,
+   3274,
+   3026,
+   1730
+  ],
+  "docs": {
+   "1980": {
+    "id": 1980,
+    "name": "Adaptive Market Level",
+    "family": "trend",
+    "overview": "Strategy that trades based on the Adaptive Market Level (AML) indicator. The indicator adapts to current volatility and plots a dynamic price level. A long position is opened when the AML line turns upward and a short position when it turns downward. Opposite positions are closed on a color change or when stop loss/take profit triggers.\n\nThe system follows medium-term trends and works on higher timeframes by default.\n\n## Details\n\n- **Entry Criteria**: AML line changes direction upward for longs and downward for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: AML direction change or stop/target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Fractal` = 6\n  - `Lag` = 7\n  - `StopLossTicks` = 1000\n  - `TakeProfitTicks` = 2000\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Adaptive Market Level\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: AML line changes direction upward for longs and downward for shorts.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: AML direction change or stop/target.\n- **Stops**: Yes.\n- **Default Values**:\n  - `Fractal` = 6\n  - `Lag` = 7\n  - `StopLossTicks` = 1000\n  - `TakeProfitTicks` = 2000\n  - `BuyPosOpen` = true\n  - `SellPosOpen` = true\n  - `BuyPosClose` = true\n  - `SellPosClose` = true\n  - `CandleType` = TimeSpan.FromHours(4)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: Adaptive Market Level\n  - Stops: Yes\n  - Complexity: Intermediate\n  - Timeframe: H4\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3240": {
+    "id": 3240,
+    "name": "Exp Blau HLM",
+    "family": "trend",
+    "overview": "The **Exp Blau HLM Strategy** is a StockSharp port of the MetaTrader 5 expert advisor `Exp_BlauHLM.mq5`. The system relies on the Blau High-Low Momentum (HLM) oscillator that compares recent highs and lows, smooths the difference with a configurable XMA pipeline and reacts to three discrete operating modes:\n\n- **Breakdown** – trades a zero-line break of the histogram component.\n- **Twist** – searches for momentum twists inside the histogram to capture transitions in slope.\n- **CloudTwist** – works with the upper and lower envelopes produced by the indicator and reacts to \"cloud\" crossovers.\n\nThe StockSharp implementation keeps the same parameters, default values and trading rules while translating money-management specifics into the generic `Volume` property of the base strategy.",
+    "details": "",
+    "parameters": "| Name | Type | Default | Description |\n| ---- | ---- | ------- | ----------- |\n| `CandleType` | `DataType` | `H4` candles | Timeframe processed by the oscillator. |\n| `SmoothingMethod` | `SmoothMethod` | `Exponential` | Moving-average method for every smoothing stage (unsupported legacy modes fall back to EMA). |\n| `XLength` | `int` | `2` | Span, in bars, used to measure the raw high/low momentum. |\n| `FirstLength` | `int` | `20` | Period of the first smoothing stage. |\n| `SecondLength` | `int` | `5` | Period of the second smoothing stage. |\n| `ThirdLength` | `int` | `3` | Period of the third smoothing stage. |\n| `FourthLength` | `int` | `3` | Period of the final signal smoother. |\n| `Phase` | `int` | `15` | Jurik phase parameter (clamped to ±100, ignored by non-Jurik smoothers). |\n| `SignalBar` | `int` | `1` | Historical offset used when comparing indicator values. |\n| `EntryMode` | `Mode` | `Twist` | Trading logic copied from the MQL expert (`Breakdown`, `Twist`, `CloudTwist`). |\n| `BuyOpen` / `SellOpen` | `bool` | `true` | Allow opening long/short positions. |\n| `BuyClose` / `SellClose` | `bool` | `true` | Allow closing long/short positions when an opposite signal appears. |"
+   },
+   "1326": {
+    "id": 1326,
+    "name": "Sniper Trade Pro",
+    "family": "trend",
+    "overview": "This strategy trades the E-mini S&P (ES) on 15-minute candles during the New York morning session. It combines 9/21 EMA trend confirmation, VWAP, money flow divergence and ADX with bullish and bearish engulfing patterns. Position size is derived from ATR-based risk per trade, using a 0.8 ATR stop and 2 ATR target, with stop moved to break-even after 1 ATR profit. Trading stops for the day after a $1,000 loss.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "496": {
+    "id": 496,
+    "name": "Adaptive Trend Flow",
+    "family": "trend",
+    "overview": "The Adaptive Trend Flow strategy builds a volatility-based channel from fast and slow EMAs of the typical price. When price crosses the channel boundaries the internal trend flips. Long positions are opened when the trend turns upward and optional SMA and MACD filters agree. Positions are closed when the trend reverses downward.\n\n## Details\n\n- **Entry Criteria**:\n  - Trend changes from down to up and filters confirm.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trend changes from up to down.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 2\n  - `SmoothLength` = 2\n  - `Sensitivity` = 2.0\n  - `UseSmaFilter` = true\n  - `SmaLength` = 4\n  - `UseMacdFilter` = true\n  - `MacdFastLength` = 2\n  - `MacdSlowLength` = 7\n  - `MacdSignalLength` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA, SMA, MACD, Standard Deviation\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - Trend changes from down to up and filters confirm.\n- **Long/Short**: Long only.\n- **Exit Criteria**:\n  - Trend changes from up to down.\n- **Stops**: None.\n- **Default Values**:\n  - `Length` = 2\n  - `SmoothLength` = 2\n  - `Sensitivity` = 2.0\n  - `UseSmaFilter` = true\n  - `SmaLength` = 4\n  - `UseMacdFilter` = true\n  - `MacdFastLength` = 2\n  - `MacdSlowLength` = 7\n  - `MacdSignalLength` = 2\n- **Filters**:\n  - Category: Trend following\n  - Direction: Long\n  - Indicators: EMA, SMA, MACD, Standard Deviation\n  - Stops: No\n  - Complexity: Medium\n  - Timeframe: Any\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "1122": {
+    "id": 1122,
+    "name": "Nova Futures PRO SAFE v6",
+    "family": "trend",
+    "overview": "This strategy combines trend, volatility and structure signals. It uses a 200 EMA with ADX to confirm trends, Bollinger Bands versus Keltner Channels to detect squeeze breakouts, and Donchian levels for structure break of highs or lows. Optional higher timeframe filters and a choppiness index avoid trading in low-quality regimes. A cooldown prevents immediate re-entry after a position closes.\n\n## Inputs\n- **EMA Length** — base exponential moving average length\n- **DMI Length** — period for ADX and directional movement\n- **Min ADX** — minimum ADX value to consider trend\n- **BB Length** — Bollinger Bands period\n- **BB Mult** — Bollinger Bands multiplier\n- **KC Length** — Keltner Channels period\n- **KC Mult** — Keltner Channels multiplier\n- **Donchian Length** — lookback for structure levels\n- **Use HTF** — enable higher timeframe confirmation\n- **HTF Candle** — higher timeframe for filters\n- **HTF EMA** — EMA length on higher timeframe\n- **HTF Min ADX** — minimum ADX on higher timeframe\n- **Use Choppiness** — enable choppiness filter\n- **Chop Length** — choppiness index period\n- **Chop Threshold** — maximum choppiness allowed\n- **Cooldown** — bars to wait after an exit\n- **Candle Type** — main candle timeframe\n\n## Notes\nSimplified port of the TradingView script \"Nova Futures PRO (SAFE v6) — HTF + Choppiness + Cooldown\".\n",
+    "details": "",
+    "parameters": ""
+   },
+   "3314": {
+    "id": 3314,
+    "name": "Head and Shoulders",
+    "family": "trend",
+    "overview": "The **Head and Shoulders Strategy** is a direct port of the MetaTrader expert advisor \"HEAD AND SHOULDERS\" (MQL ID 26066). The original robot combines head-and-shoulders pattern recognition with momentum, moving average, and MACD filters, while also managing positions with trailing stops, equity protection, and break-even rules. This StockSharp implementation focuses on the discretionary logic of the entry and exit engine using the high-level API, providing clean bindings to indicators and automated risk management via `StartProtection`.",
+    "details": "",
+    "parameters": "| Parameter | Default | Description |\n|-----------|---------|-------------|\n| `CandleType` | 1H time-frame | Primary candle series for pattern detection. |\n| `OrderVolume` | `1` | Base order size. |\n| `FastMaLength` / `SlowMaLength` | `6` / `85` | Moving average trend filter lengths. |\n| `MomentumPeriod` | `14` | Lookback period for the momentum indicator. |\n| `MomentumThreshold` | `0.3` | Minimum absolute momentum required for confirmation. |\n| `MacdFastLength`, `MacdSlowLength`, `MacdSignalLength` | `12`, `26`, `9` | MACD configuration. |\n| `ShoulderTolerancePercent` | `5` | Maximum deviation allowed between left and right shoulders. |\n| `HeadDominancePercent` | `2` | Minimum amount the head must exceed each shoulder. |\n| `StopLossSteps`, `TakeProfitSteps`, `TrailingStopSteps` | `100`, `200`, `0` | Protective order sizes in price steps (zero disables a component). |\n\nAll parameters created with `Param()` expose metadata for UI display and can be optimized through the StockSharp optimizer."
+   },
+   "22": {
+    "id": 22,
+    "name": "ADX DI",
+    "family": "trend",
+    "overview": "Testing indicates an average annual return of about 103%. It performs best in the stocks market.\n\nADX DI focuses on the crossing of +DI and -DI with rising ADX. A bullish cross of +DI over -DI coupled with strong ADX opens longs, while the opposite opens shorts. Positions close on a weakening ADX or opposite cross.\n\nThis combination helps avoid trading every DI cross by demanding confirmation from the ADX. The system aims to capture sustainable trends rather than short-term swings.\n\n\n## Details\n\n- **Entry Criteria**: Signals based on ADX, ATR.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n\n",
+    "details": "- **Entry Criteria**: Signals based on ADX, ATR.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal or stop.\n- **Stops**: Yes.\n- **Default Values**:\n  - `AdxPeriod` = 14\n  - `AdxThreshold` = 25m\n  - `AtrMultiplier` = 2m\n  - `CandleType` = TimeSpan.FromMinutes(5)\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: ADX, ATR\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Intraday (5m)\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "3274": {
+    "id": 3274,
+    "name": "Trend Line By Angle",
+    "family": "trend",
+    "overview": "The strategy is a StockSharp port of the MetaTrader expert advisor *Trend Line By Angle*. The original robot mixed manual button entries with extensive money-management tools. This port converts the discretionary workflow into an automated MACD trend-following system while preserving the protective logic:\n\n- Monthly MACD (12/26/9) calculated on the configured signal candle type defines the direction. Bullish crosses open long exposure, bearish crosses open short exposure.\n- Entries scale in up to the configured number of blocks, mirroring the repeated manual clicks in the source EA.\n- Bollinger Bands (20, 2) watch the execution timeframe. Touching the upper band liquidates long exposure; touching the lower band liquidates shorts, replicating the visual stop buttons from MetaTrader.\n- Classic risk controls — stop-loss, take-profit, trailing stop, break-even move — operate on pip distances converted through the instrument `PriceStep`.\n- Account-level protection closes all orders when either a money or percentage profit target is reached. An additional money-based trailing lock follows floating profit and exits on the configured drawdown.",
+    "details": "",
+    "parameters": "| Parameter | Description |\n| --- | --- |\n| `TradeVolume` | Volume of each entry block. |\n| `MaxEntries` | Maximum number of volume blocks to accumulate. |\n| `StopLossPips` | Stop-loss distance in pips. |\n| `TakeProfitPips` | Take-profit distance in pips. |\n| `TrailingStopPips` | Trailing distance in pips. |\n| `UseBreakEven` | Enables the break-even stop move. |\n| `BreakEvenTriggerPips` | Profit required before break-even activates. |\n| `BreakEvenOffsetPips` | Extra pips added when moving to break-even. |\n| `UseBollingerExit` | Enables exits on Bollinger band touches. |\n| `BollingerPeriod` / `BollingerDeviation` | Bollinger Bands settings. |\n| `UseProfitMoneyTarget` / `ProfitMoneyTarget` | Absolute profit target switch and value. |\n| `UseProfitPercentTarget` / `ProfitPercentTarget` | Percentage profit target switch and value. |\n| `EnableMoneyTrail` | Enables the money trailing stop. |\n| `MoneyTrailTrigger` | Profit required before the money trail becomes active. |\n| `MoneyTrailStop` | Allowed drawdown from the peak before exiting. |\n| `MacdFastPeriod`, `MacdSlowPeriod`, `MacdSignalPeriod` | MACD configuration. |\n| `CandleType` | Execution timeframe. |\n| `SignalCandleType` | Timeframe used for the MACD signal. |"
+   },
+   "3026": {
+    "id": 3026,
+    "name": "EA Close",
+    "family": "trend",
+    "overview": "The **EA Close Strategy** is a direct StockSharp port of the original MQL5 expert advisor \"EA Close\" created by Vladimir Karputov. The strategy combines a Commodity Channel Index (CCI), a weighted moving average (WMA), and a Stochastic oscillator to detect exhaustion moves at the end of retracements. Orders are evaluated only once per completed candle to mimic the \"new bar\" logic used in the source EA.\n\nThe StockSharp implementation keeps the parameter set and structure of the MQL version so that existing optimizations can be reused. Signals are generated from the previous completed candle, which makes the behaviour deterministic when the strategy is replayed on historical data.",
+    "details": "",
+    "parameters": "| Name | Description | Default |\n| ---- | ----------- | ------- |\n| `Volume` | Order size used for market entries. | 1 |\n| `StopLossPips` | Fixed stop-loss distance measured in pips. | 35 |\n| `TakeProfitPips` | Fixed take-profit distance measured in pips. | 75 |\n| `CciPeriod` | Averaging length of the CCI indicator. | 14 |\n| `CciLevel` | Absolute threshold that defines CCI extremes. | 120 |\n| `MaPeriod` | Length of the weighted moving average filter. | 1 |\n| `StochasticLength` | Lookback window for the stochastic oscillator (highest/lowest range). | 5 |\n| `StochasticKPeriod` | Smoothing factor applied to the %K line. | 3 |\n| `StochasticDPeriod` | Smoothing factor applied to the %D line. | 3 |\n| `StochasticLevelUp` | Overbought threshold for the %K line. | 70 |\n| `StochasticLevelDown` | Oversold threshold for the %K line. | 30 |\n| `CandleType` | Candle series used as the data source. | 1-hour time frame |"
+   },
+   "1730": {
+    "id": 1730,
+    "name": "BBands Stop",
+    "family": "trend",
+    "overview": "This strategy uses the BBands Stop indicator derived from Bollinger Bands to follow market trends. When the stop line flips upward, it closes any short position and opens a long one. A downward flip closes long positions and opens short. Parameters control Bollinger period, deviation, risk offset and permissions for entering or exiting longs and shorts.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Uptrend stop line is active.\n  - **Short**: Downtrend stop line is active.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite stop signal.\n- **Stops**: Trailing stop from Bollinger Bands.\n- **Filters**: None.\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Uptrend stop line is active.\n  - **Short**: Downtrend stop line is active.\n- **Long/Short**: Both.\n- **Exit Criteria**:\n  - Opposite stop signal.\n- **Stops**: Trailing stop from Bollinger Bands.\n- **Filters**: None.",
+    "parameters": ""
+   }
+  }
+ }
+}

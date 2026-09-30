@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 2622,
+      "name": "Crossing of Two iMA",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,20)) and close > ema(close,10)",
+      "exit_long": "crossbelow(close,donchian_low_prev(low,20))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Donchian/breakout reference translated with prior-bar 20-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+    },
+    {
+      "id": 714,
+      "name": "Dubic EMA",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 2112,
+      "name": "Trix Candle",
+      "family": "trend",
+      "entry_long": "close > sma(close,30)",
+      "exit_long": "close < sma(close,30)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Moving-average reference translated with inferred/default periods 10/30; unsupported shifts, recursive state, or execution rules are omitted."
+    },
+    {
+      "id": 2217,
+      "name": "Bykov Trend",
+      "family": "trend",
+      "entry_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) > -80",
+      "exit_long": "(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14))) < -20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Williams %R is expressed from the rolling high/low range using the DSL primitives; vendor-specific smoothing/state is omitted."
+    },
+    {
+      "id": 380,
+      "name": "Momentum Rev Vol",
+      "family": "trend",
+      "entry_long": "rsi(close,14) < 30",
+      "exit_long": "rsi(close,14) > 70",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "RSI reference translated with period 14 and documented/default thresholds; platform-specific oscillator variants are simplified."
+    },
+    {
+      "id": 487,
+      "name": "SMA Pullback + ATR Exits",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,14) > sma(atr(high,low,close,14),14)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,14) < sma(atr(high,low,close,14),14)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using current-period ATR relative to its rolling average; absolute price-step risk controls are omitted."
+    },
+    {
+      "id": 4202,
+      "name": "Robot ADX + 2 MA",
+      "family": "trend",
+      "entry_long": "close > ema(close,30) and adx(high,low,close,14) > 25",
+      "exit_long": "close < ema(close,30) or adx(high,low,close,14) < 20",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ADX/trend reference translated to an OHLCV-compatible trend filter; unsupported directional-index/state logic is simplified."
+    },
+    {
+      "id": 1762,
+      "name": "RSI Trend",
+      "family": "trend",
+      "entry_long": "roc(close,1) > 0 and atr(high,low,close,100) > sma(atr(high,low,close,100),100)",
+      "exit_long": "roc(close,1) < 0 or atr(high,low,close,100) < sma(atr(high,low,close,100),100)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "ATR/volatility reference translated using ATR versus its rolling average; absolute point/pip risk controls are not encoded."
+    },
+    {
+      "id": 1961,
+      "name": "Auto KD Crossover",
+      "family": "trend",
+      "entry_long": "(donchian_high(high,14) - donchian_low(low,14) > 0) and (100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) < 20",
+      "exit_long": "(donchian_high(high,14) - donchian_low(low,14) > 0) and (100 * (close - donchian_low(low,14)) / (donchian_high(high,14) - donchian_low(low,14))) > 80",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Stochastic/KD is approximated from the close position in the rolling high/low range because the DSL has no dedicated stochastic function."
+    },
+    {
+      "id": 3016,
+      "name": "Proffessor v3",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Reference strategy is not expressible as a deterministic single-security OHLCV entry signal in the TASI DSL; a never-true guard is used rather than fabricating a signal. Unsupported schedule, portfolio, order-management, external-data, or multi-order mechanics are not represented."
+    }
+  ]
+}

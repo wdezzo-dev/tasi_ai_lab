@@ -1,0 +1,104 @@
+{
+  "strategy_roster": [
+    {
+      "id": 68,
+      "name": "CCI Divergence",
+      "family": "breakout",
+      "entry_long": "close <= donchian_low_prev(low,5) and rsi(close,20) < 30",
+      "exit_long": "crossabove(rsi(close,20),50)",
+      "stop_loss_pct": 2.0,
+      "take_profit_pct": null,
+      "notes": "CCI is unavailable, so a new 5-bar low plus RSI(20)<30 proxies oversold price/CCI divergence; RSI crossing 50 proxies the zero-line exit. StopLoss=2% documented."
+    },
+    {
+      "id": 919,
+      "name": "Improved EMA & CDC Trailing Stop",
+      "family": "trend",
+      "entry_long": "close > ema(close,60) and ema(close,60) > ema(close,90) and macd(close,12,26) > macd_signal(close,12,26,9)",
+      "exit_long": "close < ema(close,60) or ema(close,60) < ema(close,90) or macd(close,12,26) < macd_signal(close,12,26,9)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented EMA60/EMA90 filter and standard MACD 12/26/9; EMA/MACD reversal approximates the unrepresentable ATR trailing stop and target."
+    },
+    {
+      "id": 1215,
+      "name": "Rally Base Drop SND Pivots",
+      "family": "trend",
+      "entry_long": "crossabove(close,donchian_high_prev(high,3))",
+      "exit_long": "close < donchian_low_prev(low,3)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses the documented Length=3 as a pivot proxy: cross above the prior 3-bar high and exit on loss of the prior 3-bar low; ATR stop and 6R target are not percentage fields."
+    },
+    {
+      "id": 1664,
+      "name": "Intraday v2",
+      "family": "mean_reversion",
+      "entry_long": "close < bb_lower(close,20,2.4)",
+      "exit_long": "crossabove(close,bb_lower(close,20,1))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Preserves outer 2.4-band entry and inner 1-band exit; period 20 is the standard fallback because the corpus omits the Bollinger period."
+    },
+    {
+      "id": 2635,
+      "name": "N Candles Sequence",
+      "family": "volatility",
+      "entry_long": "close > open and roc(close,1) > 0 and roc(close,2) > 0",
+      "exit_long": "close < open",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Approximates three consecutive bullish closes with the current body and rising one- and two-bar ROC; a bearish close approximates sequence exhaustion, while pip exits are not representable."
+    },
+    {
+      "id": 2710,
+      "name": "VR Overturn",
+      "family": "momentum",
+      "entry_long": "close > 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "The documented default first trade is Buy and has no market trigger; the true price guard represents that initial long, while PnL-dependent reversal, martingale sizing, and pip exits are not representable."
+    },
+    {
+      "id": 2946,
+      "name": "Exp T3 TRIX",
+      "family": "trend",
+      "entry_long": "crossabove(roc(close,10),sma(roc(close,10),10))",
+      "exit_long": "crossbelow(roc(close,10),sma(roc(close,10),10))",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Translates the default Twist mode with Fast Length=10: ROC crossing its smoothed baseline proxies a TRIX slope reversal because T3/TRIX are unavailable."
+    },
+    {
+      "id": 3067,
+      "name": "Exp Hans Indicator Cloud System Tm Plus",
+      "family": "breakout",
+      "entry_long": "crossbelow(close,bb_upper(close,20,2)) and close > bb_mid(close,20)",
+      "exit_long": "close < bb_mid(close,20)",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Uses Bollinger 20/2 as a channel proxy for a bullish breakout returning inside, with a middle-band exit; Hans colours, sessions, timed liquidation, and pip limits are not representable."
+    },
+    {
+      "id": 3479,
+      "name": "One Price Stop-Loss / Take-Profit",
+      "family": "trend",
+      "entry_long": "close < 0",
+      "exit_long": "close < 0",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "This utility never opens trades and only manages protection on an existing position; the false price guard preserves that behavior without inventing ZenPrice."
+    },
+    {
+      "id": 3934,
+      "name": "Up3x1 Investor Range Filter",
+      "family": "trend",
+      "entry_long": "close - open > 0.005 and high - low > 0.006",
+      "exit_long": "open - close > 0.005 and high - low > 0.006",
+      "stop_loss_pct": null,
+      "take_profit_pct": null,
+      "notes": "Preserves the documented bullish range/body filters and uses the qualifying bearish candle as the reversal exit; Monday filtering and point-based risk levels are not representable."
+    }
+  ]
+}

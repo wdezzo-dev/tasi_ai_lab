@@ -1,0 +1,98 @@
+{
+ "batch_324": {
+  "strategy_ids": [
+   1499,
+   3824,
+   3914,
+   1193,
+   2007,
+   1454,
+   1828,
+   1054,
+   2025,
+   774
+  ],
+  "docs": {
+   "1499": {
+    "id": 1499,
+    "name": "Turtle Trading",
+    "family": "trend",
+    "overview": "Classic Turtle Trading system using Donchian breakouts and ATR-based risk management.\n\n## Details\n\n- **Entry Criteria**: breakout of Donchian channel upper/lower band\n- **Long/Short**: both\n- **Exit Criteria**: cross of shorter Donchian channel or trailing stop\n- **Stops**: ATR-based initial and trailing stop\n- **Default Values**:\n  - `EntryLength` = 20\n  - `ExitLength` = 10\n  - `EntryLengthMode2` = 55\n  - `ExitLengthMode2` = 20\n  - `AtrPeriod` = 14\n  - `RiskPerTrade` = 0.02\n  - `InitialStopAtrMultiple` = 2\n  - `PyramidAtrMultiple` = 0.5\n  - `MaxUnits` = 4\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: DonchianChannels, ATR\n  - Stops: ATR\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**: breakout of Donchian channel upper/lower band\n- **Long/Short**: both\n- **Exit Criteria**: cross of shorter Donchian channel or trailing stop\n- **Stops**: ATR-based initial and trailing stop\n- **Default Values**:\n  - `EntryLength` = 20\n  - `ExitLength` = 10\n  - `EntryLengthMode2` = 55\n  - `ExitLengthMode2` = 20\n  - `AtrPeriod` = 14\n  - `RiskPerTrade` = 0.02\n  - `InitialStopAtrMultiple` = 2\n  - `PyramidAtrMultiple` = 0.5\n  - `MaxUnits` = 4\n- **Filters**:\n  - Category: Trend\n  - Direction: Both\n  - Indicators: DonchianChannels, ATR\n  - Stops: ATR\n  - Complexity: Advanced\n  - Timeframe: Intraday\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "3824": {
+    "id": 3824,
+    "name": "Channels",
+    "family": "trend",
+    "overview": "This strategy is a direct port of the MetaTrader 4 \"Channels\" expert advisor included in Gordago's public library. It combines a very fast exponential moving average (EMA) with three EMA-based envelopes to detect moments when price escapes from compressed zones. Once a single position is open the strategy relies on stop orders and optional trailing stops to manage exits, just like the original MQL implementation.\n\n## Trading logic\n\n- The strategy subscribes to hourly candles by default and calculates:\n  - A fast EMA (length 2) using candle **close** prices.\n  - A second fast EMA (length 2) using candle **open** prices, required by the short entry rules of the expert advisor.\n  - A slow EMA (length 220) on closes that serves as the base for three envelope deviations: ±1.0%, ±0.7% and ±0.3%.\n- A **long** position is opened when the close-based fast EMA satisfies any of the six historical cross checks:\n  1. It crosses upward through the outer 1% lower envelope.\n  2. It crosses upward through the 0.7% lower envelope.\n  3. It spends two consecutive bars below the 0.3% lower envelope (oversold condition).\n  4. It crosses upward through the slow EMA itself.\n  5. It crosses upward through the 0.3% upper envelope.\n  6. It crosses upward through the 0.7% upper envelope.\n- A **short** position is opened when the open-based fast EMA triggers any of the symmetric short rules:\n  1. It crosses downward through the outer 1% upper envelope.\n  2. It crosses downward through the 0.7% upper envelope.\n  3. It crosses downward through the 0.3% upper envelope.\n  4. It crosses downward through the slow EMA.\n  5. It crosses downward through the 0.3% lower envelope.\n  6. It crosses downward through the 0.7% lower envelope.\n- Only one market position can exist at a time. A new signal is ignored while a trade is active, matching the behaviour of the MetaTrader expert.\n\n## Risk management\n\n- Individual stop-loss and take-profit distances can be configured for long and short trades. When set to ",
+    "details": "",
+    "parameters": "| Name | Description |\n| ---- | ----------- |\n| `Candle Type` | Timeframe used for price analysis (default: 1 hour). |\n| `Volume` | Order size used for all entries. |\n| `Fast EMA` / `Slow EMA` | Periods for the fast and slow EMAs. |\n| `Envelope 1%`, `Envelope 0.7%`, `Envelope 0.3%` | Percentage width of the three envelope bands. |\n| `Buy Stop-Loss`, `Sell Stop-Loss` | Distance in points between the entry price and the initial stop-loss for long or short trades. |\n| `Buy Take-Profit`, `Sell Take-Profit` | Distance in points for the optional fixed take-profit levels. |\n| `Buy Trailing`, `Sell Trailing` | Trailing stop distance in points for long or short positions. |\n| `Use Trading Hours` | Enables the time window filter. |\n| `From Hour`, `To Hour` | Inclusive hour-of-day boundaries for opening new positions. The window wraps around midnight if `From` is greater than `To`. |"
+   },
+   "3914": {
+    "id": 3914,
+    "name": "FX Chaos Pyramid",
+    "family": "trend",
+    "overview": "FX Chaos Pyramid is a multi-stage breakout strategy converted from the MetaTrader 4 \"FX-CHAOS\" expert advisor located in `MQL/8055`. The port keeps the original multi-timeframe logic: the primary execution happens on the 4-hour timeframe while the daily timeframe provides the higher-level breakout filters. Entries are confirmed with the Awesome Oscillator momentum filter before the first stage is opened. Additional stages pyramid into the existing position whenever the trend continues on the primary timeframe.\n\nThe StockSharp implementation uses the high-level API with candle subscriptions, indicator binding and native order helpers, so the strategy can be used both for backtesting and for live trading without extra infrastructure code.",
+    "details": "",
+    "parameters": "| Name | Description |\n|------|-------------|\n| **Primary Candle** | Trading timeframe used for entries (default 4 hours). |\n| **Daily Candle** | Higher timeframe candles that provide previous high/low levels (default 1 day). |\n| **AO Fast / AO Slow** | Short and long periods of the Awesome Oscillator. |\n| **Breakout Buffer** | Buffer in price steps added to previous highs/lows. |\n| **Max Stages** | Maximum number of pyramid entries (1-5). |\n| **Require Profit** | Only allow additional stages when equity exceeds balance. |\n| **Volume Scale** | Global multiplier applied to the selected lot vector. |\n| **Base Balance** | Balance assigned to the smallest lot vector. |\n| **Balance Step** | Balance increment that moves to the next vector. |"
+   },
+   "1193": {
+    "id": 1193,
+    "name": "Profitable Pullback Strategy Mark804",
+    "family": "trend",
+    "overview": "A trend-following pullback strategy using a ribbon of exponential moving averages. The system looks for price retracements to the signal EMA within a confirmed trend. When price closes back in the trend direction after a pullback, the strategy opens a position and protects it with percentage-based take profit and stop loss levels.\n\n## Details\n\n- **Entry Criteria**:\n  - **Long**: Fast EMA > Signal EMA > Medium EMA, optional Medium EMA > Slow EMA, previous close below Signal EMA and current close above.\n  - **Short**: Fast EMA < Signal EMA < Medium EMA, optional Medium EMA < Slow EMA, previous close above Signal EMA and current close below.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit or stop loss is hit.\n- **Stops**: Yes, fixed take profit and stop loss percentages.\n- **Default Values**:\n  - Fast EMA Length = 8\n  - Signal EMA Length = 21\n  - Medium EMA Length = 50\n  - Slow EMA Length = 200\n  - Take Profit % = 2\n  - Stop Loss % = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium\n",
+    "details": "- **Entry Criteria**:\n  - **Long**: Fast EMA > Signal EMA > Medium EMA, optional Medium EMA > Slow EMA, previous close below Signal EMA and current close above.\n  - **Short**: Fast EMA < Signal EMA < Medium EMA, optional Medium EMA < Slow EMA, previous close above Signal EMA and current close below.\n- **Long/Short**: Both sides.\n- **Exit Criteria**: Take profit or stop loss is hit.\n- **Stops**: Yes, fixed take profit and stop loss percentages.\n- **Default Values**:\n  - Fast EMA Length = 8\n  - Signal EMA Length = 21\n  - Medium EMA Length = 50\n  - Slow EMA Length = 200\n  - Take Profit % = 2\n  - Stop Loss % = 1\n- **Filters**:\n  - Category: Trend following\n  - Direction: Both\n  - Indicators: EMA\n  - Stops: Yes\n  - Complexity: Basic\n  - Timeframe: Medium\n  - Seasonality: No\n  - Neural networks: No\n  - Divergence: No\n  - Risk level: Medium",
+    "parameters": ""
+   },
+   "2007": {
+    "id": 2007,
+    "name": "ColorJMomentum",
+    "family": "trend",
+    "overview": "The **ColorJMomentum Strategy** trades based on the direction changes of a Jurik smoothed momentum indicator. The approach is derived from the original MQL5 expert advisor `Exp_ColorJMomentum` and reproduced using the StockSharp high level API.\n\n## Concept\n\n1. Calculate the standard *Momentum* of the selected price series.\n2. Smooth the momentum values with the **Jurik Moving Average (JMA)**.\n3. Monitor the last two values of the smoothed momentum:\n   - If the indicator was declining and turns upward, a **long** position is opened.\n   - If the indicator was rising and turns downward, a **short** position is opened.\n4. Position protection is handled by optional stop loss and take profit in percentage terms.\n\nThe strategy never reads historical indicator values directly. Instead it reacts only to new candle completions and stores previous values internally.\n\n## Parameters\n\n- **Momentum Length** – period for the momentum calculation.\n- **JMA Length** – smoothing period of the Jurik moving average applied to momentum.\n- **Candle Type** – timeframe used for candle subscriptions.\n- **Stop Loss %** – percentage for optional stop loss.\n- **Enable Stop Loss** – whether to activate stop loss.\n- **Take Profit %** – percentage for take profit.\n- **Enable Long** – allow opening long positions.\n- **Enable Short** – allow opening short positions.\n\nAll parameters are created with `StrategyParam` so they can be optimized in Designer.\n\n## Usage\n\n1. Attach the strategy to the desired security.\n2. Configure parameters or leave defaults (8-period momentum and 8-period JMA on 8‑hour candles).\n3. Run the strategy. Orders will be issued via `BuyMarket` and `SellMarket` when momentum direction reverses.\n\n## Notes\n\n- The strategy processes only finished candles.\n- No explicit colors are set for indicators – Designer chooses them automatically.\n- The algorithm avoids any LINQ or custom collections, following project guidelines.\n",
+    "details": "",
+    "parameters": "- **Momentum Length** – period for the momentum calculation.\n- **JMA Length** – smoothing period of the Jurik moving average applied to momentum.\n- **Candle Type** – timeframe used for candle subscriptions.\n- **Stop Loss %** – percentage for optional stop loss.\n- **Enable Stop Loss** – whether to activate stop loss.\n- **Take Profit %** – percentage for take profit.\n- **Enable Long** – allow opening long positions.\n- **Enable Short** – allow opening short positions.\n\nAll parameters are created with `StrategyParam` so they can be optimized in Designer."
+   },
+   "1454": {
+    "id": 1454,
+    "name": "Trailing Take Profit - Close Based",
+    "family": "trend",
+    "overview": "This long-only strategy enters on a fast/slow SMA crossover. A fixed profit target is set from the entry price. When the target is reached the stop can trail below the highest close to lock in gains.\n\n## Details\n\n- **Entry**: Fast SMA crosses above slow SMA.\n- **Exit**: Reverse crossover or take profit.\n- **Indicators**: SMA.\n- **Timeframe**: Any.\n- **Risk**: Optional trailing stop.\n",
+    "details": "- **Entry**: Fast SMA crosses above slow SMA.\n- **Exit**: Reverse crossover or take profit.\n- **Indicators**: SMA.\n- **Timeframe**: Any.\n- **Risk**: Optional trailing stop.",
+    "parameters": ""
+   },
+   "1828": {
+    "id": 1828,
+    "name": "Swing Cyborg",
+    "family": "trend",
+    "overview": "Swing Cyborg is a discretionary helper that automates execution based on a trader's own trend forecast. The user defines the expected trend direction and the time window when it should be valid. The strategy then confirms entries with the RSI indicator and manages exits with fixed targets.",
+    "details": "",
+    "parameters": "- `Volume` – order volume in lots.\n- `TrendPrediction` – expected trend direction (Uptrend or Downtrend).\n- `TrendTimeframe` – timeframe used for RSI and trading (M30, H1 or H4).\n- `TrendStart` – beginning of the user defined trend period.\n- `TrendEnd` – end of the user defined trend period.\n- `Aggressiveness` – money management preset:\n  - Low: take profit 300 pips, stop loss 200 pips.\n  - Medium: take profit 500 pips, stop loss 250 pips.\n  - High: take profit 600 pips, stop loss 300 pips."
+   },
+   "1054": {
+    "id": 1054,
+    "name": "MK Custome Adaptive SuperTrend",
+    "family": "trend",
+    "overview": "Adaptive SuperTrend that clusters ATR volatility into three levels.\nLong trades occur when trend flips up, shorts when it turns down.\nStops use the SuperTrend line with optional percent take profit and stop loss.\n\n- **Long**: Direction changes to uptrend.\n- **Short**: Direction changes to downtrend.\n- **Exit**: Opposite signal, SuperTrend break, or percent stop.\n\n- Indicators: SuperTrend, ATR.\n- Stops: SuperTrend, percent stop-loss.\n",
+    "details": "",
+    "parameters": ""
+   },
+   "2025": {
+    "id": 2025,
+    "name": "Coppock Histogram",
+    "family": "trend",
+    "overview": "This strategy trades reversals of the Coppock Histogram. The indicator sums two Rate of Change values and smooths the result with a moving average. When momentum turns upward the strategy opens long positions and closes shorts. A downward turn closes longs and enters shorts. Signals are evaluated on completed candles only.\n\n## Details\n\n- **Entry Criteria**: Coppock histogram slopes up for buys or down for sells.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal closes open positions.\n- **Stops**: No explicit stop loss or take profit.\n- **Default Values**:\n  - `Roc1Period` = 14\n  - `Roc2Period` = 11\n  - `SmoothPeriod` = 3\n  - `Volume` = 1m\n  - `CandleType` = TimeSpan.FromHours(8)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RateOfChange, SimpleMovingAverage\n  - Stops: None\n  - Complexity: Basic\n  - Timeframe: 8H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium\n",
+    "details": "- **Entry Criteria**: Coppock histogram slopes up for buys or down for sells.\n- **Long/Short**: Both directions.\n- **Exit Criteria**: Opposite signal closes open positions.\n- **Stops**: No explicit stop loss or take profit.\n- **Default Values**:\n  - `Roc1Period` = 14\n  - `Roc2Period` = 11\n  - `SmoothPeriod` = 3\n  - `Volume` = 1m\n  - `CandleType` = TimeSpan.FromHours(8)\n- **Filters**:\n  - Category: Oscillator\n  - Direction: Both\n  - Indicators: RateOfChange, SimpleMovingAverage\n  - Stops: None\n  - Complexity: Basic\n  - Timeframe: 8H\n  - Seasonality: No\n  - Neural Networks: No\n  - Divergence: No\n  - Risk Level: Medium",
+    "parameters": ""
+   },
+   "774": {
+    "id": 774,
+    "name": "External Signals Tester",
+    "family": "trend",
+    "overview": "Opens positions when the difference between fast and slow EMA crosses zero or when price crosses optional EMA lines. Supports optional percent-based stop loss, take profit, and breakeven.\n\n## Details\n\n- **Entry Criteria**: EMA(10) - EMA(30) crossing zero or price crossing configurable EMA.\n- **Long/Short**: Long and short.\n",
+    "details": "- **Entry Criteria**: EMA(10) - EMA(30) crossing zero or price crossing configurable EMA.\n- **Long/Short**: Long and short.",
+    "parameters": ""
+   }
+  }
+ }
+}
