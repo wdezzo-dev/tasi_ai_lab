@@ -82,13 +82,14 @@ def _simulate(df: pd.DataFrame, spec: dict, cfg: BacktestConfig) -> tuple[pd.Ser
         # generate new position from previous-bar signal at current open
         if side==0 and i>0:
             if el[i-1]:
-                side=1
                 exec_px=o*(1+slip_rate)
                 alloc=max(0.0, cash*pos_frac)
-                qty=max(0.0, alloc/exec_px)
-                fees=fee_rate*abs_(qty*exec_px)
-                cash -= qty * exec_px + fees
-                entry=exec_px; entry_time=index[i]
+                qty=math.floor(alloc/exec_px)
+                if qty>=1:
+                    side=1
+                    fees=fee_rate*abs_(qty*exec_px)
+                    cash -= qty * exec_px + fees
+                    entry=exec_px; entry_time=index[i]
         mark=cash + qty*c
         eq_append(mark)
     if side:

@@ -1,0 +1,56 @@
+{
+  "strategy_id": 188,
+  "name": "Parabolic Sar Volume",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2330",
+    "4009"
+  ],
+  "template": {
+    "id": 188,
+    "name": "Parabolic Sar Volume",
+    "family": "trend",
+    "entry_long": "close > ema(close,{p0}) and volume_ratio(volume,{p1}) > {p0}",
+    "exit_long": "close < ema(close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is unavailable, so a short EMA(5) stands in for the trailing SAR level and volume_ratio against the documented VolumePeriod=20 replaces AvgVolume; losing the line is the SAR flip. The Acceleration/MaxAcceleration parameters and the SAR/ATR trailing stop are not percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

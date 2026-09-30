@@ -1,0 +1,57 @@
+{
+  "strategy_id": 115,
+  "name": "Volume Climax Reversal",
+  "family": "volume",
+  "timeframe": "30min",
+  "tickers": [
+    "6014"
+  ],
+  "template": {
+    "id": 115,
+    "name": "Volume Climax Reversal",
+    "family": "volume",
+    "suggested_timeframe": "Daily",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "entry_long": "rsi(close,{p0}) < {p0} and volume_ratio(volume,{p1}) > {p1} and close > donchian_low_prev(low,{p2})",
+    "exit_long": "crossbelow(rsi(close,14), 40)",
+    "notes": "Climax-volume bar with oversold conditions then close ticking back above prior-bar low approximates 'large volume bar closes and price begins to retrace' (corpus has no ref()/LR; RSI/donchian used as conservative stand-ins). Exit when retrace momentum fades below RSI 40. StopLoss=2% documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        25.0,
+        30.0,
+        35.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

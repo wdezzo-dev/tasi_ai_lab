@@ -1,0 +1,54 @@
+{
+  "strategy_id": 1388,
+  "name": "Swing Breakout Strategy PRO",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "2340"
+  ],
+  "template": {
+    "id": 1388,
+    "name": "Swing Breakout Strategy PRO",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and high > donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Prior 10-bar and one-bar highs approximate confirmed swing resistance and continuation; the prior 10-bar low is the opposite swing exit. Internal pivot offsets, opposite-swing stop, and range target cannot be encoded directly."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

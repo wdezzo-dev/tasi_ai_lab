@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3760,
+  "name": "e-TurboFx Classic",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "2288",
+    "4081"
+  ],
+  "template": {
+    "id": 3760,
+    "name": "e-TurboFx Classic",
+    "family": "momentum",
+    "entry_long": "sma(close - open,{p0}) < {p0} and (close - open) > {p1} * atr(high,low,close,{p1})",
+    "exit_long": "sma(close - open,{p2}) > 0 and (open - close) > 0.5 * atr(high,low,close,14)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Momentum exhaustion is a large counter-trend body after a SequenceLength 3 stretch of decaying bodies, approximated by a 3-bar average body on the opposite side of a body above 0.5xATR(14); the exit is the mirrored exhaustion bar. TakeProfitSteps 120 and StopLossSteps 70 are price steps, not percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

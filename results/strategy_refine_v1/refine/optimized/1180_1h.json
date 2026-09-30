@@ -1,0 +1,51 @@
+{
+  "strategy_id": 1180,
+  "name": "Precision Trading Strategy: Golden Edge",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "2283"
+  ],
+  "template": {
+    "id": 1180,
+    "name": "Precision Trading Strategy: Golden Edge",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and rsi(close,{p2}) > {p0} and roc(ema(close,9),1) > {p1} and atr(high,low,close,14) > sma(atr(high,low,close,14),50)",
+    "exit_long": "crossbelow(ema(close,9),ema(close,21)) or rsi(close,14) < 45",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented long rule keeps the fast/slow EMA cross, RSI above 55 and rising trend line, with HMA replaced by the EMA pair (9/21 are fallbacks since no lengths are documented) and the Highest/Lowest volatility filter rendered as ATR(14) above its own average. Docs list no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        50.0,
+        55.0,
+        60.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -2,21 +2,17 @@
   "strategy_id": 89,
   "ticker": "2381",
   "timeframe": "Daily",
-  "best_params": {
-    "p0": 1,
-    "p1": 2.0,
-    "p2": 18
-  },
   "spec": {
     "id": 89,
     "name": "Hull MA Reversal",
     "family": "trend",
-    "entry_long": "crossabove(roc(1 * ema(close,1) - ema(ema(close,2.0),18), 2.0), 0)",
-    "exit_long": "crossbelow(roc(2 * ema(close,9) - ema(ema(close,9),9), 1), 0)",
+    "entry_long": "crossabove(roc(1 * ema(close,1) - ema(ema(close,3.0),9), 1), 0)",
+    "exit_long": "crossbelow(roc(3.0 * ema(close,9) - ema(ema(close,9),9), 1), 0)",
     "stop_loss_pct": null,
     "take_profit_pct": null,
     "notes": "The Hull MA is approximated by the DEMA form 2*EMA-EMA(EMA) at the documented HmaPeriod=9, and the documented entry is its slope turning from falling to rising. The 2-ATR stop beyond the recent candle is a volatility-based distance, not a percentage, so both stop fields stay null."
   },
+  "best_params": {},
   "base": {
     "train": {
       "window": [
@@ -24,14 +20,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 429,
-      "engine_win_ret": 0.5066305572918817,
-      "alpha": 0.45297202070651577,
+      "engine_win_ret": 1.2871381612760073,
+      "alpha": 1.2334796246906414,
       "benchmark_ret": 0.0536585365853659,
-      "trades": 36,
-      "win_rate": 0.6666666666666666,
-      "sharpe": 1.0500164920713353,
-      "max_drawdown": -0.3237814994523751,
-      "profit_factor": 1.5593124778017315
+      "trades": 40,
+      "win_rate": 0.775,
+      "sharpe": 1.956390479078169,
+      "max_drawdown": -0.21723949578716706,
+      "profit_factor": 3.2227526999752674
     },
     "validation": {
       "window": [
@@ -39,14 +35,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": -0.08804723028105943,
-      "alpha": 0.14167195848649117,
+      "engine_win_ret": -0.26087514659770294,
+      "alpha": -0.031155957830152348,
       "benchmark_ret": -0.2297191887675506,
-      "trades": 32,
-      "win_rate": 0.46875,
-      "sharpe": -0.13304964394076468,
-      "max_drawdown": -0.265828349622665,
-      "profit_factor": 0.7453106356136948
+      "trades": 34,
+      "win_rate": 0.4117647058823529,
+      "sharpe": -0.6462966502081964,
+      "max_drawdown": -0.4196147481213214,
+      "profit_factor": 0.4305872137588347
     },
     "test": {
       "window": [
@@ -54,14 +50,14 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": 0.12141213715867405,
-      "alpha": 0.17894090154086517,
+      "engine_win_ret": 0.031543158711084596,
+      "alpha": 0.08907192309327572,
       "benchmark_ret": -0.05752876438219112,
-      "trades": 18,
-      "win_rate": 0.7222222222222222,
-      "sharpe": 0.6973808152864047,
-      "max_drawdown": -0.25415474547192585,
-      "profit_factor": 1.539252264201489
+      "trades": 16,
+      "win_rate": 0.5,
+      "sharpe": 0.29393910443963206,
+      "max_drawdown": -0.24460512531136225,
+      "profit_factor": 1.122171607483519
     }
   },
   "stress": {
@@ -71,14 +67,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 429,
-      "engine_win_ret": 0.255255226995059,
-      "alpha": 0.20159669040969308,
+      "engine_win_ret": 0.8690025041520071,
+      "alpha": 0.8153439675666412,
       "benchmark_ret": 0.0536585365853659,
-      "trades": 36,
-      "win_rate": 0.6388888888888888,
-      "sharpe": 0.6330431918974607,
-      "max_drawdown": -0.35095263920887987,
-      "profit_factor": 1.3060968606434213
+      "trades": 40,
+      "win_rate": 0.7,
+      "sharpe": 1.4960131661050249,
+      "max_drawdown": -0.2293700542127567,
+      "profit_factor": 2.541291111004621
     },
     "validation": {
       "window": [
@@ -86,14 +82,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": -0.22357398085026214,
-      "alpha": 0.006145207917288453,
+      "engine_win_ret": -0.37566754294053273,
+      "alpha": -0.14594835417298213,
       "benchmark_ret": -0.2297191887675506,
-      "trades": 32,
-      "win_rate": 0.375,
-      "sharpe": -0.5751880150091562,
-      "max_drawdown": -0.33306391264014734,
-      "profit_factor": 0.49814031772211287
+      "trades": 34,
+      "win_rate": 0.35294117647058826,
+      "sharpe": -1.0630134090206145,
+      "max_drawdown": -0.4756726880683807,
+      "profit_factor": 0.28777174239672426
     },
     "test": {
       "window": [
@@ -101,16 +97,16 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": 0.02725269641902517,
-      "alpha": 0.08478146080121629,
+      "engine_win_ret": -0.04810754948010454,
+      "alpha": 0.009421214902086583,
       "benchmark_ret": -0.05752876438219112,
-      "trades": 18,
-      "win_rate": 0.6666666666666666,
-      "sharpe": 0.27445938439228024,
-      "max_drawdown": -0.2675348497065012,
-      "profit_factor": 1.1146136442109826
+      "trades": 16,
+      "win_rate": 0.4375,
+      "sharpe": -0.10315625699982878,
+      "max_drawdown": -0.25445058751376926,
+      "profit_factor": 0.8349799993608779
     }
   },
-  "survivor": true,
-  "reason": "ok"
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
 }

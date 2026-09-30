@@ -1,0 +1,59 @@
+{
+  "strategy_id": 616,
+  "name": "Chart Oscillator",
+  "family": "mean_reversion",
+  "timeframe": "1h",
+  "tickers": [
+    "4326"
+  ],
+  "template": {
+    "id": 616,
+    "name": "Chart Oscillator",
+    "family": "mean_reversion",
+    "entry_long": "crossabove(rsi(close, {p0}), sma(rsi(close, {p1}), {p2})) and rsi(close, 14) < {p0}",
+    "exit_long": "crossbelow(rsi(close, 14), sma(rsi(close, 14), 3)) or rsi(close, 14) > {p1}",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "The default Stochastic choice is approximated by RSI(14) with a 3-period signal line and the documented Oversold 20 / Overbought 80 zones, keeping the bullish crossover near oversold as the long entry. The documented StopLossPercent 2.0 is applied; MFI/RSI selector modes are not modelled."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        75.0,
+        80.0,
+        85.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,60 @@
+{
+  "strategy_id": 2624,
+  "name": "NRTR ATR Stop",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2286",
+    "4002",
+    "7020"
+  ],
+  "template": {
+    "id": 2624,
+    "name": "NRTR ATR Stop",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0})) and atr(high,low,close,{p1}) > sma(atr(high,low,close,{p2}),20)",
+    "exit_long": "crossbelow(close,ema(close,20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "EMA(20) and ATR(14)/ATR-SMA(20) are explicit fallbacks for the NRTR trailing reversal because no values are supplied. Its coefficient, signal-bar delay, and stateful ATR stop are not exactly representable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,55 @@
+{
+  "strategy_id": 742,
+  "name": "EMA Crossover with Volume + Stacked TP & Trailing SL",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "2084"
+  ],
+  "template": {
+    "id": 742,
+    "name": "EMA Crossover with Volume + Stacked TP & Trailing SL",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and volume_ratio(volume,{p2}) > {p0}",
+    "exit_long": "crossbelow(ema(close,21),ema(close,55)) or close < ema(close,21)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The EMA(21/55) crossover is filtered by volume at 1.2 times its 20-bar average, exactly following the documented entry. ATR(14) stacked targets and trailing management are stateful and cannot be expressed as percentage exits."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        1.2,
+        2.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        28,
+        41,
+        55,
+        82,
+        110
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

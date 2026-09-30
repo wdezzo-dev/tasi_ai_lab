@@ -1,0 +1,70 @@
+{
+  "strategy_id": 483,
+  "name": "5 EMA No-Touch Breakout",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1182",
+    "2040",
+    "2070",
+    "2090",
+    "2230",
+    "2290",
+    "2360",
+    "3091",
+    "4020",
+    "4021",
+    "4080",
+    "4141",
+    "4160",
+    "4161",
+    "4240",
+    "4260",
+    "4290",
+    "4310",
+    "6002",
+    "6090",
+    "7211"
+  ],
+  "template": {
+    "id": 483,
+    "name": "5 EMA No-Touch Breakout",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and low < ema(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A break above the prior candle high with price still touching or crossing below EMA(5) proxies the no-touch setup and breakout. Stateful setup-candle extremes, the 3R target, and opposite-extreme stop are not percentage/DSL fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,263 @@
+{
+  "strategy_id": 3140,
+  "name": "Exp Slow Stoch Duplex",
+  "family": "volatility",
+  "timeframe": "Daily",
+  "tickers": [
+    "4291",
+    "4300"
+  ],
+  "template": {
+    "id": 3140,
+    "name": "Exp Slow Stoch Duplex",
+    "family": "volatility",
+    "entry_long": "crossabove({p0} * (close - donchian_low(low,{p0})) / (donchian_high(high,{p1}) - donchian_low(low,{p2})), ema({p1} * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), ema(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)), 3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The long module is translated with the documented LongKPeriod 5, LongDPeriod 3 and a smoothed secondary filter as the %D EMA, so the documented %K above %D cross enters and the reverse cross closes. The 8-hour long timeframe, LongSlowing 3, LongSignalBar 1, the short module and the 2000/1000-point protection are approximated or unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 2,
+      "p1": 100.0,
+      "p2": 5
+    },
+    "best_value": -100.0,
+    "trials": [
+      {
+        "number": 0,
+        "value": -100.0,
+        "params": {
+          "p0": 2,
+          "p1": 100.0,
+          "p2": 5
+        },
+        "summary": {}
+      },
+      {
+        "number": 1,
+        "value": -100.0,
+        "params": {
+          "p0": 8,
+          "p1": 95.0,
+          "p2": 8
+        },
+        "summary": {}
+      },
+      {
+        "number": 2,
+        "value": -100.0,
+        "params": {
+          "p0": 2,
+          "p1": 100.0,
+          "p2": 4
+        },
+        "summary": {}
+      },
+      {
+        "number": 3,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 100.0,
+          "p2": 4
+        },
+        "summary": {}
+      },
+      {
+        "number": 4,
+        "value": -100.0,
+        "params": {
+          "p0": 8,
+          "p1": 100.0,
+          "p2": 8
+        },
+        "summary": {}
+      },
+      {
+        "number": 5,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 100.0,
+          "p2": 5
+        },
+        "summary": {}
+      },
+      {
+        "number": 6,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 95.0,
+          "p2": 4
+        },
+        "summary": {}
+      },
+      {
+        "number": 7,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 100.0,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 8,
+        "value": -100.0,
+        "params": {
+          "p0": 5,
+          "p1": 105.0,
+          "p2": 8
+        },
+        "summary": {}
+      },
+      {
+        "number": 9,
+        "value": -100.0,
+        "params": {
+          "p0": 2,
+          "p1": 95.0,
+          "p2": 4
+        },
+        "summary": {}
+      },
+      {
+        "number": 10,
+        "value": -100.0,
+        "params": {
+          "p0": 4,
+          "p1": 105.0,
+          "p2": 5
+        },
+        "summary": {}
+      },
+      {
+        "number": 11,
+        "value": -100.0,
+        "params": {
+          "p0": 8,
+          "p1": 95.0,
+          "p2": 8
+        },
+        "summary": {}
+      },
+      {
+        "number": 12,
+        "value": -100.0,
+        "params": {
+          "p0": 2,
+          "p1": 100.0,
+          "p2": 5
+        },
+        "summary": {}
+      },
+      {
+        "number": 13,
+        "value": -100.0,
+        "params": {
+          "p0": 5,
+          "p1": 95.0,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 14,
+        "value": -100.0,
+        "params": {
+          "p0": 8,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {}
+      },
+      {
+        "number": 15,
+        "value": -100.0,
+        "params": {
+          "p0": 8,
+          "p1": 95.0,
+          "p2": 5
+        },
+        "summary": {}
+      },
+      {
+        "number": 16,
+        "value": -100.0,
+        "params": {
+          "p0": 4,
+          "p1": 95.0,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 17,
+        "value": -100.0,
+        "params": {
+          "p0": 2,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 18,
+        "value": -100.0,
+        "params": {
+          "p0": 4,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 19,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 95.0,
+          "p2": 8
+        },
+        "summary": {}
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

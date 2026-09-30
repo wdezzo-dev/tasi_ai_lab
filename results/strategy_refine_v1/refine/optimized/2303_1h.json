@@ -1,0 +1,52 @@
+{
+  "strategy_id": 2303,
+  "name": "ADX DMI",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "1320"
+  ],
+  "template": {
+    "id": 2303,
+    "name": "ADX DMI",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0})) and adx(high,low,close,{p1}) > {p0}",
+    "exit_long": "crossbelow(close,ema(close,{p2})) or adx(high,low,close,14) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A close/EMA(14) cross with ADX confirmation proxies the documented -DI/+DI directional crossover, with the inverse as exit. DMI lines, optional close toggles, and external stop management are not available."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        10.0,
+        15.0,
+        20.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,50 @@
+{
+  "strategy_id": 2049,
+  "name": "VininI Trend",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4071"
+  ],
+  "template": {
+    "id": 2049,
+    "name": "VininI Trend",
+    "family": "trend",
+    "entry_long": "std(close,{p0}) > {p0} and crossabove((close - sma(close,{p1})) / ({p1} * std(close,{p2})), 100)",
+    "exit_long": "std(close,14) > 0 and crossbelow((close - sma(close,14)) / (0.015 * std(close,14)), -100)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Breakdown mode is translated as the CCI proxy crossing the upper level, with the lower level as the long exit. CCI is rebuilt as (close-SMA(14))/(0.015*std(14)) behind a non-zero guard, and the period plus the +/-100 levels are explicit fallbacks because the docs list no values; Twist mode and mode switching are dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.015,
+        0.215
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

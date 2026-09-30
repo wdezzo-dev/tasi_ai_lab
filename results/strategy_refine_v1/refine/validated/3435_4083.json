@@ -1,0 +1,84 @@
+{
+  "strategy_id": 3435,
+  "ticker": "4083",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 3435,
+    "name": "Meeting Lines Stochastic",
+    "family": "trend",
+    "entry_long": "close > open and low <= open and (close - open) > (sma(close, 105.0) - sma(open, 25.0)) and 105.0 * (close - donchian_low(low, 1)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 25.0",
+    "exit_long": "100 * (close - donchian_low(low, 3)) / (donchian_high(high, 3) - donchian_low(low, 3)) < 20 or close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bullish Meeting Lines are approximated by a bullish candle whose low sits at the open and whose body exceeds the documented BodyAveragePeriod 3 average body, confirmed by the documented LongEntryLevel 30; exits use ExitLowerLevel 20 or a bearish candle. StochasticSmoothing 25 and StochasticSignal 36 are dropped, the short side is omitted, and the oscillator denominator can be zero."
+  },
+  "best_params": {},
+  "base": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 272,
+      "engine_win_ret": -0.014338159170367848,
+      "alpha": 0.08298177089956227,
+      "benchmark_ret": -0.09731993006993012,
+      "trades": 2,
+      "win_rate": 0.0,
+      "sharpe": -0.265800565265928,
+      "max_drawdown": -0.03814263887190883,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.4637404580152671,
+      "benchmark_ret": -0.4637404580152671,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "stress": {
+    "train": null,
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 272,
+      "engine_win_ret": -0.024212524395139767,
+      "alpha": 0.07310740567479035,
+      "benchmark_ret": -0.09731993006993012,
+      "trades": 2,
+      "win_rate": 0.0,
+      "sharpe": -0.43927535047161426,
+      "max_drawdown": -0.04543180896298382,
+      "profit_factor": 0.0
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.0,
+      "alpha": 0.4637404580152671,
+      "benchmark_ret": -0.4637404580152671,
+      "trades": 0,
+      "win_rate": 0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "profit_factor": 0.0
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

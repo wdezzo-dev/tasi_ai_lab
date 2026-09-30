@@ -1,0 +1,74 @@
+{
+  "strategy_id": 1781,
+  "name": "XMACD Modes",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1835"
+  ],
+  "template": {
+    "id": 1781,
+    "name": "XMACD Modes",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},26,9))",
+    "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": "{tp}",
+    "notes": "Mode=MacdDisposition is the documented default, so the entry is the MACD(12/26) main line crossing its signal(9) line and the inverse cross exits. The other three modes (zero-line breakdown, MACD twist, signal twist) are not the default and are not encoded; StopLossPercent=2m and TakeProfitPercent=4m are used as percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "tp": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        4.0,
+        5.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

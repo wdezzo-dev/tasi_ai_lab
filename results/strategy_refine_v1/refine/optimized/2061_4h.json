@@ -1,0 +1,59 @@
+{
+  "strategy_id": 2061,
+  "name": "I Trend",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1182",
+    "4100"
+  ],
+  "template": {
+    "id": 2061,
+    "name": "I Trend",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,{p0}),ema(zscore(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(zscore(close,20),ema(zscore(close,20),9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The custom iTrend oscillator is approximated by a Bollinger-equivalent z-score of price over 20 bars (deviation 2) with an EMA(9) signal line, keeping the documented crossover behaviour. MaPeriod, BbPeriod, BbDeviation, PriceType and the BbMode band selection have no documented values, so these are stated defaults."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

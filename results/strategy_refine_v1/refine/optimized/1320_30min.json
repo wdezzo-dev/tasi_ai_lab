@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1320,
+  "name": "SMB Magic",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4193"
+  ],
+  "template": {
+    "id": 1320,
+    "name": "SMB Magic",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and volume_ratio(volume,{p1}) > {p0} and close > ema(close,{p2}) and high - low > {p1} * atr(high,low,close,14)",
+    "exit_long": "close < ema(close,50)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented rule combines a large-candle breakout, volume confirmation and an EMA filter, but no numeric values are supplied, so the 20-bar channel, 1.5x volume ratio, EMA(50) and 1.5x ATR candle size are explicit fallbacks. Balance-based position sizing and the documented risk models are not signals."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

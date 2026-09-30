@@ -1,0 +1,56 @@
+{
+  "strategy_id": 256,
+  "name": "Bollinger Band Width Breakout",
+  "family": "breakout",
+  "timeframe": "30min",
+  "tickers": [
+    "2084"
+  ],
+  "template": {
+    "id": 256,
+    "name": "Bollinger Band Width Breakout",
+    "family": "breakout",
+    "entry_long": "bb_upper(close,{p0},{p1}) - bb_lower(close,{p2},2) > sma(bb_upper(close,20,2) - bb_lower(close,20,2),20) and close > bb_upper(close,20,2)",
+    "exit_long": "close < bb_mid(close,20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bollinger(20,2) width above its 20-bar mean plus an upper-band pierce approximates the documented deviation breakout and mean exit. The exact width statistic and StopMultiplier=2 are not fixed percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

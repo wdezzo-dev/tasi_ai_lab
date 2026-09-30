@@ -1,0 +1,55 @@
+{
+  "strategy_id": 1373,
+  "name": "Supertrend AT v1.0",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4264"
+  ],
+  "template": {
+    "id": 1373,
+    "name": "Supertrend AT v1.0",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0}) + {p0} * atr(high,low,close,{p1}))",
+    "exit_long": "close < ema(close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The SuperTrend line is approximated by EMA(10) with the documented SupertrendLength 10 and Multiplier 3 on ATR(10); the entry is the documented down-to-up flip above the band and the exit is the loss of the bullish regime. RiskPerTrade 2% and RewardRatio 3 size the position and its target from the previous Supertrend value, which the DSL cannot express, so the stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,83 @@
+{
+  "strategy_id": 1401,
+  "name": "Gap Momentum System",
+  "family": "momentum",
+  "timeframe": "Daily",
+  "tickers": [
+    "2282"
+  ],
+  "template": {
+    "id": 1401,
+    "name": "Gap Momentum System",
+    "family": "momentum",
+    "entry_long": "crossabove(roc(close,{p0}), sma(roc(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(roc(close,40), sma(roc(close,40),20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Accumulated up/down gaps are approximated by the documented Period=40 return measured against its SignalPeriod=20 mean, and a rising signal buys while a falling one reverses. LongOnly=true is honoured by producing only the long side, and the docs specify no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        20,
+        30,
+        40,
+        60,
+        80
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        20,
+        30,
+        40,
+        60,
+        80
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 60,
+      "p1": 30,
+      "p2": 15
+    },
+    "best_value": 2.4455460682376158,
+    "trials": [
+      {
+        "number": 36,
+        "value": 2.4455460682376158,
+        "params": {
+          "p0": 60,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.6837583442160022,
+          "median_cagr": 0.3044610652725259,
+          "median_sharpe": 1.6238319687915677,
+          "median_drawdown": -0.08051643319021484,
+          "profitable_fraction": 1.0,
+          "median_trades": 9.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

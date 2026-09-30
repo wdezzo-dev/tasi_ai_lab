@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2849,
+  "name": "Spasm",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4142"
+  ],
+  "template": {
+    "id": 2849,
+    "name": "Spasm",
+    "family": "trend",
+    "entry_long": "crossabove(close,donchian_high_prev(high,{p0})) and close > ema(close,{p1})",
+    "exit_long": "crossbelow(close,donchian_low_prev(low,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Donchian/breakout reference translated with prior-bar 24-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        18,
+        24,
+        36,
+        48
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        18,
+        24,
+        36,
+        48
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

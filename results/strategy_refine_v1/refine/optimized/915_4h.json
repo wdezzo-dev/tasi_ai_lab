@@ -1,0 +1,56 @@
+{
+  "strategy_id": 915,
+  "name": "ICT NY Kill Zone Auto Trading",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2140",
+    "7201"
+  ],
+  "template": {
+    "id": 915,
+    "name": "ICT NY Kill Zone Auto Trading",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and low < open and close - low >= {p0} * atr(high,low,close,{p1})",
+    "exit_long": "close < ema(close,{p2}) or low < donchian_low_prev(low,5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A five-bar high break with a rejection wick approximates a fair-value-gap/order-block long setup. Kill-zone time and exact multi-candle gap/order-block geometry are unavailable; documented 30/60 point protection is not a percentage."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

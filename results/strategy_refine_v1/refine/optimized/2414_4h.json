@@ -1,0 +1,50 @@
+{
+  "strategy_id": 2414,
+  "name": "Bezier ReOpen",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2300"
+  ],
+  "template": {
+    "id": 2414,
+    "name": "Bezier ReOpen",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0})) and roc(close,{p1}) > {p0}",
+    "exit_long": "crossbelow(close,ema(close,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bezier slope/re-entry is proxied by a close crossing the EMA(8) with positive one-bar momentum. Re-entry scaling and the absolute-price stop/take-profit parameters are not representable in the roster DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

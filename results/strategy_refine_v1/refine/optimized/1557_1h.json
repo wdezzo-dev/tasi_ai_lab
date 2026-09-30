@@ -1,0 +1,47 @@
+{
+  "strategy_id": 1557,
+  "name": "Williams %R Cross Strategy with 200 MA Filter",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "6040"
+  ],
+  "template": {
+    "id": 1557,
+    "name": "Williams %R Cross Strategy with 200 MA Filter",
+    "family": "trend",
+    "entry_long": "donchian_high(high,{p0}) - donchian_low(low,{p1}) > {p0} and crossabove({p1} * (donchian_high(high,{p2}) - close) / (donchian_high(high,14) - donchian_low(low,14)), -40) and close > sma(close,200)",
+    "exit_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossbelow(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)), -60) or close < sma(close,200)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Williams %R(14) is rebuilt from the documented Donchian window with a non-zero range guard, and the -50 level plus CrossThreshold=10 gives the -40/-60 pair, filtered by SMA(200). The documented 20/30 unit take-profit and stop-loss are absolute price distances, so the percent fields stay null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

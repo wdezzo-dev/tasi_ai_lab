@@ -1,0 +1,51 @@
+{
+  "strategy_id": 1992,
+  "name": "Exp Moving Average FN",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1301",
+    "2100"
+  ],
+  "template": {
+    "id": 1992,
+    "name": "Exp Moving Average FN",
+    "family": "trend",
+    "entry_long": "roc(ema(close, {p0}), {p1}) > {p0} and bars_since(roc(ema(close, {p2}), 1) < {p1}) <= 2",
+    "exit_long": "roc(ema(close, 12), 1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented EMA Length 12 slope reversal is expressed as a one-bar EMA return turning positive within two bars of a prior decline, since shifted series access is unavailable. Stop Loss 1000 and Take Profit 2000 are absolute price units and are not percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

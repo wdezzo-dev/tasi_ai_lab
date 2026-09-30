@@ -1,0 +1,53 @@
+{
+  "strategy_id": 734,
+  "name": "EMA 5 Alert Candle Short",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "1323"
+  ],
+  "template": {
+    "id": 734,
+    "name": "EMA 5 Alert Candle Short",
+    "family": "trend",
+    "entry_long": "low < ema(close,{p0}) and sma(high - ema(close,{p1}),{p2}) <= {p0} and close > donchian_high_prev(high,1)",
+    "exit_long": "close < ema(close,5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented short is mirrored for a long-only engine: a three-bar EMA(5) touch streak (average of high minus EmaPeriod 5 at or below zero) plus an alert candle below the EMA, then a close above the prior candle high; losing the EMA exits. The stop at the alert-candle high and the equal-distance take-profit are price-relative, and RiskPerTrade 2m is a sizing input, so no percentages are set."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

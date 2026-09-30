@@ -1,0 +1,48 @@
+{
+  "strategy_id": 2197,
+  "name": "IMA Expert",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4320"
+  ],
+  "template": {
+    "id": 2197,
+    "name": "IMA Expert",
+    "family": "trend",
+    "entry_long": "roc(close / sma(close,{p0}),{p1}) >= {p0}",
+    "exit_long": "roc(close / sma(close,{p2}),1) <= {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "ROC of close/SMA(5) directly proxies the one-bar relative change in IMA and uses the documented 0.5 threshold. Tick protection and volume sizing are not percentage exit rules."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "ValueError: The `choices` must contain one or more elements."
+  },
+  "train_end": "2024-07-31"
+}

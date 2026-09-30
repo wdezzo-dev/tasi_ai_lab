@@ -1,0 +1,46 @@
+{
+  "strategy_id": 2626,
+  "name": "Bullish & Bearish Engulfing",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "6020"
+  ],
+  "template": {
+    "id": 2626,
+    "name": "Bullish & Bearish Engulfing",
+    "family": "trend",
+    "entry_long": "close > open and open < donchian_low_prev(low,{p0}) and close > donchian_high_prev(high,{p1})",
+    "exit_long": "close < open and open > donchian_high_prev(high,{p2}) and close < donchian_low_prev(low,1)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Because only the current bar is visible, the engulfing pattern is expressed as a body that opens below the prior bar's low and closes above its high (and the mirror image for the exit), which is the documented pattern at Shift 1. DistanceInPips 0, CloseOppositePositions and Volume are order-handling features, and the 1-hour timeframe is fixed here."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

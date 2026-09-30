@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3880,
+  "name": "Lbs V12",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "2220",
+    "2223",
+    "4040",
+    "4081",
+    "4110",
+    "4291"
+  ],
+  "template": {
+    "id": 3880,
+    "name": "Lbs V12",
+    "family": "breakout",
+    "entry_long": "crossabove(close,donchian_high_prev(high,{p0}) + atr(high,low,close,{p1}))",
+    "exit_long": "crossbelow(close,donchian_low_prev(low,{p2}) - atr(high,low,close,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented ATR(3) offset is applied around the prior candle extremes for the long and mirror stop orders. Trigger-hour timing, 100-point target, and 20-point trailing cannot be translated into the daily DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

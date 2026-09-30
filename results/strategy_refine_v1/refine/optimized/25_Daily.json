@@ -1,0 +1,59 @@
+{
+  "strategy_id": 25,
+  "name": "Stochastic RSI Cross",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "3092"
+  ],
+  "template": {
+    "id": 25,
+    "name": "Stochastic RSI Cross",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close, {p0}), sma(rsi(close, {p1}), {p2})) and rsi(close, 14) < {p0}",
+    "exit_long": "crossbelow(rsi(close, 14), sma(rsi(close, 14), 3)) or rsi(close, 14) > {p1}",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "StochRSI %K/%D are approximated by RSI(14) and its SMA(3) with a near-oversold filter, using the documented RsiPeriod 14 / KPeriod 3. The documented StopLossPercent of 2 is applied; no take-profit value is documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        35.0,
+        40.0,
+        45.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        55.0,
+        60.0,
+        65.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,46 @@
+{
+  "strategy_id": 521,
+  "name": "Anands",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1301",
+    "2310",
+    "4090",
+    "4148"
+  ],
+  "template": {
+    "id": 521,
+    "name": "Anands",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > open",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented two-bar-ago breakout is kept, with the bullish breakout bar standing in for the previous-day close-outside-its-range bias test that needs a shifted close. The 15-minute timeframe and the optional stop at the opposite side of the breakout bar are not translated."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

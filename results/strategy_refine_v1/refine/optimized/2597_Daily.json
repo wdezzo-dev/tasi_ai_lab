@@ -1,0 +1,417 @@
+{
+  "strategy_id": 2597,
+  "name": "Morse Code",
+  "family": "volatility",
+  "timeframe": "Daily",
+  "tickers": [
+    "4009",
+    "4082",
+    "6013"
+  ],
+  "template": {
+    "id": 2597,
+    "name": "Morse Code",
+    "family": "volatility",
+    "entry_long": "close > open and close / ({p0} + roc(close, {p1}) / {p0}) < open / ({p2} + roc(open, 1) / {p1}) and close / (1 + roc(close, 2) / 100) > open / (1 + roc(open, 2) / 100)",
+    "exit_long": "close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bullish candles are 1 and bearish 0, so prior bars are reconstructed as price/(1+roc(price,n)/100) and the bullish three-bar Morse code 1-0-1 is used as the mask; the mask itself is user-selected with no documented default. A bearish completed candle is the exit, and the pip take-profit/stop-loss and direction choice are not roster fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 105.0,
+      "p1": 105.0,
+      "p2": 1
+    },
+    "best_value": 1.4865823527866378,
+    "trials": [
+      {
+        "number": 0,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 1,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 2,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 100.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 3,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 100.0,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 4,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 95.0,
+          "p1": 95.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 5,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 95.0,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 6,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 95.0,
+          "p1": 95.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 7,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 95.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 8,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 95.0,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 9,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 100.0,
+          "p1": 95.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 10,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 11,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 12,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 13,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 100.0,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 14,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 95.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 15,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 16,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 100.0,
+          "p1": 100.0,
+          "p2": 2
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 17,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 105.0,
+          "p1": 105.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 194.0
+        }
+      },
+      {
+        "number": 18,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 95.0,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      },
+      {
+        "number": 19,
+        "value": 1.4865823527866378,
+        "params": {
+          "p0": 100.0,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 3,
+          "median_return": 3.3715666415770604,
+          "median_cagr": 0.19349242188164872,
+          "median_sharpe": 1.0890862415797014,
+          "median_drawdown": -0.19925009973388796,
+          "profitable_fraction": 0.6666666666666666,
+          "median_trades": 195.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

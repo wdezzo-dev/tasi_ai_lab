@@ -1,0 +1,56 @@
+{
+  "strategy_id": 4116,
+  "name": "Rubberbands 3",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1832",
+    "2160",
+    "2170",
+    "2230",
+    "2350",
+    "2360",
+    "4080",
+    "4141",
+    "4146",
+    "4161",
+    "4310"
+  ],
+  "template": {
+    "id": 4116,
+    "name": "Rubberbands 3",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and roc(close,{p1}) > {p0}",
+    "exit_long": "close < donchian_low_prev(low,{p2}) and roc(close,1) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A positive one-bar break above the prior high proxies expansion above a running maximum; a negative one-bar break below the prior low proxies the BackStep counter-move and sequence exit. Running extremes, pyramiding, reversal sequencing, order limits, and account-currency session targets require state unavailable in the DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

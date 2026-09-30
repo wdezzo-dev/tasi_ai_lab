@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3936,
+  "name": "Manual EA",
+  "family": "mean_reversion",
+  "timeframe": "30min",
+  "tickers": [
+    "4011"
+  ],
+  "template": {
+    "id": 3936,
+    "name": "Manual EA",
+    "family": "mean_reversion",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1})",
+    "exit_long": "crossbelow(rsi(close,{p2}),90)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Stochastic %D(5,3,3) is unavailable; RSI(5) crossing above 10 enters long and crossing below 90 supplies the opposite reversal exit. The 100-point SL/TP are not percentage exits."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

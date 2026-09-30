@@ -1,0 +1,33 @@
+{
+  "strategy_id": 942,
+  "name": "IU Open Equal to High Low",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "4051",
+    "4148"
+  ],
+  "template": {
+    "id": 942,
+    "name": "IU Open Equal to High Low",
+    "family": "pattern",
+    "entry_long": "open <= low * {p0} and close > open",
+    "exit_long": "close < donchian_low_prev(low,{p0})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The open-equals-low geometry is applied to any bar with a 0.1% equality tolerance because the DSL has no session/time fields to isolate the first candle of the day, and the long side (open at the low, close up) is traded. The prior-candle low becomes the structural exit; the RiskReward 2 target and stop are price distances, not percents."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

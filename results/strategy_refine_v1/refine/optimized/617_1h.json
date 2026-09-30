@@ -1,0 +1,64 @@
+{
+  "strategy_id": 617,
+  "name": "Chart Patterns",
+  "family": "pattern",
+  "timeframe": "1h",
+  "tickers": [
+    "2030"
+  ],
+  "template": {
+    "id": 617,
+    "name": "Chart Patterns",
+    "family": "pattern",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > sma(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Chart patterns: ascending channel break (higher high and higher low over 3 bars). Long on breakout above MA(20). StopLoss=2% documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

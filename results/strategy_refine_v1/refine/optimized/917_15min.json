@@ -1,0 +1,52 @@
+{
+  "strategy_id": 917,
+  "name": "IMACD Sniper",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "4265"
+  ],
+  "template": {
+    "id": 917,
+    "name": "IMACD Sniper",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},26,9)) and close > ema(close,20) and volume_ratio(volume,20) > {p0} and close - open > {p1} * atr(high,low,close,14)",
+    "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD 12/26/9, EMA(20), volume above average, and a 0.5-ATR bullish body retain the documented core; zero-distance normalization is omitted. Dynamic 4.0/1.5 ATR targets and stops are not percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

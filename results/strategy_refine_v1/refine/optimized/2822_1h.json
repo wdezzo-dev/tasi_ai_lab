@@ -1,0 +1,55 @@
+{
+  "strategy_id": 2822,
+  "name": "FX-CHAOS Scalp",
+  "family": "volume",
+  "timeframe": "1h",
+  "tickers": [
+    "3003"
+  ],
+  "template": {
+    "id": 2822,
+    "name": "FX-CHAOS Scalp",
+    "family": "volume",
+    "entry_long": "crossabove(sma((high + low) / {p0},{p0}) - sma((high + low) / {p1},{p1}), {p2}) and close > sma(close,20)",
+    "exit_long": "crossbelow(sma((high + low) / 2,5) - sma((high + low) / 2,34), 0) or close < sma(close,20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Awesome Oscillator zero cross is translated exactly, while the fractal ZigZag swing tracker cannot be rebuilt because the DSL has no lag or pivot state and the separate daily series is unavailable, so SMA(20) stands in for the higher-timeframe filter. Point stop and target have no documented values."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        17,
+        26,
+        34,
+        51,
+        68
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

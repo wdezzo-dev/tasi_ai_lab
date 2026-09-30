@@ -1,0 +1,47 @@
+{
+  "strategy_id": 1215,
+  "name": "Rally Base Drop SND Pivots",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2060",
+    "4040",
+    "4148"
+  ],
+  "template": {
+    "id": 1215,
+    "name": "Rally Base Drop SND Pivots",
+    "family": "trend",
+    "entry_long": "crossabove(close,donchian_high_prev(high,{p0}))",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Uses the documented Length=3 as a pivot proxy: cross above the prior 3-bar high and exit on loss of the prior 3-bar low; ATR stop and 6R target are not percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

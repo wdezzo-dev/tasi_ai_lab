@@ -1,0 +1,32 @@
+{
+  "strategy_id": 1196,
+  "name": "Projection",
+  "family": "breakout",
+  "timeframe": "Daily",
+  "tickers": [
+    "2285"
+  ],
+  "template": {
+    "id": 1196,
+    "name": "Projection",
+    "family": "breakout",
+    "entry_long": "crossabove(close,open + {p0} * close)",
+    "exit_long": "crossbelow(close,open)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The current open plus a 1% price proxy is used for the projected upper level; 1% is an explicit fallback because the average-change calculation is unavailable. Daily averaging, the 0.2 target multiple, and average-change stops are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.01,
+        0.21
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

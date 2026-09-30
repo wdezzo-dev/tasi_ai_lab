@@ -1,0 +1,53 @@
+{
+  "strategy_id": 1791,
+  "name": "Stoch TP TS V3103",
+  "family": "other",
+  "timeframe": "Daily",
+  "tickers": [
+    "3092",
+    "4165",
+    "4264"
+  ],
+  "template": {
+    "id": 1791,
+    "name": "Stoch TP TS V3103",
+    "family": "other",
+    "entry_long": "crossabove(rsi(close,{p0}), sma(rsi(close,{p1}),{p2})) and rsi(close,5) > {p0} and rsi(close,5) < {p1}",
+    "exit_long": "crossbelow(rsi(close,5), sma(rsi(close,5),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The stochastic is approximated by RSI(5) with an SMA(3) percent-D line, and the documented 20 to 80 range is kept as the band the cross must occur inside. The fixed minute of each hour, the initial stop, the three-times take-profit and the trailing switch are not expressible in the DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        75.0,
+        80.0,
+        85.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

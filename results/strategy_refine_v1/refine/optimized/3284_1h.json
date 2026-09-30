@@ -1,0 +1,51 @@
+{
+  "strategy_id": 3284,
+  "name": "Consolidation Breakout",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4263"
+  ],
+  "template": {
+    "id": 3284,
+    "name": "Consolidation Breakout",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high, {p0}) and ema(close, {p1}) > ema(close, {p2}) and bars_since(atr(high, low, close, 10) < {p0} * atr(high, low, close, 40)) < 5 and roc(close, 14) > {p1} and macd(close, 12, 26) > macd_signal(close, 12, 26, 9)",
+    "exit_long": "close < ema(close, 10) or macd(close, 12, 26) < macd_signal(close, 12, 26, 9)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The two typical-price LWMAs are approximated by EMA(10)/EMA(30) on close, the overlapping-bar consolidation by a 10-vs-40 ATR squeeze inside the last five bars, the momentum-above-100 filter by ROC(14)>0, and the separate-timeframe MACD by MACD(12,26,9) on this series. Pip take-profit/stop-loss, TradeVolume, and the short side are not percentage/DSL fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.7,
+        0.9,
+        1.1
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1002,
+  "name": "MA Crossover with TP/SL and 5 EMA Filter",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3005"
+  ],
+  "template": {
+    "id": 1002,
+    "name": "MA Crossover with TP/SL and 5 EMA Filter",
+    "family": "trend",
+    "entry_long": "crossabove(sma(close,{p0}),sma(close,{p1})) and close > ema(close,{p2})",
+    "exit_long": "crossbelow(sma(close,20),sma(close,50)) or close < ema(close,5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Keeps the documented long rule: fast SMA crossing above the slow SMA while close is above the 5-period EMA, with the opposite cross or EMA loss as exit. Fast 20 and slow 50 are explicit fallbacks, and Target%/Stop% carry no documented values, so both stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

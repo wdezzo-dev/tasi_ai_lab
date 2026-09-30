@@ -1,0 +1,54 @@
+{
+  "strategy_id": 1619,
+  "name": "FT CCI",
+  "family": "volume",
+  "timeframe": "4h",
+  "tickers": [
+    "2280"
+  ],
+  "template": {
+    "id": 1619,
+    "name": "FT CCI",
+    "family": "volume",
+    "entry_long": "crossabove(zscore((high+low+close)/{p0},{p0}), {p1})",
+    "exit_long": "crossbelow(zscore((high+low+close)/3,{p1}), {p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "CCI is not in the DSL, so it is approximated by the z-score of typical price over the documented CCI Period 14 and the upper/lower thresholds are taken as the conventional +/-100 CCI levels, i.e. +/-1 z; an upward cross out of the lower band is the long entry and the mirror cross is the exit. The pip-based Stop Loss and Take Profit (0 disables each) and the 30-minute CandleType are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

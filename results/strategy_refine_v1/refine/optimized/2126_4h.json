@@ -1,0 +1,44 @@
+{
+  "strategy_id": 2126,
+  "name": "Last Price",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2190",
+    "4090"
+  ],
+  "template": {
+    "id": 2126,
+    "name": "Last Price",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0})",
+    "exit_long": "crossbelow(close,donchian_low_prev(low,{p1}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Level 1 best bid/ask, the 400-point interval, spread, volume limits, and session windows are unavailable in the OHLCV DSL. A close above the prior two-bar high is the long-side breakout proxy, with a mirrored prior-low exit; the absolute stop remains null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

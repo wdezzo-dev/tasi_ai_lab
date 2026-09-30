@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3195,
+  "name": "Ingrit",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1830"
+  ],
+  "template": {
+    "id": 3195,
+    "name": "Ingrit",
+    "family": "trend",
+    "entry_long": "close > open and close > donchian_high_prev(high, {p0}) and roc(close, {p1}) > {p0}",
+    "exit_long": "close < ema(close, {p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A strong bullish counter-trend candle closing above the 14-bar-ago swing high with positive ROC(5) is the documented wide breakout; EMA(10) loss is the reversal exit. The five-minute timeframe, pip stop/target/trailing and the signal-reversal and flatten toggles are not representable, and no numeric protection values are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

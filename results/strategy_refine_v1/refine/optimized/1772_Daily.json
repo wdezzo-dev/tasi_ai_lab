@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1772,
+  "name": "PSAR Trader v2",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4083"
+  ],
+  "template": {
+    "id": 1772,
+    "name": "PSAR Trader v2",
+    "family": "trend",
+    "entry_long": "close > ema(close, {p0}) and high > donchian_high_prev(high, {p1})",
+    "exit_long": "close < ema(close, {p2}) or low < donchian_low_prev(low, 5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is not in the DSL, so the SAR flip is approximated by price holding above EMA(10) while making a fresh five-bar high (mirrored on exit). The StartHour/EndHour window and price-unit stop/target are dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

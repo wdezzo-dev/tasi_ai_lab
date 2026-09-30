@@ -1,0 +1,58 @@
+{
+  "strategy_id": 114,
+  "name": "Bearish Abandoned Baby",
+  "family": "pattern",
+  "timeframe": "1h",
+  "tickers": [
+    "2287"
+  ],
+  "template": {
+    "id": 114,
+    "name": "Bearish Abandoned Baby",
+    "family": "pattern",
+    "entry_long": "low > donchian_high_prev(high,{p0}) and close < open and close > sma(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Abandoned Baby reversal: gap up then bearish close above MA(20). Long on reversal confirmation. StopLoss=2% documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

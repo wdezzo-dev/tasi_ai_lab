@@ -1,0 +1,50 @@
+{
+  "strategy_id": 2412,
+  "name": "ColorJFatl Digit ReOpen",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1320"
+  ],
+  "template": {
+    "id": 2412,
+    "name": "ColorJFatl Digit ReOpen",
+    "family": "trend",
+    "entry_long": "roc(ema(close, {p0}), {p1}) > {p0} and bars_since(roc(ema(close, {p2}), 1) < {p1}) <= 2",
+    "exit_long": "roc(ema(close, 7), 1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Jurik moving average is approximated by EMA(7) since JmaLength has no documented default, and its upward turn within two bars is the documented long entry while the opposite turn closes. Re-entry every PriceStep points up to MaxPositions is a pyramiding module, and the source timeframe is 4 hours."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        5,
+        7,
+        10,
+        14
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

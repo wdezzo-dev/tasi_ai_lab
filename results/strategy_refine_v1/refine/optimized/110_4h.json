@@ -1,0 +1,68 @@
+{
+  "strategy_id": 110,
+  "name": "RSI Failure Swing",
+  "family": "other",
+  "timeframe": "4h",
+  "tickers": [
+    "4014",
+    "4321"
+  ],
+  "template": {
+    "id": 110,
+    "name": "RSI Failure Swing",
+    "family": "other",
+    "suggested_timeframe": "Daily",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "entry_long": "crossabove(rsi(close,{p0}), {p1})",
+    "exit_long": "crossbelow(rsi(close,{p2}), 50)",
+    "notes": "RSI crosses back above 30 (long failure swing); exit when RSI fades below neutral 50. Corpus exit 'crosses the opposite level' ambiguous; 50 used conservatively. Documented StopLoss=2%."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,101 @@
+{
+  "strategy_id": 988,
+  "name": "Logistic RSI STOCH ROC AO",
+  "family": "momentum",
+  "timeframe": "Daily",
+  "tickers": [
+    "1320",
+    "1322",
+    "2381",
+    "4142"
+  ],
+  "template": {
+    "id": 988,
+    "name": "Logistic RSI STOCH ROC AO",
+    "family": "momentum",
+    "entry_long": "crossabove(zscore(rsi(close,{p0}),{p1}),{p2})",
+    "exit_long": "crossbelow(zscore(rsi(close,14),13),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The logistic map and the signed standard deviation are not computable, so the documented Length 13 is applied as a z-score of RsiLength 14 and the documented zero-cross rule is used directly. The AO, ROC and Stochastic input variants, LenLd 5 and Highest smoothing are dropped; docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 10,
+      "p1": 13,
+      "p2": 0
+    },
+    "best_value": 2.2289645364531854,
+    "trials": [
+      {
+        "number": 37,
+        "value": 2.2289645364531854,
+        "params": {
+          "p0": 10,
+          "p1": 13,
+          "p2": 0
+        },
+        "summary": {
+          "tickers": 4,
+          "median_return": 0.9600912680550053,
+          "median_cagr": 0.3934151270511428,
+          "median_sharpe": 1.5505738556624236,
+          "median_drawdown": -0.2683168827348095,
+          "profitable_fraction": 1.0,
+          "median_trades": 35.0
+        }
+      },
+      {
+        "number": 39,
+        "value": 2.2289645364531854,
+        "params": {
+          "p0": 10,
+          "p1": 13,
+          "p2": 0
+        },
+        "summary": {
+          "tickers": 4,
+          "median_return": 0.9600912680550053,
+          "median_cagr": 0.3934151270511428,
+          "median_sharpe": 1.5505738556624236,
+          "median_drawdown": -0.2683168827348095,
+          "profitable_fraction": 1.0,
+          "median_trades": 35.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

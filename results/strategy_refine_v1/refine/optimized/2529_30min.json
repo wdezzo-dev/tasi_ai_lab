@@ -1,0 +1,47 @@
+{
+  "strategy_id": 2529,
+  "name": "V1N1 Lonny Breakout",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "2287"
+  ],
+  "template": {
+    "id": 2529,
+    "name": "V1N1 Lonny Breakout",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and roc(ema(close,{p1}),{p2}) > {p0} and rsi(close,14) < {p1}",
+    "exit_long": "close < ema(close,20) or rsi(close,14) > 80",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A decisive close above the 20-bar opening range (TradeRange fallback) with a rising EMA(20) slope and RSI(14) below the 70 stochastic boundary captures the documented long breakout, and loss of the EMA slope or an overbought reading exits. London/New York session times, MinRangePoints, breakout-distance bands, point stop/target, trailing stop, and the bar timeout are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        65.0,
+        70.0,
+        75.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

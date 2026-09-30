@@ -1,0 +1,56 @@
+{
+  "strategy_id": 3966,
+  "name": "Three MA Cross Channel",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "3030"
+  ],
+  "template": {
+    "id": 3966,
+    "name": "Three MA Cross Channel",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and ema(close,{p2}) > ema(close,30)",
+    "exit_long": "close < donchian_low_prev(low,15)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented EMA defaults 2/4/30 are retained, with a fast-over-slow cross and medium-average alignment for the long setup. The prior 15-bar Donchian low is used for the enabled channel exit; absolute TakeProfit and StopLoss are disabled/default zero and are not percentage fields, and the short side is omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

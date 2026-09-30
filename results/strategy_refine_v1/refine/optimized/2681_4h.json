@@ -1,0 +1,51 @@
+{
+  "strategy_id": 2681,
+  "name": "Multi Stochastic",
+  "family": "mean_reversion",
+  "timeframe": "4h",
+  "tickers": [
+    "2280"
+  ],
+  "template": {
+    "id": 2681,
+    "name": "Multi Stochastic",
+    "family": "mean_reversion",
+    "entry_long": "donchian_high(high,{p0}) - donchian_low(low,{p1}) > {p0} and crossabove(sma({p1} * (close - donchian_low(low,{p2})) / (donchian_high(high,5) - donchian_low(low,5)),3), 20)",
+    "exit_long": "donchian_high(high,5) - donchian_low(low,5) > 0 and crossbelow(sma(100 * (close - donchian_low(low,5)) / (donchian_high(high,5) - donchian_low(low,5)),3), 80)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "StochasticLength=5 with the documented 3/3 %K smoothing is exact, guarded against a zero range, so the oversold crossover of OversoldLevel=20 opens the long and the overbought crossover of OverboughtLevel=80 closes it. StopLossPips=50 and TakeProfitPips=10 are pip distances, not percents, so both fields are null, and the extra currency pairs and per-slot toggles are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

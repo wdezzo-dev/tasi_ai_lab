@@ -1,0 +1,56 @@
+{
+  "strategy_id": 639,
+  "name": "CP Strat ORB",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1832",
+    "2070",
+    "2230",
+    "4014",
+    "4021",
+    "4050",
+    "4080",
+    "4141",
+    "4161",
+    "4310",
+    "7211"
+  ],
+  "template": {
+    "id": 639,
+    "name": "CP Strat ORB",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and low <= donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 09:30-09:45 New York range collapses to the prior bar on daily data; the long entry requires a close above that high while the bar's low still retests it, capturing the documented breakout-plus-retest. StopPoints 20 / TakePoints 60 and MaxTradesPerSession 3 are point and count controls, not percentage stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

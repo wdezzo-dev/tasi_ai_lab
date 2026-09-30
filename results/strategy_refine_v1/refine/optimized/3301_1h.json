@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3301,
+  "name": "Crypto Analysis",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "3050"
+  ],
+  "template": {
+    "id": 3301,
+    "name": "Crypto Analysis",
+    "family": "trend",
+    "entry_long": "close > bb_mid(close,{p0}) and close < bb_upper(close,{p1}) and ema(close,{p2}) > ema(close,50) and crossabove(macd(close,12,26),macd_signal(close,12,26,9))",
+    "exit_long": "close < bb_mid(close,20) or macd(close,12,26) < macd_signal(close,12,26,9)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The band-tag breakout is expressed as price reclaiming the Bollinger middle band inside the envelope with the documented trend filter (fast EMA above slow EMA, LWMA proxied by EMA 20/50) and a MACD confirmation. Bollinger 20/2 and MACD 12/26/9 are fallbacks; the higher-timeframe burst, monthly filter, money-based trailing and pip/percent protection are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

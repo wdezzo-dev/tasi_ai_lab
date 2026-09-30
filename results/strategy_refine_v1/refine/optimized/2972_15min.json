@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2972,
+  "name": "RSI Expert Breakout",
+  "family": "breakout",
+  "timeframe": "15min",
+  "tickers": [
+    "6004"
+  ],
+  "template": {
+    "id": 2972,
+    "name": "RSI Expert Breakout",
+    "family": "breakout",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1})",
+    "exit_long": "crossbelow(rsi(close,{p2}),60)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented RsiPeriod 14 with RsiLowerLevel 20 (bullish reversal) and RsiUpperLevel 60 (bearish reversal) are used as threshold breaks, so the long trades the break back above oversold and exits on the break back below 60. Because that exit level is rarely reached the position is held for long stretches, and TakeProfitPips 60 / StopLossPips 0 / TrailingStopPips 15 are pip distances, so the stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

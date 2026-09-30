@@ -1,0 +1,58 @@
+{
+  "strategy_id": 340,
+  "name": "Ichimoku Implied Volatility",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "7030"
+  ],
+  "template": {
+    "id": 340,
+    "name": "Ichimoku Implied Volatility",
+    "family": "trend",
+    "entry_long": "crossabove(close, sma((high+low)/{p0},{p0})) and sma((high+low)/{p1},{p1}) > sma((high+low)/2,{p2}) and close > sma(close,52)",
+    "exit_long": "crossbelow(close, sma((high+low)/2,9)) or sma((high+low)/2,9) < sma((high+low)/2,26)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The docs defer entry conditions to the implementation, so the Ichimoku structure is rebuilt from the documented periods: Tenkan 9 and Kijun 26 as mid-point SMAs, SenkouSpanB 52 as the cloud reference, and IVPeriod 20 implied-volatility context is not expressible as a gate. The ATR-multiple and Tenkan/Kijun-derived stops have no fixed percentage values, so both percentage fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

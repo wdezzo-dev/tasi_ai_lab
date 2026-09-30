@@ -1,0 +1,59 @@
+{
+  "strategy_id": 830,
+  "name": "Gann Swing Multi Layer",
+  "family": "other",
+  "timeframe": "4h",
+  "tickers": [
+    "2060",
+    "2220",
+    "3030",
+    "4148"
+  ],
+  "template": {
+    "id": 830,
+    "name": "Gann Swing Multi Layer",
+    "family": "other",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > sma(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Three consecutive aligned Gann swing turns are approximated by a close beyond the prior three-bar high with an SMA(7) continuation filter, exiting on the mirrored three-bar low. The multi-layer swing stacking, its multipliers and the 1-minute swing frame are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        5,
+        7,
+        10,
+        14
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

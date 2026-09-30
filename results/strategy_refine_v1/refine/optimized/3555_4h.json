@@ -1,0 +1,48 @@
+{
+  "strategy_id": 3555,
+  "name": "WPR Custom Cloud Simple",
+  "family": "mean_reversion",
+  "timeframe": "4h",
+  "tickers": [
+    "2222",
+    "2280"
+  ],
+  "template": {
+    "id": 3555,
+    "name": "WPR Custom Cloud Simple",
+    "family": "mean_reversion",
+    "entry_long": "donchian_high(high,{p0}) - donchian_low(low,{p1}) > {p0} and crossabove({p1} * (donchian_high(high,{p2}) - close) / (donchian_high(high,14) - donchian_low(low,14)), -80)",
+    "exit_long": "donchian_high(high,14) - donchian_low(low,14) > 0 and crossbelow(-100 * (donchian_high(high,14) - close) / (donchian_high(high,14) - donchian_low(low,14)), -20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Williams %R(14) is rebuilt from the documented lookback with a non-zero range guard, crossing up through OversoldLevel=-80 opens the long and crossing down through OverboughtLevel=-20 reverses it, exactly as the reference does. The EA deliberately places no stop-loss or take-profit, so both percent fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,47 @@
+{
+  "strategy_id": 2662,
+  "name": "Up3x1 Investor",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "6010"
+  ],
+  "template": {
+    "id": 2662,
+    "name": "Up3x1 Investor",
+    "family": "volatility",
+    "entry_long": "close > open and (high - low) > atr(high,low,close,{p0}) and (close - open) > atr(high,low,close,{p1})",
+    "exit_long": "close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The completed bullish expansion candle is represented with a body and range exceeding one ATR(14) as a normalized proxy because pip thresholds are not supplied. A bearish expansion is the failure exit; pip stop, target, and trailing levels are unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

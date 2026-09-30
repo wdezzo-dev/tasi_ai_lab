@@ -1,0 +1,47 @@
+{
+  "strategy_id": 1601,
+  "name": "Consecutive Close High1 Mean Reversion",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4163"
+  ],
+  "template": {
+    "id": 1601,
+    "name": "Consecutive Close High1 Mean Reversion",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and bars_since(close <= donchian_high_prev(high,{p1})) >= {p0}",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented entry counts Threshold 3 consecutive closes above the prior-bar high, expressed as the close above that high with bars_since of the complementary test >= 4, and the exit is the documented close below the prior low. The source trades that exhaustion short with an EmaPeriod 200 downtrend filter, so the long roster uses the same count as its long-side break signal and the 200 EMA filter is omitted; no stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        4.0,
+        5.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

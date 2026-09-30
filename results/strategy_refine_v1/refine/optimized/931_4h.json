@@ -1,0 +1,55 @@
+{
+  "strategy_id": 931,
+  "name": "Intraday Volume Swings",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "6020"
+  ],
+  "template": {
+    "id": 931,
+    "name": "Intraday Volume Swings",
+    "family": "breakout",
+    "entry_long": "volume_ratio(volume,{p0}) > {p0} and close > donchian_high_prev(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A volume-confirmed close above the prior five-bar high proxies entry into the current/previous high swing region. The daily-region definition, RegionMustClose clock semantics, and opposite short region are unavailable; 1.2 is an explicit volume threshold fallback."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        1.2,
+        2.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,47 @@
+{
+  "strategy_id": 1511,
+  "name": "Up Gap Strategy With Delay",
+  "family": "pattern",
+  "timeframe": "1h",
+  "tickers": [
+    "2382",
+    "4015",
+    "4163",
+    "4262"
+  ],
+  "template": {
+    "id": 1511,
+    "name": "Up Gap Strategy With Delay",
+    "family": "pattern",
+    "entry_long": "open > ema(close,{p0}) * {p0}",
+    "exit_long": "close < sma(close,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The session up-gap is approximated by an open 1% above the recent average (GapThreshold 1 in unspecified units) and the documented 7-bar holding period by a close below SMA(7). The session-open reference, the delay-period counter and a bar-count timer exit are not available in the DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.01,
+        1.01,
+        2.01
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        5,
+        7,
+        10,
+        14
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,56 @@
+{
+  "strategy_id": 3443,
+  "name": "Expert AML MFI",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2120",
+    "3010"
+  ],
+  "template": {
+    "id": 3443,
+    "name": "Expert AML MFI",
+    "family": "trend",
+    "entry_long": "close > open and close - open >= {p0} * atr(high,low,close,{p0}) and rsi(close,{p1}) <= {p1}",
+    "exit_long": "close < open or rsi(close,{p2}) >= 70",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(12) at the documented 40/70/30 levels proxies MFI, while a full-size bullish candle is a simplified Meeting Lines proxy. The equal-close two-candle pattern and BodyAveragePeriod=4 body test cannot be reconstructed without shifted OHLC; no percentage stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        35.0,
+        40.0,
+        45.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

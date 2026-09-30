@@ -1,0 +1,50 @@
+{
+  "strategy_id": 2081,
+  "name": "EF Distance Reversal",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "1111"
+  ],
+  "template": {
+    "id": 2081,
+    "name": "EF Distance Reversal",
+    "family": "trend",
+    "entry_long": "roc(sma(close,{p0}),{p1}) < {p0} and roc(sma(close,{p2}),1) > {p1} and atr(high,low,close,20) >= 0.01 * close",
+    "exit_long": "roc(sma(close,10),2) > 0 and roc(sma(close,10),1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The three-consecutive-SMA local bottom is captured with the documented SMA 10 over two and one bars plus the ATR(20) volatility filter; the documented threshold of 1 is unitless, so 1% of price is the fallback. Documented StopLoss 100 and TakeProfit 200 are price points, not percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

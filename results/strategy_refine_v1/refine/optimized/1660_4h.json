@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1660,
+  "name": "Live Alligator",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3020"
+  ],
+  "template": {
+    "id": 1660,
+    "name": "Live Alligator",
+    "family": "trend",
+    "entry_long": "crossabove(ema((high+low)/{p0},{p0}), ema((high+low)/{p1},{p1})) and ema((high+low)/2,{p2}) < ema((high+low)/2,13)",
+    "exit_long": "crossbelow(close, ema(close,13))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Alligator lips/teeth/jaw are approximated by EMAs of median price at 5/8/13 because SMMA is unavailable; lips crossing above the jaw with teeth still below matches the documented long. TrailPeriod is undocumented so 13 is the fallback, and the five-EMA confirmation, line shifts and trading-hours filter are dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

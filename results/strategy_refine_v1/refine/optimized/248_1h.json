@@ -1,0 +1,56 @@
+{
+  "strategy_id": 248,
+  "name": "Stochastic Breakout",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "1834",
+    "4322"
+  ],
+  "template": {
+    "id": 248,
+    "name": "Stochastic Breakout",
+    "family": "breakout",
+    "entry_long": "rsi(close,{p0}) > sma(rsi(close,{p1}),{p2}) + {p0} * std(rsi(close,14),20)",
+    "exit_long": "rsi(close,14) < sma(rsi(close,14),20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(14) substitutes for stochastic %K, while a 20-bar mean plus two standard deviations retains the documented lookback and multiplier. Falling back below its average exits; the source names a percent stop but supplies no value."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

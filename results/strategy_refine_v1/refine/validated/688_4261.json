@@ -1,0 +1,112 @@
+{
+  "strategy_id": 688,
+  "ticker": "4261",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 688,
+    "name": "Donchian Zig-Zag LuxAlgo",
+    "family": "breakout",
+    "entry_long": "crossabove(roc(close,4.0),0) and bars_since(close <= donchian_low_prev(low,40)) <= 4.0",
+    "exit_long": "crossbelow(roc(close,3),0) or close > donchian_high_prev(high,20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Zig-Zag and Bounce Speed are unsupported; ROC(3) turning positive within five bars of a prior 20-bar Donchian-low touch proxies the long reversal. Numeric lengths are explicit translation choices because the corpus gives none."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2021-03-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 828,
+      "engine_win_ret": 0.029995073152971896,
+      "alpha": -0.23152764629937073,
+      "benchmark_ret": 0.2615227194523426,
+      "trades": 6,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.19904228200064933,
+      "max_drawdown": -0.08963284159833473,
+      "profit_factor": 1.2728547100498993
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.5418153967973498,
+      "alpha": 0.1861716282518906,
+      "benchmark_ret": 0.3556437685454592,
+      "trades": 5,
+      "win_rate": 0.6,
+      "sharpe": 0.8633873800224187,
+      "max_drawdown": -0.09658665932516064,
+      "profit_factor": 8.697572286416072
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.049916561872936804,
+      "alpha": 0.44405934174152106,
+      "benchmark_ret": -0.49397590361445787,
+      "trades": 7,
+      "win_rate": 0.2857142857142857,
+      "sharpe": -1.1310167129208109,
+      "max_drawdown": -0.09866451755635419,
+      "profit_factor": 0.4523198532948696
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2021-03-29",
+        "2024-07-31"
+      ],
+      "bars_in_window": 828,
+      "engine_win_ret": -0.0005389177248438237,
+      "alpha": -0.26206163717718645,
+      "benchmark_ret": 0.2615227194523426,
+      "trades": 6,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.022246813931017313,
+      "max_drawdown": -0.1145945463787793,
+      "profit_factor": 0.9958352689300882
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": 0.5045845622270233,
+      "alpha": 0.1489407936815641,
+      "benchmark_ret": 0.3556437685454592,
+      "trades": 5,
+      "win_rate": 0.6,
+      "sharpe": 0.826691637175346,
+      "max_drawdown": -0.09905831028114642,
+      "profit_factor": 7.3391896413969135
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": -0.08280808146399876,
+      "alpha": 0.4111678221504591,
+      "benchmark_ret": -0.49397590361445787,
+      "trades": 7,
+      "win_rate": 0.14285714285714285,
+      "sharpe": -1.75349404180843,
+      "max_drawdown": -0.12777111891700543,
+      "profit_factor": 0.28627377108466573
+    }
+  },
+  "survivor": true,
+  "reason": "ok"
+}

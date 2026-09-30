@@ -1,0 +1,52 @@
+{
+  "strategy_id": 994,
+  "name": "Long Term Profitable Swing",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "2084"
+  ],
+  "template": {
+    "id": 994,
+    "name": "Long Term Profitable Swing",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and rsi(close,{p2}) > {p0}",
+    "exit_long": "crossbelow(ema(close,16),ema(close,30)) or rsi(close,9) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented EMA(16)/EMA(30) crossover and RSI(9)>50 entry are direct, with the inverse conditions as the long exit. ATR(21) 8x/11x stops and target are dynamic and cannot be encoded as fixed percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

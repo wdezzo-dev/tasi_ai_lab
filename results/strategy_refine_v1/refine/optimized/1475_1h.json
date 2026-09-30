@@ -1,0 +1,50 @@
+{
+  "strategy_id": 1475,
+  "name": "Trendline Breaks with Multi Fibonacci Supertrend",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4002"
+  ],
+  "template": {
+    "id": 1475,
+    "name": "Trendline Breaks with Multi Fibonacci Supertrend",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and roc(ema(close, {p1}), {p2}) > {p0} and adx(high, low, close, 14) > 20",
+    "exit_long": "close < ema(close, 20) or close < donchian_low_prev(low, 10)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The ATR-sloped upper trendline is approximated by the prior 20-bar high, the averaged Fibonacci SuperTrend by a rising EMA(10), and the DMI confirmation by ADX(14) above 20 because the DSL exposes no separate +DI/-DI. The documented ATR-based stop and target are not percentage fields and the swing-line construction is not reproducible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

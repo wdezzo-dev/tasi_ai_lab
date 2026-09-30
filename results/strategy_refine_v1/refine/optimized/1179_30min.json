@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1179,
+  "name": "PowerZone",
+  "family": "breakout",
+  "timeframe": "30min",
+  "tickers": [
+    "3091"
+  ],
+  "template": {
+    "id": 1179,
+    "name": "PowerZone",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high, {p0}) and bars_since(close < open) > {p1}",
+    "exit_long": "close < donchian_low_prev(low, {p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A close above the prior five-bar high after more than five bars without a down close matches the documented rule of trading the start of a sustained advance, and breaking the prior five-bar low is the exit. The OrderCloseLevel=4, OrderCloseMultiplication and the work/close time windows are point and calendar fields, and the docs specify no percent stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

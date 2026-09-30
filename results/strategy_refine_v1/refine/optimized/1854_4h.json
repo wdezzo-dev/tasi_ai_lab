@@ -1,0 +1,54 @@
+{
+  "strategy_id": 1854,
+  "name": "Heiken Ashi Simplified EA",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1830",
+    "7030"
+  ],
+  "template": {
+    "id": 1854,
+    "name": "Heiken Ashi Simplified EA",
+    "family": "breakout",
+    "entry_long": "sma(close > open,{p0}) >= {p0} and close > donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Heikin Ashi is recursive and not available, so raw candles stand in for it: three consecutive bullish candles approximate the three HA closes above their opens, and the trigger is price moving above the last three-bar high. The decelerating-open series, the DistancePoints 300 filter and the MaxPositions 3 scaling are dropped, and the docs list no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

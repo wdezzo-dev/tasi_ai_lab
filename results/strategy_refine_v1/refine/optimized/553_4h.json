@@ -1,0 +1,55 @@
+{
+  "strategy_id": 553,
+  "name": "BB Breakout Momentum Squeeze",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2288"
+  ],
+  "template": {
+    "id": 553,
+    "name": "BB Breakout Momentum Squeeze",
+    "family": "breakout",
+    "entry_long": "crossabove(zscore(close,{p0}), {p1}) and bb_upper(close,{p2},2) > ema(close,20) + 2 * atr(high,low,close,10)",
+    "exit_long": "crossbelow(zscore(close,14), 0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The squeeze-off state is Bollinger(20,2) bands outside an EMA(20)+-2*ATR(10) Keltner proxy and the bull oscillator is a z-score(14) crossing its midline, matching the documented Threshold 50. The ATR(30) x1.4 stop and the 1.5 risk-reward target are ATR-based, not percentage, fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

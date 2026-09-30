@@ -1,0 +1,53 @@
+{
+  "strategy_id": 2096,
+  "name": "Breakout Bars Trend",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "7203"
+  ],
+  "template": {
+    "id": 2096,
+    "name": "Breakout Bars Trend",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0})) and sma(close - open,{p1}) < {p0}",
+    "exit_long": "crossbelow(close,ema(close,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is unavailable, so its direction flip is proxied by a close crossing EMA(20) after a stretch of negative bodies (the Negative Signals count is a 3-bar fallback and Delta is not numerically documented). The pip/percent Reversal Mode switch for stop and target values is not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

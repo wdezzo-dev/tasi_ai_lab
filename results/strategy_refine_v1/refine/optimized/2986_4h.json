@@ -1,0 +1,71 @@
+{
+  "strategy_id": 2986,
+  "name": "The 20s Breakout",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1182",
+    "1832",
+    "2070",
+    "2081",
+    "2110",
+    "2150",
+    "2160",
+    "2190",
+    "2230",
+    "2330",
+    "2340",
+    "2350",
+    "4008",
+    "4013",
+    "4014",
+    "4021",
+    "4080",
+    "4110",
+    "4141",
+    "4161",
+    "6001",
+    "6002",
+    "6090",
+    "7211"
+  ],
+  "template": {
+    "id": 2986,
+    "name": "The 20s Breakout",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) + {p0} * (donchian_high_prev(high,{p1}) - donchian_low_prev(low,{p2}))",
+    "exit_long": "close < donchian_low_prev(low,1) - {p1} * (donchian_high_prev(high,1) - donchian_low_prev(low,1))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented Ratio 0.2 is applied to the previous bar's range, so a close beyond the prior high plus 20% of that range is the upside breakout and the mirrored band is the exit, which subsumes the LevelPoints confirmation. SignalBar 1 is inherent in next-bar execution, and 1000/2000-point protection, Mode selection and the long/short permission switches are order features."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2,
+        0.4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2,
+        0.4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,57 @@
+{
+  "strategy_id": 3727,
+  "name": "Butterfly Pattern",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "2281",
+    "3005"
+  ],
+  "template": {
+    "id": 3727,
+    "name": "Butterfly Pattern",
+    "family": "volatility",
+    "entry_long": "close > open and low <= donchian_low_prev(low,{p0}) and close > sma(close,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "No butterfly lookback, harmonic X/A/B/C/D ratios, or target values are supplied. A bullish reversal at a prior three-bar low with an SMA(20) filter is a bounded proxy; harmonic validation, three staged targets, break-even/trailing logic, and the short side are unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,39 @@
+{
+  "strategy_id": 546,
+  "name": "Balance of Power",
+  "family": "momentum",
+  "timeframe": "1h",
+  "tickers": [
+    "1214",
+    "2370",
+    "4191"
+  ],
+  "template": {
+    "id": 546,
+    "name": "Balance of Power",
+    "family": "momentum",
+    "entry_long": "crossabove(close - open, {p0} * (high - low))",
+    "exit_long": "crossbelow(close - open, {p1} * (high - low))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Balance of Power is expressed division-free as (close-open) versus Threshold*(high-low) with the documented Threshold 0.8, keeping the documented cross semantics on both sides. The no-stop rule is preserved with null protection fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.6,
+        0.8,
+        1.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": []
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,46 @@
+{
+  "strategy_id": 1184,
+  "name": "Previous Day High Low Long",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2350"
+  ],
+  "template": {
+    "id": 1184,
+    "name": "Previous Day High Low Long",
+    "family": "trend",
+    "entry_long": "crossabove(close, donchian_high_prev(high,{p0})) and roc(adx(high,low,close,{p1}),{p2}) > {p0}",
+    "exit_long": "crossbelow(close, donchian_low_prev(low,1)) or roc(adx(high,low,close,11),1) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "On daily bars the previous day is the previous bar, so the break of the prior high is a cross above donchian_high_prev(high,1) filtered by rising ADX with the documented AdxLength=11, and the previous-low break is the exit. MaxProfit=150 and MaxStopLoss=15 are point distances rather than percents, so both fields are null, and the session window and trailing stop cannot be expressed."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,55 @@
+{
+  "strategy_id": 954,
+  "name": "Keltner Channel Golden Cross",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "4193"
+  ],
+  "template": {
+    "id": 954,
+    "name": "Keltner Channel Golden Cross",
+    "family": "trend",
+    "entry_long": "close > ema(close,{p0}) + {p0} * atr(high,low,close,{p1}) and ema(close,{p2}) > ema(close,50)",
+    "exit_long": "crossbelow(close,ema(close,20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Keltner is approximated by EMA(20) plus/minus 2 ATR(14), and EMA(20)>EMA(50) is the golden-cross confirmation; all lengths are fallbacks because none are documented. ATR-based stop and target cannot be encoded as fixed percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

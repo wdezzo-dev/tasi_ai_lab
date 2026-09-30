@@ -1,0 +1,51 @@
+{
+  "strategy_id": 3319,
+  "name": "CorrTime",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "2210"
+  ],
+  "template": {
+    "id": 3319,
+    "name": "CorrTime",
+    "family": "trend",
+    "entry_long": "adx(high, low, close,{p0}) > {p0} and std(close,{p1}) / close > {p1} and crossabove(close, sma(close,{p2}))",
+    "exit_long": "crossbelow(close, sma(close,10)) or adx(high, low, close,14) < 20",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Pearson/Spearman/Kendall/Fechner correlation of price with time is not expressible, so the change in price-time coupling is approximated by a close crossing the short average while the documented gates are kept: ADX above 25 (AdxLevel default) and a Bollinger-equivalent width floor replacing BollingerSpreadMin/Max in pips. The trading window, correlation limits, reverse mode, pip-based risk and MaxOpenOrders are unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        20.0,
+        25.0,
+        30.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.015,
+        0.215
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

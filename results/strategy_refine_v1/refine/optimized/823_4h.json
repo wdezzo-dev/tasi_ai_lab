@@ -1,0 +1,76 @@
+{
+  "strategy_id": 823,
+  "name": "Futures Engulfing Candle Size",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "1214",
+    "1301",
+    "1320",
+    "1321",
+    "1831",
+    "2040",
+    "2070",
+    "2090",
+    "2140",
+    "2170",
+    "2190",
+    "3003",
+    "4005",
+    "4013",
+    "4021",
+    "4031",
+    "4146",
+    "4160",
+    "4180",
+    "4260",
+    "4290",
+    "4320",
+    "4323",
+    "4324",
+    "6002",
+    "6016",
+    "6040",
+    "7040",
+    "7200",
+    "7203"
+  ],
+  "template": {
+    "id": 823,
+    "name": "Futures Engulfing Candle Size",
+    "family": "pattern",
+    "entry_long": "close > open and high - low > atr(high,low,close,{p0})",
+    "exit_long": "close < open and high - low > atr(high,low,close,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 25-tick candle-range threshold is replaced by a range larger than ATR(14) (14 is a fallback, no ATR period is documented) with direction from the candle body, as documented. The 07:00-09:15 session window and the 50/40 tick take-profit and stop-loss are tick or time based and are not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

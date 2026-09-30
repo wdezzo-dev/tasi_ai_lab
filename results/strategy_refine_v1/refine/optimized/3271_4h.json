@@ -1,0 +1,56 @@
+{
+  "strategy_id": 3271,
+  "name": "Breakthrough Volatility",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2030",
+    "2100",
+    "4005",
+    "4240",
+    "4300",
+    "7203"
+  ],
+  "template": {
+    "id": 3271,
+    "name": "Breakthrough Volatility",
+    "family": "breakout",
+    "entry_long": "high - low > {p0} * (donchian_high(high, {p0}) - donchian_low(low, {p1})) / {p2} and close > open",
+    "exit_long": "high - low > {p1} * (donchian_high(high, 2) - donchian_low(low, 2)) / 2 and close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented range-expansion filter becomes a current range exceeding the two-bar mean range by at most 5 percent, standing in for the two-pip upper band, and the candle colour sets direction. StopLossPoints/TakeProfitPoints/TrailingStopPoints and the reverse-on-loss sequence with MaxReverseOrders are point and position-management fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.05,
+        1.05,
+        2.05
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,51 @@
+{
+  "strategy_id": 2316,
+  "name": "Polarized Fractal Efficiency",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "3008",
+    "4180",
+    "4323"
+  ],
+  "template": {
+    "id": 2316,
+    "name": "Polarized Fractal Efficiency",
+    "family": "momentum",
+    "entry_long": "crossabove(roc(close,{p0}),{p1}) and roc(close,{p2}) > roc(close,2)",
+    "exit_long": "crossbelow(roc(close,1),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "PFE is unavailable, so a positive two-bar ROC cross with one-bar acceleration proxies the documented three-bar efficiency reversal. The short branch, configurable PFE period, and point-based protection are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

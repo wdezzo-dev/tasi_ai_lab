@@ -1,0 +1,112 @@
+{
+  "strategy_id": 2695,
+  "ticker": "4016",
+  "timeframe": "Daily",
+  "spec": {
+    "id": 2695,
+    "name": "Exp BlauCMI",
+    "family": "momentum",
+    "entry_long": "crossabove(roc(ema(ema(ema(roc(close,15),1),2),5),1),0)",
+    "exit_long": "crossbelow(roc(ema(ema(ema(roc(close,10),5),5),5),1),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Blau CMI's triple-smoothed momentum is rebuilt as EMA(5) applied three times to ROC(10), and the turn up after a downswing becomes a zero-cross of its one-bar ROC. Momentum Depth 10 and the 5/5/5 smoothing stages are fallbacks; applied price, smoothing method, Signal Shift, allow-entry toggles and price-step brackets are not expressible."
+  },
+  "best_params": {},
+  "base": {
+    "train": {
+      "window": [
+        "2024-02-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 102,
+      "engine_win_ret": -0.08807402528545694,
+      "alpha": -0.2588056925622705,
+      "benchmark_ret": 0.17073166727681355,
+      "trades": 4,
+      "win_rate": 0.75,
+      "sharpe": -0.891939006155255,
+      "max_drawdown": -0.18091806500790275,
+      "profit_factor": 0.5990829296114254
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.09301822000375781,
+      "alpha": 0.008758778111954135,
+      "benchmark_ret": -0.10177699811571195,
+      "trades": 21,
+      "win_rate": 0.5714285714285714,
+      "sharpe": -0.19595712940271962,
+      "max_drawdown": -0.21685592993673275,
+      "profit_factor": 0.8485723093567968
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.6738891436093155,
+      "alpha": 0.684286935820728,
+      "benchmark_ret": -0.01039779221141246,
+      "trades": 11,
+      "win_rate": 0.5454545454545454,
+      "sharpe": 1.1099734954561575,
+      "max_drawdown": -0.10451048378874406,
+      "profit_factor": 2.720573388591951
+    }
+  },
+  "stress": {
+    "train": {
+      "window": [
+        "2024-02-27",
+        "2024-07-31"
+      ],
+      "bars_in_window": 102,
+      "engine_win_ret": -0.10858546308081951,
+      "alpha": -0.27931713035763306,
+      "benchmark_ret": 0.17073166727681355,
+      "trades": 4,
+      "win_rate": 0.5,
+      "sharpe": -1.1248617933206864,
+      "max_drawdown": -0.18509804547653042,
+      "profit_factor": 0.46751834941599074
+    },
+    "validation": {
+      "window": [
+        "2024-08-01",
+        "2025-12-31"
+      ],
+      "bars_in_window": 359,
+      "engine_win_ret": -0.18381263066048004,
+      "alpha": -0.08203563254476809,
+      "benchmark_ret": -0.10177699811571195,
+      "trades": 21,
+      "win_rate": 0.47619047619047616,
+      "sharpe": -0.523621279361063,
+      "max_drawdown": -0.2555399384375613,
+      "profit_factor": 0.6059982192077139
+    },
+    "test": {
+      "window": [
+        "2026-01-01",
+        "2026-09-21"
+      ],
+      "bars_in_window": 177,
+      "engine_win_ret": 0.5931851242255759,
+      "alpha": 0.6035829164369884,
+      "benchmark_ret": -0.01039779221141246,
+      "trades": 11,
+      "win_rate": 0.5454545454545454,
+      "sharpe": 1.034674757577243,
+      "max_drawdown": -0.12238163052428663,
+      "profit_factor": 2.331068974542483
+    }
+  },
+  "survivor": false,
+  "reason": "fail: val alpha or trades"
+}

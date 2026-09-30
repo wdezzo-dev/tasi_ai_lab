@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2743,
+  "name": "JS Sistem 2",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "1835"
+  ],
+  "template": {
+    "id": 2743,
+    "name": "JS Sistem 2",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},144,21))",
+    "exit_long": "crossbelow(macd(close,55,144),macd_signal(close,55,144,21))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        28,
+        41,
+        55,
+        82,
+        110
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        72,
+        108,
+        144,
+        216,
+        288
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        28,
+        41,
+        55,
+        82,
+        110
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

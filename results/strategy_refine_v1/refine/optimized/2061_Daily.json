@@ -1,0 +1,101 @@
+{
+  "strategy_id": 2061,
+  "name": "I Trend",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "2382"
+  ],
+  "template": {
+    "id": 2061,
+    "name": "I Trend",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,{p0}),ema(zscore(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(zscore(close,20),ema(zscore(close,20),9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The custom iTrend oscillator is approximated by a Bollinger-equivalent z-score of price over 20 bars (deviation 2) with an EMA(9) signal line, keeping the documented crossover behaviour. MaPeriod, BbPeriod, BbDeviation, PriceType and the BbMode band selection have no documented values, so these are stated defaults."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 15,
+      "p1": 10,
+      "p2": 9
+    },
+    "best_value": 5.1610651948962065,
+    "trials": [
+      {
+        "number": 38,
+        "value": 5.1610651948962065,
+        "params": {
+          "p0": 15,
+          "p1": 10,
+          "p2": 9
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.9867770224935017,
+          "median_cagr": 1.346414086698874,
+          "median_sharpe": 3.799653003657721,
+          "median_drawdown": -0.061794852110951926,
+          "profitable_fraction": 1.0,
+          "median_trades": 12.0
+        }
+      },
+      {
+        "number": 39,
+        "value": 5.1610651948962065,
+        "params": {
+          "p0": 15,
+          "p1": 10,
+          "p2": 9
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.9867770224935017,
+          "median_cagr": 1.346414086698874,
+          "median_sharpe": 3.799653003657721,
+          "median_drawdown": -0.061794852110951926,
+          "profitable_fraction": 1.0,
+          "median_trades": 12.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

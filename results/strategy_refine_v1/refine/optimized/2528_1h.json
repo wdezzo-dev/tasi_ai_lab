@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2528,
+  "name": "5/8 MA Cross",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "1302"
+  ],
+  "template": {
+    "id": 2528,
+    "name": "5/8 MA Cross",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}), ema(open,{p1}))",
+    "exit_long": "crossbelow(ema(close,{p2}), ema(open,8))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented rule compares a close-based fast EMA(5) with an open-based slow EMA(8) and acts on the crossover, which maps directly. The 40-point take profit, disabled stop and disabled trailing are price points and are not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

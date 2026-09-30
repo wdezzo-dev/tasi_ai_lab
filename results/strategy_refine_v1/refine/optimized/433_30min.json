@@ -1,0 +1,52 @@
+{
+  "strategy_id": 433,
+  "name": "MACD Long",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4322"
+  ],
+  "template": {
+    "id": 433,
+    "name": "MACD Long",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},26,9)) and bars_since(rsi(close,14) <= {p0}) < {p1}",
+    "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Documented RSI(14) oversold 30 and MACD 12/26/9 are used, with the RSI extreme required within the five bars before the MACD up-cross (the \"then\" sequencing, since shifted comparisons are unavailable). The opposite crossover is the documented exit and the optional stop is left to the engine's risk controls."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        25.0,
+        30.0,
+        35.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        5.0,
+        6.0,
+        7.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

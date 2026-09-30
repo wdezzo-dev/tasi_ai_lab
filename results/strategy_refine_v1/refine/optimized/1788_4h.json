@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1788,
+  "name": "Timer",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2081",
+    "2220",
+    "2310",
+    "4021",
+    "4030",
+    "4090",
+    "6070",
+    "7010",
+    "7202"
+  ],
+  "template": {
+    "id": 1788,
+    "name": "Timer",
+    "family": "breakout",
+    "entry_long": "roc(close,{p0}) > {p0} * atr(high,low,close,{p1}) / close",
+    "exit_long": "roc(close,{p2}) < {p1} * atr(high,low,close,14) / close",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The buy level (previous close plus ATR) is expressed as a one-bar ROC exceeding the ATR distance, and the symmetric sell level as the mirror. WaitSeconds recalculation, the extra PipDistance, the trading-hours window and the point-based stop/target/trailing are not expressible, so the stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

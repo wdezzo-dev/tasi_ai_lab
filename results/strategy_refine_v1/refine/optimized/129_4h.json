@@ -1,0 +1,51 @@
+{
+  "strategy_id": 129,
+  "name": "Overnight Gap",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "3004"
+  ],
+  "template": {
+    "id": 129,
+    "name": "Overnight Gap",
+    "family": "pattern",
+    "entry_long": "open > donchian_high_prev(high,{p0}) and close > open",
+    "exit_long": "close < open or close < sma(close,{p1})",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Overnight gap up: open above prior high with bullish close. Fade gap on reversal. StopLoss=2% documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -2,21 +2,17 @@
   "strategy_id": 273,
   "ticker": "1183",
   "timeframe": "Daily",
-  "best_params": {
-    "p0": 3.0,
-    "p1": 10,
-    "p2": 20
-  },
   "spec": {
     "id": 273,
     "name": "ATR Slope Breakout",
     "family": "trend",
-    "entry_long": "roc(close,3.0) > sma(roc(close,10),20) + 3.0 * std(roc(close,20),20)",
+    "entry_long": "roc(close,3.0) > sma(roc(close,10),30) + 3.0 * std(roc(close,20),20)",
     "exit_long": "roc(close,20) < sma(roc(close,20),20)",
     "stop_loss_pct": null,
     "take_profit_pct": null,
     "notes": "The slope indicator is proxied by the documented SlopePeriod 20 rate of change, and the documented BreakoutMultiplier 2.0 standard-deviation threshold is applied to its own 20-bar mean and deviation; exit is reversion to that mean. StopLossAtrMultiplier 2.0 and AtrPeriod 14 are ATR-relative position distances, not percentages."
   },
+  "best_params": {},
   "base": {
     "train": {
       "window": [
@@ -24,14 +20,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 562,
-      "engine_win_ret": 0.07244993794167542,
-      "alpha": 0.4639883994801369,
+      "engine_win_ret": 0.07121202736120069,
+      "alpha": 0.4627504888996622,
       "benchmark_ret": -0.3915384615384615,
       "trades": 5,
       "win_rate": 0.4,
-      "sharpe": 0.48549156171066027,
-      "max_drawdown": -0.05935936367837247,
-      "profit_factor": 1.512841187644378
+      "sharpe": 0.4835561413764568,
+      "max_drawdown": -0.05935712989138053,
+      "profit_factor": 1.49953282670243
     },
     "validation": {
       "window": [
@@ -39,14 +35,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": 0.1391747948236437,
-      "alpha": 0.0856033662522151,
+      "engine_win_ret": 0.0818275322051778,
+      "alpha": 0.028256103633749197,
       "benchmark_ret": 0.0535714285714286,
-      "trades": 5,
-      "win_rate": 0.6,
-      "sharpe": 0.7215697119641679,
-      "max_drawdown": -0.12118351002338656,
-      "profit_factor": 2.5437343003784982
+      "trades": 7,
+      "win_rate": 0.42857142857142855,
+      "sharpe": 0.45061993576538334,
+      "max_drawdown": -0.12118120953412093,
+      "profit_factor": 1.6771090032977811
     },
     "test": {
       "window": [
@@ -54,14 +50,14 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": -0.037849385268386104,
-      "alpha": 0.1907055945819306,
+      "engine_win_ret": -0.027523832937913495,
+      "alpha": 0.2010311469124032,
       "benchmark_ret": -0.2285549798503167,
-      "trades": 2,
-      "win_rate": 0.0,
-      "sharpe": -1.9001003127823675,
-      "max_drawdown": -0.037849385268386104,
-      "profit_factor": 0.0
+      "trades": 3,
+      "win_rate": 0.3333333333333333,
+      "sharpe": -0.4428135877772859,
+      "max_drawdown": -0.04556939657159753,
+      "profit_factor": 0.9254715857536348
     }
   },
   "stress": {
@@ -71,14 +67,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 562,
-      "engine_win_ret": 0.04337912809447508,
-      "alpha": 0.4349175896329366,
+      "engine_win_ret": 0.04216985526160055,
+      "alpha": 0.43370831680006205,
       "benchmark_ret": -0.3915384615384615,
       "trades": 5,
       "win_rate": 0.4,
-      "sharpe": 0.3058893518103614,
-      "max_drawdown": -0.07120730437341471,
-      "profit_factor": 1.189630938705673
+      "sharpe": 0.30126982197849944,
+      "max_drawdown": -0.0711978223997265,
+      "profit_factor": 1.1781997712447514
     },
     "validation": {
       "window": [
@@ -86,14 +82,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": 0.11397737989649204,
-      "alpha": 0.060405951325063434,
+      "engine_win_ret": 0.04721307985478118,
+      "alpha": -0.006358348716647422,
       "benchmark_ret": 0.0535714285714286,
-      "trades": 5,
-      "win_rate": 0.4,
-      "sharpe": 0.6032984246809031,
-      "max_drawdown": -0.1280021106072159,
-      "profit_factor": 2.1345414108931324
+      "trades": 7,
+      "win_rate": 0.2857142857142857,
+      "sharpe": 0.2911996305138226,
+      "max_drawdown": -0.12798735004984074,
+      "profit_factor": 1.371955503398072
     },
     "test": {
       "window": [
@@ -101,16 +97,16 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": -0.047536031176381055,
-      "alpha": 0.18101894867393564,
+      "engine_win_ret": -0.039712306075200376,
+      "alpha": 0.18884267377511632,
       "benchmark_ret": -0.2285549798503167,
-      "trades": 2,
-      "win_rate": 0.0,
-      "sharpe": -2.0395821509008214,
-      "max_drawdown": -0.047536031176381055,
-      "profit_factor": 0.0
+      "trades": 3,
+      "win_rate": 0.3333333333333333,
+      "sharpe": -0.663927212899917,
+      "max_drawdown": -0.04753298009960183,
+      "profit_factor": 0.6361637867023372
     }
   },
   "survivor": false,
-  "reason": "fail: test alpha or trades"
+  "reason": "fail: val alpha or trades"
 }

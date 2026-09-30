@@ -1,0 +1,57 @@
+{
+  "strategy_id": 3054,
+  "name": "Exp Fisher CG Oscillator",
+  "family": "momentum",
+  "timeframe": "Daily",
+  "tickers": [
+    "2284"
+  ],
+  "template": {
+    "id": 3054,
+    "name": "Exp Fisher CG Oscillator",
+    "family": "momentum",
+    "entry_long": "crossabove(rsi(close,{p0}),ema(rsi(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(rsi(close,9),ema(rsi(close,9),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(9) crossing its EMA(3) is an explicit bounded-oscillator/trigger-line proxy for Fisher CG; these lengths are fallbacks because none are supplied. Fisher transformation, SignalBar, position sizing, and unsupplied price-step protection are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

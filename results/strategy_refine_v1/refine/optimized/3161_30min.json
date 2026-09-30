@@ -1,0 +1,57 @@
+{
+  "strategy_id": 3161,
+  "name": "ColorMaRsi Trigger MMRec Duplex",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4265"
+  ],
+  "template": {
+    "id": 3161,
+    "name": "ColorMaRsi Trigger MMRec Duplex",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and rsi(close,{p2}) > rsi(close,13)",
+    "exit_long": "crossbelow(ema(close,5),ema(close,10)) or rsi(close,3) < rsi(close,13)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "EMA(5/10) and RSI(3/13) alignment are the documented long-block composite values and produce a bullish trigger. Separate short block, applied-price variants, MMRec volume history, 1000/2000-point protections, and signal-bar shifts are not representable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

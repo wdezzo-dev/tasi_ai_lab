@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -62,6 +63,25 @@ class TasiData:
         events = get_actions(ticker, load_corporate_actions(self.data_dir))
         adjusted, _ = apply_adjustments(df, events)
         return adjusted
+
+    def _load_exclusions(self) -> tuple[frozenset[str], bool]:
+        p = self.data_dir / "_exclusions.json"
+        if not p.exists():
+            return frozenset(), False
+        try:
+            d = json.loads(p.read_text())
+        except (json.JSONDecodeError, OSError):
+            return frozenset(), False
+        excluded = frozenset(f"{e.get('ticker','')}|{e.get('timeframe','')}" for e in d.get("exclusions", []))
+        return excluded, d.get("mode") == "preadjusted"
+
+    def load_clean(self, ticker: str, freq: str = "Daily") -> pd.DataFrame | None:
+        excluded, preadjusted = self._load_exclusions()
+        if f"{str(ticker).strip().zfill(4)}|{freq}" in excluded:
+            return None
+        if preadjusted:
+            return self.load(ticker, freq)
+        return self.load_adjusted(ticker, freq)
 
     def manifest(self) -> dict:
         result = {}

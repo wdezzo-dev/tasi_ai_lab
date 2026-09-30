@@ -1,0 +1,56 @@
+{
+  "strategy_id": 221,
+  "name": "Bollinger Band Squeeze",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "2083"
+  ],
+  "template": {
+    "id": 221,
+    "name": "Bollinger Band Squeeze",
+    "family": "trend",
+    "entry_long": "bb_upper(close,{p0},{p1}) - bb_lower(close,{p2},2) < sma(bb_upper(close,20,2) - bb_lower(close,20,2),20) and close > bb_upper(close,20,2)",
+    "exit_long": "crossbelow(close,bb_upper(close,20,2))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bollinger(20,2) width below its 20-bar average plus an upper-band break preserves the documented squeeze-release long setup. The exact lower-band release, session fields, and typical 2x ATR stop are not fixed percentage exits."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

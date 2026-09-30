@@ -1,0 +1,47 @@
+{
+  "strategy_id": 301,
+  "name": "Adaptive EMA Breakout",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "2340"
+  ],
+  "template": {
+    "id": 301,
+    "name": "Adaptive EMA Breakout",
+    "family": "trend",
+    "entry_long": "crossabove(close,donchian_high_prev(high,{p0}))",
+    "exit_long": "crossbelow(close,donchian_low_prev(low,{p1}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Donchian/breakout reference translated with prior-bar 10-bar channel bounds to avoid current-bar look-ahead. Additional unsupported stateful filters are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

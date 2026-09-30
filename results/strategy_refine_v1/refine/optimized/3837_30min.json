@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3837,
+  "name": "Farhad Hill Version 2 Strategy (C#)",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4194"
+  ],
+  "template": {
+    "id": 3837,
+    "name": "Farhad Hill Version 2 Strategy (C#)",
+    "family": "trend",
+    "entry_long": "ema(close,{p0}) > ema(close,{p1}) and crossabove(macd(close,{p2},26),macd_signal(close,12,26,9)) and rsi(close,14) > 50",
+    "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or ema(close,20) < ema(close,50)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A representative slice of the documented filter stack is kept: the MA cross, a MACD signal cross and a mid-range RSI confirmation, with the opposite MACD cross or MA break as exit. No indicator lengths are documented so MACD 12/26/9, EMA 20/50 and RSI 14 are explicit fallbacks; Parabolic SAR, the three trailing styles and the money-management block are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

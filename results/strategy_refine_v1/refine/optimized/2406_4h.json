@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2406,
+  "name": "RSI Threshold",
+  "family": "mean_reversion",
+  "timeframe": "4h",
+  "tickers": [
+    "2150"
+  ],
+  "template": {
+    "id": 2406,
+    "name": "RSI Threshold",
+    "family": "mean_reversion",
+    "entry_long": "crossabove(rsi(close, {p0}), {p1})",
+    "exit_long": "crossbelow(rsi(close, {p2}), 60)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented long rule is an RSI(14) upward cross of RSI Low Level 40 and the reverse signal that closes is the downward cross of High Level 60. Stop Loss 1000 and Take Profit 2000 are absolute price units, not percentages, so both protection fields stay null; the H4 timeframe and short side are not represented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        20,
+        30,
+        40,
+        60,
+        80
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

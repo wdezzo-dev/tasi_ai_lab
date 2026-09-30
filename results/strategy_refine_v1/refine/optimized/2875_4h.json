@@ -1,0 +1,54 @@
+{
+  "strategy_id": 2875,
+  "name": "Previous Candle Breakdown",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1183"
+  ],
+  "template": {
+    "id": 2875,
+    "name": "Previous Candle Breakdown",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and sma(close,{p1}) > sma(close,{p2})",
+    "exit_long": "close < donchian_low_prev(low,1)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The prior candle high/low are represented by shifted Donchian levels, with SMA(20)/SMA(50) as fallback trend filters because no values are supplied. Indents, MA shifts/types, pip protection, and higher-timeframe anchoring are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

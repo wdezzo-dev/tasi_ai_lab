@@ -1,0 +1,55 @@
+{
+  "strategy_id": 2621,
+  "name": "Color XMUV Time",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2100",
+    "4141"
+  ],
+  "template": {
+    "id": 2621,
+    "name": "Color XMUV Time",
+    "family": "trend",
+    "entry_long": "roc(ema((close > open) * (high + close) / {p0} + (close < open) * (low + close) / {p1} + (close == open) * close,{p0}),{p1}) > 0 and bars_since(roc(ema((close > open) * (high + close) / 2 + (close < open) * (low + close) / 2 + (close == open) * close,{p2}),1) <= 0) <= 2",
+    "exit_long": "roc(ema((close > open) * (high + close) / 2 + (close < open) * (low + close) / 2 + (close == open) * close,10),1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented composite bar price is rebuilt with boolean weights ((H+C)/2 on bullish bars, (L+C)/2 on bearish, close on doji) and its smoothed slope gives the colour; bars_since<=2 with a positive slope marks the bullish flip bar. Smoothing length 10 is a fallback, and the session filter plus point-based stops are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

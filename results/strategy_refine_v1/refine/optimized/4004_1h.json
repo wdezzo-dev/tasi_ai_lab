@@ -1,0 +1,58 @@
+{
+  "strategy_id": 4004,
+  "name": "FT Bill Williams Trader",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "7211"
+  ],
+  "template": {
+    "id": 4004,
+    "name": "FT Bill Williams Trader",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and ema(close,{p1}) < ema(close,{p2})",
+    "exit_long": "close < donchian_low_prev(low,5) and ema(close,8) > ema(close,13)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The fresh up-fractal is a close above the prior 5-bar high per the documented FractalPeriod 5, and the Alligator is approximated by EMAs using the documented TeethPeriod 8 and JawPeriod 13 with lips below jaw for an awakening trend. IndentPoints, MaxDistancePoints, trend alignment, the jaw exit and the 50-point stop and target are not expressible as percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

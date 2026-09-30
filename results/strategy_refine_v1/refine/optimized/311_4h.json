@@ -1,0 +1,53 @@
+{
+  "strategy_id": 311,
+  "name": "Keltner RSI Divergence",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4011",
+    "4261",
+    "4321"
+  ],
+  "template": {
+    "id": 311,
+    "name": "Keltner RSI Divergence",
+    "family": "trend",
+    "entry_long": "crossabove(close, ema(close,{p0}) - {p0} * atr(high,low,close,{p1})) and roc(rsi(close,{p2}),1) > {p1}",
+    "exit_long": "crossbelow(close, ema(close,20))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Keltner channel uses the documented EmaPeriod 20, AtrPeriod 14 and AtrMultiplier 2.0, and a rising RSI(14) stands in for the divergence check because true divergence detection is not in the DSL. The documented ATR-multiple stop is an indicator stop, not a percentage."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

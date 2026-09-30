@@ -1,0 +1,66 @@
+{
+  "strategy_id": 111,
+  "name": "Stochastic Failure Swing",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4003"
+  ],
+  "template": {
+    "id": 111,
+    "name": "Stochastic Failure Swing",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}), {p1}) and bars_since(rsi(close,{p2}) < 30) < 10 and close > donchian_low_prev(low,10)",
+    "exit_long": "crossbelow(rsi(close,14), 50)",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Stochastic %K/%D are unavailable, so RSI(14) supplies the oversold 20 reading and its recross above 30, with the higher low represented by price holding above the prior 10-bar low and bars_since giving the documented failure-swing look-back. The documented 2% stop is encoded; the 15-minute candle type and the prior-swing-level exit are approximated by the RSI 50 mirror."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

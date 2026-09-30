@@ -1,0 +1,52 @@
+{
+  "strategy_id": 717,
+  "name": "Dynamic Support and Resistance Pivot",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2382",
+    "7020"
+  ],
+  "template": {
+    "id": 717,
+    "name": "Dynamic Support and Resistance Pivot",
+    "family": "breakout",
+    "entry_long": "crossabove(close,donchian_low_prev(low,{p0})) and close <= {p0} * donchian_low_prev(low,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The prior two-bar low proxies a dynamic pivot support and the 0.4% proximity is retained; the mirrored resistance short side is omitted. The documented 10% stop and 26% target are outside the requested 1.0-5.0 percentage-field range, so they remain null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.004,
+        1.004,
+        2.004
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

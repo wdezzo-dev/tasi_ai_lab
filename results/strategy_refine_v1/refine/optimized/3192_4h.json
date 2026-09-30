@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3192,
+  "name": "JS Signal Baes",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2340"
+  ],
+  "template": {
+    "id": 3192,
+    "name": "JS Signal Baes",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},9,9))",
+    "exit_long": "crossbelow(macd(close,5,9),macd_signal(close,5,9,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

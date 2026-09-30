@@ -1,0 +1,53 @@
+{
+  "strategy_id": 144,
+  "name": "Hull Ma Volume",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2300",
+    "4200",
+    "4261"
+  ],
+  "template": {
+    "id": 144,
+    "name": "Hull Ma Volume",
+    "family": "trend",
+    "entry_long": "roc(ema(close, {p0}), {p1}) > {p0} and volume_ratio(volume, {p2}) > {p1}",
+    "exit_long": "roc(ema(close, 9), 1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Hull moving average is approximated by EMA(9) with the documented HullPeriod and the documented VolumePeriod=20 with VolumeMultiplier=1.5 becomes volume_ratio > 1.5; the documented long exit is a falling Hull slope. StopLossAtr of 2.0 ATR(14) is an ATR multiple, not a percentage field."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

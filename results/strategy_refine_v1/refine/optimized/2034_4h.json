@@ -1,0 +1,48 @@
+{
+  "strategy_id": 2034,
+  "name": "EMA Prediction",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4050"
+  ],
+  "template": {
+    "id": 2034,
+    "name": "EMA Prediction",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(close,{p1})) and close > open",
+    "exit_long": "crossbelow(ema(close,{p2}),ema(close,2)) and close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 1/2 EMA prediction crossover is combined with the documented bullish/bearish candle confirmation, and the bearish reversal exits. Tick-based 1000/2000 SL/TP are not percentage exits."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

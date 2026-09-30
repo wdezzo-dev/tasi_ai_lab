@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3627,
+  "name": "Rectangle Test",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4163"
+  ],
+  "template": {
+    "id": 3627,
+    "name": "Rectangle Test",
+    "family": "trend",
+    "entry_long": "ema(close,{p0}) > sma(close,{p1}) and close > ema(close,{p2}) and close > donchian_high_prev(high,10)",
+    "exit_long": "ema(close,45) < sma(close,200) or close < ema(close,45)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 10-bar rectangle becomes a Donchian band and the fast EMA(45)/slow SMA(200) direction filter with a close above the fast EMA is used for the long breakout. The 'both averages inside the range' test, the 0.5% rectangle-height cap, the 03:00-22:50 session window, the daily losing-trade cap and the 250/750-point brackets are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        22,
+        34,
+        45,
+        68,
+        90
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        100,
+        150,
+        200,
+        300,
+        400
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        22,
+        34,
+        45,
+        68,
+        90
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

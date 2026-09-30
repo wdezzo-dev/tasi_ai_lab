@@ -1,0 +1,59 @@
+{
+  "strategy_id": 1946,
+  "name": "Fisher Cyber Cycle",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4009",
+    "4145"
+  ],
+  "template": {
+    "id": 1946,
+    "name": "Fisher Cyber Cycle",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}),ema(rsi(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(rsi(close,8),ema(rsi(close,8),7))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Fisher Transform of the Cyber Cycle is approximated by a bounded oscillator (RSI with Length=8) versus a 7-bar EMA trigger, giving the documented Fisher-over-trigger cross and its opposite as exit. Alpha=0.07 has no counterpart in the whitelisted indicators, and the docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        5,
+        7,
+        10,
+        14
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

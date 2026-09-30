@@ -1,0 +1,37 @@
+{
+  "strategy_id": 2292,
+  "name": "Fisher Org Signal",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "3092"
+  ],
+  "template": {
+    "id": 2292,
+    "name": "Fisher Org Signal",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,{p0}), {p0})",
+    "exit_long": "crossbelow(zscore(close,{p1}), {p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Fisher Transform is not a DSL function, so the oscillator is approximated by the z-score of close over the documented Fisher Length=7, with UpLevel=1.5 and DownLevel=-1.5 read in those standardized units. The documented opposite cross reverses the position and the docs specify no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

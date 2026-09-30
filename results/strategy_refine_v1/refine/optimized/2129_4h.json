@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2129,
+  "name": "Color Schaff Trend Cycle",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4325"
+  ],
+  "template": {
+    "id": 2129,
+    "name": "Color Schaff Trend Cycle",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},50,9))",
+    "exit_long": "crossbelow(macd(close,23,50),macd_signal(close,23,50,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        17,
+        23,
+        34,
+        46
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        17,
+        23,
+        34,
+        46
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

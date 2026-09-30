@@ -1,0 +1,54 @@
+{
+  "strategy_id": 4071,
+  "name": "SVOS EURJPY D1",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4180"
+  ],
+  "template": {
+    "id": 4071,
+    "name": "SVOS EURJPY D1",
+    "family": "trend",
+    "entry_long": "(adx(high,low,close,{p0}) > {p1} and crossabove(macd(close,{p2},25),macd_signal(close,10,25,5))) or (adx(high,low,close,20) <= 20 and crossabove(rsi(close,8),30))",
+    "exit_long": "crossbelow(macd(close,10,25),macd_signal(close,10,25,5)) or (close < open and roc(close,1) < {p0})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "VHF is unavailable so the trending/ranging regime uses ADX(20); the trending branch uses the documented MACD(10,25,5) histogram cross and the ranging branch an RSI(8) recross, with a bearish-bar/engulfing proxy as exit. Pip-based 350/90/150 stops, the 0.3 std-dev floor, doji divisor and order caps are dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

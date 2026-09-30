@@ -1,0 +1,63 @@
+{
+  "strategy_id": 291,
+  "name": "ADX Slope Mean Reversion",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4263"
+  ],
+  "template": {
+    "id": 291,
+    "name": "ADX Slope Mean Reversion",
+    "family": "trend",
+    "entry_long": "crossabove(adx(high,low,close,{p0}), sma(adx(high,low,close,{p1}),{p2})) and bars_since(adx(high,low,close,14) < sma(adx(high,low,close,14),20)) <= {p0}",
+    "exit_long": "crossbelow(adx(high,low,close,14), sma(adx(high,low,close,14),20))",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "The documented AdxPeriod=14 and LookbackPeriod=20 are exact, and the entry requires the indicator to sit under its own average within the last three bars before crossing back toward it, which is the documented swing-then-reverse. StopLossPercent=2.0 becomes the percentage stop and no take profit is documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

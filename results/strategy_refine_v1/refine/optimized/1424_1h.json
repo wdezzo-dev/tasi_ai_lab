@@ -1,0 +1,55 @@
+{
+  "strategy_id": 1424,
+  "name": "Three Candle Bullish Engulfing",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4012"
+  ],
+  "template": {
+    "id": 1424,
+    "name": "Three Candle Bullish Engulfing",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > open and roc(close,{p1}) > {p0} and (open * roc(open,{p2}) - close * roc(close,1)) < {p1} * atr(high,low,close,14) and (open * roc(open,1) - close * roc(close,1)) > -30 * atr(high,low,close,14)",
+    "exit_long": "low < donchian_low_prev(low,2)",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "With no bar shifting available, the three-candle pattern is rebuilt as a close above the prior two-bar high with a bullish body, an earlier up-leg (roc(close,2)>0) and a small prior body expressed through roc(open,1)/roc(close,1) versus 0.3 x ATR(14). The documented StopLossPerc 5 is used; TrailPerc 1.5, the 15:15 session exit and the optional RsiLevel 80 entry mode are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        25.0,
+        30.0,
+        35.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        4.0,
+        5.0,
+        6.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

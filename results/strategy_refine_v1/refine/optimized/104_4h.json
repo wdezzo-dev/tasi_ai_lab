@@ -1,0 +1,41 @@
+{
+  "strategy_id": 104,
+  "name": "Rejection Candle",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "3004"
+  ],
+  "template": {
+    "id": 104,
+    "name": "Rejection Candle",
+    "family": "momentum",
+    "entry_long": "close > open and (open - low) >= {p0} * (close - open)",
+    "exit_long": "close < open",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Long translation uses a bullish rejection candle with a lower wick at least twice the body; the bearish rejection is not encoded in the long-only schema. The documented stop is 2%."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

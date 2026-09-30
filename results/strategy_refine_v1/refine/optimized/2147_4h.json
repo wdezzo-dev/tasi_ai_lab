@@ -1,0 +1,51 @@
+{
+  "strategy_id": 2147,
+  "name": "Labouchere EA",
+  "family": "volume",
+  "timeframe": "4h",
+  "tickers": [
+    "2300"
+  ],
+  "template": {
+    "id": 2147,
+    "name": "Labouchere EA",
+    "family": "volume",
+    "entry_long": "donchian_high(high,{p0}) - donchian_low(low,{p1}) > {p0} and crossabove({p1} * (close - donchian_low(low,{p2})) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), 190))",
+    "exit_long": "donchian_high(high,10) - donchian_low(low,10) > 0 and crossbelow(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), sma(100 * (close - donchian_low(low,10)) / (donchian_high(high,10) - donchian_low(low,10)), 190))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Stochastic %K is expressed as the 10-bar close position and %D as its SMA(190), both documented, with an explicit non-zero range guard; the mirrored cross supplies a long exit. Labouchere lot sequencing, the work-time window, and the 40/50 price-step stop and target are not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

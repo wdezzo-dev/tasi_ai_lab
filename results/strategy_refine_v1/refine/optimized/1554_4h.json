@@ -1,0 +1,47 @@
+{
+  "strategy_id": 1554,
+  "name": "WarriorTrading Momentum",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4006"
+  ],
+  "template": {
+    "id": 1554,
+    "name": "WarriorTrading Momentum",
+    "family": "trend",
+    "entry_long": "volume_ratio(volume,{p0}) > {p0} and close > open and (roc(close,{p1}) < {p1} or roc(open,{p2}) > 2)",
+    "exit_long": "close < ema(close,9)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The three documented setups are collapsed into one: a volume spike (GapVolumeMultiplier=2 via volume_ratio) with either a red-to-green turn after MinRedCandles=3 down bars or a GapThreshold=2% opening jump; VWAP is approximated away in favour of the documented EMA/ATR pair. The ATR stop, RiskRewardRatio=2 target and TrailingStopTrigger=1 are ATR-scaled rather than fixed percentages, and MaxDailyTrades is unsupported, so both stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

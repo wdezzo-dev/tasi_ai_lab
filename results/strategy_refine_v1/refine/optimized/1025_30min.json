@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1025,
+  "name": "Martingale with MACD and KDJ",
+  "family": "other",
+  "timeframe": "30min",
+  "tickers": [
+    "1323"
+  ],
+  "template": {
+    "id": 1025,
+    "name": "Martingale with MACD and KDJ",
+    "family": "other",
+    "entry_long": "crossabove(macd(close, {p0}, {p1}), macd_signal(close, {p2}, 26, 9)) and crossabove(rsi(close, 9), sma(rsi(close, 9), 3))",
+    "exit_long": "crossbelow(macd(close, 12, 26), macd_signal(close, 12, 26, 9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented dual condition (MACD line and the oscillator main line crossing their signal lines together) keeps MACD 12/26/9 and substitutes RSI(9)/SMA(3) for KDJ %K/%D, whose periods are not documented. Martingale pyramiding, percent add/rebound levels and pip exits are not representable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

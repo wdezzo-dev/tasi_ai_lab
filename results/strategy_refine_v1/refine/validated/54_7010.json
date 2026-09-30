@@ -2,20 +2,17 @@
   "strategy_id": 54,
   "ticker": "7010",
   "timeframe": "Daily",
-  "best_params": {
-    "p0": 20.0,
-    "p1": 15.0
-  },
   "spec": {
     "id": 54,
     "name": "Cumulative Delta Breakout",
     "family": "breakout",
-    "entry_long": "sma((close - open) * volume,20.0) > donchian_high_prev(sma((close - open) * volume,15.0),20)",
+    "entry_long": "sma((close - open) * volume,30) > donchian_high_prev(sma((close - open) * volume,30),15)",
     "exit_long": "crossbelow(sma((close - open) * volume,20),0)",
     "stop_loss_pct": null,
     "take_profit_pct": null,
     "notes": "Cumulative delta is not available in OHLCV, so it is proxied by the LookbackPeriod 20 average of signed close-open volume, and the documented breakout is a new 20-bar extreme of that series (prior-bar window so the current bar is not self-referential). The exit is the documented cross back through zero, and the stop is referenced but never quantified, so the stop fields are null."
   },
+  "best_params": {},
   "base": {
     "train": {
       "window": [
@@ -23,14 +20,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 5525,
-      "engine_win_ret": 6.8347387074576735,
-      "alpha": 6.7594698902533725,
-      "benchmark_ret": 0.07526881720430101,
-      "trades": 84,
-      "win_rate": 0.5,
-      "sharpe": 0.6229995684019337,
-      "max_drawdown": -0.3977016906444515,
-      "profit_factor": 2.19659455635527
+      "engine_win_ret": 15.991149162682582,
+      "alpha": 13.40691977200158,
+      "benchmark_ret": 2.5842293906810037,
+      "trades": 112,
+      "win_rate": 0.5178571428571429,
+      "sharpe": 0.704453570588064,
+      "max_drawdown": -0.38775528974877416,
+      "profit_factor": 2.0791319343187835
     },
     "validation": {
       "window": [
@@ -38,14 +35,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": -0.12259649488543689,
-      "alpha": -0.2433266122257235,
+      "engine_win_ret": 0.13986003024363014,
+      "alpha": 0.019129912903343538,
       "benchmark_ret": 0.1207301173402866,
-      "trades": 7,
-      "win_rate": 0.2857142857142857,
-      "sharpe": -0.7828923454811747,
-      "max_drawdown": -0.15614676603363775,
-      "profit_factor": 0.26140130441925585
+      "trades": 12,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.6792666377916752,
+      "max_drawdown": -0.10428078719298828,
+      "profit_factor": 1.9106847898139911
     },
     "test": {
       "window": [
@@ -53,14 +50,14 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": -0.023135053969890684,
-      "alpha": -0.03803263311327987,
+      "engine_win_ret": 0.007259736166830955,
+      "alpha": -0.007637842976558229,
       "benchmark_ret": 0.014897579143389184,
-      "trades": 3,
-      "win_rate": 0.3333333333333333,
-      "sharpe": -0.525497286226298,
-      "max_drawdown": -0.03326627903522339,
-      "profit_factor": 0.09079544825710772
+      "trades": 7,
+      "win_rate": 0.42857142857142855,
+      "sharpe": 0.1656977214211556,
+      "max_drawdown": -0.04819978849451212,
+      "profit_factor": 1.0676391657576392
     }
   },
   "stress": {
@@ -70,14 +67,14 @@
         "2024-07-31"
       ],
       "bars_in_window": 5525,
-      "engine_win_ret": 4.156737793791506,
-      "alpha": 4.081468976587205,
-      "benchmark_ret": 0.07526881720430101,
-      "trades": 84,
-      "win_rate": 0.4642857142857143,
-      "sharpe": 0.5100753463365006,
-      "max_drawdown": -0.470036922523281,
-      "profit_factor": 1.7606689148361137
+      "engine_win_ret": 8.704642093880876,
+      "alpha": 6.1204127031998725,
+      "benchmark_ret": 2.5842293906810037,
+      "trades": 112,
+      "win_rate": 0.45535714285714285,
+      "sharpe": 0.582020009750388,
+      "max_drawdown": -0.4047805189579924,
+      "profit_factor": 1.7315358515907953
     },
     "validation": {
       "window": [
@@ -85,14 +82,14 @@
         "2025-12-31"
       ],
       "bars_in_window": 359,
-      "engine_win_ret": -0.15312603446765827,
-      "alpha": -0.27385615180794487,
+      "engine_win_ret": 0.07617317731796347,
+      "alpha": -0.04455694002232313,
       "benchmark_ret": 0.1207301173402866,
-      "trades": 7,
-      "win_rate": 0.14285714285714285,
-      "sharpe": -0.9881010135416057,
-      "max_drawdown": -0.17430951748532653,
-      "profit_factor": 0.19508171741379135
+      "trades": 12,
+      "win_rate": 0.3333333333333333,
+      "sharpe": 0.40986449008409104,
+      "max_drawdown": -0.11847159394237405,
+      "profit_factor": 1.3638833280821843
     },
     "test": {
       "window": [
@@ -100,14 +97,14 @@
         "2026-09-21"
       ],
       "bars_in_window": 177,
-      "engine_win_ret": -0.03778243093295808,
-      "alpha": -0.05268001007634726,
+      "engine_win_ret": -0.02507133511538895,
+      "alpha": -0.03996891425877813,
       "benchmark_ret": 0.014897579143389184,
-      "trades": 3,
-      "win_rate": 0.0,
-      "sharpe": -0.8610301114465085,
-      "max_drawdown": -0.04057824927945719,
-      "profit_factor": 0.0
+      "trades": 7,
+      "win_rate": 0.42857142857142855,
+      "sharpe": -0.37299980823159995,
+      "max_drawdown": -0.06721350901327472,
+      "profit_factor": 0.62954341712037
     }
   },
   "survivor": false,

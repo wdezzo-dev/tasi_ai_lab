@@ -1,0 +1,51 @@
+{
+  "strategy_id": 816,
+  "name": "Function Logistic Equation",
+  "family": "other",
+  "timeframe": "4h",
+  "tickers": [
+    "2330",
+    "4193"
+  ],
+  "template": {
+    "id": 816,
+    "name": "Function Logistic Equation",
+    "family": "other",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1}) and roc(close,{p2}) > {p0}",
+    "exit_long": "crossbelow(rsi(close,14),50) or roc(close,14) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The logistic equation of price changes is approximated by a bounded RSI(14) oscillator, so the documented 'crosses above half of the recent range' becomes a cross of 50 with the price change in the same direction. No parameters or period are documented, so RSI(14) and 14 are fallbacks."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

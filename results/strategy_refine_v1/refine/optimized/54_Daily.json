@@ -1,0 +1,155 @@
+{
+  "strategy_id": 54,
+  "name": "Cumulative Delta Breakout",
+  "family": "breakout",
+  "timeframe": "Daily",
+  "tickers": [
+    "7010"
+  ],
+  "template": {
+    "id": 54,
+    "name": "Cumulative Delta Breakout",
+    "family": "breakout",
+    "entry_long": "sma((close - open) * volume,{p0}) > donchian_high_prev(sma((close - open) * volume,{p1}),{p2})",
+    "exit_long": "crossbelow(sma((close - open) * volume,20),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Cumulative delta is not available in OHLCV, so it is proxied by the LookbackPeriod 20 average of signed close-open volume, and the documented breakout is a new 20-bar extreme of that series (prior-bar window so the current bar is not self-referential). The exit is the documented cross back through zero, and the stop is referenced but never quantified, so the stop fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 30,
+      "p1": 30,
+      "p2": 15
+    },
+    "best_value": 1.1269356912669495,
+    "trials": [
+      {
+        "number": 21,
+        "value": 1.1269356912669495,
+        "params": {
+          "p0": 30,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 15.948603475267582,
+          "median_cagr": 0.12157155998976932,
+          "median_sharpe": 0.7039052010208391,
+          "median_drawdown": -0.38775528974877416,
+          "profitable_fraction": 1.0,
+          "median_trades": 113.0
+        }
+      },
+      {
+        "number": 35,
+        "value": 1.1269356912669495,
+        "params": {
+          "p0": 30,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 15.948603475267582,
+          "median_cagr": 0.12157155998976932,
+          "median_sharpe": 0.7039052010208391,
+          "median_drawdown": -0.38775528974877416,
+          "profitable_fraction": 1.0,
+          "median_trades": 113.0
+        }
+      },
+      {
+        "number": 36,
+        "value": 1.1269356912669495,
+        "params": {
+          "p0": 30,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 15.948603475267582,
+          "median_cagr": 0.12157155998976932,
+          "median_sharpe": 0.7039052010208391,
+          "median_drawdown": -0.38775528974877416,
+          "profitable_fraction": 1.0,
+          "median_trades": 113.0
+        }
+      },
+      {
+        "number": 37,
+        "value": 1.1269356912669495,
+        "params": {
+          "p0": 30,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 15.948603475267582,
+          "median_cagr": 0.12157155998976932,
+          "median_sharpe": 0.7039052010208391,
+          "median_drawdown": -0.38775528974877416,
+          "profitable_fraction": 1.0,
+          "median_trades": 113.0
+        }
+      },
+      {
+        "number": 38,
+        "value": 1.1269356912669495,
+        "params": {
+          "p0": 30,
+          "p1": 30,
+          "p2": 15
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 15.948603475267582,
+          "median_cagr": 0.12157155998976932,
+          "median_sharpe": 0.7039052010208391,
+          "median_drawdown": -0.38775528974877416,
+          "profitable_fraction": 1.0,
+          "median_trades": 113.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

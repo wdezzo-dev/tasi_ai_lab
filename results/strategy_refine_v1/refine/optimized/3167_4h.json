@@ -1,0 +1,41 @@
+{
+  "strategy_id": 3167,
+  "name": "Daily Range",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2370"
+  ],
+  "template": {
+    "id": 3167,
+    "name": "Daily Range",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high, {p0}) * {p0}",
+    "exit_long": "close < donchian_low_prev(low, {p1}) * {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented SlidingWindowDays of 3 becomes a three-bar high/low range and the OffsetCoefficient of 1 percent is applied to the breakout levels; RangeMode, the 10:05 session reset and MaxPositionsPerDay=3 are calendar or order-count fields. StopLossCoefficient 0.03 and TakeProfitCoefficient 0.05 scale with the range and are not fixed percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.01,
+        1.01,
+        2.01
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.79,
+        0.99,
+        1.19
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

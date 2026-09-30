@@ -1,0 +1,78 @@
+{
+  "strategy_id": 3263,
+  "name": "Explosion Range Expansion",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1111",
+    "1210",
+    "1830",
+    "2010",
+    "2040",
+    "2060",
+    "2080",
+    "2120",
+    "2140",
+    "2170",
+    "2310",
+    "2320",
+    "2360",
+    "4005",
+    "4020",
+    "4031",
+    "4040",
+    "4071",
+    "4144",
+    "4146",
+    "4160",
+    "4180",
+    "4191",
+    "4240",
+    "4260",
+    "4290",
+    "6004",
+    "6040",
+    "7030",
+    "7040",
+    "7202",
+    "7203"
+  ],
+  "template": {
+    "id": 3263,
+    "name": "Explosion Range Expansion",
+    "family": "breakout",
+    "entry_long": "(high - low) > {p0} * (donchian_high_prev(high,{p0}) - donchian_low_prev(low,{p1})) and close > open",
+    "exit_long": "close < open and (high - low) > {p1} * (donchian_high_prev(high,{p2}) - donchian_low_prev(low,1))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The current candle range is compared with the previous candle's high-low and the up-body direction gives the long; 1.5x is an explicit default for the undocumented Range Ratio. Lot caps, pause seconds, hour window, one-trade-per-day and point-based stop/target/trailing are scheduling and price-scale fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

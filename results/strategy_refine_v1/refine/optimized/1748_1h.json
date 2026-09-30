@@ -1,0 +1,55 @@
+{
+  "strategy_id": 1748,
+  "name": "EM VOL",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "2080"
+  ],
+  "template": {
+    "id": 1748,
+    "name": "EM VOL",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) + atr(high,low,close,{p1}) and adx(high,low,close,{p2}) < {p0}",
+    "exit_long": "close < donchian_low_prev(low,1) - atr(high,low,close,14)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The pivot is the previous bar high/low with a one-ATR buffer, and trading is allowed only in the low-volatility regime; AtrPeriod 14, AdxPeriod 14 and the ADX ceiling of 20 are explicit fallbacks because only parameter names are supplied. TakeProfit, StopLoss, TrailStart and TrailStep are price-step distances that are not expressible, so the mirrored support break is used as the long exit."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,56 @@
+{
+  "strategy_id": 3993,
+  "name": "CCI MA v1.5",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3060",
+    "6013"
+  ],
+  "template": {
+    "id": 3993,
+    "name": "CCI MA v1.5",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,{p0}),{p1})",
+    "exit_long": "crossbelow(zscore(close,{p2}),2) or crossbelow(zscore(close,20),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "CCI has no DSL function, so it is proxied by zscore(close,20): crossing its own zero line equals the documented CCI/SMA cross, and the supervisory CCI's +100 exit maps to a +2 z-score drop as the same relative extremity. CciPeriod, MaPeriod and SignalCciPeriod have no documented values so 20 is an explicit default, and pip stops are not percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

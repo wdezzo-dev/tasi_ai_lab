@@ -1,0 +1,51 @@
+{
+  "strategy_id": 2511,
+  "name": "True Scalper Profit Lock",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4008",
+    "4040"
+  ],
+  "template": {
+    "id": 2511,
+    "name": "True Scalper Profit Lock",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}), ema(close,{p1})) and rsi(close,{p2}) > {p0}",
+    "exit_long": "crossbelow(ema(close,5), ema(close,20)) or rsi(close,2) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Fast EMAs plus the documented two-period RSI filter drive the long, with the opposite EMA cross or a lost RSI filter closing it; FastPeriod, SlowPeriod and RsiThreshold are not given, so 5, 20 and 50 are fallbacks. TakeProfitPoints/StopLossPoints, the abandon-after-N-candles timer, break-even moves and money management are not percentage or DSL fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

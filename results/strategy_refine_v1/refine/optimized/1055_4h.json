@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1055,
+  "name": "MM Fibonacci",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "3050"
+  ],
+  "template": {
+    "id": 1055,
+    "name": "MM Fibonacci",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > donchian_low(low,{p1}) + {p0} * (donchian_high(high,{p2}) - donchian_low(low,10))",
+    "exit_long": "close < donchian_low(low,10) + {p1} * (donchian_high(high,10) - donchian_low(low,10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The 100% Murrey level becomes the 10-bar Donchian high (length not documented) and the most-recent-extreme-is-a-high condition is checked by requiring the break close above the 50% midpoint; the documented exit is the mirror 50% break. The internal Murrey grid below the 50% level is not expressible and docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

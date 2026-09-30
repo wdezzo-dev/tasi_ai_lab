@@ -1,0 +1,43 @@
+{
+  "strategy_id": 1515,
+  "name": "US Index First 30m Candle",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1301",
+    "2160",
+    "2350",
+    "4146",
+    "6016"
+  ],
+  "template": {
+    "id": 1515,
+    "name": "US Index First 30m Candle",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > open",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A break above the prior candle high approximates the locked first-30-minute range; the opposite low break supplies the long exit. Session locking, one-trade-per-day state, range-derived stops, and RiskReward=1 cannot be encoded."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1066,
+  "name": "MomentumSync PSAR RSI ADX Filtered 3-Tier Exit",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4291"
+  ],
+  "template": {
+    "id": 1066,
+    "name": "MomentumSync PSAR RSI ADX Filtered 3-Tier Exit",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1}) and adx(high,low,close,{p2}) > {p0}",
+    "exit_long": "crossbelow(rsi(close,14),45) or bars_since(crossbelow(rsi(close,14),45)) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is unavailable, so an RSI(14) reversal with ADX(14) strength is used; the three-bar exit is represented by a recent RSI bearish cross. SAR parameters and the exact three-tier state machine are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        20.0,
+        25.0,
+        30.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

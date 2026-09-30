@@ -1,0 +1,65 @@
+{
+  "strategy_id": 2510,
+  "name": "Bull vs Medved",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "1111",
+    "1202",
+    "1302",
+    "1303",
+    "2020",
+    "2110",
+    "2120",
+    "2220",
+    "2270",
+    "2281",
+    "2320",
+    "2330",
+    "3008",
+    "3020",
+    "4006",
+    "4007",
+    "4081",
+    "4292",
+    "6020"
+  ],
+  "template": {
+    "id": 2510,
+    "name": "Bull vs Medved",
+    "family": "trend",
+    "entry_long": "close > open and close - open > atr(high,low,close,{p0})",
+    "exit_long": "close < open and open - close > atr(high,low,close,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The latest candle must print a bullish body larger than the CandleSizePips threshold; since that value is undocumented the body is scaled by ATR(14) rather than an invented pip figure. The six trading windows, the three-candle regular/cool bull patterns, the bad-bull filter and the buy-limit indents need clock and shifted-bar data and are dropped, as are the pip stop distances."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2496,
+  "name": "Big Dog Range Breakout",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "4007"
+  ],
+  "template": {
+    "id": 2496,
+    "name": "Big Dog Range Breakout",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and atr(high,low,close,{p1}) < sma(atr(high,low,close,{p2}),14)",
+    "exit_long": "close < donchian_low_prev(low,14)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A prior 14-bar range approximates the default 14:00-16:00 two-hour box, with ATR(14) below its average proxying the narrow-range filter. Session timing, point distance filters, and consolidation-extreme targets are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,41 @@
+{
+  "strategy_id": 59,
+  "name": "Hammer Candle Reversal",
+  "family": "pattern",
+  "timeframe": "1h",
+  "tickers": [
+    "7030"
+  ],
+  "template": {
+    "id": 59,
+    "name": "Hammer Candle Reversal",
+    "family": "pattern",
+    "suggested_timeframe": "Daily",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "entry_long": "close > open and (open - low) >= {p0} * (close - open) and (high - close) <= (close - open)",
+    "exit_long": "close < donchian_low_prev(low,{p0})",
+    "notes": "Bullish hammer: lower shadow >= 2x body, upper shadow <= body (close>open assumed; abs/min/max not in DSL). Exit on close below prior-bar low as pattern-failure proxy (corpus exit is stop/discretionary). Stop 2% proxy."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

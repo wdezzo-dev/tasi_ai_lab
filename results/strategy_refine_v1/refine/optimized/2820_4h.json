@@ -1,0 +1,41 @@
+{
+  "strategy_id": 2820,
+  "name": "N-Candles Sequence",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "1831"
+  ],
+  "template": {
+    "id": 2820,
+    "name": "N-Candles Sequence",
+    "family": "volatility",
+    "entry_long": "close > open and bars_since(close <= open) >= {p0}",
+    "exit_long": "close < open and bars_since(close >= open) >= {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The streak of identical candle bodies is a long position in the streak's direction, and since bars_since counts the bars elapsed since the last opposite test it expresses exactly three consecutive bullish bodies, an explicit fallback for the undocumented ConsecutiveCandles. The mirror test is the bearish sequence and therefore the long exit. TakeProfitPips, StopLossPips, TrailingStopPips and TrailingStepPips, the trading-hours filter, MinProfit lock, MaxPositions, MaxPositionVolume and the black-sheep ClosingBehavior are pip, clock and position-management features that leave both percentage fields null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        4.0,
+        5.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        4.0,
+        5.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

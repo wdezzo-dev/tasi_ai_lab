@@ -1,0 +1,55 @@
+{
+  "strategy_id": 3440,
+  "name": "AML CCI Meeting Lines",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3010"
+  ],
+  "template": {
+    "id": 3440,
+    "name": "AML CCI Meeting Lines",
+    "family": "trend",
+    "entry_long": "close > open and close - open >= {p0} * atr(high,low,close,{p0}) and rsi(close,{p1}) <= {p1}",
+    "exit_long": "close < open or rsi(close,{p2}) >= 80",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A large bullish candle plus RSI(18)<=40 proxies the documented Meeting Lines and CCI<=-50 vote; RSI>=80 proxies the extreme exit. The two-candle equal-close test and body-average period 3 cannot be recovered without shifted OHLC, and no percentage protection is supplied."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        35.0,
+        40.0,
+        45.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        9,
+        14,
+        18,
+        27,
+        36
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

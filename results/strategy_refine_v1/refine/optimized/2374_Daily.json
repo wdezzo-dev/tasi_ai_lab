@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2374,
+  "name": "XMA Candles",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "2285"
+  ],
+  "template": {
+    "id": 2374,
+    "name": "XMA Candles",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}), ema(open,{p1}))",
+    "exit_long": "crossbelow(ema(close,{p2}), ema(open,14))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A bullish colour change of the smoothed candle is a close-EMA crossing above the open-EMA, and the bearish change is the mirror. Length 14 is a fallback because the docs list the parameter name without a value, and the percent StopLoss/TakeProfit fields have no supplied values."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,37 @@
+{
+  "strategy_id": 2790,
+  "name": "Alexav SpeedUp M1",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "3002",
+    "6010"
+  ],
+  "template": {
+    "id": 2790,
+    "name": "Alexav SpeedUp M1",
+    "family": "volatility",
+    "entry_long": "close - open > atr(high,low,close,{p0})",
+    "exit_long": "crossbelow(close,open)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A bullish body exceeding ATR(14) is a price-normalized proxy for the documented unusually large 100-pip candle, with a bearish body as exit. The 30/90/10/5-pip stop, target, and stepped trail cannot be translated to percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,55 @@
+{
+  "strategy_id": 3202,
+  "name": "Plan X",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "4050"
+  ],
+  "template": {
+    "id": 3202,
+    "name": "Plan X",
+    "family": "breakout",
+    "entry_long": "crossabove(close,ema(close,{p0})) and close > ema(close,{p1}) * {p0}",
+    "exit_long": "crossbelow(close,ema(close,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "EMA(20) is a fallback for the shifted reference candle and a 1% channel is a normalized stand-in for unspecified pip height. Candle shift, pip protection, trailing, and session filters are not available."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.01,
+        1.01,
+        2.01
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

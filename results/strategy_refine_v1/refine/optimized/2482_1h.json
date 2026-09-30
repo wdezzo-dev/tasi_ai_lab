@@ -1,0 +1,60 @@
+{
+  "strategy_id": 2482,
+  "name": "JK BullP AutoTrader",
+  "family": "volatility",
+  "timeframe": "1h",
+  "tickers": [
+    "2210",
+    "4003",
+    "4292"
+  ],
+  "template": {
+    "id": 2482,
+    "name": "JK BullP AutoTrader",
+    "family": "volatility",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1})",
+    "exit_long": "crossbelow(rsi(close,{p2}),50)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Bulls Power is unavailable, so an RSI(13) recross from oversold represents the documented buy reversal and the neutral cross exits. Point-based stop, target, trailing, and the separate sell branch are unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

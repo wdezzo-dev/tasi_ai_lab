@@ -1,0 +1,49 @@
+{
+  "strategy_id": 1656,
+  "name": "EMA Sticker",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2110",
+    "2370",
+    "6001"
+  ],
+  "template": {
+    "id": 1656,
+    "name": "EMA Sticker",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0}))",
+    "exit_long": "crossbelow(close,ema(close,{p1}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented MA period of 5 with a close crossing the EMA is a direct translation, and the opposite cross is the documented exit. The optional 0.001 stop and 0.001 target are absolute price units, so SL/TP stay null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

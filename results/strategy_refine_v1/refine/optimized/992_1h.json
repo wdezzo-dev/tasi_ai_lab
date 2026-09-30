@@ -1,0 +1,50 @@
+{
+  "strategy_id": 992,
+  "name": "Long Explosive V1",
+  "family": "momentum",
+  "timeframe": "1h",
+  "tickers": [
+    "1111",
+    "1321",
+    "2081",
+    "2140",
+    "2320",
+    "4260",
+    "4292",
+    "7203"
+  ],
+  "template": {
+    "id": 992,
+    "name": "Long Explosive V1",
+    "family": "momentum",
+    "entry_long": "roc(close,{p0}) > {p1}",
+    "exit_long": "roc(close,{p2}) < {p0}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "ROC(close,1)>1 is the exact scale-free translation of the documented 1% close-versus-prior-close increase; the inverse 1% drop exits. The source has no stops, and a re-entry before the prior position closes is handled by the one-position simulator."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

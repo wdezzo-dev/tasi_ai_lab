@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1659,
+  "name": "MA2CCI",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "2287"
+  ],
+  "template": {
+    "id": 1659,
+    "name": "MA2CCI",
+    "family": "trend",
+    "entry_long": "crossabove(sma(close,{p0}), sma(close,{p1})) and crossabove(zscore(close,{p2}), 0)",
+    "exit_long": "crossbelow(sma(close,4), sma(close,8)) or crossbelow(zscore(close,4), 0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented SMA(4)/SMA(8) crossover is joined by a CCI(4) zero cross, which is approximated by the 4-bar z-score since CCI is not in the DSL. The 1-ATR entry stop cannot be encoded as a percent field and the 1-minute timeframe is not available."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

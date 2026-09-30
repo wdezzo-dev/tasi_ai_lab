@@ -1,0 +1,57 @@
+{
+  "strategy_id": 1627,
+  "name": "ZeroLag MACD Cross",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1303",
+    "2300",
+    "4100",
+    "4144"
+  ],
+  "template": {
+    "id": 1627,
+    "name": "ZeroLag MACD Cross",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},34,2))",
+    "exit_long": "crossbelow(macd(close,2,34),macd_signal(close,2,34,2))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented FastEmaLength 2, SlowEmaLength 34 and SignalEmaLength 2 are used directly, and crossabove/crossbelow already enforce the documented UseFreshSignal requirement. Session hours 9-15, the KillDay/KillHour forced exit and Volume are not expressible, and the docs state there are no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        17,
+        26,
+        34,
+        51,
+        68
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

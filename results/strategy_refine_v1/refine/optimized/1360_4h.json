@@ -1,0 +1,63 @@
+{
+  "strategy_id": 1360,
+  "name": "Sunil 2 Bar Breakout",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1321",
+    "2030",
+    "2160",
+    "2190",
+    "2220",
+    "2240",
+    "2300",
+    "3003",
+    "3030",
+    "4200",
+    "6090",
+    "7040"
+  ],
+  "template": {
+    "id": 1360,
+    "name": "Sunil 2 Bar Breakout",
+    "family": "breakout",
+    "entry_long": "roc(close,{p0}) > {p0} and high > donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Exact lagged-bar comparisons are unavailable; an up close plus a new three-bar high proxies the two-bar bullish setup, while a prior three-bar-low break approximates the signal-bar stop."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

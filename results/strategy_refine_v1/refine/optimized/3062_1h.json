@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3062,
+  "name": "Time Zone Pivots Open System",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "2210"
+  ],
+  "template": {
+    "id": 3062,
+    "name": "Time Zone Pivots Open System",
+    "family": "breakout",
+    "entry_long": "close > open + {p0} * atr(high,low,close,{p0}) and roc(close,{p1}) <= {p1}",
+    "exit_long": "close < open - 0.5 * atr(high,low,close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "On daily bars the StartHour 0 anchor is the session open, so the band is open plus/minus a 0.5x ATR(14) width standing in for the 100-price-step OffsetPoints, and the required preceding neutral bar is approximated by a non-positive one-bar return. SignalBar 1, StopLossPoints 1000, TakeProfitPoints 2000 and the duplicate-entry postponement are not long-signal or percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

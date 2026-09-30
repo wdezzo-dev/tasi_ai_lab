@@ -1,0 +1,57 @@
+{
+  "strategy_id": 3261,
+  "name": "Explosion",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "1303",
+    "2030",
+    "2090",
+    "2100",
+    "2180",
+    "2240",
+    "2290",
+    "4051",
+    "4200",
+    "6010",
+    "7200"
+  ],
+  "template": {
+    "id": 3261,
+    "name": "Explosion",
+    "family": "momentum",
+    "entry_long": "(high - low) > {p0} * (donchian_high_prev(high,{p0}) - donchian_low_prev(low,{p1})) and close > open",
+    "exit_long": "(high - low) > {p1} * (donchian_high_prev(high,{p2}) - donchian_low_prev(low,1)) and close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented doubling of the previous candle's range with a bullish body is literal, using multiplication to avoid a division-by-zero on flat bars. StopLossPips 20, TakeProfitPips 10, the 25/5 pip trailing and the one-entry-per-bar flag are pip and order features."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

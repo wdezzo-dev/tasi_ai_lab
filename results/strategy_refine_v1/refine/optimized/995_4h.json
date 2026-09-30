@@ -1,0 +1,55 @@
+{
+  "strategy_id": 995,
+  "name": "Long-Leg Doji Breakout",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "7020"
+  ],
+  "template": {
+    "id": 995,
+    "name": "Long-Leg Doji Breakout",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high, {p0}) and high - low > {p0} * atr(high, low, close, {p1})",
+    "exit_long": "crossbelow(close, sma(close, {p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The doji high is approximated by the prior bar high so the long breakout is a fresh one-bar high, and the documented ATR filter (ATR 14, multiplier 0.5) becomes a volatility-expansion test. Docs state no stops, and the exit is the documented SMA(20) cross."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

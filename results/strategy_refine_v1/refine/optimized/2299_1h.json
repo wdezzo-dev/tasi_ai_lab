@@ -1,0 +1,59 @@
+{
+  "strategy_id": 2299,
+  "name": "PChannel System",
+  "family": "breakout",
+  "timeframe": "1h",
+  "tickers": [
+    "2286",
+    "6090"
+  ],
+  "template": {
+    "id": 2299,
+    "name": "PChannel System",
+    "family": "breakout",
+    "entry_long": "high > donchian_high_prev(high, {p0}) and close < donchian_high_prev(high, {p1})",
+    "exit_long": "close < donchian_low_prev(low, {p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented delayed confirmation - piercing the channel and closing back inside it - is expressed in one bar because shifted channel values are unavailable, with Period 20 and Shift 1 as fallbacks. The absolute StopLoss and TakeProfit distances have no documented values and cannot be percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,59 @@
+{
+  "strategy_id": 1264,
+  "name": "RSI Buy Sell Force",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3003",
+    "7202"
+  ],
+  "template": {
+    "id": 1264,
+    "name": "RSI Buy Sell Force",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}),ema(rsi(close,{p1}),{p2}))",
+    "exit_long": "crossbelow(rsi(close,14),ema(rsi(close,14),9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(14) versus its EMA(9) is an explicit fallback for the smoothed cc/bb pressure lines. The source supplies no periods or signal exit, so the inverse cross is used."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

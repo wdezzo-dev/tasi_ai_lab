@@ -1,0 +1,55 @@
+{
+  "strategy_id": 1169,
+  "name": "Pivot Point SuperTrend TrendFilter",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4013"
+  ],
+  "template": {
+    "id": 1169,
+    "name": "Pivot Point SuperTrend TrendFilter",
+    "family": "trend",
+    "entry_long": "crossabove(close,ema(close,{p0}) + {p0} * atr(high,low,close,{p1}))",
+    "exit_long": "close < ema(close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "SuperTrend is not in the DSL, so a trend-filter flip is proxied by a close crossing EMA(20)+3*ATR(10) (MaPeriod 20, Factor 3, AtrPeriod 10) and the flip-down exit by a close below EMA(20). The pivot-based SuperTrend leg and its date-window (seasonality) condition are dropped; docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,56 @@
+{
+  "strategy_id": 3923,
+  "name": "Alert MACD Slow",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4020"
+  ],
+  "template": {
+    "id": 3923,
+    "name": "Alert MACD Slow",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},20,9))",
+    "exit_long": "crossbelow(macd(close,3,20),macd_signal(close,3,20,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD crossover translated to the local DSL with documented/default fast, slow, and signal periods; unsupported execution/state details are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

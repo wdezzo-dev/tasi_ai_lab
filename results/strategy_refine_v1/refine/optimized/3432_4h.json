@@ -1,0 +1,52 @@
+{
+  "strategy_id": 3432,
+  "name": "DreamBot",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "3003"
+  ],
+  "template": {
+    "id": 3432,
+    "name": "DreamBot",
+    "family": "momentum",
+    "entry_long": "crossabove(roc(close,{p0}),{p1}) and adx(high,low,close,{p2}) > {p0}",
+    "exit_long": "crossbelow(roc(close,13),0) or adx(high,low,close,14) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "ROC(13) zero-line direction and ADX(14)>20 approximate the Force Index bullish threshold and momentum confirmation. Force Index smoothing, explicit point stops/targets, and trailing-start state are not available."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        10.0,
+        15.0,
+        20.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

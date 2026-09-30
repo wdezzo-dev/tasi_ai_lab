@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1309,
+  "name": "SJ NIFTY",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "7030"
+  ],
+  "template": {
+    "id": 1309,
+    "name": "SJ NIFTY",
+    "family": "trend",
+    "entry_long": "close > ema(close,{p0}) and close > sma(close * volume,{p1}) / sma(volume,{p2}) and rsi(close,14) > {p0} and close > ema(close,200) and close > donchian_high_prev(high,10)",
+    "exit_long": "close < ema(close,20) or rsi(close,14) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "EMA(20), a volume-weighted VWAP proxy, RSI(14), EMA(200), and a prior-high break approximate the documented long filter stack. SuperTrend, Keltner basis, risk sizing, and risk-ratio protection are unavailable, and the short branch is omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        40.0,
+        45.0,
+        50.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,53 @@
+{
+  "strategy_id": 3422,
+  "name": "Bullish & Bearish Harami Stochastic",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "2287",
+    "4322"
+  ],
+  "template": {
+    "id": 3422,
+    "name": "Bullish & Bearish Harami Stochastic",
+    "family": "trend",
+    "entry_long": "high <= donchian_high_prev(high,{p0}) and low >= donchian_low_prev(low,{p1}) and close > open and rsi(close,{p2}) < {p0}",
+    "exit_long": "rsi(close,14) < {p1} or rsi(close,14) > 80",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The harami is expressed as an inside bullish body (current range within the prior bar) with the documented OversoldLevel 30 confirmation and the 20/80 ExitLower/ExitUpper thresholds close the trade. Stochastic %K/%D and the 47/9/13 smoothings are unavailable, so RSI(14) stands in for %D and the MovingAveragePeriod=5 body filter is not represented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        25.0,
+        30.0,
+        35.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

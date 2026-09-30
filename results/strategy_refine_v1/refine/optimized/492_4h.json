@@ -1,0 +1,60 @@
+{
+  "strategy_id": 492,
+  "name": "Adaptive KDJ (MTF)",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1302",
+    "3010",
+    "3091"
+  ],
+  "template": {
+    "id": 492,
+    "name": "Adaptive KDJ (MTF)",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}),ema(rsi(close,{p1}),{p2})) and rsi(close,9) < sma(rsi(close,9),40)",
+    "exit_long": "crossbelow(rsi(close,9),ema(rsi(close,9),5))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(9), its EMA(5), and SMA(40) proxy the three-timeframe K/D/J blend and adaptive trend level using documented lengths. Actual KDJ and multi-timeframe aggregation are unavailable; the opposite K/D cross exits and no stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

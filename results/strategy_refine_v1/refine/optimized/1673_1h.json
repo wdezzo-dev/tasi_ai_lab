@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1673,
+  "name": "Ride Alligator",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "6018"
+  ],
+  "template": {
+    "id": 1673,
+    "name": "Ride Alligator",
+    "family": "trend",
+    "entry_long": "crossabove(sma(close,{p0}), sma(close,{p1})) and sma(close,{p2}) < sma(close,13)",
+    "exit_long": "close <= sma(close,13)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Alligator lines are approximated by plain SMAs with the documented AlligatorPeriod 5 as Lips and the standard 8/13 Teeth and Jaws lengths, since the weighted, shifted SMMA construction is not available. The documented exit is the stop at the Jaws line, so no percentage stop is encoded; the short branch is dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3360,
+  "name": "MACD Sample Hedging Grid",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4194"
+  ],
+  "template": {
+    "id": 3360,
+    "name": "MACD Sample Hedging Grid",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},26,9)) and ema(close,26) > ema(close,50) and roc(close,14) > {p0}",
+    "exit_long": "crossbelow(macd(close,12,26),macd_signal(close,12,26,9)) or ema(close,26) < ema(close,50)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD(12,26,9), EMA(26) slope, and positive ROC(14) retain the short-term and local-trend filters. Higher-timeframe momentum, grid scaling, order limits, and 20/50-step protection are not available in a stateless long-only translation."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        9,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

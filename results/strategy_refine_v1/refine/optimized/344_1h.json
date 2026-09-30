@@ -1,0 +1,55 @@
+{
+  "strategy_id": 344,
+  "name": "Hull MA Implied Volatility Breakout",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4190"
+  ],
+  "template": {
+    "id": 344,
+    "name": "Hull MA Implied Volatility Breakout",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0})",
+    "exit_long": "close < ema(close,{p1}) - {p0} * atr(high,low,close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The unavailable Hull MA and implied-volatility indicators are represented by a prior 9-bar high breakout and an ATR(20) lower band. The documented 2x ATR stop is not a fixed percentage field, and the 15-minute execution layer is unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

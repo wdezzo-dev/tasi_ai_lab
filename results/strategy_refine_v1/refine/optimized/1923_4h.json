@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1923,
+  "name": "RoNz Rapid-Fire",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4019"
+  ],
+  "template": {
+    "id": 1923,
+    "name": "RoNz Rapid-Fire",
+    "family": "trend",
+    "entry_long": "close > ema(close, {p0}) and high > donchian_high_prev(high, {p1})",
+    "exit_long": "close < ema(close, {p2}) or low < donchian_low_prev(low, 5)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented long rule (close above the moving average with Parabolic SAR flipping below price) is approximated by price above EMA(20) plus a fresh five-bar high. MaPeriod has no documented value; averaging, tick-based stops and trailing are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

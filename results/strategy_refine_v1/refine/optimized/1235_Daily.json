@@ -1,0 +1,54 @@
+{
+  "strategy_id": 1235,
+  "name": "Reflex Oscillator",
+  "family": "other",
+  "timeframe": "Daily",
+  "tickers": [
+    "1834"
+  ],
+  "template": {
+    "id": 1235,
+    "name": "Reflex Oscillator",
+    "family": "other",
+    "entry_long": "crossabove(zscore(roc(close,{p0}),{p1}),{p2})",
+    "exit_long": "crossbelow(zscore(roc(close,20),20),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Ehlers Reflex with its super-smoother and post-smoothing stages is not in the DSL, so it is approximated by a volatility-normalized momentum z-score over the documented ReflexPeriod 20, which keeps the documented UpperLevel 1 and zero-line exit thresholds meaningful. SuperSmootherPeriod 8 and PostSmoothPeriod 33 are not separately represented and the docs state there are no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

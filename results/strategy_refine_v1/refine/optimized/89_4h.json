@@ -1,0 +1,56 @@
+{
+  "strategy_id": 89,
+  "name": "Hull MA Reversal",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2090",
+    "2370"
+  ],
+  "template": {
+    "id": 89,
+    "name": "Hull MA Reversal",
+    "family": "trend",
+    "entry_long": "crossabove(roc({p0} * ema(close,{p0}) - ema(ema(close,{p1}),{p2}), 1), 0)",
+    "exit_long": "crossbelow(roc({p1} * ema(close,9) - ema(ema(close,9),9), 1), 0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Hull MA is approximated by the DEMA form 2*EMA-EMA(EMA) at the documented HmaPeriod=9, and the documented entry is its slope turning from falling to rising. The 2-ATR stop beyond the recent candle is a volatility-based distance, not a percentage, so both stop fields stay null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

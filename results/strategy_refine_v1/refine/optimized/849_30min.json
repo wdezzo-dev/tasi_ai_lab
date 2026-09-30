@@ -1,0 +1,59 @@
+{
+  "strategy_id": 849,
+  "name": "Gold Scalping BOS & CHoCH",
+  "family": "pattern",
+  "timeframe": "30min",
+  "tickers": [
+    "4083",
+    "6015"
+  ],
+  "template": {
+    "id": 849,
+    "name": "Gold Scalping BOS & CHoCH",
+    "family": "pattern",
+    "entry_long": "high > donchian_high_prev(high,{p0}) and crossabove(close, donchian_low_prev(low,{p1}))",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Swing high/low are taken as the documented 5-bar SwingLength extremes, so the long rule is a break of the prior swing high with a close recovering the prior swing low (RecentLength 10 is a fallback). The dynamic stop and TakeProfitFactor 2 targets are structure-based distances, not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

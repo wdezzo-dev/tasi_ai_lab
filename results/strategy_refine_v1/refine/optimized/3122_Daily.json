@@ -1,0 +1,263 @@
+{
+  "strategy_id": 3122,
+  "name": "Vlado",
+  "family": "mean_reversion",
+  "timeframe": "Daily",
+  "tickers": [
+    "2282",
+    "2290",
+    "7010"
+  ],
+  "template": {
+    "id": 3122,
+    "name": "Vlado",
+    "family": "mean_reversion",
+    "entry_long": "crossabove({p0} * (close - donchian_low(low, {p0})) / (donchian_high(high, {p1}) - donchian_low(low, {p2}) + {p1}), 25)",
+    "exit_long": "crossbelow(100 * (close - donchian_low(low, 14)) / (donchian_high(high, 14) - donchian_low(low, 14) + 0.0001), 75)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Williams %R is mirrored onto the 0-100 fast stochastic so the documented OversoldLevel -75 and OverboughtLevel -25 become 25 and 75, with a 14-bar window as a fallback because WilliamsPeriod has no default. The epsilon guards a zero-width range; volume sizing and the 1-hour default are not signals."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 21,
+      "p1": 0.2,
+      "p2": 28
+    },
+    "best_value": -100.0,
+    "trials": [
+      {
+        "number": 0,
+        "value": -100.0,
+        "params": {
+          "p0": 21,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 1,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 2,
+        "value": -100.0,
+        "params": {
+          "p0": 21,
+          "p1": 0.0,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 3,
+        "value": -100.0,
+        "params": {
+          "p0": 7,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 4,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 0.0,
+          "p2": 7
+        },
+        "summary": {}
+      },
+      {
+        "number": 5,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 0.0,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 6,
+        "value": -100.0,
+        "params": {
+          "p0": 28,
+          "p1": 0.2,
+          "p2": 21
+        },
+        "summary": {}
+      },
+      {
+        "number": 7,
+        "value": -100.0,
+        "params": {
+          "p0": 14,
+          "p1": 0.2,
+          "p2": 21
+        },
+        "summary": {}
+      },
+      {
+        "number": 8,
+        "value": -100.0,
+        "params": {
+          "p0": 21,
+          "p1": 0.2,
+          "p2": 21
+        },
+        "summary": {}
+      },
+      {
+        "number": 9,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 0.0,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 10,
+        "value": -100.0,
+        "params": {
+          "p0": 21,
+          "p1": 0.2,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 11,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 12,
+        "value": -100.0,
+        "params": {
+          "p0": 21,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 13,
+        "value": -100.0,
+        "params": {
+          "p0": 28,
+          "p1": 0.0,
+          "p2": 14
+        },
+        "summary": {}
+      },
+      {
+        "number": 14,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 0.2,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 15,
+        "value": -100.0,
+        "params": {
+          "p0": 14,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      },
+      {
+        "number": 16,
+        "value": -100.0,
+        "params": {
+          "p0": 10,
+          "p1": 0.2,
+          "p2": 14
+        },
+        "summary": {}
+      },
+      {
+        "number": 17,
+        "value": -100.0,
+        "params": {
+          "p0": 7,
+          "p1": 0.0,
+          "p2": 21
+        },
+        "summary": {}
+      },
+      {
+        "number": 18,
+        "value": -100.0,
+        "params": {
+          "p0": 1,
+          "p1": 0.2,
+          "p2": 7
+        },
+        "summary": {}
+      },
+      {
+        "number": 19,
+        "value": -100.0,
+        "params": {
+          "p0": 28,
+          "p1": 0.2,
+          "p2": 28
+        },
+        "summary": {}
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,54 @@
+{
+  "strategy_id": 1968,
+  "name": "Smoothing Average",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4164"
+  ],
+  "template": {
+    "id": 1968,
+    "name": "Smoothing Average",
+    "family": "trend",
+    "entry_long": "crossabove(close,sma(close,{p0}) - {p0} * sma(close,{p1}))",
+    "exit_long": "crossbelow(close,sma(close,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The corpus supplies no MA period or smoothing value, so SMA(20) and a 2% offset are explicit research fallbacks. The offset-band cross is the long interpretation of the described smoothed-average setup; no stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.02,
+        0.22
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

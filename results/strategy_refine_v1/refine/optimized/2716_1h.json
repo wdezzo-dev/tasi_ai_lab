@@ -1,0 +1,55 @@
+{
+  "strategy_id": 2716,
+  "name": "KDJ Expert Advisor",
+  "family": "momentum",
+  "timeframe": "1h",
+  "tickers": [
+    "4083"
+  ],
+  "template": {
+    "id": 2716,
+    "name": "KDJ Expert Advisor",
+    "family": "momentum",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1}) and rsi(close,{p2}) < {p0}",
+    "exit_long": "crossabove(rsi(close,30),70) or crossbelow(rsi(close,30),30)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "RSI(30) with a six-period smoother is a fallback for the KDJ/Stochastic lines and retains the oversold recross concept. The 3/6 smoothing, 25/45 pip protection, and exact J-line signals are not directly available."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        15,
+        22,
+        30,
+        45,
+        60
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

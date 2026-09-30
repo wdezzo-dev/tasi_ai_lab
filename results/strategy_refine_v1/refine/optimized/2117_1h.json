@@ -1,0 +1,52 @@
+{
+  "strategy_id": 2117,
+  "name": "Step Stochastic Cross",
+  "family": "volatility",
+  "timeframe": "1h",
+  "tickers": [
+    "4190"
+  ],
+  "template": {
+    "id": 2117,
+    "name": "Step Stochastic Cross",
+    "family": "volatility",
+    "entry_long": "crossabove(close, ema(close, {p0}) - {p0} * atr(high, low, close, {p1}))",
+    "exit_long": "close < ema(close, {p2}) - {p1} * atr(high, low, close, 14)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The ATR-based Step Stochastic is rebuilt as fast and slow EMA channels offset by 1x and 3x ATR(14), with a reclaim of the fast channel buying and losing the slow channel exiting; the multipliers are explicit fallbacks because KFast and KSlow carry no values. The price-unit stop/target and the buy/sell permission flags are not roster fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

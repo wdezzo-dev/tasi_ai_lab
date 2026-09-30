@@ -1,0 +1,49 @@
+{
+  "strategy_id": 1899,
+  "name": "Adaptive Renko",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "3002",
+    "6016"
+  ],
+  "template": {
+    "id": 1899,
+    "name": "Adaptive Renko",
+    "family": "volatility",
+    "entry_long": "roc(close,{p0}) > (atr(high,low,close,{p1}) / close) * {p0} and close > open",
+    "exit_long": "roc(close,{p2}) < -(atr(high,low,close,14) / close) * {p1} or close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A one-bar move exceeding one ATR(14), converted to ROC percent, is the explicit proxy for traveling one adaptive Renko brick. The reverse move exits. The source supplies no numeric defaults and the DSL cannot retain running bricks or a minimum brick size."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

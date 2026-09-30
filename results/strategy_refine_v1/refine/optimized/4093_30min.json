@@ -1,0 +1,52 @@
+{
+  "strategy_id": 4093,
+  "name": "Neuro Nirvaman MQ4",
+  "family": "trend",
+  "timeframe": "30min",
+  "tickers": [
+    "4322"
+  ],
+  "template": {
+    "id": 4093,
+    "name": "Neuro Nirvaman MQ4",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and adx(high,low,close,{p1}) > {p0}",
+    "exit_long": "close < donchian_low_prev(low,{p2}) or adx(high,low,close,14) < {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Laguerre-filtered +DI streams, perceptrons and supervisor have no DSL equivalent, so the SilverTrend(7) breakout is combined with the documented ADX period 14 as the strength gate (25/20 are stated defaults). The 100/50-point take-profit and stop and the perceptron weights cannot be expressed."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        20.0,
+        25.0,
+        30.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        5,
+        7,
+        10,
+        14
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,50 @@
+{
+  "strategy_id": 2492,
+  "name": "Gazonkos Rollback",
+  "family": "momentum",
+  "timeframe": "Daily",
+  "tickers": [
+    "6018"
+  ],
+  "template": {
+    "id": 2492,
+    "name": "Gazonkos Rollback",
+    "family": "momentum",
+    "entry_long": "roc(close,{p0}) > {p0} and roc(close,{p1}) <= {p1}",
+    "exit_long": "roc(close,{p2}) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented 0.004 absolute momentum threshold is normalized to 0.4% and the shifts 3/2 are approximated by three- and one-bar ROC. State-based rollback tracking and absolute-price SL 0.0040/TP 0.0016 are not percentage fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        0.4,
+        0.6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

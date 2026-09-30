@@ -1,0 +1,56 @@
+{
+  "strategy_id": 988,
+  "name": "Logistic RSI STOCH ROC AO",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "1182",
+    "7202"
+  ],
+  "template": {
+    "id": 988,
+    "name": "Logistic RSI STOCH ROC AO",
+    "family": "momentum",
+    "entry_long": "crossabove(zscore(rsi(close,{p0}),{p1}),{p2})",
+    "exit_long": "crossbelow(zscore(rsi(close,14),13),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The logistic map and the signed standard deviation are not computable, so the documented Length 13 is applied as a z-score of RsiLength 14 and the documented zero-cross rule is used directly. The AO, ROC and Stochastic input variants, LenLd 5 and Highest smoothing are dropped; docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

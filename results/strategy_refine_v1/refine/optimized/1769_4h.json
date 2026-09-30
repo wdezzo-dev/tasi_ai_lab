@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1769,
+  "name": "Follow Your Heart",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "5110"
+  ],
+  "template": {
+    "id": 1769,
+    "name": "Follow Your Heart",
+    "family": "volatility",
+    "entry_long": "roc(open,{p0}) > {p0} and roc(close,{p1}) > {p1} and roc(high,{p2}) > 2.3 and roc(low,6) > 2.3 and roc(open,6) + roc(close,6) + roc(high,6) + roc(low,6) > 0",
+    "exit_long": "roc(open,6) + roc(close,6) + roc(high,6) + roc(low,6) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The six-bar relative changes of open, close, high and low must all clear Level=2.3 with a positive sum for the long, and the mirrored sum turns negative to exit. ROC is a percentage, so the 2.3 threshold is read in percent rather than the documented price points; the account-currency profit/loss limits, 550-point stop and target, and session hours are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.3,
+        2.3,
+        3.3
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1.3,
+        2.3,
+        3.3
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        3,
+        4,
+        6,
+        9,
+        12
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

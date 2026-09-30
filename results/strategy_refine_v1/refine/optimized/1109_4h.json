@@ -1,0 +1,53 @@
+{
+  "strategy_id": 1109,
+  "name": "Nadaraya-Watson Envelope",
+  "family": "other",
+  "timeframe": "4h",
+  "tickers": [
+    "2230",
+    "4162"
+  ],
+  "template": {
+    "id": 1109,
+    "name": "Nadaraya-Watson Envelope",
+    "family": "other",
+    "entry_long": "crossabove(close, sma(close,{p0}) - {p0} * std(close,{p1}))",
+    "exit_long": "crossbelow(close, sma(close,{p2}) + {p1} * std(close,8))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Nadaraya-Watson kernel regression in log scale is approximated by the documented LookbackWindow 8 as an SMA with a dispersion band; the 0.5 band width is a fallback because RelativeWeighting 8 is a smoothing weight, not an offset. Long-only mode keeps only the lower-envelope cross in and the upper-envelope cross out."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.3,
+        0.5,
+        0.7
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        6,
+        8,
+        12,
+        16
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

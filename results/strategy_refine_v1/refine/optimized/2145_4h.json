@@ -1,0 +1,44 @@
+{
+  "strategy_id": 2145,
+  "name": "I Gap",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "1210",
+    "3008",
+    "4320",
+    "7200"
+  ],
+  "template": {
+    "id": 2145,
+    "name": "I Gap",
+    "family": "volatility",
+    "entry_long": "open < close * {p0}",
+    "exit_long": "open > close * {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A 0.5% opening gap is an explicit normalization for the documented five price steps, with the mirror gap closing long. The broker price step and position flags are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.795,
+        0.995,
+        1.195
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.005,
+        1.005,
+        2.005
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

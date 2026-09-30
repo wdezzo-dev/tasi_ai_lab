@@ -1,0 +1,58 @@
+{
+  "strategy_id": 99,
+  "name": "Tweezer Bottom",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "4019"
+  ],
+  "template": {
+    "id": 99,
+    "name": "Tweezer Bottom",
+    "family": "pattern",
+    "entry_long": "low <= donchian_low_prev(low,{p0}) and close > open and close > donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "Tweezer bottom: two candles share a low within 2 bars, then close bullish above prior high. StopLoss=2% documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

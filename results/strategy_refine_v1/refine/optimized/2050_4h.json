@@ -1,0 +1,56 @@
+{
+  "strategy_id": 2050,
+  "name": "VininI Trend LRMA",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "3060",
+    "4262"
+  ],
+  "template": {
+    "id": 2050,
+    "name": "VininI Trend LRMA",
+    "family": "trend",
+    "entry_long": "crossabove(zscore(close,{p0}),{p1}) and roc(close,{p2}) > 0",
+    "exit_long": "crossbelow(zscore(close,13),0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Z-score(13) replaces the unavailable linear-regression moving average, with zero substituting the instrument-specific +10/-10 breakdown levels. The Twist mode, 4-hour timeframe, and opposite-signal exit are approximated; no stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0,
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        26
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

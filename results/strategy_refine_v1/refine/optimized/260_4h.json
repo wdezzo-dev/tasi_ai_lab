@@ -1,0 +1,56 @@
+{
+  "strategy_id": 260,
+  "name": "Supertrend Distance Breakout",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2020",
+    "4164"
+  ],
+  "template": {
+    "id": 260,
+    "name": "Supertrend Distance Breakout",
+    "family": "trend",
+    "entry_long": "high > donchian_high_prev(high,{p0})",
+    "exit_long": "close < (donchian_high_prev(high,{p1}) + donchian_low_prev(low,{p2})) / {p0}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Supertrend is unavailable; the documented 20-bar lookback is represented by a prior-high breakout and midpoint reversion. The 10/3/2 Supertrend and deviation parameters, stop, and short side are not expressible as this long DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

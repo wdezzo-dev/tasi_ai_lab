@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1895,
+  "name": "Renko Live Charts Pimped",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2020"
+  ],
+  "template": {
+    "id": 1895,
+    "name": "Renko Live Charts Pimped",
+    "family": "trend",
+    "entry_long": "close > ema(close,{p0}) + atr(high,low,close,{p1}) and close > open",
+    "exit_long": "close < ema(close,{p2}) - atr(high,low,close,24) and close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Renko bars do not exist in this engine, so a brick step measured as one documented AtrPeriod=24 unit away from the base line stands in for the direction flip. BoxSize=10m and UseAtrMa/AtrMaPeriod=120 have no expressible price equivalent, and the docs state no stops."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        18,
+        24,
+        36,
+        48
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        18,
+        24,
+        36,
+        48
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        18,
+        24,
+        36,
+        48
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

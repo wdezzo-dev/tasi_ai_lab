@@ -1,0 +1,262 @@
+{
+  "strategy_id": 348,
+  "name": "Stochastic Implied Volatility Skew",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "2083",
+    "2283"
+  ],
+  "template": {
+    "id": 348,
+    "name": "Stochastic Implied Volatility Skew",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(close,{p0}),{p1}) and zscore(roc(close,{p2}),20) > {p0}",
+    "exit_long": "crossbelow(rsi(close,14),50)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The entry conditions are not documented ('see implementation'), so the documented Stochastic is approximated by RSI(14) with a trend-confirmation cross and the IvPeriod 20 implied-volatility proxy as a 20-bar z-score of ROC(20) above zero. StochK/StochD smoothing and the ATR-multiple stop logic are not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 0.2,
+      "p1": 25,
+      "p2": 1
+    },
+    "best_value": -100.0,
+    "trials": [
+      {
+        "number": 0,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 25,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 1,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 50,
+          "p2": 30
+        },
+        "summary": {}
+      },
+      {
+        "number": 2,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 50,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 3,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 1,
+          "p2": 20
+        },
+        "summary": {}
+      },
+      {
+        "number": 4,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 1,
+          "p2": 30
+        },
+        "summary": {}
+      },
+      {
+        "number": 5,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 25,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 6,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 1,
+          "p2": 20
+        },
+        "summary": {}
+      },
+      {
+        "number": 7,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 50,
+          "p2": 40
+        },
+        "summary": {}
+      },
+      {
+        "number": 8,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 1,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 9,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 75,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 10,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 25,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 11,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 100,
+          "p2": 30
+        },
+        "summary": {}
+      },
+      {
+        "number": 12,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 50,
+          "p2": 30
+        },
+        "summary": {}
+      },
+      {
+        "number": 13,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 50,
+          "p2": 15
+        },
+        "summary": {}
+      },
+      {
+        "number": 14,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 25,
+          "p2": 40
+        },
+        "summary": {}
+      },
+      {
+        "number": 15,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 75,
+          "p2": 10
+        },
+        "summary": {}
+      },
+      {
+        "number": 16,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 25,
+          "p2": 20
+        },
+        "summary": {}
+      },
+      {
+        "number": 17,
+        "value": -100.0,
+        "params": {
+          "p0": 0.2,
+          "p1": 38,
+          "p2": 1
+        },
+        "summary": {}
+      },
+      {
+        "number": 18,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 75,
+          "p2": 30
+        },
+        "summary": {}
+      },
+      {
+        "number": 19,
+        "value": -100.0,
+        "params": {
+          "p0": 0.0,
+          "p1": 38,
+          "p2": 30
+        },
+        "summary": {}
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

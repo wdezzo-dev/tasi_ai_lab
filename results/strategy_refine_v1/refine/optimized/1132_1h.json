@@ -1,0 +1,56 @@
+{
+  "strategy_id": 1132,
+  "name": "Octopus Nest",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "3050"
+  ],
+  "template": {
+    "id": 1132,
+    "name": "Octopus Nest",
+    "family": "trend",
+    "entry_long": "close > bb_upper(close,{p0},{p1}) and ema(close,{p2}) > ema(close,50) and close > ema(close,20)",
+    "exit_long": "close < ema(close,20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The squeeze release is taken as a close above the Bollinger upper band with the documented EMA trend filter and price above the EMA; the Keltner/BB squeeze comparison needs a max() the DSL lacks and Parabolic SAR is unavailable, so both legs are dropped. Stops at recent extremes and the risk-reward target are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

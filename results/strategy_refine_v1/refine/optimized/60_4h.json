@@ -1,0 +1,51 @@
+{
+  "strategy_id": 60,
+  "name": "Shooting Star Reversal",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "4001"
+  ],
+  "template": {
+    "id": 60,
+    "name": "Shooting Star Reversal",
+    "family": "pattern",
+    "entry_long": "close > open and (high - close) >= {p0} * (close - open) and close > sma(close,{p0})",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": "{sl}",
+    "take_profit_pct": null,
+    "notes": "After shooting star (upper shadow >= 2x body), wait for bullish confirmation close above MA(20). ShadowToBodyRatio=2.0. StopLoss=1%."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "sl": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

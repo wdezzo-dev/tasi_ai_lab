@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1145,
+  "name": "Order Block Finder",
+  "family": "other",
+  "timeframe": "4h",
+  "tickers": [
+    "2286",
+    "3008",
+    "4005",
+    "4324"
+  ],
+  "template": {
+    "id": 1145,
+    "name": "Order Block Finder",
+    "family": "other",
+    "entry_long": "crossabove(close, sma(close,{p0})) and roc(close,{p1}) > {p2}",
+    "exit_long": "crossbelow(close, sma(close,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A bullish order block becomes a close reclaiming the short average after a run of down candles, with the confirming impulse scaled by 1 percent; Relevant Periods, Min Percent Move and Use Whole Range carry no values, so 3 bars and 1 percent are fallbacks. Open-based block boundaries and higher-timeframe confirmation are not represented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

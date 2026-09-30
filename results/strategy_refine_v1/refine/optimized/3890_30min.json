@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3890,
+  "name": "ASCPlusPlus",
+  "family": "breakout",
+  "timeframe": "30min",
+  "tickers": [
+    "3005"
+  ],
+  "template": {
+    "id": 3890,
+    "name": "ASCPlusPlus",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and atr(high,low,close,{p1}) < sma(atr(high,low,close,{p2}),20)",
+    "exit_long": "close < donchian_low_prev(low,10)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A prior ten-bar high break during below-average ATR(10) approximates the narrow-range breakout; the opposite range break exits. Williams %R, confirmation counters, stop-order offsets, and point-based protection are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

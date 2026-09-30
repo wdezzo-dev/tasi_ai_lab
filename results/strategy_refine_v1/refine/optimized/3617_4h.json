@@ -1,0 +1,54 @@
+{
+  "strategy_id": 3617,
+  "name": "Resonance Hunter",
+  "family": "momentum",
+  "timeframe": "4h",
+  "tickers": [
+    "2120",
+    "3010",
+    "4011"
+  ],
+  "template": {
+    "id": 3617,
+    "name": "Resonance Hunter",
+    "family": "momentum",
+    "entry_long": "rsi(close,{p0}) < {p0} and crossabove(rsi(close,{p1}),sma(rsi(close,{p2}),3))",
+    "exit_long": "rsi(close,14) > {p1} or crossbelow(rsi(close,14),sma(rsi(close,14),3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The three-slot design needs secondary and confirmation instruments, so only the primary symbol's Stochastic resonance is translated, with RSI(14) and its SMA(3) standing in for %K/%D. The K/D/Slowing periods and the point stop-loss are not documented percent values and are noted as fallbacks."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        35.0,
+        40.0,
+        45.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        65.0,
+        70.0,
+        75.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

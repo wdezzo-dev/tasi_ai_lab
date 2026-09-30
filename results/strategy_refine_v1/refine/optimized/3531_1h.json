@@ -1,0 +1,55 @@
+{
+  "strategy_id": 3531,
+  "name": "RSI MA on RSI Dual",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4264"
+  ],
+  "template": {
+    "id": 3531,
+    "name": "RSI MA on RSI Dual",
+    "family": "trend",
+    "entry_long": "crossabove(ema(rsi(close, {p0}), {p1}), ema(rsi(close, {p2}), 9)) and ema(rsi(close, 5), 9) > {p0}",
+    "exit_long": "crossbelow(ema(rsi(close, 5), 9), ema(rsi(close, 21), 9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Two RSI streams (5 and 21) smoothed by the same MA(9) reproduce the documented dual-RSI cross while a neutral level of 50 is used because NeutralLevel has no documented value. The session filter, direction flags, signal reversal and CloseOpposite/OnlyOnePosition switches are configuration, not signals."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        45.0,
+        50.0,
+        55.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        16,
+        21,
+        32,
+        42
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,55 @@
+{
+  "strategy_id": 944,
+  "name": "IU Range Trading",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "3050"
+  ],
+  "template": {
+    "id": 944,
+    "name": "IU Range Trading",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and high - low <= {p0} * atr(high,low,close,{p1})",
+    "exit_long": "close < ema(close,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A prior 10-bar high break while the bar stays within 1.75 ATR(14) approximates the narrow-range breakout condition. The ATR target factor 2.0 is dynamic, and trailing-stop state cannot be encoded."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.75,
+        1.75,
+        2.75
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

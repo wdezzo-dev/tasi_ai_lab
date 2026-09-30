@@ -1,0 +1,57 @@
+{
+  "strategy_id": 3162,
+  "name": "Hoop Master",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "1214",
+    "2020",
+    "4261"
+  ],
+  "template": {
+    "id": 3162,
+    "name": "Hoop Master",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and volume_ratio(volume,{p1}) > {p0}",
+    "exit_long": "crossbelow(close,ema(close,{p2}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A close above the prior two-bar high with above-average volume is a stateless breakout-order proxy. Pending-order recycling, doubling/martingale size, pip indentation, and unspecified stop/target/trailing distances are not DSL fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        1.2,
+        2.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

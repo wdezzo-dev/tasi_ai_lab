@@ -1,0 +1,58 @@
+{
+  "strategy_id": 4197,
+  "name": "OsMaMaster",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4325"
+  ],
+  "template": {
+    "id": 4197,
+    "name": "OsMaMaster",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}) - macd_signal(close,{p2},26,5), 0)",
+    "exit_long": "crossbelow(macd(close,9,26) - macd_signal(close,9,26,5), 0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Documented MACD parameters are used (fast 9, slow 26, signal 5) and the OsMA turning point is approximated by the histogram crossing zero, which is the documented momentum-reversal event. The four Shift parameters select which histogram values are compared and cannot be reproduced without bar shifting, and the 50/50 pip stop and target are pip offsets rather than percentages."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

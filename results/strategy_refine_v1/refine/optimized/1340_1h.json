@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1340,
+  "name": "Stochastic RSI OHLC",
+  "family": "momentum",
+  "timeframe": "1h",
+  "tickers": [
+    "2210",
+    "4003"
+  ],
+  "template": {
+    "id": 1340,
+    "name": "Stochastic RSI OHLC",
+    "family": "momentum",
+    "entry_long": "roc(rsi(close, {p0}), {p1}) > {p0} and bars_since(crossabove(rsi(close, {p2}), 30)) < {p1}",
+    "exit_long": "roc(rsi(close, 14), 1) < 0 and bars_since(crossbelow(rsi(close, 14), 60)) < 3",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Stochastic RSI of high/low/close is approximated by close-only RSI(14): rising RSI that crossed the documented LongEntry 30 within three bars stands for the pivot-and-three-bar confirmation, and the falling ShortEntry 60 case is the mirrored exit. The LongPivot 2 / ShortPivot 98 levels, K/D smoothing, and OHLC-built bars are dropped."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

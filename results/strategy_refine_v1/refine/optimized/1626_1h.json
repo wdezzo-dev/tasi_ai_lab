@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1626,
+  "name": "Parabolic SAR Bug5",
+  "family": "momentum",
+  "timeframe": "1h",
+  "tickers": [
+    "4020"
+  ],
+  "template": {
+    "id": 1626,
+    "name": "Parabolic SAR Bug5",
+    "family": "momentum",
+    "entry_long": "crossabove(close, ema(close, {p0})) and volume_ratio(volume, {p1}) > {p0}",
+    "exit_long": "crossbelow(close, ema(close, {p2})) and volume_ratio(volume, 20) > {p1}",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is unavailable, so a price/EMA(10) crossing stands in for the documented price crossing the SAR, with an above-average volume confirmation on the documented 20-period baseline; the opposite cross with confirmation is the exit. Step, Maximum, StopLossPoints, TakeProfitPoints, TrailPoints, Reverse and SarClose are acceleration, point and boolean fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,59 @@
+{
+  "strategy_id": 2152,
+  "name": "Kalman Filter Candles",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "1302",
+    "4030"
+  ],
+  "template": {
+    "id": 2152,
+    "name": "Kalman Filter Candles",
+    "family": "trend",
+    "entry_long": "crossabove(ema(close,{p0}),ema(open,{p1}))",
+    "exit_long": "crossbelow(ema(close,{p2}),ema(open,10))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Separately smoothed close and open series approximate the two Kalman streams and retain bullish and bearish color changes. EMA length 10 is an explicit fallback for the unspecified process noise; exact adaptive filtering is unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

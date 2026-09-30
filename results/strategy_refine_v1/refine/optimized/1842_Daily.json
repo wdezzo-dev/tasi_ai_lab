@@ -1,0 +1,152 @@
+{
+  "strategy_id": 1842,
+  "name": "TSI WPR Cross",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "7010"
+  ],
+  "template": {
+    "id": 1842,
+    "name": "TSI WPR Cross",
+    "family": "trend",
+    "entry_long": "crossabove(ema({p0} * (close - donchian_high(high, {p0})) / (donchian_high(high, {p1}) - donchian_low(low, {p2})), 13) - ema({p1} * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), ema(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), 13))",
+    "exit_long": "crossbelow(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), ema(ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 13) - ema(100 * (close - donchian_high(high, 14)) / (donchian_high(high, 14) - donchian_low(low, 14)), 25), 13))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Williams %R is rebuilt as the Donchian stochastic of the 14-bar range and the TSI as the EMA(13)-EMA(25) spread of that oscillator with an EMA(13) signal; the bullish cross opens and the bearish cross closes. All lengths are explicit fallbacks because the parameters carry no values, the denominator can be zero in a flat range, and StartProtection/chart areas are unsupported."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        95.0,
+        100.0,
+        105.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 21,
+      "p1": 100.0,
+      "p2": 1
+    },
+    "best_value": 0.7103004241900392,
+    "trials": [
+      {
+        "number": 35,
+        "value": 0.7103004241900392,
+        "params": {
+          "p0": 21,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.11387152158087543,
+          "median_cagr": 0.004381292334227682,
+          "median_sharpe": 0.129862840185902,
+          "median_drawdown": -0.1717530621629766,
+          "profitable_fraction": 1.0,
+          "median_trades": 8.0
+        }
+      },
+      {
+        "number": 36,
+        "value": 0.7103004241900392,
+        "params": {
+          "p0": 21,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.11387152158087543,
+          "median_cagr": 0.004381292334227682,
+          "median_sharpe": 0.129862840185902,
+          "median_drawdown": -0.1717530621629766,
+          "profitable_fraction": 1.0,
+          "median_trades": 8.0
+        }
+      },
+      {
+        "number": 37,
+        "value": 0.7103004241900392,
+        "params": {
+          "p0": 21,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.11387152158087543,
+          "median_cagr": 0.004381292334227682,
+          "median_sharpe": 0.129862840185902,
+          "median_drawdown": -0.1717530621629766,
+          "profitable_fraction": 1.0,
+          "median_trades": 8.0
+        }
+      },
+      {
+        "number": 38,
+        "value": 0.7103004241900392,
+        "params": {
+          "p0": 21,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.11387152158087543,
+          "median_cagr": 0.004381292334227682,
+          "median_sharpe": 0.129862840185902,
+          "median_drawdown": -0.1717530621629766,
+          "profitable_fraction": 1.0,
+          "median_trades": 8.0
+        }
+      },
+      {
+        "number": 39,
+        "value": 0.7103004241900392,
+        "params": {
+          "p0": 21,
+          "p1": 100.0,
+          "p2": 1
+        },
+        "summary": {
+          "tickers": 1,
+          "median_return": 0.11387152158087543,
+          "median_cagr": 0.004381292334227682,
+          "median_sharpe": 0.129862840185902,
+          "median_drawdown": -0.1717530621629766,
+          "profitable_fraction": 1.0,
+          "median_trades": 8.0
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,58 @@
+{
+  "strategy_id": 685,
+  "name": "Donchian Breakout",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "6015"
+  ],
+  "template": {
+    "id": 685,
+    "name": "Donchian Breakout",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > ema(close,{p1}) and rsi(close,{p2}) > 50",
+    "exit_long": "close < donchian_low_prev(low,10)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "20-bar Donchian upper breakout (prior-bar channel high per DSL) confirmed by EMA(50) trend and RSI(14) > 50; exit on opposite 10-bar lower breakout (ExitLength=10 documented). Corpus ATR-based stop (AtrMultiplier=1.5, AtrLength=14) not representable as fixed pct; left null. Documented volume/ATR envelope filters omitted as values are undocumented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

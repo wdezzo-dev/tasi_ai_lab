@@ -1,0 +1,52 @@
+{
+  "strategy_id": 2219,
+  "name": "Fibo Candles Trend",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4324"
+  ],
+  "template": {
+    "id": 2219,
+    "name": "Fibo Candles Trend",
+    "family": "trend",
+    "entry_long": "crossabove(close,donchian_high(high,{p0}) - {p0} * (donchian_high(high,{p1}) - donchian_low(low,{p2})))",
+    "exit_long": "crossbelow(close,donchian_high(high,10) - {p1} * (donchian_high(high,10) - donchian_low(low,10)))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The bullish candle colour is a close inside the top 23.6% of the 10-bar high/low range, so its flip is a cross of that Fibo level. The documented 1000/2000-point stop and target are absolute point distances, not percentages, so both fields stay null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.036,
+        0.236,
+        0.436
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.036,
+        0.236,
+        0.436
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

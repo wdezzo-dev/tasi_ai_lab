@@ -1,0 +1,48 @@
+{
+  "strategy_id": 869,
+  "name": "Hamster Bot MRS 2",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4100",
+    "4240",
+    "7040",
+    "7200"
+  ],
+  "template": {
+    "id": 869,
+    "name": "Hamster Bot MRS 2",
+    "family": "trend",
+    "entry_long": "crossabove(close, sma(close,{p0}))",
+    "exit_long": "crossbelow(close, sma(close,{p1}))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The MA Length=3 level is exact and the reverse crossing is the documented exit. Shift=1 offsets the average by one bar in MetaTrader, which the DSL cannot reproduce because no series can be lagged, so the current SMA(3) level is used; no stops are documented."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

@@ -1,0 +1,52 @@
+{
+  "strategy_id": 825,
+  "name": "FVG Breakout Lite",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "6020"
+  ],
+  "template": {
+    "id": 825,
+    "name": "FVG Breakout Lite",
+    "family": "breakout",
+    "entry_long": "low > donchian_low_prev(low,{p0}) and close > donchian_high_prev(high,{p1})",
+    "exit_long": "close < donchian_low_prev(low,{p2})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The exact 3-candle imbalance (low[t-2] above high[t-1]) cannot be isolated with windowed Donchians, so the pattern is approximated by a candle trading wholly above the prior two-bar range and closing beyond its high, with a fall back into that range as the gap-fill exit. The percentage stop-loss is mentioned without a value."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

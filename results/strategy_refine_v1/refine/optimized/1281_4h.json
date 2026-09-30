@@ -1,0 +1,59 @@
+{
+  "strategy_id": 1281,
+  "name": "RSI Adaptive T3",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2210",
+    "4300"
+  ],
+  "template": {
+    "id": 1281,
+    "name": "RSI Adaptive T3",
+    "family": "trend",
+    "entry_long": "crossabove(roc({p0} * ema(close,{p0}) - {p1} * ema(ema(close,{p1}),{p2}) + ema(ema(ema(close,5),5),5), 2), 0)",
+    "exit_long": "crossbelow(roc(3 * ema(close,5) - 3 * ema(ema(close,5),5) + ema(ema(ema(close,5),5),5), 2), 0)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "T3 is rebuilt with the standard 3*EMA-3*EMA+EMA combination at the documented MinT3Length=5, and its two-bar lag is expressed as a 2-bar ROC because shifted values cannot be referenced. The RSI-adaptive length, MaxT3Length=50 adaptation and VolumeFactor=0.7 filter are dropped, and the opposite cross is the exit."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

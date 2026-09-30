@@ -1,0 +1,43 @@
+{
+  "strategy_id": 1744,
+  "name": "Renko Live Chart",
+  "family": "volatility",
+  "timeframe": "4h",
+  "tickers": [
+    "4324"
+  ],
+  "template": {
+    "id": 1744,
+    "name": "Renko Live Chart",
+    "family": "volatility",
+    "entry_long": "roc(close,{p0}) > {p1} and close > open",
+    "exit_long": "roc(close,{p2}) < {p0} or close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A 1% one-bar upward move with a bullish candle is a price-momentum fallback for an upward Renko brick; the reverse is the exit. Brick size, offset, wick handling, brick persistence, and automatic protection are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": []
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

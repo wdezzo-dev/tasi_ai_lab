@@ -1,0 +1,55 @@
+{
+  "strategy_id": 675,
+  "name": "Demo GPT - Day Trading Scalping",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1202",
+    "1321",
+    "1830",
+    "1831",
+    "1832",
+    "2110",
+    "4008",
+    "4030",
+    "4110",
+    "4323"
+  ],
+  "template": {
+    "id": 675,
+    "name": "Demo GPT - Day Trading Scalping",
+    "family": "trend",
+    "entry_long": "close > open and roc(close,{p0}) > {p0} and volume_ratio(volume,{p1}) > {p2}",
+    "exit_long": "close < open and roc(close,1) < {p1} and volume_ratio(volume,20) > 1",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Two green bars with volume above the 20-bar average become a positive bar plus positive 1-bar return and volume_ratio > 1, with the mirrored red-bar exit. The open-versus-prior-close condition needs shifted opens; EMA(20), VWAP and Camarilla levels are reference-only and unused."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

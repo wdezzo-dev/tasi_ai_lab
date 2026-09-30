@@ -1,0 +1,58 @@
+{
+  "strategy_id": 4112,
+  "name": "Moving Average with Frames",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "6013"
+  ],
+  "template": {
+    "id": 4112,
+    "name": "Moving Average with Frames",
+    "family": "trend",
+    "entry_long": "open < sma(close,{p0}) and close > sma(close,{p1})",
+    "exit_long": "open > sma(close,{p2}) and close < sma(close,18)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented open-below/close-above crossover of the shifted SMA is kept; MovingPeriod=12 combined with MovingShift=6 is approximated by SMA(18) because shifted buffers are unavailable. The 100-bar warm-up is engine-level, and MaximumRisk/DecreaseFactor are sizing rules rather than percentage exits."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        9,
+        14,
+        18,
+        27,
+        36
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        9,
+        14,
+        18,
+        27,
+        36
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        9,
+        14,
+        18,
+        27,
+        36
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

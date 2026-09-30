@@ -1,0 +1,139 @@
+{
+  "strategy_id": 1571,
+  "name": "Z-Score RSI",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "1111",
+    "2286",
+    "4291"
+  ],
+  "template": {
+    "id": 1571,
+    "name": "Z-Score RSI",
+    "family": "trend",
+    "entry_long": "crossabove(rsi(zscore(close,{p0}),{p1}),ema(rsi(zscore(close,{p2}),9),15))",
+    "exit_long": "crossbelow(rsi(zscore(close,20),9),ema(rsi(zscore(close,20),9),15))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "All three documented lengths are used literally: the price z-score over ZScoreLength=20, its RSI(9) and the EMA(15) smoothing, with the long on the RSI-over-EMA cross and the opposite cross as exit. The docs list no stops, so both percentage fields are null."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        4,
+        7,
+        9,
+        14,
+        18
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "best_params": {
+      "p0": 20,
+      "p1": 7,
+      "p2": 30
+    },
+    "best_value": 2.893676106680154,
+    "trials": [
+      {
+        "number": 32,
+        "value": 2.893676106680154,
+        "params": {
+          "p0": 20,
+          "p1": 7,
+          "p2": 30
+        },
+        "summary": {
+          "tickers": 2,
+          "median_return": 5.192478978311721,
+          "median_cagr": 0.5663012567252291,
+          "median_sharpe": 2.0644642428101188,
+          "median_drawdown": -0.20393876449257892,
+          "profitable_fraction": 1.0,
+          "median_trades": 73.5
+        }
+      },
+      {
+        "number": 34,
+        "value": 2.893676106680154,
+        "params": {
+          "p0": 20,
+          "p1": 7,
+          "p2": 30
+        },
+        "summary": {
+          "tickers": 2,
+          "median_return": 5.192478978311721,
+          "median_cagr": 0.5663012567252291,
+          "median_sharpe": 2.0644642428101188,
+          "median_drawdown": -0.20393876449257892,
+          "profitable_fraction": 1.0,
+          "median_trades": 73.5
+        }
+      },
+      {
+        "number": 35,
+        "value": 2.893676106680154,
+        "params": {
+          "p0": 20,
+          "p1": 7,
+          "p2": 30
+        },
+        "summary": {
+          "tickers": 2,
+          "median_return": 5.192478978311721,
+          "median_cagr": 0.5663012567252291,
+          "median_sharpe": 2.0644642428101188,
+          "median_drawdown": -0.20393876449257892,
+          "profitable_fraction": 1.0,
+          "median_trades": 73.5
+        }
+      },
+      {
+        "number": 39,
+        "value": 2.893676106680154,
+        "params": {
+          "p0": 20,
+          "p1": 7,
+          "p2": 30
+        },
+        "summary": {
+          "tickers": 2,
+          "median_return": 5.192478978311721,
+          "median_cagr": 0.5663012567252291,
+          "median_sharpe": 2.0644642428101188,
+          "median_drawdown": -0.20393876449257892,
+          "profitable_fraction": 1.0,
+          "median_trades": 73.5
+        }
+      }
+    ]
+  },
+  "train_end": "2024-07-31"
+}

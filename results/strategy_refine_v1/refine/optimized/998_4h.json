@@ -1,0 +1,58 @@
+{
+  "strategy_id": 998,
+  "name": "LSMA Fast And Simple Alternative Calculation",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4146"
+  ],
+  "template": {
+    "id": 998,
+    "name": "LSMA Fast And Simple Alternative Calculation",
+    "family": "trend",
+    "entry_long": "crossabove(close, {p0} * ema(close,{p0}) - {p1} * sma(close,{p1}))",
+    "exit_long": "crossbelow(close, 3 * ema(close,{p2}) - 2 * sma(close,25))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented 3*WMA-2*SMA approximation is kept with the documented length 25, substituting EMA(25) for the unavailable weighted moving average; a close crossing the line enters and the opposite cross exits. Stops are documented as absent."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        19,
+        25,
+        38,
+        50
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        19,
+        25,
+        38,
+        50
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        19,
+        25,
+        38,
+        50
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

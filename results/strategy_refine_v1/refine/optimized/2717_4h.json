@@ -1,0 +1,47 @@
+{
+  "strategy_id": 2717,
+  "name": "Daily BreakPoint",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "4007"
+  ],
+  "template": {
+    "id": 2717,
+    "name": "Daily BreakPoint",
+    "family": "trend",
+    "entry_long": "close > open * {p0} and close - open >= {p1} * atr(high,low,close,{p0})",
+    "exit_long": "close < ema(close,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "A 2% move from the current bar open and a body of at least half ATR(14) proxy the separate daily-open and body-size rules; 2% is an explicit fallback because pips are unsupplied. The daily stream, pips stops, trailing step, and session state are unavailable."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

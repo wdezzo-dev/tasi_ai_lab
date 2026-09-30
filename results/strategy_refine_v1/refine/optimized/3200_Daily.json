@@ -1,0 +1,58 @@
+{
+  "strategy_id": 3200,
+  "name": "1H Bollinger Bands",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4325"
+  ],
+  "template": {
+    "id": 3200,
+    "name": "1H Bollinger Bands",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},26,9))",
+    "exit_long": "crossbelow(macd(close,6,26),macd_signal(close,6,26,9))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        3,
+        4,
+        6,
+        9,
+        12
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        13,
+        20,
+        26,
+        39,
+        52
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        3,
+        4,
+        6,
+        9,
+        12
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

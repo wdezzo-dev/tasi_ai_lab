@@ -1,0 +1,47 @@
+{
+  "strategy_id": 3674,
+  "name": "Raymond Cloudy Day",
+  "family": "breakout",
+  "timeframe": "15min",
+  "tickers": [
+    "6018"
+  ],
+  "template": {
+    "id": 3674,
+    "name": "Raymond Cloudy Day",
+    "family": "breakout",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and close > open",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The higher-timeframe Raymond pivot levels cannot be reproduced from a single candle series, so the prior 20-bar extreme stands in for the momentum-resumption level and the loss of a fresh 5-bar low exits. ProtectiveOffsetTicks=500 is an instrument-tick distance for both stop and target, not a percentage."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

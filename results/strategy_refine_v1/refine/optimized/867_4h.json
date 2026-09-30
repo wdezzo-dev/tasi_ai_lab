@@ -1,0 +1,32 @@
+{
+  "strategy_id": 867,
+  "name": "Hammer & Shooting Star",
+  "family": "pattern",
+  "timeframe": "4h",
+  "tickers": [
+    "6010"
+  ],
+  "template": {
+    "id": 867,
+    "name": "Hammer & Shooting Star",
+    "family": "pattern",
+    "entry_long": "close > open and (open - low) >= {p0} * (close - open) and (high - close) <= (close - open)",
+    "exit_long": "close < donchian_low_prev(low,{p0})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Hammer candle: lower shadow >= 2x body, upper shadow <= body. Long WickFactor=0.9, MaxOppositeWickFactor=0.45, MinBodyRangePct=0.2. No fixed stop; exit on prior low break."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

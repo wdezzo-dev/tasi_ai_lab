@@ -1,0 +1,44 @@
+{
+  "strategy_id": 1413,
+  "name": "HSI1 First 30m Candle",
+  "family": "breakout",
+  "timeframe": "4h",
+  "tickers": [
+    "2150",
+    "4148"
+  ],
+  "template": {
+    "id": 1413,
+    "name": "HSI1 First 30m Candle",
+    "family": "breakout",
+    "entry_long": "crossabove(close,donchian_high_prev(high,{p0}))",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The first 30-minute range is approximated by the prior two 15-minute bars; a cross above that rolling high is the long breakout. Session reset, one-trade-per-day, and range-derived TP/SL cannot be represented in this daily OHLCV DSL, and the short side is omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

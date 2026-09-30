@@ -1,0 +1,58 @@
+{
+  "strategy_id": 1276,
+  "name": "RSI",
+  "family": "mean_reversion",
+  "timeframe": "30min",
+  "tickers": [
+    "4011"
+  ],
+  "template": {
+    "id": 1276,
+    "name": "RSI",
+    "family": "mean_reversion",
+    "entry_long": "crossabove(rsi(close,{p0}), {p1})",
+    "exit_long": "crossbelow(rsi(close,{p2}), 75)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "All three documented values are used verbatim: RsiLength 14, OverSold 25 for the long cross and OverBought 75 for the opposite-signal exit, with the short branch ignored. The doc states Stops: No, so both percentage fields are null, and the 5-minute CandleType is a subscription attribute the roster cannot set."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        12,
+        19,
+        25,
+        38,
+        50
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

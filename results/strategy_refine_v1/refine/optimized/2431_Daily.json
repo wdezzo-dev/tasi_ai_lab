@@ -1,0 +1,58 @@
+{
+  "strategy_id": 2431,
+  "name": "Expert MACD EURUSD 1 Hour",
+  "family": "trend",
+  "timeframe": "Daily",
+  "tickers": [
+    "4016"
+  ],
+  "template": {
+    "id": 2431,
+    "name": "Expert MACD EURUSD 1 Hour",
+    "family": "trend",
+    "entry_long": "crossabove(macd(close,{p0},{p1}),macd_signal(close,{p2},15,3))",
+    "exit_long": "crossbelow(macd(close,5,15),macd_signal(close,5,15,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "MACD-based reference translated to the local MACD 12/26/9-style DSL using documented periods where available; unsupported platform-specific filters/order handling are omitted."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        8,
+        11,
+        15,
+        22,
+        30
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        10
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

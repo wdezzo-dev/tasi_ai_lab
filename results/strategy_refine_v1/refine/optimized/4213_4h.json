@@ -1,0 +1,55 @@
+{
+  "strategy_id": 4213,
+  "name": "VmMatrix Double Zero",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "1183"
+  ],
+  "template": {
+    "id": 4213,
+    "name": "VmMatrix Double Zero",
+    "family": "trend",
+    "entry_long": "crossabove(close, open) and sma(close,{p0}) > sma(close,{p1}) and volume_ratio(volume,{p2}) > {p0}",
+    "exit_long": "crossbelow(close, open) or close < sma(close,20)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The double-zero level is the previous close, which equals the current open, so the trigger is a close crossing back above the prior close, with the matrix bias read as a 10/50 SMA stack and the optional volume check as volume_ratio(volume,20) > 1; all lengths are fallbacks. The terminal-time window, ATR acceleration gate, daily CCI, adaptive take-profit and pip stops are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        25,
+        38,
+        50,
+        75,
+        100
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

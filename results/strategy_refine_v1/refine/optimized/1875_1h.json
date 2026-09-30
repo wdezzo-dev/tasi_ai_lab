@@ -1,0 +1,51 @@
+{
+  "strategy_id": 1875,
+  "name": "Genie",
+  "family": "trend",
+  "timeframe": "1h",
+  "tickers": [
+    "4290"
+  ],
+  "template": {
+    "id": 1875,
+    "name": "Genie",
+    "family": "trend",
+    "entry_long": "crossabove(close, donchian_high_prev(high,{p0})) and roc(close,{p1}) > {p0} and adx(high,low,close,{p2}) > {p1}",
+    "exit_long": "crossbelow(close, donchian_low_prev(low,3))",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "Parabolic SAR is unavailable, so the documented SAR flip up becomes a cross above the prior 3-bar high, the +DI-over--DI flip is proxied by a positive one-bar return, and ADX(14) > 20 stands in for the ADX-above-both-DI condition. SarStep, TakeProfit 500 and TrailingStop 200 are absolute price units with no percentage field."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        15.0,
+        20.0,
+        25.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

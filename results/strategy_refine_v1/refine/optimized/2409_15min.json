@@ -1,0 +1,47 @@
+{
+  "strategy_id": 2409,
+  "name": "Turtle Trader SAR",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "6015"
+  ],
+  "template": {
+    "id": 2409,
+    "name": "Turtle Trader SAR",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0})",
+    "exit_long": "close < donchian_low_prev(low,{p1})",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The documented entry and exit rules are used directly: a close above the prior ShortPeriod 20 Donchian high enters long and the opposite ExitPeriod 10 low break exits. ATR(20) stop and take levels (StopAtr/TakeAtr 1), LongPeriod 55, pyramiding AddInterval, ATR risk sizing and the optional Parabolic SAR trail have no percentage or position-layer equivalent in the DSL."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        1,
+        10,
+        15,
+        20,
+        30,
+        40
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

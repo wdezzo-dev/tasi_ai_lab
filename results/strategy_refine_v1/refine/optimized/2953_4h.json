@@ -1,0 +1,51 @@
+{
+  "strategy_id": 2953,
+  "name": "Freeman",
+  "family": "trend",
+  "timeframe": "4h",
+  "tickers": [
+    "2010"
+  ],
+  "template": {
+    "id": 2953,
+    "name": "Freeman",
+    "family": "trend",
+    "entry_long": "roc(rsi(close,{p0}),{p1}) > {p0} and bars_since(rsi(close,{p2}) < {p1}) < 5 and roc(ema(close,10),1) > 0",
+    "exit_long": "rsi(close,14) > 70 or roc(ema(close,10),1) < 0",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "One RSI teacher block is translated: an oversold reading (RsiSellLevel 30) on a recent bar turning higher while the fast MA (FirstMaPeriod 10) rises. Every period and level is a fallback since none are documented, and the separate hourly MA/RSI filter, second teacher, ATR stop/target factors, pip trailing, pyramiding, LockCoefficient, session hours and Friday switch are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        25.0,
+        30.0,
+        35.0
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        7,
+        10,
+        14,
+        21,
+        28
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

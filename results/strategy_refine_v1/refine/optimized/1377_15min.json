@@ -1,0 +1,52 @@
+{
+  "strategy_id": 1377,
+  "name": "Supertrend Hombrok Bot",
+  "family": "trend",
+  "timeframe": "15min",
+  "tickers": [
+    "4190"
+  ],
+  "template": {
+    "id": 1377,
+    "name": "Supertrend Hombrok Bot",
+    "family": "trend",
+    "entry_long": "close > donchian_high_prev(high,{p0}) and volume_ratio(volume,{p1}) > {p0} and (close - open) > {p1} * atr(high,low,close,{p2}) and rsi(close,14) < 70",
+    "exit_long": "close < ema(close,10) - 3.0 * atr(high,low,close,10)",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Supertrend state is proxied by a 10-bar upside break (AtrPeriod=10 as the lookback) while the documented filters are exact: VolumeMultiplier=1.2, BodyPctOfAtr=0.3, and RsiOverbought=70. The ATR(10) x 3.0 band below price is the documented ATR-based stop exit; the take profit, RiskRewardRatio=2, and CapitalPerTrade sizing are not percent fields."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        1.2,
+        2.2
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.1,
+        0.3,
+        0.5
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        5,
+        8,
+        10,
+        15,
+        20
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}

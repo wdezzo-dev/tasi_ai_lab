@@ -1,0 +1,49 @@
+{
+  "strategy_id": 2691,
+  "name": "Nova",
+  "family": "breakout",
+  "timeframe": "30min",
+  "tickers": [
+    "2288"
+  ],
+  "template": {
+    "id": 2691,
+    "name": "Nova",
+    "family": "breakout",
+    "entry_long": "close > open and roc(close,{p0}) > {p0} and roc(close,{p1}) > roc(close,{p2})",
+    "exit_long": "roc(close,1) < {p1} or close < open",
+    "stop_loss_pct": null,
+    "take_profit_pct": null,
+    "notes": "The Level1 ask-versus-stored-ask test is approximated on bars as a bullish candle that has gained more than 1% and is accelerating, with the reverse as exit. StepPips 1% is an explicit fallback; the seconds-based snapshot, StopLossPips/TakeProfitPips and LossCoefficient sizing are not expressible."
+  },
+  "parameter_space": {
+    "p0": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        1.0,
+        2.0
+      ]
+    },
+    "p1": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.2
+      ]
+    },
+    "p2": {
+      "type": "categorical",
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "optimize": {
+    "error": "No usable ticker data"
+  },
+  "train_end": "2024-07-31"
+}
