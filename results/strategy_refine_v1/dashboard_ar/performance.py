@@ -42,6 +42,7 @@ def overview_chart(td: pd.DataFrame) -> alt.VConcatChart:
     nearest_dd = mk_sel("cr_dd")
     nearest_bars = mk_sel("cr_bars")
     tt = [
+        alt.Tooltip("entry_time:T", title="تاريخ الدخول"),
         alt.Tooltip("exit_time:T", title="تاريخ الخروج"),
         alt.Tooltip("trade_no:Q", title="رقم الصفقة"),
         alt.Tooltip("pnl:Q", title="أرباح/خسارة (ر.س)", format=",.0f"),
@@ -98,7 +99,8 @@ def overview_chart(td: pd.DataFrame) -> alt.VConcatChart:
         .encode(
             x=alt.X("exit_time:T", title=None, scale=x_pad),
             y=alt.Y("dd_ratio:Q", title="التراجع (%)", axis=alt.Axis(format="%", titleColor=ORANGE, grid=True, gridColor="#2d363d", gridOpacity=0.6, labelFontSize=12, titleFontSize=12)),
-            tooltip=[alt.Tooltip("exit_time:T", title="تاريخ الخروج"),
+            tooltip=[alt.Tooltip("entry_time:T", title="تاريخ الدخول"),
+                     alt.Tooltip("exit_time:T", title="تاريخ الخروج"),
                      alt.Tooltip("dd_ratio:Q", title="التراجع", format="~%"),
                      alt.Tooltip("dd_sar:Q", title="التراجع (ر.س)", format=",.0f")],
         )
@@ -146,17 +148,24 @@ def style_sign(v, tint: bool = False) -> str:
 
 
 def trade_detail_table(td: pd.DataFrame) -> pd.DataFrame:
-    cols = ["trade_no", "exit_time", "side", "qty", "entry", "exit", "pnl", "fees", "reason", "cum_pnl", "equity"]
+    cols = ["trade_no", "entry_time", "exit_time", "side", "qty", "entry", "exit", "pnl", "fees", "reason", "cum_pnl", "equity"]
     out = td[cols[::-1]].copy()
     return out.rename(columns={
-        "trade_no": "رقم", "exit_time": "تاريخ الخروج", "side": "الجانب", "qty": "الكمية",
+        "trade_no": "رقم الصفقة", "exit_time": "تاريخ الخروج", "entry_time": "تاريخ الدخول", "side": "الجانب", "qty": "الكمية",
         "entry": "دخول", "exit": "خروج", "pnl": "الربح/الخسارة", "fees": "الرسوم",
         "reason": "سبب الإغلاق", "cum_pnl": "التراكمي", "equity": "رصيد الحساب",
     })
 
 
+def _fmt_ts(v, with_time: bool = False) -> str:
+    if with_time and (v.hour or v.minute):
+        return v.strftime("%d-%m-%Y %H:%M")
+    return v.strftime("%d-%m-%Y")
+
+
 TRADE_FORMAT = {
-    "تاريخ الخروج": lambda v: v.strftime("%d-%m-%Y"),
+    "تاريخ الخروج": lambda v: _fmt_ts(v, with_time=True),
+    "تاريخ الدخول": lambda v: _fmt_ts(v, with_time=True),
     "الكمية": "{:,.2f}", "دخول": "{:,.2f}", "خروج": "{:,.2f}",
     "الربح/الخسارة": "{:+,.2f}", "الرسوم": "{:,.2f}",
     "التراكمي": "{:+,.2f}", "رصيد الحساب": "{:,.2f}",
@@ -173,8 +182,9 @@ def styled_df(df: pd.DataFrame, subset, fmt: dict, tint: bool = False):
 
 
 TRADE_COL_DEF: dict[str, Any] = {
-    "رقم": st.column_config.NumberColumn("رقم", format="%d"),
-    "تاريخ الخروج": st.column_config.DatetimeColumn("تاريخ الخروج"),
+    "رقم الصفقة": st.column_config.NumberColumn("رقم الصفقة", format="%d"),
+    "تاريخ الخروج": st.column_config.DatetimeColumn("تاريخ الخروج", format="%d-%m-%Y %H:%M"),
+    "تاريخ الدخول": st.column_config.DatetimeColumn("تاريخ الدخول", format="%d-%m-%Y %H:%M"),
     "الجانب": st.column_config.TextColumn("الجانب"),
     "الكمية": st.column_config.NumberColumn("الكمية", format="%.2f"),
     "دخول": st.column_config.NumberColumn("دخول", format="%.2f"),

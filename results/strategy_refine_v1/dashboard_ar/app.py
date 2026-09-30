@@ -58,6 +58,10 @@ st.markdown(
     [data-testid="stCaptionContainer"] p { unicode-bidi: plaintext; }
     [data-testid="stMetricValue"], [data-testid="stMetricLabel"],
     [data-testid="stMetricDelta"] { direction: rtl; text-align: right; }
+    [data-testid="stHorizontalBlock"] [data-testid="stMetric"]:has([data-testid="stMetricDeltaIcon-Down"]) [data-testid="stMetricValue"] { color: #EF4444; }
+    [data-testid="stHorizontalBlock"] [data-testid="stMetric"]:has([data-testid="stMetricDeltaIcon-Up"]) [data-testid="stMetricValue"] { color: #22C55E; }
+    [data-testid="stVegaLiteChart"] { overflow: visible; }
+    [id$="-tabpanel-0"] [data-testid="stVegaLiteChart"] > svg { padding-right: 5rem; }
     [data-testid="stWidgetLabel"] { direction: rtl; text-align: right; }
     [data-testid="stHeader"] { direction: rtl; text-align: right; }
     [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] { direction: rtl; text-align: right; }
@@ -66,7 +70,7 @@ st.markdown(
     [data-testid="stExpander"] { direction: rtl; text-align: right; }
     .stTabs [data-baseweb="tab-list"] { gap: 6px; }
     .stTabs [data-baseweb="tab"] { direction: rtl; }
-    [data-testid="stVegaLiteChart"] { direction: ltr !important; overflow: hidden; }
+    [data-testid="stVegaLiteChart"] { direction: ltr !important; }
     [data-testid="stVegaLiteChart"] canvas { max-width: 100%; }
     [data-testid="stVegaLiteChart"] [class*="tooltip"] { direction: rtl !important; text-align: right; }
     [data-testid="stVegaLiteChart"] .vega-embed { width: 100%; }
@@ -226,7 +230,7 @@ df = cards[mask]
 st.title(f"{rl}لوحة نتائج تحسين الاستراتيجيات — السوق السعودي (TASI)")
 st.markdown(
     f"{rl}تحسين وتثبيت معاملات الاستراتيجيات على فترة تدريبية ثم التحقق خارج العينة "
-    "في نافذتين (التحقق: 01-08-2024 → 31-12-2025، والاختبار: 01-01-2026 → 21-09-2026). "
+    "في نافذتين (التحقق: 01-08-2024 ← 31-12-2025، والاختبار: 01-01-2026 ← 21-09-2026). "
     "كل الأرقام نتائج تاريخية وليست تعهدًا بأرباح مستقبلية."
 )
 
@@ -279,10 +283,10 @@ with tab_overview:
 
     with st.container(horizontal=True):
         st.metric(f"{rl}صافي الأرباح والخسائر", f"{net:+,.0f} ر.س", pct(net / INITIAL_CASH), border=True)
-        st.metric(f"{rl}الحد الأقصى للتراجع", f"{dd_sar:,.0f} ر.س", pct(dd_pct), delta_color="inverse", border=True)
-        st.metric(f"{rl}الصفقات الرابحة", f"{wins} / {n}", pct(win_rate), border=True)
+        st.metric(f"{rl}الحد الأقصى للتراجع", f"{dd_sar:,.0f} ر.س", pct(dd_pct), border=True)
+        st.metric(f"{rl}الصفقات الرابحة", f"{wins} / {n}", border=True)
         st.metric("عامل الربح", f"{pf:.2f}" if pf != float("inf") else "∞", border=True)
-        st.metric("متوسط الصفقة", f"{float(td['pnl'].mean()):+,.0f} ر.س", border=True)
+        st.metric("متوسط الصفقة", f"{float(td['pnl'].mean()):+,.0f} ر.س", pct(float(td["pnl"].mean()) / INITIAL_CASH), border=True)
 
     view_mode = st.segmented_control("العرض", ["رسم بياني", "جدول"], default="رسم بياني", key="ov_view")
     if view_mode == "جدول":
@@ -324,6 +328,63 @@ with tab_plots:
                 .properties(height=280)
             )
             st.altair_chart(bar, width="stretch")
+    with st.container(border=True):
+        st.markdown("**:material/query_stats: توزيع الناجين حسب الإطار الزمني**")
+        st.caption(
+            f"{rl}لكل إطار زمني: عدد الاستراتيجيات الناجية، عدد الأسهم التي تعمل فيها، "
+            "وداخل كل إطار يمكنك فتح تفاصيل الاستراتيجيات والرموز المعنية."
+        )
+        by_tf = (
+            df.groupby("timeframe")
+            .agg(survivors=("strategy_id", "nunique"), stocks=("ticker", "nunique"), cards=("strategy_id", "size"))
+            .reindex(TIMEFRAMES, fill_value=0)
+            .reset_index()
+        )
+        counts = by_tf.melt(id_vars="timeframe", value_vars=["survivors", "stocks"], var_name="type", value_name="count")
+        counts["label"] = counts["timeframe"].map(TF_AR)
+        counts["series"] = counts["type"].map({"survivors": "استراتيجيات ناجية", "stocks": "أسهم"})
+        axis_fmt = alt.Axis(grid=True, gridColor="#2d363d", gridOpacity=0.6, labelFontSize=13, titleFontSize=14)
+        tf_chart = (
+            alt.Chart(counts)
+            .mark_bar(opacity=0.85)
+            .encode(
+                x=alt.X("label:N", title="الإطار الزمني", sort=[TF_AR[t] for t in TIMEFRAMES], axis=axis_fmt),
+                xOffset=alt.XOffset("series:N"),
+                y=alt.Y("count:Q", title="العدد", axis=axis_fmt),
+                color=alt.Color("series:N", legend=alt.Legend(title=None), scale=alt.Scale(range=["#1a9850", "#2b83ba"])),
+                tooltip=[
+                    alt.Tooltip("label:N", title="الإطار"),
+                    alt.Tooltip("series:N", title="النوع"),
+                    alt.Tooltip("count:Q", title="العدد", format="d"),
+                ],
+            )
+            .properties(height=280)
+        )
+        st.altair_chart(tf_chart, width="stretch")
+        counts_tbl = pd.DataFrame({
+            "الإطار الزمني": [TF_AR[t] for t in by_tf["timeframe"]],
+            "استراتيجيات ناجية": by_tf["survivors"],
+            "أسهم": by_tf["stocks"],
+            "بطاقات": by_tf["cards"],
+        })
+        st.dataframe(
+            styled_df(counts_tbl, ["استراتيجيات ناجية", "أسهم", "بطاقات"], {"استراتيجيات ناجية": "{:d}", "أسهم": "{:d}", "بطاقات": "{:d}"}),
+            hide_index=True, height=min(60 + 34 * len(counts_tbl), 260), width="stretch"
+        )
+        for r in by_tf.itertuples():
+            if r.survivors == 0:
+                continue
+            sub = df[df["timeframe"] == r.timeframe]
+            g = sub.groupby(["strategy_id", "name"], as_index=False)["ticker"].agg(lambda v: sorted(set(v)))
+            g["n"] = g["ticker"].str.len()
+            g = g.sort_values("n", ascending=False)
+            gv = pd.DataFrame({
+                "الاستراتيجية": g["name"],
+                "الأسهم (عدد)": g["n"],
+                "الأسهم": g["ticker"].str.join("، "),
+            })
+            with st.expander(f"{TF_AR.get(r.timeframe, r.timeframe)} — {int(r.survivors)} استراتيجية ناجية / {int(r.stocks)} سهم"):
+                st.dataframe(gv, hide_index=True, height=min(120 + 30 * len(gv), 480), width="stretch")
     with st.container(border=True):
         st.markdown("**:material/scatter_plot: العائد مقابل المخاطرة (أفضل اختيار لكل سهم)**")
         picks_df = df[df["is_pick"] == 1]
@@ -380,8 +441,8 @@ with tab_cards:
         )
         st.markdown(lbl)
         st.caption(
-            f"{rl}**كل الأرقام محققة فعلية** (نسب مئوية، بدون سنَوية).\n"
-            f"{rl}**الربح المجمع خارج العينة:** (1+التحقق) × (1+الاختبار) − 1.\n"
+            f"{rl}**كل الأرقام محققة فعلية** (نسب مئوية، بدون سنَوية).  \n"
+            f"{rl}**الربح المجمع خارج العينة:** (1+التحقق) × (1+الاختبار) − 1.  \n"
             f"{rl}**الربح الإجمالي (التاريخ الكامل)** يشمل فترة التدريب."
         )
         for t, g in df.groupby("ticker"):
