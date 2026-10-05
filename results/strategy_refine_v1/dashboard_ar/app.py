@@ -25,9 +25,10 @@ from performance import (  # noqa: E402
     build_trade_view,
     overview_chart,
     styled_df,
+    style_sign,
     style_trade_table,
 )
-from src.backtest import BacktestConfig, _simulate  # noqa: E402
+from src.backtest import BacktestConfig, _simulate, window_metrics  # noqa: E402
 from src.config import Settings  # noqa: E402
 from src.data import TasiData  # noqa: E402
 
@@ -196,7 +197,75 @@ def run_strategy(sid: int, ticker: str, tf: str, commission: float, slippage: fl
 
 
 def pct(v) -> str:
-    return f"{v * 100:.1f}%"
+    return f"{v * 100:.1%}"
+
+
+TEST_WINDOW = ("2026-01-01", "2026-09-21")
+VERIFY_COSTS = (20.0, 5.0)
+
+
+@st.cache_data(show_spinner=False)
+def load_verify_exports() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """survivors_enriched.csv (one row per passing combo) + all_survivor_trades.csv."""
+    base = PAYREPORT / "trades"
+    enr = pd.read_csv(base / "survivors_enriched.csv", dtype={"ticker": str})
+    trd = pd.read_csv(base / "all_survivor_trades.csv", dtype={"ticker": str})
+    trd["entry_time"] = pd.to_datetime(trd["entry_time"], format="mixed")
+    trd["exit_time"] = pd.to_datetime(trd["exit_time"], format="mixed")
+    return enr, trd
+
+
+def trades_view(g: pd.DataFrame) -> pd.DataFrame:
+    """Adapt exported ledger rows into the trade view used by charts/tables.
+
+    The ledger carries pnl per trade but no equity curve, so the curve is rebuilt
+    from cumulative pnl on a 100k base to draw drawdown.
+    """
+    if g.empty:
+        return pd.DataFrame(columns=["trade_no", "entry_time", "exit_time", "side", "qty", "entry",
+                                     "exit", "pnl", "fees", "reason", "cum_pnl", "equity"])
+    td = g.sort_values("exit_time").reset_index(drop=True).copy()
+    td["trade_no"] = range(1, len(td) + 1)
+    td["cum_pnl"] = td["pnl"].cumsum()
+    td["cum_pos"] = td["cum_pnl"].clip(lower=0)
+    td["cum_neg"] = td["cum_pnl"].clip(upper=0)
+    td["win"] = td["pnl"] > 0
+    td["result"] = td["pnl"].map(lambda v: "ربح" if v > 0 else ("خسارة" if v < 0 else "تعادل"))
+    td["equity"] = INITIAL_CASH + td["cum_pnl"]
+    peak = td["equity"].cummax()
+    td["dd_ratio"] = td["equity"] / peak - 1
+    td["dd_sar"] = td["equity"] - peak
+    return td
+
+
+@st.cache_data(show_spinner="جارٍ إعادة المحاكاة على بيانات السوق ...")
+def rerun_engine(sid: int, ticker: str, tf: str, entry_long: str, exit_long: str,
+                 sl, tp) -> dict | None:
+    """Re-run the engine today on current price files and re-measure the test window."""
+    df = TASI.load_clean(ticker, tf)
+    if df is None:
+        return None
+    commission, slippage = VERIFY_COSTS
+    cfg = BacktestConfig(
+        commission_bps=commission, slippage_bps=slippage,
+        stop_loss_pct=None if pd.isna(sl) else float(sl),
+        take_profit_pct=None if pd.isna(tp) else float(tp),
+    )
+    eq, trades = _simulate(df, {"entry_long": entry_long, "exit_long": exit_long}, cfg)
+    eqw = eq[(eq.index >= pd.Timestamp(TEST_WINDOW[0])) & (eq.index <= pd.Timestamp(TEST_WINDOW[1]))]
+    _, _, trw = window_metrics(eq, trades, *TEST_WINDOW, cfg)
+    winners = [t["pnl"] for t in trw if t["pnl"] > 0]
+    losers = [t["pnl"] for t in trw if t["pnl"] < 0]
+    peak = eqw.cummax()
+    metrics = {
+        "trades": len(trw),
+        "win_rate": (len(winners) / len(trw)) if trw else 0.0,
+        "engine_win_ret": (float(eqw.iloc[-1] / eqw.iloc[0] - 1) if len(eqw) else 0.0),
+        "max_drawdown": (float((eqw / peak - 1).min()) if len(eqw) else 0.0),
+        "profit_factor": (sum(winners) / abs(sum(losers))) if losers else (float("inf") if winners else 0.0),
+    }
+    metrics["window"] = f"{TEST_WINDOW[0]} → {TEST_WINDOW[1]}"
+    return {"test": metrics, "n_trades_all": len(trades)}
 
 
 # ---------------------------------------------------------------- filtering
@@ -234,11 +303,12 @@ st.markdown(
     "كل الأرقام نتائج تاريخية وليست تعهدًا بأرباح مستقبلية."
 )
 
-tab_overview, tab_plots, tab_table, tab_cards, tab_method = st.tabs(
+tab_overview, tab_plots, tab_table, tab_cards, tab_verify, tab_method = st.tabs(
     [":material/query_stats: نظرة عامة على الأداء",
      ":material/analytics: الرسوم البيانية",
      ":material/table_view: جدول الاختيارات",
      ":material/grid_view: البطاقات التفصيلية",
+     ":material/fact_check: التحقق اليدوي من الصفقات",
      ":material/science: المنهجية والتحذيرات"]
 )
 
@@ -455,7 +525,194 @@ with tab_cards:
                 gb = gv[ROW_COLUMNS[::-1]].rename(columns={k: PERF_COLUMNS[k] for k in ROW_COLUMNS})
                 st.dataframe(styled_df(gb, BOARD_SUBSET, BOARD_FORMAT), hide_index=True)
 
-# =========================================================== 5) METHOD
+# =========================================================== 5) MANUAL VERIFY
+with tab_verify:
+    st.subheader(f"{rl}التحقق اليدوي: هل الأرقام مطابقة للصفقات فعلًا؟")
+    st.caption(
+        f"{rl}هذه الصفحة للمراجعة اليدوية وتعمل بشكل مستقل عن التصفية في الشريط الجانبي. "
+        "تعرض لكل سهم صفقات كل استراتيجية ناجية عليه داخل نافذة الاختبار، وتقارن الأرقام "
+        "المخزَّنة بما تحسبه الصفقات نفسها فعليًا، مع إمكانية إعادة تشغيل المحرك على البيانات الحالية."
+    )
+    exports_ok = (PAYREPORT / "trades" / "all_survivor_trades.csv").exists() and (
+        PAYREPORT / "trades" / "survivors_enriched.csv").exists()
+    if not exports_ok:
+        st.warning(
+            "ملفات تصدير الصفقات غير موجودة. شغّل الأمر التالي مرة واحدة لتوليدها:\n\n"
+            "```\npython scripts/export_survivor_trades.py --window test\n```"
+        )
+    else:
+        enr, trd = load_verify_exports()
+        enr = enr.rename(columns={"ticker": "ticker"})
+        stocks = (
+            enr.groupby("ticker")
+            .agg(stock_name=("stock_name", "first"), sector=("sector", "first"), strategies=("strategy_id", "size"))
+            .reset_index()
+            .sort_values("stock_name", kind="stable")
+        )
+        label_to_ticker = {
+            (f"{r.ticker} — {r.stock_name}" if r.stock_name else str(r.ticker)): r.ticker
+            for r in stocks.itertuples()
+        }
+        stock_pick = st.selectbox("السهم", list(label_to_ticker), key="vf_stock")
+        tk = label_to_ticker[stock_pick]
+        sub = enr[enr["ticker"] == tk].copy()
+        st.caption(
+            f"{rl}**{tk} — {stocks.loc[stocks['ticker'] == tk, 'stock_name'].iloc[0]}** | "
+            f"{stocks.loc[stocks['ticker'] == tk, 'sector'].iloc[0]} | "
+            f"{len(sub)} استراتيجية ناجية في نافذة الاختبار."
+        )
+
+        vcols = ["strategy", "strategy_id", "timeframe", "n_trades", "engine_ret_base_test",
+                "alpha_base_test", "win_rate_base_test", "profit_factor_base_test",
+                "maxdd_base_test", "engine_ret_stress_test", "alpha_stress_test",
+                "spec_matches_catalog"]
+        vhead = {
+            "strategy": "الاستراتيجية", "strategy_id": "المعرف", "timeframe": "الإطار",
+            "n_trades": "صفقات الاختبار", "engine_ret_base_test": "العائد الفعلي (أساسي)",
+            "alpha_base_test": "الألفا (أساسي)", "win_rate_base_test": "نسبة الربح",
+            "profit_factor_base_test": "عامل الربحية", "maxdd_base_test": "أقصى تراجع",
+            "engine_ret_stress_test": "العائد الفعلي (مشدّد)", "alpha_stress_test": "الألفا (مشدّد)",
+            "spec_matches_catalog": "مطابق للقواعد",
+        }
+        with st.container(border=True):
+            st.markdown(f"**:material/list_alt: استراتيجيات {tk} الناجية (نافذة الاختبار)**")
+            gv = sub[vcols].sort_values("alpha_base_test", ascending=False).rename(columns=vhead)
+            st.caption(
+                f"{rl}الأرقام المخزَّنة عند **التكاليف الأساسية 20/5** (عمولة 20 + انزلاق 5)، "
+                "وهي نفس التكاليف المستخدمة في إعادة المحاكاة أدناه. أما صفقات هذا التبويب "
+                "فمبنية على **تكاليف واقعية 17.825/20**، لذلك لا تُقارن مباشرةً بالأرقام المخزَّنة. "
+                "عمود «مطابق للقواعد» يوضّح هل القواعد المحقَّقة هي نفسها المستخدمة في توليد دفتر الصفقات."
+            )
+            st.dataframe(
+                gv.style.map(style_sign, subset=["العائد الفعلي (أساسي)", "الألفا (أساسي)",
+                                                  "العائد الفعلي (مشدّد)", "الألفا (مشدّد)"]).format(
+                    {"المعرف": "{:d}", "صفقات الاختبار": "{:d}", "العائد الفعلي (أساسي)": "{:+.2%}",
+                     "الألفا (أساسي)": "{:+.2%}", "نسبة الربح": "{:.1%}", "عامل الربحية": "{:.2f}",
+                     "أقصى تراجع": "{:.1%}", "العائد الفعلي (مشدّد)": "{:+.2%}", "الألفا (مشدّد)": "{:+.2%}",
+                     "مطابق للقواعد": lambda v: "✅" if v else "⚠️"},
+                    na_rep=""),
+                hide_index=True, height=min(320 + 28 * len(gv), 760), width="stretch",
+            )
+
+        strat_rows = {
+            f"{r.strategy} ({int(r.strategy_id)} — {r.timeframe})": (int(r.strategy_id), r.timeframe)
+            for r in sub.sort_values("alpha_base_test", ascending=False).itertuples()
+        }
+        strat_pick = st.selectbox("الاستراتيجية", list(strat_rows), key="vf_strat")
+        sid, tf = strat_rows[strat_pick]
+        row = sub[(sub["strategy_id"] == sid) & (sub["timeframe"] == tf)].iloc[0]
+
+        c1, c2 = st.columns([3, 2], gap="medium")
+        with c1:
+            with st.container(border=True):
+                st.markdown("**:material/code: القواعد المستخدمة في التحقق**")
+                st.code(f"الدخول: {row['entry_long']}\n\nالخروج: {row['exit_long']}", language="text")
+                bits = [f"العائلة: {FAMILY_AR.get(row['family'], row['family'])}",
+                        f"الإطار: {TF_AR.get(row['timeframe'], row['timeframe'])}",
+                        f"وقف الخسارة: {'—' if pd.isna(row['stop_loss_pct']) else f'{row['stop_loss_pct']}%'}",
+                        f"هدف الربح: {'—' if pd.isna(row['take_profit_pct']) else f'{row['take_profit_pct']}%'}"]
+                st.caption(f"{rl}" + " | ".join(bits))
+                if isinstance(row["notes"], str) and row["notes"]:
+                    st.markdown(f"{rl}**شرح المستند المرجعي (بالإنجليزية):**")
+                    st.caption(f"{rl}{row['notes']}")
+                if not bool(row["spec_matches_catalog"]):
+                    st.warning(
+                        "القواعد المحقَّقة تختلف قليلًا عن القواعد التي وُلِّدت بها دفتر الصفقات "
+                        "(الأمعال المُحسَّنة لم تُحفظ، والقيم الاحتياطية استُخدمت بدلها). "
+                        "لذلك من المتوقّع ألا تطابق أرقام دفتر الصفقات الأرقام المخزَّنة هنا."
+                    )
+        with c2:
+            with st.container(border=True):
+                st.markdown("**:material/description: تعريف الصفقة**")
+                st.caption(
+                    f"{rl}صفقات نافذة الاختبار لهذا السهم وهذه الاستراتيجية، محسوبة من دفتر الصفقات نفسه.\n"
+                    f"{rl}كل صفقة على رأس مال ابتدائي 100,000 ر.س — لذلك لا تُجمع الأرباح عبر الاستراتيجيات."
+                )
+                g = trd[(trd["strategy_id"] == sid) & (trd["timeframe"] == tf) & (trd["ticker"] == tk)]
+                st.markdown(f"**عدد الصفقات:** {len(g)}")
+                st.markdown(f"**مجموع الربح/الخسارة:** {float(g['pnl'].sum()):+,.0f} ر.س")
+                st.markdown(f"**نسبة الصفقات الرابحة:** {float((g['pnl'] > 0).mean()):.1%}")
+
+        # ---------------------------------------------- truth check (live re-sim)
+        td = trades_view(g)
+        live = rerun_engine(int(sid), tk, tf, row["entry_long"], row["exit_long"],
+                           row["stop_loss_pct"], row["take_profit_pct"])
+        if live is None:
+            st.warning("تعذّر تحميل بيانات هذا السهم على هذا الإطار الزمني.")
+        else:
+            m = live["test"]
+            checks = [
+                ("عدد الصفقات", float(m["trades"]), float(row["n_trades"]), 0.0, 0.0, "{:d}"),
+                ("نسبة الربح", float(m["win_rate"]), float(row["win_rate_base_test"]), 0.005, 0.0, "{:.4f}"),
+                ("العائد من 100,000 ر.س", float(m["engine_win_ret"]), float(row["engine_ret_base_test"]), 0.005, 0.0, "{:+.4f}"),
+                ("أقصى تراجع", float(m["max_drawdown"]), float(row["maxdd_base_test"]), 0.005, 0.0, "{:+.4f}"),
+                ("عامل الربحية", float(m["profit_factor"]), float(row["profit_factor_base_test"]), 0.10, 0.05, "{:.3f}"),
+            ]
+            rows_cmp = []
+            for k, got, want, atol, rtol, fmt in checks:
+                d = got - want
+                okk = abs(d) <= atol + rtol * abs(want)
+                rows_cmp.append({"المقياس": k, "المحاكاة الآن": got, "المخزَّن": want,
+                                 "الفرق": d, "الحكم": "مطابق ✅" if okk else "مختلف ⚠️"})
+            cmp_df = pd.DataFrame(rows_cmp)
+            n_bad = int((cmp_df["الحكم"] != "مطابق ✅").sum())
+            with st.container(border=True):
+                st.markdown("**:material/fact_check: هل الأرقام المخزَّنة صادقة؟**")
+                st.caption(
+                    f"{rl}**المحاكاة الآن:** نُفِّذت للتو على ملفات الأسعار الحالية، بنفس القواعد "
+                    "وبنفس التكاليف الأساسية 20/5 التي استُخدمت عند الحفظ.\n"
+                    f"{rl}**المخزَّن:** ما كتبته مرحلة التحقق في وقتها.\n"
+                    f"{rl}التطابق الكامل يعني أن النتائج حتمية وقابلة لإعادة الإنتاج."
+                )
+                disp = cmp_df.copy()
+                st.dataframe(
+                    disp.style.map(style_sign, subset=["المحاكاة الآن", "المخزَّن", "الفرق"]).format(
+                        {"المحاكاة الآن": "{:+.4f}", "المخزَّن": "{:+.4f}", "الفرق": "{:+.4f}"},
+                        na_rep="", precision=4),
+                    hide_index=True, width="stretch",
+                )
+                if n_bad == 0:
+                    st.success("إعادة المحاكاة طابقت الأرقام المخزَّنة تمامًا — النتائج قابلة للتكرار.")
+                else:
+                    st.info(
+                        f"{n_bad} من {len(cmp_df)} مقياس مختلف عن المخزَّن."
+                    )
+                    if bool(row.get("data_version_match", True)):
+                        st.info(
+                            f"**السبب المرجّح:** ملفات الأسعار تغيّرت بعد حفظ النتائج — "
+                            f"نافذة الاختبار كانت {int(row['bars_stored_test'])} شمعة وقت الحفظ "
+                            f"وهي {int(row['bars_current_test'])} شمعة الآن "
+                            f"({int(row['bars_stored_test']) - int(row['bars_current_test']):+d}). "
+                            "هذا فرق في نسخة البيانات وليس خطأً في المحرك."
+                        )
+                    else:
+                        st.info("**السبب المرجّح:** القواعد المحقَّقة تختلف عن دفتر الكتالوج لهذا التركيب.")
+                        st.warning(
+                            "المعاملات المُحسَّنة لهذا التركيب غير محفوظة في السجل، لذا لا يمكن "
+                            "إعادة إنتاج رقم المخزَّن حتميًا."
+                        )
+
+
+        # ---------------------------------------------- trades
+        with st.container(border=True):
+            st.markdown(f"**:material/receipt_long: صفقات نافذة الاختبار ({len(td)} صفقة)**")
+            if len(td) == 0:
+                st.warning("لا توجد صفقات مُصدَّرة لهذا التركيب.")
+            else:
+                view_mode = st.segmented_control("العرض", ["رسم بياني", "جدول"], key="vf_view",
+                                                 default="رسم بياني")
+                if view_mode == "جدول":
+                    st.dataframe(style_trade_table(td), hide_index=True, height=460, width="stretch")
+                else:
+                    st.altair_chart(overview_chart(td), width="stretch")
+                st.download_button(
+                    ":material/download: تحميل هذه الصفقات (CSV)",
+                    td.to_csv(index=False).encode("utf-8-sig"),
+                    file_name=f"trades_{tk}_{sid}_{tf}.csv", mime="text/csv",
+                )
+
+
+# =========================================================== 6) METHOD
 with tab_method:
     st.markdown(
         """
